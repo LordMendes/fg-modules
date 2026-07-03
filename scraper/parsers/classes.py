@@ -7,7 +7,7 @@ from typing import Any
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from ..config import BASE_URL
+from ..resolver import base_url_from
 from .base import (
     cell_link_href,
     cell_link_text,
@@ -52,7 +52,8 @@ def parse_classes_index(soup: BeautifulSoup, page_url: str) -> list[dict[str, An
         url = resolve_url(page_url, href)
         slug = extract_slug_from_href(href)
         if slug:
-            url = f"{BASE_URL}/classes/{slug}/index.html"
+            host = base_url_from(page_url)
+            url = f"{host}/classes/{slug}/index.html"
         records.append(
             {
                 "name": cell_link_text(cells[0]),
@@ -109,9 +110,17 @@ def _parse_h4_fields(content: Tag) -> dict[str, str]:
     return fields
 
 
+def _paragraph_html(tag: Tag) -> str:
+    """Preserve outer <p> wrapper; html_inner() drops it."""
+    if tag.name == "p":
+        return str(tag)
+    return html_inner(tag)
+
+
 def _parse_requirements_block(content: Tag) -> dict[str, Any]:
     result: dict[str, Any] = {
         "text": "",
+        "html": "",
         "alignment": "",
         "skills": [],
         "feats": [],
@@ -122,6 +131,7 @@ def _parse_requirements_block(content: Tag) -> dict[str, Any]:
         if "requirement" not in h4.get_text(strip=True).lower():
             continue
         block_parts: list[str] = []
+        html_parts: list[str] = []
         for sibling in h4.next_siblings:
             if isinstance(sibling, Tag) and sibling.name == "h4":
                 break
@@ -131,6 +141,7 @@ def _parse_requirements_block(content: Tag) -> dict[str, Any]:
                     label = strong.get_text(strip=True).rstrip(":") if strong else ""
                     text = p.get_text(" ", strip=True)
                     block_parts.append(text)
+                    html_parts.append(_paragraph_html(p))
                     ll = label.lower()
                     if ll == "alignment":
                         result["alignment"] = text.replace("Alignment:", "").strip()
@@ -143,6 +154,7 @@ def _parse_requirements_block(content: Tag) -> dict[str, Any]:
                     elif "base attack" in ll:
                         result["base_attack_bonus"] = text.replace("Base Attack Bonus:", "").strip()
         result["text"] = "\n".join(block_parts).strip()
+        result["html"] = "".join(html_parts)
         break
     return result
 
@@ -169,7 +181,7 @@ def _parse_feature_paragraph(p: Tag) -> dict[str, Any] | None:
 
     name = match.group(1).strip()
     feat_type = (match.group(2) or "").strip()
-    body_html = html_inner(p)
+    body_html = _paragraph_html(p)
     body_text = p.get_text("\n", strip=True)
 
     level = 1
@@ -204,7 +216,7 @@ def _parse_class_features_section(content: Tag) -> tuple[list[dict[str, Any]], s
                     feat = _parse_feature_paragraph(sibling)
                     if feat:
                         features.append(feat)
-                section_parts.append(html_inner(sibling))
+                section_parts.append(_paragraph_html(sibling))
                 for p in sibling.find_all("p"):
                     feat = _parse_feature_paragraph(p)
                     if feat and feat not in features:

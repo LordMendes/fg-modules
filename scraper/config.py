@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 BASE_URL = "https://dnd.arkalseif.info"
+DEFAULT_BASE_URL = BASE_URL
 
 USER_AGENT = (
     "fg-modules-scraper/1.0 (+https://github.com/local/fg_modules; personal use)"

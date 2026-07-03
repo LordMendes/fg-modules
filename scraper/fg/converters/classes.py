@@ -7,12 +7,15 @@ import xml.etree.ElementTree as ET
 from typing import Any
 
 from ..html_utils import (
+    class_requirements_html,
+    normalize_class_body_html,
     normalize_fg_table_html,
     prepare_formatted_html,
     strip_loose_table_fragments,
     wrap_paragraph,
 )
 from ..loader import BuildReport
+from ..validators import validate_class_skill_automation
 from ..xml_builder import (
     IdAllocator,
     make_category,
@@ -104,7 +107,7 @@ def _prepare_feature_content(
 
     if not html:
         html = wrap_paragraph(text)
-    return html, text
+    return normalize_class_body_html(html), text
 
 
 def _description_html(detail: dict[str, Any]) -> str:
@@ -162,16 +165,15 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
     desc = _description_html(detail)
     if desc:
         parts.append(desc)
-    req = detail.get("requirements_structured") or {}
-    if req.get("text"):
-        parts.append(f"<h4>Requirements</h4>{wrap_paragraph(req['text'])}")
-    elif detail.get("requirements"):
-        parts.append(f"<h4>Requirements</h4>{wrap_paragraph(detail['requirements'])}")
+    req_html = class_requirements_html(detail)
+    if req_html:
+        # Test 3.5E referenceclass Main tab binds only to <text>, not <requirements>.
+        parts.append(f"<h4>Requirements</h4>{req_html}")
     if detail.get("notes_html"):
         notes = detail["notes_html"]
         if detail.get("spell_progression"):
             notes = strip_loose_table_fragments(notes)
-        parts.append(notes)
+        parts.append(normalize_class_body_html(notes))
     for table in detail.get("spell_progression") or []:
         if table.get("html"):
             title = table.get("title", "Spells")
@@ -234,6 +236,19 @@ def convert_classes(
             ranks = _parse_skill_ranks(detail.get("skill_points", ""))
         if ranks is not None:
             typed_number(node, "skillranks", ranks)
+
+        req_html = class_requirements_html(detail)
+        if req_html:
+            req_el = typed_formattedtext(node, "requirements", req_html)
+            set_formatted_inner(req_el, prepare_formatted_html(req_html))
+
+        for warning in validate_class_skill_automation(
+            rec.get("name", ""),
+            detail,
+            classskills=skills,
+            skill_ranks=ranks,
+        ):
+            report.warnings.append(warning)
 
         notes_text = detail.get("notes_text", "")
         features = detail.get("class_features") or []

@@ -117,6 +117,20 @@ Produces:
 modules/Complete Divine.mod
 ```
 
+### Rebuild modules after converter changes
+
+If you already have scraped JSON and only need to regenerate `.mod` files (for example after updating the FG builder):
+
+```powershell
+python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html" --skip-scrape --rebuild
+```
+
+Or rebuild a single book:
+
+```powershell
+python scraper/json_to_fg.py scraped/stormwrack --output "modules/Stormwrack.mod"
+```
+
 ## Output layout
 
 ```
@@ -162,4 +176,6 @@ python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplement
 
 - Scraped content is for personal use. Respect the source site's terms and rate limits; the default `--delay 0.5` helps avoid hammering the server.
 - Class automation in FG 3.5E depends on specific field names and feature text (hit die, BAB, saves, class skills, spellcasting features). The converter targets the Test 3.5E ruleset conventions where possible.
+- Prestige class prerequisites are written to `<requirements type="formattedtext">` and duplicated in the Main tab `<text>` field (the Test 3.5E ruleset only displays `text` on the class Main tab). Requirements use block-level HTML (`<p>`, `<b>`) so FG renders line breaks and bold labels correctly.
+- The builder strips invalid XML control characters (for example `0x01` from some source pages) so modules load cleanly in Fantasy Grounds.
 - Per-category JSON files (`classes.json`, etc.) override embedded data in `book.json` when both exist.

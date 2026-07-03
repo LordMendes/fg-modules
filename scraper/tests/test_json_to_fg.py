@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from scraper.fg.builder import build_module
+from scraper.fg.builder import EmptyModuleError, build_module
 from scraper.fg.loader import load_book
 from scraper.fg.packager import package_module
 
@@ -76,6 +76,7 @@ MINIMAL_BOOK = {
                     "description_html": "<p>A test prestige class.</p>",
                     "skill_points": "4 + Int",
                     "skill_ranks": 4,
+                    "class_skills": "Hide (Dex), Move Silently (Dex), and Tumble (Dex)",
                     "hit_die": "d8",
                     "advancement": [
                         {
@@ -210,6 +211,57 @@ class TestMinimalBuild:
         assert "<th>" not in text
         assert "<td><b>Level</b></td>" in text
 
+    def test_class_notes_use_paragraph_blocks_for_legacy_inline_html(
+        self, tmp_path: Path
+    ):
+        book = json.loads(json.dumps(MINIMAL_BOOK))
+        detail = book["categories"]["classes"][0]["detail"]
+        detail["requirements_structured"] = {
+            "text": "Base Attack Bonus: +5\nAlignment: Lawful good",
+        }
+        detail["notes_html"] = (
+            "<strong>Weapon and Armor Proficiency:</strong> None."
+            "<strong>Sneak Attack (Ex):</strong> +1d6 damage."
+        )
+        scraped = tmp_path / "legacy-class"
+        scraped.mkdir()
+        (scraped / "summary.json").write_text(
+            json.dumps({"title": "Test Book", "book_slug": "test-book--1"}),
+            encoding="utf-8",
+        )
+        for cat in ("spells", "feats", "classes", "items", "skills", "races"):
+            payload = book["categories"].get(cat, [])
+            (scraped / f"{cat}.json").write_text(json.dumps(payload), encoding="utf-8")
+        (scraped / "book.json").write_text(json.dumps(book), encoding="utf-8")
+
+        out = tmp_path / "module"
+        build_module(scraped, out, ["classes"], "Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert '<requirements type="formattedtext">' in text
+        assert "<h4>Requirements</h4>" in text
+        assert "<p>Base Attack Bonus: +5</p>" in text
+        assert "<p>Alignment: Lawful good</p>" in text
+        assert "<p><b>Weapon and Armor Proficiency:</b>" in text
+        assert "<p><b>Sneak Attack (Ex):</b>" in text
+
+    def test_class_has_requirements_field_for_prestige_class(
+        self, minimal_scraped: Path, tmp_path: Path
+    ):
+        out = tmp_path / "module"
+        build_module(minimal_scraped, out, ["classes"], "Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert '<requirements type="formattedtext">' in text
+        assert "BAB +5" in text
+
+    def test_class_has_skill_automation_fields(
+        self, minimal_scraped: Path, tmp_path: Path
+    ):
+        out = tmp_path / "module"
+        report = build_module(minimal_scraped, out, ["classes"], "Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert '<skillranks type="number">4</skillranks>' in text
+        assert not any("Test Class" in w and "skillranks" in w for w in report.warnings)
+
     def test_package_mod(self, minimal_scraped: Path, tmp_path: Path):
         out = tmp_path / "module"
         build_module(minimal_scraped, out, ["spells", "feats"], "Author")
@@ -226,9 +278,21 @@ class TestMinimalBuild:
         d = minimal_scraped
         (d / "book.json").write_text(json.dumps(book), encoding="utf-8")
         out = tmp_path / "module2"
-        report = build_module(d, out, ["spells"], "Author", skip_no_detail=True)
-        assert report.skipped.get("spells", 0) == 1
-        assert report.written.get("spells", 0) == 0
+        with pytest.raises(EmptyModuleError):
+            build_module(d, out, ["spells"], "Author", skip_no_detail=True)
+
+    def test_empty_book_raises(self, tmp_path: Path):
+        d = tmp_path / "empty-book"
+        d.mkdir()
+        (d / "summary.json").write_text(
+            json.dumps({"title": "Empty Book", "book_slug": "empty-book--1"}),
+            encoding="utf-8",
+        )
+        for cat in ("spells", "feats", "classes", "skills", "items", "races"):
+            (d / f"{cat}.json").write_text("[]", encoding="utf-8")
+        with pytest.raises(EmptyModuleError, match="no records written"):
+            build_module(d, tmp_path / "out", list(MINIMAL_BOOK["categories"].keys()), "Author")
+        assert not (tmp_path / "out" / "definition.xml").exists()
 
 
 @pytest.mark.slow

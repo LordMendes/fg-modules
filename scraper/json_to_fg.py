@@ -9,6 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from scraper.fg.builder import EmptyModuleError
 from scraper.fg.loader import ALL_CATEGORIES, load_book
 from scraper.fg.packager import build_and_package_module
 
@@ -82,6 +83,9 @@ def main(argv: list[str] | None = None) -> int:
             author=args.author,
             skip_no_detail=not args.include_no_detail,
         )
+    except EmptyModuleError as exc:
+        print(f"Build skipped: {exc}", file=sys.stderr)
+        return 1
     except Exception as exc:
         print(f"Build failed: {exc}", file=sys.stderr)
         return 1

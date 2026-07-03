@@ -5,7 +5,7 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 from typing import Any
 
-from .html_utils import prepare_formatted_html
+from .html_utils import prepare_formatted_html, sanitize_xml_text
 
 FG_ROOT_ATTRS = {
     "version": "4.4",
@@ -39,7 +39,7 @@ def make_definition_root() -> ET.Element:
 def typed_string(parent: ET.Element, tag: str, value: Any) -> ET.Element | None:
     if value is None:
         return None
-    text = str(value).strip()
+    text = sanitize_xml_text(str(value).strip())
     if not text:
         return None
     el = ET.SubElement(parent, tag)
@@ -141,7 +141,7 @@ def _serialize_element(elem: ET.Element, indent: int = 0) -> str:
 
 
 def _escape_xml_text(text: str) -> str:
-    return (
+    return sanitize_xml_text(
         text.replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")

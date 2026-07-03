@@ -8,7 +8,7 @@ from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 
-from .config import BASE_URL, CATEGORY_INDEX_PATHS
+from .config import BASE_URL, CATEGORY_INDEX_PATHS, DEFAULT_BASE_URL
 from .models import BookContext
 
 RULEBOOK_URL_RE = re.compile(
@@ -31,11 +31,20 @@ def parse_rulebook_url(url: str) -> tuple[str, str]:
     return match.group("edition"), match.group("book")
 
 
-def build_category_urls(book_slug: str) -> dict[str, str]:
+def base_url_from(url: str, fallback: str = DEFAULT_BASE_URL) -> str:
+    """Return scheme://host from an absolute URL, or fallback for relative paths."""
+    parsed = urlparse(url)
+    if parsed.scheme and parsed.netloc:
+        return f"{parsed.scheme}://{parsed.netloc}"
+    return fallback.rstrip("/")
+
+
+def build_category_urls(book_slug: str, base: str = BASE_URL) -> dict[str, str]:
     urls: dict[str, str] = {}
+    origin = base.rstrip("/")
     for category, template in CATEGORY_INDEX_PATHS.items():
         path = template.format(book_slug=book_slug)
-        urls[category] = urljoin(BASE_URL, path)
+        urls[category] = urljoin(origin + "/", path.lstrip("/"))
     return urls
 
 

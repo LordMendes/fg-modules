@@ -9,6 +9,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup, Tag
 
 from ..config import BASE_URL, SPELL_COMPONENT_KEYS
+from ..fg.html_utils import sanitize_xml_text
 
 TOTAL_ITEMS_RE = re.compile(r"\(total\s+(\d+)\s+items\)", re.I)
 GLOBAL_ID_RE = re.compile(r"--(\d+)(?:/index\.html)?$")
@@ -105,7 +106,7 @@ def html_inner(element: Tag | None) -> str:
 def html_to_text(element: Tag | None) -> str:
     if element is None:
         return ""
-    return element.get_text("\n", strip=True)
+    return sanitize_xml_text(element.get_text("\n", strip=True))
 
 
 def parse_labeled_metadata(content: Tag) -> dict[str, str]:

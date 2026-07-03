@@ -18,6 +18,10 @@ from .loader import (
 from .xml_builder import IdAllocator, make_db_root, write_definition, write_xml
 
 
+class EmptyModuleError(Exception):
+    """Raised when a book has no records to write into a module."""
+
+
 def build_module(
     scraped_dir: Path,
     output_dir: Path,
@@ -46,6 +50,11 @@ def build_module(
         section = converter(records, book.title, report, ids)
         if section is not None:
             root.append(section)
+
+    if sum(report.written.values()) == 0:
+        raise EmptyModuleError(
+            f"no records written for {book.title!r} ({book.slug}); module not created"
+        )
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
