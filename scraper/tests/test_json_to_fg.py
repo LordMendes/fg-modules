@@ -191,6 +191,92 @@ class TestMinimalBuild:
         assert school is not None
         assert school.text == "Evocation"
 
+    def test_spell_has_cast_action(self, minimal_scraped: Path, tmp_path: Path):
+        out = tmp_path / "module"
+        build_module(minimal_scraped, out, ["spells"], "Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert "<actions>" in text
+        assert '<type type="string">cast</type>' in text
+        assert '<savetype type="string">will</savetype>' in text
+
+    def test_spell_actions_disabled(self, minimal_scraped: Path, tmp_path: Path):
+        out = tmp_path / "module"
+        build_module(
+            minimal_scraped, out, ["spells"], "Author", spell_actions=False
+        )
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert "<actions>" not in text
+
+    def test_spell_description_table_uses_fg_safe_headers(self, tmp_path: Path):
+        book = json.loads(json.dumps(MINIMAL_BOOK))
+        book["categories"]["spells"] = [
+            {
+                "name": "Crumble",
+                "source_url": "https://example.com/spells/crumble/index.html",
+                "book_slug": "test-book--1",
+                "category": "spells",
+                "index": {"school": "Transmutation", "components": {"V": True, "S": True}},
+                "detail": {
+                    "school": "Transmutation",
+                    "level": "Druid 6",
+                    "casting_time": "1 standard action",
+                    "range": "Close",
+                    "duration": "Instantaneous",
+                    "saving_throw": "None",
+                    "spell_resistance": "No",
+                    "components": {"V": True, "S": True},
+                    "description_html": (
+                        "<p>Damage depends on your level.</p>"
+                        "<table><tr><th><strong>Level</strong></th>"
+                        "<th><strong>Size of Object Affected</strong></th></tr>"
+                        "<tr><td>Up to 15</td><td>Huge</td></tr></table>"
+                    ),
+                    "description_text": "Damage depends on your level.",
+                },
+            }
+        ]
+        scraped = tmp_path / "table-spell"
+        scraped.mkdir()
+        (scraped / "summary.json").write_text(
+            json.dumps({"title": "Test Book", "book_slug": "test-book--1"}),
+            encoding="utf-8",
+        )
+        for cat in ("spells", "feats", "classes", "items", "skills", "races"):
+            payload = book["categories"].get(cat, [])
+            (scraped / f"{cat}.json").write_text(json.dumps(payload), encoding="utf-8")
+        (scraped / "book.json").write_text(json.dumps(book), encoding="utf-8")
+
+        out = tmp_path / "module"
+        build_module(scraped, out, ["spells"], "Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        record = re.search(
+            r'<name type="string">Crumble</name>.*?<description type="formattedtext">(.*?)</description>',
+            text,
+            re.S,
+        )
+        assert record is not None
+        inner = record.group(1).strip()
+        assert "<th>" not in inner
+        assert "<strong>" not in inner
+        assert "<p>Damage depends on your level.</p>" in inner
+        assert "<td><b>Level</b></td>" in inner
+        assert "<td><b>Size of Object Affected</b></td>" in inner
+        assert "<td>Huge</td>" in inner
+
+    def test_spell_has_cast_action(self, minimal_scraped: Path, tmp_path: Path):
+        out = tmp_path / "module"
+        build_module(minimal_scraped, out, ["spells"], "Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert "<actions>" in text
+        assert '<type type="string">cast</type>' in text
+        assert '<savetype type="string">will</savetype>' in text
+
+    def test_spell_actions_disabled(self, minimal_scraped: Path, tmp_path: Path):
+        out = tmp_path / "module"
+        build_module(minimal_scraped, out, ["spells"], "Author", spell_actions=False)
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert "<actions>" not in text
+
     def test_feat_has_benefit(self, minimal_scraped: Path, tmp_path: Path):
         out = tmp_path / "module"
         build_module(minimal_scraped, out, ["feats"], "Author")
@@ -339,6 +425,53 @@ class TestCompleteDivineIntegration:
         assert db.find("feat") is not None
         assert db.find("class") is not None
         assert db.find("item") is not None
+        assert db.find(".//actions") is not None
+
+    def test_complete_divine_spells_have_actions(
+        self, scraped_dir: Path, tmp_path: Path
+    ):
+        out = tmp_path / "complete-divine"
+        build_module(scraped_dir, out, ["spells"], "Test Author")
+        db = ET.parse(out / "db.xml").getroot()
+        spells = db.findall(".//spell/category/*")
+        assert spells
+        with_actions = [s for s in spells if s.find("actions") is not None]
+        assert len(with_actions) >= len(spells) // 2
+
+    def test_complete_divine_spells_have_actions(self, scraped_dir: Path, tmp_path: Path):
+        out = tmp_path / "complete-divine-spells"
+        build_module(scraped_dir, out, ["spells"], "Test Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        assert text.count("<actions>") == self.EXPECTED["spells"]
+        assert text.count('<type type="string">cast</type>') == self.EXPECTED["spells"]
+        savetype_count = text.count('<savetype type="string">')
+        assert 40 <= savetype_count <= 55
+
+    def test_complete_divine_table_spells_use_fg_safe_headers(
+        self, scraped_dir: Path, tmp_path: Path
+    ):
+        out = tmp_path / "complete-divine-spell-tables"
+        build_module(scraped_dir, out, ["spells"], "Test Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        for spell in (
+            "Bolt of Glory",
+            "Crumble",
+            "Dragon Breath",
+            "Quill Blast",
+            "Standing Wave",
+            "Weapon of the Deity",
+        ):
+            record = re.search(
+                rf'<name type="string">{re.escape(spell)}</name>.*?'
+                r'<description type="formattedtext">(.*?)</description>',
+                text,
+                re.S,
+            )
+            assert record is not None, f"{spell} description not found"
+            inner = record.group(1)
+            assert "<table" in inner, f"{spell} missing table"
+            assert "<th>" not in inner, f"{spell} still has th headers"
+            assert "<td><b>" in inner, f"{spell} missing bold td headers"
 
     def test_evangelist_prerequisites_in_class_text(
         self, scraped_dir: Path, tmp_path: Path

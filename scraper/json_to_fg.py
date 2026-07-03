@@ -48,6 +48,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Include index records even when detail is missing",
     )
+    parser.add_argument(
+        "--no-spell-actions",
+        action="store_true",
+        help="Omit FG spell power actions (cast/save/damage/effect) from spell records",
+    )
     return parser.parse_args(argv)
 
 
@@ -82,6 +87,7 @@ def main(argv: list[str] | None = None) -> int:
             categories=categories,
             author=args.author,
             skip_no_detail=not args.include_no_detail,
+            spell_actions=not args.no_spell_actions,
         )
     except EmptyModuleError as exc:
         print(f"Build skipped: {exc}", file=sys.stderr)
@@ -99,6 +105,7 @@ def main(argv: list[str] | None = None) -> int:
             categories=categories,
             author=args.author,
             skip_no_detail=not args.include_no_detail,
+            spell_actions=not args.no_spell_actions,
         )
         print(f"Unpacked copy written to {args.unpacked.resolve()}")
 

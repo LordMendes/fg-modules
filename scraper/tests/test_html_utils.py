@@ -4,6 +4,8 @@ from scraper.fg.html_utils import (
     class_requirements_html,
     normalize_class_body_html,
     normalize_fg_table_html,
+    normalize_fg_tables_in_html,
+    prepare_spell_description_html,
     requirements_text_to_html,
     sanitize_xml_text,
     structured_requirements_to_html,
@@ -17,6 +19,39 @@ def test_normalize_fg_table_html_converts_th_to_bold_td():
     assert "<td><b>Level</b></td>" in out
     assert "<td><b>BAB</b></td>" in out
     assert "<td>1</td>" in out
+
+
+def test_normalize_fg_tables_in_html_preserves_surrounding_paragraphs():
+    html = (
+        "<p>Intro paragraph.</p>"
+        "<table><tr><th><strong>Level</strong></th><th><strong>Size</strong></th></tr>"
+        "<tr><td>Up to 15</td><td>Huge</td></tr></table>"
+        "<p>Closing paragraph.</p>"
+    )
+    out = normalize_fg_tables_in_html(html)
+    assert out.index("<p>Intro paragraph.</p>") < out.index("<table>")
+    assert out.index("</table>") < out.index("<p>Closing paragraph.</p>")
+    assert "<th>" not in out
+    assert "<td><b>Level</b></td>" in out
+    assert "<td><b>Size</b></td>" in out
+    assert "<td>Up to 15</td>" in out
+
+
+def test_prepare_spell_description_html_converts_crumble_table():
+    html = (
+        "<p>The erosion inflicts 1d6 points of damage per caster level.</p>"
+        "<table><tr><th><strong>Level</strong></th>"
+        "<th><strong>Size of Object Affected</strong></th></tr>"
+        "<tr><td>Up to 15</td><td>Huge</td></tr>"
+        "<tr><td>16–18</td><td>Gargantuan</td></tr></table>"
+    )
+    out = prepare_spell_description_html(html)
+    assert "<th>" not in out
+    assert "<strong>" not in out
+    assert "<p>The erosion inflicts 1d6 points of damage per caster level.</p>" in out
+    assert "<td><b>Level</b></td>" in out
+    assert "<td><b>Size of Object Affected</b></td>" in out
+    assert "<td>Gargantuan</td>" in out
 
 
 def test_normalize_class_body_html_splits_legacy_inline_features():

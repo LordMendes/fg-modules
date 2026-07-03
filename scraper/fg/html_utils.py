@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 BLOCK_TAGS = frozenset(
     {"p", "div", "table", "ul", "ol", "h1", "h2", "h3", "h4", "blockquote", "pre"}
@@ -178,8 +178,36 @@ def wrap_paragraph(text: str) -> str:
     return sanitize_xml_text(f"<p>{escaped}</p>")
 
 
-def normalize_fg_table_html(html: str) -> str:
+def _normalize_table_headers(table: Tag, soup: BeautifulSoup) -> None:
     """FG formattedtext renders <th> as stacked blocks; use <td><b>…</b></td> instead."""
+    for th in table.find_all("th"):
+        label = th.get_text(" ", strip=True)
+        th.clear()
+        th.name = "td"
+        bold = soup.new_tag("b")
+        bold.string = label
+        th.append(bold)
+
+
+def normalize_fg_tables_in_html(html: str) -> str:
+    """Convert all table headers to FG-safe markup without dropping surrounding content."""
+    if not html or "<table" not in html.lower():
+        return html
+
+    soup = BeautifulSoup(html, "lxml")
+    tables = soup.find_all("table")
+    if not tables:
+        return html
+
+    for table in tables:
+        _normalize_table_headers(table, soup)
+
+    body = soup.body or soup
+    return sanitize_xml_text("".join(str(c) for c in body.children).strip())
+
+
+def normalize_fg_table_html(html: str) -> str:
+    """Normalize a single table (or loose rows) for FG formattedtext."""
     if not html or "<" not in html:
         return html
 
@@ -193,15 +221,25 @@ def normalize_fg_table_html(html: str) -> str:
         for tr in trs:
             table.append(tr.extract())
 
-    for th in table.find_all("th"):
-        label = th.get_text(" ", strip=True)
-        th.clear()
-        th.name = "td"
-        bold = soup.new_tag("b")
-        bold.string = label
-        th.append(bold)
-
+    _normalize_table_headers(table, soup)
     return str(table)
+
+
+def prepare_spell_description_html(html: str) -> str:
+    """Normalize scraper spell HTML for FG formattedtext, preserving embedded tables."""
+    content = prepare_formatted_html(html)
+    if not content or content == "<p />":
+        return content
+
+    soup = BeautifulSoup(content, "lxml")
+    for strong in soup.find_all("strong"):
+        strong.name = "b"
+
+    body = soup.body or soup
+    inner = "".join(str(c) for c in body.children).strip()
+    inner = re.sub(r"\s*\n\s*", " ", inner)
+    inner = sanitize_xml_text(inner)
+    return normalize_fg_tables_in_html(inner)
 
 
 def strip_loose_table_fragments(html: str) -> str:

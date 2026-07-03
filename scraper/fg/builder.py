@@ -28,6 +28,8 @@ def build_module(
     categories: list[str],
     author: str,
     skip_no_detail: bool = True,
+    *,
+    spell_actions: bool = True,
 ) -> BuildReport:
     book = load_book(scraped_dir)
     report = BuildReport(book_title=book.title, book_slug=book.slug)
@@ -47,7 +49,12 @@ def build_module(
         converter = CONVERTERS.get(cat)
         if not converter:
             continue
-        section = converter(records, book.title, report, ids)
+        if cat == "spells":
+            section = converter(
+                records, book.title, report, ids, spell_actions=spell_actions
+            )
+        else:
+            section = converter(records, book.title, report, ids)
         if section is not None:
             root.append(section)
 

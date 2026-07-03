@@ -38,6 +38,8 @@ def build_and_package_module(
     categories: list[str],
     author: str,
     skip_no_detail: bool = True,
+    *,
+    spell_actions: bool = True,
 ) -> BuildReport:
     """Build to a temp folder, zip contents, and write a .mod file."""
     from .builder import build_module
@@ -48,7 +50,12 @@ def build_and_package_module(
     with tempfile.TemporaryDirectory(prefix="fg-build-") as tmp:
         staging = Path(tmp)
         report = build_module(
-            scraped_dir, staging, categories, author, skip_no_detail
+            scraped_dir,
+            staging,
+            categories,
+            author,
+            skip_no_detail,
+            spell_actions=spell_actions,
         )
         if not package_module(staging, mod_path):
             raise RuntimeError(f"failed to package {mod_path}")

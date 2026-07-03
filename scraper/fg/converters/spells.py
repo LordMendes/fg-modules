@@ -5,12 +5,15 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 from typing import Any
 
-from ..html_utils import first_sentence, strip_html_to_text
+from ..html_utils import first_sentence, prepare_spell_description_html, strip_html_to_text
 from ..loader import BuildReport
+from ..spell_actions import build_spell_actions
 from ..xml_builder import (
     IdAllocator,
     components_string,
+    emit_spell_actions,
     make_category,
+    set_formatted_inner,
     typed_formattedtext,
     typed_string,
 )
@@ -21,6 +24,8 @@ def convert_spells(
     book_title: str,
     report: BuildReport,
     ids: IdAllocator,
+    *,
+    spell_actions: bool = True,
 ) -> ET.Element | None:
     if not records:
         return None
@@ -63,12 +68,18 @@ def convert_spells(
         typed_string(node, "components", comp)
 
         desc_html = detail.get("description_html", "")
-        typed_formattedtext(node, "description", desc_html)
+        desc_el = typed_formattedtext(node, "description", desc_html)
+        if desc_html:
+            set_formatted_inner(desc_el, prepare_spell_description_html(desc_html))
 
         desc_text = detail.get("description_text") or strip_html_to_text(desc_html)
         short = first_sentence(desc_text)
         if short:
             typed_string(node, "shortdescription", short)
+
+        if spell_actions:
+            actions = build_spell_actions({**detail, "name": rec.get("name")})
+            emit_spell_actions(node, actions, ids)
 
         report.add_written("spells")
 

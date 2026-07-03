@@ -61,6 +61,95 @@ def typed_number(parent: ET.Element, tag: str, value: Any) -> ET.Element | None:
     return el
 
 
+def typed_dice(parent: ET.Element, tag: str, value: Any) -> ET.Element | None:
+    if value is None or value == "":
+        el = ET.SubElement(parent, tag)
+        el.set("type", "dice")
+        return el
+    if isinstance(value, list):
+        if not value:
+            el = ET.SubElement(parent, tag)
+            el.set("type", "dice")
+            return el
+        if len(value) == 1:
+            text = value[0]
+        else:
+            sides = value[0][1:] if value[0].startswith("d") else value[0]
+            text = f"{len(value)}d{sides}"
+    else:
+        text = str(value).strip()
+    if not text:
+        el = ET.SubElement(parent, tag)
+        el.set("type", "dice")
+        return el
+    el = ET.SubElement(parent, tag)
+    el.set("type", "dice")
+    el.text = text
+    return el
+
+
+def _emit_damage_or_heal_entry(
+    parent: ET.Element,
+    entry: dict[str, Any],
+    ids: IdAllocator,
+) -> None:
+    entry_el = ET.SubElement(parent, ids.next_id("spell_action_entry", ""))
+    typed_dice(entry_el, "dice", entry.get("dice_list"))
+    typed_string(entry_el, "dicestat", entry.get("dicestat"))
+    if entry.get("max_stat") is not None and entry.get("dicestat"):
+        typed_number(entry_el, "dicestatmax", entry["max_stat"])
+    typed_string(entry_el, "stat", entry.get("stat"))
+    if entry.get("stat"):
+        typed_number(entry_el, "statmult", 1)
+        if entry.get("max_stat") is not None:
+            typed_number(entry_el, "statmax", entry["max_stat"])
+    elif entry.get("bonus") is not None:
+        typed_number(entry_el, "bonus", entry["bonus"])
+    typed_string(entry_el, "type", entry.get("damage_type"))
+
+
+def emit_spell_actions(
+    parent: ET.Element,
+    actions: list[dict[str, Any]],
+    ids: IdAllocator,
+) -> ET.Element:
+    """Append an <actions> block with typed FG spell power actions."""
+    actions_el = ET.SubElement(parent, "actions")
+    for order, action in enumerate(actions, start=1):
+        action_el = ET.SubElement(actions_el, ids.next_id("spell_action", ""))
+        typed_string(action_el, "type", action.get("type"))
+        typed_number(action_el, "order", action.get("order", order))
+
+        if action.get("type") == "cast":
+            typed_string(action_el, "savetype", action.get("savetype"))
+            typed_string(action_el, "onmissdamage", action.get("onmissdamage"))
+            typed_string(action_el, "atktype", action.get("atktype"))
+            typed_string(action_el, "savedctype", action.get("savedctype"))
+            typed_number(action_el, "savedcmod", action.get("savedcmod"))
+            if action.get("srnotallowed"):
+                typed_number(action_el, "srnotallowed", 1)
+
+        elif action.get("type") == "damage":
+            dmg_list = ET.SubElement(action_el, "damagelist")
+            for entry in action.get("entries") or []:
+                _emit_damage_or_heal_entry(dmg_list, entry, ids)
+
+        elif action.get("type") == "heal":
+            heal_list = ET.SubElement(action_el, "heallist")
+            for entry in action.get("entries") or []:
+                _emit_damage_or_heal_entry(heal_list, entry, ids)
+
+        elif action.get("type") == "effect":
+            typed_string(action_el, "label", action.get("label"))
+            if action.get("durdice_list"):
+                typed_dice(action_el, "durdice", action.get("durdice_list"))
+            typed_string(action_el, "durunit", action.get("durunit"))
+            typed_number(action_el, "durmod", action.get("durmod"))
+            typed_number(action_el, "durmult", action.get("durmult"))
+
+    return actions_el
+
+
 def typed_formattedtext(
     parent: ET.Element,
     tag: str,
