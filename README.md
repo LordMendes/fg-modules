@@ -1,6 +1,16 @@
 # FG Modules — D&D 3.5 Scraper & Builder
 
-Scrape rulebook content from [dnd.arkalseif.info](https://dnd.arkalseif.info) into structured JSON, then convert it into Fantasy Grounds 3.5E modules (`.mod` files).
+## Project goal
+
+Fantasy Grounds is a virtual tabletop that loads **modules** — packaged rule content such as spells, feats, classes, items, and races — so players and GMs can drag entries onto character sheets and reference them in play. Building that content by hand for dozens of D&D 3.5 supplement books is slow and error-prone.
+
+This project automates that workflow end to end:
+
+1. **Scrape** rulebook pages from [dnd.arkalseif.info](https://dnd.arkalseif.info) into structured JSON (spells, feats, classes, skills, items, races).
+2. **Convert** that JSON into Fantasy Grounds 3.5E database XML with fields aligned to the 3.5E ruleset conventions.
+3. **Package** the result as installable `.mod` files you can load in Fantasy Grounds.
+
+The intended outcome is a repeatable pipeline: point at an edition index (for example, all 3.5 supplementals), run one command, and get a folder of FG modules ready for personal use at the table — without manually retyping hundreds of entries per book.
 
 ## Requirements
 
@@ -12,7 +22,6 @@ Scrape rulebook content from [dnd.arkalseif.info](https://dnd.arkalseif.info) in
 From the project root:
 
 ```powershell
-cd C:\Users\User\Documents\fg_modules
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r scraper/requirements.txt
@@ -21,7 +30,6 @@ pip install -r scraper/requirements.txt
 On Linux/WSL:
 
 ```bash
-cd /path/to/fg_modules
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r scraper/requirements.txt
