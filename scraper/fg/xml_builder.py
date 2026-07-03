@@ -118,10 +118,8 @@ def _serialize_element(elem: ET.Element, indent: int = 0) -> str:
 
     children = list(elem)
     if inner_html is not None:
-        line = f"{tab * indent}<{elem.tag}{attrs}>"
-        parts.append(line)
-        for html_line in inner_html.split("\n"):
-            parts.append(f"{tab * (indent + 1)}{html_line}")
+        parts.append(f"{tab * indent}<{elem.tag}{attrs}>")
+        parts.append(f"{tab * (indent + 1)}{inner_html.replace(chr(10), ' ').strip()}")
         parts.append(f"{tab * indent}</{elem.tag}>")
     elif children:
         parts.append(f"{tab * indent}<{elem.tag}{attrs}>")

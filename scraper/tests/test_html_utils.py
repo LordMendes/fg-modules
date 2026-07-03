@@ -1,10 +1,12 @@
 """Tests for FG HTML helpers."""
 
 from scraper.fg.html_utils import (
+    class_requirements_html,
     normalize_class_body_html,
     normalize_fg_table_html,
     requirements_text_to_html,
     sanitize_xml_text,
+    structured_requirements_to_html,
 )
 
 
@@ -50,3 +52,40 @@ def test_sanitize_xml_text_strips_control_characters():
     assert sanitize_xml_text(dirty) == "beforeafterend"
     assert "\x01" not in sanitize_xml_text(dirty)
     assert sanitize_xml_text("normal text") == "normal text"
+
+
+def test_structured_requirements_to_html_indents_when_requested():
+    req = {"alignment": "Lawful good"}
+    out = structured_requirements_to_html(req, indent=True)
+    assert "<table><tr><td>\xa0\xa0\xa0\xa0<b>Alignment:</b> Lawful good</td></tr></table>" in out
+
+
+def test_structured_requirements_to_html_uses_clean_paragraphs():
+    req = {
+        "alignment": "As a cleric of the chosen deity",
+        "skills": [
+            "Bluff 8 ranks\n                        , Gather Information 5 ranks"
+        ],
+        "feats": ["Negotiator (or)\n                        , Persuasive"],
+    }
+    out = structured_requirements_to_html(req)
+    assert "<a " not in out
+    assert out.count("<p>") == 3
+    assert "<b>Alignment:</b> As a cleric of the chosen deity" in out
+    assert "Bluff 8 ranks , Gather Information 5 ranks" in out
+    assert "Negotiator (or) , Persuasive" in out
+
+
+def test_class_requirements_html_prefers_structured_over_linked_html():
+    detail = {
+        "requirements_structured": {
+            "alignment": "Lawful good",
+            "html": (
+                '<p><strong>Alignment:</strong> Lawful good</p>'
+                '<p><strong>Skills:</strong> <a href="../../skills/hide/index.html">Hide</a> 5 ranks</p>'
+            ),
+        }
+    }
+    out = class_requirements_html(detail)
+    assert "<a " not in out
+    assert "<b>Alignment:</b> Lawful good" in out

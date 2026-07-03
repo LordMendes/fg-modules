@@ -118,7 +118,19 @@ def _description_html(detail: dict[str, Any]) -> str:
         if detail.get("hit_die") and "Hit Die:" not in html:
             html += f"<p><b>Hit Die:</b> {detail['hit_die']}</p>"
         html += f"<p><b>Skill Points:</b> {detail['skill_points']}</p>"
+    req_html = class_requirements_html(detail, indent=True)
+    if req_html and not _has_prerequisites_heading(html):
+        html += f"<p><b>Prerequisites:</b></p>{req_html}"
     return html
+
+
+def _has_prerequisites_heading(html: str) -> bool:
+    return (
+        "<p><b>Prerequisites:</b></p>" in html
+        or "<p><b>Prerequisites</b></p>" in html
+        or "<p><b>Requirements</b></p>" in html
+        or "<h4>Requirements</h4>" in html
+    )
 
 
 def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
@@ -165,10 +177,6 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
     desc = _description_html(detail)
     if desc:
         parts.append(desc)
-    req_html = class_requirements_html(detail)
-    if req_html:
-        # Test 3.5E referenceclass Main tab binds only to <text>, not <requirements>.
-        parts.append(f"<h4>Requirements</h4>{req_html}")
     if detail.get("notes_html"):
         notes = detail["notes_html"]
         if detail.get("spell_progression"):

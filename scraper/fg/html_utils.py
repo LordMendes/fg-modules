@@ -49,6 +49,7 @@ def prepare_formatted_html(html: str) -> str:
     if not re.search(r"<(" + "|".join(BLOCK_TAGS) + r")[\s>]", inner, re.I):
         inner = f"<p>{inner}</p>"
 
+    inner = re.sub(r"\s*\n\s*", " ", inner)
     return sanitize_xml_text(inner.strip())
 
 
@@ -81,25 +82,87 @@ def normalize_class_body_html(html: str) -> str:
     return sanitize_xml_text(inner.strip())
 
 
-def requirements_text_to_html(text: str) -> str:
-    """Turn newline-separated requirement lines into FG paragraph blocks."""
-    lines = [line.strip() for line in text.split("\n") if line.strip()]
-    if not lines:
+_REQ_INDENT = "\u00a0" * 4
+
+
+def _req_line_html(text: str) -> str:
+    content = text.strip()
+    if content.startswith("<"):
+        return content
+    escaped = (
+        content.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
+    return escaped
+
+
+def _requirements_html_from_lines(lines: list[str], *, indent: bool = False) -> str:
+    rows = [line.strip() for line in lines if line.strip()]
+    if not rows:
         return ""
-    return sanitize_xml_text("".join(wrap_paragraph(line) for line in lines))
+    if indent:
+        body = "".join(
+            f"<tr><td>{_REQ_INDENT}{_req_line_html(line)}</td></tr>" for line in rows
+        )
+        return sanitize_xml_text(f"<table>{body}</table>")
+    return sanitize_xml_text(
+        "".join(f"<p>{_req_line_html(line)}</p>" for line in rows)
+    )
 
 
-def class_requirements_html(detail: dict[str, Any]) -> str:
+def requirements_text_to_html(text: str, *, indent: bool = False) -> str:
+    """Turn newline-separated requirement lines into FG paragraph blocks."""
+    return _requirements_html_from_lines(text.split("\n"), indent=indent)
+
+
+def _clean_req_value(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def structured_requirements_to_html(req: dict[str, Any], *, indent: bool = False) -> str:
+    """Build FG-safe requirement paragraphs from structured scraper fields."""
+    lines: list[str] = []
+    if req.get("alignment"):
+        lines.append(f"<b>Alignment:</b> {_clean_req_value(req['alignment'])}")
+    if req.get("base_attack_bonus"):
+        lines.append(
+            f"<b>Base Attack Bonus:</b> {_clean_req_value(req['base_attack_bonus'])}"
+        )
+    skills = req.get("skills") or []
+    if skills:
+        skills_text = _clean_req_value(
+            ", ".join(_clean_req_value(item) for item in skills if item)
+        )
+        if skills_text:
+            lines.append(f"<b>Skills:</b> {skills_text}")
+    feats = req.get("feats") or []
+    if feats:
+        feats_text = _clean_req_value(
+            ", ".join(_clean_req_value(item) for item in feats if item)
+        )
+        if feats_text:
+            lines.append(f"<b>Feats:</b> {feats_text}")
+    if req.get("special"):
+        lines.append(f"<b>Special:</b> {_clean_req_value(req['special'])}")
+    return _requirements_html_from_lines(lines, indent=indent)
+
+
+def class_requirements_html(detail: dict[str, Any], *, indent: bool = False) -> str:
     """Build FG requirements formattedtext from scraped class detail."""
     req = detail.get("requirements_structured") or {}
+    structured_html = structured_requirements_to_html(req, indent=indent)
+    if structured_html:
+        return structured_html
+    req_text = req.get("text") or detail.get("requirements") or ""
+    if req_text:
+        return requirements_text_to_html(req_text, indent=indent)
     req_html = req.get("html") or ""
-    if not req_html:
-        req_text = req.get("text") or detail.get("requirements") or ""
-        if req_text:
-            req_html = requirements_text_to_html(req_text)
-    if not req_html:
-        return ""
-    return normalize_class_body_html(req_html)
+    if req_html:
+        plain = strip_html_to_text(req_html)
+        if plain:
+            return requirements_text_to_html(plain, indent=indent)
+    return ""
 
 
 def wrap_paragraph(text: str) -> str:

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -13,7 +14,16 @@ from scraper.fg.loader import load_book
 from scraper.fg.packager import package_module
 
 FIXTURES = Path(__file__).parent / "fixtures"
-SCRAPED_CD = Path(__file__).resolve().parents[2] / "scraped" / "complete-divine--56"
+SCRAPED_ROOT = Path(__file__).resolve().parents[2] / "scraped"
+SCRAPED_CD = SCRAPED_ROOT / "complete-divine--56"
+
+
+def _scraped_complete_divine_dir() -> Path | None:
+    for name in ("complete-divine--56", "complete-divine"):
+        path = SCRAPED_ROOT / name
+        if (path / "book.json").exists():
+            return path
+    return None
 
 
 MINIMAL_BOOK = {
@@ -210,6 +220,9 @@ class TestMinimalBuild:
         assert "Sneak attack" in text
         assert "<th>" not in text
         assert "<td><b>Level</b></td>" in text
+        skill_pts = text.index("Skill Points:")
+        req = text.index("<p><b>Prerequisites:</b></p>")
+        assert skill_pts < req
 
     def test_class_notes_use_paragraph_blocks_for_legacy_inline_html(
         self, tmp_path: Path
@@ -238,11 +251,15 @@ class TestMinimalBuild:
         build_module(scraped, out, ["classes"], "Author")
         text = (out / "db.xml").read_text(encoding="utf-8")
         assert '<requirements type="formattedtext">' in text
-        assert "<h4>Requirements</h4>" in text
-        assert "<p>Base Attack Bonus: +5</p>" in text
-        assert "<p>Alignment: Lawful good</p>" in text
+        assert "<p><b>Prerequisites:</b></p>" in text
+        assert "<table><tr><td>\xa0\xa0\xa0\xa0Base Attack Bonus: +5</td></tr>" in text
+        assert "<tr><td>\xa0\xa0\xa0\xa0Alignment: Lawful good</td></tr></table>" in text
         assert "<p><b>Weapon and Armor Proficiency:</b>" in text
         assert "<p><b>Sneak Attack (Ex):</b>" in text
+        skill_pts = text.index("Skill Points:")
+        req = text.index("<p><b>Prerequisites:</b></p>")
+        weapon = text.index("Weapon and Armor Proficiency")
+        assert skill_pts < req < weapon
 
     def test_class_has_requirements_field_for_prestige_class(
         self, minimal_scraped: Path, tmp_path: Path
@@ -301,9 +318,10 @@ class TestCompleteDivineIntegration:
 
     @pytest.fixture
     def scraped_dir(self) -> Path:
-        if not SCRAPED_CD.exists() or not (SCRAPED_CD / "book.json").exists():
-            pytest.skip("scraped/complete-divine--56/book.json not present")
-        return SCRAPED_CD
+        path = _scraped_complete_divine_dir()
+        if path is None:
+            pytest.skip("scraped complete-divine book.json not present")
+        return path
 
     def test_complete_divine_counts(self, scraped_dir: Path, tmp_path: Path):
         out = tmp_path / "complete-divine"
@@ -321,6 +339,35 @@ class TestCompleteDivineIntegration:
         assert db.find("feat") is not None
         assert db.find("class") is not None
         assert db.find("item") is not None
+
+    def test_evangelist_prerequisites_in_class_text(
+        self, scraped_dir: Path, tmp_path: Path
+    ):
+        out = tmp_path / "complete-divine"
+        build_module(scraped_dir, out, ["classes"], "Test Author")
+        text = (out / "db.xml").read_text(encoding="utf-8")
+        record = re.search(
+            r"<id-\d+>\s*<name type=\"string\">Evangelist</name>"
+            r".*?<classfeatures>.*?</classfeatures>\s*"
+            r"<text type=\"formattedtext\">(.*?)</text>",
+            text,
+            re.S,
+        )
+        assert record is not None, "Evangelist class text not found"
+        inner = record.group(1).strip()
+        assert "\n" not in inner, "formattedtext inner HTML must be a single line"
+        assert "<a href=" not in inner
+        assert "Prerequisites:" in inner
+        assert "<table><tr><td>\xa0\xa0\xa0\xa0<b>Alignment:</b> As a cleric of the chosen deity</td></tr>" in inner
+        assert "<b>Alignment:</b> As a cleric of the chosen deity" in inner
+        assert "Bluff 8 ranks" in inner
+        assert "Negotiator" in inner
+        pre = inner.index("Prerequisites")
+        align = inner.index("<b>Alignment:</b> As a cleric of the chosen deity")
+        bluff = inner.index("Bluff 8 ranks")
+        negotiator = inner.index("Negotiator")
+        weapon = inner.index("Weapon and Armor Proficiency")
+        assert pre < align < bluff < negotiator < weapon
 
     def test_load_book(self, scraped_dir: Path):
         book = load_book(scraped_dir)
