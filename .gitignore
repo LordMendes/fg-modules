@@ -1,0 +1,6 @@
+scraped/
+scraped/.cache/
+modulos-cesar/
+.venv/
+.cursor/
+modules/
