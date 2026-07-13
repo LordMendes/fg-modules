@@ -1,0 +1,508 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum DomainType {
+  CLERIC
+  PSIONIC_DISCIPLINE
+}
+
+enum EntityCategory {
+  SPELL
+  FEAT
+  MONSTER
+  TEMPLATE
+  CLASS
+  SKILL
+  EQUIPMENT
+  ITEM
+  RACE
+  DEITY
+  DOMAIN
+  PSIONIC
+  RULE
+}
+
+model Source {
+  id       String  @id @default(cuid())
+  name     String
+  abbrev   String?
+  edition  String
+
+  spells     Spell[]
+  feats      Feat[]
+  monsters   Monster[]
+  templates  Template[]
+  classes    DndClass[]
+  skills     Skill[]
+  equipment  Equipment[]
+  items      Item[]
+  races      Race[]
+  deities    Deity[]
+  domains    Domain[]
+  psionics   Psionic[]
+  rules      Rule[]
+
+  @@unique([name, abbrev, edition])
+  @@index([abbrev])
+  @@index([edition])
+}
+
+model Spell {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  school          String?
+  castingTime     String?
+  components      String?
+  range           String?
+  minLevel        Int?
+  target          String?
+  duration        String?
+  savingThrow     String?
+  spellResistance String?
+  searchVector    Unsupported("tsvector")?
+
+  source       Source            @relation(fields: [sourceId], references: [id])
+  classLevels  SpellClassLevel[]
+  domains      SpellDomain[]
+  domainSpells DomainSpell[]
+
+  @@index([sourceId])
+  @@index([school])
+  @@index([name])
+  @@index([externalId])
+}
+
+model Feat {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  featType        String?
+  searchVector    Unsupported("tsvector")?
+
+  source        Source        @relation(fields: [sourceId], references: [id])
+  monsterFeats  MonsterFeat[]
+
+  @@index([sourceId])
+  @@index([featType])
+  @@index([name])
+}
+
+model Monster {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  creatureType    String?
+  subtypes        String?
+  challengeRating String?
+  hitDice         String?
+  searchVector    Unsupported("tsvector")?
+
+  source         Source                  @relation(fields: [sourceId], references: [id])
+  feats          MonsterFeat[]
+  abilities      MonsterAbility[]
+  templateSamples TemplateSampleMonster[]
+
+  @@index([sourceId])
+  @@index([creatureType])
+  @@index([challengeRating])
+  @@index([name])
+}
+
+model Template {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  templateType    String?
+  crChange        String?
+  levelAdjustment String?
+  searchVector    Unsupported("tsvector")?
+
+  source         Source                  @relation(fields: [sourceId], references: [id])
+  sampleMonsters TemplateSampleMonster[]
+
+  @@index([sourceId])
+  @@index([name])
+}
+
+model DndClass {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  hitDie          String?
+  skillPoints     String?
+  isPrestige      Boolean  @default(false)
+  searchVector    Unsupported("tsvector")?
+
+  source         Source              @relation(fields: [sourceId], references: [id])
+  spellLevels    SpellClassLevel[]
+  psionicLevels  PsionicClassLevel[]
+
+  @@index([sourceId])
+  @@index([name])
+  @@map("classes")
+}
+
+model Skill {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  externalId        Int?
+  name              String
+  sourceUrl         String?
+  scrapedAt         DateTime?
+  sourceId          String
+  indexData         Json     @default("{}")
+  descriptionHtml   String?  @db.Text
+  descriptionText   String?  @db.Text
+  keyAbility        String?
+  trainedOnly       Boolean?
+  armorCheckPenalty Boolean?
+  searchVector      Unsupported("tsvector")?
+
+  source Source @relation(fields: [sourceId], references: [id])
+
+  @@index([sourceId])
+  @@index([name])
+}
+
+model Equipment {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  kind            String?
+  category        String?
+  cost            String?
+  weight          String?
+  searchVector    Unsupported("tsvector")?
+
+  source Source @relation(fields: [sourceId], references: [id])
+
+  @@index([sourceId])
+  @@index([kind])
+  @@index([name])
+}
+
+model Item {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  itemType        String?
+  price           String?
+  casterLevel     String?
+  aura            String?
+  searchVector    Unsupported("tsvector")?
+
+  source Source @relation(fields: [sourceId], references: [id])
+
+  @@index([sourceId])
+  @@index([itemType])
+  @@index([name])
+}
+
+model Race {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  size            String?
+  creatureType    String?
+  levelAdjustment String?
+  searchVector    Unsupported("tsvector")?
+
+  source Source @relation(fields: [sourceId], references: [id])
+
+  @@index([sourceId])
+  @@index([name])
+}
+
+model Deity {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  alignment       String?
+  pantheon        String?
+  portfolio       String?
+  searchVector    Unsupported("tsvector")?
+
+  source Source @relation(fields: [sourceId], references: [id])
+
+  @@index([sourceId])
+  @@index([pantheon])
+  @@index([name])
+}
+
+model Domain {
+  id              String     @id @default(cuid())
+  slug            String     @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json       @default("{}")
+  descriptionHtml String?    @db.Text
+  descriptionText String?    @db.Text
+  grantedPowerHtml String?   @db.Text
+  grantedPowerText String?   @db.Text
+  domainType      DomainType @default(CLERIC)
+  searchVector    Unsupported("tsvector")?
+
+  source            Source              @relation(fields: [sourceId], references: [id])
+  spells            SpellDomain[]
+  domainSpells      DomainSpell[]
+  psionicDisciplines PsionicDiscipline[]
+
+  @@index([sourceId])
+  @@index([domainType])
+  @@index([name])
+}
+
+model Psionic {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  powerPoints     String?
+  discipline      String?
+  manifestingTime String?
+  range           String?
+  searchVector    Unsupported("tsvector")?
+
+  source      Source              @relation(fields: [sourceId], references: [id])
+  classes     PsionicClassLevel[]
+  disciplines PsionicDiscipline[]
+
+  @@index([sourceId])
+  @@index([discipline])
+  @@index([name])
+}
+
+model Rule {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  externalId      Int?
+  name            String
+  sourceUrl       String?
+  scrapedAt       DateTime?
+  sourceId        String
+  indexData       Json     @default("{}")
+  descriptionHtml String?  @db.Text
+  descriptionText String?  @db.Text
+  category        String?
+  subcategory     String?
+  searchVector    Unsupported("tsvector")?
+
+  source    Source           @relation(fields: [sourceId], references: [id])
+  abilities MonsterAbility[]
+
+  @@index([sourceId])
+  @@index([category])
+  @@index([name])
+}
+
+model SpellClassLevel {
+  id      String @id @default(cuid())
+  spellId String
+  classId String
+  level   Int
+
+  spell Spell    @relation(fields: [spellId], references: [id], onDelete: Cascade)
+  class DndClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([spellId, classId])
+  @@index([classId])
+  @@index([level])
+}
+
+model SpellDomain {
+  id       String @id @default(cuid())
+  spellId  String
+  domainId String
+
+  spell  Spell  @relation(fields: [spellId], references: [id], onDelete: Cascade)
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@unique([spellId, domainId])
+  @@index([domainId])
+}
+
+model DomainSpell {
+  id       String @id @default(cuid())
+  domainId String
+  spellId  String
+  position Int
+
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  spell  Spell  @relation(fields: [spellId], references: [id], onDelete: Cascade)
+
+  @@unique([domainId, position])
+  @@index([spellId])
+}
+
+model PsionicClassLevel {
+  id        String @id @default(cuid())
+  psionicId String
+  classId   String
+  level     Int
+
+  psionic Psionic  @relation(fields: [psionicId], references: [id], onDelete: Cascade)
+  class   DndClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([psionicId, classId])
+  @@index([classId])
+}
+
+model PsionicDiscipline {
+  id        String @id @default(cuid())
+  psionicId String
+  domainId  String
+  level     Int?
+
+  psionic Psionic @relation(fields: [psionicId], references: [id], onDelete: Cascade)
+  domain  Domain  @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@unique([psionicId, domainId])
+  @@index([domainId])
+}
+
+model MonsterFeat {
+  id        String @id @default(cuid())
+  monsterId String
+  featId    String
+
+  monster Monster @relation(fields: [monsterId], references: [id], onDelete: Cascade)
+  feat    Feat    @relation(fields: [featId], references: [id], onDelete: Cascade)
+
+  @@unique([monsterId, featId])
+  @@index([featId])
+}
+
+model MonsterAbility {
+  id        String @id @default(cuid())
+  monsterId String
+  ruleId    String
+
+  monster Monster @relation(fields: [monsterId], references: [id], onDelete: Cascade)
+  rule    Rule    @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@unique([monsterId, ruleId])
+  @@index([ruleId])
+}
+
+model TemplateSampleMonster {
+  id         String  @id @default(cuid())
+  templateId String
+  monsterId  String?
+  sampleName String?
+
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  monster  Monster? @relation(fields: [monsterId], references: [id], onDelete: SetNull)
+
+  @@index([monsterId])
+}
+
+model UnresolvedRef {
+  id           String         @id @default(cuid())
+  fromCategory EntityCategory
+  fromSlug     String
+  toCategory   EntityCategory
+  toSlug       String?
+  toExternalId Int?
+  field        String
+  createdAt    DateTime       @default(now())
+
+  @@index([fromCategory, fromSlug])
+}
+
+model ImportRun {
+  id              String   @id @default(cuid())
+  startedAt       DateTime @default(now())
+  completedAt     DateTime?
+  durationMs      Int?
+  recordCounts    Json     @default("{}")
+  unresolvedCount Int      @default(0)
+  status          String   @default("running")
+  error           String?  @db.Text
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,1 +1,1 @@
-"""D&D Tools rulebook scraper for dnd.arkalseif.info."""
+"""D&D Tools 3.5 scraper for new.dndtools.org."""

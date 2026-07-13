@@ -1,6 +1,13 @@
 scraped/
 scraped/.cache/
+data/dndtools/
+data/dndtools/.cache/
 modulos-cesar/
 .venv/
 .cursor/
 modules/
+
+# Node / pnpm monorepo
+node_modules/
+.pnpm-store/
+web/node_modules/

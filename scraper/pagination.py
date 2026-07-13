@@ -2,34 +2,47 @@
 
 from __future__ import annotations
 
+import re
 from typing import Callable, Iterator
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from bs4 import BeautifulSoup
 
-from .config import PAGINATED_CATEGORIES
-from .parsers.base import parse_pagination_total
+from .config import BASE_URL, CATEGORY_CONFIG, DEFAULT_PAGE_SIZE
+from .parsers.base import make_soup
+
+TOTAL_JSON_RE = re.compile(r'total\\":\s*(\d+)')
+PAGE_SIZE_JSON_RE = re.compile(r'pageSize\\":\s*(\d+)')
 
 
-def page_url(base_index_url: str, page: int) -> str:
-    """Build paginated index URL using index.html_page=N convention."""
-    parsed = urlparse(base_index_url)
-    path = parsed.path
-    if path.endswith("/"):
-        path = path + "index.html"
-    elif not path.endswith("index.html"):
-        path = path.rstrip("/") + "/index.html"
-
-    if page <= 1:
-        new_path = path
-    else:
-        new_path = path.replace("index.html", f"index.html_page={page}")
-
-    return parsed._replace(path=new_path, query="", fragment="").geturl()
+def category_index_url(category: str, page: int = 1, page_size: int = DEFAULT_PAGE_SIZE) -> str:
+    path = str(CATEGORY_CONFIG[category]["path"])
+    query = urlencode({"page": page, "rows": page_size})
+    return f"{BASE_URL}/{path}?{query}"
 
 
-def expected_page_count(total: int | None, page_size: int = 20) -> int:
-    if total <= 0:
+def parse_pagination_total(soup: BeautifulSoup, html: str | None = None) -> int | None:
+    for text in (html, str(soup)):
+        if not text:
+            continue
+        match = TOTAL_JSON_RE.search(text)
+        if match:
+            return int(match.group(1))
+    return None
+
+
+def parse_page_size(soup: BeautifulSoup, html: str | None = None) -> int:
+    for text in (html, str(soup)):
+        if not text:
+            continue
+        match = PAGE_SIZE_JSON_RE.search(text)
+        if match:
+            return int(match.group(1))
+    return DEFAULT_PAGE_SIZE
+
+
+def expected_page_count(total: int | None, page_size: int = DEFAULT_PAGE_SIZE) -> int:
+    if not total or total <= 0:
         return 1
     return (total + page_size - 1) // page_size
 
@@ -39,27 +52,21 @@ class IndexPaginator:
         self._fetch = fetch
         self._category = category
 
-    def iter_pages(self, base_index_url: str) -> Iterator[tuple[int, str, BeautifulSoup]]:
-        """Yield (page_number, url, soup) for each index page."""
-        if self._category not in PAGINATED_CATEGORIES:
-            html = self._fetch(base_index_url)
-            soup = BeautifulSoup(html, "lxml")
-            yield 1, base_index_url, soup
-            return
-
+    def iter_pages(self) -> Iterator[tuple[int, str, BeautifulSoup]]:
         page = 1
-        expected_total: int | None = None
         max_pages: int | None = None
+        page_size = DEFAULT_PAGE_SIZE
 
         while True:
-            url = page_url(base_index_url, page)
+            url = category_index_url(self._category, page, page_size)
             html = self._fetch(url)
-            soup = BeautifulSoup(html, "lxml")
+            soup = make_soup(html)
 
             if page == 1:
-                expected_total = parse_pagination_total(soup)
-                if expected_total is not None:
-                    max_pages = expected_page_count(expected_total)
+                total = parse_pagination_total(soup, html)
+                page_size = parse_page_size(soup, html)
+                if total is not None:
+                    max_pages = expected_page_count(total, page_size)
 
             yield page, url, soup
 
@@ -67,14 +74,10 @@ class IndexPaginator:
                 if page >= max_pages:
                     break
             else:
-                # No total found: stop when a page has zero data rows
-                table = soup.select_one("#content table.common")
-                data_rows = sum(
-                    1 for tr in (table.find_all("tr") if table else []) if tr.find_all("td")
-                )
-                if data_rows == 0 and page > 1:
+                rows = soup.select("table tbody tr")
+                if not rows and page > 1:
                     break
-                if data_rows < 20:
+                if len(rows) < page_size:
                     break
 
             page += 1
