@@ -44,6 +44,12 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    /*
+     * Match all request paths except:
+     * - _next/static, _next/image
+     * - favicon, robots, sitemap chunks (/sitemap/N.xml)
+     * - common static image extensions
+     */
+    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

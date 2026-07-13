@@ -1,14 +1,8 @@
 import type { MetadataRoute } from "next";
+import { sitemapChunkUrls } from "@/lib/sitemap";
+import { siteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
-
-function siteUrl(): string {
-  return (
-    process.env.SITE_URL ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "http://localhost:3000"
-  );
-}
 
 export default function robots(): MetadataRoute.Robots {
   const base = siteUrl();
@@ -17,8 +11,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // Thin/duplicate URLs are handled via per-page robots noindex
+      // (filtered category lists and /search?q=…). Keep crawl of hubs.
       disallow: ["/api/", "/health"],
     },
-    sitemap: `${base}/sitemap.xml`,
+    // generateSitemaps serves chunks at /sitemap/[id].xml. Listing each chunk
+    // here avoids a root /sitemap.xml index (conflicts with [category]).
+    sitemap: sitemapChunkUrls(base),
   };
 }

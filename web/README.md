@@ -105,6 +105,19 @@ Re-running is idempotent (upserts on slug).
 - Session nonce validation on actions
 - In-memory rate limiting (60 req/min pagination, 10 req/min search)
 
+## SEO & Indexing
+
+- `SITE_URL` must be the canonical HTTPS origin in production (used by `metadataBase`, Open Graph, robots, and sitemaps).
+- Entity discovery for crawlers is **sitemap-first**: `robots.txt` lists chunked sitemaps at `/sitemap/0.xml`…`/sitemap/14.xml` (hubs, one file per category, sources). Category list pagination stays client infinite-scroll (no crawlable `?page=` URLs) so anti-scrape controls stay intact.
+- Filtered category URLs and `/search?q=…` are `noindex,follow` via page metadata to avoid thin/duplicate indexing.
+
+### Search Console checklist (after deploy)
+
+1. Confirm `SITE_URL` matches the live canonical host (no trailing slash).
+2. Submit the sitemap URLs from `robots.txt` (or the first `/sitemap/0.xml` hub) in [Google Search Console](https://search.google.com/search-console) and Bing Webmaster Tools.
+3. Request indexing for hub pages (`/`, category indexes, `/sources`) first, then monitor Coverage / Pages reports.
+4. Prefer a single host (`www` vs apex) via CDN/host redirects.
+
 ## Project Structure
 
 ```

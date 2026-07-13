@@ -4,7 +4,14 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
 import { SessionProvider } from "@/components/session-provider";
+import { JsonLd } from "@/components/json-ld";
 import { getSession, SESSION_NONCE_HEADER } from "@/lib/session";
+import {
+  absoluteUrl,
+  DEFAULT_DESCRIPTION,
+  SITE_NAME,
+  siteUrl,
+} from "@/lib/seo";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -19,12 +26,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl()),
   title: {
-    default: "Arcane Archives — D&D 3.5 Reference",
-    template: "%s — Arcane Archives",
+    default: `${SITE_NAME} — D&D 3.5 Reference`,
+    template: `%s — ${SITE_NAME}`,
   },
-  description: "A comprehensive D&D 3.5 Edition reference — spells, feats, monsters, classes, and more.",
+  description: DEFAULT_DESCRIPTION,
   robots: { index: true, follow: true },
+  openGraph: {
+    title: `${SITE_NAME} — D&D 3.5 Reference`,
+    description: DEFAULT_DESCRIPTION,
+    url: absoluteUrl("/"),
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — D&D 3.5 Reference`,
+    description: DEFAULT_DESCRIPTION,
+  },
 };
 
 export default async function RootLayout({
@@ -39,6 +60,23 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${plusJakarta.variable} ${inter.variable} h-full`}>
       <body className="min-h-full min-w-0 flex flex-col antialiased">
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: SITE_NAME,
+            url: absoluteUrl("/"),
+            description: DEFAULT_DESCRIPTION,
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: `${absoluteUrl("/search")}?q={search_term_string}`,
+              },
+              "query-input": "required name=search_term_string",
+            },
+          }}
+        />
         <Providers>
           <SessionProvider nonce={nonce}>
             <SiteHeader />

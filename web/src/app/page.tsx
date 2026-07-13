@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
 import { HomeSearch } from "@/components/home-search";
+import { buildPageMetadata, DEFAULT_DESCRIPTION } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  description: DEFAULT_DESCRIPTION,
+  path: "/",
+});
 
 export default function HomePage() {
   return (

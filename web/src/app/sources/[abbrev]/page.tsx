@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getSourceByAbbrev } from "@/lib/entities";
 import { CATEGORIES } from "@/lib/categories";
+import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ abbrev: string }>;
@@ -11,7 +13,11 @@ export async function generateMetadata({ params }: Props) {
   const { abbrev } = await params;
   const source = await getSourceByAbbrev(abbrev);
   if (!source) return {};
-  return { title: `${source.name} (${abbrev})` };
+  return buildPageMetadata({
+    title: `${source.name} (${abbrev})`,
+    description: `Browse D&D 3.5 Edition entries from ${source.name} (${abbrev}), ${source.edition}.`,
+    path: `/sources/${abbrev}`,
+  });
 }
 
 export default async function SourceDetailPage({ params }: Props) {
@@ -27,6 +33,16 @@ export default async function SourceDetailPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={absoluteBreadcrumbJsonLd(
+          [
+            { name: "Home", path: "/" },
+            { name: "Sources", path: "/sources" },
+            { name: abbrev, path: `/sources/${abbrev}` },
+          ],
+          absoluteUrl,
+        )}
+      />
       <nav className="breadcrumb">
         <Link href="/">Home</Link> / <Link href="/sources">Sources</Link> / {abbrev}
       </nav>

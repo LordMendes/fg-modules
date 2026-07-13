@@ -9,6 +9,8 @@ import {
 } from "@/lib/entity-filters";
 import { PaginatedEntityList } from "@/components/paginated-list";
 import { EntityListFilters } from "@/components/entity-list-filters";
+import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { absoluteUrl, buildPageMetadata, hasQueryParams } from "@/lib/seo";
 import type { CategoryKey } from "@/lib/categories";
 
 type Props = {
@@ -16,10 +18,17 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params, searchParams }: Props) {
   const { category } = await params;
+  const rawParams = await searchParams;
   if (!isCategoryKey(category)) return {};
-  return { title: getCategoryLabel(category) };
+  const label = getCategoryLabel(category);
+  return buildPageMetadata({
+    title: label,
+    description: `Browse and search the complete ${label.toLowerCase()} compendium for D&D 3.5 Edition.`,
+    path: `/${category}`,
+    noindex: hasQueryParams(rawParams),
+  });
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
@@ -49,8 +58,20 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         ? `${filters.sources.length} sources`
         : null;
 
+  const breadcrumbItems = [
+    { name: "Home", path: "/" },
+    { name: getCategoryLabel(category), path: `/${category}` },
+  ];
+  if (filters.sources.length === 1) {
+    breadcrumbItems.push({
+      name: filters.sources[0],
+      path: `/sources/${filters.sources[0]}`,
+    });
+  }
+
   return (
     <>
+      <JsonLd data={absoluteBreadcrumbJsonLd(breadcrumbItems, absoluteUrl)} />
       <nav className="breadcrumb">
         <Link href="/">Home</Link> / {getCategoryLabel(category)}
         {filters.sources.length === 1 && (

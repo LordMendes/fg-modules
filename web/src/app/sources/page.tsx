@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { listSources } from "@/lib/entities";
+import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Sources" };
+export const metadata = buildPageMetadata({
+  title: "Sources",
+  description:
+    "Browse D&D 3.5 Edition content by publication source and rulebook edition.",
+  path: "/sources",
+});
 
 export default async function SourcesPage() {
   const sources = await listSources();
@@ -15,6 +22,15 @@ export default async function SourcesPage() {
 
   return (
     <>
+      <JsonLd
+        data={absoluteBreadcrumbJsonLd(
+          [
+            { name: "Home", path: "/" },
+            { name: "Sources", path: "/sources" },
+          ],
+          absoluteUrl,
+        )}
+      />
       <div className="page-header">
         <h1>Sources &amp; Rulebooks</h1>
         <p>Browse content by publication source and edition.</p>

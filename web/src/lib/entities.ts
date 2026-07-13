@@ -1310,3 +1310,86 @@ export async function getSourceContent(abbrev: string, category: CategoryKey, cu
 
   return listEntities(category, { cursor, sourceAbbrev: abbrev });
 }
+
+export type SitemapSlugEntry = {
+  slug: string;
+  lastModified: Date | null;
+};
+
+/** Lightweight slug listing for sitemap generation (no joins / heavy fields). */
+export async function listEntitySlugsForSitemap(
+  category: CategoryKey,
+): Promise<SitemapSlugEntry[]> {
+  const select = { slug: true, scrapedAt: true } as const;
+  const orderBy = { slug: "asc" as const };
+
+  let rows: { slug: string; scrapedAt: Date | null }[];
+
+  switch (category) {
+    case "spells":
+      rows = await prisma.spell.findMany({ select, orderBy });
+      break;
+    case "feats":
+      rows = await prisma.feat.findMany({ select, orderBy });
+      break;
+    case "monsters":
+      rows = await prisma.monster.findMany({ select, orderBy });
+      break;
+    case "classes":
+      rows = await prisma.dndClass.findMany({ select, orderBy });
+      break;
+    case "skills":
+      rows = await prisma.skill.findMany({ select, orderBy });
+      break;
+    case "races":
+      rows = await prisma.race.findMany({ select, orderBy });
+      break;
+    case "items":
+      rows = await prisma.item.findMany({ select, orderBy });
+      break;
+    case "equipment":
+      rows = await prisma.equipment.findMany({ select, orderBy });
+      break;
+    case "domains":
+      rows = await prisma.domain.findMany({ select, orderBy });
+      break;
+    case "deities":
+      rows = await prisma.deity.findMany({ select, orderBy });
+      break;
+    case "psionics":
+      rows = await prisma.psionic.findMany({ select, orderBy });
+      break;
+    case "templates":
+      rows = await prisma.template.findMany({ select, orderBy });
+      break;
+    case "rules":
+      rows = await prisma.rule.findMany({ select, orderBy });
+      break;
+    default:
+      return [];
+  }
+
+  return rows.map((r) => ({
+    slug: r.slug,
+    lastModified: r.scrapedAt,
+  }));
+}
+
+/** Source abbrevs for `/sources/{abbrev}` sitemap entries. */
+export async function listSourceAbbrevsForSitemap(): Promise<
+  { abbrev: string }[]
+> {
+  const rows = await prisma.source.findMany({
+    where: { abbrev: { not: null } },
+    select: { abbrev: true },
+    orderBy: { abbrev: "asc" },
+  });
+  const seen = new Set<string>();
+  const result: { abbrev: string }[] = [];
+  for (const row of rows) {
+    if (!row.abbrev || seen.has(row.abbrev)) continue;
+    seen.add(row.abbrev);
+    result.push({ abbrev: row.abbrev });
+  }
+  return result;
+}
