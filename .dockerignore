@@ -1,0 +1,11 @@
+node_modules
+web/node_modules
+.git
+**/.cache
+scraped
+.venv
+.cursor
+modules
+modulos-cesar
+web/.env
+web/.next

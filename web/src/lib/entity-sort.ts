@@ -114,7 +114,10 @@ export function buildEntityOrderBy(
     },
   };
 
-  const primary = fieldMap[category]?.[column] ?? { name: direction };
+  const primary = (fieldMap[category]?.[column] ?? { name: direction }) as Record<
+    string,
+    unknown
+  >;
   return withSlug(primary);
 }
 

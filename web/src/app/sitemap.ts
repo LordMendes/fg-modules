@@ -1,8 +1,18 @@
 import type { MetadataRoute } from "next";
 import { CATEGORIES } from "@/lib/categories";
 
+export const dynamic = "force-dynamic";
+
+function siteUrl(): string {
+  return (
+    process.env.SITE_URL ??
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "http://localhost:3000"
+  );
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const base = siteUrl();
 
   const categoryUrls = CATEGORIES.map((c) => ({
     url: `${base}/${c.key}`,

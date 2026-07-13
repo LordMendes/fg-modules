@@ -11,7 +11,8 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
-    "import:dndtools": "tsx prisma/import-dndtools.ts"
+    "import:dndtools": "tsx prisma/import-dndtools.ts",
+    "import:bundle": "esbuild prisma/import-dndtools.ts --bundle --platform=node --format=esm --outfile=import-dndtools.mjs --external:pg --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\""
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
@@ -30,7 +31,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/dompurify": "^3.2.0",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
@@ -38,6 +38,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "prisma": "^7.8.0",
+    "esbuild": "^0.25.5",
     "tailwindcss": "^4",
     "tsx": "^4.19.4",
     "typescript": "^5"

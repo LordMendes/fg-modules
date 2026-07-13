@@ -41,26 +41,51 @@ You can also run commands from `web/` directly with `pnpm <script>`.
 
 ## Environment Variables
 
-Set in `web/.env`:
+### Local development
+
+Set in `web/.env` (see `web/.env.example`):
 
 | Variable | Description |
 |----------|-------------|
 | `DATABASE_URL` | PostgreSQL connection string |
 | `SESSION_SECRET` | Random 32-byte secret for session signing |
-| `NEXT_PUBLIC_SITE_URL` | Public site URL |
+| `SITE_URL` | Public site URL (sitemap, robots) |
+| `NEXT_PUBLIC_SITE_URL` | Legacy alias for `SITE_URL` |
+
+### Coolify (production)
+
+Do **not** commit or bake `web/.env` into the image (it is excluded via `.dockerignore`).
+
+Set these as **runtime** environment variables in Coolify:
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | From your linked PostgreSQL service |
+| `SESSION_SECRET` | `openssl rand -base64 32` |
+| `SITE_URL` | Your public URL, e.g. `https://dnd.example.com` |
+
+`prisma generate` during the Docker build uses a harmless placeholder URL when no database is available — the real `DATABASE_URL` is only read at container startup.
 
 ## Coolify Deployment
 
 1. Create a new application in Coolify pointing to the **repo root**.
 2. Set Dockerfile to `web/Dockerfile` with build context `.`.
-3. Add a PostgreSQL database service and set `DATABASE_URL`.
-4. Set `SESSION_SECRET` to a random value (`openssl rand -base64 32`).
-5. Set `NEXT_PUBLIC_SITE_URL` to your domain.
-6. Deploy — migrations run automatically on startup.
-7. Run the import as a one-off command:
+3. Add a PostgreSQL 16+ database service and link it — set `DATABASE_URL` on the app from that service.
+4. Set the remaining runtime env vars (`SESSION_SECRET`, `SITE_URL`).
+5. Deploy — migrations run automatically on startup.
+6. Import data once via Coolify's **Execute Command** (or `docker exec`):
    ```
-   DATA_DIR=/data/dndtools pnpm import:dndtools
+   /docker-entrypoint.sh import
    ```
+   Data is baked into the image at `/data/dndtools`; `DATA_DIR` defaults there.
+
+### Entrypoint commands
+
+| Command | Description |
+|---------|-------------|
+| `start` (default) | Run migrations, then start the web server |
+| `import` | Import JSON data into PostgreSQL |
+| `migrate` | Run migrations only |
 
 ## Data Import
 
@@ -87,8 +112,10 @@ fg-modules/                  # pnpm monorepo root
 ├── package.json
 ├── pnpm-workspace.yaml
 ├── docker-compose.yml
+├── .dockerignore
 └── web/                     # @fg-modules/web
     ├── prisma/
     ├── src/
-    └── Dockerfile
+    ├── Dockerfile
+    └── docker-entrypoint.sh
 ```
