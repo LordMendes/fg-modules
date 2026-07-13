@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from typing import Callable, Iterator
-from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+from urllib.parse import urlencode
 
 from bs4 import BeautifulSoup
 

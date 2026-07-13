@@ -1,11 +1,9 @@
-"""Class detail parser — adds level advancement tables."""
+"""Class detail parser — adds level advancement tables and class features."""
 
 from __future__ import annotations
 
 import re
 from typing import Any
-
-from bs4 import Tag
 
 from .base import html_inner, make_soup, parse_detail_page, parse_slug_and_id
 
@@ -121,5 +119,24 @@ def parse_detail(html: str, source_url: str) -> dict[str, Any]:
         detail["advancement_html"] = f"<table>{advancement_html}</table>"
     if class_skills:
         detail["class_skills"] = class_skills
+
+    # Prefer Class Features as description; leave Requirements for overlay.
+    class_features = detail.pop("class_features_html", None)
+    class_features_text = detail.pop("class_features_text", None)
+    requirements_html = detail.pop("requirements_html", None)
+    requirements_text = detail.pop("requirements_text", None)
+
+    if class_features:
+        detail["description_html"] = class_features
+        detail["description_text"] = class_features_text
+    elif detail.get("description_html") == requirements_html:
+        # parse_detail_page may have set description from first prose (Requirements).
+        detail["description_html"] = None
+        detail["description_text"] = None
+
+    # Keep new-site requirements as fallback until classic overlay replaces them.
+    if requirements_html:
+        detail["requirements_html"] = requirements_html
+        detail["requirements_text"] = requirements_text
 
     return detail

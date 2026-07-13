@@ -4,6 +4,9 @@ from __future__ import annotations
 
 from scraper.normalize import (
     DEFAULT_SOURCE,
+    PLACEHOLDER_TEXT,
+    clean_field_value,
+    is_placeholder_text,
     merge_source,
     normalize_records,
     parse_source_line,
@@ -46,3 +49,22 @@ def test_merge_source_index_fallback() -> None:
     source = merge_source(None, index_source_abbrev="MM", index_edition="Core (3.5)")
     assert source["abbrev"] == "MM"
     assert source["edition"] == "Core (3.5)"
+
+
+def test_clean_field_value_strips_placeholder() -> None:
+    assert is_placeholder_text(PLACEHOLDER_TEXT)
+    assert clean_field_value(PLACEHOLDER_TEXT) is None
+    assert clean_field_value(f"<p>{PLACEHOLDER_TEXT}</p>") is None
+    assert clean_field_value("Dex 13") == "Dex 13"
+
+
+def test_normalize_records_strips_placeholder_fields() -> None:
+    records = [
+        {
+            "prerequisite_text": PLACEHOLDER_TEXT,
+            "benefit_text": "You gain a bonus.",
+        }
+    ]
+    normalized = normalize_records(records)
+    assert normalized[0]["prerequisite_text"] is None
+    assert normalized[0]["benefit_text"] == "You gain a bonus."

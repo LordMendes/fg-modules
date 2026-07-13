@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup, Tag
 from ..config import BASE_URL, SPELL_COMPONENT_KEYS
 from ..normalize import (
     SOURCE_PAGE_RE,
+    clean_field_value,
     is_source_line,
     label_to_snake,
     merge_source,
@@ -172,21 +173,56 @@ def parse_badge_texts(container: Tag) -> list[str]:
     return values
 
 
+def parse_ability_badges(container: Tag) -> list[dict[str, Any]]:
+    abilities: list[dict[str, Any]] = []
+    for badge in container.select("[data-slot='badge'], span[data-variant]"):
+        text = badge.get_text(strip=True)
+        if not text:
+            continue
+        parent_a = badge.find_parent("a")
+        if parent_a and parent_a.get("href"):
+            href = parent_a["href"]
+            slug, record_id = parse_slug_and_id(href)
+            abilities.append(
+                {
+                    "name": text,
+                    "level": None,
+                    "slug": slug,
+                    "url": href,
+                    "id": record_id,
+                }
+            )
+        else:
+            abilities.append(
+                {
+                    "name": text,
+                    "level": None,
+                    "slug": None,
+                    "url": None,
+                    "id": None,
+                }
+            )
+    return abilities
+
+
+def _section_content(heading: Tag) -> Tag | None:
+    for sibling in heading.next_siblings:
+        if isinstance(sibling, Tag):
+            return sibling
+    return None
+
+
 def parse_sections(soup: BeautifulSoup) -> dict[str, Any]:
     sections: dict[str, Any] = {}
-    for heading in soup.select("p.font-semibold, p.text-xs.font-semibold"):
+    headings = soup.select(
+        "p.font-semibold, p.text-xs.font-semibold, h2.text-lg.font-semibold"
+    )
+    for heading in headings:
         title = heading.get_text(strip=True)
         if not title:
             continue
         key = label_to_snake(title)
-        block = heading.find_parent("div")
-        if not block:
-            continue
-        content_div = None
-        for sibling in heading.next_siblings:
-            if isinstance(sibling, Tag):
-                content_div = sibling
-                break
+        content_div = _section_content(heading)
         if content_div is None:
             continue
 
@@ -196,10 +232,10 @@ def parse_sections(soup: BeautifulSoup) -> dict[str, Any]:
                 "description_html": html_inner(prose),
                 "description_text": html_to_text(prose),
             }
+        elif content_div.select("[data-slot='badge'], span[data-variant]"):
+            sections[key] = parse_ability_badges(content_div)
         elif content_div.select("a[href]"):
             sections[key] = parse_badge_links(content_div)
-        elif content_div.select("[data-slot='badge']"):
-            sections[key] = parse_badge_texts(content_div)
         else:
             sections[key] = {
                 "description_html": html_inner(content_div),
@@ -427,13 +463,21 @@ def parse_index_page(soup: BeautifulSoup, category: str, page_url: str) -> list[
 def _apply_sections(detail: dict[str, Any], sections: dict[str, Any]) -> None:
     for key, value in sections.items():
         if key == "description" and isinstance(value, dict):
-            detail.setdefault("description_html", value.get("description_html"))
-            detail.setdefault("description_text", value.get("description_text"))
+            html = clean_field_value(value.get("description_html"))
+            text = clean_field_value(value.get("description_text"))
+            if html:
+                detail.setdefault("description_html", html)
+            if text:
+                detail.setdefault("description_text", text)
         elif isinstance(value, list):
             detail[key] = value
         elif isinstance(value, dict):
-            detail.setdefault(f"{key}_html", value.get("description_html"))
-            detail.setdefault(f"{key}_text", value.get("description_text"))
+            html = clean_field_value(value.get("description_html"))
+            text = clean_field_value(value.get("description_text"))
+            if html:
+                detail.setdefault(f"{key}_html", html)
+            if text:
+                detail.setdefault(f"{key}_text", text)
         else:
             detail[key] = value
 
@@ -474,10 +518,18 @@ def parse_detail_page(
 
     _apply_sections(detail, sections)
 
-    if description_html and not detail.get("description_html"):
-        detail["description_html"] = description_html
-    if description_text and not detail.get("description_text"):
-        detail["description_text"] = description_text
+    if category == "monsters":
+        if description_html:
+            detail["flavor_html"] = description_html
+            detail["flavor_text"] = description_text
+        if not detail.get("description_html") and description_html:
+            detail["description_html"] = description_html
+            detail["description_text"] = description_text
+    elif description_html and not detail.get("description_html"):
+        detail["description_html"] = clean_field_value(description_html)
+        detail["description_text"] = clean_field_value(description_text)
+    elif description_text and not detail.get("description_text"):
+        detail["description_text"] = clean_field_value(description_text)
 
     index_stub = detail.pop("index", None)
     index_fields = index_stub if isinstance(index_stub, dict) else {}

@@ -25,6 +25,9 @@ export function EntityDetailView({
     <article className="entity-detail">
       <header className="detail-header">
         <h1>{entity.name}</h1>
+        {entity.statLine && (
+          <p className="detail-stat-line">{entity.statLine}</p>
+        )}
         <div className="detail-meta">
           <span className="source-line">
             {entity.source.name}
@@ -40,8 +43,22 @@ export function EntityDetailView({
         </div>
       </header>
 
+      {entity.sections && entity.sections.length > 0 && (
+        <>
+          {entity.sections.map((section) => (
+            <section key={section.title} className="entity-section">
+              <h2>{section.title}</h2>
+              <div
+                className="prose-content"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(section.html) }}
+              />
+            </section>
+          ))}
+        </>
+      )}
+
       {fields.length > 0 && (
-        <dl className="stat-block">
+        <dl className={`stat-block${category === "monsters" ? " monster-stats" : ""}`}>
           {fields.map(([label, value]) => (
             <div key={label} className="stat-row">
               <dt>{label}</dt>
@@ -49,6 +66,65 @@ export function EntityDetailView({
             </div>
           ))}
         </dl>
+      )}
+
+      {entity.specialAbilities && entity.specialAbilities.length > 0 && (
+        <section className="monster-abilities">
+          <h2>Special Abilities</h2>
+          <div className="badge-list">
+            {entity.specialAbilities.map((ability) =>
+              ability.href ? (
+                <Link key={ability.href} href={ability.href} className="ability-badge linked">
+                  {ability.label}
+                </Link>
+              ) : (
+                <span key={ability.label} className="ability-badge">
+                  {ability.label}
+                </span>
+              ),
+            )}
+          </div>
+        </section>
+      )}
+
+      {entity.featLinks && entity.featLinks.length > 0 && (
+        <section className="monster-feats">
+          <h2>Feats</h2>
+          <ul className="feat-link-list">
+            {entity.featLinks.map((feat) => (
+              <li key={feat.href}>
+                <Link href={feat.href}>{feat.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {entity.flavorHtml && (
+        <section
+          className="prose-content flavor-content"
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.flavorHtml) }}
+        />
+      )}
+
+      {entity.descriptionHtml && category === "monsters" && (
+        <section className="monster-section">
+          <h2>Description</h2>
+          <div
+            className="prose-content"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}
+          />
+        </section>
+      )}
+
+      {entity.combatHtml && (
+        <section className="monster-section">
+          <h2>Combat</h2>
+          <div
+            className="prose-content"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.combatHtml) }}
+          />
+        </section>
       )}
 
       {entity.classSkills && entity.classSkills.length > 0 && (
@@ -85,7 +161,17 @@ export function EntityDetailView({
         </section>
       )}
 
-      {entity.descriptionHtml && (
+      {entity.descriptionHtml && category === "feats" && (
+        <section className="entity-section">
+          <h2>Description</h2>
+          <div
+            className="prose-content"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}
+          />
+        </section>
+      )}
+
+      {entity.descriptionHtml && category !== "monsters" && category !== "feats" && (
         <section
           className="prose-content"
           dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}

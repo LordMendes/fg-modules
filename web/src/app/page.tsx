@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
+import { HomeSearch } from "@/components/home-search";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
           Your gateway to D&D 3.5 Edition — browse spells, feats, monsters,
           classes, and thousands more entries from across the multiverse.
         </p>
+        <HomeSearch />
       </section>
 
       <section className="category-grid">

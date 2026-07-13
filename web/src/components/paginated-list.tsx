@@ -11,14 +11,20 @@ export function PaginatedEntityList({
   category,
   initialItems,
   initialCursor,
-  sourceAbbrev,
-  edition,
+  search,
+  description,
+  sources,
+  editions,
+  fields,
 }: {
   category: CategoryKey;
   initialItems: EntityListItem[];
   initialCursor: string | null;
-  sourceAbbrev?: string;
-  edition?: string;
+  search?: string;
+  description?: string;
+  sources?: string[];
+  editions?: string[];
+  fields?: Record<string, string[]>;
 }) {
   const [items, setItems] = useState(initialItems);
   const [cursor, setCursor] = useState(initialCursor);
@@ -33,8 +39,11 @@ export function PaginatedEntityList({
         category,
         nonce,
         cursor,
-        sourceAbbrev,
-        edition,
+        search,
+        description,
+        sources,
+        editions,
+        fields,
       });
       if (!result.success) {
         setError(result.error ?? "Failed to load");

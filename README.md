@@ -1,13 +1,13 @@
 # FG Modules — D&D 3.5 Scraper & Reference Site
 
-Monorepo for scraping D&D 3.5 content from [new.dndtools.org](https://new.dndtools.org) into structured JSON, serving it via a Next.js reference site, and (legacy) building Fantasy Grounds modules.
+Monorepo for scraping D&D 3.5 content from [new.dndtools.org](https://new.dndtools.org) into structured JSON (feat/class prerequisites overlaid from classic [dndtools.org](https://dndtools.org)), serving it via a Next.js reference site, and (legacy) building Fantasy Grounds modules.
 
 ## Monorepo layout
 
 | Package | Path | Description |
 |---------|------|-------------|
 | `@fg-modules/web` | `web/` | Next.js D&D 3.5 reference site |
-| Python scraper | `scraper/` | Scrapes new.dndtools.org → `data/dndtools/` |
+| Python scraper | `scraper/` | Scrapes new.dndtools.org → `data/dndtools/` (prerequisites from classic dndtools.org) |
 | Legacy FG builder | `old/scraper/` | Scrapes dnd.arkalseif.info → `.mod` files |
 
 ```bash
@@ -23,7 +23,7 @@ See [`web/README.md`](web/README.md) for the full web app setup.
 
 ## Project goal
 
-1. **Scrape** D&D 3.5 rules data from [new.dndtools.org](https://new.dndtools.org) into normalized JSON (spells, feats, classes, monsters, etc.).
+1. **Scrape** D&D 3.5 rules data from [new.dndtools.org](https://new.dndtools.org) into normalized JSON. For feats and classes, prerequisite/requirements text is overlaid from classic [dndtools.org](https://dndtools.org) (the new site often has placeholders or incomplete requirements).
 2. **Serve** that data through the web reference site (`pnpm dev` after `pnpm import:dndtools`).
 
 The legacy Fantasy Grounds pipeline (scrape rulebooks from dnd.arkalseif.info, convert to `.mod` files) lives under `old/scraper/` — see [Legacy FG builder](#legacy-fg-builder) below.
@@ -34,7 +34,7 @@ The legacy Fantasy Grounds pipeline (scrape rulebooks from dnd.arkalseif.info, c
 
 - **Python 3.10+** for the scraper
 - **Node.js 22+** and **pnpm 10+** for the web app
-- Internet access to new.dndtools.org
+- Internet access to new.dndtools.org and dndtools.org
 
 > **Ubuntu 20.04 note:** system `python3` is often 3.8. Check with `python3 --version`. If it is below 3.10, use `python3.11` or `python3.12` instead (already installed on many systems).
 
@@ -114,8 +114,8 @@ python -m scraper.scrape_all
 | Category | Output file | ~Records |
 |----------|-------------|----------|
 | spells | `spells.json` | 5,035 |
-| feats | `feats.json` | 3,665 |
-| classes | `classes.json` | 1,054 |
+| feats | `feats.json` | 3,665 (+ classic prerequisites) |
+| classes | `classes.json` | 1,054 (+ classic requirements) |
 | monsters | `monsters.json` | 807 |
 | items | `items.json` | 816 |
 | psionics | `psionics.json` | 703 |

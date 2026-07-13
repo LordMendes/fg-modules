@@ -1,13 +1,23 @@
 {
-  "scraped_at": "2026-07-13T16:30:42.435886+00:00",
+  "scraped_at": "2026-07-13T17:31:47.050968+00:00",
   "base_url": "https://new.dndtools.org",
+  "classic_base_url": "https://dndtools.org",
   "categories": {
+    "feats": {
+      "expected": 3665,
+      "scraped": 3665,
+      "errors": 0,
+      "duration_seconds": 35.62,
+      "pages_crawled": 74,
+      "prerequisite_overlay": true
+    },
     "classes": {
       "expected": 1054,
       "scraped": 1054,
       "errors": 0,
-      "duration_seconds": 15.32,
-      "pages_crawled": 22
+      "duration_seconds": 23.63,
+      "pages_crawled": 22,
+      "prerequisite_overlay": true
     }
   }
 }

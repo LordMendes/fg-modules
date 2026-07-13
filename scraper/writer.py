@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .config import BASE_URL, CATEGORY_CONFIG
+from .config import BASE_URL, CATEGORY_CONFIG, CLASSIC_BASE_URL, PREREQUISITE_OVERLAY_CATEGORIES
 from .normalize import normalize_records
 
 
@@ -70,6 +70,7 @@ def write_summary(output_dir: Path, stats: dict[str, CategoryStats]) -> None:
     payload = {
         "scraped_at": datetime.now(timezone.utc).isoformat(),
         "base_url": BASE_URL,
+        "classic_base_url": CLASSIC_BASE_URL,
         "categories": {
             category: {
                 "expected": CATEGORY_CONFIG[category]["expected"],
@@ -77,6 +78,7 @@ def write_summary(output_dir: Path, stats: dict[str, CategoryStats]) -> None:
                 "errors": s.errors,
                 "duration_seconds": round(s.duration_seconds, 2),
                 "pages_crawled": s.pages_crawled,
+                "prerequisite_overlay": category in PREREQUISITE_OVERLAY_CATEGORIES,
             }
             for category, s in stats.items()
         },

@@ -27,7 +27,12 @@ from .http_client import HttpClient
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Scrape D&D 3.5 data from new.dndtools.org")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Scrape D&D 3.5 data from new.dndtools.org "
+            "(feats/classes prerequisites from classic dndtools.org)"
+        )
+    )
     parser.add_argument(
         "--output",
         default=DEFAULT_OUTPUT_DIR,

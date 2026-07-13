@@ -11,6 +11,20 @@ const prisma = new PrismaClient({ adapter });
 const DATA_DIR = process.env.DATA_DIR ?? resolve(__dirname, "../../data/dndtools");
 const BATCH_SIZE = 500;
 
+const PLACEHOLDER_TEXT =
+  "Do not touch this field. Everything is handled from the corresponding twig file (the path is in the help text).";
+
+function isPlaceholderText(value: unknown): boolean {
+  return typeof value === "string" && value.includes(PLACEHOLDER_TEXT);
+}
+
+function cleanImportedText(value: unknown): string | null {
+  if (typeof value !== "string" || value.length === 0 || isPlaceholderText(value)) {
+    return null;
+  }
+  return value;
+}
+
 type LinkRef = {
   name?: string;
   slug?: string;
@@ -134,6 +148,9 @@ function classIndexData(
         )
     : [];
 
+  const requirementsHtml = cleanImportedText(record.requirements_html);
+  const requirementsText = cleanImportedText(record.requirements_text);
+
   return {
     ...index,
     ...(typeof record.advancement_html === "string"
@@ -141,7 +158,86 @@ function classIndexData(
       : {}),
     ...(Array.isArray(record.advancement) ? { advancement: record.advancement } : {}),
     ...(classSkills.length ? { classSkills } : {}),
+    ...(requirementsHtml ? { requirementsHtml } : {}),
+    ...(requirementsText ? { requirementsText } : {}),
   };
+}
+
+const MONSTER_STAT_KEYS = [
+  "hit_dice",
+  "initiative",
+  "speed",
+  "armor_class",
+  "base_attack_grapple",
+  "attack",
+  "full_attack",
+  "str",
+  "dex",
+  "con",
+  "int",
+  "wis",
+  "cha",
+  "fort_ref_will",
+  "challenge_rating",
+  "alignment",
+  "organization",
+  "treasure",
+  "environment",
+  "level_adjustment",
+  "spell_resistance",
+  "caster_level",
+  "stat_line",
+] as const;
+
+function monsterIndexData(record: Record<string, unknown>): object {
+  const index = (record.index ?? {}) as Record<string, unknown>;
+  const source = record.source as SourceData | undefined;
+  const stats: Record<string, unknown> = {};
+
+  for (const key of MONSTER_STAT_KEYS) {
+    const value = record[key];
+    if (value != null && value !== "") {
+      stats[key] = value;
+    }
+  }
+
+  if (typeof record.flavor_html === "string") stats.flavorHtml = record.flavor_html;
+  if (typeof record.combat_html === "string") stats.combatHtml = record.combat_html;
+  if (typeof source?.page === "number") stats.sourcePage = source.page;
+
+  const abilities = record.special_abilities as LinkRef[] | undefined;
+  if (abilities?.length) {
+    stats.specialAbilities = abilities.map((ability) => ({
+      name: ability.name ?? null,
+      slug: ability.slug ?? null,
+    }));
+  }
+
+  return { ...index, ...stats };
+}
+
+const FEAT_SECTION_KEYS = [
+  ["prerequisite_html", "prerequisiteHtml"],
+  ["benefit_html", "benefitHtml"],
+  ["special_html", "specialHtml"],
+  ["normal_html", "normalHtml"],
+] as const;
+
+function featIndexData(record: Record<string, unknown>): object {
+  const index = (record.index ?? {}) as Record<string, unknown>;
+  const source = record.source as SourceData | undefined;
+  const data: Record<string, unknown> = { ...index };
+
+  for (const [sourceKey, targetKey] of FEAT_SECTION_KEYS) {
+    const value = cleanImportedText(record[sourceKey]);
+    if (value) {
+      data[targetKey] = value;
+    }
+  }
+
+  if (typeof source?.page === "number") data.sourcePage = source.page;
+
+  return data;
 }
 
 function buildSkillAbilityMap(): Map<string, string | null> {
@@ -355,6 +451,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
   {
     const records = loadJson("classes");
     const skillAbilities = buildSkillAbilityMap();
+    const importedSlugs = new Set(records.map((r) => r.slug));
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
@@ -368,17 +465,20 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap),
             indexData: classIndexData(r, skillAbilities),
-            descriptionHtml: (r.description_html as string) ?? null,
-            descriptionText: (r.description_text as string) ?? null,
+            descriptionHtml: cleanImportedText(r.description_html),
+            descriptionText: cleanImportedText(r.description_text),
             hitDie: (r.hit_die as string) ?? index?.hit_die ?? null,
             skillPoints: (r.skill_points as string) ?? index?.skill_points ?? null,
             isPrestige: Boolean(index?.prestige_level && index.prestige_level !== ""),
           },
           update: {
             name: r.name,
+            sourceUrl: r.source_url ?? null,
+            scrapedAt: parseDate(r.scraped_at),
+            sourceId: getSourceId(r, sourceMap),
             indexData: classIndexData(r, skillAbilities),
-            descriptionHtml: (r.description_html as string) ?? null,
-            descriptionText: (r.description_text as string) ?? null,
+            descriptionHtml: cleanImportedText(r.description_html),
+            descriptionText: cleanImportedText(r.description_text),
             hitDie: (r.hit_die as string) ?? index?.hit_die ?? null,
             skillPoints: (r.skill_points as string) ?? index?.skill_points ?? null,
             isPrestige: Boolean(index?.prestige_level && index.prestige_level !== ""),
@@ -386,36 +486,56 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
         });
       }
     });
+    const prunedClasses = await prisma.dndClass.deleteMany({
+      where: { slug: { notIn: [...importedSlugs] } },
+    });
     counts.classes = records.length;
-    console.log(`  classes: ${records.length}`);
+    console.log(
+      `  classes: ${records.length}` +
+        (prunedClasses.count ? ` (pruned ${prunedClasses.count} stale)` : ""),
+    );
   }
 
   // Feats
   {
     const records = loadJson("feats");
+    const importedSlugs = new Set(records.map((r) => r.slug));
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
+        const featData = {
+          name: r.name,
+          sourceUrl: r.source_url ?? null,
+          scrapedAt: parseDate(r.scraped_at),
+          indexData: featIndexData(r),
+          descriptionHtml: cleanImportedText(r.description_html),
+          descriptionText: cleanImportedText(r.description_text),
+          featType: (r.type as string) ?? index?.type ?? null,
+        };
         await prisma.feat.upsert({
           where: { slug: r.slug },
           create: {
             slug: r.slug,
             externalId: parseExternalId(r.id),
-            name: r.name,
-            sourceUrl: r.source_url ?? null,
-            scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap),
-            indexData: (r.index ?? {}) as object,
-            descriptionHtml: (r.description_html as string) ?? null,
-            descriptionText: (r.description_text as string) ?? null,
-            featType: (r.type as string) ?? index?.type ?? null,
+            ...featData,
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object },
+          update: {
+            ...featData,
+            sourceId: getSourceId(r, sourceMap),
+            externalId: parseExternalId(r.id),
+          },
         });
       }
     });
+    const prunedFeats = await prisma.feat.deleteMany({
+      where: { slug: { notIn: [...importedSlugs] } },
+    });
     counts.feats = records.length;
-    console.log(`  feats: ${records.length}`);
+    console.log(
+      `  feats: ${records.length}` +
+        (prunedFeats.count ? ` (pruned ${prunedFeats.count} stale)` : ""),
+    );
   }
 
   // Races
@@ -574,24 +694,27 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
+        const monsterData = {
+          name: r.name,
+          sourceUrl: r.source_url ?? null,
+          scrapedAt: parseDate(r.scraped_at),
+          indexData: monsterIndexData(r),
+          descriptionHtml: (r.description_html as string) ?? null,
+          descriptionText: (r.description_text as string) ?? null,
+          creatureType: (r.type as string) ?? index?.type ?? null,
+          subtypes: (r.subtypes as string) ?? index?.subtypes ?? null,
+          challengeRating: (r.challenge_rating as string) ?? index?.cr ?? null,
+          hitDice: (r.hit_dice as string) ?? index?.hd ?? null,
+        };
         await prisma.monster.upsert({
           where: { slug: r.slug },
           create: {
             slug: r.slug,
             externalId: parseExternalId(r.id),
-            name: r.name,
-            sourceUrl: r.source_url ?? null,
-            scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap),
-            indexData: (r.index ?? {}) as object,
-            descriptionHtml: (r.description_html as string) ?? null,
-            descriptionText: (r.description_text as string) ?? null,
-            creatureType: (r.type as string) ?? index?.type ?? null,
-            subtypes: (r.subtypes as string) ?? index?.subtypes ?? null,
-            challengeRating: (r.challenge_rating as string) ?? index?.cr ?? null,
-            hitDice: (r.hit_dice as string) ?? index?.hd ?? null,
+            ...monsterData,
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object },
+          update: monsterData,
         });
       }
     });

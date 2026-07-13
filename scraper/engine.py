@@ -7,7 +7,16 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .config import CATEGORY_CONFIG, DEFAULT_WORKERS, FLUSH_EVERY
+from .classic_prerequisites import (
+    apply_class_requirements_overlay,
+    apply_feat_prerequisite_overlay,
+    build_class_lookup,
+    build_feat_lookup,
+    resolve_classic_class_url,
+    resolve_classic_feat_url,
+    save_lookup_cache,
+)
+from .config import CATEGORY_CONFIG, DEFAULT_WORKERS, FLUSH_EVERY, PREREQUISITE_OVERLAY_CATEGORIES
 from .http_client import AsyncHttpClient, HttpClient
 from .pagination import IndexPaginator, parse_pagination_total
 from .parsers import DETAIL_PARSERS, INDEX_PARSERS
@@ -69,6 +78,69 @@ class ScrapeEngine:
             write_errors(self.output_dir, result.errors)
         return result
 
+    def _build_classic_lookup(self, category: str) -> dict[Any, str]:
+        if category == "feats":
+            print("  Building classic feat prerequisite lookup...")
+            lookup = build_feat_lookup(self.client.fetch)
+            save_lookup_cache(
+                self.output_dir / ".index" / "classic_feats_lookup.json",
+                lookup,
+            )
+            print(f"  Classic feat lookup: {len(lookup)} entries")
+            return lookup  # type: ignore[return-value]
+        if category == "classes":
+            print("  Building classic class requirements lookup...")
+            lookup = build_class_lookup(self.client.fetch)
+            save_lookup_cache(
+                self.output_dir / ".index" / "classic_classes_lookup.json",
+                lookup,
+            )
+            print(f"  Classic class lookup: {len(lookup)} entries")
+            return lookup  # type: ignore[return-value]
+        return {}
+
+    async def _apply_prerequisite_overlay(
+        self,
+        category: str,
+        detail_data: dict[str, Any],
+        index_row: dict[str, Any],
+        classic_lookup: dict[Any, str],
+        async_client: AsyncHttpClient,
+    ) -> None:
+        merged_stub = {**index_row, **detail_data}
+        if category == "feats":
+            classic_url = resolve_classic_feat_url(merged_stub, classic_lookup)  # type: ignore[arg-type]
+            if not classic_url:
+                append_error(
+                    self.errors,
+                    category,
+                    index_row.get("url", ""),
+                    f"classic feat prerequisite not found for id={index_row.get('id')}",
+                )
+                return
+            try:
+                classic_html = await async_client.fetch(classic_url)
+                apply_feat_prerequisite_overlay(detail_data, classic_html)
+            except Exception as exc:
+                append_error(self.errors, category, classic_url, f"classic prereq: {exc}")
+            return
+
+        if category == "classes":
+            classic_url = resolve_classic_class_url(merged_stub, classic_lookup)  # type: ignore[arg-type]
+            if not classic_url:
+                append_error(
+                    self.errors,
+                    category,
+                    index_row.get("url", ""),
+                    f"classic class requirements not found for name={index_row.get('name')!r}",
+                )
+                return
+            try:
+                classic_html = await async_client.fetch(classic_url)
+                apply_class_requirements_overlay(detail_data, classic_html)
+            except Exception as exc:
+                append_error(self.errors, category, classic_url, f"classic requirements: {exc}")
+
     async def _scrape_category(
         self,
         category: str,
@@ -82,6 +154,10 @@ class ScrapeEngine:
         existing = load_existing_records(output_path) if self.resume else {}
         index_parser = INDEX_PARSERS[category]
         detail_parser = DETAIL_PARSERS[category]
+
+        classic_lookup: dict[Any, str] = {}
+        if category in PREREQUISITE_OVERLAY_CATEGORIES and not self.index_only and not self.dry_run:
+            classic_lookup = self._build_classic_lookup(category)
 
         paginator = IndexPaginator(self.client.fetch, category)
         index_rows: list[dict[str, Any]] = []
@@ -143,6 +219,14 @@ class ScrapeEngine:
                     try:
                         html = await async_client.fetch(source_url)
                         detail_data = detail_parser(html, source_url)
+                        if category in PREREQUISITE_OVERLAY_CATEGORIES and classic_lookup:
+                            await self._apply_prerequisite_overlay(
+                                category,
+                                detail_data,
+                                index_row,
+                                classic_lookup,
+                                async_client,
+                            )
                         records[position] = merge_index_detail(index_row, detail_data)
                     except Exception as exc:
                         stats.errors += 1

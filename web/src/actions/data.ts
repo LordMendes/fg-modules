@@ -17,9 +17,14 @@ export type PaginateInput = {
   nonce: string;
   cursor?: string;
   search?: string;
+  description?: string;
+  sources?: string[];
+  editions?: string[];
+  fields?: Record<string, string[]>;
+  /** @deprecated Prefer `sources`. */
   sourceAbbrev?: string;
+  /** @deprecated Prefer `editions`. */
   edition?: string;
-  filter?: string;
 };
 
 export type PaginateResult = {
@@ -46,9 +51,12 @@ export async function paginateEntities(input: PaginateInput): Promise<PaginateRe
   const result = await listEntities(input.category as CategoryKey, {
     cursor: input.cursor,
     search: input.search,
+    description: input.description,
+    sources: input.sources,
+    editions: input.editions,
+    fields: input.fields,
     sourceAbbrev: input.sourceAbbrev,
     edition: input.edition,
-    filter: input.filter,
   });
 
   return { success: true, items: result.items, nextCursor: result.nextCursor };
@@ -68,7 +76,7 @@ export type SearchResult = {
 export async function searchEntities(input: SearchInput): Promise<SearchResult> {
   const hdrs = await headers();
   const ip = getClientIp(hdrs);
-  const rl = rateLimit(`search:${ip}`, 10, 60_000);
+  const rl = rateLimit(`search:${ip}`, 60, 60_000);
   if (!rl.success) return { success: false, error: "Rate limit exceeded" };
 
   if (!(await validateSessionNonce(input.nonce))) {

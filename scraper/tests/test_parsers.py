@@ -6,7 +6,13 @@ from pathlib import Path
 
 import pytest
 
-from scraper.pagination import parse_pagination_total
+from scraper.classic_prerequisites import (
+    apply_class_requirements_overlay,
+    apply_feat_prerequisite_overlay,
+    parse_classic_class_requirements,
+    parse_classic_feat_prerequisite,
+)
+from scraper.pagination import category_index_url, parse_pagination_total
 from scraper.parsers.base import (
     make_soup,
     merge_index_detail,
@@ -15,6 +21,7 @@ from scraper.parsers.base import (
     parse_slug_and_id,
 )
 from scraper.parsers.classes import parse_detail as parse_class_detail
+from scraper.parsers.classic import parse_classic_class_slug, parse_classic_feat_slug
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -31,6 +38,30 @@ def test_parse_slug_and_id(href: str, slug: str, record_id: int | None) -> None:
     parsed_slug, parsed_id = parse_slug_and_id(href)
     assert parsed_slug == slug
     assert parsed_id == record_id
+
+
+def test_parse_classic_feat_slug() -> None:
+    slug, record_id, book = parse_classic_feat_slug(
+        "/feats/eberron-campaign-setting--12/aberrant-dragonmark--2/"
+    )
+    assert slug == "aberrant-dragonmark-2"
+    assert record_id == 2
+    assert book == "eberron-campaign-setting"
+
+
+def test_parse_classic_class_slug() -> None:
+    slug, book_id, book = parse_classic_class_slug(
+        "/classes/complete-mage--58/abjurant-champion/"
+    )
+    assert slug == "abjurant-champion-58"
+    assert book_id == 58
+    assert book == "complete-mage"
+
+
+def test_category_index_urls_use_new_site() -> None:
+    assert category_index_url("feats").startswith("https://new.dndtools.org/feats")
+    assert "rows=50" in category_index_url("feats")
+    assert category_index_url("spells").startswith("https://new.dndtools.org/spells")
 
 
 def test_spells_index_parser() -> None:
@@ -61,11 +92,11 @@ def test_spells_detail_parser() -> None:
     assert detail["source"]["abbrev"] == "Sc"
     assert detail["source"]["page"] == 7
     assert detail["classes"]
-    assert detail["descriptors"] == ["Acid"]
+    assert [d["name"] for d in detail["descriptors"]] == ["Acid"]
     assert "fire ants" in detail["description_text"]
 
 
-def test_feats_detail_parser() -> None:
+def test_feats_detail_parser_new_site() -> None:
     html = (FIXTURES / "feats_detail.html").read_text(encoding="utf-8")
     detail = parse_detail_page(
         html,
@@ -76,6 +107,31 @@ def test_feats_detail_parser() -> None:
     assert detail["type"] == "General"
     assert detail["source"]["abbrev"] == "ECS"
     assert detail["source"]["page"] == 47
+    # New site has placeholder prerequisites — cleaned to None.
+    assert detail.get("prerequisite_html") is None
+    assert detail.get("prerequisite_text") is None
+    assert detail.get("benefit_text")
+
+
+def test_classic_feat_prerequisite_parser() -> None:
+    html = (FIXTURES / "feats_detail_classic.html").read_text(encoding="utf-8")
+    fields = parse_classic_feat_prerequisite(html)
+    assert fields["prerequisite_text"]
+    assert "dragonmarked race" in fields["prerequisite_text"].lower()
+
+
+def test_feat_prerequisite_overlay() -> None:
+    new_html = (FIXTURES / "feats_detail.html").read_text(encoding="utf-8")
+    classic_html = (FIXTURES / "feats_detail_classic.html").read_text(encoding="utf-8")
+    detail = parse_detail_page(
+        new_html,
+        "https://new.dndtools.org/feats/aberrant-dragonmark-2",
+        "feats",
+    )
+    apply_feat_prerequisite_overlay(detail, classic_html)
+    assert detail["prerequisite_text"]
+    assert "dragonmarked race" in detail["prerequisite_text"].lower()
+    assert "dragonmark" in (detail.get("benefit_text") or "").lower()
 
 
 def test_monsters_detail_parser() -> None:
@@ -89,9 +145,18 @@ def test_monsters_detail_parser() -> None:
     assert detail["hit_dice"]
     assert detail["armor_class"]
     assert detail["source"]["abbrev"] == "MM"
+    assert detail["flavor_html"]
+    assert "inner radiance" in detail["flavor_text"]
+    assert detail["description_html"]
+    assert "Planetouched" in detail["description_text"]
+    assert detail["combat_html"]
+    assert "Daylight" in detail["combat_text"]
+    ability_names = {a["name"] for a in detail["special_abilities"]}
+    assert "Darkvision" in ability_names
+    assert "Resistance to Acid" in ability_names
 
 
-def test_classes_detail_parser() -> None:
+def test_classes_detail_parser_new_site() -> None:
     html = (FIXTURES / "classes_detail.html").read_text(encoding="utf-8")
     detail = parse_class_detail(
         html,
@@ -105,6 +170,33 @@ def test_classes_detail_parser() -> None:
     assert detail["advancement"][0]["level"] == 1
     assert detail["class_skills"]
     assert any(skill["name"] == "Concentration" for skill in detail["class_skills"])
+    # Description should be class features, not requirements.
+    assert detail.get("description_text")
+    assert "Abjurant Armor" in detail["description_text"]
+    assert "martial weapon" not in (detail.get("description_text") or "").lower()
+
+
+def test_classic_class_requirements_parser() -> None:
+    html = (FIXTURES / "classes_detail_classic.html").read_text(encoding="utf-8")
+    fields = parse_classic_class_requirements(html)
+    assert fields["requirements_text"]
+    assert "+5" in (fields["min_bab_req"] or "")
+    assert "combat casting" in fields["requirements_text"].lower()
+
+
+def test_class_requirements_overlay() -> None:
+    new_html = (FIXTURES / "classes_detail.html").read_text(encoding="utf-8")
+    classic_html = (FIXTURES / "classes_detail_classic.html").read_text(encoding="utf-8")
+    detail = parse_class_detail(
+        new_html,
+        "https://new.dndtools.org/classes/abjurant-champion-264",
+    )
+    apply_class_requirements_overlay(detail, classic_html)
+    assert detail["requirements_text"]
+    assert "combat casting" in detail["requirements_text"].lower()
+    assert "+5" in (detail.get("min_bab_req") or "")
+    # Primary description remains class features from new site.
+    assert "Abjurant Armor" in (detail.get("description_text") or "")
 
 
 def test_pagination_total_from_fixture() -> None:

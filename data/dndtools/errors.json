@@ -1,1 +1,1952 @@
-[]
+[
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/advanced-construction-3792",
+    "error": "classic feat prerequisite not found for id=3792",
+    "timestamp": "2026-07-13T17:30:50.091341+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/augment-construction-3790",
+    "error": "classic feat prerequisite not found for id=3790",
+    "timestamp": "2026-07-13T17:30:50.946435+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/blessed-vulkoor-3783",
+    "error": "classic feat prerequisite not found for id=3783",
+    "timestamp": "2026-07-13T17:30:51.660186+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/chain-power-3800",
+    "error": "classic feat prerequisite not found for id=3800",
+    "timestamp": "2026-07-13T17:30:52.468057+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/conjunctive-mind-3500",
+    "error": "classic feat prerequisite not found for id=3500",
+    "timestamp": "2026-07-13T17:30:53.444730+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/craft-drilbu-3797",
+    "error": "classic feat prerequisite not found for id=3797",
+    "timestamp": "2026-07-13T17:30:53.873577+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/deep-psychic-meditation-3815",
+    "error": "classic feat prerequisite not found for id=3815",
+    "timestamp": "2026-07-13T17:30:54.700936+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/draconic-reservoir-3781",
+    "error": "classic feat prerequisite not found for id=3781",
+    "timestamp": "2026-07-13T17:30:56.383311+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/ecto-manipulation-3793",
+    "error": "classic feat prerequisite not found for id=3793",
+    "timestamp": "2026-07-13T17:30:57.362508+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/empower-construction-3791",
+    "error": "classic feat prerequisite not found for id=3791",
+    "timestamp": "2026-07-13T17:30:57.696302+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/enhanced-construction-3795",
+    "error": "classic feat prerequisite not found for id=3795",
+    "timestamp": "2026-07-13T17:30:58.206550+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/epic-poison-crafter-3821",
+    "error": "classic feat prerequisite not found for id=3821",
+    "timestamp": "2026-07-13T17:30:58.489531+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/evils-blessing-3516",
+    "error": "classic feat prerequisite not found for id=3516",
+    "timestamp": "2026-07-13T17:30:58.936567+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/extended-construction-3794",
+    "error": "classic feat prerequisite not found for id=3794",
+    "timestamp": "2026-07-13T17:30:59.316883+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/extra-power-3801",
+    "error": "classic feat prerequisite not found for id=3801",
+    "timestamp": "2026-07-13T17:30:59.472110+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/focused-body-3816",
+    "error": "classic feat prerequisite not found for id=3816",
+    "timestamp": "2026-07-13T17:31:00.866271+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/fortify-power-3802",
+    "error": "classic feat prerequisite not found for id=3802",
+    "timestamp": "2026-07-13T17:31:01.112164+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/improved-inertial-armor-3799",
+    "error": "classic feat prerequisite not found for id=3799",
+    "timestamp": "2026-07-13T17:31:04.531870+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/improved-psionic-sidestep-3787",
+    "error": "classic feat prerequisite not found for id=3787",
+    "timestamp": "2026-07-13T17:31:04.878664+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/infused-construction-3796",
+    "error": "classic feat prerequisite not found for id=3796",
+    "timestamp": "2026-07-13T17:31:05.601521+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-bane-3769",
+    "error": "classic feat prerequisite not found for id=3769",
+    "timestamp": "2026-07-13T17:31:05.674234+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-cyric-3771",
+    "error": "classic feat prerequisite not found for id=3771",
+    "timestamp": "2026-07-13T17:31:05.686916+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-gond-3772",
+    "error": "classic feat prerequisite not found for id=3772",
+    "timestamp": "2026-07-13T17:31:05.725708+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-helm-3773",
+    "error": "classic feat prerequisite not found for id=3773",
+    "timestamp": "2026-07-13T17:31:05.740413+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-lathander-3774",
+    "error": "classic feat prerequisite not found for id=3774",
+    "timestamp": "2026-07-13T17:31:05.787917+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-malar-3775",
+    "error": "classic feat prerequisite not found for id=3775",
+    "timestamp": "2026-07-13T17:31:05.818443+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-mystra-3776",
+    "error": "classic feat prerequisite not found for id=3776",
+    "timestamp": "2026-07-13T17:31:05.831487+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-nature-3777",
+    "error": "classic feat prerequisite not found for id=3777",
+    "timestamp": "2026-07-13T17:31:05.836306+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/initiate-selune-3778",
+    "error": "classic feat prerequisite not found for id=3778",
+    "timestamp": "2026-07-13T17:31:05.849492+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/insidious-mind-3501",
+    "error": "classic feat prerequisite not found for id=3501",
+    "timestamp": "2026-07-13T17:31:06.168778+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/intense-psychic-meditation-3499",
+    "error": "classic feat prerequisite not found for id=3499",
+    "timestamp": "2026-07-13T17:31:06.273536+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/masters-will-3510",
+    "error": "classic feat prerequisite not found for id=3510",
+    "timestamp": "2026-07-13T17:31:08.604092+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/mind-blind-3803",
+    "error": "classic feat prerequisite not found for id=3803",
+    "timestamp": "2026-07-13T17:31:09.223241+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/pinpoint-shot-3785",
+    "error": "classic feat prerequisite not found for id=3785",
+    "timestamp": "2026-07-13T17:31:11.447100+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/power-specialization-3804",
+    "error": "classic feat prerequisite not found for id=3804",
+    "timestamp": "2026-07-13T17:31:12.102648+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/powergrace-3819",
+    "error": "classic feat prerequisite not found for id=3819",
+    "timestamp": "2026-07-13T17:31:12.236488+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-combat-buffer-3789",
+    "error": "classic feat prerequisite not found for id=3789",
+    "timestamp": "2026-07-13T17:31:12.773783+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-defense-3805",
+    "error": "classic feat prerequisite not found for id=3805",
+    "timestamp": "2026-07-13T17:31:12.777464+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-energy-admixture-3807",
+    "error": "classic feat prerequisite not found for id=3807",
+    "timestamp": "2026-07-13T17:31:12.804871+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-energy-substitution-3806",
+    "error": "classic feat prerequisite not found for id=3806",
+    "timestamp": "2026-07-13T17:31:12.808829+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-feint-3817",
+    "error": "classic feat prerequisite not found for id=3817",
+    "timestamp": "2026-07-13T17:31:12.812370+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-focus-3784",
+    "error": "classic feat prerequisite not found for id=3784",
+    "timestamp": "2026-07-13T17:31:12.833496+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-sidestep-3786",
+    "error": "classic feat prerequisite not found for id=3786",
+    "timestamp": "2026-07-13T17:31:12.890082+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psionic-tumble-3818",
+    "error": "classic feat prerequisite not found for id=3818",
+    "timestamp": "2026-07-13T17:31:12.901172+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psychic-assault-3788",
+    "error": "classic feat prerequisite not found for id=3788",
+    "timestamp": "2026-07-13T17:31:12.952637+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psychic-meditation-3498",
+    "error": "classic feat prerequisite not found for id=3498",
+    "timestamp": "2026-07-13T17:31:12.971600+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psychic-meditation-3814",
+    "error": "classic feat prerequisite not found for id=3814",
+    "timestamp": "2026-07-13T17:31:12.976222+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/psychic-sight-3820",
+    "error": "classic feat prerequisite not found for id=3820",
+    "timestamp": "2026-07-13T17:31:13.003655+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/reach-power-3808",
+    "error": "classic feat prerequisite not found for id=3808",
+    "timestamp": "2026-07-13T17:31:13.920575+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/resculpt-mind-3809",
+    "error": "classic feat prerequisite not found for id=3809",
+    "timestamp": "2026-07-13T17:31:14.307459+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/ritual-transference-3782",
+    "error": "classic feat prerequisite not found for id=3782",
+    "timestamp": "2026-07-13T17:31:14.750143+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/run-air-3798",
+    "error": "classic feat prerequisite not found for id=3798",
+    "timestamp": "2026-07-13T17:31:14.888575+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/sculpt-power-3810",
+    "error": "classic feat prerequisite not found for id=3810",
+    "timestamp": "2026-07-13T17:31:15.568347+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/sculpt-spell-3768",
+    "error": "classic feat prerequisite not found for id=3768",
+    "timestamp": "2026-07-13T17:31:15.589344+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/split-psionic-ray-3811",
+    "error": "classic feat prerequisite not found for id=3811",
+    "timestamp": "2026-07-13T17:31:17.833200+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/tainted-construction-3503",
+    "error": "classic feat prerequisite not found for id=3503",
+    "timestamp": "2026-07-13T17:31:19.490414+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/tenacious-mind-3502",
+    "error": "classic feat prerequisite not found for id=3502",
+    "timestamp": "2026-07-13T17:31:19.684656+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/upgrade-power-3812",
+    "error": "classic feat prerequisite not found for id=3812",
+    "timestamp": "2026-07-13T17:31:21.106564+00:00"
+  },
+  {
+    "category": "feats",
+    "url": "https://new.dndtools.org/feats/widen-power-3813",
+    "error": "classic feat prerequisite not found for id=3813",
+    "timestamp": "2026-07-13T17:31:22.493341+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/acolyte-of-the-skin-207",
+    "error": "classic class requirements not found for name='Acolyte of the Skin'",
+    "timestamp": "2026-07-13T17:31:24.059629+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/acolyte-of-the-skin-836",
+    "error": "classic class requirements not found for name='Acolyte of the Skin'",
+    "timestamp": "2026-07-13T17:31:24.074449+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/alienist-223",
+    "error": "classic class requirements not found for name='Alienist'",
+    "timestamp": "2026-07-13T17:31:24.219311+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/alienist-837",
+    "error": "classic class requirements not found for name='Alienist'",
+    "timestamp": "2026-07-13T17:31:24.232427+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/animal-lord-181",
+    "error": "classic class requirements not found for name='Animal Lord'",
+    "timestamp": "2026-07-13T17:31:24.347943+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/animal-lord-605",
+    "error": "classic class requirements not found for name='Animal Lord'",
+    "timestamp": "2026-07-13T17:31:24.365279+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arachnomancer2-425",
+    "error": "classic class requirements not found for name='Arachnomancer'",
+    "timestamp": "2026-07-13T17:31:24.451146+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arachnomancer-895",
+    "error": "classic class requirements not found for name='Arachnomancer'",
+    "timestamp": "2026-07-13T17:31:24.471543+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arcane-devotee-509",
+    "error": "classic class requirements not found for name='Arcane Devotee'",
+    "timestamp": "2026-07-13T17:31:24.522130+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arcane-devotee-657",
+    "error": "classic class requirements not found for name='Arcane Devotee'",
+    "timestamp": "2026-07-13T17:31:24.532906+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arcane-trickster-379",
+    "error": "classic class requirements not found for name='Arcane Trickster'",
+    "timestamp": "2026-07-13T17:31:24.570515+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arcane-trickster-838",
+    "error": "classic class requirements not found for name='Arcane Trickster'",
+    "timestamp": "2026-07-13T17:31:24.584237+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/arch-psion-992",
+    "error": "classic class requirements not found for name='Arch Psion'",
+    "timestamp": "2026-07-13T17:31:24.619194+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/archmage-380",
+    "error": "classic class requirements not found for name='Archmage'",
+    "timestamp": "2026-07-13T17:31:24.669976+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/archmage-510",
+    "error": "classic class requirements not found for name='Archmage'",
+    "timestamp": "2026-07-13T17:31:24.681500+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ballisteer-993",
+    "error": "classic class requirements not found for name='Ballisteer'",
+    "timestamp": "2026-07-13T17:31:25.017148+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/barbarian-89",
+    "error": "classic class requirements not found for name='Barbarian'",
+    "timestamp": "2026-07-13T17:31:25.056334+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/barbarian-37",
+    "error": "classic class requirements not found for name='Barbarian'",
+    "timestamp": "2026-07-13T17:31:25.062891+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/barbarian-61",
+    "error": "classic class requirements not found for name='Barbarian'",
+    "timestamp": "2026-07-13T17:31:25.069270+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/barbarian-104",
+    "error": "classic class requirements not found for name='Barbarian'",
+    "timestamp": "2026-07-13T17:31:25.075357+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bard",
+    "error": "classic class requirements not found for name='Bard'",
+    "timestamp": "2026-07-13T17:31:25.094200+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bear-warrior-340",
+    "error": "classic class requirements not found for name='Bear Warrior'",
+    "timestamp": "2026-07-13T17:31:25.363822+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bear-warrior-628",
+    "error": "classic class requirements not found for name='Bear Warrior'",
+    "timestamp": "2026-07-13T17:31:25.376101+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/beholder-mage-557",
+    "error": "classic class requirements not found for name='Beholder Mage'",
+    "timestamp": "2026-07-13T17:31:25.482479+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/beholder-mage-600",
+    "error": "classic class requirements not found for name='Beholder Mage'",
+    "timestamp": "2026-07-13T17:31:25.532455+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/black-flame-zealot-256",
+    "error": "classic class requirements not found for name='Black Flame Zealot'",
+    "timestamp": "2026-07-13T17:31:25.704760+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/black-flame-zealot-884",
+    "error": "classic class requirements not found for name='Black Flame Zealot'",
+    "timestamp": "2026-07-13T17:31:25.718095+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bladesinger-306",
+    "error": "classic class requirements not found for name='Bladesinger'",
+    "timestamp": "2026-07-13T17:31:25.823324+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bladesinger-695",
+    "error": "classic class requirements not found for name='Bladesinger'",
+    "timestamp": "2026-07-13T17:31:25.840440+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bladesinger-839",
+    "error": "classic class requirements not found for name='Bladesinger'",
+    "timestamp": "2026-07-13T17:31:25.855513+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/blighter-257",
+    "error": "classic class requirements not found for name='Blighter'",
+    "timestamp": "2026-07-13T17:31:25.895971+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/blighter-607",
+    "error": "classic class requirements not found for name='Blighter'",
+    "timestamp": "2026-07-13T17:31:25.946519+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/blood-magus-225",
+    "error": "classic class requirements not found for name='Blood Magus'",
+    "timestamp": "2026-07-13T17:31:25.959160+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/blood-magus-840",
+    "error": "classic class requirements not found for name='Blood Magus'",
+    "timestamp": "2026-07-13T17:31:25.972358+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bloodhound-204",
+    "error": "classic class requirements not found for name='Bloodhound'",
+    "timestamp": "2026-07-13T17:31:26.005863+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/bloodhound-608",
+    "error": "classic class requirements not found for name='Bloodhound'",
+    "timestamp": "2026-07-13T17:31:26.021690+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/body-leech-1044",
+    "error": "classic class requirements not found for name='Body Leech'",
+    "timestamp": "2026-07-13T17:31:26.110202+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cavalier-341",
+    "error": "classic class requirements not found for name='Cavalier'",
+    "timestamp": "2026-07-13T17:31:26.336478+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cavalier-765",
+    "error": "classic class requirements not found for name='Cavalier'",
+    "timestamp": "2026-07-13T17:31:26.348197+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/celestial-paragon-1058",
+    "error": "classic class requirements not found for name='Celestial Paragon'",
+    "timestamp": "2026-07-13T17:31:26.467377+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cerebral-assassin-994",
+    "error": "classic class requirements not found for name='Cerebral Assassin'",
+    "timestamp": "2026-07-13T17:31:26.480670+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/church-inquisitor-258",
+    "error": "classic class requirements not found for name='Church Inquisitor'",
+    "timestamp": "2026-07-13T17:31:26.642904+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/church-inquisitor-357",
+    "error": "classic class requirements not found for name='Church Inquisitor'",
+    "timestamp": "2026-07-13T17:31:26.657988+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cleric-39",
+    "error": "classic class requirements not found for name='Cleric'",
+    "timestamp": "2026-07-13T17:31:26.717987+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cleric-91",
+    "error": "classic class requirements not found for name='Cleric'",
+    "timestamp": "2026-07-13T17:31:26.745974+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cleric-63",
+    "error": "classic class requirements not found for name='Cleric'",
+    "timestamp": "2026-07-13T17:31:26.754978+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/cleric-105",
+    "error": "classic class requirements not found for name='Cleric'",
+    "timestamp": "2026-07-13T17:31:26.785104+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/commoner-24",
+    "error": "classic class requirements not found for name='Commoner'",
+    "timestamp": "2026-07-13T17:31:26.932482+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/commoner-32",
+    "error": "classic class requirements not found for name='Commoner'",
+    "timestamp": "2026-07-13T17:31:26.947345+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/consecrated-harrier-259",
+    "error": "classic class requirements not found for name='Consecrated Harrier'",
+    "timestamp": "2026-07-13T17:31:26.973573+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/consecrated-harrier-358",
+    "error": "classic class requirements not found for name='Consecrated Harrier'",
+    "timestamp": "2026-07-13T17:31:26.990374+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/constructor-995",
+    "error": "classic class requirements not found for name='Constructor'",
+    "timestamp": "2026-07-13T17:31:27.005394+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/constructor-1045",
+    "error": "classic class requirements not found for name='Constructor'",
+    "timestamp": "2026-07-13T17:31:27.022399+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/contemplative-260",
+    "error": "classic class requirements not found for name='Contemplative'",
+    "timestamp": "2026-07-13T17:31:27.034967+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/contemplative-359",
+    "error": "classic class requirements not found for name='Contemplative'",
+    "timestamp": "2026-07-13T17:31:27.047476+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/crystal-master-996",
+    "error": "classic class requirements not found for name='Crystal Master'",
+    "timestamp": "2026-07-13T17:31:27.285611+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/crystal-master-1046",
+    "error": "classic class requirements not found for name='Crystal Master'",
+    "timestamp": "2026-07-13T17:31:27.302864+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/crystalsinger-997",
+    "error": "classic class requirements not found for name='Crystalsinger'",
+    "timestamp": "2026-07-13T17:31:27.318652+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/defender-of-sardior-1041",
+    "error": "classic class requirements not found for name='Defender of Sardior'",
+    "timestamp": "2026-07-13T17:31:27.836412+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/devotee-of-sardior-1040",
+    "error": "classic class requirements not found for name='Devotee of Sardior'",
+    "timestamp": "2026-07-13T17:31:28.057964+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/diamond-warrior-998",
+    "error": "classic class requirements not found for name='Diamond Warrior'",
+    "timestamp": "2026-07-13T17:31:28.173854+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-champion-511",
+    "error": "classic class requirements not found for name='Divine Champion'",
+    "timestamp": "2026-07-13T17:31:28.488696+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-champion-661",
+    "error": "classic class requirements not found for name='Divine Champion'",
+    "timestamp": "2026-07-13T17:31:28.498705+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-disciple-512",
+    "error": "classic class requirements not found for name='Divine Disciple'",
+    "timestamp": "2026-07-13T17:31:28.535870+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-disciple-662",
+    "error": "classic class requirements not found for name='Divine Disciple'",
+    "timestamp": "2026-07-13T17:31:28.546557+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-oracle-238",
+    "error": "classic class requirements not found for name='Divine Oracle'",
+    "timestamp": "2026-07-13T17:31:28.622944+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-oracle-360",
+    "error": "classic class requirements not found for name='Divine Oracle'",
+    "timestamp": "2026-07-13T17:31:28.634916+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-seeker-513",
+    "error": "classic class requirements not found for name='Divine Seeker'",
+    "timestamp": "2026-07-13T17:31:28.668761+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/divine-seeker-663",
+    "error": "classic class requirements not found for name='Divine Seeker'",
+    "timestamp": "2026-07-13T17:31:28.679783+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dragon-defender-1048",
+    "error": "classic class requirements not found for name='Dragon Defender'",
+    "timestamp": "2026-07-13T17:31:28.873984+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dragon-disciple-383",
+    "error": "classic class requirements not found for name='Dragon Disciple'",
+    "timestamp": "2026-07-13T17:31:28.930041+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dragon-disciple-842",
+    "error": "classic class requirements not found for name='Dragon Disciple'",
+    "timestamp": "2026-07-13T17:31:28.935668+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dread-champion-999",
+    "error": "classic class requirements not found for name='Dread Champion'",
+    "timestamp": "2026-07-13T17:31:29.266723+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dread-pirate-182",
+    "error": "classic class requirements not found for name='Dread Pirate'",
+    "timestamp": "2026-07-13T17:31:29.355614+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dread-pirate-755",
+    "error": "classic class requirements not found for name='Dread Pirate'",
+    "timestamp": "2026-07-13T17:31:29.367844+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/drow-paragon-1000",
+    "error": "classic class requirements not found for name='Drow Paragon'",
+    "timestamp": "2026-07-13T17:31:29.439119+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/druid-92",
+    "error": "classic class requirements not found for name='Druid'",
+    "timestamp": "2026-07-13T17:31:29.474899+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/druid-40",
+    "error": "classic class requirements not found for name='Druid'",
+    "timestamp": "2026-07-13T17:31:29.483593+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/druid-64",
+    "error": "classic class requirements not found for name='Druid'",
+    "timestamp": "2026-07-13T17:31:29.490362+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/druid-106",
+    "error": "classic class requirements not found for name='Druid'",
+    "timestamp": "2026-07-13T17:31:29.497418+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/drunken-master-310",
+    "error": "classic class requirements not found for name='Drunken Master'",
+    "timestamp": "2026-07-13T17:31:29.531985+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/drunken-master-767",
+    "error": "classic class requirements not found for name='Drunken Master'",
+    "timestamp": "2026-07-13T17:31:29.544362+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/duelist-384",
+    "error": "classic class requirements not found for name='Duelist'",
+    "timestamp": "2026-07-13T17:31:29.557825+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/duelist-768",
+    "error": "classic class requirements not found for name='Duelist'",
+    "timestamp": "2026-07-13T17:31:29.595870+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dukar-928",
+    "error": "classic class requirements not found for name='Dukar (Wizard)'",
+    "timestamp": "2026-07-13T17:31:29.622670+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dungeon-delver-183",
+    "error": "classic class requirements not found for name='Dungeon Delver'",
+    "timestamp": "2026-07-13T17:31:29.635905+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dungeon-delver-756",
+    "error": "classic class requirements not found for name='Dungeon Delver'",
+    "timestamp": "2026-07-13T17:31:29.648074+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dwarf-paragon-1001",
+    "error": "classic class requirements not found for name='Dwarf Paragon'",
+    "timestamp": "2026-07-13T17:31:29.748445+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dweomerkeeper-483",
+    "error": "classic class requirements not found for name='Dweomerkeeper'",
+    "timestamp": "2026-07-13T17:31:29.781517+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/dweomerkeeper-968",
+    "error": "classic class requirements not found for name='Dweomerkeeper'",
+    "timestamp": "2026-07-13T17:31:29.795419+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/elemental-savant-209",
+    "error": "classic class requirements not found for name='Elemental Savant'",
+    "timestamp": "2026-07-13T17:31:30.087845+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/elemental-savant-843",
+    "error": "classic class requirements not found for name='Elemental Savant'",
+    "timestamp": "2026-07-13T17:31:30.093587+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/elf-paragon-1002",
+    "error": "classic class requirements not found for name='Elf Paragon'",
+    "timestamp": "2026-07-13T17:31:30.210376+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/entropist-1054",
+    "error": "classic class requirements not found for name='Entropist'",
+    "timestamp": "2026-07-13T17:31:30.365635+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-barbarian-48",
+    "error": "classic class requirements not found for name='Epic Barbarian'",
+    "timestamp": "2026-07-13T17:31:30.466801+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-barbarian-991",
+    "error": "classic class requirements not found for name='Epic Barbarian'",
+    "timestamp": "2026-07-13T17:31:30.483787+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-eye-horus-re-1015",
+    "error": "classic class requirements not found for name='Epic Eye of Horus-Re'",
+    "timestamp": "2026-07-13T17:31:30.661634+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-hammer-moradin-1003",
+    "error": "classic class requirements not found for name='Epic Hammer of Moradin'",
+    "timestamp": "2026-07-13T17:31:30.732935+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-hathran-1004",
+    "error": "classic class requirements not found for name='Epic Hathran'",
+    "timestamp": "2026-07-13T17:31:30.747643+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-incantatrix-1005",
+    "error": "classic class requirements not found for name='Epic Incantatrix'",
+    "timestamp": "2026-07-13T17:31:30.760081+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-justiciar-tyr-1006",
+    "error": "classic class requirements not found for name='Epic Justiciar of Tyr'",
+    "timestamp": "2026-07-13T17:31:30.790408+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-monk-long-death-1007",
+    "error": "classic class requirements not found for name='Epic Monk of the Long Death'",
+    "timestamp": "2026-07-13T17:31:30.862934+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-morninglord-lathander-1008",
+    "error": "classic class requirements not found for name='Epic Morninglord of Lathander'",
+    "timestamp": "2026-07-13T17:31:30.875521+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-runecaster-1009",
+    "error": "classic class requirements not found for name='Epic Runecaster'",
+    "timestamp": "2026-07-13T17:31:31.060176+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-shaaryan-hunter-1010",
+    "error": "classic class requirements not found for name='Epic Shaaryan Hunter'",
+    "timestamp": "2026-07-13T17:31:31.072374+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/epic-shadow-adept-1011",
+    "error": "classic class requirements not found for name='Epic Shadow Adept'",
+    "timestamp": "2026-07-13T17:31:31.084294+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/exotic-weapon-master-311",
+    "error": "classic class requirements not found for name='Exotic Weapon Master'",
+    "timestamp": "2026-07-13T17:31:31.431254+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/exotic-weapon-master-610",
+    "error": "classic class requirements not found for name='Exotic Weapon Master'",
+    "timestamp": "2026-07-13T17:31:31.440934+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/expert-25",
+    "error": "classic class requirements not found for name='Expert'",
+    "timestamp": "2026-07-13T17:31:31.446768+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/expert-33",
+    "error": "classic class requirements not found for name='Expert'",
+    "timestamp": "2026-07-13T17:31:31.464131+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/expert2-124",
+    "error": "classic class requirements not found for name='Expert'",
+    "timestamp": "2026-07-13T17:31:31.476326+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/eye-of-gruumsh-312",
+    "error": "classic class requirements not found for name='Eye of Gruumsh'",
+    "timestamp": "2026-07-13T17:31:31.508463+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/eye-of-gruumsh-611",
+    "error": "classic class requirements not found for name='Eye of Gruumsh'",
+    "timestamp": "2026-07-13T17:31:31.519969+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/fatespinner-211",
+    "error": "classic class requirements not found for name='Fatespinner'",
+    "timestamp": "2026-07-13T17:31:31.762547+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/fatespinner-844",
+    "error": "classic class requirements not found for name='Fatespinner'",
+    "timestamp": "2026-07-13T17:31:31.768098+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/favored-soul-7",
+    "error": "classic class requirements not found for name='Favored Soul'",
+    "timestamp": "2026-07-13T17:31:31.801445+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/favored-soul-76",
+    "error": "classic class requirements not found for name='Favored Soul'",
+    "timestamp": "2026-07-13T17:31:31.834133+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/fighter-93",
+    "error": "classic class requirements not found for name='Fighter'",
+    "timestamp": "2026-07-13T17:31:31.925211+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/fighter-41",
+    "error": "classic class requirements not found for name='Fighter'",
+    "timestamp": "2026-07-13T17:31:31.931022+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/fighter-65",
+    "error": "classic class requirements not found for name='Fighter'",
+    "timestamp": "2026-07-13T17:31:31.936774+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/frenzied-berserker-313",
+    "error": "classic class requirements not found for name='Frenzied Berserker'",
+    "timestamp": "2026-07-13T17:31:32.399242+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/frenzied-berserker-614",
+    "error": "classic class requirements not found for name='Frenzied Berserker'",
+    "timestamp": "2026-07-13T17:31:32.410513+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/geomancer-241",
+    "error": "classic class requirements not found for name='Geomancer'",
+    "timestamp": "2026-07-13T17:31:32.509342+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/geomancer-615",
+    "error": "classic class requirements not found for name='Geomancer'",
+    "timestamp": "2026-07-13T17:31:32.523134+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/grim-psion-1023",
+    "error": "classic class requirements not found for name='Grim Psion'",
+    "timestamp": "2026-07-13T17:31:32.935113+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/halfling-outrider-315",
+    "error": "classic class requirements not found for name='Halfling Outrider'",
+    "timestamp": "2026-07-13T17:31:33.035656+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/halfling-outrider-772",
+    "error": "classic class requirements not found for name='Halfling Outrider'",
+    "timestamp": "2026-07-13T17:31:33.046649+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hathran-516",
+    "error": "classic class requirements not found for name='Hathran'",
+    "timestamp": "2026-07-13T17:31:33.250133+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hathran-669",
+    "error": "classic class requirements not found for name='Hathran'",
+    "timestamp": "2026-07-13T17:31:33.267902+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hierophant-387",
+    "error": "classic class requirements not found for name='Hierophant'",
+    "timestamp": "2026-07-13T17:31:33.591259+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hierophant-517",
+    "error": "classic class requirements not found for name='Hierophant'",
+    "timestamp": "2026-07-13T17:31:33.605565+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/holy-liberator-242",
+    "error": "classic class requirements not found for name='Holy Liberator'",
+    "timestamp": "2026-07-13T17:31:33.778164+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/holy-liberator-361",
+    "error": "classic class requirements not found for name='Holy Liberator'",
+    "timestamp": "2026-07-13T17:31:33.794737+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hospitaler-243",
+    "error": "classic class requirements not found for name='Hospitaler'",
+    "timestamp": "2026-07-13T17:31:33.873988+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hospitaler-362",
+    "error": "classic class requirements not found for name='Hospitaler'",
+    "timestamp": "2026-07-13T17:31:33.886045+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hunter-of-the-dead-317",
+    "error": "classic class requirements not found for name='Hunter of the Dead'",
+    "timestamp": "2026-07-13T17:31:33.917754+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/hunter-of-the-dead-363",
+    "error": "classic class requirements not found for name='Hunter of the Dead'",
+    "timestamp": "2026-07-13T17:31:33.932091+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/incantatrix-568",
+    "error": "classic class requirements not found for name='Incantatrix'",
+    "timestamp": "2026-07-13T17:31:34.234943+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/incantatrix-670",
+    "error": "classic class requirements not found for name='Incantatrix'",
+    "timestamp": "2026-07-13T17:31:34.247550+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/kineticist-1024",
+    "error": "classic class requirements not found for name='Kineticist'",
+    "timestamp": "2026-07-13T17:31:34.789279+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/knight-of-the-chalice-321",
+    "error": "classic class requirements not found for name='Knight of the Chalice'",
+    "timestamp": "2026-07-13T17:31:34.970588+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/knight-of-the-chalice-364",
+    "error": "classic class requirements not found for name='Knight of the Chalice'",
+    "timestamp": "2026-07-13T17:31:34.986794+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/lightbringer-bard-1025",
+    "error": "classic class requirements not found for name='Lightbringer Bard'",
+    "timestamp": "2026-07-13T17:31:35.490251+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/lightbringer-cleric-1026",
+    "error": "classic class requirements not found for name='Lightbringer Cleric'",
+    "timestamp": "2026-07-13T17:31:35.498204+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/lightbringer-paladin-1027",
+    "error": "classic class requirements not found for name='Lightbringer Paladin'",
+    "timestamp": "2026-07-13T17:31:35.505965+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/lightbringer-rogue-1028",
+    "error": "classic class requirements not found for name='Lightbringer Rogue'",
+    "timestamp": "2026-07-13T17:31:35.512558+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/mage-of-the-arcane-order-215",
+    "error": "classic class requirements not found for name='Mage of the Arcane Order'",
+    "timestamp": "2026-07-13T17:31:35.767365+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/mage-of-the-arcane-order-845",
+    "error": "classic class requirements not found for name='Mage of the Arcane Order'",
+    "timestamp": "2026-07-13T17:31:35.773511+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/magewright-1029",
+    "error": "classic class requirements not found for name='Magewright'",
+    "timestamp": "2026-07-13T17:31:35.862358+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/master-arcane-artisan-1056",
+    "error": "classic class requirements not found for name='Master Arcane Artisan'",
+    "timestamp": "2026-07-13T17:31:36.077649+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/master-of-shrouds-366",
+    "error": "classic class requirements not found for name='Master of Shrouds'",
+    "timestamp": "2026-07-13T17:31:36.518318+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/master-of-shrouds-550",
+    "error": "classic class requirements not found for name='Master of Shrouds'",
+    "timestamp": "2026-07-13T17:31:36.530729+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/master-of-shrouds-969",
+    "error": "classic class requirements not found for name='Master of Shrouds'",
+    "timestamp": "2026-07-13T17:31:36.542444+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/meditant-1030",
+    "error": "classic class requirements not found for name='Meditant'",
+    "timestamp": "2026-07-13T17:31:36.637894+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/meditant-1049",
+    "error": "classic class requirements not found for name='Meditant'",
+    "timestamp": "2026-07-13T17:31:36.652508+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/metamagic-specialist-1031",
+    "error": "classic class requirements not found for name='Metamagic Specialist'",
+    "timestamp": "2026-07-13T17:31:36.701327+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/mindbender-217",
+    "error": "classic class requirements not found for name='Mindbender'",
+    "timestamp": "2026-07-13T17:31:36.736255+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/mindbender-846",
+    "error": "classic class requirements not found for name='Mindbender'",
+    "timestamp": "2026-07-13T17:31:36.742259+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/mindknight-1032",
+    "error": "classic class requirements not found for name='Mindknight'",
+    "timestamp": "2026-07-13T17:31:36.759198+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/monk-94",
+    "error": "classic class requirements not found for name='Monk'",
+    "timestamp": "2026-07-13T17:31:36.843467+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/monk-42",
+    "error": "classic class requirements not found for name='Monk'",
+    "timestamp": "2026-07-13T17:31:36.849399+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/monk-66",
+    "error": "classic class requirements not found for name='Monk'",
+    "timestamp": "2026-07-13T17:31:36.855163+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/netherese-arcanist-1033",
+    "error": "classic class requirements not found for name='Netherese Arcanist'",
+    "timestamp": "2026-07-13T17:31:37.386000+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/nightcloak-489",
+    "error": "classic class requirements not found for name='Nightcloak'",
+    "timestamp": "2026-07-13T17:31:37.423785+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/nightcloak-971",
+    "error": "classic class requirements not found for name='Nightcloak'",
+    "timestamp": "2026-07-13T17:31:37.436302+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/order-of-the-bow-initiate-328",
+    "error": "classic class requirements not found for name='Order of the Bow Initiate'",
+    "timestamp": "2026-07-13T17:31:37.834300+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/order-of-the-bow-initiate-778",
+    "error": "classic class requirements not found for name='Order of the Bow Initiate'",
+    "timestamp": "2026-07-13T17:31:37.845283+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/paladin-95",
+    "error": "classic class requirements not found for name='Paladin'",
+    "timestamp": "2026-07-13T17:31:37.971944+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/paladin-43",
+    "error": "classic class requirements not found for name='Paladin'",
+    "timestamp": "2026-07-13T17:31:37.978377+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/paladin-67",
+    "error": "classic class requirements not found for name='Paladin'",
+    "timestamp": "2026-07-13T17:31:37.984831+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/paladin-107",
+    "error": "classic class requirements not found for name='Paladin'",
+    "timestamp": "2026-07-13T17:31:37.991148+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/paladin-variant-20",
+    "error": "classic class requirements not found for name='Paladin Variant'",
+    "timestamp": "2026-07-13T17:31:37.997652+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/paladin-variant-955",
+    "error": "classic class requirements not found for name='Paladin Variant'",
+    "timestamp": "2026-07-13T17:31:38.006243+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/pale-master-552",
+    "error": "classic class requirements not found for name='Pale Master'",
+    "timestamp": "2026-07-13T17:31:38.067641+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/pale-master-847",
+    "error": "classic class requirements not found for name='Pale Master'",
+    "timestamp": "2026-07-13T17:31:38.076036+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/percipient-1042",
+    "error": "classic class requirements not found for name='Percipient'",
+    "timestamp": "2026-07-13T17:31:38.155295+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/planar-vanguard-1043",
+    "error": "classic class requirements not found for name='Planar Vanguard'",
+    "timestamp": "2026-07-13T17:31:38.315760+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/psionic-dragon-comrade-1047",
+    "error": "classic class requirements not found for name='Psionic Dragon Comrade'",
+    "timestamp": "2026-07-13T17:31:38.880144+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/psychic-assassin-1051",
+    "error": "classic class requirements not found for name='Psychic Assassin'",
+    "timestamp": "2026-07-13T17:31:38.895540+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/psychic-rogue-1050",
+    "error": "classic class requirements not found for name='Psychic Rogue'",
+    "timestamp": "2026-07-13T17:31:38.918874+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/psychic-weapon-master-1034",
+    "error": "classic class requirements not found for name='Psychic Weapon Master'",
+    "timestamp": "2026-07-13T17:31:39.007222+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/purple-dragon-knight-329",
+    "error": "classic class requirements not found for name='Purple Dragon Knight'",
+    "timestamp": "2026-07-13T17:31:39.040061+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/purple-dragon-knight-518",
+    "error": "classic class requirements not found for name='Purple Dragon Knight'",
+    "timestamp": "2026-07-13T17:31:39.050824+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/purple-dragon-knight-676",
+    "error": "classic class requirements not found for name='Purple Dragon Knight'",
+    "timestamp": "2026-07-13T17:31:39.064094+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ranger-96",
+    "error": "classic class requirements not found for name='Ranger'",
+    "timestamp": "2026-07-13T17:31:39.232440+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ranger-44",
+    "error": "classic class requirements not found for name='Ranger'",
+    "timestamp": "2026-07-13T17:31:39.239780+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ranger-68",
+    "error": "classic class requirements not found for name='Ranger'",
+    "timestamp": "2026-07-13T17:31:39.246494+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ranger-108",
+    "error": "classic class requirements not found for name='Ranger'",
+    "timestamp": "2026-07-13T17:31:39.253232+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ranger-variant-21",
+    "error": "classic class requirements not found for name='Ranger Variant'",
+    "timestamp": "2026-07-13T17:31:39.259924+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ranger-variant-956",
+    "error": "classic class requirements not found for name='Ranger Variant'",
+    "timestamp": "2026-07-13T17:31:39.266691+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ravager-331",
+    "error": "classic class requirements not found for name='Ravager'",
+    "timestamp": "2026-07-13T17:31:39.301809+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ravager-779",
+    "error": "classic class requirements not found for name='Ravager'",
+    "timestamp": "2026-07-13T17:31:39.315021+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/red-wizard-391",
+    "error": "classic class requirements not found for name='Red Wizard'",
+    "timestamp": "2026-07-13T17:31:39.443762+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/red-wizard-519",
+    "error": "classic class requirements not found for name='Red Wizard'",
+    "timestamp": "2026-07-13T17:31:39.456131+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/rogue-97",
+    "error": "classic class requirements not found for name='Rogue'",
+    "timestamp": "2026-07-13T17:31:39.594922+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/rogue-45",
+    "error": "classic class requirements not found for name='Rogue'",
+    "timestamp": "2026-07-13T17:31:39.600816+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/rogue-69",
+    "error": "classic class requirements not found for name='Rogue'",
+    "timestamp": "2026-07-13T17:31:39.606611+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ruby-disciple-1035",
+    "error": "classic class requirements not found for name='Ruby Disciple'",
+    "timestamp": "2026-07-13T17:31:39.697235+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/runecaster-520",
+    "error": "classic class requirements not found for name='Runecaster'",
+    "timestamp": "2026-07-13T17:31:39.750941+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/runecaster-677",
+    "error": "classic class requirements not found for name='Runecaster'",
+    "timestamp": "2026-07-13T17:31:39.765072+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sacred-exorcist-247",
+    "error": "classic class requirements not found for name='Sacred Exorcist'",
+    "timestamp": "2026-07-13T17:31:39.847569+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sacred-exorcist-367",
+    "error": "classic class requirements not found for name='Sacred Exorcist'",
+    "timestamp": "2026-07-13T17:31:39.860057+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sacred-fist-248",
+    "error": "classic class requirements not found for name='Sacred Fist'",
+    "timestamp": "2026-07-13T17:31:39.873855+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sacred-fist-368",
+    "error": "classic class requirements not found for name='Sacred Fist'",
+    "timestamp": "2026-07-13T17:31:39.891128+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/samurai-22",
+    "error": "classic class requirements not found for name='Samurai'",
+    "timestamp": "2026-07-13T17:31:39.944116+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/samurai-84",
+    "error": "classic class requirements not found for name='Samurai'",
+    "timestamp": "2026-07-13T17:31:39.963315+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sangehirn-1036",
+    "error": "classic class requirements not found for name='Sangehirn'",
+    "timestamp": "2026-07-13T17:31:40.055043+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sangehirn-1052",
+    "error": "classic class requirements not found for name='Sangehirn'",
+    "timestamp": "2026-07-13T17:31:40.072349+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/shadow-adept-521",
+    "error": "classic class requirements not found for name='Shadow Adept'",
+    "timestamp": "2026-07-13T17:31:40.886656+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/shadow-adept-679",
+    "error": "classic class requirements not found for name='Shadow Adept'",
+    "timestamp": "2026-07-13T17:31:40.899058+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/shadow-mind-1037",
+    "error": "classic class requirements not found for name='Shadow Mind'",
+    "timestamp": "2026-07-13T17:31:40.935333+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/shugenja-8",
+    "error": "classic class requirements not found for name='Shugenja'",
+    "timestamp": "2026-07-13T17:31:41.622854+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/shugenja-86",
+    "error": "classic class requirements not found for name='Shugenja'",
+    "timestamp": "2026-07-13T17:31:41.671456+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sorcerer-98",
+    "error": "classic class requirements not found for name='Sorcerer'",
+    "timestamp": "2026-07-13T17:31:42.066363+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sorcerer-46",
+    "error": "classic class requirements not found for name='Sorcerer'",
+    "timestamp": "2026-07-13T17:31:42.073857+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sorcerer-70",
+    "error": "classic class requirements not found for name='Sorcerer'",
+    "timestamp": "2026-07-13T17:31:42.081009+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/sorcerer-109",
+    "error": "classic class requirements not found for name='Sorcerer'",
+    "timestamp": "2026-07-13T17:31:42.088189+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/soul-manifester-1055",
+    "error": "classic class requirements not found for name='Soul Manifester'",
+    "timestamp": "2026-07-13T17:31:42.135389+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/spellfire-hierophant-1038",
+    "error": "classic class requirements not found for name='Spellfire Hierophant'",
+    "timestamp": "2026-07-13T17:31:42.423987+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/spellsword-334",
+    "error": "classic class requirements not found for name='Spellsword'",
+    "timestamp": "2026-07-13T17:31:42.471327+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/spellsword-848",
+    "error": "classic class requirements not found for name='Spellsword'",
+    "timestamp": "2026-07-13T17:31:42.477129+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/spymaster-196",
+    "error": "classic class requirements not found for name='Spymaster'",
+    "timestamp": "2026-07-13T17:31:42.637590+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/spymaster-760",
+    "error": "classic class requirements not found for name='Spymaster'",
+    "timestamp": "2026-07-13T17:31:42.654064+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/stormlord-251",
+    "error": "classic class requirements not found for name='Stormlord'",
+    "timestamp": "2026-07-13T17:31:42.883287+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/stormlord-492",
+    "error": "classic class requirements not found for name='Stormlord'",
+    "timestamp": "2026-07-13T17:31:42.895937+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/swiftblade-1039",
+    "error": "classic class requirements not found for name='Swiftblade'",
+    "timestamp": "2026-07-13T17:31:43.448469+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/tattooed-monk-336",
+    "error": "classic class requirements not found for name='Tattooed Monk'",
+    "timestamp": "2026-07-13T17:31:43.692683+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/tattooed-monk-647",
+    "error": "classic class requirements not found for name='Tattooed Monk'",
+    "timestamp": "2026-07-13T17:31:43.711139+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/tempest-198",
+    "error": "classic class requirements not found for name='Tempest'",
+    "timestamp": "2026-07-13T17:31:43.761069+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/tempest-621",
+    "error": "classic class requirements not found for name='Tempest'",
+    "timestamp": "2026-07-13T17:31:43.772467+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/temple-raider-of-olidammara-252",
+    "error": "classic class requirements not found for name='Temple Raider of Olidammara'",
+    "timestamp": "2026-07-13T17:31:43.810068+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/temple-raider-of-olidammara-761",
+    "error": "classic class requirements not found for name='Temple Raider of Olidammara'",
+    "timestamp": "2026-07-13T17:31:43.851651+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/thayan-knight-337",
+    "error": "classic class requirements not found for name='Thayan Knight'",
+    "timestamp": "2026-07-13T17:31:43.919752+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/thayan-knight-538",
+    "error": "classic class requirements not found for name='Thayan Knight'",
+    "timestamp": "2026-07-13T17:31:43.925673+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/thief-acrobat-199",
+    "error": "classic class requirements not found for name='Thief-acrobat'",
+    "timestamp": "2026-07-13T17:31:43.985045+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/thief-acrobat-762",
+    "error": "classic class requirements not found for name='Thief-acrobat'",
+    "timestamp": "2026-07-13T17:31:43.994160+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/thrall-of-eltab-1053",
+    "error": "classic class requirements not found for name='Thrall of Eltab'",
+    "timestamp": "2026-07-13T17:31:44.033100+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/true-necromancer-555",
+    "error": "classic class requirements not found for name='True Necromancer'",
+    "timestamp": "2026-07-13T17:31:44.433804+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/true-necromancer-849",
+    "error": "classic class requirements not found for name='True Necromancer'",
+    "timestamp": "2026-07-13T17:31:44.442022+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ur-priest-177",
+    "error": "classic class requirements not found for name='Ur-priest'",
+    "timestamp": "2026-07-13T17:31:44.680478+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/ur-priest-253",
+    "error": "classic class requirements not found for name='Ur-priest'",
+    "timestamp": "2026-07-13T17:31:44.697142+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/vigilante-200",
+    "error": "classic class requirements not found for name='Vigilante'",
+    "timestamp": "2026-07-13T17:31:45.048032+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/vigilante-763",
+    "error": "classic class requirements not found for name='Vigilante'",
+    "timestamp": "2026-07-13T17:31:45.067450+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/virtuoso-201",
+    "error": "classic class requirements not found for name='Virtuoso'",
+    "timestamp": "2026-07-13T17:31:45.080396+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/virtuoso-764",
+    "error": "classic class requirements not found for name='Virtuoso'",
+    "timestamp": "2026-07-13T17:31:45.093395+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/void-disciple-254",
+    "error": "classic class requirements not found for name='Void Disciple'",
+    "timestamp": "2026-07-13T17:31:45.130446+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/void-disciple-648",
+    "error": "classic class requirements not found for name='Void Disciple'",
+    "timestamp": "2026-07-13T17:31:45.147260+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/void-incarnate-1057",
+    "error": "classic class requirements not found for name='Void Incarnate'",
+    "timestamp": "2026-07-13T17:31:45.158924+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warlord-of-utterdark-1059",
+    "error": "classic class requirements not found for name='Warlord of Utterdark'",
+    "timestamp": "2026-07-13T17:31:45.381133+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warmage-5",
+    "error": "classic class requirements not found for name='Warmage'",
+    "timestamp": "2026-07-13T17:31:45.406927+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warmage-79",
+    "error": "classic class requirements not found for name='Warmage'",
+    "timestamp": "2026-07-13T17:31:45.461840+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warpriest-255",
+    "error": "classic class requirements not found for name='Warpriest'",
+    "timestamp": "2026-07-13T17:31:45.769341+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warpriest-370",
+    "error": "classic class requirements not found for name='Warpriest'",
+    "timestamp": "2026-07-13T17:31:45.784857+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warrior-28",
+    "error": "classic class requirements not found for name='Warrior'",
+    "timestamp": "2026-07-13T17:31:45.790982+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warrior-34",
+    "error": "classic class requirements not found for name='Warrior'",
+    "timestamp": "2026-07-13T17:31:45.803682+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/warrior2-135",
+    "error": "classic class requirements not found for name='Warrior'",
+    "timestamp": "2026-07-13T17:31:45.818185+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wayfarer-guide-221",
+    "error": "classic class requirements not found for name='Wayfarer Guide'",
+    "timestamp": "2026-07-13T17:31:46.000764+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wayfarer-guide-850",
+    "error": "classic class requirements not found for name='Wayfarer Guide'",
+    "timestamp": "2026-07-13T17:31:46.006699+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wearer-of-purple-424",
+    "error": "classic class requirements not found for name='Wearer of Purple'",
+    "timestamp": "2026-07-13T17:31:46.060120+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wearer-of-purple-497",
+    "error": "classic class requirements not found for name='Wearer of Purple'",
+    "timestamp": "2026-07-13T17:31:46.072510+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wizard-99",
+    "error": "classic class requirements not found for name='Wizard'",
+    "timestamp": "2026-07-13T17:31:46.457922+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wizard-47",
+    "error": "classic class requirements not found for name='Wizard'",
+    "timestamp": "2026-07-13T17:31:46.465268+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wizard-71",
+    "error": "classic class requirements not found for name='Wizard'",
+    "timestamp": "2026-07-13T17:31:46.472511+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wizard-110",
+    "error": "classic class requirements not found for name='Wizard'",
+    "timestamp": "2026-07-13T17:31:46.479704+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wu-jen-6",
+    "error": "classic class requirements not found for name='Wu Jen'",
+    "timestamp": "2026-07-13T17:31:46.577017+00:00"
+  },
+  {
+    "category": "classes",
+    "url": "https://new.dndtools.org/classes/wu-jen-88",
+    "error": "classic class requirements not found for name='Wu Jen'",
+    "timestamp": "2026-07-13T17:31:46.602531+00:00"
+  }
+]

@@ -18,6 +18,11 @@ DEFAULT_SOURCE: dict[str, Any] = {
     "url": None,
 }
 
+PLACEHOLDER_TEXT = (
+    "Do not touch this field. Everything is handled from the corresponding "
+    "twig file (the path is in the help text)."
+)
+
 ARRAY_KEYS = frozenset(
     {
         "classes",
@@ -32,6 +37,20 @@ ARRAY_KEYS = frozenset(
         "tables",
     }
 )
+
+
+def is_placeholder_text(text: str | None) -> bool:
+    if not text:
+        return False
+    return PLACEHOLDER_TEXT in text
+
+
+def clean_field_value(value: str | None) -> str | None:
+    if value is None:
+        return None
+    if is_placeholder_text(value):
+        return None
+    return value
 
 
 def label_to_snake(label: str) -> str:
@@ -130,4 +149,13 @@ def normalize_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     all_keys: set[str] = set()
     for record in records:
         all_keys.update(flatten_keys(record))
-    return [fill_nulls(record, all_keys) for record in records]
+    normalized = [fill_nulls(record, all_keys) for record in records]
+    return [_strip_placeholder_fields(record) for record in normalized]
+
+
+def _strip_placeholder_fields(record: dict[str, Any]) -> dict[str, Any]:
+    result = dict(record)
+    for key, value in result.items():
+        if isinstance(value, str):
+            result[key] = clean_field_value(value)
+    return result

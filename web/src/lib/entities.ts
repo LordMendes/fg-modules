@@ -3,6 +3,15 @@ import type { CategoryKey } from "@/lib/categories";
 import type { Prisma } from "@/generated/prisma/client";
 import { parseSpellComponents, spellDescriptionSnippet } from "@/lib/spell-utils";
 import type { SpellComponentFlags } from "@/lib/spell-utils";
+import {
+  CATEGORY_FILTER_FIELDS,
+  CLASS_TYPE_FILTER_OPTIONS,
+  SPELL_COMPONENT_FILTER_OPTIONS,
+  formatBooleanFilterLabel,
+  normalizeFilterValues,
+  type CategoryFilterOptions,
+  type FilterFieldDef,
+} from "@/lib/entity-filters";
 
 export type EntityListItem = {
   slug: string;
@@ -21,6 +30,12 @@ export type EntityDetail = {
   source: { name: string; abbrev: string | null; edition: string; page: number | null };
   fields: Record<string, string | null>;
   related: { label: string; href: string; meta?: string }[];
+  statLine?: string | null;
+  featLinks?: { label: string; href: string }[];
+  specialAbilities?: { label: string; href?: string }[];
+  flavorHtml?: string | null;
+  combatHtml?: string | null;
+  sections?: { title: string; html: string }[];
   advancementHtml?: string | null;
   spellLevels?: ClassSpellLevelSummary[];
   classSkills?: ClassSkillRef[];
@@ -80,6 +95,104 @@ function sourceSelect() {
   return { select: { name: true, abbrev: true, edition: true } };
 }
 
+const MONSTER_STAT_FIELDS: [label: string, key: string][] = [
+  ["Hit Dice", "hit_dice"],
+  ["Initiative", "initiative"],
+  ["Speed", "speed"],
+  ["Armor Class", "armor_class"],
+  ["Base Attack / Grapple", "base_attack_grapple"],
+  ["Attack", "attack"],
+  ["Full Attack", "full_attack"],
+  ["STR", "str"],
+  ["DEX", "dex"],
+  ["CON", "con"],
+  ["INT", "int"],
+  ["WIS", "wis"],
+  ["CHA", "cha"],
+  ["Fort / Ref / Will", "fort_ref_will"],
+  ["Challenge Rating", "challenge_rating"],
+  ["Alignment", "alignment"],
+  ["Organization", "organization"],
+  ["Treasure", "treasure"],
+  ["Environment", "environment"],
+  ["Level Adjustment", "level_adjustment"],
+  ["Spell Resistance", "spell_resistance"],
+  ["Caster Level", "caster_level"],
+];
+
+function indexString(data: Record<string, unknown>, key: string): string | null {
+  const value = data[key];
+  if (typeof value !== "string" || value.length === 0) return null;
+  if (value.includes("Do not touch this field")) return null;
+  return value;
+}
+
+function indexNumber(data: Record<string, unknown>, key: string): number | null {
+  const value = data[key];
+  return typeof value === "number" ? value : null;
+}
+
+function parseMonsterAbilities(
+  indexData: Record<string, unknown>,
+  linked: { label: string; href: string }[],
+): { label: string; href?: string }[] {
+  const stored = indexData.specialAbilities;
+  if (Array.isArray(stored)) {
+    return stored
+      .map((item) => {
+        if (!item || typeof item !== "object") return null;
+        const record = item as Record<string, unknown>;
+        const label = typeof record.name === "string" ? record.name : null;
+        if (!label) return null;
+        const slug = typeof record.slug === "string" ? record.slug : null;
+        return slug ? { label, href: `/rules/${slug}` } : { label };
+      })
+      .filter((item): item is { label: string; href?: string } => item !== null);
+  }
+  return linked.map(({ label, href }) => ({ label, href }));
+}
+
+function buildFeatSections(indexData: Record<string, unknown>): { title: string; html: string }[] {
+  const mapping: [string, string][] = [
+    ["Prerequisite", "prerequisiteHtml"],
+    ["Benefit", "benefitHtml"],
+    ["Normal", "normalHtml"],
+    ["Special", "specialHtml"],
+  ];
+
+  return mapping.flatMap(([title, key]) => {
+    const html = indexString(indexData, key);
+    return html ? [{ title, html }] : [];
+  });
+}
+
+function buildClassSections(indexData: Record<string, unknown>): { title: string; html: string }[] {
+  const html = indexString(indexData, "requirementsHtml");
+  return html ? [{ title: "Requirements", html }] : [];
+}
+
+function buildMonsterFields(
+  indexData: Record<string, unknown>,
+  record: {
+    creatureType: string | null;
+    subtypes: string | null;
+    challengeRating: string | null;
+    hitDice: string | null;
+  },
+): Record<string, string | null> {
+  const fields: Record<string, string | null> = {};
+
+  for (const [label, key] of MONSTER_STAT_FIELDS) {
+    const value = indexString(indexData, key) ?? null;
+    if (value) fields[label] = value;
+  }
+
+  if (!fields["Hit Dice"]) fields["Hit Dice"] = record.hitDice;
+  if (!fields["Challenge Rating"]) fields["Challenge Rating"] = record.challengeRating;
+
+  return fields;
+}
+
 function parseClassSkills(value: unknown): ClassSkillRef[] {
   if (!Array.isArray(value)) return [];
 
@@ -103,37 +216,131 @@ function parseClassSkills(value: unknown): ClassSkillRef[] {
     .filter((item): item is ClassSkillRef => item !== null);
 }
 
-export async function listEntities(
-  category: CategoryKey,
-  options: {
-    cursor?: string;
-    search?: string;
-    sourceAbbrev?: string;
-    edition?: string;
-    filter?: string;
-  } = {},
-): Promise<{ items: EntityListItem[]; nextCursor: string | null }> {
-  const { cursor, search, sourceAbbrev, edition, filter } = options;
+export type ListEntitiesOptions = {
+  cursor?: string;
+  search?: string;
+  description?: string;
+  /** @deprecated Prefer `sources`. Kept for source-page callers. */
+  sourceAbbrev?: string;
+  /** @deprecated Prefer `editions`. */
+  edition?: string;
+  sources?: string[];
+  editions?: string[];
+  /** Map of URL param → selected values (multi). */
+  fields?: Record<string, string[]>;
+};
+
+function buildSourceWhere(options: ListEntitiesOptions): Prisma.SourceWhereInput | undefined {
+  const sources = [
+    ...(options.sources ?? []),
+    ...(options.sourceAbbrev ? [options.sourceAbbrev] : []),
+  ];
+  const editions = [
+    ...(options.editions ?? []),
+    ...(options.edition ? [options.edition] : []),
+  ];
+  const uniqueSources = [...new Set(sources)];
+  const uniqueEditions = [...new Set(editions)];
 
   const sourceWhere: Prisma.SourceWhereInput = {};
-  if (sourceAbbrev) sourceWhere.abbrev = sourceAbbrev;
-  if (edition) sourceWhere.edition = edition;
+  if (uniqueSources.length) sourceWhere.abbrev = { in: uniqueSources };
+  if (uniqueEditions.length) sourceWhere.edition = { in: uniqueEditions };
+  return Object.keys(sourceWhere).length ? sourceWhere : undefined;
+}
+
+function componentContainsClause(component: string): Prisma.StringFilter {
+  // Prefer whole-token style matches so "F" does not match only via "DF".
+  if (component === "F") {
+    return { contains: "F", mode: "insensitive" };
+  }
+  return { contains: component, mode: "insensitive" };
+}
+
+/** Build Prisma field filters from category field defs + selected URL values. */
+function buildFieldWhere(
+  category: CategoryKey,
+  fields: Record<string, string[]> | undefined,
+): Record<string, unknown> {
+  if (!fields) return {};
+  const where: Record<string, unknown> = {};
+  const andClauses: Record<string, unknown>[] = [];
+
+  for (const def of CATEGORY_FILTER_FIELDS[category]) {
+    const raw = fields[def.param];
+    if (!raw?.length) continue;
+
+    if (def.valueType === "component") {
+      for (const component of raw) {
+        andClauses.push({ components: componentContainsClause(component) });
+      }
+      continue;
+    }
+
+    if (def.valueType === "relation" && def.param === "class") {
+      if (category === "spells") {
+        where.classLevels = {
+          some: { class: { slug: { in: raw } } },
+        };
+      } else if (category === "psionics") {
+        where.classes = {
+          some: { class: { slug: { in: raw } } },
+        };
+      }
+      continue;
+    }
+
+    if (def.valueType === "prestige") {
+      const wantsBase = raw.includes("base");
+      const wantsPrestige = raw.includes("prestige");
+      if (wantsBase && !wantsPrestige) where.isPrestige = false;
+      else if (wantsPrestige && !wantsBase) where.isPrestige = true;
+      continue;
+    }
+
+    if (def.param === "subtype") {
+      // OR across subtypes: match any selected subtype token inside the subtypes string.
+      where.OR = raw.map((subtype) => ({
+        subtypes: { contains: subtype, mode: "insensitive" as const },
+      }));
+      continue;
+    }
+
+    const normalized = normalizeFilterValues(def, raw);
+    if (!normalized.length) continue;
+    where[def.prismaField] = { in: normalized };
+  }
+
+  if (andClauses.length) {
+    where.AND = [...((where.AND as Record<string, unknown>[]) ?? []), ...andClauses];
+  }
+
+  return where;
+}
+
+export async function listEntities(
+  category: CategoryKey,
+  options: ListEntitiesOptions = {},
+): Promise<{ items: EntityListItem[]; nextCursor: string | null }> {
+  const { cursor, search, description, fields } = options;
+
+  const sourceWhere = buildSourceWhere(options);
+  const fieldWhere = buildFieldWhere(category, fields);
 
   const baseWhere = {
     ...(search ? { name: { contains: search, mode: "insensitive" as const } } : {}),
-    ...(Object.keys(sourceWhere).length ? { source: sourceWhere } : {}),
+    ...(description
+      ? { descriptionText: { contains: description, mode: "insensitive" as const } }
+      : {}),
+    ...(sourceWhere ? { source: sourceWhere } : {}),
+    ...fieldWhere,
   };
 
   const take = PAGE_SIZE + 1;
 
   switch (category) {
     case "spells": {
-      const where: Prisma.SpellWhereInput = {
-        ...baseWhere,
-        ...(filter ? { school: filter } : {}),
-      };
       const rows = await prisma.spell.findMany({
-        where,
+        where: baseWhere as Prisma.SpellWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -146,12 +353,8 @@ export async function listEntities(
       }));
     }
     case "feats": {
-      const where: Prisma.FeatWhereInput = {
-        ...baseWhere,
-        ...(filter ? { featType: filter } : {}),
-      };
       const rows = await prisma.feat.findMany({
-        where,
+        where: baseWhere as Prisma.FeatWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -160,12 +363,8 @@ export async function listEntities(
       return formatList(rows, (r) => ({ type: r.featType }));
     }
     case "monsters": {
-      const where: Prisma.MonsterWhereInput = {
-        ...baseWhere,
-        ...(filter ? { creatureType: filter } : {}),
-      };
       const rows = await prisma.monster.findMany({
-        where,
+        where: baseWhere as Prisma.MonsterWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -179,7 +378,7 @@ export async function listEntities(
     }
     case "classes": {
       const rows = await prisma.dndClass.findMany({
-        where: baseWhere,
+        where: baseWhere as Prisma.DndClassWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -192,7 +391,7 @@ export async function listEntities(
     }
     case "skills": {
       const rows = await prisma.skill.findMany({
-        where: baseWhere,
+        where: baseWhere as Prisma.SkillWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -200,12 +399,13 @@ export async function listEntities(
       });
       return formatList(rows, (r) => ({
         keyAbility: r.keyAbility,
-        trainedOnly: r.trainedOnly?.toString() ?? null,
+        trainedOnly:
+          r.trainedOnly == null ? null : formatBooleanFilterLabel(r.trainedOnly),
       }));
     }
     case "races": {
       const rows = await prisma.race.findMany({
-        where: baseWhere,
+        where: baseWhere as Prisma.RaceWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -217,12 +417,8 @@ export async function listEntities(
       }));
     }
     case "items": {
-      const where: Prisma.ItemWhereInput = {
-        ...baseWhere,
-        ...(filter ? { itemType: filter } : {}),
-      };
       const rows = await prisma.item.findMany({
-        where,
+        where: baseWhere as Prisma.ItemWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -231,12 +427,8 @@ export async function listEntities(
       return formatList(rows, (r) => ({ type: r.itemType, price: r.price }));
     }
     case "equipment": {
-      const where: Prisma.EquipmentWhereInput = {
-        ...baseWhere,
-        ...(filter ? { kind: filter } : {}),
-      };
       const rows = await prisma.equipment.findMany({
-        where,
+        where: baseWhere as Prisma.EquipmentWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -248,8 +440,21 @@ export async function listEntities(
       }));
     }
     case "domains": {
+      // Domains description search should also match granted power text.
+      const domainWhere: Prisma.DomainWhereInput = {
+        ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
+        ...(sourceWhere ? { source: sourceWhere } : {}),
+        ...(description
+          ? {
+              OR: [
+                { descriptionText: { contains: description, mode: "insensitive" } },
+                { grantedPowerText: { contains: description, mode: "insensitive" } },
+              ],
+            }
+          : {}),
+      };
       const rows = await prisma.domain.findMany({
-        where: baseWhere,
+        where: domainWhere,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -261,7 +466,7 @@ export async function listEntities(
     }
     case "deities": {
       const rows = await prisma.deity.findMany({
-        where: baseWhere,
+        where: baseWhere as Prisma.DeityWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -273,12 +478,8 @@ export async function listEntities(
       }));
     }
     case "psionics": {
-      const where: Prisma.PsionicWhereInput = {
-        ...baseWhere,
-        ...(filter ? { discipline: filter } : {}),
-      };
       const rows = await prisma.psionic.findMany({
-        where,
+        where: baseWhere as Prisma.PsionicWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -291,7 +492,7 @@ export async function listEntities(
     }
     case "templates": {
       const rows = await prisma.template.findMany({
-        where: baseWhere,
+        where: baseWhere as Prisma.TemplateWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -303,12 +504,8 @@ export async function listEntities(
       }));
     }
     case "rules": {
-      const where: Prisma.RuleWhereInput = {
-        ...baseWhere,
-        ...(filter ? { category: filter } : {}),
-      };
       const rows = await prisma.rule.findMany({
-        where,
+        where: baseWhere as Prisma.RuleWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: { name: "asc" },
@@ -322,6 +519,349 @@ export async function listEntities(
     default:
       return { items: [], nextCursor: null };
   }
+}
+
+type FilterOption = { value: string; label: string };
+
+export async function getCategoryFilterOptions(
+  category: CategoryKey,
+): Promise<CategoryFilterOptions> {
+  const sourcesWithCategory = await prisma.source.findMany({
+    where: {
+      [category]: { some: {} },
+    },
+    select: { abbrev: true, edition: true },
+    orderBy: [{ abbrev: "asc" }],
+  });
+
+  const sourceOpts: FilterOption[] = sourcesWithCategory
+    .filter((s) => s.abbrev)
+    .map((s) => ({ value: s.abbrev!, label: s.abbrev! }));
+
+  const editionSet = new Set<string>();
+  for (const s of sourcesWithCategory) {
+    if (s.edition) editionSet.add(s.edition);
+  }
+  const editionOpts: FilterOption[] = [...editionSet]
+    .sort()
+    .map((e) => ({ value: e, label: e }));
+
+  const fieldDefs = CATEGORY_FILTER_FIELDS[category];
+  const fields: Record<string, FilterOption[]> = {};
+
+  for (const def of fieldDefs) {
+    fields[def.param] = await getFieldFilterOptions(category, def);
+  }
+
+  return {
+    sources: sourceOpts,
+    editions: editionOpts,
+    fields,
+  };
+}
+
+async function getFieldFilterOptions(
+  category: CategoryKey,
+  def: FilterFieldDef,
+): Promise<FilterOption[]> {
+  const field = def.prismaField;
+
+  if (def.valueType === "component") {
+    return SPELL_COMPONENT_FILTER_OPTIONS;
+  }
+  if (def.valueType === "prestige") {
+    return CLASS_TYPE_FILTER_OPTIONS;
+  }
+
+  switch (category) {
+    case "spells": {
+      if (field === "minLevel") {
+        const rows = await prisma.spell.groupBy({
+          by: ["minLevel"],
+          where: { minLevel: { not: null } },
+          _count: { minLevel: true },
+          orderBy: { minLevel: "asc" },
+        });
+        return rows
+          .filter((r) => r.minLevel != null)
+          .map((r) => ({
+            value: String(r.minLevel),
+            label: String(r.minLevel),
+          }));
+      }
+      if (field === "school") {
+        const rows = await prisma.spell.groupBy({
+          by: ["school"],
+          where: { school: { not: null } },
+          _count: { school: true },
+          orderBy: { _count: { school: "desc" } },
+        });
+        return rows
+          .filter((r) => r.school)
+          .map((r) => ({ value: r.school!, label: r.school! }));
+      }
+      if (def.valueType === "relation" && def.param === "class") {
+        const rows = await prisma.dndClass.findMany({
+          where: { spellLevels: { some: {} } },
+          select: { slug: true, name: true },
+          orderBy: { name: "asc" },
+        });
+        return rows.map((r) => ({ value: r.slug, label: r.name }));
+      }
+      break;
+    }
+    case "feats": {
+      const rows = await prisma.feat.groupBy({
+        by: ["featType"],
+        where: { featType: { not: null } },
+        _count: { featType: true },
+        orderBy: { _count: { featType: "desc" } },
+      });
+      return rows
+        .filter((r) => r.featType)
+        .map((r) => ({ value: r.featType!, label: r.featType! }));
+    }
+    case "monsters": {
+      if (field === "creatureType") {
+        const rows = await prisma.monster.groupBy({
+          by: ["creatureType"],
+          where: { creatureType: { not: null } },
+          _count: { creatureType: true },
+          orderBy: { _count: { creatureType: "desc" } },
+        });
+        return rows
+          .filter((r) => r.creatureType)
+          .map((r) => ({ value: r.creatureType!, label: r.creatureType! }));
+      }
+      if (field === "subtypes") {
+        const rows = await prisma.monster.groupBy({
+          by: ["subtypes"],
+          where: { subtypes: { not: null } },
+          _count: { subtypes: true },
+        });
+        const tokens = new Set<string>();
+        for (const row of rows) {
+          if (!row.subtypes) continue;
+          for (const part of row.subtypes.split(/[,;/]/)) {
+            const token = part.trim();
+            if (token && token !== "—" && token !== "-") tokens.add(token);
+          }
+        }
+        return [...tokens].sort((a, b) => a.localeCompare(b)).map((t) => ({
+          value: t,
+          label: t,
+        }));
+      }
+      if (field === "challengeRating") {
+        const rows = await prisma.monster.groupBy({
+          by: ["challengeRating"],
+          where: { challengeRating: { not: null } },
+          _count: { challengeRating: true },
+          orderBy: { _count: { challengeRating: "desc" } },
+        });
+        return rows
+          .filter((r) => r.challengeRating)
+          .map((r) => ({ value: r.challengeRating!, label: r.challengeRating! }));
+      }
+      break;
+    }
+    case "classes": {
+      if (field === "hitDie") {
+        const rows = await prisma.dndClass.groupBy({
+          by: ["hitDie"],
+          where: { hitDie: { not: null } },
+          _count: { hitDie: true },
+          orderBy: { _count: { hitDie: "desc" } },
+        });
+        return rows
+          .filter((r) => r.hitDie)
+          .map((r) => ({ value: r.hitDie!, label: r.hitDie! }));
+      }
+      if (field === "skillPoints") {
+        const rows = await prisma.dndClass.groupBy({
+          by: ["skillPoints"],
+          where: { skillPoints: { not: null } },
+          _count: { skillPoints: true },
+          orderBy: { _count: { skillPoints: "desc" } },
+        });
+        return rows
+          .filter((r) => r.skillPoints)
+          .map((r) => ({ value: r.skillPoints!, label: r.skillPoints! }));
+      }
+      break;
+    }
+    case "skills": {
+      if (field === "trainedOnly" || field === "armorCheckPenalty") {
+        return [
+          { value: "yes", label: "Yes" },
+          { value: "no", label: "No" },
+        ];
+      }
+      break;
+    }
+    case "races": {
+      if (field === "size") {
+        const rows = await prisma.race.groupBy({
+          by: ["size"],
+          where: { size: { not: null } },
+          _count: { size: true },
+          orderBy: { _count: { size: "desc" } },
+        });
+        return rows
+          .filter((r) => r.size)
+          .map((r) => ({ value: r.size!, label: r.size! }));
+      }
+      if (field === "levelAdjustment") {
+        const rows = await prisma.race.groupBy({
+          by: ["levelAdjustment"],
+          where: { levelAdjustment: { not: null } },
+          _count: { levelAdjustment: true },
+          orderBy: { _count: { levelAdjustment: "desc" } },
+        });
+        return rows
+          .filter((r) => r.levelAdjustment)
+          .map((r) => ({ value: r.levelAdjustment!, label: r.levelAdjustment! }));
+      }
+      break;
+    }
+    case "items": {
+      if (field === "itemType") {
+        const rows = await prisma.item.groupBy({
+          by: ["itemType"],
+          where: { itemType: { not: null } },
+          _count: { itemType: true },
+          orderBy: { _count: { itemType: "desc" } },
+        });
+        return rows
+          .filter((r) => r.itemType)
+          .map((r) => ({ value: r.itemType!, label: r.itemType! }));
+      }
+      break;
+    }
+    case "equipment": {
+      if (field === "kind") {
+        const rows = await prisma.equipment.groupBy({
+          by: ["kind"],
+          where: { kind: { not: null } },
+          _count: { kind: true },
+          orderBy: { _count: { kind: "desc" } },
+        });
+        return rows
+          .filter((r) => r.kind)
+          .map((r) => ({ value: r.kind!, label: r.kind! }));
+      }
+      if (field === "category") {
+        const rows = await prisma.equipment.groupBy({
+          by: ["category"],
+          where: { category: { not: null } },
+          _count: { category: true },
+          orderBy: { _count: { category: "desc" } },
+        });
+        return rows
+          .filter((r) => r.category)
+          .map((r) => ({ value: r.category!, label: r.category! }));
+      }
+      break;
+    }
+    case "deities": {
+      if (field === "alignment") {
+        const rows = await prisma.deity.groupBy({
+          by: ["alignment"],
+          where: { alignment: { not: null } },
+          _count: { alignment: true },
+          orderBy: { _count: { alignment: "desc" } },
+        });
+        return rows
+          .filter((r) => r.alignment)
+          .map((r) => ({ value: r.alignment!, label: r.alignment! }));
+      }
+      if (field === "pantheon") {
+        const rows = await prisma.deity.groupBy({
+          by: ["pantheon"],
+          where: { pantheon: { not: null } },
+          _count: { pantheon: true },
+          orderBy: { _count: { pantheon: "desc" } },
+        });
+        return rows
+          .filter((r) => r.pantheon)
+          .map((r) => ({ value: r.pantheon!, label: r.pantheon! }));
+      }
+      break;
+    }
+    case "psionics": {
+      if (field === "discipline") {
+        const rows = await prisma.psionic.groupBy({
+          by: ["discipline"],
+          where: { discipline: { not: null } },
+          _count: { discipline: true },
+          orderBy: { _count: { discipline: "desc" } },
+        });
+        return rows
+          .filter((r) => r.discipline)
+          .map((r) => ({ value: r.discipline!, label: r.discipline! }));
+      }
+      if (field === "powerPoints") {
+        const rows = await prisma.psionic.groupBy({
+          by: ["powerPoints"],
+          where: { powerPoints: { not: null } },
+          _count: { powerPoints: true },
+          orderBy: { _count: { powerPoints: "desc" } },
+        });
+        return rows
+          .filter((r) => r.powerPoints)
+          .map((r) => ({ value: r.powerPoints!, label: r.powerPoints! }));
+      }
+      if (def.valueType === "relation" && def.param === "class") {
+        const rows = await prisma.dndClass.findMany({
+          where: { psionicLevels: { some: {} } },
+          select: { slug: true, name: true },
+          orderBy: { name: "asc" },
+        });
+        return rows.map((r) => ({ value: r.slug, label: r.name }));
+      }
+      break;
+    }
+    case "templates": {
+      if (field === "templateType") {
+        const rows = await prisma.template.groupBy({
+          by: ["templateType"],
+          where: { templateType: { not: null } },
+          _count: { templateType: true },
+          orderBy: { _count: { templateType: "desc" } },
+        });
+        return rows
+          .filter((r) => r.templateType)
+          .map((r) => ({ value: r.templateType!, label: r.templateType! }));
+      }
+      break;
+    }
+    case "rules": {
+      if (field === "category") {
+        const rows = await prisma.rule.groupBy({
+          by: ["category"],
+          where: { category: { not: null } },
+          _count: { category: true },
+          orderBy: { _count: { category: "desc" } },
+        });
+        return rows
+          .filter((r) => r.category)
+          .map((r) => ({ value: r.category!, label: r.category! }));
+      }
+      if (field === "subcategory") {
+        const rows = await prisma.rule.groupBy({
+          by: ["subcategory"],
+          where: { subcategory: { not: null } },
+          _count: { subcategory: true },
+          orderBy: { _count: { subcategory: "desc" } },
+        });
+        return rows
+          .filter((r) => r.subcategory)
+          .map((r) => ({ value: r.subcategory!, label: r.subcategory! }));
+      }
+      break;
+    }
+  }
+  return [];
 }
 
 function formatList<T extends { slug: string; name: string; source: { abbrev: string | null; edition: string } }>(
@@ -392,11 +932,14 @@ export async function getEntityDetail(
     case "feats": {
       const r = await prisma.feat.findUnique({ where: { slug }, include: { source: src } });
       if (!r) return null;
+      const indexData = r.indexData as Record<string, unknown>;
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
-        source: { ...r.source, page: null },
-        fields: { Type: r.featType },
+        source: { ...r.source, page: indexNumber(indexData, "sourcePage") },
+        statLine: r.featType ? `${r.featType} feat` : null,
+        fields: {},
+        sections: buildFeatSections(indexData),
         related: [],
       };
     }
@@ -410,20 +953,25 @@ export async function getEntityDetail(
         },
       });
       if (!r) return null;
+      const indexData = r.indexData as Record<string, unknown>;
+      const linkedAbilities = r.abilities.map((a) => ({
+        label: a.rule.name,
+        href: `/rules/${a.rule.slug}`,
+      }));
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
-        source: { ...r.source, page: null },
-        fields: {
-          Type: r.creatureType,
-          Subtypes: r.subtypes,
-          "Challenge Rating": r.challengeRating,
-          "Hit Dice": r.hitDice,
-        },
-        related: [
-          ...r.feats.map((f) => ({ label: f.feat.name, href: `/feats/${f.feat.slug}` })),
-          ...r.abilities.map((a) => ({ label: a.rule.name, href: `/rules/${a.rule.slug}` })),
-        ],
+        source: { ...r.source, page: indexNumber(indexData, "sourcePage") },
+        statLine: indexString(indexData, "stat_line"),
+        fields: buildMonsterFields(indexData, r),
+        flavorHtml: indexString(indexData, "flavorHtml"),
+        combatHtml: indexString(indexData, "combatHtml"),
+        featLinks: r.feats.map((f) => ({
+          label: f.feat.name,
+          href: `/feats/${f.feat.slug}`,
+        })),
+        specialAbilities: parseMonsterAbilities(indexData, linkedAbilities),
+        related: [],
       };
     }
     case "classes": {
@@ -448,6 +996,7 @@ export async function getEntityDetail(
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
         source: { ...r.source, page: null },
         fields: { "Hit Die": r.hitDie, "Skill Points": r.skillPoints },
+        sections: buildClassSections(indexData),
         advancementHtml: (indexData?.advancementHtml as string) ?? null,
         spellLevels: levelCounts.map((row) => ({
           level: row.level,
