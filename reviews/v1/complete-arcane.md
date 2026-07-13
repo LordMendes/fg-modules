@@ -1,0 +1,182 @@
+# Complete Arcane
+- **Path:** `C:\Users\User\Documents\fg_modules\reviews\v1\Complete Arcane.mod`
+- **Book slug:** `complete-arcane--55`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 75
+- **Info:** 0
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 22 |
+| feat | 75 |
+| item | 1 |
+| spell | 149 |
+
+## Build warnings (embedded)
+
+- classes/Alienist: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Argent Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Effigy Master: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Geometer: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Green Star Adept: unknown class skill name(s) for FG ruleset: engineering)
+- classes/Initiate of the Sevenfold Veil: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Mage of the Arcane Order: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Mindbender: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Sublime Chord: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Wayfarer Guide: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Wild Mage: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Wu Jen: unknown class skill name(s) for FG ruleset: engineering), royalty)
+
+## Warnings
+
+- **[warning]** `class_unknown_skill` — Alienist: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Alienist: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Argent Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Argent Savant: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Effigy Master: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Effigy Master: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Geometer: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Geometer: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Green Star Adept: unknown class skill name(s) for FG ruleset: engineering)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Green Star Adept: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Initiate of the Sevenfold Veil: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Initiate of the Sevenfold Veil: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Mage of the Arcane Order: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Mage of the Arcane Order: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Mindbender: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Mindbender: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Sublime Chord: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Sublime Chord: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Wayfarer Guide: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Wayfarer Guide: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Wild Mage: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Wild Mage: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Wu Jen: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Wu Jen: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `spell_missing_field` — Absorption: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Absorption: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Aiming At the Target: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Aiming At the Target: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Assay Resistance: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Assay Resistance: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Baleful Utterance: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Baleful Utterance: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Baleful Utterance: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Blink, Greater: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Blink, Greater: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Cloud Chariot: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Cloud Chariot: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Discern Shapechanger: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Discern Shapechanger: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Duelward: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Duelward: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fiendform: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fiendform: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fiery Eyes: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Finding the Center: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Finding the Center: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fire Breath: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fire Breath: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fire Wings: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fire Wings: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fist of Stone: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fist of Stone: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Ghostform: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Ghostform: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Giant Size: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Giant Size: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Heart of Stone: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Heart of Stone: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Lightning Blade: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Minute Form: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Minute Form: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Ring of Blades: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Ring of Blades: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Scales of the Lizard: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Scales of the Lizard: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sign of Sealing, Greater: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sign of Sealing, Greater: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sign of Sealing, Greater: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sign of Sealing, Greater: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spirit Self: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spirit Self: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spiritwall: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Thornskin: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Thornskin: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `missing_type_attr` — Skillful: Field 'cl' should have type="string"
+  - Remediation: Add type attributes per FG export conventions.
