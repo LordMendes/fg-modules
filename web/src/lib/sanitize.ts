@@ -45,3 +45,26 @@ export function sanitizeHtml(html: string | null | undefined): string {
     ALLOWED_ATTR: ["href", "class", "colspan", "rowspan"],
   });
 }
+
+function withEntityTableClass(attrs: string): string {
+  const classMatch = attrs.match(/\sclass="([^"]*)"/i);
+  if (classMatch) {
+    const classes = classMatch[1].includes("entity-table")
+      ? classMatch[1]
+      : `${classMatch[1]} entity-table`.trim();
+    return attrs.replace(/\sclass="[^"]*"/i, ` class="${classes}"`);
+  }
+  return `${attrs} class="entity-table"`;
+}
+
+/** Wrap prose tables for scroll + shared entity-table styling. */
+export function formatProseHtml(html: string | null | undefined): string {
+  const sanitized = sanitizeHtml(html);
+  if (!sanitized.includes("<table")) return sanitized;
+
+  return sanitized
+    .replace(/<table(\s[^>]*)?>/gi, (_match, attrs = "") => {
+      return `<div class="table-wrap"><table${withEntityTableClass(attrs)}>`;
+    })
+    .replace(/<\/table>/gi, "</table></div>");
+}

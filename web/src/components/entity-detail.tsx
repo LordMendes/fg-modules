@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { EntityDetail } from "@/lib/entities";
-import { sanitizeHtml } from "@/lib/sanitize";
+import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
 import { SortableHtmlTables } from "@/components/sortable-html-tables";
@@ -51,7 +51,7 @@ export function EntityDetailView({
               <h2>{section.title}</h2>
               <div
                 className="prose-content"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(section.html) }}
+                dangerouslySetInnerHTML={{ __html: formatProseHtml(section.html) }}
               />
             </section>
           ))}
@@ -104,7 +104,7 @@ export function EntityDetailView({
       {entity.flavorHtml && (
         <section
           className="prose-content flavor-content"
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.flavorHtml) }}
+          dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.flavorHtml) }}
         />
       )}
 
@@ -113,7 +113,7 @@ export function EntityDetailView({
           <h2>Description</h2>
           <div
             className="prose-content"
-            dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}
+            dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.descriptionHtml) }}
           />
         </section>
       )}
@@ -123,7 +123,7 @@ export function EntityDetailView({
           <h2>Combat</h2>
           <div
             className="prose-content"
-            dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.combatHtml) }}
+            dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.combatHtml) }}
           />
         </section>
       )}
@@ -169,7 +169,7 @@ export function EntityDetailView({
           <h2>Description</h2>
           <div
             className="prose-content"
-            dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}
+            dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.descriptionHtml) }}
           />
         </section>
       )}
@@ -177,7 +177,7 @@ export function EntityDetailView({
       {entity.descriptionHtml && category !== "monsters" && category !== "feats" && (
         <section
           className="prose-content"
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}
+          dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.descriptionHtml) }}
         />
       )}
     </article>

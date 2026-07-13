@@ -1211,9 +1211,8 @@ body {
   overflow-x: auto;
 }
 
-.prose-content table {
-  width: max-content;
-  min-width: 100%;
+.prose-content .table-wrap {
+  margin: 1rem 0;
 }
 
 .prose-content p {
