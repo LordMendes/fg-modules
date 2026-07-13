@@ -1,5 +1,7 @@
 import type { CategoryKey } from "@/lib/categories";
+import { DEFAULT_ENTITY_SORT, normalizeEntitySort } from "@/lib/entity-sort";
 import { SPELL_COMPONENT_KEYS } from "@/lib/spell-utils";
+import type { TableSort } from "@/lib/table-sort";
 
 export type FilterFieldDef = {
   /** URL query param key (also used as MultiSelect id). */
@@ -20,6 +22,7 @@ export type ParsedListFilters = {
   sources: string[];
   editions: string[];
   fields: Record<string, string[]>;
+  sort: TableSort | null;
 };
 
 export type CategoryFilterOptions = {
@@ -187,7 +190,22 @@ export function parseListSearchParams(
     if (values.length) fields[def.param] = values;
   }
 
-  return { search, description, sources, editions, fields };
+  const sortColumn = readTextParam(searchParams, "sort");
+  const sortOrder = readTextParam(searchParams, "order");
+  const rawSort: TableSort | null = sortColumn
+    ? {
+        column: sortColumn,
+        direction: sortOrder === "desc" ? "desc" : "asc",
+      }
+    : null;
+  const normalizedSort = normalizeEntitySort(category, rawSort);
+  const sort =
+    normalizedSort.column === DEFAULT_ENTITY_SORT.column &&
+    normalizedSort.direction === DEFAULT_ENTITY_SORT.direction
+      ? null
+      : normalizedSort;
+
+  return { search, description, sources, editions, fields, sort };
 }
 
 /** Build URLSearchParams from current filter state for client navigation. */
@@ -199,6 +217,10 @@ export function buildListSearchParams(filters: ParsedListFilters): URLSearchPara
   if (filters.editions.length) params.set("edition", filters.editions.join(","));
   for (const [key, values] of Object.entries(filters.fields)) {
     if (values.length) params.set(key, values.join(","));
+  }
+  if (filters.sort) {
+    params.set("sort", filters.sort.column);
+    if (filters.sort.direction === "desc") params.set("order", "desc");
   }
   return params;
 }

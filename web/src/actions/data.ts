@@ -11,6 +11,7 @@ import { validateSessionNonce } from "@/lib/session";
 import { rateLimit, getClientIp } from "@/lib/ratelimit";
 import type { CategoryKey } from "@/lib/categories";
 import { isCategoryKey } from "@/lib/categories";
+import type { TableSort } from "@/lib/table-sort";
 
 export type PaginateInput = {
   category: string;
@@ -21,6 +22,7 @@ export type PaginateInput = {
   sources?: string[];
   editions?: string[];
   fields?: Record<string, string[]>;
+  sort?: TableSort | null;
   /** @deprecated Prefer `sources`. */
   sourceAbbrev?: string;
   /** @deprecated Prefer `editions`. */
@@ -55,6 +57,7 @@ export async function paginateEntities(input: PaginateInput): Promise<PaginateRe
     sources: input.sources,
     editions: input.editions,
     fields: input.fields,
+    sort: input.sort,
     sourceAbbrev: input.sourceAbbrev,
     edition: input.edition,
   });

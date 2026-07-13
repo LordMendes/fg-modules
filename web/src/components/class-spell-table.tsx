@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Bookmark } from "lucide-react";
+import { SortableTh } from "@/components/sortable-th";
 import type { ClassSpellRef } from "@/lib/entities";
 import { SPELL_COMPONENT_KEYS } from "@/lib/spell-utils";
+import { sortItems, toggleSort, type TableSort } from "@/lib/table-sort";
 
 function EllipsisCell({
   text,
@@ -52,6 +54,26 @@ function ComponentMark({ present }: { present: boolean }) {
   );
 }
 
+function getSpellSortValue(spell: ClassSpellRef, column: string): unknown {
+  switch (column) {
+    case "name":
+      return spell.name;
+    case "school":
+      return spell.school;
+    case "description":
+      return spell.description;
+    case "source":
+      return spell.sourceAbbrev;
+    case "edition":
+      return spell.edition;
+    default:
+      if (SPELL_COMPONENT_KEYS.includes(column as (typeof SPELL_COMPONENT_KEYS)[number])) {
+        return spell.components[column as keyof ClassSpellRef["components"]];
+      }
+      return null;
+  }
+}
+
 export function ClassSpellTable({
   spells,
   onSpellClick,
@@ -59,28 +81,43 @@ export function ClassSpellTable({
   spells: ClassSpellRef[];
   onSpellClick: (slug: string) => void;
 }) {
+  const [sort, setSort] = useState<TableSort>({ column: "name", direction: "asc" });
+  const sortedSpells = useMemo(
+    () => sortItems(spells, sort, getSpellSortValue),
+    [spells, sort],
+  );
+
+  function handleSort(column: string) {
+    setSort((current) => toggleSort(current, column));
+  }
+
   return (
     <div className="table-wrap class-spell-table-wrap">
       <table className="entity-table class-spell-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>School</th>
-            <th>Description</th>
+            <SortableTh column="name" label="Name" sort={sort} onSort={handleSort} />
+            <SortableTh column="school" label="School" sort={sort} onSort={handleSort} />
+            <SortableTh column="description" label="Description" sort={sort} onSort={handleSort} />
             {SPELL_COMPONENT_KEYS.map((key) => (
-              <th key={key} className="component-col" title={key}>
-                {key}
-              </th>
+              <SortableTh
+                key={key}
+                column={key}
+                label={key}
+                sort={sort}
+                onSort={handleSort}
+                className="component-col"
+              />
             ))}
-            <th>Source</th>
-            <th>Edition</th>
+            <SortableTh column="source" label="Source" sort={sort} onSort={handleSort} />
+            <SortableTh column="edition" label="Edition" sort={sort} onSort={handleSort} />
             <th className="action-col">
               <span className="sr-only">Open</span>
             </th>
           </tr>
         </thead>
         <tbody>
-          {spells.map((spell) => (
+          {sortedSpells.map((spell) => (
             <tr key={spell.slug}>
               <td>
                 <button

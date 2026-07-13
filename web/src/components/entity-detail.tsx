@@ -3,6 +3,7 @@ import type { EntityDetail } from "@/lib/entities";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
+import { SortableHtmlTables } from "@/components/sortable-html-tables";
 
 function formatAdvancementHtml(html: string): string {
   const withClass = html.replace(
@@ -153,10 +154,12 @@ export function EntityDetailView({
         <section className="advancement-section">
           <h2>Advancement</h2>
           <div className="table-wrap advancement-table-wrap">
-            <div
-              className="advancement-table-host"
-              dangerouslySetInnerHTML={{ __html: formatAdvancementHtml(entity.advancementHtml) }}
-            />
+            <SortableHtmlTables>
+              <div
+                className="advancement-table-host"
+                dangerouslySetInnerHTML={{ __html: formatAdvancementHtml(entity.advancementHtml) }}
+              />
+            </SortableHtmlTables>
           </div>
         </section>
       )}

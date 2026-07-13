@@ -12,6 +12,8 @@ import {
   type CategoryFilterOptions,
   type FilterFieldDef,
 } from "@/lib/entity-filters";
+import { buildEntityOrderBy } from "@/lib/entity-sort";
+import type { TableSort } from "@/lib/table-sort";
 
 export type EntityListItem = {
   slug: string;
@@ -228,6 +230,7 @@ export type ListEntitiesOptions = {
   editions?: string[];
   /** Map of URL param → selected values (multi). */
   fields?: Record<string, string[]>;
+  sort?: TableSort | null;
 };
 
 function buildSourceWhere(options: ListEntitiesOptions): Prisma.SourceWhereInput | undefined {
@@ -336,6 +339,7 @@ export async function listEntities(
   };
 
   const take = PAGE_SIZE + 1;
+  const orderBy = buildEntityOrderBy(category, options.sort);
 
   switch (category) {
     case "spells": {
@@ -343,7 +347,7 @@ export async function listEntities(
         where: baseWhere as Prisma.SpellWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.SpellOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -357,7 +361,7 @@ export async function listEntities(
         where: baseWhere as Prisma.FeatWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.FeatOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({ type: r.featType }));
@@ -367,7 +371,7 @@ export async function listEntities(
         where: baseWhere as Prisma.MonsterWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.MonsterOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -381,7 +385,7 @@ export async function listEntities(
         where: baseWhere as Prisma.DndClassWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.DndClassOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -394,7 +398,7 @@ export async function listEntities(
         where: baseWhere as Prisma.SkillWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.SkillOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -408,7 +412,7 @@ export async function listEntities(
         where: baseWhere as Prisma.RaceWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.RaceOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -421,7 +425,7 @@ export async function listEntities(
         where: baseWhere as Prisma.ItemWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.ItemOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({ type: r.itemType, price: r.price }));
@@ -431,7 +435,7 @@ export async function listEntities(
         where: baseWhere as Prisma.EquipmentWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.EquipmentOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -457,7 +461,7 @@ export async function listEntities(
         where: domainWhere,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.DomainOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -469,7 +473,7 @@ export async function listEntities(
         where: baseWhere as Prisma.DeityWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.DeityOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -482,7 +486,7 @@ export async function listEntities(
         where: baseWhere as Prisma.PsionicWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.PsionicOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -495,7 +499,7 @@ export async function listEntities(
         where: baseWhere as Prisma.TemplateWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.TemplateOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
@@ -508,7 +512,7 @@ export async function listEntities(
         where: baseWhere as Prisma.RuleWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
-        orderBy: { name: "asc" },
+        orderBy: orderBy as Prisma.RuleOrderByWithRelationInput[],
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({

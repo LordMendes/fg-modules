@@ -445,6 +445,40 @@ body {
   padding: 0.75rem 1rem;
   border-bottom: 2px solid var(--border-ornament);
   white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.sortable-th {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+}
+
+.sortable-th:hover {
+  color: var(--accent);
+}
+
+.sortable-th.is-sorted {
+  color: var(--accent);
+}
+
+.sort-indicator {
+  font-size: 0.65rem;
+  opacity: 0.55;
+  line-height: 1;
+}
+
+.sortable-th.is-sorted .sort-indicator {
+  opacity: 1;
 }
 
 .entity-table td {
@@ -1212,9 +1246,15 @@ body {
   cursor: not-allowed;
 }
 
-.load-more-wrap {
+.infinite-scroll-sentinel {
+  min-height: 1px;
+  padding: 1.5rem 0 0.5rem;
   text-align: center;
-  margin-top: 1.5rem;
+}
+
+.infinite-scroll-status {
+  color: var(--text-muted);
+  font-size: 0.875rem;
 }
 
 /* Page headers */

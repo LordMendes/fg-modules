@@ -1,6 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { SortableTh } from "@/components/sortable-th";
+import { DEFAULT_ENTITY_SORT } from "@/lib/entity-sort";
 import type { EntityListItem } from "@/lib/entities";
 import type { CategoryKey } from "@/lib/categories";
+import { buildListSearchParams, parseListSearchParams } from "@/lib/entity-filters";
+import { toggleSort, type TableSort } from "@/lib/table-sort";
 
 type Column = { key: string; label: string };
 
@@ -58,23 +65,45 @@ const CATEGORY_COLUMNS: Record<CategoryKey, Column[]> = {
 export function EntityTable({
   category,
   items,
+  sort,
 }: {
   category: CategoryKey;
   items: EntityListItem[];
+  sort: TableSort | null;
 }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const columns = CATEGORY_COLUMNS[category] ?? [];
+  const activeSort = sort ?? DEFAULT_ENTITY_SORT;
+
+  function handleSort(column: string) {
+    const filters = parseListSearchParams(
+      category,
+      Object.fromEntries(searchParams.entries()),
+    );
+    const nextSort = toggleSort(filters.sort ?? DEFAULT_ENTITY_SORT, column);
+    const params = buildListSearchParams({ ...filters, sort: nextSort });
+    const qs = params.toString();
+    router.push(qs ? `/${category}?${qs}` : `/${category}`);
+  }
 
   return (
     <div className="table-wrap">
       <table className="entity-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <SortableTh column="name" label="Name" sort={activeSort} onSort={handleSort} />
             {columns.map((col) => (
-              <th key={col.key}>{col.label}</th>
+              <SortableTh
+                key={col.key}
+                column={col.key}
+                label={col.label}
+                sort={activeSort}
+                onSort={handleSort}
+              />
             ))}
-            <th>Source</th>
-            <th>Edition</th>
+            <SortableTh column="source" label="Source" sort={activeSort} onSort={handleSort} />
+            <SortableTh column="edition" label="Edition" sort={activeSort} onSort={handleSort} />
           </tr>
         </thead>
         <tbody>

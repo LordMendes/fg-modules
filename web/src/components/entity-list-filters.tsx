@@ -48,8 +48,9 @@ export function EntityListFilters({
       sources,
       editions,
       fields,
+      sort: initialFilters.sort,
     }),
-    [search, description, sources, editions, fields],
+    [search, description, sources, editions, fields, initialFilters.sort],
   );
 
   const active = hasActiveFilters(draftFilters) || hasActiveFilters(initialFilters);
@@ -79,6 +80,7 @@ export function EntityListFilters({
       sources: [],
       editions: [],
       fields: cleared,
+      sort: initialFilters.sort,
     });
   }
 
