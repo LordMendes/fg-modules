@@ -1,19 +1,20 @@
-# FG Modules — D&D 3.5 Scraper & Builder
+# FG Modules — D&D 3.5 Scraper & Reference Site
+
+Monorepo for scraping D&D 3.5 content from [new.dndtools.org](https://new.dndtools.org) into structured JSON, serving it via a Next.js reference site, and (legacy) building Fantasy Grounds modules.
 
 ## Monorepo layout
-
-This repository is a **pnpm monorepo**:
 
 | Package | Path | Description |
 |---------|------|-------------|
 | `@fg-modules/web` | `web/` | Next.js D&D 3.5 reference site |
 | Python scraper | `scraper/` | Scrapes new.dndtools.org → `data/dndtools/` |
+| Legacy FG builder | `old/scraper/` | Scrapes dnd.arkalseif.info → `.mod` files |
 
 ```bash
 corepack enable
 pnpm install          # install all workspace deps
 pnpm dev              # start @fg-modules/web
-pnpm import:dndtools  # load JSON into Postgres
+pnpm import:dndtools  # load scraped JSON into Postgres
 ```
 
 See [`web/README.md`](web/README.md) for the full web app setup.
@@ -22,188 +23,180 @@ See [`web/README.md`](web/README.md) for the full web app setup.
 
 ## Project goal
 
-Fantasy Grounds is a virtual tabletop that loads **modules** — packaged rule content such as spells, feats, classes, items, and races — so players and GMs can drag entries onto character sheets and reference them in play. Building that content by hand for dozens of D&D 3.5 supplement books is slow and error-prone.
+1. **Scrape** D&D 3.5 rules data from [new.dndtools.org](https://new.dndtools.org) into normalized JSON (spells, feats, classes, monsters, etc.).
+2. **Serve** that data through the web reference site (`pnpm dev` after `pnpm import:dndtools`).
 
-This project automates that workflow end to end:
+The legacy Fantasy Grounds pipeline (scrape rulebooks from dnd.arkalseif.info, convert to `.mod` files) lives under `old/scraper/` — see [Legacy FG builder](#legacy-fg-builder) below.
 
-1. **Scrape** rulebook pages from [dnd.arkalseif.info](https://dnd.arkalseif.info) into structured JSON (spells, feats, classes, skills, items, races).
-2. **Convert** that JSON into Fantasy Grounds 3.5E database XML with fields aligned to the 3.5E ruleset conventions.
-3. **Package** the result as installable `.mod` files you can load in Fantasy Grounds.
-
-The intended outcome is a repeatable pipeline: point at an edition index (for example, all 3.5 supplementals), run one command, and get a folder of FG modules ready for personal use at the table — without manually retyping hundreds of entries per book.
+---
 
 ## Requirements
 
-- Python 3.10+
-- Internet access to dnd.arkalseif.info
+- **Python 3.10+** for the scraper
+- **Node.js 22+** and **pnpm 10+** for the web app
+- Internet access to new.dndtools.org
 
-## Setup
+> **Ubuntu 20.04 note:** system `python3` is often 3.8. Check with `python3 --version`. If it is below 3.10, use `python3.11` or `python3.12` instead (already installed on many systems).
+
+---
+
+## Scraper setup
 
 From the project root:
+
+**Windows (PowerShell):**
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-pip install -r scraper/requirements.txt
+pip install -r requirements.txt
 ```
 
-On Linux/WSL:
+**Linux / macOS:**
 
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv   # use any 3.10+ interpreter; not plain python3 on older Ubuntu
 source .venv/bin/activate
-pip install -r scraper/requirements.txt
+pip install -r requirements.txt
 ```
 
-## Quick start — full edition pipeline
+Confirm the venv is using the right Python:
 
-Use **`build_edition.py`** to scrape every book listed on an edition index page, build FG modules, and package `.mod` files in one run.
-
-Example — all 3.5 supplementals:
-
-```powershell
-python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html"
+```bash
+python --version   # must be 3.10+
 ```
 
-This will:
+A virtual environment is recommended but not required — you can also run `python3.11 -m pip install -r requirements.txt` and invoke `python3.11 -m scraper.scrape_all` directly.
 
-1. Discover all books on the index (49 for supplementals-35--5)
-2. Scrape each book into `scraped/{book-slug}/`
-3. Build each module into `modules/{Book Name}.mod`
-4. Write a rollup report to `scraped/_supplementals-35--5-pipeline.json`
+---
 
-### Useful pipeline flags
+## Running the scraper
 
-| Flag | Description |
-|------|-------------|
-| `--list` | List discovered books and exit |
-| `--only complete-divine,complete-arcane` | Process only named books (folder slug or display name) |
-| `--limit 5` | Process at most N books |
-| `--skip-existing` | Skip scraping when `summary.json` already exists |
-| `--rebuild` | Rebuild modules even when output already exists |
-| `--skip-scrape` | Build modules from existing scraped JSON only |
-| `--skip-build` | Scrape only; do not build FG modules |
-| `--no-zip` | Write unpacked module folders instead of `.mod` files |
-| `--delay 0.5` | Seconds between HTTP requests (default: 0.5) |
-| `--cache scraped/.cache` | HTTP response cache directory |
+Always run from the **repo root** as a module:
 
-### Resume a long run
-
-If a run stops partway through, rerun with `--skip-existing` to skip books already scraped:
-
-```powershell
-python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html" --skip-existing
+```bash
+python -m scraper.scrape_all
 ```
 
-### Process one book from an edition
+Do **not** run `python3 -m scrape_all` from inside `scraper/` — relative imports require the package path `scraper.scrape_all`.
 
-```powershell
-python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html" --only complete-divine
+### Quick test
+
+```bash
+python -m scraper.scrape_all --categories spells --limit 10 --dry-run
+python -m scraper.scrape_all --categories spells --limit 10
 ```
 
-## Step-by-step (manual workflow)
+### Full scrape
 
-You can also run each stage separately.
+Scrapes all 13 categories into `data/dndtools/`:
 
-### 1. Scrape a single book
-
-```powershell
-python scraper/scrape_book.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/complete-divine--56/index.html" --output scraped/complete-divine --cache scraped/.cache
+```bash
+python -m scraper.scrape_all
 ```
 
-Output per book:
+### CLI flags
 
-```
-scraped/complete-divine/
-  summary.json      # scrape stats
-  book.json         # combined book data
-  spells.json
-  feats.json
-  classes.json
-  skills.json
-  items.json
-  races.json
-```
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--output PATH` | `data/dndtools` | Output directory |
+| `--categories LIST` | all 13 | Comma-separated subset (see table below) |
+| `--delay SECONDS` | `0.5` | Delay between HTTP requests |
+| `--cache PATH` | `data/dndtools/.cache` | HTTP response cache |
+| `--workers N` | `8` | Parallel detail-page workers |
+| `--limit N` | none | Cap records per category (testing) |
+| `--resume` | off | Skip URLs already in output JSON |
+| `--index-only` | off | Index pages only, skip detail pages |
+| `--dry-run` | off | Print plan without writing files |
 
-### 2. Scrape all books in an edition (JSON only)
+### Categories
 
-```powershell
-python scraper/scrape_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html" --output scraped --cache scraped/.cache
-```
+| Category | Output file | ~Records |
+|----------|-------------|----------|
+| spells | `spells.json` | 5,035 |
+| feats | `feats.json` | 3,665 |
+| classes | `classes.json` | 1,054 |
+| monsters | `monsters.json` | 807 |
+| items | `items.json` | 816 |
+| psionics | `psionics.json` | 703 |
+| deities | `deities.json` | 670 |
+| domains | `domains.json` | 368 |
+| rules | `rules.json` | 273 |
+| templates | `templates.json` | 155 |
+| races | `races.json` | 150 |
+| skills | `skills.json` | 80 |
+| equipment | `equipment.json` | 65 |
 
-Supports the same `--list`, `--only`, `--limit`, and `--skip-existing` flags as the pipeline.
+Scrape a subset:
 
-### 3. Build a Fantasy Grounds module from scraped JSON
-
-```powershell
-python scraper/json_to_fg.py scraped/complete-divine --output "modules/Complete Divine.mod"
-```
-
-Produces:
-
-```
-modules/Complete Divine.mod
-```
-
-### Rebuild modules after converter changes
-
-If you already have scraped JSON and only need to regenerate `.mod` files (for example after updating the FG builder):
-
-```powershell
-python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html" --skip-scrape --rebuild
+```bash
+python -m scraper.scrape_all --categories spells,feats,classes
 ```
 
-Or rebuild a single book:
+### Resume after interruption
 
-```powershell
-python scraper/json_to_fg.py scraped/stormwrack --output "modules/Stormwrack.mod"
+```bash
+python -m scraper.scrape_all --resume
 ```
+
+---
 
 ## Output layout
 
 ```
-fg_modules/
-├── scraped/              # scraped JSON per book
-│   ├── .cache/           # HTTP cache (shared)
-│   └── complete-divine/
-├── modules/              # packaged .mod files
-│   └── Complete Divine.mod
+data/dndtools/
+├── .cache/           # HTTP cache (shared)
+├── summary.json      # scrape stats per category
+├── errors.json       # failed URLs (if any)
+├── spells.json
+├── feats.json
+├── classes.json
+└── …                 # one JSON file per category
 ```
 
-## Installing modules in Fantasy Grounds
+Each `{category}.json` is an array of record objects with normalized fields, source metadata, and HTML/text descriptions.
 
-1. Copy the `.mod` file from `modules/` into your Fantasy Grounds modules folder, or
-2. In FG, use **Load Module** and point to the `.mod` file.
+---
+
+## Load data into the web app
+
+After scraping:
+
+```bash
+docker compose up -d postgres   # if not already running
+pnpm import:dndtools
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
 
 ## Tests
 
-```powershell
+```bash
 python -m pytest scraper/tests -q
 ```
 
-Skip the slow live-network integration test:
+Tests use local HTML fixtures — no network required.
 
-```powershell
-python -m pytest scraper/tests -q -k "not test_full_scrape_counts"
+---
+
+## Legacy FG builder
+
+The original workflow for building Fantasy Grounds `.mod` files from [dnd.arkalseif.info](https://dnd.arkalseif.info) is preserved in `old/scraper/`:
+
+```bash
+pip install -r old/scraper/requirements.txt
+python old/scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html"
 ```
 
-## Edition index URLs
+Key scripts: `build_edition.py` (full pipeline), `scrape_book.py`, `scrape_edition.py`, `json_to_fg.py`. Output goes to `scraped/` and `modules/`.
 
-Any edition index page under `/rulebooks/` works. Examples:
-
-- [Supplementals 3.5](https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html)
-- Other edition lists at `https://dnd.arkalseif.info/rulebooks/`
-
-Use `--list` first to preview which books will be processed:
-
-```powershell
-python scraper/build_edition.py "https://dnd.arkalseif.info/rulebooks/supplementals-35--5/index.html" --list
-```
+---
 
 ## Notes
 
 - Scraped content is for personal use. Respect the source site's terms and rate limits; the default `--delay 0.5` helps avoid hammering the server.
-- Class automation in FG 3.5E depends on specific field names and feature text (hit die, BAB, saves, class skills, spellcasting features). The converter targets the Test 3.5E ruleset conventions where possible.
-- Prestige class prerequisites are written to `<requirements type="formattedtext">` and duplicated in the Main tab `<text>` field (the Test 3.5E ruleset only displays `text` on the class Main tab). Requirements use block-level HTML (`<p>`, `<b>`) so FG renders line breaks and bold labels correctly.
-- The builder strips invalid XML control characters (for example `0x01` from some source pages) so modules load cleanly in Fantasy Grounds.
-- Per-category JSON files (`classes.json`, etc.) override embedded data in `book.json` when both exist.
+- If you see `TypeError: 'type' object is not subscriptable`, you are on Python 3.8/3.9 — switch to 3.10+.
+- The scraper prints a clear error at startup when the Python version is too old.

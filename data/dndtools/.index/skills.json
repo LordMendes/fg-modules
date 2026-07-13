@@ -1,0 +1,1042 @@
+[
+  {
+    "name": "Alchemy",
+    "url": "https://new.dndtools.org/skills/alchemy",
+    "slug": "alchemy",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Animal Empathy",
+    "url": "https://new.dndtools.org/skills/animal-empathy",
+    "slug": "animal-empathy",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Appraise",
+    "url": "https://new.dndtools.org/skills/appraise",
+    "slug": "appraise",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Autohypnosis",
+    "url": "https://new.dndtools.org/skills/autohypnosis",
+    "slug": "autohypnosis",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Balance",
+    "url": "https://new.dndtools.org/skills/balance",
+    "slug": "balance",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Bluff",
+    "url": "https://new.dndtools.org/skills/bluff",
+    "slug": "bluff",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Climb",
+    "url": "https://new.dndtools.org/skills/climb",
+    "slug": "climb",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "STR",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Concentration",
+    "url": "https://new.dndtools.org/skills/concentration",
+    "slug": "concentration",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CON",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Control Shape",
+    "url": "https://new.dndtools.org/skills/control-shape",
+    "slug": "control-shape",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "MM"
+    }
+  },
+  {
+    "name": "Craft",
+    "url": "https://new.dndtools.org/skills/craft",
+    "slug": "craft",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Craft",
+    "url": "https://new.dndtools.org/skills/craft-ecs-variant",
+    "slug": "craft-ecs-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Decipher Script",
+    "url": "https://new.dndtools.org/skills/decipher-script",
+    "slug": "decipher-script",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Diplomacy",
+    "url": "https://new.dndtools.org/skills/diplomacy",
+    "slug": "diplomacy",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Disable Device",
+    "url": "https://new.dndtools.org/skills/disable-device",
+    "slug": "disable-device",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Disguise",
+    "url": "https://new.dndtools.org/skills/disguise",
+    "slug": "disguise",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Escape Artist",
+    "url": "https://new.dndtools.org/skills/escape-artist",
+    "slug": "escape-artist",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Forgery",
+    "url": "https://new.dndtools.org/skills/forgery",
+    "slug": "forgery",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Gather Information",
+    "url": "https://new.dndtools.org/skills/gather-information",
+    "slug": "gather-information",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Handle Animal",
+    "url": "https://new.dndtools.org/skills/handle-animal",
+    "slug": "handle-animal",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Heal",
+    "url": "https://new.dndtools.org/skills/heal",
+    "slug": "heal",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Hide",
+    "url": "https://new.dndtools.org/skills/hide",
+    "slug": "hide",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Iaijutsu Focus",
+    "url": "https://new.dndtools.org/skills/iaijutsu-focus",
+    "slug": "iaijutsu-focus",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Innuendo",
+    "url": "https://new.dndtools.org/skills/innuendo",
+    "slug": "innuendo",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Intimidate",
+    "url": "https://new.dndtools.org/skills/intimidate",
+    "slug": "intimidate",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Intimidate",
+    "url": "https://new.dndtools.org/skills/intimidate-tob-variant",
+    "slug": "intimidate-tob-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "ToB"
+    }
+  },
+  {
+    "name": "Intuit Direction",
+    "url": "https://new.dndtools.org/skills/intuit-direction",
+    "slug": "intuit-direction",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Jump",
+    "url": "https://new.dndtools.org/skills/jump",
+    "slug": "jump",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "STR",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge",
+    "url": "https://new.dndtools.org/skills/knowledge",
+    "slug": "knowledge",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (Shadowlands)",
+    "url": "https://new.dndtools.org/skills/knowledge-shadowlands",
+    "slug": "knowledge-shadowlands",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Knowledge (War)",
+    "url": "https://new.dndtools.org/skills/knowledge-war",
+    "slug": "knowledge-war",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    }
+  },
+  {
+    "name": "Knowledge (arcana)",
+    "url": "https://new.dndtools.org/skills/knowledge-arcana",
+    "slug": "knowledge-arcana",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (architecture and engineering)",
+    "url": "https://new.dndtools.org/skills/knowledge-architecture-and-engineering",
+    "slug": "knowledge-architecture-and-engineering",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (barbarian lore)",
+    "url": "https://new.dndtools.org/skills/knowledge-barbarian-lore",
+    "slug": "knowledge-barbarian-lore",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Knowledge (code of martial honor)",
+    "url": "https://new.dndtools.org/skills/knowledge-code-martial-honor",
+    "slug": "knowledge-code-martial-honor",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    }
+  },
+  {
+    "name": "Knowledge (dungeoneering)",
+    "url": "https://new.dndtools.org/skills/knowledge-dungeoneering",
+    "slug": "knowledge-dungeoneering",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (geography)",
+    "url": "https://new.dndtools.org/skills/knowledge-geography",
+    "slug": "knowledge-geography",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (ghost lore)",
+    "url": "https://new.dndtools.org/skills/knowledge-ghost-lore",
+    "slug": "knowledge-ghost-lore",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "Gh"
+    }
+  },
+  {
+    "name": "Knowledge (history)",
+    "url": "https://new.dndtools.org/skills/knowledge-history",
+    "slug": "knowledge-history",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (law)",
+    "url": "https://new.dndtools.org/skills/knowledge-law",
+    "slug": "knowledge-law",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    }
+  },
+  {
+    "name": "Knowledge (local)",
+    "url": "https://new.dndtools.org/skills/knowledge-local",
+    "slug": "knowledge-local",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (nature)",
+    "url": "https://new.dndtools.org/skills/knowledge-nature",
+    "slug": "knowledge-nature",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (nobility and royalty)",
+    "url": "https://new.dndtools.org/skills/knowledge-nobility-and-royalty",
+    "slug": "knowledge-nobility-and-royalty",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (psionics)",
+    "url": "https://new.dndtools.org/skills/knowledge-psionics",
+    "slug": "knowledge-psionics",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "Web35"
+    }
+  },
+  {
+    "name": "Knowledge (religion)",
+    "url": "https://new.dndtools.org/skills/knowledge-religion",
+    "slug": "knowledge-religion",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (spirits)",
+    "url": "https://new.dndtools.org/skills/knowledge-spirits",
+    "slug": "knowledge-spirits",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Knowledge (the planes)",
+    "url": "https://new.dndtools.org/skills/knowledge-the-planes",
+    "slug": "knowledge-the-planes",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge (weaponry)",
+    "url": "https://new.dndtools.org/skills/knowledge-weaponry",
+    "slug": "knowledge-weaponry",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    }
+  },
+  {
+    "name": "Listen",
+    "url": "https://new.dndtools.org/skills/listen",
+    "slug": "listen",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Lucid Dreaming",
+    "url": "https://new.dndtools.org/skills/lucid-dreaming",
+    "slug": "lucid-dreaming",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "MP"
+    }
+  },
+  {
+    "name": "Martial Lore",
+    "url": "https://new.dndtools.org/skills/martial-lore",
+    "slug": "martial-lore",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "ToB"
+    }
+  },
+  {
+    "name": "Move Silently",
+    "url": "https://new.dndtools.org/skills/move-silently",
+    "slug": "move-silently",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Open Lock",
+    "url": "https://new.dndtools.org/skills/open-lock",
+    "slug": "open-lock",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Perform",
+    "url": "https://new.dndtools.org/skills/perform",
+    "slug": "perform",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Perform",
+    "url": "https://new.dndtools.org/skills/perform-oa-variant",
+    "slug": "perform-oa-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Pick Pocket",
+    "url": "https://new.dndtools.org/skills/pick-pocket",
+    "slug": "pick-pocket",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Profession",
+    "url": "https://new.dndtools.org/skills/profession",
+    "slug": "profession",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Profession",
+    "url": "https://new.dndtools.org/skills/profession-oa-variant",
+    "slug": "profession-oa-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Psicraft",
+    "url": "https://new.dndtools.org/skills/psicraft",
+    "slug": "psicraft",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Read Lips",
+    "url": "https://new.dndtools.org/skills/read-lips",
+    "slug": "read-lips",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Remote View",
+    "url": "https://new.dndtools.org/skills/remote-view",
+    "slug": "remote-view",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PsH3"
+    }
+  },
+  {
+    "name": "Ride",
+    "url": "https://new.dndtools.org/skills/ride",
+    "slug": "ride",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Scry",
+    "url": "https://new.dndtools.org/skills/scry",
+    "slug": "scry",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  },
+  {
+    "name": "Search",
+    "url": "https://new.dndtools.org/skills/search",
+    "slug": "search",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Sense Motive",
+    "url": "https://new.dndtools.org/skills/sense-motive",
+    "slug": "sense-motive",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Sense Motive",
+    "url": "https://new.dndtools.org/skills/sense-motive-oa-variant",
+    "slug": "sense-motive-oa-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Sleight of Hand",
+    "url": "https://new.dndtools.org/skills/sleight-of-hand",
+    "slug": "sleight-of-hand",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Speak Language",
+    "url": "https://new.dndtools.org/skills/speak-language",
+    "slug": "speak-language",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "—",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Speak Language",
+    "url": "https://new.dndtools.org/skills/speak-language-oa-variant",
+    "slug": "speak-language-oa-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "—",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Spellcraft",
+    "url": "https://new.dndtools.org/skills/spellcraft",
+    "slug": "spellcraft",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Spot",
+    "url": "https://new.dndtools.org/skills/spot",
+    "slug": "spot",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Stabilize Self",
+    "url": "https://new.dndtools.org/skills/stabilize-self",
+    "slug": "stabilize-self",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CON",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PsH3"
+    }
+  },
+  {
+    "name": "Survival",
+    "url": "https://new.dndtools.org/skills/survival",
+    "slug": "survival",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Swim",
+    "url": "https://new.dndtools.org/skills/swim",
+    "slug": "swim",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "STR",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Truespeak",
+    "url": "https://new.dndtools.org/skills/truespeak",
+    "slug": "truespeak",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "TM"
+    }
+  },
+  {
+    "name": "Tumble",
+    "url": "https://new.dndtools.org/skills/tumble",
+    "slug": "tumble",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Tumble",
+    "url": "https://new.dndtools.org/skills/tumble-oa-variant",
+    "slug": "tumble-oa-variant",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Use Magic Device",
+    "url": "https://new.dndtools.org/skills/use-magic-device",
+    "slug": "use-magic-device",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Use Psionic Device",
+    "url": "https://new.dndtools.org/skills/use-psionic-device",
+    "slug": "use-psionic-device",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Use Rope",
+    "url": "https://new.dndtools.org/skills/use-rope",
+    "slug": "use-rope",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Wilderness Lore",
+    "url": "https://new.dndtools.org/skills/wilderness-lore",
+    "slug": "wilderness-lore",
+    "id": null,
+    "category": "skills",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    }
+  }
+]

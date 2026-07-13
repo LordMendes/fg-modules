@@ -1,0 +1,1952 @@
+[
+  {
+    "name": "Aasimar",
+    "url": "https://new.dndtools.org/races/aasimar-17",
+    "slug": "aasimar-17",
+    "id": 17,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Aasimar",
+    "url": "https://new.dndtools.org/races/aasimar-92",
+    "slug": "aasimar-92",
+    "id": 92,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Air Genasi",
+    "url": "https://new.dndtools.org/races/air-genasi-83",
+    "slug": "air-genasi-83",
+    "id": 83,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Aquatic Elf",
+    "url": "https://new.dndtools.org/races/aquatic-elf-94",
+    "slug": "aquatic-elf-94",
+    "id": 94,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Aquatic Elf",
+    "url": "https://new.dndtools.org/races/aquatic-elf-125",
+    "slug": "aquatic-elf-125",
+    "id": 125,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Aquatic Half-Elf",
+    "url": "https://new.dndtools.org/races/aquatic-half-elf-128",
+    "slug": "aquatic-half-elf-128",
+    "id": 128,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Aquatic Half-Elf",
+    "url": "https://new.dndtools.org/races/aquatic-half-elf-110",
+    "slug": "aquatic-half-elf-110",
+    "id": 110,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Arctic Dwarf",
+    "url": "https://new.dndtools.org/races/arctic-dwarf-46",
+    "slug": "arctic-dwarf-46",
+    "id": 46,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Asherati",
+    "url": "https://new.dndtools.org/races/asherati-130",
+    "slug": "asherati-130",
+    "id": 130,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sa",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Avariel",
+    "url": "https://new.dndtools.org/races/avariel-95",
+    "slug": "avariel-95",
+    "id": 95,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Aventi",
+    "url": "https://new.dndtools.org/races/aventi-43",
+    "slug": "aventi-43",
+    "id": 43,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Badlands Dwarf",
+    "url": "https://new.dndtools.org/races/badlands-dwarf-132",
+    "slug": "badlands-dwarf-132",
+    "id": 132,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sa",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Bariaur",
+    "url": "https://new.dndtools.org/races/bariaur-23",
+    "slug": "bariaur-23",
+    "id": 23,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "BE",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Bhukas",
+    "url": "https://new.dndtools.org/races/bhukas-131",
+    "slug": "bhukas-131",
+    "id": 131,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sa",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Bugbear",
+    "url": "https://new.dndtools.org/races/bugbear-120",
+    "slug": "bugbear-120",
+    "id": 120,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Bugbear",
+    "url": "https://new.dndtools.org/races/bugbear-140",
+    "slug": "bugbear-140",
+    "id": 140,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "MM",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Catfolk",
+    "url": "https://new.dndtools.org/races/catfolk-121",
+    "slug": "catfolk-121",
+    "id": 121,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RW",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Centaur",
+    "url": "https://new.dndtools.org/races/centaur-145",
+    "slug": "centaur-145",
+    "id": 145,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "RW",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Chaos Gnome",
+    "url": "https://new.dndtools.org/races/chaos-gnome-135",
+    "slug": "chaos-gnome-135",
+    "id": 135,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RS",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Darfellan",
+    "url": "https://new.dndtools.org/races/darfellan-44",
+    "slug": "darfellan-44",
+    "id": 44,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Deep Gnome",
+    "url": "https://new.dndtools.org/races/deep-gnome-75",
+    "slug": "deep-gnome-75",
+    "id": 75,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Deep Gnome",
+    "url": "https://new.dndtools.org/races/deep-gnome-106",
+    "slug": "deep-gnome-106",
+    "id": 106,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Deepwyrm Drow",
+    "url": "https://new.dndtools.org/races/deepwyrm-drow-48",
+    "slug": "deepwyrm-drow-48",
+    "id": 48,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Deepwyrm Half-Drow",
+    "url": "https://new.dndtools.org/races/deepwyrm-half-drow-49",
+    "slug": "deepwyrm-half-drow-49",
+    "id": 49,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Dekanter Goblin",
+    "url": "https://new.dndtools.org/races/dekanter-goblin-117",
+    "slug": "dekanter-goblin-117",
+    "id": 117,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "4",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Diabolus",
+    "url": "https://new.dndtools.org/races/diabolus-29",
+    "slug": "diabolus-29",
+    "id": 29,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "DC",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Diopsid",
+    "url": "https://new.dndtools.org/races/diopsid-30",
+    "slug": "diopsid-30",
+    "id": 30,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "DC",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Doppelganger",
+    "url": "https://new.dndtools.org/races/doppelganger-9",
+    "slug": "doppelganger-9",
+    "id": 9,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "4",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Dragonborn of Bahamut",
+    "url": "https://new.dndtools.org/races/dragonborn-of-bahamut-137",
+    "slug": "dragonborn-of-bahamut-137",
+    "id": 137,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RDr",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Dream Dwarf",
+    "url": "https://new.dndtools.org/races/dream-dwarf-136",
+    "slug": "dream-dwarf-136",
+    "id": 136,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RS",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Drow",
+    "url": "https://new.dndtools.org/races/drow-6",
+    "slug": "drow-6",
+    "id": 6,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "MM",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Drow",
+    "url": "https://new.dndtools.org/races/drow-68",
+    "slug": "drow-68",
+    "id": 68,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Drow",
+    "url": "https://new.dndtools.org/races/drow-96",
+    "slug": "drow-96",
+    "id": 96,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Dvati",
+    "url": "https://new.dndtools.org/races/dvati-31",
+    "slug": "dvati-31",
+    "id": 31,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "DC",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Dwarf",
+    "url": "https://new.dndtools.org/races/dwarf-4",
+    "slug": "dwarf-4",
+    "id": 4,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Earth Genasi",
+    "url": "https://new.dndtools.org/races/earth-genasi-84",
+    "slug": "earth-genasi-84",
+    "id": 84,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Elf",
+    "url": "https://new.dndtools.org/races/elf-2",
+    "slug": "elf-2",
+    "id": 2,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Feral Gargun",
+    "url": "https://new.dndtools.org/races/feral-gargan-14",
+    "slug": "feral-gargan-14",
+    "id": 14,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "RS",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Fire Genasi",
+    "url": "https://new.dndtools.org/races/fire-genasi-85",
+    "slug": "fire-genasi-85",
+    "id": 85,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Fireblood Dwarf",
+    "url": "https://new.dndtools.org/races/fireblood-dwarf-50",
+    "slug": "fireblood-dwarf-50",
+    "id": 50,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Forest Gnome",
+    "url": "https://new.dndtools.org/races/forest-gnome-107",
+    "slug": "forest-gnome-107",
+    "id": 107,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Forestlord Elf",
+    "url": "https://new.dndtools.org/races/forestlord-elf-51",
+    "slug": "forestlord-elf-51",
+    "id": 51,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Forestlord Half-Elf",
+    "url": "https://new.dndtools.org/races/forestlord-half-elf-52",
+    "slug": "forestlord-half-elf-52",
+    "id": 52,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Frostblood Half-Orc",
+    "url": "https://new.dndtools.org/races/frostblood-half-orc-58",
+    "slug": "frostblood-half-orc-58",
+    "id": 58,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Frostblood Orc",
+    "url": "https://new.dndtools.org/races/frostblood-orc-57",
+    "slug": "frostblood-orc-57",
+    "id": 57,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Ghostwise Halfling",
+    "url": "https://new.dndtools.org/races/ghostwise-halfling-79",
+    "slug": "ghostwise-halfling-79",
+    "id": 79,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Ghostwise Halfling",
+    "url": "https://new.dndtools.org/races/ghostwise-halfling-116",
+    "slug": "ghostwise-halfling-116",
+    "id": 116,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Githzerai",
+    "url": "https://new.dndtools.org/races/githzerai",
+    "slug": "githzerai",
+    "id": null,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "MM3",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Glimmerskin Halfling",
+    "url": "https://new.dndtools.org/races/glimmerskin-halfling-54",
+    "slug": "glimmerskin-halfling-54",
+    "id": 54,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Gnoll",
+    "url": "https://new.dndtools.org/races/gnoll-146",
+    "slug": "gnoll-146",
+    "id": 146,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RW",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Gnome",
+    "url": "https://new.dndtools.org/races/gnome-12",
+    "slug": "gnome-12",
+    "id": 12,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Goblin",
+    "url": "https://new.dndtools.org/races/goblin-118",
+    "slug": "goblin-118",
+    "id": 118,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Goblin",
+    "url": "https://new.dndtools.org/races/goblin-141",
+    "slug": "goblin-141",
+    "id": 141,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "MM",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Gold Dwarf",
+    "url": "https://new.dndtools.org/races/gold-dwarf-59",
+    "slug": "gold-dwarf-59",
+    "id": 59,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Gold Dwarf",
+    "url": "https://new.dndtools.org/races/gold-dwarf-65",
+    "slug": "gold-dwarf-65",
+    "id": 65,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Goliath",
+    "url": "https://new.dndtools.org/races/goliath-13",
+    "slug": "goliath-13",
+    "id": 13,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RS",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Gray Dwarf",
+    "url": "https://new.dndtools.org/races/gray-dwarf-60",
+    "slug": "gray-dwarf-60",
+    "id": 60,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Gray Dwarf",
+    "url": "https://new.dndtools.org/races/gray-dwarf-66",
+    "slug": "gray-dwarf-66",
+    "id": 66,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Gray Orc",
+    "url": "https://new.dndtools.org/races/gray-orc-112",
+    "slug": "gray-orc-112",
+    "id": 112,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Hadozee",
+    "url": "https://new.dndtools.org/races/hadozee-124",
+    "slug": "hadozee-124",
+    "id": 124,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Half-Drow",
+    "url": "https://new.dndtools.org/races/half-drow-111",
+    "slug": "half-drow-111",
+    "id": 111,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Half-Drow",
+    "url": "https://new.dndtools.org/races/half-drow-139",
+    "slug": "half-drow-139",
+    "id": 139,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DrU",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Half-Elf",
+    "url": "https://new.dndtools.org/races/half-elf-3",
+    "slug": "half-elf-3",
+    "id": 3,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Half-Elf",
+    "url": "https://new.dndtools.org/races/half-elf-77",
+    "slug": "half-elf-77",
+    "id": 77,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Half-Elf",
+    "url": "https://new.dndtools.org/races/half-elf-109",
+    "slug": "half-elf-109",
+    "id": 109,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Half-Orc",
+    "url": "https://new.dndtools.org/races/half-orc-7",
+    "slug": "half-orc-7",
+    "id": 7,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Half-Orc",
+    "url": "https://new.dndtools.org/races/half-orc-78",
+    "slug": "half-orc-78",
+    "id": 78,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Half-Orc",
+    "url": "https://new.dndtools.org/races/half-orc-113",
+    "slug": "half-orc-113",
+    "id": 113,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Half-moon elf",
+    "url": "https://new.dndtools.org/races/half-moon-elf-19",
+    "slug": "half-moon-elf-19",
+    "id": 19,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Half-ogre",
+    "url": "https://new.dndtools.org/races/half-ogre-11",
+    "slug": "half-ogre-11",
+    "id": 11,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Half-ogre",
+    "url": "https://new.dndtools.org/races/half-ogres-40",
+    "slug": "half-ogres-40",
+    "id": 40,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "SS",
+      "edition": "Supplementals (3.0)"
+    }
+  },
+  {
+    "name": "Halfling",
+    "url": "https://new.dndtools.org/races/halfling-15",
+    "slug": "halfling-15",
+    "id": 15,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Hengeyokai",
+    "url": "https://new.dndtools.org/races/hengeyokai-38",
+    "slug": "hengeyokai-38",
+    "id": 38,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Hobgoblin",
+    "url": "https://new.dndtools.org/races/hobgoblin-119",
+    "slug": "hobgoblin-119",
+    "id": 119,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Hobgoblin",
+    "url": "https://new.dndtools.org/races/hobgoblin-149",
+    "slug": "hobgoblin-149",
+    "id": 149,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "MM",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Human",
+    "url": "https://new.dndtools.org/races/human-5",
+    "slug": "human-5",
+    "id": 5,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Human",
+    "url": "https://new.dndtools.org/races/human-64",
+    "slug": "human-64",
+    "id": 64,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Illumian",
+    "url": "https://new.dndtools.org/races/illumian-10",
+    "slug": "illumian-10",
+    "id": 10,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Jerren",
+    "url": "https://new.dndtools.org/races/jerren-36",
+    "slug": "jerren-36",
+    "id": 36,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "BV",
+      "edition": "Supplementals (3.0)"
+    }
+  },
+  {
+    "name": "Kalashtar",
+    "url": "https://new.dndtools.org/races/kalashtar-39",
+    "slug": "kalashtar-39",
+    "id": 39,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RE",
+      "edition": "Eberron (3.5)"
+    }
+  },
+  {
+    "name": "Killoren",
+    "url": "https://new.dndtools.org/races/killoren-147",
+    "slug": "killoren-147",
+    "id": 147,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RW",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Kir-Lanan",
+    "url": "https://new.dndtools.org/races/kir-lanan-104",
+    "slug": "kir-lanan-104",
+    "id": 104,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "4",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Kobold",
+    "url": "https://new.dndtools.org/races/kobold-122",
+    "slug": "kobold-122",
+    "id": 122,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RDr",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Korobukuru",
+    "url": "https://new.dndtools.org/races/korobukuru-34",
+    "slug": "korobukuru-34",
+    "id": 34,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Kuo-Toa",
+    "url": "https://new.dndtools.org/races/kuo-toa-21",
+    "slug": "kuo-toa-21",
+    "id": 21,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "Und",
+      "edition": "Forgotten Realms (3.5)"
+    }
+  },
+  {
+    "name": "Lightfoot Halfling",
+    "url": "https://new.dndtools.org/races/lightfoot-halfling-80",
+    "slug": "lightfoot-halfling-80",
+    "id": 80,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Lizardfolk",
+    "url": "https://new.dndtools.org/races/lizardfolk-103",
+    "slug": "lizardfolk-103",
+    "id": 103,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Lupin",
+    "url": "https://new.dndtools.org/races/lupin-32",
+    "slug": "lupin-32",
+    "id": 32,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DC",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Lycanthrope",
+    "url": "https://new.dndtools.org/races/lycanthrope-102",
+    "slug": "lycanthrope-102",
+    "id": 102,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Minotaur",
+    "url": "https://new.dndtools.org/races/minotaur-1",
+    "slug": "minotaur-1",
+    "id": 1,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "MM",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Mongrelfolk",
+    "url": "https://new.dndtools.org/races/mongrelfolk-142",
+    "slug": "mongrelfolk-142",
+    "id": 142,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Moon Elf",
+    "url": "https://new.dndtools.org/races/moon-elf-69",
+    "slug": "moon-elf-69",
+    "id": 69,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Moon Elf",
+    "url": "https://new.dndtools.org/races/moon-elf-97",
+    "slug": "moon-elf-97",
+    "id": 97,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Mountain Orc",
+    "url": "https://new.dndtools.org/races/mountain-orc-114",
+    "slug": "mountain-orc-114",
+    "id": 114,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Nezumi",
+    "url": "https://new.dndtools.org/races/nezumi-25",
+    "slug": "nezumi-25",
+    "id": 25,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Orc",
+    "url": "https://new.dndtools.org/races/orc-8",
+    "slug": "orc-8",
+    "id": 8,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "MM",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "name": "Orog",
+    "url": "https://new.dndtools.org/races/orog-115",
+    "slug": "orog-115",
+    "id": 115,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Painted Elf",
+    "url": "https://new.dndtools.org/races/painted-elf-133",
+    "slug": "painted-elf-133",
+    "id": 133,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sa",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Pixie (Sprite)",
+    "url": "https://new.dndtools.org/races/pixie-sprite-22",
+    "slug": "pixie-sprite-22",
+    "id": 22,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "SS",
+      "edition": "Supplementals (3.0)"
+    }
+  },
+  {
+    "name": "Poison Dusk Lizardfolk",
+    "url": "https://new.dndtools.org/races/poison-dusk-lizardfolk-148",
+    "slug": "poison-dusk-lizardfolk-148",
+    "id": 148,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "MM3",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Raptoran",
+    "url": "https://new.dndtools.org/races/raptoran-16",
+    "slug": "raptoran-16",
+    "id": 16,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RW",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Rock Gnome",
+    "url": "https://new.dndtools.org/races/rock-gnome-76",
+    "slug": "rock-gnome-76",
+    "id": 76,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Rock Gnome",
+    "url": "https://new.dndtools.org/races/rock-gnome-108",
+    "slug": "rock-gnome-108",
+    "id": 108,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Scablands Half-Orc",
+    "url": "https://new.dndtools.org/races/scablands-half-orc-134",
+    "slug": "scablands-half-orc-134",
+    "id": 134,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sa",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Sea Kin",
+    "url": "https://new.dndtools.org/races/sea-kin-143",
+    "slug": "sea-kin-143",
+    "id": 143,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Seacliff Dwarf",
+    "url": "https://new.dndtools.org/races/seacliff-dwarf-126",
+    "slug": "seacliff-dwarf-126",
+    "id": 126,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Shade",
+    "url": "https://new.dndtools.org/races/shade-99",
+    "slug": "shade-99",
+    "id": 99,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "4",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Sharakim",
+    "url": "https://new.dndtools.org/races/sharakim-144",
+    "slug": "sharakim-144",
+    "id": 144,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Shield Dwarf",
+    "url": "https://new.dndtools.org/races/shield-dwarf-67",
+    "slug": "shield-dwarf-67",
+    "id": 67,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Shield Dwarf",
+    "url": "https://new.dndtools.org/races/shield-dwarf-61",
+    "slug": "shield-dwarf-61",
+    "id": 61,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Shoal Halfling",
+    "url": "https://new.dndtools.org/races/shoal-halfling-129",
+    "slug": "shoal-halfling-129",
+    "id": 129,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Silverbrow Human",
+    "url": "https://new.dndtools.org/races/silverbrow-human-47",
+    "slug": "silverbrow-human-47",
+    "id": 47,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Skarn",
+    "url": "https://new.dndtools.org/races/skarn-18",
+    "slug": "skarn-18",
+    "id": 18,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "MoI",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Skulk",
+    "url": "https://new.dndtools.org/races/skulk-42",
+    "slug": "skulk-42",
+    "id": 42,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Spellscale",
+    "url": "https://new.dndtools.org/races/spellscale-123",
+    "slug": "spellscale-123",
+    "id": 123,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RDr",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Spirit Folk, Bamboo",
+    "url": "https://new.dndtools.org/races/spirit-folk-bamboo-26",
+    "slug": "spirit-folk-bamboo-26",
+    "id": 26,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Spirit Folk, River",
+    "url": "https://new.dndtools.org/races/spirit-folk-river-27",
+    "slug": "spirit-folk-river-27",
+    "id": 27,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Spirit Folk, Sea",
+    "url": "https://new.dndtools.org/races/spirit-folk-sea-28",
+    "slug": "spirit-folk-sea-28",
+    "id": 28,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Stonechild",
+    "url": "https://new.dndtools.org/races/stonechild-138",
+    "slug": "stonechild-138",
+    "id": 138,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "4",
+      "source_abbrev": "RS",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Stonehunter Gnome",
+    "url": "https://new.dndtools.org/races/stonehunter-gnome-53",
+    "slug": "stonehunter-gnome-53",
+    "id": 53,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Strongheart Halfling",
+    "url": "https://new.dndtools.org/races/strongheart-halfling-81",
+    "slug": "strongheart-halfling-81",
+    "id": 81,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Sun Elf",
+    "url": "https://new.dndtools.org/races/sun-elf-70",
+    "slug": "sun-elf-70",
+    "id": 70,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Sun Elf",
+    "url": "https://new.dndtools.org/races/sun-elf-100",
+    "slug": "sun-elf-100",
+    "id": 100,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Sunscorch Hobgoblin",
+    "url": "https://new.dndtools.org/races/sunscorch-hobgoblin-56",
+    "slug": "sunscorch-hobgoblin-56",
+    "id": 56,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Tibbit",
+    "url": "https://new.dndtools.org/races/tibbit-33",
+    "slug": "tibbit-33",
+    "id": 33,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "DC",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Tiefling",
+    "url": "https://new.dndtools.org/races/tiefling-20",
+    "slug": "tiefling-20",
+    "id": 20,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Tiefling",
+    "url": "https://new.dndtools.org/races/tiefling-87",
+    "slug": "tiefling-87",
+    "id": 87,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Underfolk",
+    "url": "https://new.dndtools.org/races/underfolk-41",
+    "slug": "underfolk-41",
+    "id": 41,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RD",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Urdunnir Dwarf",
+    "url": "https://new.dndtools.org/races/urdunnir-dwarf-62",
+    "slug": "urdunnir-dwarf-62",
+    "id": 62,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "4",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Vanara",
+    "url": "https://new.dndtools.org/races/vanara-24",
+    "slug": "vanara-24",
+    "id": 24,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "OA",
+      "edition": "Oriental Adventures (3.0)"
+    }
+  },
+  {
+    "name": "Vashar",
+    "url": "https://new.dndtools.org/races/vashar-37",
+    "slug": "vashar-37",
+    "id": 37,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "BV",
+      "edition": "Supplementals (3.0)"
+    }
+  },
+  {
+    "name": "Viletooth Lizardfolk",
+    "url": "https://new.dndtools.org/races/viletooth-lizardfolk-55",
+    "slug": "viletooth-lizardfolk-55",
+    "id": 55,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "DM",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Warforged",
+    "url": "https://new.dndtools.org/races/warforged-45",
+    "slug": "warforged-45",
+    "id": 45,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "ECS",
+      "edition": "Eberron (3.5)"
+    }
+  },
+  {
+    "name": "Water Genasi",
+    "url": "https://new.dndtools.org/races/water-genasi-86",
+    "slug": "water-genasi-86",
+    "id": 86,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "1",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Wavecrest Gnome",
+    "url": "https://new.dndtools.org/races/wavecrest-gnome-127",
+    "slug": "wavecrest-gnome-127",
+    "id": 127,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Wemic",
+    "url": "https://new.dndtools.org/races/wemic-98",
+    "slug": "wemic-98",
+    "id": 98,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Whisper Gnome",
+    "url": "https://new.dndtools.org/races/whisper-gnome-35",
+    "slug": "whisper-gnome-35",
+    "id": 35,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "RS",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "name": "Wild Dwarf",
+    "url": "https://new.dndtools.org/races/wild-dwarf-63",
+    "slug": "wild-dwarf-63",
+    "id": 63,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Wild Elf",
+    "url": "https://new.dndtools.org/races/wild-elf-71",
+    "slug": "wild-elf-71",
+    "id": 71,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "MM",
+      "edition": "Core (3.0)"
+    }
+  },
+  {
+    "name": "Wild Elf",
+    "url": "https://new.dndtools.org/races/wild-elf-72",
+    "slug": "wild-elf-72",
+    "id": 72,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Wild Elf",
+    "url": "https://new.dndtools.org/races/wild-elf-101",
+    "slug": "wild-elf-101",
+    "id": 101,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Wood Elf",
+    "url": "https://new.dndtools.org/races/wood-elf-73",
+    "slug": "wood-elf-73",
+    "id": 73,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "MM",
+      "edition": "Core (3.0)"
+    }
+  },
+  {
+    "name": "Wood Elf",
+    "url": "https://new.dndtools.org/races/wood-elf-74",
+    "slug": "wood-elf-74",
+    "id": 74,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Wood Elf",
+    "url": "https://new.dndtools.org/races/wood-elf-105",
+    "slug": "wood-elf-105",
+    "id": 105,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "0",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Yuan-Ti (Broodguard)",
+    "url": "https://new.dndtools.org/races/yuan-ti-broodguard-92",
+    "slug": "yuan-ti-broodguard-92",
+    "id": 92,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "SK",
+      "edition": "Forgotten Realms (3.5)"
+    }
+  },
+  {
+    "name": "Yuan-Ti (Pureblood)",
+    "url": "https://new.dndtools.org/races/yuan-ti-pureblood-89",
+    "slug": "yuan-ti-pureblood-89",
+    "id": 89,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "5",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Yuan-Ti (Pureblood)",
+    "url": "https://new.dndtools.org/races/yuan-ti-pureblood-90",
+    "slug": "yuan-ti-pureblood-90",
+    "id": 90,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "SK",
+      "edition": "Forgotten Realms (3.5)"
+    }
+  },
+  {
+    "name": "Yuan-Ti (Pureblood)",
+    "url": "https://new.dndtools.org/races/yuan-ti-pureblood-93",
+    "slug": "yuan-ti-pureblood-93",
+    "id": 93,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "MM",
+      "edition": "Core (3.0)"
+    }
+  },
+  {
+    "name": "Yuan-Ti (Tainted One)",
+    "url": "https://new.dndtools.org/races/yuan-ti-tainted-one-88",
+    "slug": "yuan-ti-tainted-one-88",
+    "id": 88,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "2",
+      "source_abbrev": "Rac",
+      "edition": "Forgotten Realms (3.0)"
+    }
+  },
+  {
+    "name": "Yuan-Ti (Tainted One)",
+    "url": "https://new.dndtools.org/races/yuan-ti-tainted-one-91",
+    "slug": "yuan-ti-tainted-one-91",
+    "id": 91,
+    "category": "races",
+    "index": {
+      "type": null,
+      "level_adjustment": "3",
+      "source_abbrev": "SK",
+      "edition": "Forgotten Realms (3.5)"
+    }
+  }
+]

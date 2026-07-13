@@ -46,7 +46,7 @@ export function PaginatedEntityList({
   }
 
   return (
-    <div>
+    <div className="min-w-0">
       <EntityTable category={category} items={items} />
       {error && <p className="error-text">{error}</p>}
       {cursor && (

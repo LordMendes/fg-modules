@@ -1,8 +1,17 @@
 import { cookies } from "next/headers";
 import { randomBytes, createHmac } from "crypto";
 
-const COOKIE_NAME = "dnd_session";
+export const COOKIE_NAME = "dnd_session";
+export const SESSION_NONCE_HEADER = "x-session-nonce";
 const MAX_AGE = 60 * 60 * 24;
+
+export const SESSION_COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax" as const,
+  maxAge: MAX_AGE,
+  path: "/",
+};
 
 function getSecret(): string {
   const secret = process.env.SESSION_SECRET;
@@ -24,52 +33,39 @@ export type SessionData = {
   createdAt: number;
 };
 
-export async function getOrCreateSession(): Promise<SessionData> {
-  const cookieStore = await cookies();
-  const existing = cookieStore.get(COOKIE_NAME)?.value;
-
-  if (existing) {
-    const [payload, sig] = existing.split(".");
-    if (payload && sig && sign(payload) === sig) {
-      try {
-        return JSON.parse(Buffer.from(payload, "base64url").toString()) as SessionData;
-      } catch {
-        // fall through
-      }
-    }
-  }
-
-  const session: SessionData = {
+export function createSession(): SessionData {
+  return {
     nonce: randomBytes(16).toString("hex"),
     createdAt: Date.now(),
   };
+}
+
+export function buildSessionToken(session: SessionData): string {
   const payload = Buffer.from(JSON.stringify(session)).toString("base64url");
-  const token = `${payload}.${sign(payload)}`;
+  return `${payload}.${sign(payload)}`;
+}
 
-  cookieStore.set(COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: MAX_AGE,
-    path: "/",
-  });
+export function parseSessionToken(token: string | undefined): SessionData | null {
+  if (!token) return null;
 
-  return session;
+  const [payload, sig] = token.split(".");
+  if (!payload || !sig || sign(payload) !== sig) return null;
+
+  try {
+    return JSON.parse(Buffer.from(payload, "base64url").toString()) as SessionData;
+  } catch {
+    return null;
+  }
+}
+
+/** Read session from cookies only (Server Components / Server Actions). */
+export async function getSession(): Promise<SessionData | null> {
+  const cookieStore = await cookies();
+  return parseSessionToken(cookieStore.get(COOKIE_NAME)?.value);
 }
 
 export async function validateSessionNonce(nonce: string | undefined): Promise<boolean> {
   if (!nonce) return false;
-  const cookieStore = await cookies();
-  const existing = cookieStore.get(COOKIE_NAME)?.value;
-  if (!existing) return false;
-
-  const [payload, sig] = existing.split(".");
-  if (!payload || !sig || sign(payload) !== sig) return false;
-
-  try {
-    const session = JSON.parse(Buffer.from(payload, "base64url").toString()) as SessionData;
-    return session.nonce === nonce;
-  } catch {
-    return false;
-  }
+  const session = await getSession();
+  return session?.nonce === nonce;
 }

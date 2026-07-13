@@ -2,6 +2,16 @@
 
 from __future__ import annotations
 
+import sys
+
+if sys.version_info < (3, 10):
+    version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    raise SystemExit(
+        f"Python 3.10+ is required (you are running {version}). "
+        "This scraper uses modern type syntax that Python 3.8/3.9 cannot run. "
+        "Use a newer interpreter, e.g. python3.11 -m venv .venv"
+    )
+
 import argparse
 from pathlib import Path
 

@@ -1,0 +1,13 @@
+{
+  "scraped_at": "2026-07-13T16:30:42.435886+00:00",
+  "base_url": "https://new.dndtools.org",
+  "categories": {
+    "classes": {
+      "expected": 1054,
+      "scraped": 1054,
+      "errors": 0,
+      "duration_seconds": 15.32,
+      "pages_crawled": 22
+    }
+  }
+}

@@ -16,20 +16,5 @@ services:
       timeout: 5s
       retries: 5
 
-  web:
-    build:
-      context: .
-      dockerfile: web/Dockerfile
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: postgresql://dndtools:dndtools@postgres:5432/dndtools?schema=public
-      SESSION_SECRET: change-me-in-production
-      NEXT_PUBLIC_SITE_URL: http://localhost:3000
-    depends_on:
-      postgres:
-        condition: service_healthy
-
 volumes:
   postgres_data:

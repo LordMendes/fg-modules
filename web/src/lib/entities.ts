@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import type { CategoryKey } from "@/lib/categories";
 import type { Prisma } from "@/generated/prisma/client";
+import { parseSpellComponents, spellDescriptionSnippet } from "@/lib/spell-utils";
+import type { SpellComponentFlags } from "@/lib/spell-utils";
 
 export type EntityListItem = {
   slug: string;
@@ -19,12 +21,86 @@ export type EntityDetail = {
   source: { name: string; abbrev: string | null; edition: string; page: number | null };
   fields: Record<string, string | null>;
   related: { label: string; href: string; meta?: string }[];
+  advancementHtml?: string | null;
+  spellLevels?: ClassSpellLevelSummary[];
+  classSkills?: ClassSkillRef[];
 };
+
+export type ClassSkillRef = {
+  name: string;
+  slug: string | null;
+  ability: string | null;
+};
+
+export type ClassSpellLevelSummary = {
+  level: number;
+  label: string;
+  count: number;
+};
+
+export type ClassSpellRef = {
+  slug: string;
+  name: string;
+  school: string | null;
+  description: string | null;
+  components: SpellComponentFlags;
+  sourceAbbrev: string | null;
+  edition: string | null;
+};
+
+export type SpellPreview = {
+  slug: string;
+  name: string;
+  source: { name: string; abbrev: string | null; edition: string };
+  fields: Record<string, string | null>;
+  descriptionHtml: string | null;
+  descriptionText: string | null;
+};
+
+export function formatSpellLevelLabel(level: number): string {
+  if (level === 0) return "0 Level";
+  const mod100 = level % 100;
+  const mod10 = level % 10;
+  const suffix =
+    mod100 >= 11 && mod100 <= 13
+      ? "th"
+      : mod10 === 1
+        ? "st"
+        : mod10 === 2
+          ? "nd"
+          : mod10 === 3
+            ? "rd"
+            : "th";
+  return `${level}${suffix} Level`;
+}
 
 const PAGE_SIZE = 50;
 
 function sourceSelect() {
-  return { select: { name: true, abbrev: true, edition: true, page: true } };
+  return { select: { name: true, abbrev: true, edition: true } };
+}
+
+function parseClassSkills(value: unknown): ClassSkillRef[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const record = item as Record<string, unknown>;
+      const name = typeof record.name === "string" ? record.name : null;
+      if (!name) return null;
+
+      const slug = typeof record.slug === "string" ? record.slug : null;
+      const ability =
+        typeof record.ability === "string"
+          ? record.ability
+          : typeof record.keyAbility === "string"
+            ? record.keyAbility
+            : null;
+
+      return { name, slug, ability };
+    })
+    .filter((item): item is ClassSkillRef => item !== null);
 }
 
 export async function listEntities(
@@ -355,20 +431,31 @@ export async function getEntityDetail(
         where: { slug },
         include: {
           source: src,
-          spellLevels: { include: { spell: { select: { slug: true, name: true } } }, orderBy: { level: "asc" }, take: 50 },
         },
       });
       if (!r) return null;
+
+      const levelCounts = await prisma.spellClassLevel.groupBy({
+        by: ["level"],
+        where: { classId: r.id },
+        _count: { spellId: true },
+        orderBy: { level: "asc" },
+      });
+
+      const indexData = r.indexData as Record<string, unknown>;
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
         source: { ...r.source, page: null },
         fields: { "Hit Die": r.hitDie, "Skill Points": r.skillPoints },
-        related: r.spellLevels.map((sl) => ({
-          label: sl.spell.name,
-          href: `/spells/${sl.spell.slug}`,
-          meta: `Level ${sl.level}`,
+        advancementHtml: (indexData?.advancementHtml as string) ?? null,
+        spellLevels: levelCounts.map((row) => ({
+          level: row.level,
+          label: formatSpellLevelLabel(row.level),
+          count: row._count.spellId,
         })),
+        classSkills: parseClassSkills(indexData?.classSkills),
+        related: [],
       };
     }
     case "skills": {
@@ -563,6 +650,65 @@ export async function searchAll(query: string, limit = 20): Promise<
   }
 
   return results;
+}
+
+export async function getClassSpellsAtLevel(
+  classSlug: string,
+  level: number,
+): Promise<ClassSpellRef[]> {
+  const rows = await prisma.spellClassLevel.findMany({
+    where: { class: { slug: classSlug }, level },
+    orderBy: { spell: { name: "asc" } },
+    select: {
+      spell: {
+        select: {
+          slug: true,
+          name: true,
+          school: true,
+          components: true,
+          descriptionText: true,
+          indexData: true,
+          source: { select: { abbrev: true, edition: true } },
+        },
+      },
+    },
+  });
+
+  return rows.map(({ spell }) => ({
+    slug: spell.slug,
+    name: spell.name,
+    school: spell.school,
+    description: spellDescriptionSnippet(spell.indexData, spell.descriptionText),
+    components: parseSpellComponents(spell.components, spell.indexData),
+    sourceAbbrev: spell.source.abbrev,
+    edition: spell.source.edition,
+  }));
+}
+
+export async function getSpellPreview(spellSlug: string): Promise<SpellPreview | null> {
+  const r = await prisma.spell.findUnique({
+    where: { slug: spellSlug },
+    include: { source: { select: { name: true, abbrev: true, edition: true } } },
+  });
+  if (!r) return null;
+
+  return {
+    slug: r.slug,
+    name: r.name,
+    source: r.source,
+    fields: {
+      School: r.school,
+      "Casting Time": r.castingTime,
+      Components: r.components,
+      Range: r.range,
+      Target: r.target,
+      Duration: r.duration,
+      "Saving Throw": r.savingThrow,
+      "Spell Resistance": r.spellResistance,
+    },
+    descriptionHtml: r.descriptionHtml,
+    descriptionText: r.descriptionText,
+  };
 }
 
 export async function listSources(): Promise<

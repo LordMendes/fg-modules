@@ -14,6 +14,7 @@ from scraper.parsers.base import (
     parse_index_page,
     parse_slug_and_id,
 )
+from scraper.parsers.classes import parse_detail as parse_class_detail
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -92,13 +93,18 @@ def test_monsters_detail_parser() -> None:
 
 def test_classes_detail_parser() -> None:
     html = (FIXTURES / "classes_detail.html").read_text(encoding="utf-8")
-    detail = parse_detail_page(
+    detail = parse_class_detail(
         html,
         "https://new.dndtools.org/classes/abjurant-champion-264",
-        "classes",
     )
     assert detail["name"] == "Abjurant Champion"
     assert detail["hit_die"] == "d10"
+    assert detail["advancement"]
+    assert detail["advancement_html"]
+    assert "<table" in detail["advancement_html"]
+    assert detail["advancement"][0]["level"] == 1
+    assert detail["class_skills"]
+    assert any(skill["name"] == "Concentration" for skill in detail["class_skills"])
 
 
 def test_pagination_total_from_fixture() -> None:

@@ -1,0 +1,4050 @@
+[
+  {
+    "name": "Abyss (SpC)",
+    "url": "https://new.dndtools.org/domains/abyss-136",
+    "slug": "abyss-136",
+    "id": 136,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you can channel the furious power of the demons. This power grants yo…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Air",
+    "url": "https://new.dndtools.org/domains/air-113",
+    "slug": "air-113",
+    "id": 113,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn or destroy earth creatures as a good cleric turns undead. Rebuke, command, or bolster air creat…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Alteration (DCS)",
+    "url": "https://new.dndtools.org/domains/alteration-254",
+    "slug": "alteration-254",
+    "id": 254,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast Transmutation spells on living targets at +1 caster level.",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Ancestor (OA)",
+    "url": "https://new.dndtools.org/domains/ancestor-74",
+    "slug": "ancestor-74",
+    "id": 74,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A number of times per day equal to your Charisma bonus (minimum once, even with a Charisma penalty),…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Animal",
+    "url": "https://new.dndtools.org/domains/animal-97",
+    "slug": "animal-97",
+    "id": 97,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can use speak with animals once per day as a spell-like ability. Add Knowledge (nature) to your…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Arborea (SpC)",
+    "url": "https://new.dndtools.org/domains/arborea-144",
+    "slug": "arborea-144",
+    "id": 144,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you can channel the glory of the eladrin to grant yourself a morale b…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Arcane Insight",
+    "url": "https://new.dndtools.org/domains/arcane-insight-255",
+    "slug": "arcane-insight-255",
+    "id": 255,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Knowledge (arcana) to your list of cleric class skills. You gain a +2 insight bonus on Spellcraf…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Army (DM)",
+    "url": "https://new.dndtools.org/domains/army-dm-33",
+    "slug": "army-dm-33",
+    "id": 33,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the spell-like ability to inspire allies within 30-ft, giving them a +2 morale bonus on sav…",
+      "source_abbrev": "D317"
+    }
+  },
+  {
+    "name": "Artifice (DD)",
+    "url": "https://new.dndtools.org/domains/artifice-47",
+    "slug": "artifice-47",
+    "id": 47,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain +4 bonus on Craft checks. You cast conjuration (creation) spells at +1 caster level. (Those wit…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Artifice (ECS)",
+    "url": "https://new.dndtools.org/domains/artifice-ecs-237",
+    "slug": "artifice-ecs-237",
+    "id": 237,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain +4 competence bonus on Craft checks. You cast creation spells at +1 caster level.",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Avarice (DM)",
+    "url": "https://new.dndtools.org/domains/avarice-dm-34",
+    "slug": "avarice-dm-34",
+    "id": 34,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as a standard action, you may determine the most valuable item within 30-ft. An item’s…",
+      "source_abbrev": "D323"
+    }
+  },
+  {
+    "name": "Baator (SpC)",
+    "url": "https://new.dndtools.org/domains/baator-148",
+    "slug": "baator-148",
+    "id": 148,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the ability to see perfectly in darkness of any kind, even that created by a deeper darknes…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Balance",
+    "url": "https://new.dndtools.org/domains/balance-127",
+    "slug": "balance-127",
+    "id": 127,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as a free action, you can add your Wisdom modifier to your Armor Class. This bonus las…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Beastmaster (DF)",
+    "url": "https://new.dndtools.org/domains/beastmaster-256",
+    "slug": "beastmaster-256",
+    "id": 256,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Speak with animals once per day per level as the spell. This is a supernatural ability.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Beguilement (DM)",
+    "url": "https://new.dndtools.org/domains/beguilement-dm-36",
+    "slug": "beguilement-dm-36",
+    "id": 36,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast compulsion spells at +1 level. Deities Any gods of trickery , rulership , and magic can hav…",
+      "source_abbrev": "D312"
+    }
+  },
+  {
+    "name": "Bestial (BoVD)",
+    "url": "https://new.dndtools.org/domains/bestial-18",
+    "slug": "bestial-18",
+    "id": 18,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Character gains the scent extraordinary ability.",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Blackwater (SW)",
+    "url": "https://new.dndtools.org/domains/blackwater-125",
+    "slug": "blackwater-125",
+    "id": 125,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are immune to pressure damage from descending into even the greatest of oceanic depths.",
+      "source_abbrev": "Sto"
+    }
+  },
+  {
+    "name": "Blightbringer",
+    "url": "https://new.dndtools.org/domains/blightbringer-133",
+    "slug": "blightbringer-133",
+    "id": 133,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command blightspawned creatures and evil-aligned animals or plants as an evil Cleric rebuk…",
+      "source_abbrev": "Una"
+    }
+  },
+  {
+    "name": "Cat (Web)",
+    "url": "https://new.dndtools.org/domains/cat-web-329",
+    "slug": "cat-web-329",
+    "id": 329,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Cats are inordinately lucky. You gain the power of good fortune, which is usable once per day. This…",
+      "source_abbrev": "Web35"
+    }
+  },
+  {
+    "name": "Cavern (FRCS)",
+    "url": "https://new.dndtools.org/domains/cavern-frcs-245",
+    "slug": "cavern-frcs-245",
+    "id": 245,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the dwarven ability of stonecunning. If you already have stonecunning, your racial bonus fo…",
+      "source_abbrev": "FRCS"
+    }
+  },
+  {
+    "name": "Cavern (SpC)",
+    "url": "https://new.dndtools.org/domains/cavern-60",
+    "slug": "cavern-60",
+    "id": 60,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the stonecunning ability ( PH 15). If you already have stonecunning, your racial bonus on c…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Celerity (CD)",
+    "url": "https://new.dndtools.org/domains/celerity-cd-227",
+    "slug": "celerity-cd-227",
+    "id": 227,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your land speed is faster than the normal for your race by +10 feet. This benefit is lost if you are…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Celerity (DF)",
+    "url": "https://new.dndtools.org/domains/celerity-prestige-domain-228",
+    "slug": "celerity-prestige-domain-228",
+    "id": 228,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "+2 enhancement bonus to Dexterity, speed increased +10 ft. when in light armor, +2 enhancement bonus…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Celerity (SpC)",
+    "url": "https://new.dndtools.org/domains/celerity-42",
+    "slug": "celerity-42",
+    "id": 42,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your land speed is faster than the norm for your race by 10 feet. This benefit is lost if you are we…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Celestia (SpC)",
+    "url": "https://new.dndtools.org/domains/celestia-141",
+    "slug": "celestia-141",
+    "id": 141,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you can generate an aura of menace similar to that of the archons. Th…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Celestial (BoED)",
+    "url": "https://new.dndtools.org/domains/celestial-6",
+    "slug": "celestial-6",
+    "id": 6,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the supernatural ability to smite evil once per day. Add a +4 bonus to your melee attack ro…",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Celestial (OA)",
+    "url": "https://new.dndtools.org/domains/celestial-oa-244",
+    "slug": "celestial-oa-244",
+    "id": 244,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command spirits as an evil Cleric rebukes undead. Use this ability a number of times per d…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Chaos",
+    "url": "https://new.dndtools.org/domains/chaos-101",
+    "slug": "chaos-101",
+    "id": 101,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast chaos spells at +1 caster level. Special When casting Summon Monster IX spell as a Chaos Do…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Chaos [mantle]",
+    "url": "https://new.dndtools.org/domains/chaos-mantle-333",
+    "slug": "chaos-mantle-333",
+    "id": 333,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus to deal additional damage to nonchaotic creatures. You deal an add…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Charity (DM)",
+    "url": "https://new.dndtools.org/domains/charity-dm-38",
+    "slug": "charity-dm-38",
+    "id": 38,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as a full-round action, you may reduce your hit points by up two times your class leve…",
+      "source_abbrev": "D355"
+    }
+  },
+  {
+    "name": "Charm (DD)",
+    "url": "https://new.dndtools.org/domains/charm-149",
+    "slug": "charm-149",
+    "id": 149,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can boost your Charisma by 4 points once per day. Activating this power is a free action. The Ch…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Charm (ECS)",
+    "url": "https://new.dndtools.org/domains/charm-ecs-188",
+    "slug": "charm-ecs-188",
+    "id": 188,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can boost your Charisma by 4 points once per day. Activating this power is a free action. The Ch…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Charm (FRCS)",
+    "url": "https://new.dndtools.org/domains/charm-frcs-189",
+    "slug": "charm-frcs-189",
+    "id": 189,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can boost your Charisma by 4 points once per day. Activating this power is a free action. The Ch…",
+      "source_abbrev": "FRCS"
+    }
+  },
+  {
+    "name": "Chastity (DM)",
+    "url": "https://new.dndtools.org/domains/chastity-dm-45",
+    "slug": "chastity-dm-45",
+    "id": 45,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you may dispel a single spell effect targeting you as a targeted dispel magic spell. C…",
+      "source_abbrev": "D355"
+    }
+  },
+  {
+    "name": "Chromatic Dragon (DM)",
+    "url": "https://new.dndtools.org/domains/chromatic-dragon-dm-78",
+    "slug": "chromatic-dragon-dm-78",
+    "id": 78,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Choose a chromatic dragon color. You cannot later change the kind of dragon. Once per day, you may u…",
+      "source_abbrev": "D344"
+    }
+  },
+  {
+    "name": "City (RD)",
+    "url": "https://new.dndtools.org/domains/city-119",
+    "slug": "city-119",
+    "id": 119,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Gather Information and Knowledge (local) to your list of cleric class skills.",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Cold (CD)",
+    "url": "https://new.dndtools.org/domains/cold-32",
+    "slug": "cold-32",
+    "id": 32,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can turn or destroy fire creatures as a good cleric turns undead. You can also rebuke or command…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Cold (Fr)",
+    "url": "https://new.dndtools.org/domains/cold-fr-203",
+    "slug": "cold-fr-203",
+    "id": 203,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can turn or destroy fire creatures as a good cleric turns undead. You can also rebuke or command…",
+      "source_abbrev": "Fr"
+    }
+  },
+  {
+    "name": "Cold (PG)",
+    "url": "https://new.dndtools.org/domains/cold-pg-204",
+    "slug": "cold-pg-204",
+    "id": 204,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can turn or destroy fire creatures as a good cleric turns undead and rebuke or command cold crea…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Cold (SpC)",
+    "url": "https://new.dndtools.org/domains/cold-spc-205",
+    "slug": "cold-spc-205",
+    "id": 205,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can turn or destroy fire creatures as a good cleric turns undead. You can also rebuke or command…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Commerce",
+    "url": "https://new.dndtools.org/domains/commerce-257",
+    "slug": "commerce-257",
+    "id": 257,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +10 competence bonus on Profession checks made to earn a living (not checks to accomplish…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Communication [mantle]",
+    "url": "https://new.dndtools.org/domains/communication-mantle-334",
+    "slug": "communication-mantle-334",
+    "id": 334,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "While psionically focused, you gain a +2 competence bonus on Diplomacy checks and can use the Diplom…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Community (BoED)",
+    "url": "https://new.dndtools.org/domains/community-8",
+    "slug": "community-8",
+    "id": 8,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Use calm emotions as a spell-like ability once per day. Gain a +2 competence bonus on Diplomacy chec…",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Community (CD)",
+    "url": "https://new.dndtools.org/domains/community-cd-247",
+    "slug": "community-cd-247",
+    "id": 247,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Use calm emotions as a spell-like ability once per day. Gain a +2 bonus on Diplomacy checks.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Community (DCS)",
+    "url": "https://new.dndtools.org/domains/community-dcs-248",
+    "slug": "community-dcs-248",
+    "id": 248,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Cast calm emotions as a spell-like apility once per day. Gain +2 competence bonus on Diplomacy check…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Community (DD)",
+    "url": "https://new.dndtools.org/domains/community-dd-249",
+    "slug": "community-dd-249",
+    "id": 249,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Use calm emotions as a spell-like ability once per day. Gain a +2 competence bonus on Diplomacy chec…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Community (DF)",
+    "url": "https://new.dndtools.org/domains/community-prestige-domain-251",
+    "slug": "community-prestige-domain-251",
+    "id": 251,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Use calm emotions as a spell-like ability once per day. Gain +2 bonus on Diplomacy checks.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Community (ECS)",
+    "url": "https://new.dndtools.org/domains/community-ecs-250",
+    "slug": "community-ecs-250",
+    "id": 250,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can use calm emotions as a spell-like ability once per day. You also gain a +2 competence bonus…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Competition (CD)",
+    "url": "https://new.dndtools.org/domains/competition-cd-187",
+    "slug": "competition-cd-187",
+    "id": 187,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You relish the chance to prove yourself against your foes. As an extraordinary ability, you gain a +…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Competition (SpC)",
+    "url": "https://new.dndtools.org/domains/competition-142",
+    "slug": "competition-142",
+    "id": 142,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +1 bonus on opposed checks you make.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Conflict [mantle]",
+    "url": "https://new.dndtools.org/domains/conflict-mantle-335",
+    "slug": "conflict-mantle-335",
+    "id": 335,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are more in tune with martial concepts and gain the Weapon Focus feat as a bonus feat with a wea…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Consumption [mantle]",
+    "url": "https://new.dndtools.org/domains/consumption-mantle-336",
+    "slug": "consumption-mantle-336",
+    "id": 336,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your focus as an immediate action to gain 5 temporary hit points when someone within…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Corrupt (HH)",
+    "url": "https://new.dndtools.org/domains/corrupt-11",
+    "slug": "corrupt-11",
+    "id": 11,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Those who delve into black magic have learned of exceedingly evil spells that take an appalling toll…",
+      "source_abbrev": "HH"
+    }
+  },
+  {
+    "name": "Corruption (BoVD)",
+    "url": "https://new.dndtools.org/domains/corruption-17",
+    "slug": "corruption-17",
+    "id": 17,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, character can attack an object and ignore its hardness rating.",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Corruption (FC1)",
+    "url": "https://new.dndtools.org/domains/corruption-fc1-194",
+    "slug": "corruption-fc1-194",
+    "id": 194,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can attack an object and ignore its hardness.",
+      "source_abbrev": "FCI"
+    }
+  },
+  {
+    "name": "Corruption and Madness [mantle]",
+    "url": "https://new.dndtools.org/domains/corruption-madness-mantle-337",
+    "slug": "corruption-madness-mantle-337",
+    "id": 337,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your insights into corruption and madness have touched you with insanity and terrible clarity. While…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Courage (CW)",
+    "url": "https://new.dndtools.org/domains/courage-43",
+    "slug": "courage-43",
+    "id": 43,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You radiate an aura of courage that grants all allies within 10 feet (including yourself) a +4 moral…",
+      "source_abbrev": "CW"
+    }
+  },
+  {
+    "name": "Courage (SpC)",
+    "url": "https://new.dndtools.org/domains/courage-spc-229",
+    "slug": "courage-spc-229",
+    "id": 229,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You radiate an aura of courage that grants all allies within 10-ft (including yourself) a +4 morale…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Craft (FRCS)",
+    "url": "https://new.dndtools.org/domains/craft-frcs-243",
+    "slug": "craft-frcs-243",
+    "id": 243,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast creation spells at +1 caster level and gain Skill Focus in the Craft skill of your choice.",
+      "source_abbrev": "FRCS"
+    }
+  },
+  {
+    "name": "Craft (SpC)",
+    "url": "https://new.dndtools.org/domains/craft-58",
+    "slug": "craft-58",
+    "id": 58,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast conjuration (creation) spells at +1 caster level and gain Skill Focus as a bonus feat for o…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Creation (CD)",
+    "url": "https://new.dndtools.org/domains/creation-cd-209",
+    "slug": "creation-cd-209",
+    "id": 209,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast Conjuration (creation) spells at +1 caster level.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Creation (DD)",
+    "url": "https://new.dndtools.org/domains/creation-dd-210",
+    "slug": "creation-dd-210",
+    "id": 210,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Cast conjuration (creation) spells at +2 caster level. (Those with access to both the Artifice and C…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Creation (DF)",
+    "url": "https://new.dndtools.org/domains/creation-prestige-domain-211",
+    "slug": "creation-prestige-domain-211",
+    "id": 211,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Cast Conjuration (creation) spells at +2 caster levels.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Creation (SpC)",
+    "url": "https://new.dndtools.org/domains/creation-spc-173",
+    "slug": "creation-spc-173",
+    "id": 173,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast conjuration (creation) spells at +1 caster level. Special Those with access to both the Art…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Creation [mantle]",
+    "url": "https://new.dndtools.org/domains/creation-mantle-338",
+    "slug": "creation-mantle-338",
+    "id": 338,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the Ectopic Form feat (page 50) as a bonus feat and learn the form of your choice. You must…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Darkness (BoVD)",
+    "url": "https://new.dndtools.org/domains/darkness-14",
+    "slug": "darkness-14",
+    "id": 14,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Character gains the Blind-Fight feat. Special When casting wall of force as a darkness domain spell,…",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Darkness (DD)",
+    "url": "https://new.dndtools.org/domains/darkness-dd-184",
+    "slug": "darkness-dd-184",
+    "id": 184,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Free Blind-Fight feat. Special When casting blindness/deafness as a Darkness (DD) domain spell, only…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Darkness (FRCS)",
+    "url": "https://new.dndtools.org/domains/darkness-frcs-185",
+    "slug": "darkness-frcs-185",
+    "id": 185,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Free Blind-Fight feat.",
+      "source_abbrev": "FRCS"
+    }
+  },
+  {
+    "name": "Darkness (SpC)",
+    "url": "https://new.dndtools.org/domains/darkness-spc-186",
+    "slug": "darkness-spc-186",
+    "id": 186,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Blind-Fight as a bonus feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Death",
+    "url": "https://new.dndtools.org/domains/death-118",
+    "slug": "death-118",
+    "id": 118,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a death touch once per day. Your death touch is a supernatural ability that produces a d…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Death [mantle]",
+    "url": "https://new.dndtools.org/domains/death-mantle-339",
+    "slug": "death-mantle-339",
+    "id": 339,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus to kill a dying creature, as the death knell spell ( PH 217).",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Deathbound",
+    "url": "https://new.dndtools.org/domains/deathbound-67",
+    "slug": "deathbound-67",
+    "id": 67,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your limit for creating undead animated with spells increases to three times your caster level inste…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Deathless (ECS)",
+    "url": "https://new.dndtools.org/domains/deathless-147",
+    "slug": "deathless-147",
+    "id": 147,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can perform a greater rebuking against deathless creatures in place of one of your…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Decay (ECS)",
+    "url": "https://new.dndtools.org/domains/decay-258",
+    "slug": "decay-258",
+    "id": 258,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a touch of decay once per day. Your touch of decay is a supernatural ability that causes…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Deception [mantle]",
+    "url": "https://new.dndtools.org/domains/deception-mantle-340",
+    "slug": "deception-mantle-340",
+    "id": 340,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "As an immediate action, you can expend your psionic focus to displace yourself until your next actio…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Demonic (BoVD)",
+    "url": "https://new.dndtools.org/domains/demonic-15",
+    "slug": "demonic-15",
+    "id": 15,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Character gains +1 divine bonus on attack and damage rolls for unarmed strikes and attacks with natu…",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Demonic (FC1)",
+    "url": "https://new.dndtools.org/domains/demonic-fc1-190",
+    "slug": "demonic-fc1-190",
+    "id": 190,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +1 profane bonus on attack and damage rolls for unarmed strikes and attacks with natural…",
+      "source_abbrev": "FCI"
+    }
+  },
+  {
+    "name": "Destiny (RD)",
+    "url": "https://new.dndtools.org/domains/destiny-120",
+    "slug": "destiny-120",
+    "id": 120,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as an immediate action, you can grant a willing creature within 30-ft. the ability to r…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Destruction",
+    "url": "https://new.dndtools.org/domains/destruction-117",
+    "slug": "destruction-117",
+    "id": 117,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the smite power, the supernatural ability to make a single melee attack with a +4 bonus on…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Destruction [mantle]",
+    "url": "https://new.dndtools.org/domains/destruction-mantle-341",
+    "slug": "destruction-mantle-341",
+    "id": 341,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the Improved Sunder feat as long as you are psionically focused. If you expend your focus a…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Diabolic (BoVD)",
+    "url": "https://new.dndtools.org/domains/diabolic-bovd-192",
+    "slug": "diabolic-bovd-192",
+    "id": 192,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, character can add her class level as a bonus on a Bluff , Diplomacy , Intimidate , or…",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Diabolic (FC2)",
+    "url": "https://new.dndtools.org/domains/diabolic-16",
+    "slug": "diabolic-16",
+    "id": 16,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as an immediate action, add your class level as a bonus on a single Bluff , Diplomacy…",
+      "source_abbrev": "FCII"
+    }
+  },
+  {
+    "name": "Divination (DF)",
+    "url": "https://new.dndtools.org/domains/divination-prestige-domain-246",
+    "slug": "divination-prestige-domain-246",
+    "id": 246,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast divination spells at +2 caster levels.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Divination (OA)",
+    "url": "https://new.dndtools.org/domains/divination-77",
+    "slug": "divination-77",
+    "id": 77,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast divination spells at +2 caster levels.",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Domination (CD)",
+    "url": "https://new.dndtools.org/domains/domination-39",
+    "slug": "domination-39",
+    "id": 39,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the Spell Focus (Enchantment) feat.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Domination (DF)",
+    "url": "https://new.dndtools.org/domains/domination-prestige-domain-222",
+    "slug": "domination-prestige-domain-222",
+    "id": 222,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the Spell Focus (Enchantment) feat.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Domination (Dr)",
+    "url": "https://new.dndtools.org/domains/domination-dr-221",
+    "slug": "domination-dr-221",
+    "id": 221,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Spell Focus (enchantment) as a bonus feat. Deities None (see the dracolyte prestige class,…",
+      "source_abbrev": "Dr"
+    }
+  },
+  {
+    "name": "Domination (SpC)",
+    "url": "https://new.dndtools.org/domains/domination-spc-331",
+    "slug": "domination-spc-331",
+    "id": 331,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Spell Focus (enchantment) as a bonus feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Dragon (Dr)",
+    "url": "https://new.dndtools.org/domains/dragon-dr-239",
+    "slug": "dragon-dr-239",
+    "id": 239,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Bluff and Intimidate to your list of cleric class skills.",
+      "source_abbrev": "Dr"
+    }
+  },
+  {
+    "name": "Dragon (SpC)",
+    "url": "https://new.dndtools.org/domains/dragon-48",
+    "slug": "dragon-48",
+    "id": 48,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Bluff and Intimidate to your list of cleric class skills.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Dragon Below (ECS)",
+    "url": "https://new.dndtools.org/domains/dragon-below-238",
+    "slug": "dragon-below-238",
+    "id": 238,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Augment Summoning as a bonus feat.",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Dread Tyranny",
+    "url": "https://new.dndtools.org/domains/dread-tyranny-259",
+    "slug": "dread-tyranny-259",
+    "id": 259,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Intimidate to your list of cleric class skills. You add your Strength bonus in addition to your…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Dream (CD)",
+    "url": "https://new.dndtools.org/domains/dream-37",
+    "slug": "dream-37",
+    "id": 37,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Because you have long delved into dreams and nightmares, you are immune to fear effects.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Dream (SpC)",
+    "url": "https://new.dndtools.org/domains/dream-spc-332",
+    "slug": "dream-spc-332",
+    "id": 332,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are immune to fear effects.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Drow (FRCS)",
+    "url": "https://new.dndtools.org/domains/drow-frcs-242",
+    "slug": "drow-frcs-242",
+    "id": 242,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Free Lightning Reflexes feat.",
+      "source_abbrev": "FRCS"
+    }
+  },
+  {
+    "name": "Drow (SpC)",
+    "url": "https://new.dndtools.org/domains/drow-53",
+    "slug": "drow-53",
+    "id": 53,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Lightning Reflexes as a bonus feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Dwarf (SpC)",
+    "url": "https://new.dndtools.org/domains/dwarf-150",
+    "slug": "dwarf-150",
+    "id": 150,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Great Fortitude as a bonus feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Earth",
+    "url": "https://new.dndtools.org/domains/earth-109",
+    "slug": "earth-109",
+    "id": 109,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn or destroy air creatures as a good cleric turns undead. Rebuke, command, or bolster earth creat…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Edgewalker Sentinel",
+    "url": "https://new.dndtools.org/domains/edgewalker-sentinel-260",
+    "slug": "edgewalker-sentinel-260",
+    "id": 260,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Knowledge (the planes) to your list of ranger or scout class skills. When you select this feat,…",
+      "source_abbrev": "SoS"
+    }
+  },
+  {
+    "name": "Egoist (CP) [discipline]",
+    "url": "https://new.dndtools.org/domains/egoist-363",
+    "slug": "egoist-363",
+    "id": 363,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who specializes in psychometabolism is known as an egoist. This discipline consists of power…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Egoist (XPH) [discipline]",
+    "url": "https://new.dndtools.org/domains/egoist-261",
+    "slug": "egoist-261",
+    "id": 261,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who specializes in psychometabolism is known as an egoist. This discipline consists of power…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Elements [mantle]",
+    "url": "https://new.dndtools.org/domains/elements-mantle-342",
+    "slug": "elements-mantle-342",
+    "id": 342,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you become psionically focused, choose one of the four primary elements with which to align you…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Elf (SpC)",
+    "url": "https://new.dndtools.org/domains/elf-151",
+    "slug": "elf-151",
+    "id": 151,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the Point Blank Shot feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Elysium (SpC)",
+    "url": "https://new.dndtools.org/domains/elysium-143",
+    "slug": "elysium-143",
+    "id": 143,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the ability to smite evil with a single melee attack once per day. You add your Charisma bo…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Emotion (DM)",
+    "url": "https://new.dndtools.org/domains/emotion-dm-308",
+    "slug": "emotion-dm-308",
+    "id": 308,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your understanding of the mind and emotions allows you to more easily shrug off the effects of mind-…",
+      "source_abbrev": "D340"
+    }
+  },
+  {
+    "name": "Endurance (BoED)",
+    "url": "https://new.dndtools.org/domains/endurance-7",
+    "slug": "endurance-7",
+    "id": 7,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can perform a feat of endurance, which is the supernatural ability to gain an enhancement bonus…",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Energy [mantle]",
+    "url": "https://new.dndtools.org/domains/energy-mantle-343",
+    "slug": "energy-mantle-343",
+    "id": 343,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus to gain resistance 5 against one energy type for a number of round…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Entropy (FC1)",
+    "url": "https://new.dndtools.org/domains/entropy-49",
+    "slug": "entropy-49",
+    "id": 49,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a standard action, you can channel a bolt of Abyssal entropy as a ranged touch attac…",
+      "source_abbrev": "FCI"
+    }
+  },
+  {
+    "name": "Envy",
+    "url": "https://new.dndtools.org/domains/envy-152",
+    "slug": "envy-152",
+    "id": 152,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Bluff to your list of Cleric class skills. In addition, you cast spells that damage or drain abi…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Eternal Strength",
+    "url": "https://new.dndtools.org/domains/eternal-strength-262",
+    "slug": "eternal-strength-262",
+    "id": 262,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +4 bonus on saving throws to resist effects that deal Strength damage or cause Strength d…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Evil",
+    "url": "https://new.dndtools.org/domains/evil-104",
+    "slug": "evil-104",
+    "id": 104,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast evil spells at +1 caster level. Special When casting Summon Monster IX spell as an Evil Dom…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Evil [mantle]",
+    "url": "https://new.dndtools.org/domains/evil-mantle-344",
+    "slug": "evil-mantle-344",
+    "id": 344,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus to deal additional damage to a non-evil creature. You deal an addi…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Exorcism (DF)",
+    "url": "https://new.dndtools.org/domains/exorcism-44",
+    "slug": "exorcism-44",
+    "id": 44,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the supernatural ability to force possessing spirits out of the bodies they inhabit. You ma…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Exorcism (ECS)",
+    "url": "https://new.dndtools.org/domains/exorcism-ecs-230",
+    "slug": "exorcism-ecs-230",
+    "id": 230,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the supernatural ability to force possessing spirits out of the bodies they inhabit. You ma…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Family",
+    "url": "https://new.dndtools.org/domains/family-153",
+    "slug": "family-153",
+    "id": 153,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you can protect a number of creatures equal to your Charisma modifier…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Far Horizons",
+    "url": "https://new.dndtools.org/domains/far-horizons-263",
+    "slug": "far-horizons-263",
+    "id": 263,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Climb , Jump , and Swim to your list of cleric class skills. Furthermore, you always know the di…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Fate (CW)",
+    "url": "https://new.dndtools.org/domains/fate-154",
+    "slug": "fate-154",
+    "id": 154,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the uncanny dodge ability, allowing you to retain your Dexterity bonus to AC (if any) even…",
+      "source_abbrev": "CW"
+    }
+  },
+  {
+    "name": "Fate [mantle]",
+    "url": "https://new.dndtools.org/domains/fate-mantle-345",
+    "slug": "fate-mantle-345",
+    "id": 345,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can expend your psionic focus to add a bonus on one d20 roll equal to your level i…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Feast (ECS)",
+    "url": "https://new.dndtools.org/domains/feast-175",
+    "slug": "feast-175",
+    "id": 175,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have immunity to ingested poisons and to diseases spread by ingestion.",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Fey (BoED)",
+    "url": "https://new.dndtools.org/domains/fey-9",
+    "slug": "fey-9",
+    "id": 9,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain a +4 bonus on saving throws against the spell-like abilities of feys (such as dryads, nymphs, a…",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Fire",
+    "url": "https://new.dndtools.org/domains/fire-107",
+    "slug": "fire-107",
+    "id": 107,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn or destroy water creatures as a good cleric turns undead. Rebuke, command, or bolster fire crea…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Flame (OA)",
+    "url": "https://new.dndtools.org/domains/flame-79",
+    "slug": "flame-79",
+    "id": 79,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can generate a flame ward , a spell-like ability to grant yourself or someone you touch a resist…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Force (CD)",
+    "url": "https://new.dndtools.org/domains/force-41",
+    "slug": "force-41",
+    "id": 41,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "By manipulating cosmic forces of inertia and force, once per day the cleric can reroll any damage ro…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Force (LoM)",
+    "url": "https://new.dndtools.org/domains/force-lom-225",
+    "slug": "force-lom-225",
+    "id": 225,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "By manipulating cosmic forces of inertia and force, once per day you can reroll any damage roll (for…",
+      "source_abbrev": "LoM"
+    }
+  },
+  {
+    "name": "Force (SpC)",
+    "url": "https://new.dndtools.org/domains/force-spc-226",
+    "slug": "force-spc-226",
+    "id": 226,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "By manipulating cosmic forces of inertia, once per day you can reroll any damage roll (for a weapon,…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Force [mantle]",
+    "url": "https://new.dndtools.org/domains/force-mantle-346",
+    "slug": "force-mantle-346",
+    "id": 346,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "While psionically focused, you gain a +1 deflection bonus to your Armor Class.",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Forge (DCS)",
+    "url": "https://new.dndtools.org/domains/forge-264",
+    "slug": "forge-264",
+    "id": 264,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 insight bonus on Craft and Appraise checks related to stone or metal items.",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Fortune (OA)",
+    "url": "https://new.dndtools.org/domains/fortune-72",
+    "slug": "fortune-72",
+    "id": 72,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the power of good fortune, which is usable once per day. This extraordinary ability allows…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Freedom [mantle]",
+    "url": "https://new.dndtools.org/domains/freedom-mantle-347",
+    "slug": "freedom-mantle-347",
+    "id": 347,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "While psionically focused, you gain a +10-foot bonus to your speed. You can expend your focus to add…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Fury (FC1)",
+    "url": "https://new.dndtools.org/domains/fury-52",
+    "slug": "fury-52",
+    "id": 52,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you can designate a single creature or object as the target of your f…",
+      "source_abbrev": "FCI"
+    }
+  },
+  {
+    "name": "Fury (OA)",
+    "url": "https://new.dndtools.org/domains/fury-oa-241",
+    "slug": "fury-oa-241",
+    "id": 241,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the smite power, the supernatural ability to make a single melee attack with a +4 attack bo…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Gatekeeper Initiate",
+    "url": "https://new.dndtools.org/domains/gatekeeper-initiate-265",
+    "slug": "gatekeeper-initiate-265",
+    "id": 265,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You get a +2 bonus on saving throws against the supernatural and spelllike abilities of aberrations.…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Gem Dragon (DM)",
+    "url": "https://new.dndtools.org/domains/gem-dragon-dm-309",
+    "slug": "gem-dragon-dm-309",
+    "id": 309,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Autohypnosis , Knowledge (psionics) , and Psicraft to your list of Cleric class skills.",
+      "source_abbrev": "D344"
+    }
+  },
+  {
+    "name": "Generosity (DM)",
+    "url": "https://new.dndtools.org/domains/generosity-dm-310",
+    "slug": "generosity-dm-310",
+    "id": 310,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as an immediate action you may choose to cast a maximized conjuration (healing) spell…",
+      "source_abbrev": "D344"
+    }
+  },
+  {
+    "name": "Ghost (Gh)",
+    "url": "https://new.dndtools.org/domains/ghost-63",
+    "slug": "ghost-63",
+    "id": 63,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Cast ectomancy spells at +1 caster level.",
+      "source_abbrev": "Gh"
+    }
+  },
+  {
+    "name": "Glory (BoED)",
+    "url": "https://new.dndtools.org/domains/glory-3",
+    "slug": "glory-3",
+    "id": 3,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn undead with a +2 bonus on the turning check and +1d6 to the turning damage roll.",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Glory (CD)",
+    "url": "https://new.dndtools.org/domains/glory-cd-196",
+    "slug": "glory-cd-196",
+    "id": 196,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn undead with a +2 bonus on the turning check and +1d6 on the turning damage roll.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Glory (DD)",
+    "url": "https://new.dndtools.org/domains/glory-dd-197",
+    "slug": "glory-dd-197",
+    "id": 197,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn undead with a +2 bonus on the turning check and +1d6 to the turning damage roll.",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Glory (DF)",
+    "url": "https://new.dndtools.org/domains/glory-df-198",
+    "slug": "glory-df-198",
+    "id": 198,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn undead with a +2 bonus on the turning check and +1d6 on the turning damage roll.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Glory (Dr)",
+    "url": "https://new.dndtools.org/domains/glory-dr-199",
+    "slug": "glory-dr-199",
+    "id": 199,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can turn undead with a +2 bonus on the turning check and +1d6 on the turning damage roll.",
+      "source_abbrev": "Dr"
+    }
+  },
+  {
+    "name": "Glory (SpC)",
+    "url": "https://new.dndtools.org/domains/glory-spc-200",
+    "slug": "glory-spc-200",
+    "id": 200,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn undead with a +2 bonus on the turning check and +1d6 on the turning damage roll.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Gluttony (SpC)",
+    "url": "https://new.dndtools.org/domains/gluttony-137",
+    "slug": "gluttony-137",
+    "id": 137,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "For a total time per day of 1 round per cleric level you possess, you can increase your size as if y…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Gnome",
+    "url": "https://new.dndtools.org/domains/gnome-54",
+    "slug": "gnome-54",
+    "id": 54,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast illusion spells at +1 caster level.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Good",
+    "url": "https://new.dndtools.org/domains/good-103",
+    "slug": "good-103",
+    "id": 103,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast good spells at +1 caster level. Special When casting Summon Monster IX spell as a Good Doma…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Good [mantle]",
+    "url": "https://new.dndtools.org/domains/good-mantle-348",
+    "slug": "good-mantle-348",
+    "id": 348,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus to deal additional damage to a non-good creature. You deal an extr…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Grave (OA)",
+    "url": "https://new.dndtools.org/domains/grave-76",
+    "slug": "grave-76",
+    "id": 76,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a death touch once per day. Your death touch is a spell-like ability that is a death eff…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Greed (BoVD)",
+    "url": "https://new.dndtools.org/domains/greed-12",
+    "slug": "greed-12",
+    "id": 12,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Character gains a +2 competence bonus on Appraise , Open Lock , and Pick Pocket checks.",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Greed (Dr)",
+    "url": "https://new.dndtools.org/domains/greed-dr-180",
+    "slug": "greed-dr-180",
+    "id": 180,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 competence bonus on Appraise, Open Lock, and Slight of Hand checks.",
+      "source_abbrev": "Dr"
+    }
+  },
+  {
+    "name": "Greed (SpC)",
+    "url": "https://new.dndtools.org/domains/greed-spc-181",
+    "slug": "greed-spc-181",
+    "id": 181,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 competence bonus on Appraise , Open Lock , and Sleight of Hand checks.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Greensinger Initiate",
+    "url": "https://new.dndtools.org/domains/greensinger-initiate-266",
+    "slug": "greensinger-initiate-266",
+    "id": 266,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Bluff , Hide , and Perform to your list of druid class skills. In addition, you can cast the fol…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Guardian (OA)",
+    "url": "https://new.dndtools.org/domains/guardian-71",
+    "slug": "guardian-71",
+    "id": 71,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can add your shaman level to a single saving throw you make.",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Guardian [mantle]",
+    "url": "https://new.dndtools.org/domains/guardian-mantle-349",
+    "slug": "guardian-mantle-349",
+    "id": 349,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus as an immediate action to take the damage dealt to an adjacent all…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Hades (SpC)",
+    "url": "https://new.dndtools.org/domains/hades-139",
+    "slug": "hades-139",
+    "id": 139,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the ability to smite good with a single melee attack once per day. You add your Charisma bo…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Halfling (SpC)",
+    "url": "https://new.dndtools.org/domains/halfling-155",
+    "slug": "halfling-155",
+    "id": 155,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day for 10 minutes, you add your Charisma modifier to your Climb , Jump , Move Silently , a…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Hatred",
+    "url": "https://new.dndtools.org/domains/hatred-156",
+    "slug": "hatred-156",
+    "id": 156,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, choose one opponent. Against that foe you gain a +2 profane bonus on…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Healing",
+    "url": "https://new.dndtools.org/domains/healing-111",
+    "slug": "healing-111",
+    "id": 111,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast healing spells at +1 caster level.",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Herald (BoED)",
+    "url": "https://new.dndtools.org/domains/herald-10",
+    "slug": "herald-10",
+    "id": 10,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Intimidate is a class skill. You gain a +4 sacred bonus on Diplomacy and Intimidate checks.",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Hero (OA)",
+    "url": "https://new.dndtools.org/domains/hero-82",
+    "slug": "hero-82",
+    "id": 82,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can add your shaman level to a single attack roll.",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Hope (DM)",
+    "url": "https://new.dndtools.org/domains/hope-dm-311",
+    "slug": "hope-dm-311",
+    "id": 311,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, when you fail a skill check, attack roll, or saving throw, you may roll 1d6 and add it…",
+      "source_abbrev": "D340"
+    }
+  },
+  {
+    "name": "Humility (DM)",
+    "url": "https://new.dndtools.org/domains/humility-dm-312",
+    "slug": "humility-dm-312",
+    "id": 312,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast all divination spells at +1 caster level.",
+      "source_abbrev": "D355"
+    }
+  },
+  {
+    "name": "Hunger",
+    "url": "https://new.dndtools.org/domains/hunger-66",
+    "slug": "hunger-66",
+    "id": 66,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a bite attack. If you are Small, your bite attack deals 1d4 points of damage; Medium, 1d6;…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Hunt (DM)",
+    "url": "https://new.dndtools.org/domains/hunt-dm-313",
+    "slug": "hunt-dm-313",
+    "id": 313,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Track as a bonus feat.",
+      "source_abbrev": "D342"
+    }
+  },
+  {
+    "name": "Illusion",
+    "url": "https://new.dndtools.org/domains/illusion-157",
+    "slug": "illusion-157",
+    "id": 157,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast all illusion spells at +1 caster level.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Incarnum (MoI)",
+    "url": "https://new.dndtools.org/domains/incarnum-69",
+    "slug": "incarnum-69",
+    "id": 69,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Incarnum Spellshaping as a bonus feat. Special Clerics of any deity can select this domain,…",
+      "source_abbrev": "MoI"
+    }
+  },
+  {
+    "name": "Initiate of Aasterinian (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-aasterinian-267",
+    "slug": "initiate-aasterinian-267",
+    "id": 267,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Bluff , Disguise , Speak Language , and Sleight of Hand to your list of cleric class skills. If…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Amaunator (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-amaunator-268",
+    "slug": "initiate-amaunator-268",
+    "id": 268,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can spontaneously cast any spell on your spell list that has the fire descriptor. This ability w…",
+      "source_abbrev": "PF"
+    }
+  },
+  {
+    "name": "Initiate of Anhur (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-anhur-27",
+    "slug": "initiate-of-anhur-27",
+    "id": 27,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You take no penalty on Listen checks for being distracted or asleep. You can make attacks of opportu…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Arvoreen (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-arvoreen-269",
+    "slug": "initiate-arvoreen-269",
+    "id": 269,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Hide and Move Silently to your list of cleric or paladin class skills. In addition, you add the…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Astilabor (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-astilabor-270",
+    "slug": "initiate-astilabor-270",
+    "id": 270,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Disable Device , Open Lock , and Search to your list of cleric class skills. In addition, you ad…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Bahamut (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-bahamut-271",
+    "slug": "initiate-bahamut-271",
+    "id": 271,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can smite evil (as the paladin class feature, PH 44), using your cleric level as y…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Bane (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-bane-92",
+    "slug": "initiate-of-bane-92",
+    "id": 92,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain frightful presence—the ability to strike fear into your opponents with your hostile actions…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Baravar Cloakshadow (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-baravar-cloakshadow-28",
+    "slug": "initiate-of-baravar-cloakshadow-28",
+    "id": 28,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can spend a turn/rebuke attempt as a standard action to recognize all visible illusion effects w…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Cyric (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-cyric-96",
+    "slug": "initiate-of-cyric-96",
+    "id": 96,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain complete immunity to normal and magical fear. In addition, you may add the following spells…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Eilistraee (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-eilistraee-26",
+    "slug": "initiate-of-eilistraee-26",
+    "id": 26,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can spend one of the daily uses of your racial spell-like abilities ( dancing ligh…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Falazure (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-falazure-272",
+    "slug": "initiate-falazure-272",
+    "id": 272,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you cast an inflict spell on an undead creature, you add the spell’s level to the damage healed…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Garyx (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-garyx-273",
+    "slug": "initiate-garyx-273",
+    "id": 273,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can apply the effect of the Empower Spell metamagic feat to any fire spell you cas…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Ghaunadaur (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-ghaunadaur-20",
+    "slug": "initiate-of-ghaunadaur-20",
+    "id": 20,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can command or rebuke oozes as an evil cleric commands or rebukes undead. You can use this super…",
+      "source_abbrev": "CR"
+    }
+  },
+  {
+    "name": "Initiate of Gond (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-gond-94",
+    "slug": "initiate-of-gond-94",
+    "id": 94,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may add Disable Device and Open Lock to your list of cleric class skills. In addition, you may a…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Gruumsh (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-gruumsh-19",
+    "slug": "initiate-of-gruumsh-19",
+    "id": 19,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as a swift action (see the Swift and Immediate Actions sidebar, page 21 ), you can cas…",
+      "source_abbrev": "CR"
+    }
+  },
+  {
+    "name": "Initiate of Helm (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-helm-84",
+    "slug": "initiate-of-helm-84",
+    "id": 84,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can make attacks of opportunity when you are flat-footed, as though you had the Combat Reflexes…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Hlal (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-hlal-274",
+    "slug": "initiate-hlal-274",
+    "id": 274,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Three times per day, you can add your caster level as a bonus on any Escape Artist check or any grap…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Horus-Re (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-horus-re-25",
+    "slug": "initiate-of-horus-re-25",
+    "id": 25,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can use wild shape (as the druid ability) to take the shape of a hawk for 1 hour.…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Ilmater (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-ilmater-85",
+    "slug": "initiate-of-ilmater-85",
+    "id": 85,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you cast any cure spell that would cure more damage than the target has taken, the target gains…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Io (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-io-275",
+    "slug": "initiate-io-275",
+    "id": 275,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 competence bonus on saves against effects created by dragons and creatures of the drag…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Kossuth (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-kossuth-276",
+    "slug": "initiate-kossuth-276",
+    "id": 276,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "All fire elementals that you summon using the summon monster spells have +2 hit points per die (inst…",
+      "source_abbrev": "CR"
+    }
+  },
+  {
+    "name": "Initiate of Lathander (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-lathander-88",
+    "slug": "initiate-of-lathander-88",
+    "id": 88,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "The anyspell and greater anyspell spells also appear on the Spell domain list. With this feat, you c…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Lendys (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-lendys-277",
+    "slug": "initiate-lendys-277",
+    "id": 277,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Gather Information and Sense Motive to your list of cleric class skills. You gain a +1 competenc…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Loviatar (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-loviatar-278",
+    "slug": "initiate-loviatar-278",
+    "id": 278,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "The first time you take damage in any combat, you gain a +1 morale bonus on attack rolls and a +1 mo…",
+      "source_abbrev": "CR"
+    }
+  },
+  {
+    "name": "Initiate of Malar (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-malar-91",
+    "slug": "initiate-of-malar-91",
+    "id": 91,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you use a summon monster or summon nature’s ally spell to summon a natural or fiendish animal,…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Milil (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-milil-21",
+    "slug": "initiate-of-milil-21",
+    "id": 21,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your bard , cleric , and paladin levels stack for the purpose of determining which kinds of bardic m…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Mystra (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-mystra-86",
+    "slug": "initiate-of-mystra-86",
+    "id": 86,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can attempt to cast spells even within a dead magic zone or an antimagic field . In a dead magic…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Nature (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-nature-90",
+    "slug": "initiate-of-nature-90",
+    "id": 90,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can rebuke or command animals or plant creatures as an evil cleric rebukes or commands undead. Y…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Nobanion (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-nobanion-24",
+    "slug": "initiate-of-nobanion-24",
+    "id": 24,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain wild empathy (as the druid class feature), usable only on feline and part-feline animals or…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Selûne (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-selune-87",
+    "slug": "initiate-of-selune-87",
+    "id": 87,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast augury and divination spells at +5 caster level. In addition, you may add the following spe…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Shar (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-shar-279",
+    "slug": "initiate-shar-279",
+    "id": 279,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You add <em><a href=”/bluff/”>Bluff </em></a> and Hide </a to your list of class skills.</p> In addi…",
+      "source_abbrev": "CR"
+    }
+  },
+  {
+    "name": "Initiate of Tamara (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-tamara-280",
+    "slug": "initiate-tamara-280",
+    "id": 280,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you cast a cure spell on a good-aligned creature, you add the spell’s level to the damage heale…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Tchazzar (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-tchazzar-281",
+    "slug": "initiate-tchazzar-281",
+    "id": 281,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You receive a +2 bonus on saving throws against dragon breath weapons and frightful presence. In add…",
+      "source_abbrev": "DrF"
+    }
+  },
+  {
+    "name": "Initiate of Tiamat (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-tiamat-282",
+    "slug": "initiate-tiamat-282",
+    "id": 282,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Intimidate to your list of cleric class skills. When you make a melee attack against a creature…",
+      "source_abbrev": "DM"
+    }
+  },
+  {
+    "name": "Initiate of Torm (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-torm-283",
+    "slug": "initiate-torm-283",
+    "id": 283,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the smite power, the supernatural ability to make a single melee attack once per day with a…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Tymora (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-tymora-22",
+    "slug": "initiate-of-tymora-22",
+    "id": 22,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can add a +5 luck bonus on any attack roll, saving throw, skill check, or ability…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Initiate of Tyr (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-tyr-95",
+    "slug": "initiate-of-tyr-95",
+    "id": 95,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +1 bonus on all damage rolls when attacking with a longsword. In addition, you may add th…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Initiate of Varae (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-varae-284",
+    "slug": "initiate-varae-284",
+    "id": 284,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as a standard action, you can transform your skin into shimmering emerald scales. The…",
+      "source_abbrev": "CR"
+    }
+  },
+  {
+    "name": "Initiate of the Holy Realm (Feat)",
+    "url": "https://new.dndtools.org/domains/initiate-of-the-holy-realm-23",
+    "slug": "initiate-of-the-holy-realm-23",
+    "id": 23,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You get a +1 sacred bonus on all saving throws while within the Holy Realm or on a quest specifi cal…",
+      "source_abbrev": "CV"
+    }
+  },
+  {
+    "name": "Inquisition (CD)",
+    "url": "https://new.dndtools.org/domains/inquisition-134",
+    "slug": "inquisition-134",
+    "id": 134,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain a +4 bonus on all dispel checks. Special This is a Domain not accessible in by normal means or…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Inquisition (DF)",
+    "url": "https://new.dndtools.org/domains/inquisition-df-183",
+    "slug": "inquisition-df-183",
+    "id": 183,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain a +4 bonus on all dispel checks.",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Insight (DCS)",
+    "url": "https://new.dndtools.org/domains/insight-285",
+    "slug": "insight-285",
+    "id": 285,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain uncanny dodge (as a rogue or barbarian ), the extraordinary ability to react to danger befo…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Joy (BoED)",
+    "url": "https://new.dndtools.org/domains/joy-4",
+    "slug": "joy-4",
+    "id": 4,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +4 sacred bonus on Diplomacy checks.",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Justice [mantle]",
+    "url": "https://new.dndtools.org/domains/justice-mantle-350",
+    "slug": "justice-mantle-350",
+    "id": 350,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus as an immediate action to make an attack of opportunity against a…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Kineticist (CP) [discipline]",
+    "url": "https://new.dndtools.org/domains/kineticist-364",
+    "slug": "kineticist-364",
+    "id": 364,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Psions who specialize in psychokinesis are known as kineticists. They are the masters of powers that…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Kineticist (XPH) [discipline]",
+    "url": "https://new.dndtools.org/domains/kineticist-330",
+    "slug": "kineticist-330",
+    "id": 330,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Psions who specialize in psychokinesis are known as kineticists. They are the masters of powers that…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Knowledge",
+    "url": "https://new.dndtools.org/domains/knowledge-115",
+    "slug": "knowledge-115",
+    "id": 115,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add all Knowledge skills to your list of cleric class skills. You cast divination spells at +1 caste…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Knowledge [mantle]",
+    "url": "https://new.dndtools.org/domains/knowledge-mantle-351",
+    "slug": "knowledge-mantle-351",
+    "id": 351,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "While psionically focused, you can make Knowledge checks as if trained. You can expend your psionic…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Kobold (RDr)",
+    "url": "https://new.dndtools.org/domains/kobold-286",
+    "slug": "kobold-286",
+    "id": 286,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can use the Search skill to locate traps when the task has a Difficulty Class higher than 20. Yo…",
+      "source_abbrev": "RDr"
+    }
+  },
+  {
+    "name": "Law",
+    "url": "https://new.dndtools.org/domains/law-102",
+    "slug": "law-102",
+    "id": 102,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast law spells at +1 caster level. Special When casting Summon Monster IX spell as a Law Domain…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Law Inviolate",
+    "url": "https://new.dndtools.org/domains/law-inviolate-178",
+    "slug": "law-inviolate-178",
+    "id": 178,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your natural weapons, as well as any weapons you wield, are treated as lawful-aligned for the purpos…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Law [mantle]",
+    "url": "https://new.dndtools.org/domains/law-mantle-352",
+    "slug": "law-mantle-352",
+    "id": 352,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your psionic focus to deal additional damage to non-lawful creatures. You deal an add…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Liberation (CD)",
+    "url": "https://new.dndtools.org/domains/liberation-cd-201",
+    "slug": "liberation-cd-201",
+    "id": 201,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "If you are affected by a charm, compulsion, or fear effect and fail your saving throw, you can attem…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Liberation (DCS)",
+    "url": "https://new.dndtools.org/domains/liberation-30",
+    "slug": "liberation-30",
+    "id": 30,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 morale bonus on all saving throws against Enchantment spells or effects.",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Liberation (DD)",
+    "url": "https://new.dndtools.org/domains/liberation-dd-202",
+    "slug": "liberation-dd-202",
+    "id": 202,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 morale bonus on all saving throws against enchantment spells or effects.",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Life (ECS)",
+    "url": "https://new.dndtools.org/domains/life-287",
+    "slug": "life-287",
+    "id": 287,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can grant 1d6 temporary hit points +1 per cleric level to a creature you touch. Th…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Life [mantle]",
+    "url": "https://new.dndtools.org/domains/life-mantle-353",
+    "slug": "life-mantle-353",
+    "id": 353,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "If you expend your psionic focus as a swift action as you manifest a power from this mantle, your ma…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Light and Darkness [mantle]",
+    "url": "https://new.dndtools.org/domains/light-darkness-mantle-354",
+    "slug": "light-darkness-mantle-354",
+    "id": 354,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you gain this mantle, choose whether you gain low-light vision or darkvision out to 60 feet. If…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Limbo (SpC)",
+    "url": "https://new.dndtools.org/domains/limbo-140",
+    "slug": "limbo-140",
+    "id": 140,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the ability to smite law with a single melee attack once per day. You add your Charisma bon…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Luck",
+    "url": "https://new.dndtools.org/domains/luck-100",
+    "slug": "luck-100",
+    "id": 100,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the power of good fortune, which is usable once per day. This extraordinary ability allows…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Lung Dragon (DM)",
+    "url": "https://new.dndtools.org/domains/lung-dragon-dm-314",
+    "slug": "lung-dragon-dm-314",
+    "id": 314,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 competence bonus on Charisma-based skill checks and Charisma checks against creatures…",
+      "source_abbrev": "D344"
+    }
+  },
+  {
+    "name": "Lust",
+    "url": "https://new.dndtools.org/domains/lust-158",
+    "slug": "lust-158",
+    "id": 158,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you gain an enhancement bonus to Charisma equal to your Cleric level.…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Madness (CD)",
+    "url": "https://new.dndtools.org/domains/madness-cd-216",
+    "slug": "madness-cd-216",
+    "id": 216,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your insanity gives you insight. You subtract 1 from all Wisdom-based skill checks and all Will save…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Madness (DD)",
+    "url": "https://new.dndtools.org/domains/madness-dd-217",
+    "slug": "madness-dd-217",
+    "id": 217,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain an Insanity score equal to half your class level (add cleric levels to prestige class level…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Madness (DF)",
+    "url": "https://new.dndtools.org/domains/madness-df-218",
+    "slug": "madness-df-218",
+    "id": 218,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain an \"Insanity score\" equal to half your class level (add cleric levels to prestige class lev…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Madness (ECS)",
+    "url": "https://new.dndtools.org/domains/madness-ecs-219",
+    "slug": "madness-ecs-219",
+    "id": 219,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your insanity gives you insight. You subtract 1 from all Wisdom-based skill checks and all Will save…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Madness (LoM)",
+    "url": "https://new.dndtools.org/domains/madness-lom-220",
+    "slug": "madness-lom-220",
+    "id": 220,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are slowly going insane. Subtract 1 from all Wisdom-based skill checks (such as Listen checks) a…",
+      "source_abbrev": "LoM"
+    }
+  },
+  {
+    "name": "Madness (SpC)",
+    "url": "https://new.dndtools.org/domains/madness-spc-315",
+    "slug": "madness-spc-315",
+    "id": 315,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your insanity gives you insight. You subtract 1 from all Wisdom-based skill checks and all Will save…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Magic",
+    "url": "https://new.dndtools.org/domains/magic-98",
+    "slug": "magic-98",
+    "id": 98,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Use scrolls, wands, and other devices with spell completion or spell trigger activation as a wizard…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Magic [mantle]",
+    "url": "https://new.dndtools.org/domains/magic-mantle-355",
+    "slug": "magic-mantle-355",
+    "id": 355,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Use Magic Device as a class skill. If you purchased ranks in Use Magic Device or Use Psioni…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Maho (OA)",
+    "url": "https://new.dndtools.org/domains/maho-73",
+    "slug": "maho-73",
+    "id": 73,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "The maho-tsukai spell list contains only a few unique spells that do not appear on the other lists i…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Mechanus (SpC)",
+    "url": "https://new.dndtools.org/domains/mechanus-138",
+    "slug": "mechanus-138",
+    "id": 138,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the ability to smite chaos with a single melee attack once per day. You add your Charisma b…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Meditation (DCS)",
+    "url": "https://new.dndtools.org/domains/meditation-288",
+    "slug": "meditation-288",
+    "id": 288,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you may cast one spell as though it had the Empower Spell feat applied to it. However,…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Meditation (ECS)",
+    "url": "https://new.dndtools.org/domains/meditation-ecs-289",
+    "slug": "meditation-ecs-289",
+    "id": 289,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can cast one spell as though it had the Empower Spell feat applied to it. However,…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Meditation (OA)",
+    "url": "https://new.dndtools.org/domains/meditation-oa-290",
+    "slug": "meditation-oa-290",
+    "id": 290,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Each day, you can prepare one spell as though it had the Empower Spell feat applied to it. However,…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Mental Power [mantle]",
+    "url": "https://new.dndtools.org/domains/mental-power-mantle-356",
+    "slug": "mental-power-mantle-356",
+    "id": 356,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "For the purpose of determining bonus power points for the class that gives you this mantle, treat yo…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Mentalism (DCS)",
+    "url": "https://new.dndtools.org/domains/mentalism-dcs-191",
+    "slug": "mentalism-dcs-191",
+    "id": 191,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 bonus on Bluff , Diplomacy , and Sense Motive checks. You also gain a +2 bonus on Will…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Mentalism (PG)",
+    "url": "https://new.dndtools.org/domains/mentalism-159",
+    "slug": "mentalism-159",
+    "id": 159,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can generate a mental ward that grants any creature you touch a resistance bonus o…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Metal",
+    "url": "https://new.dndtools.org/domains/metal-83",
+    "slug": "metal-83",
+    "id": 83,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Martial Weapon Proficiency and Weapon Focus as bonus feats for either the light hammer or t…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Metallic Dragon (DM)",
+    "url": "https://new.dndtools.org/domains/metallic-dragon-dm-316",
+    "slug": "metallic-dragon-dm-316",
+    "id": 316,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain damage reduction 1/adamantine. This increases by 1 per five Cleric levels.",
+      "source_abbrev": "D344"
+    }
+  },
+  {
+    "name": "Mind (CD)",
+    "url": "https://new.dndtools.org/domains/mind-cd-213",
+    "slug": "mind-cd-213",
+    "id": 213,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain a +2 bonus on Bluff , Diplomacy , and Sense Motive checks.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Mind (DF)",
+    "url": "https://new.dndtools.org/domains/mind-df-214",
+    "slug": "mind-df-214",
+    "id": 214,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain a +2 bonus on Bluff , Diplomacy , Innuendo , Read Lips , and Sense Motive checks. Gain a +2 bon…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Mind (SpC)",
+    "url": "https://new.dndtools.org/domains/mind-spc-317",
+    "slug": "mind-spc-317",
+    "id": 317,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 bonus on Bluff , Diplomacy , and Sense Motive checks.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Mind (XPH)",
+    "url": "https://new.dndtools.org/domains/mind-xph-215",
+    "slug": "mind-xph-215",
+    "id": 215,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain a +2 bonus on Bluff , Diplomacy , and Sense Motive checks. Gain a +2 bonus on Will saves agains…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Moon",
+    "url": "https://new.dndtools.org/domains/moon-57",
+    "slug": "moon-57",
+    "id": 57,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn or destroy lycanthropes as a good Cleric turns undead. You can use this ability a number of tim…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Mysticism (CD)",
+    "url": "https://new.dndtools.org/domains/mysticism-cd-231",
+    "slug": "mysticism-cd-231",
+    "id": 231,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you may use a free action to channel your deity’s power to grant yourself a luck bonus…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Mysticism (DF)",
+    "url": "https://new.dndtools.org/domains/mysticism-df-232",
+    "slug": "mysticism-df-232",
+    "id": 232,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You apply your Charisma modifier (if positive) as a bonus on all saving throws. If you already have…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Natural World [mantle]",
+    "url": "https://new.dndtools.org/domains/natural-world-mantle-357",
+    "slug": "natural-world-mantle-357",
+    "id": 357,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the wild empathy class feature ( PH 35), except the result is determined by 1d20 + manifest…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Nature (OA)",
+    "url": "https://new.dndtools.org/domains/nature-70",
+    "slug": "nature-70",
+    "id": 70,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command normal animals or plant creatures as an evil Cleric rebukes or commands undead. Us…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Necromancer (ECS)",
+    "url": "https://new.dndtools.org/domains/necromancer-291",
+    "slug": "necromancer-291",
+    "id": 291,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast necromancy spells at +1 caster level.",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Necromancy (DCS)",
+    "url": "https://new.dndtools.org/domains/necromancy-292",
+    "slug": "necromancy-292",
+    "id": 292,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke, command, or bolster undead as an evil cleric . Use this ability a number of times per day eq…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Night (DM)",
+    "url": "https://new.dndtools.org/domains/night-dm-318",
+    "slug": "night-dm-318",
+    "id": 318,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain low-light vision. If you already have low-light vision, you gain darkvision with a range of…",
+      "source_abbrev": "D342"
+    }
+  },
+  {
+    "name": "Nightbringer Initiate",
+    "url": "https://new.dndtools.org/domains/nightbringer-initiate-293",
+    "slug": "nightbringer-initiate-293",
+    "id": 293,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Hide and Move Silently to your list of druid class skills. In addition, you can cast the followi…",
+      "source_abbrev": "FE"
+    }
+  },
+  {
+    "name": "Nobility (CW)",
+    "url": "https://new.dndtools.org/domains/nobility-160",
+    "slug": "nobility-160",
+    "id": 160,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the spell-like ability to inspire allies, giving them a +2 morale bonus on saving throws, a…",
+      "source_abbrev": "CW"
+    }
+  },
+  {
+    "name": "Nobility (DD)",
+    "url": "https://new.dndtools.org/domains/nobility-dd-193",
+    "slug": "nobility-dd-193",
+    "id": 193,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the spell-like ability to inspire allies, giving them a +2 morale bonus on saving throws, a…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Nomad (CP) [discipline]",
+    "url": "https://new.dndtools.org/domains/nomad-365",
+    "slug": "nomad-365",
+    "id": 365,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who relies on psychoportation powers is known as a nomad. Nomads can wield powers that prope…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Nomad (XPH) [discipline]",
+    "url": "https://new.dndtools.org/domains/nomad-294",
+    "slug": "nomad-294",
+    "id": 294,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who relies on psychoportation powers is known as a nomad. Nomads can wield powers that prope…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Ocean (SpC)",
+    "url": "https://new.dndtools.org/domains/ocean-31",
+    "slug": "ocean-31",
+    "id": 31,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You have the supernatural ability to breathe water as if under the effect of a water breathing spell…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Oneiromancy (HH)",
+    "url": "https://new.dndtools.org/domains/oneiromancy-64",
+    "slug": "oneiromancy-64",
+    "id": 64,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your spell list expands to include a number of dream-related spells (all described later in this cha…",
+      "source_abbrev": "HH"
+    }
+  },
+  {
+    "name": "Ooze (FC1)",
+    "url": "https://new.dndtools.org/domains/ooze-50",
+    "slug": "ooze-50",
+    "id": 50,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can rebuke or command oozes as an evil cleric rebukes or commands undead. This ability is usable…",
+      "source_abbrev": "FCI"
+    }
+  },
+  {
+    "name": "Oracle (CD)",
+    "url": "https://new.dndtools.org/domains/oracle-132",
+    "slug": "oracle-132",
+    "id": 132,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast divination spells at +2 caster levels. Special This is a Domain not accessible in by normal…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Orc (SpC)",
+    "url": "https://new.dndtools.org/domains/orc-161",
+    "slug": "orc-161",
+    "id": 161,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the smite power, the ability to make a single melee attack with a +4 bonus on attack rolls…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Pact (CD)",
+    "url": "https://new.dndtools.org/domains/pact-35",
+    "slug": "pact-35",
+    "id": 35,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Appraise, Intimidate , and Sense Motive to your list of cleric class skills.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Pact (SpC)",
+    "url": "https://new.dndtools.org/domains/pact-spc-212",
+    "slug": "pact-spc-212",
+    "id": 212,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Appraise , Intimidate , and Sense Motive to your list of cleric class skills.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Pain (BoVD)",
+    "url": "https://new.dndtools.org/domains/pain-13",
+    "slug": "pain-13",
+    "id": 13,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Character converts damage that he deals in one blow per day into healing for himself, up to 1 point…",
+      "source_abbrev": "BV"
+    }
+  },
+  {
+    "name": "Pain and Suffering [mantle]",
+    "url": "https://new.dndtools.org/domains/pain-suffering-mantle-358",
+    "slug": "pain-suffering-mantle-358",
+    "id": 358,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "As an immediate action, you can expend your psionic focus to share the pain of the next melee attack…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Passion (DCS)",
+    "url": "https://new.dndtools.org/domains/passion-295",
+    "slug": "passion-295",
+    "id": 295,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "For a total time per day of 1 round per cleric level you possess, you can act as if under the effect…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Passion (ECS)",
+    "url": "https://new.dndtools.org/domains/passion-ecs-296",
+    "slug": "passion-ecs-296",
+    "id": 296,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "For a total time per day of 1 round per cleric level, as a free action you can act as if under the e…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Patience (DM)",
+    "url": "https://new.dndtools.org/domains/patience-dm-319",
+    "slug": "patience-dm-319",
+    "id": 319,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, as an immediate action, you may delay the effect of a spell that affects you for 10 ro…",
+      "source_abbrev": "D355"
+    }
+  },
+  {
+    "name": "Pestilence (CD)",
+    "url": "https://new.dndtools.org/domains/pestilence-cd-206",
+    "slug": "pestilence-cd-206",
+    "id": 206,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Immunity to the effects of all diseases, though cleric s with this power can still carry infectious…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Pestilence (DCS)",
+    "url": "https://new.dndtools.org/domains/pestilence-dcs-207",
+    "slug": "pestilence-dcs-207",
+    "id": 207,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are immune to the effects of all diseases, though you can still carry infectious diseases. Speci…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Pestilence (DF)",
+    "url": "https://new.dndtools.org/domains/pestilence-df-208",
+    "slug": "pestilence-df-208",
+    "id": 208,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Immunity to the effects of all diseases, though cleric s with this power can still carry infectious…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Pestilence (SpC)",
+    "url": "https://new.dndtools.org/domains/pestilence-spc-320",
+    "slug": "pestilence-spc-320",
+    "id": 320,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain immunity to the effects of all diseases, though you can still carry infectious diseases.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Physical Power [mantle]",
+    "url": "https://new.dndtools.org/domains/physical-power-mantle-359",
+    "slug": "physical-power-mantle-359",
+    "id": 359,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "As a free action, you can expend your psionic focus to gain a +2 bonus to Str, Dex, or Con for 1 rou…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Planning (CW)",
+    "url": "https://new.dndtools.org/domains/planning-162",
+    "slug": "planning-162",
+    "id": 162,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Extend Spell as a bonus feat.",
+      "source_abbrev": "CW"
+    }
+  },
+  {
+    "name": "Plant",
+    "url": "https://new.dndtools.org/domains/plant-114",
+    "slug": "plant-114",
+    "id": 114,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command plant creatures as an evil cleric rebukes or commands undead. Use this ability a t…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Pleasure (BoED)",
+    "url": "https://new.dndtools.org/domains/pleasure-1",
+    "slug": "pleasure-1",
+    "id": 1,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are immune to any effect that damages or drains your Charisma.",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Portal",
+    "url": "https://new.dndtools.org/domains/portal-56",
+    "slug": "portal-56",
+    "id": 56,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can detect an active or inactive portal as if it were a normal secret door ( Search DC 20).",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Portal (Alternative)",
+    "url": "https://new.dndtools.org/domains/portal-alternative-129",
+    "slug": "portal-alternative-129",
+    "id": 129,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Portal Sensitive as a bonus feat.",
+      "source_abbrev": "Und"
+    }
+  },
+  {
+    "name": "Pride",
+    "url": "https://new.dndtools.org/domains/pride-163",
+    "slug": "pride-163",
+    "id": 163,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Whenever your roll a 1 on a saving throw, you can immediately reroll the save. You must keep the res…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Protection",
+    "url": "https://new.dndtools.org/domains/protection-99",
+    "slug": "protection-99",
+    "id": 99,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can generate a protective ward as a supernatural ability. Grant someone you touch a resistance b…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Purification (CD)",
+    "url": "https://new.dndtools.org/domains/purification-cd-195",
+    "slug": "purification-cd-195",
+    "id": 195,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast abjuration spells at +1 caster level.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Purification (SpC)",
+    "url": "https://new.dndtools.org/domains/purification-29",
+    "slug": "purification-29",
+    "id": 29,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast all abjuration spells at +1 caster level.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Radiance (DM)",
+    "url": "https://new.dndtools.org/domains/radiance-dm-321",
+    "slug": "radiance-dm-321",
+    "id": 321,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are immune to pattern effects. This is a supernatural ability.",
+      "source_abbrev": "D321"
+    }
+  },
+  {
+    "name": "Radiant Fire",
+    "url": "https://new.dndtools.org/domains/radiant-fire-297",
+    "slug": "radiant-fire-297",
+    "id": 297,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 insight bonus on damage rolls against creatures with the evil subtype. In addition, yo…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Renewal",
+    "url": "https://new.dndtools.org/domains/renewal-164",
+    "slug": "renewal-164",
+    "id": 164,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "If you fall below 0 hit points, you regain a number of hit points equal to 1d8 + your Charisma modif…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Repose (DD)",
+    "url": "https://new.dndtools.org/domains/repose-46",
+    "slug": "repose-46",
+    "id": 46,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a death touch once per day. Your death touch is a spell-like ability that is a death eff…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Repose (FP)",
+    "url": "https://new.dndtools.org/domains/repose-fp-233",
+    "slug": "repose-fp-233",
+    "id": 233,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a death touch once per day as a spell-like ability that is a death effect. You must succ…",
+      "source_abbrev": "FP"
+    }
+  },
+  {
+    "name": "Repose (Gh)",
+    "url": "https://new.dndtools.org/domains/repose-gh-234",
+    "slug": "repose-gh-234",
+    "id": 234,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a death touch once per day as a spell-like ability that is a death effect. You must succ…",
+      "source_abbrev": "Gh"
+    }
+  },
+  {
+    "name": "Repose (PG)",
+    "url": "https://new.dndtools.org/domains/repose-pg-235",
+    "slug": "repose-pg-235",
+    "id": 235,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "The character may use a death touch once per day. The death touch is a spell-like ability that is a…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Repose (Sa)",
+    "url": "https://new.dndtools.org/domains/repose-sa-236",
+    "slug": "repose-sa-236",
+    "id": 236,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may use a death touch once per day. You must succeed on a melee touch attack against a living cr…",
+      "source_abbrev": "Sa"
+    }
+  },
+  {
+    "name": "Repose [mantle]",
+    "url": "https://new.dndtools.org/domains/repose-mantle-361",
+    "slug": "repose-mantle-361",
+    "id": 361,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "While psionically focused, you gain a +2 bonus on Concentration checks. You can expend your focus as…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Restoration (DCS)",
+    "url": "https://new.dndtools.org/domains/restoration-298",
+    "slug": "restoration-298",
+    "id": 298,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast healing spells at +1 caster level.",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Retribution",
+    "url": "https://new.dndtools.org/domains/retribution-165",
+    "slug": "retribution-165",
+    "id": 165,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, if you have been harmed by someone in combat, you can make a strike of vengeance with…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Revered Ancestor (FE)",
+    "url": "https://new.dndtools.org/domains/revered-ancestor-177",
+    "slug": "revered-ancestor-177",
+    "id": 177,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Exotic Weapon Proficiency (Valenar double scimitar) as a bonus feat. If you already possess…",
+      "source_abbrev": "FE"
+    }
+  },
+  {
+    "name": "River (OA)",
+    "url": "https://new.dndtools.org/domains/river-80",
+    "slug": "river-80",
+    "id": 80,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can swim with great skill (though you cannot breathe water without further magical assistance).…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Rune (DD)",
+    "url": "https://new.dndtools.org/domains/rune-89",
+    "slug": "rune-89",
+    "id": 89,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Free Scribe Scroll feat.",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Sanctified",
+    "url": "https://new.dndtools.org/domains/sanctified-2",
+    "slug": "sanctified-2",
+    "id": 2,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "This section begins with a list of sanctified spells, which are available to any class that prepares…",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Sand (Sa)",
+    "url": "https://new.dndtools.org/domains/sand-124",
+    "slug": "sand-124",
+    "id": 124,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can shape a small amount of sand into any solid object you can imagine, up to 8 cu…",
+      "source_abbrev": "Sa"
+    }
+  },
+  {
+    "name": "Scalykind (DD)",
+    "url": "https://new.dndtools.org/domains/scalykind-dd-252",
+    "slug": "scalykind-dd-252",
+    "id": 252,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command animals (reptilian creatures and snakes only) as an evil cleric rebukes or command…",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Scalykind (PG)",
+    "url": "https://new.dndtools.org/domains/scalykind-pg-253",
+    "slug": "scalykind-pg-253",
+    "id": 253,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can rebuke or command animals (reptilian creatures and snakes only) as an evil cleric rebukes or…",
+      "source_abbrev": "PG"
+    }
+  },
+  {
+    "name": "Scalykind (SpC)",
+    "url": "https://new.dndtools.org/domains/scalykind-93",
+    "slug": "scalykind-93",
+    "id": 93,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command animals (reptilian creatures and snakes only) as an evil cleric rebukes or command…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Seafolk (SW)",
+    "url": "https://new.dndtools.org/domains/seafolk-126",
+    "slug": "seafolk-126",
+    "id": 126,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Expert Swimmer ( SW 92) or Rapid Swimming ( SW 93) (your choice) as a bonus feat.",
+      "source_abbrev": "Sto"
+    }
+  },
+  {
+    "name": "Seduction (DM)",
+    "url": "https://new.dndtools.org/domains/seduction-dm-322",
+    "slug": "seduction-dm-322",
+    "id": 322,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +1 bonus on Charisma checks and all opposed Charisma-based skill checks. Deities Any gods…",
+      "source_abbrev": "D312"
+    }
+  },
+  {
+    "name": "Seer (CP) [discipline]",
+    "url": "https://new.dndtools.org/domains/seer-366",
+    "slug": "seer-366",
+    "id": 366,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who chooses clairsentience is known as a seer. Seers can learn precognitive powers to aid th…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Seer (XPH) [discipline]",
+    "url": "https://new.dndtools.org/domains/seer-299",
+    "slug": "seer-299",
+    "id": 299,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who chooses clairsentience is known as a seer. Seers can learn precognitive powers to aid th…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Serpent (OA)",
+    "url": "https://new.dndtools.org/domains/serpent-oa-300",
+    "slug": "serpent-oa-300",
+    "id": 300,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command snakes as an evil cleric rebukes or commands undead. Use this ability a total numb…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Shadow (ECS)",
+    "url": "https://new.dndtools.org/domains/shadow-301",
+    "slug": "shadow-301",
+    "id": 301,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Gain Blind-Fight as a bonus feat.",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Shaper (CP) [discipline]",
+    "url": "https://new.dndtools.org/domains/shaper-367",
+    "slug": "shaper-367",
+    "id": 367,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion specializing in metacreativity is known as a shaper. This discipline includes powers that dr…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Shaper (XPH) [discipline]",
+    "url": "https://new.dndtools.org/domains/shaper-302",
+    "slug": "shaper-302",
+    "id": 302,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion specializing in metacreativity is known as a shaper. This discipline includes powers that dr…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Sky (RW)",
+    "url": "https://new.dndtools.org/domains/sky-121",
+    "slug": "sky-121",
+    "id": 121,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your fly or glide speed improves by 5 ft. Add Spot to your list of cleric class skills.",
+      "source_abbrev": "RW"
+    }
+  },
+  {
+    "name": "Slime",
+    "url": "https://new.dndtools.org/domains/slime-166",
+    "slug": "slime-166",
+    "id": 166,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command oozes as an evil Cleric rebukes or commands undead. You can use this ability a num…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Sloth",
+    "url": "https://new.dndtools.org/domains/sloth-167",
+    "slug": "sloth-167",
+    "id": 167,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are closest to your god while lazing and relaxing. You take no penalty to Armor Class against me…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Spell",
+    "url": "https://new.dndtools.org/domains/spell-59",
+    "slug": "spell-59",
+    "id": 59,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 bonus on Concentration checks and Spellcraft checks.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Spider (SpC)",
+    "url": "https://new.dndtools.org/domains/spider-61",
+    "slug": "spider-61",
+    "id": 61,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command spiders as an evil Cleric rebukes or commands undead. You can use this ability a n…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Spirit (DM)",
+    "url": "https://new.dndtools.org/domains/spirit-dm-323",
+    "slug": "spirit-dm-323",
+    "id": 323,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You may create a spiritual bond between an item you have created (usually a doll or similar object)…",
+      "source_abbrev": "D312"
+    }
+  },
+  {
+    "name": "Spite (HH)",
+    "url": "https://new.dndtools.org/domains/spite-65",
+    "slug": "spite-65",
+    "id": 65,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Sympathetic strike. You can force opponents to take damage they have dealt you. Once per day, you ca…",
+      "source_abbrev": "HH"
+    }
+  },
+  {
+    "name": "Stone (OA)",
+    "url": "https://new.dndtools.org/domains/stone-75",
+    "slug": "stone-75",
+    "id": 75,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can generate a stone ward, a spell-like ability to grant yourself or someone you touch damage re…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Storm (DCS)",
+    "url": "https://new.dndtools.org/domains/storm-dcs-182",
+    "slug": "storm-dcs-182",
+    "id": 182,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain electricity resistance 5.",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Storm (SpC)",
+    "url": "https://new.dndtools.org/domains/storm-130",
+    "slug": "storm-130",
+    "id": 130,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain resistance to electricity 5.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Strength",
+    "url": "https://new.dndtools.org/domains/strength-108",
+    "slug": "strength-108",
+    "id": 108,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can perform a feat of strength as a supernatural ability. You gain an enhancement bonus to Stren…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Suffering",
+    "url": "https://new.dndtools.org/domains/suffering-168",
+    "slug": "suffering-168",
+    "id": 168,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can use a pain touch once per day. Make a melee touch attack against a living creature, which be…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Summer (Sa)",
+    "url": "https://new.dndtools.org/domains/summer-123",
+    "slug": "summer-123",
+    "id": 123,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You are considered a native of the waste for purposes of heat resistance (you have 1 level of protec…",
+      "source_abbrev": "Sa"
+    }
+  },
+  {
+    "name": "Summoner (CD)",
+    "url": "https://new.dndtools.org/domains/summoner-169",
+    "slug": "summoner-169",
+    "id": 169,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add +2 to your caster level for all Conjuration (summoning) or Conjuration (calling) spells.",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Summoning (DF)",
+    "url": "https://new.dndtools.org/domains/summoning-303",
+    "slug": "summoning-303",
+    "id": 303,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast any summon monster spell at twice your caster level, increasing the range and duration of t…",
+      "source_abbrev": "DF"
+    }
+  },
+  {
+    "name": "Sun",
+    "url": "https://new.dndtools.org/domains/sun-105",
+    "slug": "sun-105",
+    "id": 105,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can perform a greater turning against undead in place of a regular turning. The gr…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Telepath (CP) [discipline]",
+    "url": "https://new.dndtools.org/domains/telepath-368",
+    "slug": "telepath-368",
+    "id": 368,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who chooses the discipline of telepathy is known as a telepath. He is the master of powers t…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Telepath (XPH) [discipline]",
+    "url": "https://new.dndtools.org/domains/telepath-304",
+    "slug": "telepath-304",
+    "id": 304,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "A psion who chooses the discipline of telepathy is known as a telepath. He is the master of powers t…",
+      "source_abbrev": "XPH"
+    }
+  },
+  {
+    "name": "Temperance (DM)",
+    "url": "https://new.dndtools.org/domains/temperance-dm-324",
+    "slug": "temperance-dm-324",
+    "id": 324,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "When you prepare spells you immediately heal 1 hit point per spell level of domain spells you still…",
+      "source_abbrev": "D355"
+    }
+  },
+  {
+    "name": "Temptation (FC1)",
+    "url": "https://new.dndtools.org/domains/temptation-51",
+    "slug": "temptation-51",
+    "id": 51,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Select a gender. As long as you wear no armor, you gain a +2 competence bonus on Charisma-based chec…",
+      "source_abbrev": "FCI"
+    }
+  },
+  {
+    "name": "The Planes [mantle]",
+    "url": "https://new.dndtools.org/domains/the-planes-mantle-360",
+    "slug": "the-planes-mantle-360",
+    "id": 360,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You can expend your focus to gain a +4 bonus on manifester level checks made to overcome an outsider…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Thirst (Sa)",
+    "url": "https://new.dndtools.org/domains/thirst-122",
+    "slug": "thirst-122",
+    "id": 122,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke or command oozes as an evil Cleric rebukes or commands undead. Use this ability a total numbe…",
+      "source_abbrev": "Sa"
+    }
+  },
+  {
+    "name": "Thunder (DM)",
+    "url": "https://new.dndtools.org/domains/thunder-dm-325",
+    "slug": "thunder-dm-325",
+    "id": 325,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain sonic resistance 5.",
+      "source_abbrev": "D290"
+    }
+  },
+  {
+    "name": "Time",
+    "url": "https://new.dndtools.org/domains/time-170",
+    "slug": "time-170",
+    "id": 170,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Improved Initiative as a bonus feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Time [mantle]",
+    "url": "https://new.dndtools.org/domains/time-mantle-362",
+    "slug": "time-mantle-362",
+    "id": 362,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 bonus on initiative checks. In addition, once per day, you can expend your psionic foc…",
+      "source_abbrev": "CP"
+    }
+  },
+  {
+    "name": "Trade",
+    "url": "https://new.dndtools.org/domains/trade-55",
+    "slug": "trade-55",
+    "id": 55,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day as a free action, you can use detect thoughts , affecting one subject and lasting a num…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Transformation (RE)",
+    "url": "https://new.dndtools.org/domains/transformation-145",
+    "slug": "transformation-145",
+    "id": 145,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You cast transmutation spells at +1 caster level. Deities No deity includes the Transformation domai…",
+      "source_abbrev": "RE"
+    }
+  },
+  {
+    "name": "Travel",
+    "url": "https://new.dndtools.org/domains/travel-112",
+    "slug": "travel-112",
+    "id": 112,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "For a total time per day of 1 round per cleric level you possess, you can act normally regardless of…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Treachery (DCS)",
+    "url": "https://new.dndtools.org/domains/treachery-305",
+    "slug": "treachery-305",
+    "id": 305,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, when you attack a flat-footed opponent, you can deal additional damage equal to 1d6 pe…",
+      "source_abbrev": "DCS"
+    }
+  },
+  {
+    "name": "Trickery",
+    "url": "https://new.dndtools.org/domains/trickery-106",
+    "slug": "trickery-106",
+    "id": 106,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Bluff , Disguise , and Hide to your list of cleric class skills.",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Truth (RE)",
+    "url": "https://new.dndtools.org/domains/truth-146",
+    "slug": "truth-146",
+    "id": 146,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a bonus on Sense Motive checks equal to your Cleric level. You cast divination spells at +1…",
+      "source_abbrev": "RE"
+    }
+  },
+  {
+    "name": "Tyranny (CW)",
+    "url": "https://new.dndtools.org/domains/tyranny-171",
+    "slug": "tyranny-171",
+    "id": 171,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add +1 to the save DC of any compulsion spell you cast.",
+      "source_abbrev": "CW"
+    }
+  },
+  {
+    "name": "Undead (DM)",
+    "url": "https://new.dndtools.org/domains/undead-dm-326",
+    "slug": "undead-dm-326",
+    "id": 326,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 competence bonus on your turning checks to turn or rebuke undead.",
+      "source_abbrev": "D312"
+    }
+  },
+  {
+    "name": "Undeath",
+    "url": "https://new.dndtools.org/domains/undeath-172",
+    "slug": "undeath-172",
+    "id": 172,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain Extra Turning as a bonus feat.",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Undying Fate",
+    "url": "https://new.dndtools.org/domains/undying-fate-306",
+    "slug": "undying-fate-306",
+    "id": 306,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "As a swift action, you can determine how close creatures are to death. This extraordinary ability ca…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Vile Darkness (LoM)",
+    "url": "https://new.dndtools.org/domains/vile-darkness-68",
+    "slug": "vile-darkness-68",
+    "id": 68,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the Blind-Fight feat.",
+      "source_abbrev": "LoM"
+    }
+  },
+  {
+    "name": "War",
+    "url": "https://new.dndtools.org/domains/war-116",
+    "slug": "war-116",
+    "id": 116,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Free Martial Weapon Proficiency with deity’s favored weapon (if necessary) and Weapon Focus with the…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Warden Initiate",
+    "url": "https://new.dndtools.org/domains/warden-initiate-179",
+    "slug": "warden-initiate-179",
+    "id": 179,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain a +2 deflection bonus to Armor Class when fighting within a forest. Add Climb and Jump to y…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Warforged (FE)",
+    "url": "https://new.dndtools.org/domains/warforged-176",
+    "slug": "warforged-176",
+    "id": 176,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Rebuke, command, or bolster construct creatures as an evil cleric rebukes undead. Use these abilitie…",
+      "source_abbrev": "FE"
+    }
+  },
+  {
+    "name": "Water",
+    "url": "https://new.dndtools.org/domains/water-110",
+    "slug": "water-110",
+    "id": 110,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Turn or destroy fire creatures as a good cleric turns undead. Rebuke, command, or bolster water crea…",
+      "source_abbrev": "PH"
+    }
+  },
+  {
+    "name": "Watery Death (Und)",
+    "url": "https://new.dndtools.org/domains/watery-death-128",
+    "slug": "watery-death-128",
+    "id": 128,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain the ability to smite any nonaquatic creature once per day with one normal melee attack. You…",
+      "source_abbrev": "Und"
+    }
+  },
+  {
+    "name": "Wealth (Dr)",
+    "url": "https://new.dndtools.org/domains/wealth-131",
+    "slug": "wealth-131",
+    "id": 131,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Appraise to your list of cleric class skills. You gain Skill Focus (Appraise) as a bonus feat.",
+      "source_abbrev": "Dr"
+    }
+  },
+  {
+    "name": "Weather (CD)",
+    "url": "https://new.dndtools.org/domains/weather-40",
+    "slug": "weather-40",
+    "id": 40,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Inclement weather has less of an effect on you. Rain and snow don’t penalize your Spot and Search ch…",
+      "source_abbrev": "CD"
+    }
+  },
+  {
+    "name": "Weather (DD)",
+    "url": "https://new.dndtools.org/domains/weather-dd-223",
+    "slug": "weather-dd-223",
+    "id": 223,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Intuit Direction and Wilderness Lore are class skills.",
+      "source_abbrev": "DD"
+    }
+  },
+  {
+    "name": "Weather (ECS)",
+    "url": "https://new.dndtools.org/domains/weather-ecs-224",
+    "slug": "weather-ecs-224",
+    "id": 224,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Your vision is unobstructed by nonmagical weather conditions. Add Survival to your list of cleric cl…",
+      "source_abbrev": "ECS"
+    }
+  },
+  {
+    "name": "Whispered Secrets",
+    "url": "https://new.dndtools.org/domains/whispered-secrets-307",
+    "slug": "whispered-secrets-307",
+    "id": 307,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Add Listen and Spot to your list of cleric class skills. Furthermore, you automatically become aware…",
+      "source_abbrev": "RD"
+    }
+  },
+  {
+    "name": "Windstorm (SpC)",
+    "url": "https://new.dndtools.org/domains/windstorm-135",
+    "slug": "windstorm-135",
+    "id": 135,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Inclement weather has less of an effect on you. Rain and snow don’t penalize your Spot and Search ch…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Winter (DM)",
+    "url": "https://new.dndtools.org/domains/winter-dm-327",
+    "slug": "winter-dm-327",
+    "id": 327,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "You gain cold resistance 5.",
+      "source_abbrev": "D290"
+    }
+  },
+  {
+    "name": "Winter (Fr)",
+    "url": "https://new.dndtools.org/domains/winter-62",
+    "slug": "winter-62",
+    "id": 62,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "During the winter season, you gain a +2 sacred bonus on all Wisdom-based skill checks.",
+      "source_abbrev": "Fr"
+    }
+  },
+  {
+    "name": "Wood (OA)",
+    "url": "https://new.dndtools.org/domains/wood-81",
+    "slug": "wood-81",
+    "id": 81,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Move through natural thorns, briars, overgrown areas, and similar terrain at your normal speed and w…",
+      "source_abbrev": "OA"
+    }
+  },
+  {
+    "name": "Wrath",
+    "url": "https://new.dndtools.org/domains/wrath-5",
+    "slug": "wrath-5",
+    "id": 5,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "—",
+      "source_abbrev": "—"
+    }
+  },
+  {
+    "name": "Wrath (BoED)",
+    "url": "https://new.dndtools.org/domains/wrath-boed-240",
+    "slug": "wrath-boed-240",
+    "id": 240,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you may make a free attack of opportunity against any opponent that damages you with a…",
+      "source_abbrev": "BE"
+    }
+  },
+  {
+    "name": "Wrath (SpC)",
+    "url": "https://new.dndtools.org/domains/wrath-spc-174",
+    "slug": "wrath-spc-174",
+    "id": 174,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day, you can subtract a number of points from your Wisdom score equal to or less than your…",
+      "source_abbrev": "Sc"
+    }
+  },
+  {
+    "name": "Zeal (DM)",
+    "url": "https://new.dndtools.org/domains/zeal-dm-328",
+    "slug": "zeal-dm-328",
+    "id": 328,
+    "category": "domains",
+    "index": {
+      "granted_power_snippet": "Once per day you may take 20 on a skill check without increasing the amount of time needed to make t…",
+      "source_abbrev": "D355"
+    }
+  }
+]

@@ -95,11 +95,65 @@ function parseDate(value?: string): Date | null {
   return isNaN(d.getTime()) ? null : d;
 }
 
+function resolveSource(
+  src: Partial<SourceData>,
+  index: Record<string, unknown> = {},
+): { name: string; abbrev: string; edition: string } {
+  const abbrevRaw =
+    src.abbrev ?? (typeof index.source_abbrev === "string" ? index.source_abbrev : undefined);
+  return {
+    name: src.name ?? "Core",
+    abbrev: abbrevRaw ?? "",
+    edition: src.edition ?? (typeof index.edition === "string" ? index.edition : undefined) ?? "3.5",
+  };
+}
+
 function sourceKey(source: SourceData): string {
-  const name = source.name ?? "Core";
-  const abbrev = source.abbrev ?? "";
-  const edition = source.edition ?? "3.5";
+  const { name, abbrev, edition } = resolveSource(source);
   return `${name}::${abbrev}::${edition}`;
+}
+
+function classIndexData(
+  record: Record<string, unknown>,
+  skillAbilities: Map<string, string | null>,
+): object {
+  const index = (record.index ?? {}) as Record<string, unknown>;
+  const classSkills = Array.isArray(record.class_skills)
+    ? (record.class_skills as Array<Record<string, unknown>>)
+        .map((skill) => {
+          const name = typeof skill.name === "string" ? skill.name : null;
+          if (!name) return null;
+          const slug = typeof skill.slug === "string" ? skill.slug : null;
+          const ability =
+            (typeof skill.ability === "string" ? skill.ability : null) ??
+            (slug ? skillAbilities.get(slug) ?? null : null);
+          return { name, slug, ability };
+        })
+        .filter((skill): skill is { name: string; slug: string | null; ability: string | null } =>
+          skill !== null,
+        )
+    : [];
+
+  return {
+    ...index,
+    ...(typeof record.advancement_html === "string"
+      ? { advancementHtml: record.advancement_html }
+      : {}),
+    ...(Array.isArray(record.advancement) ? { advancement: record.advancement } : {}),
+    ...(classSkills.length ? { classSkills } : {}),
+  };
+}
+
+function buildSkillAbilityMap(): Map<string, string | null> {
+  const map = new Map<string, string | null>();
+  for (const record of loadJson("skills")) {
+    const index = (record.index ?? {}) as Record<string, unknown>;
+    map.set(
+      record.slug as string,
+      (index.key_ability as string) ?? (record.key_ability as string) ?? null,
+    );
+  }
+  return map;
 }
 
 async function pass1Sources(): Promise<Map<string, string>> {
@@ -112,13 +166,7 @@ async function pass1Sources(): Promise<Map<string, string>> {
     for (const record of records) {
       const src = record.source ?? {};
       const index = record.index ?? {};
-      const merged: SourceData = {
-        name: src.name ?? "Core",
-        abbrev: src.abbrev ?? (index.source_abbrev as string) ?? null,
-        edition: src.edition ?? (index.edition as string) ?? "3.5",
-        page: src.page ?? null,
-        url: src.url ?? null,
-      };
+      const merged = resolveSource(src, index);
       const key = sourceKey(merged);
       if (seen.has(key)) continue;
       seen.add(key);
@@ -126,15 +174,15 @@ async function pass1Sources(): Promise<Map<string, string>> {
       const row = await prisma.source.upsert({
         where: {
           name_abbrev_edition: {
-            name: merged.name!,
-            abbrev: merged.abbrev ?? null,
-            edition: merged.edition!,
+            name: merged.name,
+            abbrev: merged.abbrev,
+            edition: merged.edition,
           },
         },
         create: {
-          name: merged.name!,
-          abbrev: merged.abbrev ?? null,
-          edition: merged.edition!,
+          name: merged.name,
+          abbrev: merged.abbrev,
+          edition: merged.edition,
         },
         update: {},
       });
@@ -147,13 +195,7 @@ async function pass1Sources(): Promise<Map<string, string>> {
 }
 
 function getSourceId(record: RecordBase, sourceMap: Map<string, string>): string {
-  const src = record.source ?? {};
-  const index = record.index ?? {};
-  const merged: SourceData = {
-    name: src.name ?? "Core",
-    abbrev: src.abbrev ?? (index.source_abbrev as string) ?? null,
-    edition: src.edition ?? (index.edition as string) ?? "3.5",
-  };
+  const merged = resolveSource(record.source ?? {}, record.index ?? {});
   const id = sourceMap.get(sourceKey(merged));
   if (!id) throw new Error(`Source not found for ${record.slug}`);
   return id;
@@ -312,6 +354,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
   // Classes
   {
     const records = loadJson("classes");
+    const skillAbilities = buildSkillAbilityMap();
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
@@ -324,14 +367,22 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap),
-            indexData: (r.index ?? {}) as object,
+            indexData: classIndexData(r, skillAbilities),
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
             hitDie: (r.hit_die as string) ?? index?.hit_die ?? null,
             skillPoints: (r.skill_points as string) ?? index?.skill_points ?? null,
             isPrestige: Boolean(index?.prestige_level && index.prestige_level !== ""),
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object },
+          update: {
+            name: r.name,
+            indexData: classIndexData(r, skillAbilities),
+            descriptionHtml: (r.description_html as string) ?? null,
+            descriptionText: (r.description_text as string) ?? null,
+            hitDie: (r.hit_die as string) ?? index?.hit_die ?? null,
+            skillPoints: (r.skill_points as string) ?? index?.skill_points ?? null,
+            isPrestige: Boolean(index?.prestige_level && index.prestige_level !== ""),
+          },
         });
       }
     });

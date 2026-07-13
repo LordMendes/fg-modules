@@ -1,0 +1,912 @@
+[
+  {
+    "name": "Banded Mail",
+    "url": "https://new.dndtools.org/equipment/banded-mail",
+    "slug": "banded-mail",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "heavy",
+      "stats": "AC 6 · Max Dex 1 · ACP -6",
+      "cost": "250 gp",
+      "weight": "35 lb."
+    }
+  },
+  {
+    "name": "Bastard Sword",
+    "url": "https://new.dndtools.org/equipment/bastard-sword",
+    "slug": "bastard-sword",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d10 · 19-20/x2",
+      "cost": "35 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Battleaxe",
+    "url": "https://new.dndtools.org/equipment/battleaxe",
+    "slug": "battleaxe",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · x3",
+      "cost": "10 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Breastplate",
+    "url": "https://new.dndtools.org/equipment/breastplate",
+    "slug": "breastplate",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "medium",
+      "stats": "AC 5 · Max Dex 3 · ACP -4",
+      "cost": "200 gp",
+      "weight": "30 lb."
+    }
+  },
+  {
+    "name": "Buckler",
+    "url": "https://new.dndtools.org/equipment/buckler",
+    "slug": "buckler",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "shield",
+      "category": "light",
+      "stats": "AC 1 · ACP -1",
+      "cost": "15 gp",
+      "weight": "5 lb."
+    }
+  },
+  {
+    "name": "Chain Shirt",
+    "url": "https://new.dndtools.org/equipment/chain-shirt",
+    "slug": "chain-shirt",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "light",
+      "stats": "AC 4 · Max Dex 4 · ACP -2",
+      "cost": "100 gp",
+      "weight": "25 lb."
+    }
+  },
+  {
+    "name": "Chainmail",
+    "url": "https://new.dndtools.org/equipment/chainmail",
+    "slug": "chainmail",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "medium",
+      "stats": "AC 5 · Max Dex 2 · ACP -5",
+      "cost": "150 gp",
+      "weight": "40 lb."
+    }
+  },
+  {
+    "name": "Club",
+    "url": "https://new.dndtools.org/equipment/club",
+    "slug": "club",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d6 · x2 · 10 ft.",
+      "cost": "0 gp",
+      "weight": "3 lb."
+    }
+  },
+  {
+    "name": "Composite Longbow",
+    "url": "https://new.dndtools.org/equipment/composite-longbow",
+    "slug": "composite-longbow",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · x3 · 110 ft.",
+      "cost": "100 gp",
+      "weight": "3 lb."
+    }
+  },
+  {
+    "name": "Composite Shortbow",
+    "url": "https://new.dndtools.org/equipment/composite-shortbow",
+    "slug": "composite-shortbow",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d6 · x3 · 70 ft.",
+      "cost": "75 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Crossbow, Heavy",
+    "url": "https://new.dndtools.org/equipment/crossbow-heavy",
+    "slug": "crossbow-heavy",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d10 · 19-20/x2 · 120 ft.",
+      "cost": "50 gp",
+      "weight": "8 lb."
+    }
+  },
+  {
+    "name": "Crossbow, Light",
+    "url": "https://new.dndtools.org/equipment/crossbow-light",
+    "slug": "crossbow-light",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d8 · 19-20/x2 · 80 ft.",
+      "cost": "35 gp",
+      "weight": "4 lb."
+    }
+  },
+  {
+    "name": "Dagger",
+    "url": "https://new.dndtools.org/equipment/dagger",
+    "slug": "dagger",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d4 · 19-20/x2 · 10 ft.",
+      "cost": "2 gp",
+      "weight": "1 lb."
+    }
+  },
+  {
+    "name": "Dart",
+    "url": "https://new.dndtools.org/equipment/dart",
+    "slug": "dart",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d4 · x2 · 20 ft.",
+      "cost": "1 gp",
+      "weight": "1 lb."
+    }
+  },
+  {
+    "name": "Dwarven Waraxe",
+    "url": "https://new.dndtools.org/equipment/dwarven-waraxe",
+    "slug": "dwarven-waraxe",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d10 · x3",
+      "cost": "30 gp",
+      "weight": "8 lb."
+    }
+  },
+  {
+    "name": "Falchion",
+    "url": "https://new.dndtools.org/equipment/falchion",
+    "slug": "falchion",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "2d4 · 18-20/x2",
+      "cost": "75 gp",
+      "weight": "8 lb."
+    }
+  },
+  {
+    "name": "Flail, Heavy",
+    "url": "https://new.dndtools.org/equipment/flail-heavy",
+    "slug": "flail-heavy",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d10 · 19-20/x2",
+      "cost": "15 gp",
+      "weight": "10 lb."
+    }
+  },
+  {
+    "name": "Flail, Light",
+    "url": "https://new.dndtools.org/equipment/flail-light",
+    "slug": "flail-light",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · 19-20/x2",
+      "cost": "8 gp",
+      "weight": "5 lb."
+    }
+  },
+  {
+    "name": "Full Plate",
+    "url": "https://new.dndtools.org/equipment/full-plate",
+    "slug": "full-plate",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "heavy",
+      "stats": "AC 8 · Max Dex 1 · ACP -6",
+      "cost": "1,500 gp",
+      "weight": "50 lb."
+    }
+  },
+  {
+    "name": "Gauntlet",
+    "url": "https://new.dndtools.org/equipment/gauntlet",
+    "slug": "gauntlet",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d3 · x2",
+      "cost": "2 gp",
+      "weight": "1 lb."
+    }
+  },
+  {
+    "name": "Glaive",
+    "url": "https://new.dndtools.org/equipment/glaive",
+    "slug": "glaive",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d10 · x3",
+      "cost": "8 gp",
+      "weight": "10 lb."
+    }
+  },
+  {
+    "name": "Greataxe",
+    "url": "https://new.dndtools.org/equipment/greataxe",
+    "slug": "greataxe",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d12 · x3",
+      "cost": "20 gp",
+      "weight": "12 lb."
+    }
+  },
+  {
+    "name": "Greatsword",
+    "url": "https://new.dndtools.org/equipment/greatsword",
+    "slug": "greatsword",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "2d6 · 19-20/x2",
+      "cost": "50 gp",
+      "weight": "8 lb."
+    }
+  },
+  {
+    "name": "Halberd",
+    "url": "https://new.dndtools.org/equipment/halberd",
+    "slug": "halberd",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d10 · x3",
+      "cost": "10 gp",
+      "weight": "12 lb."
+    }
+  },
+  {
+    "name": "Half-Plate",
+    "url": "https://new.dndtools.org/equipment/half-plate",
+    "slug": "half-plate",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "heavy",
+      "stats": "AC 7 · Max Dex 0 · ACP -7",
+      "cost": "600 gp",
+      "weight": "50 lb."
+    }
+  },
+  {
+    "name": "Heavy Mace",
+    "url": "https://new.dndtools.org/equipment/heavy-mace",
+    "slug": "heavy-mace",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d8 · x2",
+      "cost": "12 gp",
+      "weight": "8 lb."
+    }
+  },
+  {
+    "name": "Heavy Steel Shield",
+    "url": "https://new.dndtools.org/equipment/heavy-steel-shield",
+    "slug": "heavy-steel-shield",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "shield",
+      "category": "heavy",
+      "stats": "AC 2 · ACP -2",
+      "cost": "20 gp",
+      "weight": "15 lb."
+    }
+  },
+  {
+    "name": "Heavy Wooden Shield",
+    "url": "https://new.dndtools.org/equipment/heavy-wooden-shield",
+    "slug": "heavy-wooden-shield",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "shield",
+      "category": "heavy",
+      "stats": "AC 2 · ACP -2",
+      "cost": "7 gp",
+      "weight": "10 lb."
+    }
+  },
+  {
+    "name": "Hide Armor",
+    "url": "https://new.dndtools.org/equipment/hide-armor",
+    "slug": "hide-armor",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "medium",
+      "stats": "AC 4 · Max Dex 4 · ACP -3",
+      "cost": "15 gp",
+      "weight": "25 lb."
+    }
+  },
+  {
+    "name": "Javelin",
+    "url": "https://new.dndtools.org/equipment/javelin",
+    "slug": "javelin",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d6 · x2 · 30 ft.",
+      "cost": "1 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Kama",
+    "url": "https://new.dndtools.org/equipment/kama",
+    "slug": "kama",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d6 · x2",
+      "cost": "2 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Kukri",
+    "url": "https://new.dndtools.org/equipment/kukri",
+    "slug": "kukri",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d4 · 18-20/x2",
+      "cost": "8 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Lance",
+    "url": "https://new.dndtools.org/equipment/lance",
+    "slug": "lance",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · x3",
+      "cost": "10 gp",
+      "weight": "10 lb."
+    }
+  },
+  {
+    "name": "Leather Armor",
+    "url": "https://new.dndtools.org/equipment/leather-armor",
+    "slug": "leather-armor",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "light",
+      "stats": "AC 2 · Max Dex 6 · ACP 0",
+      "cost": "10 gp",
+      "weight": "15 lb."
+    }
+  },
+  {
+    "name": "Light Mace",
+    "url": "https://new.dndtools.org/equipment/light-mace",
+    "slug": "light-mace",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d6 · x2",
+      "cost": "5 gp",
+      "weight": "4 lb."
+    }
+  },
+  {
+    "name": "Light Steel Shield",
+    "url": "https://new.dndtools.org/equipment/light-steel-shield",
+    "slug": "light-steel-shield",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "shield",
+      "category": "light",
+      "stats": "AC 1 · ACP -1",
+      "cost": "9 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Light Wooden Shield",
+    "url": "https://new.dndtools.org/equipment/light-wooden-shield",
+    "slug": "light-wooden-shield",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "shield",
+      "category": "light",
+      "stats": "AC 1 · ACP -1",
+      "cost": "3 gp",
+      "weight": "5 lb."
+    }
+  },
+  {
+    "name": "Longbow",
+    "url": "https://new.dndtools.org/equipment/longbow",
+    "slug": "longbow",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · x3 · 100 ft.",
+      "cost": "75 gp",
+      "weight": "3 lb."
+    }
+  },
+  {
+    "name": "Longspear",
+    "url": "https://new.dndtools.org/equipment/longspear",
+    "slug": "longspear",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d8 · x3",
+      "cost": "5 gp",
+      "weight": "9 lb."
+    }
+  },
+  {
+    "name": "Longsword",
+    "url": "https://new.dndtools.org/equipment/longsword",
+    "slug": "longsword",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · 19-20/x2",
+      "cost": "15 gp",
+      "weight": "4 lb."
+    }
+  },
+  {
+    "name": "Morningstar",
+    "url": "https://new.dndtools.org/equipment/morningstar",
+    "slug": "morningstar",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d8 · x2",
+      "cost": "8 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Net",
+    "url": "https://new.dndtools.org/equipment/net",
+    "slug": "net",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "- · - · 10 ft.",
+      "cost": "20 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Nunchaku",
+    "url": "https://new.dndtools.org/equipment/nunchaku",
+    "slug": "nunchaku",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d6 · x2",
+      "cost": "2 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Padded Armor",
+    "url": "https://new.dndtools.org/equipment/padded-armor",
+    "slug": "padded-armor",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "light",
+      "stats": "AC 1 · Max Dex 8 · ACP 0",
+      "cost": "5 gp",
+      "weight": "10 lb."
+    }
+  },
+  {
+    "name": "Pick, Heavy",
+    "url": "https://new.dndtools.org/equipment/pick-heavy",
+    "slug": "pick-heavy",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d6 · x4",
+      "cost": "8 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Pick, Light",
+    "url": "https://new.dndtools.org/equipment/pick-light",
+    "slug": "pick-light",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d4 · x4",
+      "cost": "4 gp",
+      "weight": "3 lb."
+    }
+  },
+  {
+    "name": "Quarterstaff",
+    "url": "https://new.dndtools.org/equipment/quarterstaff",
+    "slug": "quarterstaff",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d6 · x2",
+      "cost": "0 gp",
+      "weight": "4 lb."
+    }
+  },
+  {
+    "name": "Rapier",
+    "url": "https://new.dndtools.org/equipment/rapier",
+    "slug": "rapier",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d6 · 18-20/x2",
+      "cost": "20 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Sai",
+    "url": "https://new.dndtools.org/equipment/sai",
+    "slug": "sai",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d4 · x2 · 10 ft.",
+      "cost": "1 gp",
+      "weight": "1 lb."
+    }
+  },
+  {
+    "name": "Scale Mail",
+    "url": "https://new.dndtools.org/equipment/scale-mail",
+    "slug": "scale-mail",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "medium",
+      "stats": "AC 4 · Max Dex 3 · ACP -4",
+      "cost": "50 gp",
+      "weight": "30 lb."
+    }
+  },
+  {
+    "name": "Scimitar",
+    "url": "https://new.dndtools.org/equipment/scimitar",
+    "slug": "scimitar",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d6 · 18-20/x2",
+      "cost": "15 gp",
+      "weight": "4 lb."
+    }
+  },
+  {
+    "name": "Shortbow",
+    "url": "https://new.dndtools.org/equipment/shortbow",
+    "slug": "shortbow",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d6 · x3 · 60 ft.",
+      "cost": "30 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Shortsword",
+    "url": "https://new.dndtools.org/equipment/shortsword",
+    "slug": "shortsword",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d6 · 19-20/x2",
+      "cost": "10 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Shuriken",
+    "url": "https://new.dndtools.org/equipment/shuriken",
+    "slug": "shuriken",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d2 · x2 · 10 ft.",
+      "cost": "1 gp",
+      "weight": "1 lb."
+    }
+  },
+  {
+    "name": "Siangham",
+    "url": "https://new.dndtools.org/equipment/siangham",
+    "slug": "siangham",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d6 · x2",
+      "cost": "3 gp",
+      "weight": "1 lb."
+    }
+  },
+  {
+    "name": "Sickle",
+    "url": "https://new.dndtools.org/equipment/sickle",
+    "slug": "sickle",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d6 · x2",
+      "cost": "6 gp",
+      "weight": "2 lb."
+    }
+  },
+  {
+    "name": "Sling",
+    "url": "https://new.dndtools.org/equipment/sling",
+    "slug": "sling",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d4 · x2 · 50 ft.",
+      "cost": "0 gp",
+      "weight": "0 lb."
+    }
+  },
+  {
+    "name": "Spear",
+    "url": "https://new.dndtools.org/equipment/spear",
+    "slug": "spear",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "simple",
+      "stats": "1d8 · x3 · 20 ft.",
+      "cost": "2 gp",
+      "weight": "6 lb."
+    }
+  },
+  {
+    "name": "Spiked Chain",
+    "url": "https://new.dndtools.org/equipment/spiked-chain",
+    "slug": "spiked-chain",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "2d4 · x2",
+      "cost": "25 gp",
+      "weight": "10 lb."
+    }
+  },
+  {
+    "name": "Splint Mail",
+    "url": "https://new.dndtools.org/equipment/splint-mail",
+    "slug": "splint-mail",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "heavy",
+      "stats": "AC 6 · Max Dex 0 · ACP -7",
+      "cost": "200 gp",
+      "weight": "45 lb."
+    }
+  },
+  {
+    "name": "Studded Leather Armor",
+    "url": "https://new.dndtools.org/equipment/studded-leather-armor",
+    "slug": "studded-leather-armor",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "armor",
+      "category": "light",
+      "stats": "AC 3 · Max Dex 5 · ACP -1",
+      "cost": "25 gp",
+      "weight": "20 lb."
+    }
+  },
+  {
+    "name": "Tower Shield",
+    "url": "https://new.dndtools.org/equipment/tower-shield",
+    "slug": "tower-shield",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "shield",
+      "category": "heavy",
+      "stats": "AC 4 · Max Dex 2 · ACP -10",
+      "cost": "30 gp",
+      "weight": "45 lb."
+    }
+  },
+  {
+    "name": "Trident",
+    "url": "https://new.dndtools.org/equipment/trident",
+    "slug": "trident",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · x2 · 10 ft.",
+      "cost": "15 gp",
+      "weight": "4 lb."
+    }
+  },
+  {
+    "name": "Warhammer",
+    "url": "https://new.dndtools.org/equipment/warhammer",
+    "slug": "warhammer",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "martial",
+      "stats": "1d8 · x3",
+      "cost": "12 gp",
+      "weight": "5 lb."
+    }
+  },
+  {
+    "name": "Whip",
+    "url": "https://new.dndtools.org/equipment/whip",
+    "slug": "whip",
+    "id": null,
+    "category": "equipment",
+    "index": {
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "1d3 · x2",
+      "cost": "1 gp",
+      "weight": "2 lb."
+    }
+  }
+]

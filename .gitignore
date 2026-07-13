@@ -1,6 +1,6 @@
 scraped/
 scraped/.cache/
-data/dndtools/
+# data/dndtools/
 data/dndtools/.cache/
 modulos-cesar/
 .venv/

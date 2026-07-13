@@ -7,6 +7,7 @@ from typing import Any, Callable
 from bs4 import BeautifulSoup
 
 from .base import parse_detail_page, parse_index_page
+from . import classes as classes_parser
 
 IndexParser = Callable[[BeautifulSoup, str], list[dict[str, Any]]]
 DetailParser = Callable[[str, str], dict[str, Any]]
@@ -44,3 +45,4 @@ CATEGORIES = (
 
 INDEX_PARSERS = {category: _make_index_parser(category) for category in CATEGORIES}
 DETAIL_PARSERS = {category: _make_detail_parser(category) for category in CATEGORIES}
+DETAIL_PARSERS["classes"] = classes_parser.parse_detail

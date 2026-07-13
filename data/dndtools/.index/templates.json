@@ -1,0 +1,2482 @@
+[
+  {
+    "name": "Acidborn Monster",
+    "url": "https://new.dndtools.org/templates/acidborn-monster",
+    "slug": "acidborn-monster",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "living corporeal animal, magical beast, plant, vermin of the aquatic subtype (referred to hereafter as the base creature)",
+      "type_change": "magical beast (augmented animal)",
+      "cr": "As the base creature + 1.",
+      "la": "—",
+      "summary": "When a dungeon builder needs a deterrent, the only thing better than a giant pit of acid is a giant pit of acid with a shark in it. Until re…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Afflicted",
+    "url": "https://new.dndtools.org/templates/afflicted",
+    "slug": "afflicted",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "living, corporeal creature with an Intelligence of 3, more that already has the Red Curse, has been unprotected by cinnabryl for at least 24 hours",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Although clearly a human armed for battle, the creature walks with a pronounced limp because of a twisted left leg and his face, which is vi…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Air Element Creatures",
+    "url": "https://new.dndtools.org/templates/air-element-creatures",
+    "slug": "air-element-creatures",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "elemental (air)",
+      "cr": "Up to 3 HD, same as the base creature3 HD to 7 HD, same as the base creature +18+ HD, same as the base creature +2.",
+      "la": "—",
+      "summary": "\"Air element\" is a template that can be added to any corporeal creature (referred to hereafter as the \"base creature\") of the following base…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Amphibious Creature",
+    "url": "https://new.dndtools.org/templates/amphibious-creature",
+    "slug": "amphibious-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid, monstrous humanoid (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "—",
+      "la": "+0.",
+      "summary": "Perhaps only a few times in any generation, an individual member of an otherwise land-bound race is born fully capable of surviving both on…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Anarchic Creature",
+    "url": "https://new.dndtools.org/templates/anarchic-creature",
+    "slug": "anarchic-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, ooze, plant, vermin of nonlawful alignment",
+      "type_change": "—",
+      "cr": "Up to 3 HD, same as the base creature; 4 HD to 7 HD, same as the base creature +1; 8 or more HD, same as the base creature +2.",
+      "la": "+5.",
+      "summary": "Anarchic creatures dwell in planes of chaos, the realms of disorder. Although they may resemble creatures from the Material plane, they appe…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Arachnoid Creature",
+    "url": "https://new.dndtools.org/templates/arachnoid-creature",
+    "slug": "arachnoid-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "aberration",
+      "cr": "Same as the base creature +1.",
+      "la": "—",
+      "summary": "In their foul veneration of the Spider Queen, the drow of the Underdark have created many new creatures that manifest spiderlike features. U…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Archdragon",
+    "url": "https://new.dndtools.org/templates/archdragon",
+    "slug": "archdragon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "true dragon (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Fierce, primordial beings composed of the multiverse's elements, dragons are among the most powerful creatures tied to any specific elementa…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Axiomatic Creature",
+    "url": "https://new.dndtools.org/templates/axiomatic-creature",
+    "slug": "axiomatic-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, ooze, plant, vermin of nonchaotic alignment",
+      "type_change": "—",
+      "cr": "Up to 3 HD, as the base creature, 4 to 7 HD, as the base creature +1; 8 or more HD, as the base creature +2.",
+      "la": "As the base creature +4.",
+      "summary": "Axiomatic creatures dwell on lawful planes, the domains of order. Although they may resemble creatures from the Material Plane, they are mor…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Beast Of Xvim",
+    "url": "https://new.dndtools.org/templates/beast-of-xvim",
+    "slug": "beast-of-xvim",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "As base creature +1",
+      "la": "—",
+      "summary": "As the power and influence of Iyachtu Xvim grow in the Realms, manifestations of the deity of tyranny and hatred have become all too common.…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Blightspawned Template",
+    "url": "https://new.dndtools.org/templates/blightspawned-template",
+    "slug": "blightspawned-template",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "plant,",
+      "cr": "Same as the base creature +1.",
+      "la": "—",
+      "summary": "\"Blightspawned\" is a template that can be added to any animal, beast, or plant (referred to hereafter as the \"base creature\"). The creature'…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Blooded One",
+    "url": "https://new.dndtools.org/templates/blooded-one",
+    "slug": "blooded-one",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +1.",
+      "summary": "\"Blooded\" is a template that can be added to any humanoid (referred to hereafter as the \"base creature\"). It uses all the base creature's st…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Bodak Creatures",
+    "url": "https://new.dndtools.org/templates/bodak-creatures",
+    "slug": "bodak-creatures",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base creature +4",
+      "la": "—",
+      "summary": "Bodaks are the undead remnants of creatures destroyed by the touch of absolute evil. Bodaks physically resemble the creatures they were in l…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Bone Creature",
+    "url": "https://new.dndtools.org/templates/bone-creature",
+    "slug": "bone-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "—",
+      "la": "—",
+      "summary": "Sometimes creatures that rise as undead skeletons retain their intellect and abilities. Bone fighters wield deadly weapons and clank about i…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Bone Naga",
+    "url": "https://new.dndtools.org/templates/bone-naga",
+    "slug": "bone-naga",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "naga (referred to hereafter as the base creature)",
+      "type_change": "undead",
+      "cr": "—",
+      "la": "-",
+      "summary": "\"Bone naga\" is an acquired template that can be added to any naga (referred to hereafter as the base creature).",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Captured One",
+    "url": "https://new.dndtools.org/templates/captured-one",
+    "slug": "captured-one",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "construct",
+      "cr": "Same as base creature +2.",
+      "la": "—",
+      "summary": "A captured one is a living creature that is under the control of a raggamoffyn. The raggamoffyn has access to its host's memories and draws…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Celestial Creature",
+    "url": "https://new.dndtools.org/templates/celestial-creature",
+    "slug": "celestial-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Up to 3 HD, as base creature4 HD to 7 HD, as base creature +18+ HD, as base creature +2",
+      "la": "—",
+      "summary": "Celestial creatures dwell in the upper planes, realms of good, although they resemble beings found on the Material Plane. They are more rega…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Chameleon Creature",
+    "url": "https://new.dndtools.org/templates/chameleon-creature",
+    "slug": "chameleon-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal creature except a construct, undead, elemental (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "+1.",
+      "summary": "Chameleon creatures are the results of forced crossbreeding experiments involving chameleons and other creatures. A chameleon creature has s…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Chimeric Creature",
+    "url": "https://new.dndtools.org/templates/chimeric-creature",
+    "slug": "chimeric-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "magical beast",
+      "cr": "9 or same as base creature +1, whichever is higher.",
+      "la": "—",
+      "summary": "Chimeric creatures are hybrids that combine the traits of a monstrous goat and a chromatic dragon with those of a third creature, which must…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Corpse Creature",
+    "url": "https://new.dndtools.org/templates/corpse-creature",
+    "slug": "corpse-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +1.",
+      "la": "—",
+      "summary": "Not all corpses risen as undead are shambling, slow-moving zombies. Some retain their intellect and abilities. Surrounded by the stench of d…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Corrupted Creature",
+    "url": "https://new.dndtools.org/templates/corrupted-creature",
+    "slug": "corrupted-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "magical beast",
+      "cr": "Up to 3 HD, same as base creature +1, 4 HD to 7 HD, same as the base creature +2, 8+ HD, same as the base creature +3.",
+      "la": "Same as the base creature +5.",
+      "summary": "Powerful evil, unchecked and rampant, can horribly alter any aspect of the physical world, and creatures are no exception. Twisted by malevo…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Crypt Spawn",
+    "url": "https://new.dndtools.org/templates/crypt-spawn",
+    "slug": "crypt-spawn",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +1.",
+      "la": "—",
+      "summary": "A crypt spawn is a kind of undead created when a desperate person uses the undeath after death spell to avoid true death. These beings usual…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Curst",
+    "url": "https://new.dndtools.org/templates/curst",
+    "slug": "curst",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "+3.",
+      "summary": "Cursts are unfortunate undead humanoids, trapped under a curse that will not let them die.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Death Knight",
+    "url": "https://new.dndtools.org/templates/death-knight",
+    "slug": "death-knight",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as character +3.",
+      "la": "—",
+      "summary": "Gods of death create death knights. They are martial champions of evil. These horrible undead are most commonly raised from the ranks of bla…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Demonically Fused Elemental",
+    "url": "https://new.dndtools.org/templates/demonically-fused-elemental",
+    "slug": "demonically-fused-elemental",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Up to 3 HD, as base creature +1.4 HD to 7 HD, as base creature +2. 8+ HD, as base creature +3.",
+      "la": "—",
+      "summary": "Monte Cook, Dragon #285",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Dracolich",
+    "url": "https://new.dndtools.org/templates/dracolich",
+    "slug": "dracolich",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "evil dragon (hereafter referred to as the base creature), though dragons of old age, older, with spellcasting abilities, are preferred",
+      "type_change": "undead",
+      "cr": "Same as base creature +3.",
+      "la": "Same as base creature +4.",
+      "summary": "The dracolich is an undead creature resulting from the transformation of an evil dragon. The process usually involves a cooperative effort b…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Draconic Creature",
+    "url": "https://new.dndtools.org/templates/draconic-creature",
+    "slug": "draconic-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +1.",
+      "summary": "Draconic creatures are descended from a dragon ancestor, although that ancestor might be many generations removed.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Dread Warrior",
+    "url": "https://new.dndtools.org/templates/dread-warrior",
+    "slug": "dread-warrior",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as base creature.",
+      "la": "—",
+      "summary": "Dread warriors are enhanced undead created immediately after a warrior's death so that they retain at least minimal intelligence. They must…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Dry Lich",
+    "url": "https://new.dndtools.org/templates/dry-lich",
+    "slug": "dry-lich",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "living creature (referred to hereafter as the base creature), provided it can create the required canopic jars, undergo the Sere Rite (see below)",
+      "type_change": "undead",
+      "cr": "Same as the base creature +3.",
+      "la": "Same as the base creature + 5.",
+      "summary": "A dry lich is an especially horrid sort of undead spellcaster, and the ultimate destiny of a walker in the waste.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Dungeonbred Monster",
+    "url": "https://new.dndtools.org/templates/dungeonbred-monster",
+    "slug": "dungeonbred-monster",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "living corporeal aberration, animal, magical beast, vermin that is Large, bigger (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "As the base creature.",
+      "la": "—",
+      "summary": "It can be difficult to maintain a dungeon that houses large living monsters. They consume vast amounts of food and water each day, produce a…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Dustform Creature",
+    "url": "https://new.dndtools.org/templates/dustform-creature",
+    "slug": "dustform-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "living creature (referred to hereafter as the base creature)",
+      "type_change": "construct",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +2.",
+      "summary": "The dust of the waste is not all arid dirt and fine sand. Creatures long-dead eventually become dust, and as dust they can return.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Effigy Creature",
+    "url": "https://new.dndtools.org/templates/effigy-creature",
+    "slug": "effigy-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "construct",
+      "cr": "Same as base creature +1.",
+      "la": "-",
+      "summary": "Effigies are magically animated automatons built in the form of living creatures. They are things of clockwork mechanisms and always animate…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Elder Eidolon",
+    "url": "https://new.dndtools.org/templates/elder-eidolon",
+    "slug": "elder-eidolon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "aberration, animal, dragon, giant, humanoid, magical beast, monstrous humanoid, plant, vermin",
+      "type_change": "construct",
+      "cr": "As base creature +3.",
+      "la": "-",
+      "summary": "The art of crafting magical constructs to serve as guardians has existed for eons. It was an old practice when the humanoid races took their…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Elder Serpent of Set",
+    "url": "https://new.dndtools.org/templates/elder-serpent-of-set",
+    "slug": "elder-serpent-of-set",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "snakelike animal, magical beast (referred to hereafter as the \"base creature\"), as long as the average Intelligence for its kind is no greater than 5",
+      "type_change": "magical beast (augmented animal) if it was not already a magical beast",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +3.",
+      "summary": "Sseth the Great Snake was once the Faerûnian god of poison and serpents of all sorts, from typical vipers to yuan-ti to nagas. He was known…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Entomanothropy Runs Wild",
+    "url": "https://new.dndtools.org/templates/entomanothropy-runs-wild",
+    "slug": "entomanothropy-runs-wild",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "By class level or base creature, modified according to the Hit Die of the base vermin: 1 HD or 2 HD, +2; 3 HD to 5 HD, +3, 6 HD to 10 HD, +5, 11 HD to 20 HD, +6; 21 or more HD, +7.",
+      "la": "Same as the base creature +2. In addition, an entomanothrope's character level is increased by the number of racial Hit Dice the base vermin has.",
+      "summary": "Entomanothropes are humans or giants that can transform themselves into monstrous vermin. While similar to lycanthropes, they differ in the…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Entropic Creature",
+    "url": "https://new.dndtools.org/templates/entropic-creature",
+    "slug": "entropic-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, outsider, plant, undead, vermin (referred to hereafter as the base creature)",
+      "type_change": "outsider",
+      "cr": "3 HD or fewer, as the base creature +1; 4 to 7 HD, as the base creature +2; 8 or more HD, as the base creature +3.",
+      "la": "+2.",
+      "summary": "Entropic creatures dwell on the Negative Energy Plane. In addition to large quantities of undead, entropic creatures ideally adapted to the…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Evolved Undead",
+    "url": "https://new.dndtools.org/templates/evolved-undead",
+    "slug": "evolved-undead",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "undead with an Intelligence score (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +1",
+      "summary": "An evolved undead is an undead whose body is flushed with more negative energy than normal due to an exceptionally long lifetime. Any undead…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Faerzress-infused Creature",
+    "url": "https://new.dndtools.org/templates/faerzress-infused-creature",
+    "slug": "faerzress-infused-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "+1.",
+      "summary": "A faerzress-infused creature is one that has been magically altered to harness the power of the Underdark's pervasive magical radiation. Fae…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Favored Spawn of Kyuss",
+    "url": "https://new.dndtools.org/templates/favored-spawn-of-kyuss",
+    "slug": "favored-spawn-of-kyuss",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "living, corporeal creature",
+      "type_change": "undead",
+      "cr": "+2 (for creatures with 9 HD or less) or +3 (for creatures with 10 HD or more).",
+      "la": "—",
+      "summary": "While the spawn of Kyuss are bearers and victims of their master's corruption, those who garner the demigod's favor are blessed by worms. Fo…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Fiendish Creature",
+    "url": "https://new.dndtools.org/templates/fiendish-creature",
+    "slug": "fiendish-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "magical beast, but otherwise the type is unchanged",
+      "cr": "Up to 3 HD, as base creature4 HD to 7 HD, as base creature +1.8+ HD, as base creature +2",
+      "la": "—",
+      "summary": "Fiendish creatures dwell in the infernal planes, realms of evil, although they resemble beings found on the Material Plane. They are more fe…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Fire-Souled Creature",
+    "url": "https://new.dndtools.org/templates/fire-souled-creature",
+    "slug": "fire-souled-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "creature with an Intelligence of 3, more (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +3.",
+      "summary": "Clifford Horowitz, Dragon #314",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Fleshvigor",
+    "url": "https://new.dndtools.org/templates/fleshvigor",
+    "slug": "fleshvigor",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "non-skeletal corporeal undead, referred to hereafter as the base creature",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +1.",
+      "summary": "A fleshvigor looks like the base creature, although its mouth and teeth are larger, and its skin often has a flushed or fevered appearance.…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ghastly Creatures",
+    "url": "https://new.dndtools.org/templates/ghastly-creatures",
+    "slug": "ghastly-creatures",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base creature +2",
+      "la": "—",
+      "summary": "Even more repellent than ghoulish creatures, ghastly creatures reek of the grave. From a distance, they look like ghoulish creatures, but up…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ghost",
+    "url": "https://new.dndtools.org/templates/ghost",
+    "slug": "ghost",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2",
+      "la": "—",
+      "summary": "Ghosts are the spectral remnants of intelligent beings who, for one reason or another, cannot rest easily in their graves.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ghost Brute",
+    "url": "https://new.dndtools.org/templates/ghost-brute",
+    "slug": "ghost-brute",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "animal, magical beast, plant with a Charisma score below 8 (hereafter referred to as the base creature)",
+      "type_change": "undead (augmented animal, magical beast, or plant), and it gains the incorporeal and augmented subtypes",
+      "cr": "Base creature's CR +2.",
+      "la": "+5",
+      "summary": "Ghost brutes are the spectral remnants of creatures without the sense of self needed to become normal ghosts. They drift aimlessly, haunting…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ghostly Dragon",
+    "url": "https://new.dndtools.org/templates/ghostly-dragon",
+    "slug": "ghostly-dragon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "dragon",
+      "type_change": "undead",
+      "cr": "Same as the base dragon +2.",
+      "la": "—",
+      "summary": "A ghost template is found at Ghost. The ghostly dragon template presented here provides an alternative method of creating ghostly dragons to…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ghoulish Creature",
+    "url": "https://new.dndtools.org/templates/ghoulish-creature",
+    "slug": "ghoulish-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base creature +1",
+      "la": "—",
+      "summary": "Occasionally, a living person chooses a path of ineffable evil through depraved acts including regular cannibalism. Sometimes, these creatur…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Gravetouched Ghoul",
+    "url": "https://new.dndtools.org/templates/gravetouched-ghoul",
+    "slug": "gravetouched-ghoul",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal aberration, fey, giant, humanoid, monstrous humanoid with Intelligence, Charisma scores of 3, higher (referred to hereafter as the base creature)",
+      "type_change": "undead, and it gains the augmented subtype",
+      "cr": "Same as the base creature +4",
+      "la": "Same as base creature +2.",
+      "summary": "Like traditional ghouls, gravetouched ghouls haunt graveyards, battlefields, and other places rich with the carrion for which they hunger. T…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Greenbound Creature",
+    "url": "https://new.dndtools.org/templates/greenbound-creature",
+    "slug": "greenbound-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "animal, fey, giant, humanoid, monstrous humanoid, vermin (hereafter referred to as the base creature)",
+      "type_change": "plant with the appropriate augmented subtype",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +8.",
+      "summary": "In the crumbling Siluvanedenn ruins of Telardon, powerful and ancient magical energies seep from an unknown number of buried arcane treasure…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Guardian Monster",
+    "url": "https://new.dndtools.org/templates/guardian-monster",
+    "slug": "guardian-monster",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "living corporeal aberration, animal, magical beast, vermin with an Intelligence of 3, lower (referred to hereafter as the base creature)",
+      "type_change": "magical beast (augmented animal)",
+      "cr": "As the base creature + 1.",
+      "la": "—",
+      "summary": "Dungeon builders are frustrated by intruders who focus on avoiding (rather than confronting) monsters that defend vaults or treasure. Many h…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Celestial",
+    "url": "https://new.dndtools.org/templates/half-celestial",
+    "slug": "half-celestial",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "outsider",
+      "cr": "Same as the base creature +1",
+      "la": "—",
+      "summary": "Celestials' magical nature allows them to crossbreed with virtually any creature. The offspring of the resulting unions, half-celestials, ar…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Doppelganger",
+    "url": "https://new.dndtools.org/templates/half-doppelganger",
+    "slug": "half-doppelganger",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid creature (referred to hereafter as the \"base creature\") of Tiny to Large size",
+      "type_change": "—",
+      "cr": "Same as the base creature.",
+      "la": "Same as the base creature +2.",
+      "summary": "Perhaps the most numerous of the half-bloods described in \"Strange Bedfellows (Dragon #313)\", half-doppelgangers blend into and come to term…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Dragon",
+    "url": "https://new.dndtools.org/templates/half-dragon",
+    "slug": "half-dragon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "dragon",
+      "cr": "—",
+      "la": "—",
+      "summary": "With the creation of monster templates, half-dragons of all kinds have become so popular with DMs that some players have begun to wonder if…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Dragon, Faerûnian",
+    "url": "https://new.dndtools.org/templates/half-dragon-faernian",
+    "slug": "half-dragon-faernian",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Monster Compendium Monsters of Faerûn details five varieties of dragon common to the lands of Faerûn: brown, deep, fang, shadow, and song dr…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Farspawn",
+    "url": "https://new.dndtools.org/templates/half-farspawn",
+    "slug": "half-farspawn",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal creature of the aberration, animal, dragon, elemental, giant, humanoid, magical beast, monstrous humanoid, ooze, plant, vermin type (hereafter referred to as the base creature)",
+      "type_change": "outsider",
+      "cr": "HD 4 or less, as base creature +1; HD 5 to 10, as base creature +2; HD 11 or more, as base creature +3.",
+      "la": "+4.",
+      "summary": "Much as fiends produce terrible mortal progeny, certain entities of the Far Realm occasionally venture to the Material Plane to procreate. S…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Fey",
+    "url": "https://new.dndtools.org/templates/half-fey",
+    "slug": "half-fey",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal living creature referred to hereafter as the base creature",
+      "type_change": "fey",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +2.",
+      "summary": "Half-fey is an inherited template that can be added to any corporeal living creature referred to hereafter as the base creature. The creatur…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Golem",
+    "url": "https://new.dndtools.org/templates/half-golem",
+    "slug": "half-golem",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "construct, granting him or her construct traits",
+      "cr": "Same as character +3.",
+      "la": "—",
+      "summary": "Half-golems are the results of good-intentioned actions taken too far. While the application of a poultice infused with curative herbs or th…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Illithid",
+    "url": "https://new.dndtools.org/templates/half-illithid",
+    "slug": "half-illithid",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal other than a construct (referred to hereafter as the base creature)",
+      "type_change": "aberration",
+      "cr": "Same as the base creature -3.",
+      "la": "+5.",
+      "summary": "\"Half-illithid\" is an inherited template that can be added to any corporeal other than a construct (referred to hereafter as the base creatu…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Janni",
+    "url": "https://new.dndtools.org/templates/half-janni",
+    "slug": "half-janni",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid creature (referred to hereafter as the \"base creature\")",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +3.",
+      "summary": "In arid deserts and fertile river valleys, janni nomads roam, free to mingle with more mundane societies. With their homogeneous mix of all…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Minotaur",
+    "url": "https://new.dndtools.org/templates/half-minotaur",
+    "slug": "half-minotaur",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "creature of the giant, humanoid, monstrous humanoid type (referred to hereafter as the \"base creature\") from Small to Huge in size",
+      "type_change": "—",
+      "cr": "Same as the base creature if it did not gain a size category, otherwise same as the base creature +1.",
+      "la": "Same as the base creature +1.",
+      "summary": "Half-minotaurs are extraordinarily rare, and some believe they are not born so much as made. They only appear near underground labyrinths or…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Nymph",
+    "url": "https://new.dndtools.org/templates/half-nymph",
+    "slug": "half-nymph",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid creature (referred to hereafter as the \"base creature\")",
+      "type_change": "—",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +2.",
+      "summary": "Less often [than other combinations] but noteworthy enough for poets to create epic sagas of romance and passion, gentle woodland nymphs fal…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Ogre",
+    "url": "https://new.dndtools.org/templates/half-ogre",
+    "slug": "half-ogre",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "creature of the giant, humanoid, monstrous humanoid type (referred to hereafter as the \"base creature\") from Small to Huge in size",
+      "type_change": "—",
+      "cr": "Same as the base creature if it did not gain a size category, otherwise same as the base creature +1.",
+      "la": "Same as the base creature if it did not gain a size category, otherwise same as the base creature +1.",
+      "summary": "Ogre clans rarely develop the sophisticated agricultural or animal husbandry skills need to support their large numbers, and instead resort…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Rakshasa",
+    "url": "https://new.dndtools.org/templates/half-rakshasa",
+    "slug": "half-rakshasa",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid creature (referred to hereafter as the \"base creature\") of Small to Large size",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as base creature +3.",
+      "summary": "Infamous for their greed and avarice, rakshasas often seek their victories by altering their forms and seducing powerful leaders or popular…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Satyr",
+    "url": "https://new.dndtools.org/templates/half-satyr",
+    "slug": "half-satyr",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "giant, humanoid, monstrous humanoid creature (referred to hereafter as the \"base creature\") of Small to Large size",
+      "type_change": "—",
+      "cr": "Same as the base creature.",
+      "la": "Same as the base creature +1.",
+      "summary": "Known for tracking the beautiful women who pass through their woods and seducing them with their pipes and song, satyrs deserve their lasciv…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Troll",
+    "url": "https://new.dndtools.org/templates/half-troll",
+    "slug": "half-troll",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, outsider (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +2.",
+      "la": "+4.",
+      "summary": "Trolls, as a rule, breed only with those of their own kind. But from time to time, a troll in rut finds itself without a mate. At such times…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Undead",
+    "url": "https://new.dndtools.org/templates/half-undead",
+    "slug": "half-undead",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +5.",
+      "summary": "Under normal circumstances, crossbreeding the living with the undead is impossible. Necromancy and accidents of fate, however, can produce e…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-Vampire",
+    "url": "https://new.dndtools.org/templates/half-vampire",
+    "slug": "half-vampire",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid, monstrous humanoid (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +1",
+      "la": "Same as the base creature +2",
+      "summary": "See also: Half Undead",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Half-fiend",
+    "url": "https://new.dndtools.org/templates/half-fiend",
+    "slug": "half-fiend",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "outsider",
+      "cr": "Same as the base creature +2",
+      "la": "—",
+      "summary": "Fiends' magical nature allows them to crossbreed with virtually any creature. Spawned deep in the dark, nether planes, these fiendish offspr…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Hivennest Monster",
+    "url": "https://new.dndtools.org/templates/hivennest-monster",
+    "slug": "hivennest-monster",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "As a group consisting of the base creature and as many of the base swarms as are released during hivedeath.",
+      "la": "—",
+      "summary": "Hivenest monsters are nonliving creatures that house colonies of insects in their bodies, whether deliberately or as a result of infestation…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Hooded Pupil",
+    "url": "https://new.dndtools.org/templates/hooded-pupil",
+    "slug": "hooded-pupil",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal giant, humanoid (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "+1.",
+      "la": "Same as the base creature +4",
+      "summary": "A hooded pupil is a humanoid or a giant who was lured by the promises of necromancy, envious of the power the necromancer wields and the une…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Hordling Appearance",
+    "url": "https://new.dndtools.org/templates/hordling-appearance",
+    "slug": "hordling-appearance",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "All hordlings look different. When you create a new hordling, roll on the following tables to determine the fiend's appearance. Feel free to…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Huecuva",
+    "url": "https://new.dndtools.org/templates/huecuva",
+    "slug": "huecuva",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "humanoid (hereafter referred to as the base creature with at least one level in the cleric, druid, paladin, monk class",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2.",
+      "la": "—",
+      "summary": "Huecuvas are undead creatures created from clerics, druids, paladins, or monks who have failed in their vows. As punishment for their heresi…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ice Beast",
+    "url": "https://new.dndtools.org/templates/ice-beast",
+    "slug": "ice-beast",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "construct",
+      "cr": "An ice beast's CR is 1 plus 1/2 its Hit Dice.",
+      "la": "-",
+      "summary": "An ice beast is a magical construct of ice and snow created by means of a conjure ice beast spell (or similar effect) in the image of a real…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Juju Zombie",
+    "url": "https://new.dndtools.org/templates/juju-zombie",
+    "slug": "juju-zombie",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2.",
+      "la": "—",
+      "summary": "Animated by a particularly hateful brand of necromancy, juju zombies are malicious, murderous creatures enslaved by the mighty spells that c…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ka-tainted",
+    "url": "https://new.dndtools.org/templates/ka-tainted",
+    "slug": "ka-tainted",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "giant, humanoid, monstrous humanoid",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +3.",
+      "summary": "This creature looks like it might have descended from a human, or perhaps once was one. While bipedal, armed, and armored, it has rough, peb…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Keening Spirit",
+    "url": "https://new.dndtools.org/templates/keening-spirit",
+    "slug": "keening-spirit",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "A keening spirit is a kind of ghost, created specifically from the spirit of an evil female elf of any elf subtype. Known for its constant w…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Lich",
+    "url": "https://new.dndtools.org/templates/lich",
+    "slug": "lich",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the character + 2",
+      "la": "—",
+      "summary": "Liches are undead spellcasters, usually wizards or sorcerers but sometimes clerics, who have used their magical powers to unnaturally extend…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Living Zombie",
+    "url": "https://new.dndtools.org/templates/living-zombie",
+    "slug": "living-zombie",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal creature (other than undead) that has a skeletal structure (referred to hereafter as the base creature)",
+      "type_change": "magical beast if it is an animal, and it gains the augmented subtype",
+      "cr": "+0.",
+      "la": "-.",
+      "summary": "Living zombies are living creatures reduced to a mindless state by a potent combination of enchantment and necromantic magic.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Lycanthrope",
+    "url": "https://new.dndtools.org/templates/lycanthrope",
+    "slug": "lycanthrope",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "shapechanger",
+      "cr": "Same as the animal +2",
+      "la": "Same as the base creature +2 (afflicted) or +3 (natural). Other Lycanthropes Of The Realms Following the Time of Troubles, a variety of new lycanthrope forms appeared in the Realms. Rumors persist of such strange creatures as werebison, weredogs, weredolphins, wereleopards, wereowls, and werepanthers. Lythari These elf-werewolves share all the abilities of common werewolves, except that they do not have a hybrid form. Their alignment is always chaotic good, and they are often higher-level characters in elf form. In wolf form, lythari are beautiful, with pale gray or silver fur and intelligent blue or brown eyes. In wood elf form, they are beautiful and otherworldly, even for elves. Tall and pale-skinned, they have light blue or green eyes and silver hair. Lythari can only pass on their lycanthropy to other elves, and only in a special ritual performed with the complete consent of both parties. Werecat These chaotic good lycanthropes are humans who can assume the form of ordinary cats. A secretive sisterhood of werecats known as the Eyes of the Evening serves the goddesses Sharess and Selûne, though their exact aims are unknown. They are rumored to hunt cultists of Shar and Loviatar during nights of the full moon. Sample Lycanthropes Werebear: Werebear, Bear Form. Werebear, Human Form Werebear, Hybrid Form Wereboar: Wereboar, Boar Form. Wereboar, Human Form Wereboar, Hybrid Form Wererat: Wererat, Rat Form. Wererat, Human Form Wererat, Hybrid Form Weretiger: Weretiger, Tiger Form. Weretiger, Human Form Weretiger, Hybrid Form Werewolf: Werewolf, Wolf Form. Werewolf, Human Form Werewolf, Hybrid Form Werebat: Werebat, Bat Form. Werebat, Drow Form Werebat, Hybrid Form Werecrocodile: Werecrocodile, Crocodile Form. Werecrocodile, Human Form Werecrocodile, Hybrid Form Wereshark: Wereshark, Shark Form. Wereshark, Human Form Wereshark, Hybrid Form",
+      "summary": "Lycanthropes are humanoids who can transform themselves into animals or hybrid monsters. Also see Lycanthrope Prestige Class",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Maurid",
+    "url": "https://new.dndtools.org/templates/maurid",
+    "slug": "maurid",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "creature",
+      "type_change": "—",
+      "cr": "Same as base creature +1.",
+      "la": "—",
+      "summary": "Dungeon #112",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Mineral Warrior",
+    "url": "https://new.dndtools.org/templates/mineral-warrior",
+    "slug": "mineral-warrior",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal creature that is not a construct, undead, an elemental (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +1.",
+      "summary": "A mineral warrior is a creature that has undergone a transformation into a creature of living stone. Many creatures embrace this change will…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Mirage Mullah",
+    "url": "https://new.dndtools.org/templates/mirage-mullah",
+    "slug": "mirage-mullah",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "humanoid creature (hereafter referred to as the base creature)",
+      "type_change": "fey",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +3 (+4 if Charisma exceeds 18).",
+      "summary": "Fey nobles known as mirage mullahs rule fey oases. Unlike other sorts of fey, these seemingly jovial creatures have precious little compassi…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Mobs",
+    "url": "https://new.dndtools.org/templates/mobs",
+    "slug": "mobs",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "Small, Medium, large creature",
+      "type_change": "—",
+      "cr": "8, or +2 if the base creature's CR is 7 or higher.",
+      "la": "-",
+      "summary": "An angry mob represents the most dangerous form of crowd. An angry mob might or might not be enraged at the PCs, but as a general rule the m…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Monster Mayhem - Drider Template",
+    "url": "https://new.dndtools.org/templates/monster-mayhem-drider-template",
+    "slug": "monster-mayhem-drider-template",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "aberration",
+      "cr": "Same as the base creature +2",
+      "la": "—",
+      "summary": "A drider is a humanoid partially turned into a monstrous spider. The spider goddess Lolth subjects above-average 6th-level drow to a special…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Monster Mayhem - Skeleton Template",
+    "url": "https://new.dndtools.org/templates/monster-mayhem-skeleton-template",
+    "slug": "monster-mayhem-skeleton-template",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "Undead",
+      "cr": "Depends on Hit Dice:",
+      "la": "—",
+      "summary": "The skeletons in the Monster Manual are differentiated only by size. While simple, that system makes skeletons of very different creatures t…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Monster Mayhem - Zombie Template",
+    "url": "https://new.dndtools.org/templates/monster-mayhem-zombie-template",
+    "slug": "monster-mayhem-zombie-template",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "Undead",
+      "cr": "Hit DiceChallenge Rating 1/21/8 11/4 21/2 41 62 8, 103 12, 144 16, 185 206 Treasure: None Alignment: Always neutral evil Advancement: Hit Dice are based on advanced Hit Dice, if applicable. Table 1: Zombie Armor and Damage Zombie Natural ArmorZombie Slam Damage Diminutive01 Fine01d2 Tiny01d3 Small+11d4 Medium-size+21d6 Large+31d8 Huge+42d6 Gargantuan+62d8 Colossal+114d6 Sample 1: Goblin, Zombie. Sample 1: Bugbear, Zombie. Sample 3: Ogre, Zombie. Sample 4: Troll, Zombie. Sample 5: Displacer Beast, Zombie. Sample 6: Ettin, Zombie*. Create a Zombie",
+      "la": "—",
+      "summary": "The zombies in the Monster Manual (3.0) are differentiated only by size. While simple, that system makes zombies of very different creatures…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Monster Of Legacy",
+    "url": "https://new.dndtools.org/templates/monster-of-legacy",
+    "slug": "monster-of-legacy",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "aberration, dragon, elemental, giant, magical beast, monstrous humanoid, ooze, outsider, undead (hereafter referred to as the base creature)",
+      "type_change": "—",
+      "cr": "Adjust the creature's Challenge Rating based on the number of legacy abilities to which it has access. These increases are not cumulative with each other.",
+      "la": "Legacy monsters are never appropriate as player characters or cohorts. The base creature loses any level adjustment it previously had.",
+      "summary": "\"Monster of legacy\" is an acquired template that can be added to any aberration, dragon, elemental, giant, magical beast, monstrous humanoid…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Monster Of Legend",
+    "url": "https://new.dndtools.org/templates/monster-of-legend",
+    "slug": "monster-of-legend",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "outsider, though the monster of legend's home plane is the Material Plane",
+      "cr": "Same as base creature +2.",
+      "la": "—",
+      "summary": "A monster of legend is a creature chosen by a god to perform an appointed task. The creature is imbued with divine abilities and great stren…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Mummified Creature",
+    "url": "https://new.dndtools.org/templates/mummified-creature",
+    "slug": "mummified-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal giant, humanoid, monstrous humanoid (referred to hereafter as the base creature)",
+      "type_change": "undead, and it gains the augmented subtype",
+      "cr": "Same as the base creature +3.",
+      "la": "+4.",
+      "summary": "Mummies are undead creatures, embalmed using ancient necromantic lore. Often set as guardians for sacred sites, mummies defend their charges…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Mummy",
+    "url": "https://new.dndtools.org/templates/mummy",
+    "slug": "mummy",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +2",
+      "la": "—",
+      "summary": "WOTC R&D, Dragon #300",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Necromental",
+    "url": "https://new.dndtools.org/templates/necromental",
+    "slug": "necromental",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "elemental (referred to hereafter as the base creature)",
+      "type_change": "undead, and it gains the augmented subtype",
+      "cr": "Same as the base creature +1.",
+      "la": "-",
+      "summary": "A necromental is the undead remnant of an elemental creature. It retains only a fraction of the self-awareness that the elemental had in lif…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Necropolitan",
+    "url": "https://new.dndtools.org/templates/necropolitan",
+    "slug": "necropolitan",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "humanoid, monstrous humanoid (referred to hereafter as the base creature)",
+      "type_change": "undead, and it gains the augmented subtype",
+      "cr": "—",
+      "la": "Same as the base creature. (Becoming a necropolitan involves losing a level - see Ritual of Crucimigration, below - so the advantages of the undead type cancel out what would other wise be a larger adjustment.)",
+      "summary": "Necropolitans are humanoids who renounce life and embrace undeath in a special ritual called the Ritual of Crucimigration.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Nether Creatures",
+    "url": "https://new.dndtools.org/templates/nether-creatures",
+    "slug": "nether-creatures",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +1",
+      "la": "—",
+      "summary": "Nether creatures are a special type of undead created by the evil queen of Ico (Playstation 2) to guard her castle and serve her every need.…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Nether Hound of Kiaransalee",
+    "url": "https://new.dndtools.org/templates/nether-hound-of-kiaransalee",
+    "slug": "nether-hound-of-kiaransalee",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal undead with an Intelligence of 3, more, nongood alignment (referred to hereafter as the \"base creature\")",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "-.",
+      "summary": "Unlike many gods of the FORGOTTEN REALMS who lord over realms of death and the undead, Kiaransalee prides herself on imagination. Rather tha…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Orglash",
+    "url": "https://new.dndtools.org/templates/orglash",
+    "slug": "orglash",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +1.",
+      "summary": "An orglash, or ice spirit, is a kind of air elemental native to the colder parts of Rashemen. Alien and unpredictable, they are viewed as a…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Paragon Creature",
+    "url": "https://new.dndtools.org/templates/paragon-creature",
+    "slug": "paragon-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Up to 6 HD, as base creature +18; 7 HD to 15 HD, as base creature +15; 16+ HD, as base creature +12.",
+      "la": "—",
+      "summary": "Among the population of every kind of creature are some specimens that are its weakest, worst representatives. Likewise, every population ha…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Pennaggolan",
+    "url": "https://new.dndtools.org/templates/pennaggolan",
+    "slug": "pennaggolan",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2.",
+      "la": "—",
+      "summary": "Pennaggolans are among the most fearsome undead creatures in existence. A type of vampire, they prey on the weak and sickly, attacking lone…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Pseudonatural Creature",
+    "url": "https://new.dndtools.org/templates/pseudonatural-creature",
+    "slug": "pseudonatural-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal creature (referred to hereafter as the base creature)",
+      "type_change": "outsider",
+      "cr": "Up to 3 HD, as base creature; 4 HD to 11 HD, as base creature +1; 12 or more HD, as base creature +2.",
+      "la": "—",
+      "summary": "Past the timeless eons that lie between the stars pseudonatural creatures dwell beyond the planes as we know them, nestled in far realms of…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Radiant Creature",
+    "url": "https://new.dndtools.org/templates/radiant-creature",
+    "slug": "radiant-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid (referred to hereafter as the \"base creature\"",
+      "type_change": "outsider",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as base creature +3.",
+      "summary": "Radiant creatures are natives of the Plane of Radiance and are at least partially made up of the raw materials and energies of that plane. M…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ravenous Creatures",
+    "url": "https://new.dndtools.org/templates/ravenous-creatures",
+    "slug": "ravenous-creatures",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "—",
+      "summary": "Clifford Horowitz, Dragon #319",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Restless Prey Creature",
+    "url": "https://new.dndtools.org/templates/restless-prey-creature",
+    "slug": "restless-prey-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as base creature +2",
+      "la": "—",
+      "summary": "Poachers and hunters are naturally drawn to certain creatures whose body parts are valued as trophies. Unfortunately, beasts that are slain…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Revenant",
+    "url": "https://new.dndtools.org/templates/revenant",
+    "slug": "revenant",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "As base creature +1",
+      "la": "—",
+      "summary": "Revenants are undead avengers who have returned from the grave to track down and kill their murderers. They exist only for revenge against t…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Revived Fossil",
+    "url": "https://new.dndtools.org/templates/revived-fossil",
+    "slug": "revived-fossil",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal creature (other than an undead) that has a skeletal system (referred to hereafter as the base creature)",
+      "type_change": "undead",
+      "cr": "Depends on Hit Dice, as follows:",
+      "la": "-",
+      "summary": "Revived fossils are the remains of animals or monsters that were preserved in a petrified state. Fossils are found encased in stone or other…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Sacred Watcher",
+    "url": "https://new.dndtools.org/templates/sacred-watcher",
+    "slug": "sacred-watcher",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "aberration, animal, dragon, giant, humanoid, magical beast, monstrous humanoid, plant of good alignment (referred to hereafter as the \"base creature\")",
+      "type_change": "deathless",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +5.",
+      "summary": "When a character of great virtue dies while another person is in her care, she sometimes clings to a form of life as a sacred watcher. Not u…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Saint",
+    "url": "https://new.dndtools.org/templates/saint",
+    "slug": "saint",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "living creature of good alignment that is not an outsider, an elemental (referred to hereafter as the \"base creature\")",
+      "type_change": "outsider",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +2.",
+      "summary": "Mortal by birth, celestial by virtue: a saint is the epitome of exalted mortal nature. When a living creature lives her entire life as an ex…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Sanctified Creature",
+    "url": "https://new.dndtools.org/templates/sanctified-creature",
+    "slug": "sanctified-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "evil creature except for outsiders with the evil subtype (referred to hereafter as \"base creature\")",
+      "type_change": "—",
+      "cr": "Same as base creature +1.",
+      "la": "Same as base creature +2.",
+      "summary": "When an evil creature is subjected to a sanctify the wicked spell, it gives up special qualities, attacks, and abilities that are inherently…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Scion Of Kyuss",
+    "url": "https://new.dndtools.org/templates/scion-of-kyuss",
+    "slug": "scion-of-kyuss",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base creature +2",
+      "la": "—",
+      "summary": "Scions of Kyuss are undead creatures created by Kyuss, a powerful evil cleric turned demigod. These creatures have a great hatred of all liv…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Seelie Court Fey",
+    "url": "https://new.dndtools.org/templates/seelie-court-fey",
+    "slug": "seelie-court-fey",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "As base creature +1.",
+      "la": "—",
+      "summary": "Gwendolyn Kestrel, Dragon #304",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Sentry Ooze",
+    "url": "https://new.dndtools.org/templates/sentry-ooze",
+    "slug": "sentry-ooze",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "living corporeal ooze with no Intelligence (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "As the base creature + 2.",
+      "la": "—",
+      "summary": "Oozes make ideal additions to any dungeon. They consume the waste produced by other monsters and can be nasty little surprises in their own…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Sepulchral Thief",
+    "url": "https://new.dndtools.org/templates/sepulchral-thief",
+    "slug": "sepulchral-thief",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2.",
+      "la": "As base creature +6.",
+      "summary": "They say that you can't take it with you. \"They\" have clearly never encountered one of these rapacious undead.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Shadow Creature",
+    "url": "https://new.dndtools.org/templates/shadow-creature",
+    "slug": "shadow-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1. Treasure: Same as the base creature. Alignment: Usually neutral evil. Advancement: Same as the base creature. Level Adjustment: Same as base creature +2.",
+      "la": "Same as base creature +2.",
+      "summary": "Shadow creatures dwell on the Plane of Shadow, sometimes crossing into other planes where the barriers between dimensions are weak. Just as…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Shadow-walkers",
+    "url": "https://new.dndtools.org/templates/shadow-walkers",
+    "slug": "shadow-walkers",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base character +1.",
+      "la": "Same as the base character +1.",
+      "summary": "Shadow-walkers are people who have experienced a magical ritual of the god Mask that attunes a person's body to shadow. Similar to shades, t…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Silveraith",
+    "url": "https://new.dndtools.org/templates/silveraith",
+    "slug": "silveraith",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead, and it gains the incorporeal subtype",
+      "cr": "Same as the base creature + 2",
+      "la": "—",
+      "summary": "Silveraiths are incorporeal undead creatures that glow with pale blue energy (like that created by a chill touch spell). Their forms are vag…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Skeletal Dragon",
+    "url": "https://new.dndtools.org/templates/skeletal-dragon",
+    "slug": "skeletal-dragon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "dragon (referred to hereafter as the base dragon)",
+      "type_change": "undead",
+      "cr": "Base dragon's CR x 1/2 (minimum 1).",
+      "la": "-",
+      "summary": "Skeletal dragons are created via the animate dead spell and function as normal skeletons in most ways, though they retain a few of their dra…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Skitterhaunt",
+    "url": "https://new.dndtools.org/templates/skitterhaunt",
+    "slug": "skitterhaunt",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "—",
+      "summary": "\"Skitterhaunt\" is a template that can be added to any vermin (referred to hereafter as the \"base creature\"). Vermin with this template becom…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Spectral Mage",
+    "url": "https://new.dndtools.org/templates/spectral-mage",
+    "slug": "spectral-mage",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead (incorporeal)",
+      "cr": "Same as the character +2.",
+      "la": "—",
+      "summary": "A spectral mage is an undead arcane spellcaster given unlife by magic, sometimes willing, sometimes not. Incorporeal and only able to intera…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Spectral Savant",
+    "url": "https://new.dndtools.org/templates/spectral-savant",
+    "slug": "spectral-savant",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "humanoid creature (referred to here-after as the base creature), provided it can complete the transformation ritual (see below)",
+      "type_change": "undead",
+      "cr": "Same as base creature +2.",
+      "la": "Same as the base creature +4.",
+      "summary": "A silhouette of what once walked as a man now walks in permanent shadow. Its eyes burn from the darkness with a compelling, ravenous hunger.",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Spellstitched",
+    "url": "https://new.dndtools.org/templates/spellstitched",
+    "slug": "spellstitched",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base creature +1.",
+      "la": "—",
+      "summary": "Spellstitched creatures are undead creatures that have been powerfully enhanced and fortified by arcane means. The undead gain the ability t…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Spellwarped Creature",
+    "url": "https://new.dndtools.org/templates/spellwarped-creature",
+    "slug": "spellwarped-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, plant, vermin (referred to hereafter as the base creature)",
+      "type_change": "aberration",
+      "cr": "HD 3 or less, as base creature; HD 4 to 10, as base creature +1; HD 11 or more, as base creature +2.",
+      "la": "+3.",
+      "summary": "Spellwarped creatures have been tainted by powerful magic long ago, powerful spellcasters infused magic into the bodies of many creatures, s…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Spirit Animal",
+    "url": "https://new.dndtools.org/templates/spirit-animal",
+    "slug": "spirit-animal",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "animal (referred to hereafter as the \"base creature\")",
+      "type_change": "—",
+      "cr": "Same as the base creature +1.",
+      "la": "-",
+      "summary": "Sometimes mistaken for undead, spirit animals do not arise out of hatred, cruelty, or despair. Rather, they are natural manifestations of th…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Spirit Of The Woods",
+    "url": "https://new.dndtools.org/templates/spirit-of-the-woods",
+    "slug": "spirit-of-the-woods",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "magical beast",
+      "cr": "Same as base creature +3. Note that if the spirit of the woods flees to change form, that could be considered a situation where the party overcame the encounter.",
+      "la": "—",
+      "summary": "The spirit of the woods is a force of nature with sentience and great power, but no form. Despite its name, these spirits are not limited to…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Swarm-Shifter",
+    "url": "https://new.dndtools.org/templates/swarm-shifter",
+    "slug": "swarm-shifter",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "corporeal undead with an Intelligence score (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +1. If this template is applied multiple times, the base creature's Challenge Raring increases by 2, regardless of how many swarm forms the creature can take in excess of one.",
+      "la": "-",
+      "summary": "The vampire that explodes onto a flock of bats, the mummy that crumbles into a pile of scorpions - these are swarm-shifters, undead that hav…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Swordwraith",
+    "url": "https://new.dndtools.org/templates/swordwraith",
+    "slug": "swordwraith",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2.",
+      "la": "—",
+      "summary": "\"Swordwraith\" is a template that can be added to any humanoid or monstrous humanoid creature with levels in fighter (referred to hereafter a…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Tauric Creature",
+    "url": "https://new.dndtools.org/templates/tauric-creature",
+    "slug": "tauric-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "monstrous humanoid",
+      "cr": "Same as base creature.",
+      "la": "—",
+      "summary": "A tauric creature is a hybrid being possessing the head, arms, and upper torso of a humanoid, and the legs and lower body of an animal, beas…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Telthor Creature",
+    "url": "https://new.dndtools.org/templates/telthor-creature",
+    "slug": "telthor-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "fey,",
+      "cr": "Same as the base creature +1.",
+      "la": "Same as the base creature +2.",
+      "summary": "Telthors are spirit animals or people native to Rashemen, particularly those who died defending the land. Incorporeal and ghostly, they are…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Template - Dark Creature",
+    "url": "https://new.dndtools.org/templates/template-dark-creature",
+    "slug": "template-dark-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature or same as base creature +1; see below.",
+      "la": "+1",
+      "summary": "Dark creatures dwell on the Plane of Shadow, sometimes crossing into other planes where the barriers between dimensions are weak. Just as pa…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "The Fearsome Werescorpion",
+    "url": "https://new.dndtools.org/templates/the-fearsome-werescorpion",
+    "slug": "the-fearsome-werescorpion",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "12 12 12 Treasure: Standard Standard Standard Alignment: Often chaotic evil Often chaotic evil Often chaotic evil Advancement: By character class By character class By character class Level Adjustment: +6 +6 +6 This almost feral giant has the head of a large scorpion. Natural plates cover its body, and it has wicked-looking pincerlike claws that somehow hold a greatclub with confidence and power. The hill giant werescorpion is a brutish creature, and it usually serves as the thrall of some smarter hill giant or even of an ogre mage or clever orc. It revels in combat, and it must be restrained from charging at opponents upon sight. It prefers its hybrid form, which is its most frightening. This creature is a standard hill giant with entomanothropy as an affliction. Combat With intelligence bordering on that of animals, this werescorpion rushes into melee without any real strategy, wielding its club and claws to do the most damage possible. On an initial rush into battle the creature attempts to overrun or bull rush smaller targets. Its claws have fingers, but it also has razor-like ridges on the insides like those of a scorpion's pincers. Constrict (Ex): A werescorpion in vermin form deals automatic claw damage on a successful grapple check. Improved Grab (Ex): To use this ability, the werescorpion in vermin form must hit with a claw attack. Poison (Ex): Injury, Fort DC 28, initial and secondary damage 1d6 Con. Rock Throwing (Ex): The range increment is 120 feet for a werescorpion's thrown rocks. Alternate Form (Su): An entomanothrope can shift into vermin form as though using the polymorph spell on itself, though its gear is not affected, it does not regain hit points for changing form, and only the specific vermin form indicated for the entomanothrope can be assumed. It does not assume the ability scores of the animal, but instead adds the animal's physical ability score modifiers to its own ability scores. An entomanothrope also can assume a bipedal hybrid form with two humanoid (or giant) arms and legs, and a face like the base vermin. The hybrid body is basically humanoid, but with fur or hair or skin/plates like that of the base vermin. Werescorpions have clawed hands. Changing forms is a standard action (see Lycanthropy as an Affliction for information about afflicted entomanothropes controlling their change). An entomanothrope can maintain its new form indefinitely. Entomanothropic Command (Su): In any form, entomanothropes can command vermin of its type (any size) as if using a command undead spell on mindless undead. This ability affects 2 Hit Dice of the vermin type per Hit Die of the entomanothrope, and it lasts for 1 hour. Entomanothropic Immunities (Ex): Entomanothropes have immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects) in any form.",
+      "la": "+6 +6 +6 This almost feral giant has the head of a large scorpion. Natural plates cover its body, and it has wicked-looking pincerlike claws that somehow hold a greatclub with confidence and power. The hill giant werescorpion is a brutish creature, and it usually serves as the thrall of some smarter hill giant or even of an ogre mage or clever orc. It revels in combat, and it must be restrained from charging at opponents upon sight. It prefers its hybrid form, which is its most frightening. This creature is a standard hill giant with entomanothropy as an affliction. Combat With intelligence bordering on that of animals, this werescorpion rushes into melee without any real strategy, wielding its club and claws to do the most damage possible. On an initial rush into battle the creature attempts to overrun or bull rush smaller targets. Its claws have fingers, but it also has razor-like ridges on the insides like those of a scorpion's pincers. Constrict (Ex): A werescorpion in vermin form deals automatic claw damage on a successful grapple check. Improved Grab (Ex): To use this ability, the werescorpion in vermin form must hit with a claw attack. Poison (Ex): Injury, Fort DC 28, initial and secondary damage 1d6 Con. Rock Throwing (Ex): The range increment is 120 feet for a werescorpion's thrown rocks. Alternate Form (Su): An entomanothrope can shift into vermin form as though using the polymorph spell on itself, though its gear is not affected, it does not regain hit points for changing form, and only the specific vermin form indicated for the entomanothrope can be assumed. It does not assume the ability scores of the animal, but instead adds the animal's physical ability score modifiers to its own ability scores. An entomanothrope also can assume a bipedal hybrid form with two humanoid (or giant) arms and legs, and a face like the base vermin. The hybrid body is basically humanoid, but with fur or hair or skin/plates like that of the base vermin. Werescorpions have clawed hands. Changing forms is a standard action (see Lycanthropy as an Affliction for information about afflicted entomanothropes controlling their change). An entomanothrope can maintain its new form indefinitely. Entomanothropic Command (Su): In any form, entomanothropes can command vermin of its type (any size) as if using a command undead spell on mindless undead. This ability affects 2 Hit Dice of the vermin type per Hit Die of the entomanothrope, and it lasts for 1 hour. Entomanothropic Immunities (Ex): Entomanothropes have immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects) in any form.",
+      "summary": "Miala stopped on the path, listening to the sounds of the wind and of the rocks falling far below. \"The mountains are treacherous, full of g…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "The Magister",
+    "url": "https://new.dndtools.org/templates/the-magister",
+    "slug": "the-magister",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the character +4. The Magister is a powerful opponent backed by the magic of several deities.",
+      "la": "—",
+      "summary": "The Magister is the mage chosen by the deities of magic to encourage the ever-wider use of magic in Faerûn and to promote its availability a…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "The Wereboar",
+    "url": "https://new.dndtools.org/templates/the-wereboar",
+    "slug": "the-wereboar",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Wereboars are aggressive creatures that often provoke fights to drive other creatures out of their territories, or sometimes just for the sa…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "The Werewasp",
+    "url": "https://new.dndtools.org/templates/the-werewasp",
+    "slug": "the-werewasp",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "4 4 4 Treasure: Standard Standard Standard Alignment: Chaotic neutral Chaotic neutral Chaotic neutral Advancement: By character class By character class By character class Level Adjustment: +2 +2 +2 This woman has large, dark eyes, and her dark hair has light-colored bands running through it. A werewasp is a clever and tough opponent, and it can fly at a foe and deliver a virulent poison. The creature lives either in a small community (though it does not act as a swarm creature) among humanoids or with the base creature's type. The wasplike aspects of its humanoid appearance actually increase its physical beauty. While it does prefer humanoid or wasp form, those whom it lives among determines which form it usually stays in. It does not fight mindlessly, and it retreats when injured unless something threatens its community. The werewasp presented here is a 1st-level human rogue using the following base stats: Str 10, Dex 15, Con 12, Int 14, Wis 13, Cha 8. She is a natural entomanothrope. Combat Werewasps prefer hit-and-run tactics when possible, though they also swarm on a creature when with normal giant wasps. They prefer to disable their victims and then deal with them once they neutralize the threat. Poison (Ex): Injury, Fort DC 16, initial and secondary damage 1d6 Con. Curse of Entomanothropy (Su): Any humanoid or giant of size Small to Huge that is hit by the werewasp's sting attack in vermin or hybrid form must succeed on a DC 15 Fortitude save or contract entomanothropy. Afflicted entomanothropes cannot pass on the curse of entomanothropy. Alternate Form (Su): An entomanothrope can shift into vermin form as though using the polymorph spell on itself, though its gear is not affected, it does not regain hit points for changing form, and only the specific vermin form indicated for the entomanothrope can be assumed. It does not assume the ability scores of the vermin, but instead adds the vermin's physical ability score modifiers to its own ability scores. An entomanothrope also can assume a bipedal hybrid form with two humanoid (or giant) arms and legs, and a face like the base vermin. The hybrid body is basically humanoid, but with fur or hair or skin/plates like that of the base vermin. If the base vermin has a tail attack, such as the monstrous scorpion, giant wasp, or giant bee, then the hybrid form has it, too. If the base vermin has wings, then the hybrid form has wings also. Changing forms is a standard action. An entomanothrope can maintain its new form indefinitely. Entomanothropic Command (Su): In any form, entomanothropes can command vermin of its type (any size) as if using a command undead spell on mindless undead. This ability affects 2 Hit Dice of the vermin type per Hit Die of the entomanothrope, and it lasts for 1 hour. Entomanothropic Immunities (Ex): Entomanothropes have immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects) in any form. Skills: The werewasp has a +8 bonus on Spot checks. *It also has a +4 bonus on Survival checks on orient itself. What's Bugging You? Learn how to create your own entomanothropes with the entomanothrope template.",
+      "la": "+2 +2 +2 This woman has large, dark eyes, and her dark hair has light-colored bands running through it. A werewasp is a clever and tough opponent, and it can fly at a foe and deliver a virulent poison. The creature lives either in a small community (though it does not act as a swarm creature) among humanoids or with the base creature's type. The wasplike aspects of its humanoid appearance actually increase its physical beauty. While it does prefer humanoid or wasp form, those whom it lives among determines which form it usually stays in. It does not fight mindlessly, and it retreats when injured unless something threatens its community. The werewasp presented here is a 1st-level human rogue using the following base stats: Str 10, Dex 15, Con 12, Int 14, Wis 13, Cha 8. She is a natural entomanothrope. Combat Werewasps prefer hit-and-run tactics when possible, though they also swarm on a creature when with normal giant wasps. They prefer to disable their victims and then deal with them once they neutralize the threat. Poison (Ex): Injury, Fort DC 16, initial and secondary damage 1d6 Con. Curse of Entomanothropy (Su): Any humanoid or giant of size Small to Huge that is hit by the werewasp's sting attack in vermin or hybrid form must succeed on a DC 15 Fortitude save or contract entomanothropy. Afflicted entomanothropes cannot pass on the curse of entomanothropy. Alternate Form (Su): An entomanothrope can shift into vermin form as though using the polymorph spell on itself, though its gear is not affected, it does not regain hit points for changing form, and only the specific vermin form indicated for the entomanothrope can be assumed. It does not assume the ability scores of the vermin, but instead adds the vermin's physical ability score modifiers to its own ability scores. An entomanothrope also can assume a bipedal hybrid form with two humanoid (or giant) arms and legs, and a face like the base vermin. The hybrid body is basically humanoid, but with fur or hair or skin/plates like that of the base vermin. If the base vermin has a tail attack, such as the monstrous scorpion, giant wasp, or giant bee, then the hybrid form has it, too. If the base vermin has wings, then the hybrid form has wings also. Changing forms is a standard action. An entomanothrope can maintain its new form indefinitely. Entomanothropic Command (Su): In any form, entomanothropes can command vermin of its type (any size) as if using a command undead spell on mindless undead. This ability affects 2 Hit Dice of the vermin type per Hit Die of the entomanothrope, and it lasts for 1 hour. Entomanothropic Immunities (Ex): Entomanothropes have immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects) in any form. Skills: The werewasp has a +8 bonus on Spot checks. *It also has a +4 bonus on Survival checks on orient itself. What's Bugging You? Learn how to create your own entomanothropes with the entomanothrope template.",
+      "summary": "Rumors persisted of a newly discovered type of were-creature: one that could change into vermin forms. Miala and Scout walked through the wo…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Thomil",
+    "url": "https://new.dndtools.org/templates/thomil",
+    "slug": "thomil",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +1.",
+      "summary": "A thomil, or rock spirit, is a kind of earth elemental local to the colder parts of Rashemen. Thomils are created or summoned to guard Rashe…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Ti-khana Creature",
+    "url": "https://new.dndtools.org/templates/ti-khana-creature",
+    "slug": "ti-khana-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +2.",
+      "la": "+4.",
+      "summary": "A twisted result of yuan-ti experimentation and cross-breeding, a ti-khana creature is a psionic hybrid of reptilian animal or magical beast…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Titanic Creature",
+    "url": "https://new.dndtools.org/templates/titanic-creature",
+    "slug": "titanic-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "13 if base creature's CR is 1 or lower; same as base creature + 13 if base creature's CR is 2 or more.",
+      "la": "—",
+      "summary": "Titanic creatures are created as the result of powerful transformation magic as well as forces of nature gone awry. Because of a titanic cre…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Trap Haunt",
+    "url": "https://new.dndtools.org/templates/trap-haunt",
+    "slug": "trap-haunt",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead, and it gains the incorporeal subtype",
+      "cr": "Same as base creature +2",
+      "la": "—",
+      "summary": "A trap haunt is the undead remnant of a particularly headstrong rogue who was slain by a trap. Like most ghosts, a trap haunt is bound to th…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Two Heads Are Better Than One . . .and Three Are Better Than Two",
+    "url": "https://new.dndtools.org/templates/two-heads-are-better-than-one-and-three-are-better-than-two",
+    "slug": "two-heads-are-better-than-one-and-three-are-better-than-two",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "1 additional head, +2 2-4 additional heads, +3 5-7 additional heads, +4+1 additional per head-based special attack of base creature Treasure: As base creature Alignment: Always chaotic Advancement: Same as base creature Lernaean, Pyro- and Cryo- Creatures Some multiheaded creatures have abilities similar to those possessed by the magic forms of hydras. Each type has a different ability. Lernaean Creatures These multiheaded creatures have bodies that are immune to attack (but see below). The only way to slay a Lernaean creature is to sever all its heads. However, each time a head is severed, two new heads spring from the stump in 1d4 rounds. A Lernaean creature may never have more than twice its original number of heads, and any heads it gains beyond that number wither and die within a day. To prevent a severed head from growing back into two, at least 5 points of fire or acid damage must be dealt to the stump (AC 19) before the new heads appear. Spells such as disintegrate, finger of death, and slay living kill a Lernaean creature outright if they succeed. If the spell deals damage on a successful save, that damage is directed against one of the creature's heads. Pyro Creatures These reddish creatures can breathe jets of fire 10 feet high, 10 feet wide and 20 feet long. All heads breath once every 1d4 rounds. Each jet deals 3d6 points of damage per head. A successful Reflex save halves the damage. The save DC is 10 + 1/2 the creature's number of heads + the creature's Con modifier. The creature also gains the fire subtype. Fire Subtype (Ex): Fire immunity; double damage from cold except on a successful save. Cryo Creatures These purplish creatures can breath jets of frost 10 feet high, 10 feet wide and 20 feet long. All heads breath once every 1d4 rounds. Each jet deals 3d6 damage per head. A successful Reflex save halves the damage. The save DC is 10 + 1/2 the creature's number of heads + the creature's Con modifier. The creature also gains the cold subtype. Cold Subtype (Ex): Cold immunity; double damage from fire except on a successful save. Sample Multiheaded Creature: Demonic Guardian Hound.",
+      "la": "—",
+      "summary": "Classical mythology holds numerous examples of multiheaded monsters, from the Hydra to the Chimera to Cerberus, the three-headed hound that…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Umbral Creature",
+    "url": "https://new.dndtools.org/templates/umbral-creature",
+    "slug": "umbral-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "aberration, dragon, giant, magical beast, monstrous humanoid with a Charisma score of at least 8 (hereafter referred to as the base creature)",
+      "type_change": "undead, and it gains the incorporeal and augmented subtypes",
+      "cr": "As base creature +2 (or +3 if Huge or larger).",
+      "la": "-",
+      "summary": "Like shadows, umbral creatures are creatures of living darkness. They hate life and light with equal fervor. Their touch bestows the painful…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Unseelie Fey",
+    "url": "https://new.dndtools.org/templates/unseelie-fey",
+    "slug": "unseelie-fey",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "As base creature +1",
+      "la": "—",
+      "summary": "Gwendolyn Kestrel, Dragon #304",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Vampire",
+    "url": "https://new.dndtools.org/templates/vampire",
+    "slug": "vampire",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "fey, giant, humanoid, monstrous humanoid creature (referred to hereafter as the base creature)",
+      "type_change": "undead",
+      "cr": "Same as the base creature +2.",
+      "la": "Same as the base creature +6.",
+      "summary": "Forever anchored to their coffins and the unholy earth of their graves, these nocturnal predators scheme constantly to strengthen themselves…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Vampire Lord",
+    "url": "https://new.dndtools.org/templates/vampire-lord",
+    "slug": "vampire-lord",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base vampire +3",
+      "la": "—",
+      "summary": "In the machinations of vampires, the undead creatures vie against the living and against each other. Power is all, and the accumulation of p…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Vampire Spawn with Class",
+    "url": "https://new.dndtools.org/templates/vampire-spawn-with-class",
+    "slug": "vampire-spawn-with-class",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "This column aims to provide players with tips on creating effective and interesting characters of various types. So whether you're a beginni…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Vampiric Dragon",
+    "url": "https://new.dndtools.org/templates/vampiric-dragon",
+    "slug": "vampiric-dragon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead, and it loses any subtypes it had in life",
+      "cr": "Same as the base dragon +2.",
+      "la": "+5.",
+      "summary": "A vampiric dragon is forever anchored to its hoard, much like a normal vampire craves its coffin. It appears much as it did as a living drag…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Vivacious Creature",
+    "url": "https://new.dndtools.org/templates/vivacious-creature",
+    "slug": "vivacious-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, outsider, plant, vermin (referred to hereafter as the base creature)",
+      "type_change": "outsider",
+      "cr": "3 HD or fewer, as the base creature +1; 4 to 7 HD, as the base creature +2; 8 or more HD, as the base creature +3.",
+      "la": "Same as the base creature +5.",
+      "summary": "Vivacious creatures dwell on the Positive Energy Plane. The vast expanses of the plane are populated by rare creatures that have adapted to…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Voidmind Creature",
+    "url": "https://new.dndtools.org/templates/voidmind-creature",
+    "slug": "voidmind-creature",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "living aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, outsider (referred to hereafter as the base creature) of Tiny to Huge size",
+      "type_change": "—",
+      "cr": "+1.",
+      "la": "+3.",
+      "summary": "As much as mind flayers enjoy devouring the brains of lesser creatures, they remain interested in finding new ways to create minions. Many c…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Warbeast",
+    "url": "https://new.dndtools.org/templates/warbeast",
+    "slug": "warbeast",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as base creature +1.",
+      "la": "—",
+      "summary": "The warbeast is a creature born and raised to serve as a rider's mount. Bred for exceptional strength, aggression, and surefootedness, these…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Wendigo",
+    "url": "https://new.dndtools.org/templates/wendigo",
+    "slug": "wendigo",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "animal, giant, humanoid, magical beast, monstrous humanoid (referred to hereafter as the base creature), although the vast majority of wendigo were once animals, humanoids",
+      "type_change": "fey, and it gains the cold subtype",
+      "cr": "Same as the base creature +2.",
+      "la": "—",
+      "summary": "\"Wendigo\" is an acquired template that can be added to any animal, giant, humanoid, magical beast, or monstrous humanoid (referred to hereaf…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Werebear",
+    "url": "https://new.dndtools.org/templates/werebear",
+    "slug": "werebear",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Werebears are reclusive creatures that prefer to avoid civilization and hunt down evil beings in the wilderness. Though they tend to be mood…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Wererat",
+    "url": "https://new.dndtools.org/templates/wererat",
+    "slug": "wererat",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Since most characters spend considerable time in cities, they're bound to encounter wererats at one time or another -- particularly when the…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Weretiger Template Class",
+    "url": "https://new.dndtools.org/templates/weretiger-template-class",
+    "slug": "weretiger-template-class",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Weretigers are powerful but secretive creatures that prefer to remain hidden from humanoid civilization. But unlike wererats (who usually se…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Werewolf",
+    "url": "https://new.dndtools.org/templates/werewolf",
+    "slug": "werewolf",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "Werewolves are cruel and evil creatures that enjoy killing for the sake of violence and prefer innocents as their targets. Some werewolves e…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Wight",
+    "url": "https://new.dndtools.org/templates/wight",
+    "slug": "wight",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +2",
+      "la": "—",
+      "summary": "WOTC R&D, Dragon #300",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Woodling",
+    "url": "https://new.dndtools.org/templates/woodling",
+    "slug": "woodling",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "inherited",
+      "applies_to": "corporeal animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "Same as the base creature +2.",
+      "la": "+3.",
+      "summary": "Woodling creatures have bonded with nature, to a large extent, they have become plant creatures. These creatures have an unusual mind-set, m…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Worm That Walks",
+    "url": "https://new.dndtools.org/templates/worm-that-walks",
+    "slug": "worm-that-walks",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "ooze (it is a creature composed of hundreds of discrete crawling worms)",
+      "cr": "Same as the character + 3",
+      "la": "—",
+      "summary": "A worm that walks is the evil memory of an arcane spellcaster whose will and personality have survived the dissolution of his body and trans…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Wraith",
+    "url": "https://new.dndtools.org/templates/wraith",
+    "slug": "wraith",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Same as the base creature +3",
+      "la": "—",
+      "summary": "WOTC R&D, Dragon #300",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Yellow Musk Zombie",
+    "url": "https://new.dndtools.org/templates/yellow-musk-zombie",
+    "slug": "yellow-musk-zombie",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "acquired",
+      "applies_to": "living creature that would ordinarily have an Intelligence score, whose physiology includes a brain (referred to hereafter as the base creature)",
+      "type_change": "—",
+      "cr": "—",
+      "la": "—",
+      "summary": "\"Yellow musk zombie\" is an acquired template that can be applied to any living creature that would ordinarily have an Intelligence score, an…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Yuan-Ti",
+    "url": "https://new.dndtools.org/templates/yuan-ti",
+    "slug": "yuan-ti",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "—",
+      "cr": "Tainted one: Base creature +1",
+      "la": "—",
+      "summary": "One of the most insidious aspects of the yuan-ti is their human heritage, for this vile race of serpent folk is descended from humans who in…",
+      "has_tables": false
+    }
+  },
+  {
+    "name": "Zombie Dragon",
+    "url": "https://new.dndtools.org/templates/zombie-dragon",
+    "slug": "zombie-dragon",
+    "id": null,
+    "category": "templates",
+    "index": {
+      "type": "unknown",
+      "applies_to": "—",
+      "type_change": "undead, and it loses any subtypes it had in life",
+      "cr": "Base dragon's CR x 1/2 +1 (minimum 2).",
+      "la": "-",
+      "summary": "A zombie dragon is created by use of the animate dead spell or by a vampiric dragon. It functions as a normal zombie in most ways, though it…",
+      "has_tables": false
+    }
+  }
+]

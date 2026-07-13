@@ -1,0 +1,1762 @@
+[
+  {
+    "id": null,
+    "slug": "alchemy",
+    "name": "Alchemy",
+    "source_url": "https://new.dndtools.org/skills/alchemy",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>Alchemists combine strange ingredients in secret ways to make marvelous substances.</p>",
+    "description_text": "Alchemists combine strange ingredients in secret ways to make marvelous substances.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": 63,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "animal-empathy",
+    "name": "Animal Empathy",
+    "source_url": "https://new.dndtools.org/skills/animal-empathy",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>The character can improve the attitude of an animal with a successful check. To use the skill, the character and the animal must be able to study each other, noting each other’s body language, vocalizations, and general demeanor. This means that the character must be within 30 feet under normal conditions.</p>\n<p>Generally, influencing an animal in this way takes 1 minute, but, as with influencing people, it might take more or less time.</p>\n<p>This skill works on animals. The character can use it with a –4 penalty on beasts and magical beasts.</p>",
+    "description_text": "The character can improve the attitude of an animal with a successful check. To use the skill, the character and the animal must be able to study each other, noting each other’s body language, vocalizations, and general demeanor. This means that the character must be within 30 feet under normal conditions.\nGenerally, influencing an animal in this way takes 1 minute, but, as with influencing people, it might take more or less time.\nThis skill works on animals. The character can use it with a –4 penalty on beasts and magical beasts.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": null,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "appraise",
+    "name": "Appraise",
+    "source_url": "https://new.dndtools.org/skills/appraise",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to tell an antique from old junk, a sword that’s old and fancy from an elven heirloom, and high-quality jewelry from cheap stuff made to look good.</p>",
+    "description_text": "Use this skill to tell an antique from old junk, a sword that’s old and fancy from an elven heirloom, and high-quality jewelry from cheap stuff made to look good.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 67,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "autohypnosis",
+    "name": "Autohypnosis",
+    "source_url": "https://new.dndtools.org/skills/autohypnosis",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "XPH"
+    },
+    "description_html": "<p>You have trained your mind to gain mastery over your body and the mind's own deepest capabilities.</p>",
+    "description_text": "You have trained your mind to gain mastery over your body and the mind's own deepest capabilities.",
+    "source": {
+      "name": "Expanded Psionics Handbook",
+      "abbrev": "XPH",
+      "edition": "3.5",
+      "page": 36,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "balance",
+    "name": "Balance",
+    "source_url": "https://new.dndtools.org/skills/balance",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can keep your balance while walking on a tightrope, a narrow beam, a slippery ledge, or an uneven floor.</p>",
+    "description_text": "You can keep your balance while walking on a tightrope, a narrow beam, a slippery ledge, or an uneven floor.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 67,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "bluff",
+    "name": "Bluff",
+    "source_url": "https://new.dndtools.org/skills/bluff",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can make the outrageous or the untrue seem plausible, or use doublespeak or innuendo to deliver a secret message to another character. The skill encompasses acting, conning, fast talking, misdirection, prevarication, and misleading body language. Use a bluff to sow temporary confusion, get someone to turn and look where you point, or simply look innocuous.</p>",
+    "description_text": "You can make the outrageous or the untrue seem plausible, or use doublespeak or innuendo to deliver a secret message to another character. The skill encompasses acting, conning, fast talking, misdirection, prevarication, and misleading body language. Use a bluff to sow temporary confusion, get someone to turn and look where you point, or simply look innocuous.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 67,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "climb",
+    "name": "Climb",
+    "source_url": "https://new.dndtools.org/skills/climb",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "STR",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to scale a cliff, to get to the window on the second story of a wizard’s tower, or to climb out of a pit after falling through a trapdoor.</p>",
+    "description_text": "Use this skill to scale a cliff, to get to the window on the second story of a wizard’s tower, or to climb out of a pit after falling through a trapdoor.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 69,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "concentration",
+    "name": "Concentration",
+    "source_url": "https://new.dndtools.org/skills/concentration",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CON",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You are particularly good at focusing your mind.</p>",
+    "description_text": "You are particularly good at focusing your mind.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 69,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "control-shape",
+    "name": "Control Shape",
+    "source_url": "https://new.dndtools.org/skills/control-shape",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "MM"
+    },
+    "description_html": "<p>Any character who has contracted lycanthropy and is aware of his condition can learn Control Shape as a class skill. (An afflicted lycanthrope not yet aware of his condition can attempt Control Shape checks untrained.) This skill determines whether an afflicted lycanthrope can control his shape. A natural lycanthrope does not need this skill, since it has full control over its shape.</p>\n<p></p><h4>Check (Involuntary Change)</h4><p></p>\n<p>An afflicted character must make a check at moonrise each night of the full moon to resist involuntarily assuming animal form. An injured character must also check for an involuntary change after accumulating enough damage to reduce his hit points by one-quarter and again after each additional one-quarter lost.</p>\n<p></p><table><br/>\n<tr><br/>\n<th>Involuntary Change </th><br/>\n<th>Control Shape DC </th><br/>\n</tr><br/>\n<tr><br/>\n<td> Resist involuntary change </td><br/>\n<td> 25 </td><br/>\n</tr><br/>\n</table><p></p>\n<p>On a failed check, the character must remain in animal form until the next dawn, when he automatically returns to his base form. A character aware of his condition may make one attempt to return to humanoid form (see below), but if he fails, he remains in animal form until the next dawn.</p>\n<p></p><h4>Retry (Involuntary Change)</h4><p></p>\n<p>Check to resist an involuntary change once each time a triggering event occurs.</p>\n<p></p><h4>Check (Voluntary Change)</h4><p></p>\n<p>In addition, an afflicted lycanthrope aware of his condition may attempt to use this skill voluntarily in order to change to animal form, assume hybrid form, or return to humanoid form, regardless of the state of the moon or whether he has been injured.</p>\n<p></p><table><br/>\n<tr><br/>\n<th>Involuntary Change </th><br/>\n<th>Control Shape DC </th><br/>\n</tr><br/>\n<tr><br/>\n<td> Return to humanoid form (full moon <sup>*</sup>) </td><br/>\n<td> 25 </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Return to humanoid form (not full moon) </td><br/>\n<td> 20 </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Assume hybrid form </td><br/>\n<td> 15 </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Voluntary change to animal form (full moon) </td><br/>\n<td> 15 </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Voluntary change to animal form (not full moon) </td><br/>\n<td> 20 </td><br/>\n</tr><br/>\n</table><p></p>\n<p><sup>*</sup> For game purposes, the full moon lasts three days every month.</p>\n<p></p><h4>Retry (Voluntary Change)</h4><p></p>\n<p>A character can retry voluntary changes to animal form or hybrid form as often as he likes. Each attempt is a standard action. However, on a failed check to return to humanoid form, the character must remain in animal or hybrid form until the next dawn, when he automatically returns to humanoid form.</p>",
+    "description_text": "Any character who has contracted lycanthropy and is aware of his condition can learn Control Shape as a class skill. (An afflicted lycanthrope not yet aware of his condition can attempt Control Shape checks untrained.) This skill determines whether an afflicted lycanthrope can control his shape. A natural lycanthrope does not need this skill, since it has full control over its shape.\nCheck (Involuntary Change)\nAn afflicted character must make a check at moonrise each night of the full moon to resist involuntarily assuming animal form. An injured character must also check for an involuntary change after accumulating enough damage to reduce his hit points by one-quarter and again after each additional one-quarter lost.\nInvoluntary Change\nControl Shape DC\nResist involuntary change\n25\nOn a failed check, the character must remain in animal form until the next dawn, when he automatically returns to his base form. A character aware of his condition may make one attempt to return to humanoid form (see below), but if he fails, he remains in animal form until the next dawn.\nRetry (Involuntary Change)\nCheck to resist an involuntary change once each time a triggering event occurs.\nCheck (Voluntary Change)\nIn addition, an afflicted lycanthrope aware of his condition may attempt to use this skill voluntarily in order to change to animal form, assume hybrid form, or return to humanoid form, regardless of the state of the moon or whether he has been injured.\nInvoluntary Change\nControl Shape DC\nReturn to humanoid form (full moon\n*\n)\n25\nReturn to humanoid form (not full moon)\n20\nAssume hybrid form\n15\nVoluntary change to animal form (full moon)\n15\nVoluntary change to animal form (not full moon)\n20\n*\nFor game purposes, the full moon lasts three days every month.\nRetry (Voluntary Change)\nA character can retry voluntary changes to animal form or hybrid form as often as he likes. Each attempt is a standard action. However, on a failed check to return to humanoid form, the character must remain in animal or hybrid form until the next dawn, when he automatically returns to humanoid form.",
+    "source": {
+      "name": "Monster Manual v.3.5",
+      "abbrev": "MM",
+      "edition": "3.5",
+      "page": 303,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "craft",
+    "name": "Craft",
+    "source_url": "https://new.dndtools.org/skills/craft",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You are trained in a craft, trade, or art, such as alchemy, armorsmithing, basketweaving, bookbinding, bowmaking, blacksmithing, calligraphy, carpentry, cobbling, gemcutting, leatherworking, locksmithing, painting, pottery, sculpting, shipmaking, stonemasonry, trapmaking, weaponsmithing, or weaving.</p>\n<p>Like Knowledge, Perform, and Profession, Craft is actually a number of separate skills. For instance, you could have the skill Craft (carpentry). Your ranks in that skill don’t affect any Craft (pottery) or Craft (leatherworking) checks you might make. You could have several Craft skills, each with its own ranks, each purchased as a separate skill.</p>\n<p>A Craft skill is specifically focused on creating something. If nothing is created by the endeavor, it probably falls under the heading of a Profession skill (page 80).</p>",
+    "description_text": "You are trained in a craft, trade, or art, such as alchemy, armorsmithing, basketweaving, bookbinding, bowmaking, blacksmithing, calligraphy, carpentry, cobbling, gemcutting, leatherworking, locksmithing, painting, pottery, sculpting, shipmaking, stonemasonry, trapmaking, weaponsmithing, or weaving.\nLike Knowledge, Perform, and Profession, Craft is actually a number of separate skills. For instance, you could have the skill Craft (carpentry). Your ranks in that skill don’t affect any Craft (pottery) or Craft (leatherworking) checks you might make. You could have several Craft skills, each with its own ranks, each purchased as a separate skill.\nA Craft skill is specifically focused on creating something. If nothing is created by the endeavor, it probably falls under the heading of a Profession skill (page 80).",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 70,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "craft-ecs-variant",
+    "name": "Craft",
+    "source_url": "https://new.dndtools.org/skills/craft-ecs-variant",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "ECS"
+    },
+    "description_html": "<p>Chapter 6: Adventuring Equipment includes a number of new items that can be made using the <a href=\"/skills/craft\">Craft (alchemy)</a> skill, as well as a few special materials that are more difficult to work with than their mundane equivalents. Craft check DCs for these items are given on the table below. Several of these DCs are expressed as “base +x,” which means that the DC to create an item from that substance is higher than the normal DC for creating such an item, as indicated in the <em>Player’s Handbook</em>.</p>\n<p></p><table><br/>\n<tbody><br/>\n<tr><br/>\n<th>Item</th><br/>\n<th>Craft Skill</th><br/>\n<th>Craft DC</th><br/>\n</tr><br/>\n<tr><br/>\n<td>Acidic fire</td><br/>\n<td>Alchemy</td><br/>\n<td>25</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Alchemist’s lightning</td><br/>\n<td>Alchemy</td><br/>\n<td>22</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Alchemist’s frost</td><br/>\n<td>Alchemy</td><br/>\n<td>22</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Byeshk weapon</td><br/>\n<td>Weaponsmithing</td><br/>\n<td>base +5</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Byeshk armor or shield</td><br/>\n<td>Armorsmithing</td><br/>\n<td>base +8</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Dragonshard item</td><br/>\n<td>Varies</td><br/>\n<td>base +3</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Noxious smokestick</td><br/>\n<td>Alchemy</td><br/>\n<td>25</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Other byeshk item</td><br/>\n<td>Varies</td><br/>\n<td>base +5</td><br/>\n</tr><br/>\n</tbody><br/>\n</table><p></p>\n<p><strong>Repair Warforged:</strong> A character with ranks in certain <a href=\"/skills/craft\">Craft</a> skills can attempt to repair a warforged character who has taken damage. A check requires 8 hours and restores a number of hit points equal to the Craft check result -15. A character can take 10 on this check but can’t take 20. Other constructs can’t be repaired in this way (but a character with the <a href=\"/feats/craft-construct-449\">Craft Construct</a> feat can repair such a construct, as described on page 303 of the <em>Monster Manual</em>.)</p>\n<p>Applicable <a href=\"/skills/craft\">Craft</a> skills include armorsmithing, blacksmithing, gemcutting, and sculpting. A warforged with an applicable <a href=\"/skills/craft\">Craft</a> skill can repair itself.</p>\n<p>Repairing warforged requires some crafting expertise. This particular use of the <a href=\"/skills/craft\">Craft</a> skill cannot be performed untrained.</p>",
+    "description_text": "Chapter 6: Adventuring Equipment includes a number of new items that can be made using the\nCraft (alchemy)\nskill, as well as a few special materials that are more difficult to work with than their mundane equivalents. Craft check DCs for these items are given on the table below. Several of these DCs are expressed as “base +x,” which means that the DC to create an item from that substance is higher than the normal DC for creating such an item, as indicated in the\nPlayer’s Handbook\n.\nItem\nCraft Skill\nCraft DC\nAcidic fire\nAlchemy\n25\nAlchemist’s lightning\nAlchemy\n22\nAlchemist’s frost\nAlchemy\n22\nByeshk weapon\nWeaponsmithing\nbase +5\nByeshk armor or shield\nArmorsmithing\nbase +8\nDragonshard item\nVaries\nbase +3\nNoxious smokestick\nAlchemy\n25\nOther byeshk item\nVaries\nbase +5\nRepair Warforged:\nA character with ranks in certain\nCraft\nskills can attempt to repair a warforged character who has taken damage. A check requires 8 hours and restores a number of hit points equal to the Craft check result -15. A character can take 10 on this check but can’t take 20. Other constructs can’t be repaired in this way (but a character with the\nCraft Construct\nfeat can repair such a construct, as described on page 303 of the\nMonster Manual\n.)\nApplicable\nCraft\nskills include armorsmithing, blacksmithing, gemcutting, and sculpting. A warforged with an applicable\nCraft\nskill can repair itself.\nRepairing warforged requires some crafting expertise. This particular use of the\nCraft\nskill cannot be performed untrained.",
+    "source": {
+      "name": "Eberron Campaign Setting",
+      "abbrev": "ECS",
+      "edition": "3.5",
+      "page": 46,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "decipher-script",
+    "name": "Decipher Script",
+    "source_url": "https://new.dndtools.org/skills/decipher-script",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to piece together the meaning of ancient runes carved into the wall of an abandoned temple, to get the gist of an intercepted letter written in the Infernal language, to follow the directions on a treasure map written in a forgotten alphabet, or to interpret the mysterious glyphs painted on a cave wall.</p>",
+    "description_text": "Use this skill to piece together the meaning of ancient runes carved into the wall of an abandoned temple, to get the gist of an intercepted letter written in the Infernal language, to follow the directions on a treasure map written in a forgotten alphabet, or to interpret the mysterious glyphs painted on a cave wall.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 71,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "diplomacy",
+    "name": "Diplomacy",
+    "source_url": "https://new.dndtools.org/skills/diplomacy",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to persuade the chamberlain to let you see the king, to negotiate peace between feuding barbarian tribes, or to convince the ogre mages that have captured you that they should ransom you back to your friends instead of twisting your limbs off one by one. Diplomacy includes etiquette, social grace, tact, subtlety, and a way with words. A skilled character knows the formal and informal rules of conduct, social expectations, proper forms of address, and so on. This skill represents the ability to give  others the right impression of oneself, to negotiate effectively, and to influence others.</p>",
+    "description_text": "Use this skill to persuade the chamberlain to let you see the king, to negotiate peace between feuding barbarian tribes, or to convince the ogre mages that have captured you that they should ransom you back to your friends instead of twisting your limbs off one by one. Diplomacy includes etiquette, social grace, tact, subtlety, and a way with words. A skilled character knows the formal and informal rules of conduct, social expectations, proper forms of address, and so on. This skill represents the ability to give  others the right impression of oneself, to negotiate effectively, and to influence others.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 71,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "disable-device",
+    "name": "Disable Device",
+    "source_url": "https://new.dndtools.org/skills/disable-device",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to disarm a trap, jam a lock (in either the open or closed position), or rig a wagon wheel to fall off. You can examine a fairly simple or fairly small mechanical device and disable it. The effort requires at least a simple tool of the appropriate sort (a pick, pry bar, saw, file, etc.). Attempting a  Disable Device check without a set of thieves’ tools (page 130) carries a -2 circumstance penalty, even if a simple tool is employed. The use of masterwork thieves’ tools enables you to make the check with a +2 circumstance bonus.</p>",
+    "description_text": "Use this skill to disarm a trap, jam a lock (in either the open or closed position), or rig a wagon wheel to fall off. You can examine a fairly simple or fairly small mechanical device and disable it. The effort requires at least a simple tool of the appropriate sort (a pick, pry bar, saw, file, etc.). Attempting a  Disable Device check without a set of thieves’ tools (page 130) carries a -2 circumstance penalty, even if a simple tool is employed. The use of masterwork thieves’ tools enables you to make the check with a +2 circumstance bonus.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 72,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "disguise",
+    "name": "Disguise",
+    "source_url": "https://new.dndtools.org/skills/disguise",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to change your appearance or someone else’s. The effort requires at least a few props,  some makeup, and some time. The use of a disguise kit (page 130) provides a +2 circumstance bonus to a Disguise check. A disguise can include an apparent change of height or weight of no more than  one-tenth the original.</p>\n<p>You can also use Disguise to impersonate people, either individuals or types. For example, you might,  with little or no actual disguise, make yourself seem like a traveller even if you’re a local.</p>",
+    "description_text": "Use this skill to change your appearance or someone else’s. The effort requires at least a few props,  some makeup, and some time. The use of a disguise kit (page 130) provides a +2 circumstance bonus to a Disguise check. A disguise can include an apparent change of height or weight of no more than  one-tenth the original.\nYou can also use Disguise to impersonate people, either individuals or types. For example, you might,  with little or no actual disguise, make yourself seem like a traveller even if you’re a local.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 72,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "escape-artist",
+    "name": "Escape Artist",
+    "source_url": "https://new.dndtools.org/skills/escape-artist",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to slip out of bonds or manacles, wriggle through tight spaces, or escape the grip of a monster that grapples you.</p>",
+    "description_text": "Use this skill to slip out of bonds or manacles, wriggle through tight spaces, or escape the grip of a monster that grapples you.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 73,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "forgery",
+    "name": "Forgery",
+    "source_url": "https://new.dndtools.org/skills/forgery",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to fake a written order from the duchess instructing a jailer to release prisoners, to create an authentic-looking treasure map, or to detect forgeries that others try to pass off.</p>",
+    "description_text": "Use this skill to fake a written order from the duchess instructing a jailer to release prisoners, to create an authentic-looking treasure map, or to detect forgeries that others try to pass off.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 74,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "gather-information",
+    "name": "Gather Information",
+    "source_url": "https://new.dndtools.org/skills/gather-information",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill for making contacts in an area, finding out local gossip, rumormongering, and collecting  general information.</p>",
+    "description_text": "Use this skill for making contacts in an area, finding out local gossip, rumormongering, and collecting  general information.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 74,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "handle-animal",
+    "name": "Handle Animal",
+    "source_url": "https://new.dndtools.org/skills/handle-animal",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to drive a team of horses pulling a wagon over rough terrain, to teach a dog to guard, or to teach a tyrannosaur to ‘speak’ on your command.</p>",
+    "description_text": "Use this skill to drive a team of horses pulling a wagon over rough terrain, to teach a dog to guard, or to teach a tyrannosaur to ‘speak’ on your command.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 74,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "heal",
+    "name": "Heal",
+    "source_url": "https://new.dndtools.org/skills/heal",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to keep a badly wounded friend from dying, to help others recover faster from wounds, to  keep your friend from succumbing to a wyvern’s sting, or to treat disease.</p>",
+    "description_text": "Use this skill to keep a badly wounded friend from dying, to help others recover faster from wounds, to  keep your friend from succumbing to a wyvern’s sting, or to treat disease.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 75,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "hide",
+    "name": "Hide",
+    "source_url": "https://new.dndtools.org/skills/hide",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to sink back into the shadows and proceed unseen, to approach a wizard's tower under cover of brush, or to tail someone through a busy street without being noticed.</p>",
+    "description_text": "Use this skill to sink back into the shadows and proceed unseen, to approach a wizard's tower under cover of brush, or to tail someone through a busy street without being noticed.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 76,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "iaijutsu-focus",
+    "name": "Iaijutsu Focus",
+    "source_url": "https://new.dndtools.org/skills/iaijutsu-focus",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p>Use this skill to gather your personal energy (ki) in an iaijutsu duel.</p>",
+    "description_text": "Use this skill to gather your personal energy (ki) in an iaijutsu duel.",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 58,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "innuendo",
+    "name": "Innuendo",
+    "source_url": "https://new.dndtools.org/skills/innuendo",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>You know how to give and understand secret messages, while appearing to be speaking about other things. Two rogues, for example, might seem to be talking about bakery goods when they're really planning on how to break into the evil wizard's laboratory.</p>",
+    "description_text": "You know how to give and understand secret messages, while appearing to be speaking about other things. Two rogues, for example, might seem to be talking about bakery goods when they're really planning on how to break into the evil wizard's laboratory.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": 70,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "intimidate",
+    "name": "Intimidate",
+    "source_url": "https://new.dndtools.org/skills/intimidate",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to get a bully to back down, to frighten an opponent, or to make a prisoner give you the information you want. Intimi-dation includes verbal threats and body language.</p>",
+    "description_text": "Use this skill to get a bully to back down, to frighten an opponent, or to make a prisoner give you the information you want. Intimi-dation includes verbal threats and body language.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 76,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "intimidate-tob-variant",
+    "name": "Intimidate",
+    "source_url": "https://new.dndtools.org/skills/intimidate-tob-variant",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "ToB"
+    },
+    "description_html": "<p><span>You can use this skill to participate in the duel of wills before a fight begins.</span></p>",
+    "description_text": "You can use this skill to participate in the duel of wills before a fight begins.",
+    "source": {
+      "name": "Tome of Battle: The Book of Nine Swords",
+      "abbrev": "ToB",
+      "edition": "3.5",
+      "page": 27,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "intuit-direction",
+    "name": "Intuit Direction",
+    "source_url": "https://new.dndtools.org/skills/intuit-direction",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>You have an innate sense of direction.</p>",
+    "description_text": "You have an innate sense of direction.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": 70,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "jump",
+    "name": "Jump",
+    "source_url": "https://new.dndtools.org/skills/jump",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "STR",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to leap over pits, vault low fences, or reach a tree's lowest branches.</p>",
+    "description_text": "Use this skill to leap over pits, vault low fences, or reach a tree's lowest branches.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 77,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge",
+    "name": "Knowledge",
+    "source_url": "https://new.dndtools.org/skills/knowledge",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM’s approval, you can invent new areas of knowledge.</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)</li>\n<li>Geography (lands, terrain, climate, people)</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM’s approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-shadowlands",
+    "name": "Knowledge (Shadowlands)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-shadowlands",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, astrology, magic traditions, arcane symbols, cryptic phrases)</li>\n<li>Architecture and engineering (buildings, bridges, fortifications)</li>\n<li>Barbarian lore (lands outside Rokugan, their people and customs)</li>\n<li>Geography (lands of Rokugan, terrain, climate, people and clans)</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)</li>\n<li>Local (legends, personalities, inhabitants, laws, and traditions of one clan or small region)</li>\n<li>Nature (plants and animals, seasons and cycles, weather)</li>\n<li>Nobility and royalty (lineage, heraldry, customs, family trees, mottoes, personalities, laws)</li>\n<li>Religion (ancestors, Shintao, the Fortunes, rituals, sacred symbols)</li>\n<li>Shadowlands (goblins, ogres, nezumi, other Shadowlands creatures and dangers, maho, the Taint)—Rokugan only</li>\n<li>Spirits (spirit creatures, the spirit world)</li>\n<li>War (military history, strategy, tactics, war machines)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, astrology, magic traditions, arcane symbols, cryptic phrases)\nArchitecture and engineering (buildings, bridges, fortifications)\nBarbarian lore (lands outside Rokugan, their people and customs)\nGeography (lands of Rokugan, terrain, climate, people and clans)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, and traditions of one clan or small region)\nNature (plants and animals, seasons and cycles, weather)\nNobility and royalty (lineage, heraldry, customs, family trees, mottoes, personalities, laws)\nReligion (ancestors, Shintao, the Fortunes, rituals, sacred symbols)\nShadowlands (goblins, ogres, nezumi, other Shadowlands creatures and dangers, maho, the Taint)—Rokugan only\nSpirits (spirit creatures, the spirit world)\nWar (military history, strategy, tactics, war machines)",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 57,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-war",
+    "name": "Knowledge (War)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-war",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    },
+    "description_html": "<p>This is a <a href=\"/skills/knowledge\">knowledge</a> skill that applies to siege engines, sapping, siege tactics and<br/>strategy in warfare.</p>",
+    "description_text": "This is a\nknowledge\nskill that applies to siege engines, sapping, siege tactics and\nstrategy in warfare.",
+    "source": {
+      "name": "Sword and Fist: A Guidebook to Monks and Fighters",
+      "abbrev": "SF",
+      "edition": "3.5",
+      "page": 10,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-arcana",
+    "name": "Knowledge (arcana)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-arcana",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-architecture-and-engineering",
+    "name": "Knowledge (architecture and engineering)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-architecture-and-engineering",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-barbarian-lore",
+    "name": "Knowledge (barbarian lore)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-barbarian-lore",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, astrology, magic traditions, arcane symbols, cryptic phrases)</li>\n<li>Architecture and engineering (buildings, bridges, fortifications)</li>\n<li>Barbarian lore (lands outside Rokugan, their people and customs)</li>\n<li>Geography (lands of Rokugan, terrain, climate, people and clans)</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)</li>\n<li>Local (legends, personalities, inhabitants, laws, and traditions of one clan or small region)</li>\n<li>Nature (plants and animals, seasons and cycles, weather)</li>\n<li>Nobility and royalty (lineage, heraldry, customs, family trees, mottoes, personalities, laws)</li>\n<li>Religion (ancestors, Shintao, the Fortunes, rituals, sacred symbols)</li>\n<li>Shadowlands (goblins, ogres, nezumi, other Shadowlands creatures and dangers, maho, the Taint)—Rokugan only</li>\n<li>Spirits (spirit creatures, the spirit world)</li>\n<li>War (military history, strategy, tactics, war machines)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, astrology, magic traditions, arcane symbols, cryptic phrases)\nArchitecture and engineering (buildings, bridges, fortifications)\nBarbarian lore (lands outside Rokugan, their people and customs)\nGeography (lands of Rokugan, terrain, climate, people and clans)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, and traditions of one clan or small region)\nNature (plants and animals, seasons and cycles, weather)\nNobility and royalty (lineage, heraldry, customs, family trees, mottoes, personalities, laws)\nReligion (ancestors, Shintao, the Fortunes, rituals, sacred symbols)\nShadowlands (goblins, ogres, nezumi, other Shadowlands creatures and dangers, maho, the Taint)—Rokugan only\nSpirits (spirit creatures, the spirit world)\nWar (military history, strategy, tactics, war machines)",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 57,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-code-martial-honor",
+    "name": "Knowledge (code of martial honor)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-code-martial-honor",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    },
+    "description_html": "<p>This is a skill that reflects the knowledge of a Master Samurai's code:</p>\n<p><strong>The Master Samurai's Code</strong></p>\n<ul>\n<li>The master samurai is obedient to his lord.</li>\n</ul>\n<ul>\n<li>It is a master samurai's right to protest against bad judgments or orders from his lord, and death is the final protest a master samurai can make.</li>\n</ul>\n<ul>\n<li>The master samurai is ready to die at any time.</li>\n</ul>\n<ul>\n<li>There is no failure, only success or death.</li>\n</ul>\n<ul>\n<li>To die in the service of one's lord is the greatest service a master samurai can perform.</li>\n</ul>\n<ul>\n<li>Dishonor to one's lord or family is dishonor to the master samurai.</li>\n</ul>\n<ul>\n<li>All debts, of honor or vengeance, are repaid.</li>\n</ul>\n<ul>\n<li>An enemy deserves no mercy.</li>\n</ul>\n<ul>\n<li>Cowardice is dishonorable.</li>\n</ul>",
+    "description_text": "This is a skill that reflects the knowledge of a Master Samurai's code:\nThe Master Samurai's Code\nThe master samurai is obedient to his lord.\nIt is a master samurai's right to protest against bad judgments or orders from his lord, and death is the final protest a master samurai can make.\nThe master samurai is ready to die at any time.\nThere is no failure, only success or death.\nTo die in the service of one's lord is the greatest service a master samurai can perform.\nDishonor to one's lord or family is dishonor to the master samurai.\nAll debts, of honor or vengeance, are repaid.\nAn enemy deserves no mercy.\nCowardice is dishonorable.",
+    "source": {
+      "name": "Sword and Fist: A Guidebook to Monks and Fighters",
+      "abbrev": "SF",
+      "edition": "3.5",
+      "page": 29,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-dungeoneering",
+    "name": "Knowledge (dungeoneering)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-dungeoneering",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-geography",
+    "name": "Knowledge (geography)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-geography",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-ghost-lore",
+    "name": "Knowledge (ghost lore)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-ghost-lore",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "Gh"
+    },
+    "description_html": "<p></p><p>In the Ghostwalk campaign, a new Knowledge category is available: Ghost lore (the paths, weaknesses, ghost powers, the Calling). This category of the Knowledge skill is a class skill for bards, clerics, and wizards.</p><p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM’s approval, you can invent new areas of knowledge.</p><p></p>",
+    "description_text": "In the Ghostwalk campaign, a new Knowledge category is available: Ghost lore (the paths, weaknesses, ghost powers, the Calling). This category of the Knowledge skill is a class skill for bards, clerics, and wizards.\nLike the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM’s approval, you can invent new areas of knowledge.",
+    "source": {
+      "name": "Ghostwalk",
+      "abbrev": "Gh",
+      "edition": "3.5",
+      "page": 27,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-history",
+    "name": "Knowledge (history)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-history",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-law",
+    "name": "Knowledge (law)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-law",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    },
+    "description_html": "<p>This skill was used in 3.0 edition only. For 3.5 this is part of <a href=\"/skills/knowledge-local\">Knowledge (local)</a>.</p>",
+    "description_text": "This skill was used in 3.0 edition only. For 3.5 this is part of\nKnowledge (local)\n.",
+    "source": {
+      "name": "Sword and Fist: A Guidebook to Monks and Fighters",
+      "abbrev": "SF",
+      "edition": "3.5",
+      "page": 20,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-local",
+    "name": "Knowledge (local)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-local",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-nature",
+    "name": "Knowledge (nature)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-nature",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-nobility-and-royalty",
+    "name": "Knowledge (nobility and royalty)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-nobility-and-royalty",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-psionics",
+    "name": "Knowledge (psionics)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-psionics",
+    "scraped_at": "2026-07-13T16:02:50Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "Web35"
+    },
+    "description_html": "<p>Knowledge (Psionics) covers ancient mysteries, psionic traditions, psychic symbols, cryptic phrases, astral constructs, and psionic races. You can use this skill to identify psionic monsters and their special powers or vulnerabilities.</p>",
+    "description_text": "Knowledge (Psionics) covers ancient mysteries, psionic traditions, psychic symbols, cryptic phrases, astral constructs, and psionic races. You can use this skill to identify psionic monsters and their special powers or vulnerabilities.",
+    "source": {
+      "name": "Web 3.5",
+      "abbrev": "Web35",
+      "edition": "3.5",
+      "page": null,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-religion",
+    "name": "Knowledge (religion)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-religion",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-spirits",
+    "name": "Knowledge (spirits)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-spirits",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p>Answering a question within your field of study has a DC of 10 (for really easy questions), 15 (for basic questions), or 20 to 30 (for really tough questions).</p>\n<p>In many cases, you can use this skill to identify monsters and their special powers or vulnerabilities. In general, the DC of such a check equals 10 + the monster’s HD. A successful check allows you to remember a bit of useful information about that monster. For every 5 points by which your check result exceeds the DC, you recall another piece of useful information.</p>",
+    "description_text": "Answering a question within your field of study has a DC of 10 (for really easy questions), 15 (for basic questions), or 20 to 30 (for really tough questions).\nIn many cases, you can use this skill to identify monsters and their special powers or vulnerabilities. In general, the DC of such a check equals 10 + the monster’s HD. A successful check allows you to remember a bit of useful information about that monster. For every 5 points by which your check result exceeds the DC, you recall another piece of useful information.",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 58,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-the-planes",
+    "name": "Knowledge (the planes)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-the-planes",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\n</p>\n<ul>\n<li>Arcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\n</li>\n<li>Architecture and engineering (buildings, aqueducts, bridges, fortifications)\n</li>\n<li>Dungeoneering (aberrations, caverns, oozes, spelunking)\n</li>\n<li>Geography (lands, terrain, climate, people)\n</li>\n<li>History (royalty, wars, colonies, migrations, founding of cities)\n</li>\n<li>Local (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\n</li>\n<li>Nature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\n</li>\n<li>Nobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\n</li>\n<li>Religion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\n</li>\n<li>The planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)</li>\n</ul>",
+    "description_text": "Like the Craft and Profession skills, Knowledge actually encompasses a number of unrelated skills. Knowledge represents a study of some body of lore, possibly an academic or even scientific discipline. Below are listed typical fields of study. With your DM's approval, you can invent new areas of knowledge.\nArcana (ancient mysteries, magic traditions, arcane symbols, cryptic phrases, constructs, dragons, magical beasts)\nArchitecture and engineering (buildings, aqueducts, bridges, fortifications)\nDungeoneering (aberrations, caverns, oozes, spelunking)\nGeography (lands, terrain, climate, people)\nHistory (royalty, wars, colonies, migrations, founding of cities)\nLocal (legends, personalities, inhabitants, laws, customs, traditions, humanoids)\nNature (animals, fey, giants, monstrous humanoids, plants, seasons and cycles, weather, vermin)\nNobility and royalty (lineages, heraldry, family trees, mottoes, personalities)\nReligion (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)\nThe planes (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, elementals, magic related to the planes)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "knowledge-weaponry",
+    "name": "Knowledge (weaponry)",
+    "source_url": "https://new.dndtools.org/skills/knowledge-weaponry",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "SF"
+    },
+    "description_html": "<p>Answering a question within your field of study has a DC of 10 (for really easy questions), 15 (for basic questions), or 20 to 30 (for really tough questions).</p>\n<p>In many cases, you can use this skill to identify monsters and their special powers or vulnerabilities. In general, the DC of such a check equals 10 + the monster’s HD. A successful check allows you to remember a bit of useful information about that monster. For every 5 points by which your check result exceeds the DC, you recall another piece of useful information.</p>",
+    "description_text": "Answering a question within your field of study has a DC of 10 (for really easy questions), 15 (for basic questions), or 20 to 30 (for really tough questions).\nIn many cases, you can use this skill to identify monsters and their special powers or vulnerabilities. In general, the DC of such a check equals 10 + the monster’s HD. A successful check allows you to remember a bit of useful information about that monster. For every 5 points by which your check result exceeds the DC, you recall another piece of useful information.",
+    "source": {
+      "name": "Sword and Fist: A Guidebook to Monks and Fighters",
+      "abbrev": "SF",
+      "edition": "3.5",
+      "page": 38,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "listen",
+    "name": "Listen",
+    "source_url": "https://new.dndtools.org/skills/listen",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to hear approaching enemies, to detect someone sneaking up on you from behind, or to eavesdrop on someone else's conversation.</p>",
+    "description_text": "Use this skill to hear approaching enemies, to detect someone sneaking up on you from behind, or to eavesdrop on someone else's conversation.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "lucid-dreaming",
+    "name": "Lucid Dreaming",
+    "source_url": "https://new.dndtools.org/skills/lucid-dreaming",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "MP"
+    },
+    "description_html": "<p>Use this skill to realize that you are dreaming, consciously direct elements of a dream, and move into other dreamscapes.</p>",
+    "description_text": "Use this skill to realize that you are dreaming, consciously direct elements of a dream, and move into other dreamscapes.",
+    "source": {
+      "name": "Manual of the Planes",
+      "abbrev": "MP",
+      "edition": "3.5",
+      "page": 203,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "martial-lore",
+    "name": "Martial Lore",
+    "source_url": "https://new.dndtools.org/skills/martial-lore",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "ToB"
+    },
+    "description_html": "<p>You can use this skill to identify martial maneuvers as soon as they are initiated.</p>",
+    "description_text": "You can use this skill to identify martial maneuvers as soon as they are initiated.",
+    "source": {
+      "name": "Tome of Battle: The Book of Nine Swords",
+      "abbrev": "ToB",
+      "edition": "3.5",
+      "page": 28,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "move-silently",
+    "name": "Move Silently",
+    "source_url": "https://new.dndtools.org/skills/move-silently",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can use this skill to sneak up behind an enemy or to slink away without being noticed.</p>",
+    "description_text": "You can use this skill to sneak up behind an enemy or to slink away without being noticed.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 78,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "open-lock",
+    "name": "Open Lock",
+    "source_url": "https://new.dndtools.org/skills/open-lock",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can pick padlocks, finesse combination locks, and solve puzzle locks. The effort requires at least a simple tool of the appropriate sort (a pick, pry bar, blank key, wire, or the like). Attempting an Open Lock check without a set of thieves' tools (page 130) imposes a -2 circumstance penalty on the check, even if a simple tool is employed. If you use masterwork thieves' tools, you gain a +2 circumstance bonus on the check.</p>",
+    "description_text": "You can pick padlocks, finesse combination locks, and solve puzzle locks. The effort requires at least a simple tool of the appropriate sort (a pick, pry bar, blank key, wire, or the like). Attempting an Open Lock check without a set of thieves' tools (page 130) imposes a -2 circumstance penalty on the check, even if a simple tool is employed. If you use masterwork thieves' tools, you gain a +2 circumstance bonus on the check.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 79,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "perform",
+    "name": "Perform",
+    "source_url": "https://new.dndtools.org/skills/perform",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You are skilled in a type of artistic expression, which may encompass a variety of specific methods, and you know how to put on a <br/>show.\n</p>\n<p>Like Craft, Knowledge, and Profession, Perform is actually a number of separate skills. For instance, you could have the skill Perform (act). Your ranks in that skill don't affect any checks you happen to make for Perform (oratory) or Perform (string instruments). You could have several Perform skills, each with its own ranks, each purchased as a separate skill.\n</p>\n<p>Each of the nine categories of the Perform skill includes a variety of methods, instruments, or techniques, a small list of which is provided for each category below. The DM is free to expand any of these categories with additional methods, instruments, or techniques, as appropriate for his or her campaign.\n</p>\n<ul>\n<li>Act (comedy, drama, mime)\n</li>\n<li>Comedy (buffoonery, limericks, joke-telling)\n</li>\n<li>Dance (ballet, waltz, jig)\n</li>\n<li>Keyboard instruments (harpsichord, piano, pipe organ)\n</li>\n<li>Oratory (epic, ode, storytelling)\n</li>\n<li>Percussion instruments (bells, chimes, drums, gong)\n</li>\n<li>String instruments (fiddle, harp, lute, mandolin)\n</li>\n<li>Wind instruments (flute, pan pipes, recorder, shawm, trumpet)\n</li>\n<li>Sing (ballad, chant, melody)</li>\n</ul>",
+    "description_text": "You are skilled in a type of artistic expression, which may encompass a variety of specific methods, and you know how to put on a\nshow.\nLike Craft, Knowledge, and Profession, Perform is actually a number of separate skills. For instance, you could have the skill Perform (act). Your ranks in that skill don't affect any checks you happen to make for Perform (oratory) or Perform (string instruments). You could have several Perform skills, each with its own ranks, each purchased as a separate skill.\nEach of the nine categories of the Perform skill includes a variety of methods, instruments, or techniques, a small list of which is provided for each category below. The DM is free to expand any of these categories with additional methods, instruments, or techniques, as appropriate for his or her campaign.\nAct (comedy, drama, mime)\nComedy (buffoonery, limericks, joke-telling)\nDance (ballet, waltz, jig)\nKeyboard instruments (harpsichord, piano, pipe organ)\nOratory (epic, ode, storytelling)\nPercussion instruments (bells, chimes, drums, gong)\nString instruments (fiddle, harp, lute, mandolin)\nWind instruments (flute, pan pipes, recorder, shawm, trumpet)\nSing (ballad, chant, melody)",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 79,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "perform-oa-variant",
+    "name": "Perform",
+    "source_url": "https://new.dndtools.org/skills/perform-oa-variant",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p>You are skilled in a type of artistic expression, which may encompass a variety of specific methods, and you know how to put on a<br/>\nshow.</p>\n<p>Like Craft, Knowledge, and Profession, Perform is actually a number of separate skills. For instance, you could have the skill Perform (act). Your ranks in that skill don’t affect any checks you happen to make for Perform (oratory) or Perform (string instruments). You could have several Perform skills, each with its own ranks, each purchased as a separate skill.</p>\n<p>Common types of performance include acrobatics (Low), acting (Low), dance (Low), jesting (Low), Noh/kabuki (High), musical instruments (High or Low—see Chapter 5: Descriptions and Equipment for possible instruments), oratory (High), poetry (High), rhetoric (High), storytelling (neither High nor Low), and tea ceremony (High).</p>",
+    "description_text": "You are skilled in a type of artistic expression, which may encompass a variety of specific methods, and you know how to put on a\nshow.\nLike Craft, Knowledge, and Profession, Perform is actually a number of separate skills. For instance, you could have the skill Perform (act). Your ranks in that skill don’t affect any checks you happen to make for Perform (oratory) or Perform (string instruments). You could have several Perform skills, each with its own ranks, each purchased as a separate skill.\nCommon types of performance include acrobatics (Low), acting (Low), dance (Low), jesting (Low), Noh/kabuki (High), musical instruments (High or Low—see Chapter 5: Descriptions and Equipment for possible instruments), oratory (High), poetry (High), rhetoric (High), storytelling (neither High nor Low), and tea ceremony (High).",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 57,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "pick-pocket",
+    "name": "Pick Pocket",
+    "source_url": "https://new.dndtools.org/skills/pick-pocket",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>A check against DC 10 lets the character palm a coin-sized, unattended object. Minor feats of legerdemain, such as making a coin disappear, are also DC 10 unless an observer is determined to note where the item went.</p>\n<p>When performing this skill under close observation, the character’s skill check is opposed by the observer’s Spot check. The observer’s check doesn’t prevent the character from performing the action, just from doing it unnoticed.</p>\n<p>If the character tries to take something from another creature, the character must make a skill check against DC 20. The opponent makes a Spot check to detect the attempt. The opponent detects the attempt if her check result beats the character’s check result, regardless of whether the character got the item.</p>\n<p></p><table><br/>\n<thead><br/>\n<tr><br/>\n<th scope=\"col\" style=\"text-align:center\"><strong>DC</strong></th><br/>\n<th scope=\"col\" style=\"text-align:center\"><strong>Task</strong></th><br/>\n</tr><br/>\n</thead><br/>\n<tbody><br/>\n<tr><br/>\n<td>10</td><br/>\n<td><span>Palm a coin-sized object, make a coin disappear</span></td><br/>\n</tr><br/>\n<tr><br/>\n<td>20</td><br/>\n<td><span>Lift a small object from a person</span></td><br/>\n</tr><br/>\n</tbody><br/>\n</table><p></p>\n<p> </p>\n<p> </p>\n<p> </p>\n<p> </p>\n<p> </p>",
+    "description_text": "A check against DC 10 lets the character palm a coin-sized, unattended object. Minor feats of legerdemain, such as making a coin disappear, are also DC 10 unless an observer is determined to note where the item went.\nWhen performing this skill under close observation, the character’s skill check is opposed by the observer’s Spot check. The observer’s check doesn’t prevent the character from performing the action, just from doing it unnoticed.\nIf the character tries to take something from another creature, the character must make a skill check against DC 20. The opponent makes a Spot check to detect the attempt. The opponent detects the attempt if her check result beats the character’s check result, regardless of whether the character got the item.\nDC\nTask\n10\nPalm a coin-sized object, make a coin disappear\n20\nLift a small object from a person",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": null,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "profession",
+    "name": "Profession",
+    "source_url": "https://new.dndtools.org/skills/profession",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You are trained in a livelihood or a professional role, such as apothecary, boater, bookkeeper, brewer, cook, driver, farmer, fisher, guide, herbalist, herder, hunter, innkeeper, lumberjack, miller, miner, porter, rancher, sailor, scribe, siege engineer, stablehand, tanner, teamster, woodcutter, or the like.\n</p>\n<p>Like Craft, Knowledge, and Perform, Profession is actually a number of separate skills. For instance, you could have the skill Profession (cook). Your ranks in that skill don't affect any Profession (miller) or Profession (miner) checks you might make. You could have several Profession skills, each with its own ranks, each purchased as a separate skill.\n</p>\n<p>While a Craft skill represents ability in creating or making an item, a Profession skill represents an aptitude in a vocation requiring a broader range of less specific knowledge. To draw a modern analogy, if an occupation is a service industry, it's probably a Profession skill. If it's in the manufacturing sector, it's probably a Craft skill</p>",
+    "description_text": "You are trained in a livelihood or a professional role, such as apothecary, boater, bookkeeper, brewer, cook, driver, farmer, fisher, guide, herbalist, herder, hunter, innkeeper, lumberjack, miller, miner, porter, rancher, sailor, scribe, siege engineer, stablehand, tanner, teamster, woodcutter, or the like.\nLike Craft, Knowledge, and Perform, Profession is actually a number of separate skills. For instance, you could have the skill Profession (cook). Your ranks in that skill don't affect any Profession (miller) or Profession (miner) checks you might make. You could have several Profession skills, each with its own ranks, each purchased as a separate skill.\nWhile a Craft skill represents ability in creating or making an item, a Profession skill represents an aptitude in a vocation requiring a broader range of less specific knowledge. To draw a modern analogy, if an occupation is a service industry, it's probably a Profession skill. If it's in the manufacturing sector, it's probably a Craft skill",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 80,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "profession-oa-variant",
+    "name": "Profession",
+    "source_url": "https://new.dndtools.org/skills/profession-oa-variant",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p>You are trained in a livelihood or a professional role, such as apothecary, boater, bookkeeper, brewer, cook, driver, farmer, fisher, guide, herbalist, herder, hunter, innkeeper, lumberjack, miller, miner, porter, rancher, sailor, scribe, siege engineer, stablehand, tanner, teamster, woodcutter, or the like.</p>\n<p>Like Craft, Knowledge, and Perform, Profession is actually a number of separate skills. For instance, you could have the skill Profession (cook). Your ranks in that skill don’t affect any Profession (miller) or Profession (miner) checks you might make. You could have several Profession skills, each with its own ranks, each purchased as a separate skill.</p>\n<p>While a Craft skill represents ability in creating or making an item, a Profession skill represents an aptitude in a vocation requiring a broader range of less specific knowledge. To draw a modern analogy, if an occupation is a service industry, it’s probably a Profession skill. If it’s in the manufacturing sector, it’s probably a Craft skill.</p>\n<p>Possible professions include Cook, courtier (High), engineer, farmer, fisher, gambler (Low), herbalist, masseur, merchant, mortician (Low), mountaineer, pearl bed diver, sailor, and torturer (Low).</p>",
+    "description_text": "You are trained in a livelihood or a professional role, such as apothecary, boater, bookkeeper, brewer, cook, driver, farmer, fisher, guide, herbalist, herder, hunter, innkeeper, lumberjack, miller, miner, porter, rancher, sailor, scribe, siege engineer, stablehand, tanner, teamster, woodcutter, or the like.\nLike Craft, Knowledge, and Perform, Profession is actually a number of separate skills. For instance, you could have the skill Profession (cook). Your ranks in that skill don’t affect any Profession (miller) or Profession (miner) checks you might make. You could have several Profession skills, each with its own ranks, each purchased as a separate skill.\nWhile a Craft skill represents ability in creating or making an item, a Profession skill represents an aptitude in a vocation requiring a broader range of less specific knowledge. To draw a modern analogy, if an occupation is a service industry, it’s probably a Profession skill. If it’s in the manufacturing sector, it’s probably a Craft skill.\nPossible professions include Cook, courtier (High), engineer, farmer, fisher, gambler (Low), herbalist, masseur, merchant, mortician (Low), mountaineer, pearl bed diver, sailor, and torturer (Low).",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 58,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "psicraft",
+    "name": "Psicraft",
+    "source_url": "https://new.dndtools.org/skills/psicraft",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "XPH"
+    },
+    "description_html": "<p>Use this skill to identify powers as they are manifest or powers already in place.</p>",
+    "description_text": "Use this skill to identify powers as they are manifest or powers already in place.",
+    "source": {
+      "name": "Expanded Psionics Handbook",
+      "abbrev": "XPH",
+      "edition": "3.5",
+      "page": 38,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "read-lips",
+    "name": "Read Lips",
+    "source_url": "https://new.dndtools.org/skills/read-lips",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>You can understand what others are saying by watching their lips.</p>",
+    "description_text": "You can understand what others are saying by watching their lips.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": 72,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "remote-view",
+    "name": "Remote View",
+    "source_url": "https://new.dndtools.org/skills/remote-view",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PsH3"
+    },
+    "description_html": "<p><span>Use this skill to spy on someone with the&lt;span&gt; </span>&lt;/span&gt;<em>remote viewing</em><span>&lt;span&gt; </span>power.&lt;/span&gt;</p>",
+    "description_text": "Use this skill to spy on someone with the<span>\n</span>\nremote viewing\n<span>\npower.</span>",
+    "source": {
+      "name": "Psionics Handbook 3.0",
+      "abbrev": "PsH3",
+      "edition": "3.5",
+      "page": 20,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "ride",
+    "name": "Ride",
+    "source_url": "https://new.dndtools.org/skills/ride",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can ride a mount, be it a horse, riding dog, griffon, dragon, or some other kind of creature suited for riding. If you attempt to ride a creature that is ill suited as a mount (such as most bipedal creatures), you take a -5 penalty on your Ride checks.</p>",
+    "description_text": "You can ride a mount, be it a horse, riding dog, griffon, dragon, or some other kind of creature suited for riding. If you attempt to ride a creature that is ill suited as a mount (such as most bipedal creatures), you take a -5 penalty on your Ride checks.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 80,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "scry",
+    "name": "Scry",
+    "source_url": "https://new.dndtools.org/skills/scry",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>Use this skill to spy on someone with a scrying spell or a crystal ball or to perform some divinations.</p>",
+    "description_text": "Use this skill to spy on someone with a scrying spell or a crystal ball or to perform some divinations.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": 73,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "search",
+    "name": "Search",
+    "source_url": "https://new.dndtools.org/skills/search",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can find secret doors, simple traps, hidden compartments, and other details not readily apparent. The Spot skill lets you notice something, such as a hiding rogue. The Search skill lets a character discern some small detail or irregularity through active effort.</p>\n<p>Search does not allow you to find complex traps unless you are a rogue (see Restriction, below).</p>",
+    "description_text": "You can find secret doors, simple traps, hidden compartments, and other details not readily apparent. The Spot skill lets you notice something, such as a hiding rogue. The Search skill lets a character discern some small detail or irregularity through active effort.\nSearch does not allow you to find complex traps unless you are a rogue (see Restriction, below).",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 81,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "sense-motive",
+    "name": "Sense Motive",
+    "source_url": "https://new.dndtools.org/skills/sense-motive",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to tell when someone is bluffing you, to discern hidden messages in conversations, or to sense when someone is being magically influenced. This skill represents sensitivity to the body language, speech habits, and mannerisms of others.</p>",
+    "description_text": "Use this skill to tell when someone is bluffing you, to discern hidden messages in conversations, or to sense when someone is being magically influenced. This skill represents sensitivity to the body language, speech habits, and mannerisms of others.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 81,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "sense-motive-oa-variant",
+    "name": "Sense Motive",
+    "source_url": "https://new.dndtools.org/skills/sense-motive-oa-variant",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p><em>Included here are new uses of the Sense Motive skill. Player’s should refer to the description of the <a href=\"/skills/sense-motive\">Sense Motive</a> skill stated in the Player’s Handbook for full detail about this skill.</em></p>\n<p>Characters use this skill in an iaijutsu duel (see Chapter 6) and at other times when they want to appraise the skill of another character (usually an opponent). Because of these uses, it is a class skill for samurai. In an iaijutsu duel, samurai use the following DCs:</p>\n<p></p><table><br/>\n<tbody><br/>\n<tr><br/>\n<th><strong>Information</strong></th><br/>\n<th><strong>DC</strong></th><br/>\n</tr><br/>\n<tr><br/>\n<td>Opposing character’s level</td><br/>\n<td>15</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Opposing character’s ranks in Iaijutsu Focus</td><br/>\n<td>20</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Opposing character’s total attack and damage bonus with primary weapon</td><br/>\n<td>25</td><br/>\n</tr><br/>\n</tbody><br/>\n</table><p></p>",
+    "description_text": "Included here are new uses of the Sense Motive skill. Player’s should refer to the description of the\nSense Motive\nskill stated in the Player’s Handbook for full detail about this skill.\nCharacters use this skill in an iaijutsu duel (see Chapter 6) and at other times when they want to appraise the skill of another character (usually an opponent). Because of these uses, it is a class skill for samurai. In an iaijutsu duel, samurai use the following DCs:\nInformation\nDC\nOpposing character’s level\n15\nOpposing character’s ranks in Iaijutsu Focus\n20\nOpposing character’s total attack and damage bonus with primary weapon\n25",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 58,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "sleight-of-hand",
+    "name": "Sleight of Hand",
+    "source_url": "https://new.dndtools.org/skills/sleight-of-hand",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can cut or lift a purse and hide it on your person, palm an unattended object, hide a light weapon in your clothing, or perform some feat of legerdemain with an object no larger than a hat or a loaf of bread.</p>",
+    "description_text": "You can cut or lift a purse and hide it on your person, palm an unattended object, hide a light weapon in your clothing, or perform some feat of legerdemain with an object no larger than a hat or a loaf of bread.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 81,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "speak-language",
+    "name": "Speak Language",
+    "source_url": "https://new.dndtools.org/skills/speak-language",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "—",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p></p><table><br/>\n<tr><br/>\n<th>Language </th><br/>\n<th>Typical Speakers </th><br/>\n<th>Alphabet </th><br/>\n</tr><br/>\n<tr><br/>\n<td> Abyssal </td><br/>\n<td> Demons, chaotic evil outsiders </td><br/>\n<td> Infernal </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Aquan </td><br/>\n<td> Water-based creatures </td><br/>\n<td> Elven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Auran </td><br/>\n<td> Air-based creatures </td><br/>\n<td> Draconic </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Celestial </td><br/>\n<td> Good outsiders </td><br/>\n<td> Celestial </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Common </td><br/>\n<td> Humans, halflings, half-elves, half-orcs </td><br/>\n<td> Common </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Draconic </td><br/>\n<td> Kobolds, troglodytes, lizardfolk, dragons </td><br/>\n<td> Draconic </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Druidic </td><br/>\n<td> Druids (only) </td><br/>\n<td> Druidic </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Dwarven </td><br/>\n<td> Dwarves </td><br/>\n<td> Dwarven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Elven </td><br/>\n<td> Elves </td><br/>\n<td> Elven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Giant </td><br/>\n<td> Ogres, giants </td><br/>\n<td> Dwarven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Gnome </td><br/>\n<td> Gnomes </td><br/>\n<td> Dwarven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Goblin </td><br/>\n<td> Goblins, hobgoblins, bugbears </td><br/>\n<td> Dwarven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Gnoll </td><br/>\n<td> Gnolls </td><br/>\n<td> Common </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Halfling </td><br/>\n<td> Halflings </td><br/>\n<td> Common </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Ignan </td><br/>\n<td> Fire-based creatures </td><br/>\n<td> Draconic </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Infernal </td><br/>\n<td> Devils, lawful evil outsiders </td><br/>\n<td> Infernal </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Orc </td><br/>\n<td> Orcs </td><br/>\n<td> Dwarven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Sylvan </td><br/>\n<td> Dryads, brownies, leprechauns </td><br/>\n<td> Elven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Terran </td><br/>\n<td> Xorns and other earth-based creatures </td><br/>\n<td> Dwarven </td><br/>\n</tr><br/>\n<tr><br/>\n<td> Undercommon </td><br/>\n<td> Drow </td><br/>\n<td> Elven </td><br/>\n</tr><br/>\n</table><p></p>\n<p>Common languages and their alphabets are summarized on the table above.</p>",
+    "description_text": "Language\nTypical Speakers\nAlphabet\nAbyssal\nDemons, chaotic evil outsiders\nInfernal\nAquan\nWater-based creatures\nElven\nAuran\nAir-based creatures\nDraconic\nCelestial\nGood outsiders\nCelestial\nCommon\nHumans, halflings, half-elves, half-orcs\nCommon\nDraconic\nKobolds, troglodytes, lizardfolk, dragons\nDraconic\nDruidic\nDruids (only)\nDruidic\nDwarven\nDwarves\nDwarven\nElven\nElves\nElven\nGiant\nOgres, giants\nDwarven\nGnome\nGnomes\nDwarven\nGoblin\nGoblins, hobgoblins, bugbears\nDwarven\nGnoll\nGnolls\nCommon\nHalfling\nHalflings\nCommon\nIgnan\nFire-based creatures\nDraconic\nInfernal\nDevils, lawful evil outsiders\nInfernal\nOrc\nOrcs\nDwarven\nSylvan\nDryads, brownies, leprechauns\nElven\nTerran\nXorns and other earth-based creatures\nDwarven\nUndercommon\nDrow\nElven\nCommon languages and their alphabets are summarized on the table above.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 82,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "speak-language-oa-variant",
+    "name": "Speak Language",
+    "source_url": "https://new.dndtools.org/skills/speak-language-oa-variant",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "—",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p><em>Included here are new languages from the Oriental Adventures setting. Player’s should refer to the description of the <a href=\"/skills/speak-language\">Speak Language</a> skill stated in the Player’s Handbook for full detail about this skill.</em></p>\n<p></p><table><br/>\n<tbody><br/>\n<tr><br/>\n<th><strong>Language</strong></th><br/>\n<th><strong>Typical Speakers</strong></th><br/>\n<th><strong>Alphabet</strong></th><br/>\n</tr><br/>\n<tr><br/>\n<td>Rokugani/Common</td><br/>\n<td>Humans</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Bakemono</td><br/>\n<td>Bakemono, Shadowlands ogres</td><br/>\n<td>Dwarven</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Buso</td><br/>\n<td>Buso</td><br/>\n<td>—</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Draconic</td><br/>\n<td>Dragons, hannya</td><br/>\n<td>Draconic</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Dwarven</td><br/>\n<td>Korobokuru</td><br/>\n<td>Dwarven</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Giant</td><br/>\n<td>Oni, wang-liang</td><br/>\n<td>Dwarven</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Hengeyokai</td><br/>\n<td>Hengeyokai</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Kappa</td><br/>\n<td>Kappa</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Nezumi</td><br/>\n<td>Nezumi</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Shadowlands</td><br/>\n<td>Bog hags, dokufu, Shadowlands oni</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Spirit Tongue</td><br/>\n<td>Spirit folk, celestials, dragons</td><br/>\n<td>Draconic</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Tasloi</td><br/>\n<td>Tasloi</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Tengu</td><br/>\n<td>Tengu</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Vanara</td><br/>\n<td>Vanara</td><br/>\n<td>Common</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Yeti</td><br/>\n<td>Yeti</td><br/>\n<td>—</td><br/>\n</tr><br/>\n<tr><br/>\n<td>Yuan-Ti</td><br/>\n<td>Yuan-ti</td><br/>\n<td>Draconic</td><br/>\n</tr><br/>\n</tbody><br/>\n</table><p></p>",
+    "description_text": "Included here are new languages from the Oriental Adventures setting. Player’s should refer to the description of the\nSpeak Language\nskill stated in the Player’s Handbook for full detail about this skill.\nLanguage\nTypical Speakers\nAlphabet\nRokugani/Common\nHumans\nCommon\nBakemono\nBakemono, Shadowlands ogres\nDwarven\nBuso\nBuso\n—\nDraconic\nDragons, hannya\nDraconic\nDwarven\nKorobokuru\nDwarven\nGiant\nOni, wang-liang\nDwarven\nHengeyokai\nHengeyokai\nCommon\nKappa\nKappa\nCommon\nNezumi\nNezumi\nCommon\nShadowlands\nBog hags, dokufu, Shadowlands oni\nCommon\nSpirit Tongue\nSpirit folk, celestials, dragons\nDraconic\nTasloi\nTasloi\nCommon\nTengu\nTengu\nCommon\nVanara\nVanara\nCommon\nYeti\nYeti\n—\nYuan-Ti\nYuan-ti\nDraconic",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 58,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "spellcraft",
+    "name": "Spellcraft",
+    "source_url": "https://new.dndtools.org/skills/spellcraft",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p></p><p>Use this skill to identify spells as they are cast or spells already in place.</p><table><thead><tr><th>Spellcraft DC</th><th>Task</th></tr></thead><tbody><tr><td style=\"vertical-align:middle;white-space:nowrap\">13</td><td>When using <a href=\"/spells/read-magic-2511\"><em>read magic</em></a>, identify a <a href=\"/spells/glyph-of-warding-2326\"><em>glyph of warding</em></a>. No action required.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">15 + spell level</td><td>Identify a spell being cast. (You must see or hear the spell’s verbal or somatic components.) No action required. No retry.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">15 + spell level</td><td>Learn a spell from a spellbook or scroll (wizard only). No retry for that spell until you gain at least 1 rank in Spellcraft (even if you find another source to try to learn the spell from). Requires 8 hours.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">15 + spell level</td><td>Prepare a spell from a borrowed spellbook (wizard only). One try per day. No extra time required.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">15 + spell level</td><td>When casting <a href=\"/spells/detect-magic-2489\"><em>detect magic</em></a>, determine the school of magic involved in the aura of a single item or creature you can see. (If the aura is not a spell effect, the DC is 15 + one-half caster level.) No action required.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">19</td><td>When using <a href=\"/spells/read-magic-2511\"><em>read magic</em></a>, identify a <em>symbol</em>. No action required.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">20 + spell level</td><td>Identify a spell that’s already in place and in effect. You must be able to see or detect the effects of the spell. No action required. No retry.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">20 + spell level</td><td>Identify materials created or shaped by magic, such as noting that an iron wall is the result of a <a href=\"/spells/wall-of-iron-2469\"><em>wall of iron</em></a> spell. No action required. No retry.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">20 + spell level</td><td>Decipher a written spell (such as a scroll) without using <a href=\"/spells/read-magic-2511\"><em>read magic</em></a>. One try per day. Requires a full-round action.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">25 + spell level</td><td>After rolling a saving throw against a spell targeted on you, determine what that spell was. No action required. No retry.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">25</td><td>Identify a potion. Requires 1 minute. No retry.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">20</td><td>Draw a diagram to allow <a href=\"/spells/dimensional-anchor-2308\"><em>dimensional anchor</em></a> to be cast on a <em>magic circle</em> spell. Requires 10 minutes. No retry. The DM makes this check.</td></tr><tr><td style=\"vertical-align:middle;white-space:nowrap\">30 or higher</td><td>Understand a strange or unique magical effect, such as the effects of a magic stream. Time required varies. No retry.</td></tr></tbody></table><p></p>",
+    "description_text": "Use this skill to identify spells as they are cast or spells already in place.\nSpellcraft DC\nTask\n13\nWhen using\nread magic\n, identify a\nglyph of warding\n. No action required.\n15 + spell level\nIdentify a spell being cast. (You must see or hear the spell’s verbal or somatic components.) No action required. No retry.\n15 + spell level\nLearn a spell from a spellbook or scroll (wizard only). No retry for that spell until you gain at least 1 rank in Spellcraft (even if you find another source to try to learn the spell from). Requires 8 hours.\n15 + spell level\nPrepare a spell from a borrowed spellbook (wizard only). One try per day. No extra time required.\n15 + spell level\nWhen casting\ndetect magic\n, determine the school of magic involved in the aura of a single item or creature you can see. (If the aura is not a spell effect, the DC is 15 + one-half caster level.) No action required.\n19\nWhen using\nread magic\n, identify a\nsymbol\n. No action required.\n20 + spell level\nIdentify a spell that’s already in place and in effect. You must be able to see or detect the effects of the spell. No action required. No retry.\n20 + spell level\nIdentify materials created or shaped by magic, such as noting that an iron wall is the result of a\nwall of iron\nspell. No action required. No retry.\n20 + spell level\nDecipher a written spell (such as a scroll) without using\nread magic\n. One try per day. Requires a full-round action.\n25 + spell level\nAfter rolling a saving throw against a spell targeted on you, determine what that spell was. No action required. No retry.\n25\nIdentify a potion. Requires 1 minute. No retry.\n20\nDraw a diagram to allow\ndimensional anchor\nto be cast on a\nmagic circle\nspell. Requires 10 minutes. No retry. The DM makes this check.\n30 or higher\nUnderstand a strange or unique magical effect, such as the effects of a magic stream. Time required varies. No retry.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 82,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "spot",
+    "name": "Spot",
+    "source_url": "https://new.dndtools.org/skills/spot",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to notice bandits waiting in ambush, to see a rogue lurking in the shadows, to see through a disguise, to read lips, or to see the monstrous centipede in the pile of trash.</p>",
+    "description_text": "Use this skill to notice bandits waiting in ambush, to see a rogue lurking in the shadows, to see through a disguise, to read lips, or to see the monstrous centipede in the pile of trash.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 83,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "stabilize-self",
+    "name": "Stabilize Self",
+    "source_url": "https://new.dndtools.org/skills/stabilize-self",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "CON",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PsH3"
+    },
+    "description_html": "<p><span>Use this skill to keep from succumbing to a mortal wound.</span></p>",
+    "description_text": "Use this skill to keep from succumbing to a mortal wound.",
+    "source": {
+      "name": "Psionics Handbook 3.0",
+      "abbrev": "PsH3",
+      "edition": "3.5",
+      "page": 20,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "survival",
+    "name": "Survival",
+    "source_url": "https://new.dndtools.org/skills/survival",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to follow tracks, hunt wild game, guide a party safely through frozen wastelands, identify signs that owlbears live nearby, predict the weather, or avoid quicksand and other natural hazards.</p>",
+    "description_text": "Use this skill to follow tracks, hunt wild game, guide a party safely through frozen wastelands, identify signs that owlbears live nearby, predict the weather, or avoid quicksand and other natural hazards.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 83,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "swim",
+    "name": "Swim",
+    "source_url": "https://new.dndtools.org/skills/swim",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "STR",
+      "trained_only": false,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Using this skill, a land-based creature can swim, dive, navigate underwater obstacles, and so on.</p>",
+    "description_text": "Using this skill, a land-based creature can swim, dive, navigate underwater obstacles, and so on.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 84,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "truespeak",
+    "name": "Truespeak",
+    "source_url": "https://new.dndtools.org/skills/truespeak",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "INT",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "TM"
+    },
+    "description_html": "<p>Use this skill to master the tortuous pronunciation of truenames, each of which involves a dozen syllables, precise timing, and vocalizations foreign even to the most multilingual character. If you're a truenamer, you use this skill every time you deliver an utterance or make a recitation. If you're a spellcaster with a truename spell at your disposal, you make a Truespeak check to cast the spell properly. Members of prestige classes such as the fiendbinder, acolyte of the ego, and brimstone speaker make Truespeak checks to activate their class features.</p>\n<p>You can also make a Truespeak check as a free action to identify an utterance being spoken, even when it's not your turn. The DC of this check is equal to the DC to speak the utterance you wish to identify.</p>\n<p>Of the standard classes, only the truenamer has Truespeak as a class skill. Other characters can avoid the high cost of cross-class skills by taking the Truename Training feat (described on page 229).</p>\n<p>This skill doesn't represent your ability to learn and know truenames so much as it represents your ability to say them aloud. Each truename is complex and exacting enough that just overhearing a truename’even a personal truename’ doesn't give you any particular facility for pronouncing it yourself. That takes continuous vocal exercises and endless study.</p>",
+    "description_text": "Use this skill to master the tortuous pronunciation of truenames, each of which involves a dozen syllables, precise timing, and vocalizations foreign even to the most multilingual character. If you're a truenamer, you use this skill every time you deliver an utterance or make a recitation. If you're a spellcaster with a truename spell at your disposal, you make a Truespeak check to cast the spell properly. Members of prestige classes such as the fiendbinder, acolyte of the ego, and brimstone speaker make Truespeak checks to activate their class features.\nYou can also make a Truespeak check as a free action to identify an utterance being spoken, even when it's not your turn. The DC of this check is equal to the DC to speak the utterance you wish to identify.\nOf the standard classes, only the truenamer has Truespeak as a class skill. Other characters can avoid the high cost of cross-class skills by taking the Truename Training feat (described on page 229).\nThis skill doesn't represent your ability to learn and know truenames so much as it represents your ability to say them aloud. Each truename is complex and exacting enough that just overhearing a truename’even a personal truename’ doesn't give you any particular facility for pronouncing it yourself. That takes continuous vocal exercises and endless study.",
+    "source": {
+      "name": "Tome of Magic",
+      "abbrev": "TM",
+      "edition": "3.5",
+      "page": 195,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "tumble",
+    "name": "Tumble",
+    "source_url": "https://new.dndtools.org/skills/tumble",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>You can dive, roll, somersault, flip, and so on. You can’t use this skill if your speed has been reduced by armor, excess equipment, or loot (see Table 9-2: Carrying Loads, page 162).</p>",
+    "description_text": "You can dive, roll, somersault, flip, and so on. You can’t use this skill if your speed has been reduced by armor, excess equipment, or loot (see Table 9-2: Carrying Loads, page 162).",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 84,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "tumble-oa-variant",
+    "name": "Tumble",
+    "source_url": "https://new.dndtools.org/skills/tumble-oa-variant",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": true,
+      "armor_check_penalty": true,
+      "source_abbrev": "OA"
+    },
+    "description_html": "<p><em>Included here are new uses of the Tumble skill. Player’s should refer to the description of the <a href=\"/skills/tumble\">Tumble</a> skill stated in the Player’s Handbook for full detail about this skill.</em></p>\n<p><strong>Extreme Tumbling:</strong> Characters who are excellent at tumbling can accomplish remarkable feats of acrobatics with a very high Tumble check result:</p>\n<p></p><table><br/>\n<tbody><br/>\n<tr><br/>\n<th><strong>DC</strong></th><br/>\n<th><strong>Task</strong></th><br/>\n</tr><br/>\n<tr><br/>\n<td>30</td><br/>\n<td>Treat a fall as if it were 20 feet shorter when determining damage.</td><br/>\n</tr><br/>\n<tr><br/>\n<td>35</td><br/>\n<td>Stand up from prone as a free action (instead of a move-equivalent action).</td><br/>\n</tr><br/>\n<tr><br/>\n<td>40</td><br/>\n<td>Move 10 feet as a “5-foot step,” while also performing a full-round action during the round (such as a full attack). In melee, you might do a back flip over your opponent’s head to get on his other side. This move never provokes an attack of opportunity—it is exactly equivalent to a 5-foot step, except for the distance covered.</td><br/>\n</tr><br/>\n<tr><br/>\n<td>45</td><br/>\n<td>Treat a fall as if it were 30 feet shorter when determining damage.</td><br/>\n</tr><br/>\n<tr><br/>\n<td>50</td><br/>\n<td>Climb to a height of up to 20 feet (as part of normal movement) by jumping and bouncing off walls or trees. You must have at least two vertical surfaces to bounce off, and the two must be within 10 feet of each other.</td><br/>\n</tr><br/>\n<tr><br/>\n<td>60</td><br/>\n<td>Treat a fall as if it were 40 feet shorter when determining damage. (There is no limit to the distance a character with Tumble can fall without being hurt. Increase the DC by 15 for each additional 10 feet of falling.)</td><br/>\n</tr><br/>\n</tbody><br/>\n</table><p></p>\n<p>A character with 15 or more ranks in Tumble gains a +4 dodge bonus to AC when executing the fight defensively standard or full-round action, instead of a +2 bonus (or the +3 bonus from having 5 or more ranks).</p>\n<p>A character with 15 or more ranks in Tumble gains a +8 dodge bonus to AC when executing the total defense standard action, instead of a +4 bonus (or the +6 bonus from having 5 or more ranks).</p>",
+    "description_text": "Included here are new uses of the Tumble skill. Player’s should refer to the description of the\nTumble\nskill stated in the Player’s Handbook for full detail about this skill.\nExtreme Tumbling:\nCharacters who are excellent at tumbling can accomplish remarkable feats of acrobatics with a very high Tumble check result:\nDC\nTask\n30\nTreat a fall as if it were 20 feet shorter when determining damage.\n35\nStand up from prone as a free action (instead of a move-equivalent action).\n40\nMove 10 feet as a “5-foot step,” while also performing a full-round action during the round (such as a full attack). In melee, you might do a back flip over your opponent’s head to get on his other side. This move never provokes an attack of opportunity—it is exactly equivalent to a 5-foot step, except for the distance covered.\n45\nTreat a fall as if it were 30 feet shorter when determining damage.\n50\nClimb to a height of up to 20 feet (as part of normal movement) by jumping and bouncing off walls or trees. You must have at least two vertical surfaces to bounce off, and the two must be within 10 feet of each other.\n60\nTreat a fall as if it were 40 feet shorter when determining damage. (There is no limit to the distance a character with Tumble can fall without being hurt. Increase the DC by 15 for each additional 10 feet of falling.)\nA character with 15 or more ranks in Tumble gains a +4 dodge bonus to AC when executing the fight defensively standard or full-round action, instead of a +2 bonus (or the +3 bonus from having 5 or more ranks).\nA character with 15 or more ranks in Tumble gains a +8 dodge bonus to AC when executing the total defense standard action, instead of a +4 bonus (or the +6 bonus from having 5 or more ranks).",
+    "source": {
+      "name": "Oriental Adventures",
+      "abbrev": "OA",
+      "edition": "3.5",
+      "page": 58,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "use-magic-device",
+    "name": "Use Magic Device",
+    "source_url": "https://new.dndtools.org/skills/use-magic-device",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to activate magic devices, including scrolls and wands, that you could not otherwise activate.</p>",
+    "description_text": "Use this skill to activate magic devices, including scrolls and wands, that you could not otherwise activate.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 85,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "use-psionic-device",
+    "name": "Use Psionic Device",
+    "source_url": "https://new.dndtools.org/skills/use-psionic-device",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "CHA",
+      "trained_only": true,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>Use this skill to activate psionic devices, including power stones (chunks of crystal that store specific powers) and dorjes (slender crystal wands charged with several uses of the same power), that otherwise you could not activate.</p>",
+    "description_text": "Use this skill to activate psionic devices, including power stones (chunks of crystal that store specific powers) and dorjes (slender crystal wands charged with several uses of the same power), that otherwise you could not activate.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 38,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "use-rope",
+    "name": "Use Rope",
+    "source_url": "https://new.dndtools.org/skills/use-rope",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "DEX",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PH"
+    },
+    "description_html": "<p>With this skill, you can make firm knots, undo tricky knots, and bind prisoners with ropes.</p>",
+    "description_text": "With this skill, you can make firm knots, undo tricky knots, and bind prisoners with ropes.",
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "3.5",
+      "page": 86,
+      "url": null
+    }
+  },
+  {
+    "id": null,
+    "slug": "wilderness-lore",
+    "name": "Wilderness Lore",
+    "source_url": "https://new.dndtools.org/skills/wilderness-lore",
+    "scraped_at": "2026-07-13T16:02:51Z",
+    "index": {
+      "key_ability": "WIS",
+      "trained_only": false,
+      "armor_check_penalty": false,
+      "source_abbrev": "PHB"
+    },
+    "description_html": "<p>Use this skill to hunt wild game, guide a party safely through frozen wastelands, identify signs that owlbears live nearby, or avoid quicksand and other natural hazards.</p>",
+    "description_text": "Use this skill to hunt wild game, guide a party safely through frozen wastelands, identify signs that owlbears live nearby, or avoid quicksand and other natural hazards.",
+    "source": {
+      "name": "Player's Handbook 3.0",
+      "abbrev": "PHB",
+      "edition": "3.5",
+      "page": 76,
+      "url": null
+    }
+  }
+]

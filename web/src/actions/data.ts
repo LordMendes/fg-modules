@@ -1,7 +1,12 @@
 "use server";
 
 import { headers } from "next/headers";
-import { listEntities, searchAll } from "@/lib/entities";
+import {
+  getClassSpellsAtLevel,
+  getSpellPreview,
+  listEntities,
+  searchAll,
+} from "@/lib/entities";
 import { validateSessionNonce } from "@/lib/session";
 import { rateLimit, getClientIp } from "@/lib/ratelimit";
 import type { CategoryKey } from "@/lib/categories";
@@ -76,4 +81,63 @@ export async function searchEntities(input: SearchInput): Promise<SearchResult> 
 
   const results = await searchAll(input.query, 30);
   return { success: true, results };
+}
+
+export type ClassSpellsInput = {
+  classSlug: string;
+  level: number;
+  nonce: string;
+};
+
+export type ClassSpellsResult = {
+  success: boolean;
+  error?: string;
+  spells?: Awaited<ReturnType<typeof getClassSpellsAtLevel>>;
+};
+
+export async function fetchClassSpellsAtLevel(
+  input: ClassSpellsInput,
+): Promise<ClassSpellsResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`class-spells:${ip}`, 120, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  if (!Number.isInteger(input.level) || input.level < 0 || input.level > 9) {
+    return { success: false, error: "Invalid spell level" };
+  }
+
+  const spells = await getClassSpellsAtLevel(input.classSlug, input.level);
+  return { success: true, spells };
+}
+
+export type SpellPreviewInput = {
+  spellSlug: string;
+  nonce: string;
+};
+
+export type SpellPreviewResult = {
+  success: boolean;
+  error?: string;
+  spell?: Awaited<ReturnType<typeof getSpellPreview>>;
+};
+
+export async function fetchSpellPreview(input: SpellPreviewInput): Promise<SpellPreviewResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`spell-preview:${ip}`, 120, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  const spell = await getSpellPreview(input.spellSlug);
+  if (!spell) return { success: false, error: "Spell not found" };
+
+  return { success: true, spell };
 }

@@ -57,11 +57,17 @@
   --font-display: var(--font-display);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body), Georgia, serif;
   min-height: 100vh;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -76,7 +82,9 @@ body {
 }
 
 .header-inner {
+  width: 100%;
   max-width: 1280px;
+  min-width: 0;
   margin: 0 auto;
   padding: 0.75rem 1.5rem;
   display: flex;
@@ -170,10 +178,13 @@ body {
 
 /* Main layout */
 .main-content {
+  width: 100%;
   max-width: 1280px;
+  min-width: 0;
   margin: 0 auto;
   padding: 2rem 1.5rem;
   flex: 1;
+  overflow-x: hidden;
 }
 
 /* Home */
@@ -244,7 +255,13 @@ body {
 
 /* Tables */
 .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   background: var(--bg-card);
@@ -254,6 +271,16 @@ body {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
+}
+
+.table-wrap > .entity-table {
+  width: max-content;
+  min-width: 100%;
+}
+
+.table-wrap > .entity-table.class-spell-table {
+  width: 100%;
+  min-width: 960px;
 }
 
 .entity-table th {
@@ -310,7 +337,8 @@ body {
 
 /* Detail page */
 .entity-detail {
-  max-width: 800px;
+  width: 100%;
+  min-width: 0;
 }
 
 .detail-header {
@@ -414,10 +442,470 @@ body {
   font-size: 0.75rem;
 }
 
+/* Class advancement table */
+.advancement-section {
+  margin-bottom: 2rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.advancement-section h2 {
+  font-family: var(--font-display), serif;
+  font-size: 1.125rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+}
+
+.advancement-table-wrap {
+  margin-bottom: 0.5rem;
+}
+
+.advancement-table-host {
+  width: 100%;
+  min-width: 0;
+}
+
+.advancement-table {
+  width: max-content;
+  min-width: 100%;
+  font-size: 0.8125rem;
+}
+
+.advancement-table th,
+.advancement-table td {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  padding: 0.5rem 0.625rem;
+}
+
+.advancement-table tr:first-child th {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.625rem 0.75rem;
+}
+
+.advancement-table tr:first-child th:empty,
+.advancement-table tr:first-child th:not([colspan]):empty {
+  padding: 0;
+  border: none;
+}
+
+.advancement-table tr:nth-child(2) th {
+  font-size: 0.75rem;
+  padding: 0.625rem 0.5rem;
+  line-height: 1.2;
+}
+
+.advancement-table td:first-child,
+.advancement-table th:first-child {
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--bg-card);
+  box-shadow: 1px 0 0 var(--border-color);
+}
+
+.advancement-table tr:nth-child(2) th:first-child {
+  background: var(--bg-secondary);
+}
+
+.advancement-table tr:first-child th:first-child {
+  background: var(--bg-secondary);
+}
+
+.advancement-table tbody tr:nth-child(even) td:first-child {
+  background: var(--table-stripe);
+}
+
+.advancement-table tbody tr:hover td:first-child {
+  background: var(--bg-secondary);
+}
+
+.advancement-table td:nth-child(6),
+.advancement-table th:nth-child(6) {
+  text-align: left;
+  white-space: normal;
+  min-width: 9rem;
+  max-width: 16rem;
+  line-height: 1.35;
+}
+
+.advancement-table .caps {
+  letter-spacing: 0.04em;
+}
+
+/* Class skills table */
+.class-skills-section {
+  margin-bottom: 2rem;
+}
+
+.class-skills-section h2 {
+  font-family: var(--font-display), serif;
+  font-size: 1.125rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+}
+
+.class-skills-table td:last-child {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Class spell list */
+.class-spells-section {
+  margin-bottom: 2rem;
+  min-width: 0;
+}
+
+.class-spells-section h2 {
+  font-family: var(--font-display), serif;
+  font-size: 1.125rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+}
+
+.class-spell-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.class-spell-level {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.class-spell-level.is-open {
+  border-color: var(--border-ornament);
+}
+
+.class-spell-level-toggle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.class-spell-level-toggle:hover {
+  background: var(--bg-secondary);
+}
+
+.class-spell-level-title {
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.class-spell-level-count {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.class-spell-level-icon {
+  width: 1.25rem;
+  text-align: center;
+  color: var(--accent-gold);
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.class-spell-level-body {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 0 0 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.class-spell-level-body .class-spell-table-wrap {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.class-spell-table {
+  width: 100%;
+  min-width: 960px;
+  table-layout: fixed;
+  font-size: 0.8125rem;
+}
+
+.class-spell-table th.component-col,
+.class-spell-table td.component-col {
+  width: 2.25rem;
+  text-align: center;
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}
+
+.class-spell-table th:nth-child(1),
+.class-spell-table td:nth-child(1) {
+  width: 14%;
+}
+
+.class-spell-table th:nth-child(2),
+.class-spell-table td:nth-child(2) {
+  width: 11%;
+  overflow: hidden;
+}
+
+.class-spell-table th:nth-child(3),
+.class-spell-table td:nth-child(3) {
+  width: auto;
+  max-width: 0;
+  overflow: hidden;
+}
+
+.class-spell-table th:nth-child(10),
+.class-spell-table td:nth-child(10) {
+  width: 5rem;
+}
+
+.class-spell-table th:nth-child(11),
+.class-spell-table td:nth-child(11) {
+  width: 5.5rem;
+}
+
+.class-spell-table th.action-col,
+.class-spell-table td.action-col {
+  width: 2.75rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+  overflow: hidden;
+}
+
+.class-spell-table .school-cell,
+.class-spell-table .description-cell {
+  vertical-align: middle;
+}
+
+.class-spell-table .school-cell {
+  color: var(--text-secondary);
+}
+
+.class-spell-table .description-cell {
+  color: var(--text-muted);
+}
+
+.class-spell-ellipsis {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+  width: 100%;
+}
+
+.class-spell-name-btn {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  text-align: left;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.class-spell-name-btn:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+.spell-component-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.spell-component-mark.is-yes {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.spell-component-mark.is-no {
+  color: var(--text-muted);
+  opacity: 0.45;
+}
+
+.class-spell-bookmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.class-spell-bookmark:hover {
+  color: var(--accent-gold);
+  opacity: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.class-spell-level-error {
+  color: var(--accent-burgundy);
+}
+
+.class-spell-level-status,
+.class-spell-level-error {
+  padding: 0.875rem 1rem 0;
+  font-size: 0.875rem;
+}
+
+/* Spell preview modal */
+.spell-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.spell-modal-panel {
+  width: min(720px, 100%);
+  max-height: min(85vh, 900px);
+  overflow: auto;
+  background: var(--bg-card);
+  border: 2px solid var(--border-ornament);
+  border-radius: 6px;
+  box-shadow: 0 16px 48px var(--shadow);
+}
+
+.spell-modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  z-index: 1;
+}
+
+.spell-modal-header h2 {
+  font-family: var(--font-display), serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.375rem;
+}
+
+.spell-modal-source {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.spell-modal-close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.spell-modal-close:hover {
+  border-color: var(--accent-gold);
+}
+
+.spell-modal-body {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.spell-modal-stats {
+  margin-bottom: 1.25rem;
+}
+
+.spell-modal-text {
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+.spell-modal-footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.spell-modal-status {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.spell-modal-error {
+  color: var(--accent-burgundy);
+  font-size: 0.875rem;
+}
+
 /* Prose content */
 .prose-content {
   line-height: 1.7;
   color: var(--text-primary);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.prose-content table {
+  width: max-content;
+  min-width: 100%;
 }
 
 .prose-content p {
@@ -607,4 +1095,135 @@ body {
 
 .breadcrumb a:hover {
   text-decoration: underline;
+}
+
+/* Tablet — graceful reflow */
+@media (max-width: 1023px) {
+  .header-inner {
+    gap: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2.125rem;
+  }
+}
+
+/* Phone — single-column stack and touch-friendly controls */
+@media (max-width: 767px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .header-nav {
+    width: 100%;
+    gap: 0.25rem 0.5rem;
+  }
+
+  .header-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.625rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search-bar {
+    flex: 1;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .search-input {
+    width: 100%;
+    min-width: 0;
+    font-size: 1rem;
+  }
+
+  .theme-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+  }
+
+  .site-logo {
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
+  .main-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .hero {
+    padding: 2rem 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: 1.875rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .detail-header h1 {
+    font-size: 1.625rem;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sources-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-card,
+  .source-card,
+  .search-result-item {
+    min-height: 2.75rem;
+  }
+
+  .btn-secondary {
+    min-height: 2.75rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .spell-modal-close {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .related-list a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.25rem 0;
+  }
+
+  .entity-link,
+  .source-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.375rem 0.25rem;
+  }
 }

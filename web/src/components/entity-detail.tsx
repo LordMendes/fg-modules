@@ -1,6 +1,16 @@
 import Link from "next/link";
 import type { EntityDetail } from "@/lib/entities";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { ClassSpellList } from "@/components/class-spell-list";
+import { ClassSkillsTable } from "@/components/class-skills-table";
+
+function formatAdvancementHtml(html: string): string {
+  const withClass = html.replace(
+    /<table(\s[^>]*)?>/gi,
+    '<table class="entity-table advancement-table">',
+  );
+  return sanitizeHtml(withClass);
+}
 
 export function EntityDetailView({
   category,
@@ -41,6 +51,14 @@ export function EntityDetailView({
         </dl>
       )}
 
+      {entity.classSkills && entity.classSkills.length > 0 && (
+        <ClassSkillsTable skills={entity.classSkills} />
+      )}
+
+      {entity.spellLevels && entity.spellLevels.length > 0 && (
+        <ClassSpellList classSlug={entity.slug} levels={entity.spellLevels} />
+      )}
+
       {entity.related.length > 0 && (
         <section className="related-section">
           <h2>Related</h2>
@@ -52,6 +70,18 @@ export function EntityDetailView({
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {entity.advancementHtml && (
+        <section className="advancement-section">
+          <h2>Advancement</h2>
+          <div className="table-wrap advancement-table-wrap">
+            <div
+              className="advancement-table-host"
+              dangerouslySetInnerHTML={{ __html: formatAdvancementHtml(entity.advancementHtml) }}
+            />
+          </div>
         </section>
       )}
 
