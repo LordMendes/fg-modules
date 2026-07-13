@@ -1289,6 +1289,55 @@ export async function listSources(): Promise<
   }));
 }
 
+/** Live entity totals per category for hub UI. */
+export async function getCategoryCounts(): Promise<Record<CategoryKey, number>> {
+  const [
+    spells,
+    feats,
+    monsters,
+    classes,
+    skills,
+    races,
+    items,
+    equipment,
+    domains,
+    deities,
+    psionics,
+    templates,
+    rules,
+  ] = await Promise.all([
+    prisma.spell.count(),
+    prisma.feat.count(),
+    prisma.monster.count(),
+    prisma.dndClass.count(),
+    prisma.skill.count(),
+    prisma.race.count(),
+    prisma.item.count(),
+    prisma.equipment.count(),
+    prisma.domain.count(),
+    prisma.deity.count(),
+    prisma.psionic.count(),
+    prisma.template.count(),
+    prisma.rule.count(),
+  ]);
+
+  return {
+    spells,
+    feats,
+    monsters,
+    classes,
+    skills,
+    races,
+    items,
+    equipment,
+    domains,
+    deities,
+    psionics,
+    templates,
+    rules,
+  };
+}
+
 export async function getSourceByAbbrev(abbrev: string) {
   return prisma.source.findFirst({
     where: { abbrev },
