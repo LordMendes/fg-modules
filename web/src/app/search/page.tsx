@@ -37,6 +37,11 @@ export default async function SearchPage({ searchParams }: Props) {
       </div>
 
       <div className="search-results">
+        {results.length > 0 && (
+          <h2 id="search-results-heading" className="sr-only">
+            Results
+          </h2>
+        )}
         {results.map((r) => (
           <Link
             key={`${r.category}-${r.slug}`}

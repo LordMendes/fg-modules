@@ -11,7 +11,7 @@ export function SiteHeader() {
           <span className="logo-icon">⚔</span>
           <span className="logo-text">Arcane Archives</span>
         </Link>
-        <nav className="header-nav">
+        <nav className="header-nav" aria-label="Primary navigation">
           <Link href="/sources">Sources</Link>
           {CATEGORIES.slice(0, 6).map((c) => (
             <Link key={c.key} href={`/${c.key}`}>

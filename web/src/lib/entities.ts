@@ -1280,13 +1280,15 @@ export async function listSources(): Promise<
     },
   });
 
-  return sources.map((s) => ({
-    id: s.id,
-    name: s.name,
-    abbrev: s.abbrev,
-    edition: s.edition,
-    counts: Object.values(s._count).reduce((a, b) => a + b, 0),
-  }));
+  return sources
+    .map((s) => ({
+      id: s.id,
+      name: s.name,
+      abbrev: s.abbrev,
+      edition: s.edition,
+      counts: Object.values(s._count).reduce((a, b) => a + b, 0),
+    }))
+    .filter((s) => s.counts > 0);
 }
 
 /** Live entity totals per category for hub UI. */

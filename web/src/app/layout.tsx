@@ -77,10 +77,13 @@ export default async function RootLayout({
             },
           }}
         />
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Providers>
           <SessionProvider nonce={nonce}>
             <SiteHeader />
-            <main className="main-content min-w-0 w-full">{children}</main>
+            <main id="main-content" className="main-content min-w-0 w-full">{children}</main>
             <footer className="site-footer">
               D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
             </footer>

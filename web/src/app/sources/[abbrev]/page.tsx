@@ -43,7 +43,7 @@ export default async function SourceDetailPage({ params }: Props) {
           absoluteUrl,
         )}
       />
-      <nav className="breadcrumb">
+      <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link> / <Link href="/sources">Sources</Link> / {abbrev}
       </nav>
       <div className="page-header">

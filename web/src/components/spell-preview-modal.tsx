@@ -5,6 +5,9 @@ import Link from "next/link";
 import type { SpellPreview } from "@/lib/entities";
 import { sanitizeHtml } from "@/lib/sanitize";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
 export function SpellPreviewModal({
   spell,
   loading,
@@ -17,18 +20,56 @@ export function SpellPreviewModal({
   onClose: () => void;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+
+    const panel = panelRef.current;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panel) return;
+
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        panel.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
-    panelRef.current?.focus();
+
+    const closeButton = panel?.querySelector<HTMLElement>(".spell-modal-close");
+    if (closeButton) {
+      closeButton.focus();
+    } else {
+      panel?.focus();
+    }
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
+      previouslyFocused.current?.focus();
     };
   }, [onClose]);
 
@@ -37,7 +78,13 @@ export function SpellPreviewModal({
     : [];
 
   return (
-    <div className="spell-modal-overlay" onClick={onClose} role="presentation">
+    <div className="spell-modal-overlay" role="presentation">
+      <button
+        type="button"
+        className="spell-modal-backdrop"
+        aria-label="Close dialog"
+        onClick={onClose}
+      />
       <div
         ref={panelRef}
         className="spell-modal-panel"
@@ -45,13 +92,12 @@ export function SpellPreviewModal({
         aria-modal="true"
         aria-labelledby="spell-modal-title"
         tabIndex={-1}
-        onClick={(event) => event.stopPropagation()}
       >
         <header className="spell-modal-header">
           <div>
-            {loading && <p className="spell-modal-status">Loading spell…</p>}
+            {loading && !spell && <p className="spell-modal-status">Loading spell…</p>}
             {error && <p className="spell-modal-error">{error}</p>}
-            {spell && (
+            {spell ? (
               <>
                 <h2 id="spell-modal-title">{spell.name}</h2>
                 <p className="spell-modal-source">
@@ -60,6 +106,10 @@ export function SpellPreviewModal({
                   <span className="edition-chip">{spell.source.edition}</span>
                 </p>
               </>
+            ) : (
+              <h2 id="spell-modal-title" className="sr-only">
+                {error ? "Spell preview error" : "Spell preview"}
+              </h2>
             )}
           </div>
           <button type="button" className="spell-modal-close" onClick={onClose} aria-label="Close">

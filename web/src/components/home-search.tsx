@@ -109,6 +109,7 @@ export function HomeSearch() {
         <Search className="home-search-icon h-5 w-5" aria-hidden />
         <input
           type="search"
+          role="combobox"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => {

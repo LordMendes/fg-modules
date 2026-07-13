@@ -38,7 +38,13 @@ export default async function SourcesPage() {
 
       {Object.entries(byEdition).map(([edition, editionSources]) => (
         <section key={edition} className="edition-group">
-          <h2>{edition}</h2>
+          <h2>
+            <span>{edition}</span>
+            <span className="edition-group-count">
+              {editionSources.length.toLocaleString()}{" "}
+              {editionSources.length === 1 ? "source" : "sources"}
+            </span>
+          </h2>
           <div className="sources-grid">
             {editionSources.map((source) => (
               <Link

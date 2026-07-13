@@ -31,7 +31,8 @@ function enhanceTable(table: HTMLTableElement) {
     button.type = "button";
     button.className = "sortable-th";
     button.innerHTML = `<span>${label}</span><span class="sort-indicator" aria-hidden="true">↕</span>`;
-    button.setAttribute("aria-sort", "none");
+    button.setAttribute("aria-label", `Sort by ${label}`);
+    th.setAttribute("aria-sort", "none");
     th.textContent = "";
     th.appendChild(button);
 
@@ -45,13 +46,18 @@ function enhanceTable(table: HTMLTableElement) {
         const otherBtn = other.querySelector("button.sortable-th");
         if (!otherBtn || otherBtn === button) continue;
         otherBtn.classList.remove("is-sorted");
-        otherBtn.setAttribute("aria-sort", "none");
+        other.setAttribute("aria-sort", "none");
+        otherBtn.setAttribute("aria-label", `Sort by ${otherBtn.querySelector("span")?.textContent ?? "column"}`);
         const indicator = otherBtn.querySelector(".sort-indicator");
         if (indicator) indicator.textContent = "↕";
       }
 
       button.classList.add("is-sorted");
-      button.setAttribute("aria-sort", direction === "asc" ? "ascending" : "descending");
+      th.setAttribute("aria-sort", direction === "asc" ? "ascending" : "descending");
+      button.setAttribute(
+        "aria-label",
+        `Sort by ${label}, ${direction === "asc" ? "ascending" : "descending"}`,
+      );
       const indicator = button.querySelector(".sort-indicator");
       if (indicator) indicator.textContent = direction === "asc" ? "▲" : "▼";
 

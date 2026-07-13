@@ -23,7 +23,10 @@ export default async function HomePage() {
         <HomeSearch />
       </section>
 
-      <section className="category-grid">
+      <section className="category-grid" aria-labelledby="browse-categories-heading">
+        <h2 id="browse-categories-heading" className="sr-only">
+          Browse by category
+        </h2>
         {CATEGORIES.map((cat) => (
           <Link key={cat.key} href={`/${cat.key}`} className="category-card">
             <div className="icon">{cat.icon}</div>

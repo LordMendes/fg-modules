@@ -6,6 +6,7 @@ modulos-cesar/
 .venv/
 .cursor/
 modules/
+web/lighthouse-reports/
 
 # Node / pnpm monorepo
 node_modules/

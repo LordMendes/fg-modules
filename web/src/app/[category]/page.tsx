@@ -72,7 +72,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   return (
     <>
       <JsonLd data={absoluteBreadcrumbJsonLd(breadcrumbItems, absoluteUrl)} />
-      <nav className="breadcrumb">
+      <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link> / {getCategoryLabel(category)}
         {filters.sources.length === 1 && (
           <>

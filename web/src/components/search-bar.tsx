@@ -24,8 +24,8 @@ export function SearchBar() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="search-bar">
-      <Search className="search-icon h-4 w-4" />
+    <form onSubmit={handleSubmit} className="search-bar" role="search">
+      <Search className="search-icon h-4 w-4" aria-hidden />
       <input
         type="search"
         placeholder="Search..."
@@ -33,6 +33,7 @@ export function SearchBar() {
         onChange={(e) => setQuery(e.target.value)}
         className="search-input"
         disabled={isPending}
+        aria-label="Search the archives"
       />
     </form>
   );

@@ -69,7 +69,7 @@ export default async function EntityDetailPage({ params }: Props) {
           },
         ]}
       />
-      <nav className="breadcrumb">
+      <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link> /{" "}
         <Link href={`/${category}`}>{label}</Link> /{" "}
         {entity.name}

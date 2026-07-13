@@ -16,17 +16,19 @@ export function SortableTh({
   className?: string;
 }) {
   const active = sort?.column === column;
+  const direction = active ? (sort.direction === "asc" ? "ascending" : "descending") : "none";
   const indicator = active ? (sort.direction === "asc" ? "▲" : "▼") : "↕";
+  const ariaLabel = active
+    ? `Sort by ${label}, ${sort.direction === "asc" ? "ascending" : "descending"}`
+    : `Sort by ${label}`;
 
   return (
-    <th className={className}>
+    <th className={className} aria-sort={direction}>
       <button
         type="button"
         className={`sortable-th${active ? " is-sorted" : ""}`}
         onClick={() => onSort(column)}
-        aria-sort={
-          active ? (sort.direction === "asc" ? "ascending" : "descending") : "none"
-        }
+        aria-label={ariaLabel}
       >
         <span>{label}</span>
         <span className="sort-indicator" aria-hidden="true">
