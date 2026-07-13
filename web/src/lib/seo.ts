@@ -5,12 +5,18 @@ export const SITE_NAME = "Arcane Archives";
 export const DEFAULT_DESCRIPTION =
   "A comprehensive D&D 3.5 Edition reference — spells, feats, monsters, classes, and more.";
 
+function normalizeSiteUrl(raw: string): string {
+  const trimmed = raw.trim().replace(/\/$/, "");
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 export function siteUrl(): string {
-  return (
+  const raw =
     process.env.SITE_URL ??
     process.env.NEXT_PUBLIC_SITE_URL ??
-    "http://localhost:3000"
-  ).replace(/\/$/, "");
+    "http://localhost:3000";
+  return normalizeSiteUrl(raw);
 }
 
 export function absoluteUrl(path = "/"): string {
