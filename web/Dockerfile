@@ -1,5 +1,5 @@
-# syntax=docker/dockerfile:1
 # Build from repo root: docker build -f web/Dockerfile .
+# No "# syntax=docker/dockerfile:1" — avoids a Docker Hub pull that can fail with 500 on some hosts.
 
 FROM node:22-alpine AS base
 RUN apk add --no-cache libc6-compat openssl wget
