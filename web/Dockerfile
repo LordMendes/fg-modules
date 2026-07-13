@@ -36,14 +36,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/web/public ./web/public
+COPY --from=builder /data/dndtools /data/dndtools
 COPY --from=builder /app/web/prisma ./web/prisma
 COPY --from=builder /app/web/prisma.config.ts ./web/
-COPY --from=builder /app/web/package.json ./web/
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/web/node_modules ./web/node_modules
-COPY --from=builder /data/dndtools /data/dndtools
+COPY --from=builder /app/web/public ./web/public
 
+# Monorepo standalone layout: .next/standalone/{web,node_modules}
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
 

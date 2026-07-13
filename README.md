@@ -1,5 +1,25 @@
 # FG Modules — D&D 3.5 Scraper & Builder
 
+## Monorepo layout
+
+This repository is a **pnpm monorepo**:
+
+| Package | Path | Description |
+|---------|------|-------------|
+| `@fg-modules/web` | `web/` | Next.js D&D 3.5 reference site |
+| Python scraper | `scraper/` | Scrapes new.dndtools.org → `data/dndtools/` |
+
+```bash
+corepack enable
+pnpm install          # install all workspace deps
+pnpm dev              # start @fg-modules/web
+pnpm import:dndtools  # load JSON into Postgres
+```
+
+See [`web/README.md`](web/README.md) for the full web app setup.
+
+---
+
 ## Project goal
 
 Fantasy Grounds is a virtual tabletop that loads **modules** — packaged rule content such as spells, feats, classes, items, and races — so players and GMs can drag entries onto character sheets and reference them in play. Building that content by hand for dozens of D&D 3.5 supplement books is slow and error-prone.
