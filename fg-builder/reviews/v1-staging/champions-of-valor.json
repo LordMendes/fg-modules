@@ -1,0 +1,527 @@
+{
+  "module_name": "Champions of Valor",
+  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Champions of Valor.mod",
+  "book_slug": "champions-of-valor--28",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 28,
+    "feat": 30,
+    "spell": 33
+  },
+  "build_warnings": [
+    "classes/Berronar Valkyrie (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Broken One (Monk): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Claw of the Sun and the Ankh (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Crescent Moon Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Darksong Knight (Fighter): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Dukar (Wizard): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Eternal Order (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Fangshields Barbarian: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Fangshields Druid: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Fangshields Ranger: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Fangshields Ranger",
+    "classes/Golden Cup (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Golden Lion (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Holy Judge (Paladin): unknown class skill name(s) for FG ruleset: royalty)",
+    "classes/Lion Legionnaire (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Mystic Fire Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Noble Heart (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Phoenix Disciple (Monk): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Purple Staff (Cleric): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Red Falcon (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Ruby Rose Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Shadow Sword (Ranger): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Shooting Star (Ranger): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Triadic Knight: unknown class skill name(s) for FG ruleset: royalty)",
+    "classes/Vigilant Eye of Helm (Paladin): missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Wary Swordknight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)"
+  ],
+  "totals": {
+    "errors": 0,
+    "warnings": 60,
+    "info": 0
+  },
+  "issues": [
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Berronar Valkyrie (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Broken One (Monk)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Claw of the Sun and the Ankh (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Crescent Moon Knight (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Darksong Knight (Fighter)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dukar (Wizard)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Eternal Order (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Barbarian",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Druid",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Ranger",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Ranger",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Ranger",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Ranger",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Ranger",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fangshields Ranger",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Golden Cup (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Golden Lion (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Holy Judge (Paladin)",
+      "message": "unknown class skill name(s) for FG ruleset: royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Holy Judge (Paladin)",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Lion Legionnaire (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mystic Fire Knight (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Noble Heart (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Phoenix Disciple (Monk)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Purple Staff (Cleric)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Red Falcon (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ruby Rose Knight (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadow Sword (Ranger)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shooting Star (Ranger)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Triadic Knight",
+      "message": "unknown class skill name(s) for FG ruleset: royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Triadic Knight",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vigilant Eye of Helm (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wary Swordknight (Paladin)",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Disk of Solar Vengeance",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Disk of Solar Vengeance",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Dispel Silence",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Dispel Silence",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Dispel Silence",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Dispel Silence",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Faith Healing Wand",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Golden Dragonmail",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Golden Dragonmail",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Holy Fire Shield",
+      "message": "Missing required field: castingtime",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Holy Fire Shield",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Holy Fire Shield",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Holy Fire Shield",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Holy Fire Shield",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Horrible Taste",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Horrible Taste",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Shard Blessing Aura",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Shard Blessing Aura",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Silver Dragonmail",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Silver Dragonmail",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Skin of the Steel Dragon",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Skin of the Steel Dragon",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spellsong",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spellsong",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spellsong, Lesser",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spellsong, Lesser",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Stormvoice",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Stormvoice",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    }
+  ]
+}

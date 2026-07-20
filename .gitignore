@@ -1,16 +1,5 @@
-scraped/
-scraped/.cache/
-# data/dndtools/
-data/dndtools/.cache/
-modulos-cesar/
 .venv/
 .cursor/
-modules/
-web/lighthouse-reports/
-
-# Node / pnpm monorepo
 node_modules/
-.pnpm-store/
-web/node_modules/
-web/import-dndtools.mjs
-web/import-dndtools.cjs
+
+# Project-specific ignores live in fg-builder/.gitignore and dndtools-reference/.gitignore

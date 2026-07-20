@@ -1,0 +1,634 @@
+{
+  "module_name": "Complete Arcane",
+  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Arcane.mod",
+  "book_slug": "complete-arcane--55",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 22,
+    "feat": 75,
+    "spell": 149,
+    "item": 1
+  },
+  "build_warnings": [
+    "classes/Alienist: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Argent Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Effigy Master: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Geometer: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Green Star Adept: unknown class skill name(s) for FG ruleset: engineering)",
+    "classes/Initiate of the Sevenfold Veil: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Mage of the Arcane Order: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Mindbender: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Sublime Chord: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Wayfarer Guide: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Wild Mage: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Wu Jen: unknown class skill name(s) for FG ruleset: engineering), royalty)"
+  ],
+  "totals": {
+    "errors": 0,
+    "warnings": 75,
+    "info": 0
+  },
+  "issues": [
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Alienist",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Alienist",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Argent Savant",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Argent Savant",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Effigy Master",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Effigy Master",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Geometer",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Geometer",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Green Star Adept",
+      "message": "unknown class skill name(s) for FG ruleset: engineering)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Green Star Adept",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Initiate of the Sevenfold Veil",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Initiate of the Sevenfold Veil",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mage of the Arcane Order",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mage of the Arcane Order",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mindbender",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mindbender",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sublime Chord",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sublime Chord",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wayfarer Guide",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wayfarer Guide",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wild Mage",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wild Mage",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wu Jen",
+      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wu Jen",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Absorption",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Absorption",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aiming At the Target",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aiming At the Target",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Assay Resistance",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Assay Resistance",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Baleful Utterance",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Baleful Utterance",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Baleful Utterance",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Blink, Greater",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Blink, Greater",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Cloud Chariot",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Cloud Chariot",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Discern Shapechanger",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Discern Shapechanger",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Duelward",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Duelward",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fiendform",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fiendform",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fiery Eyes",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Finding the Center",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Finding the Center",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fire Breath",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fire Breath",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fire Wings",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fire Wings",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fist of Stone",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fist of Stone",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Ghostform",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Ghostform",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Giant Size",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Giant Size",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Heart of Stone",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Heart of Stone",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Lightning Blade",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Minute Form",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Minute Form",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Ring of Blades",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Ring of Blades",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Scales of the Lizard",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Scales of the Lizard",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Sign of Sealing, Greater",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Sign of Sealing, Greater",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Sign of Sealing, Greater",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Sign of Sealing, Greater",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spirit Self",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spirit Self",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spiritwall",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Thornskin",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Thornskin",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Skillful",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    }
+  ]
+}

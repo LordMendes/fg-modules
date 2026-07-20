@@ -1,0 +1,165 @@
+# Champions of Valor
+- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Champions of Valor.mod`
+- **Book slug:** `champions-of-valor--28`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 60
+- **Info:** 0
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 28 |
+| feat | 30 |
+| spell | 33 |
+
+## Build warnings (embedded)
+
+- classes/Berronar Valkyrie (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Broken One (Monk): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Claw of the Sun and the Ankh (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Crescent Moon Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Darksong Knight (Fighter): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Dukar (Wizard): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Eternal Order (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Fangshields Barbarian: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Fangshields Druid: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Fangshields Ranger: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Fangshields Ranger
+- classes/Golden Cup (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Golden Lion (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Holy Judge (Paladin): unknown class skill name(s) for FG ruleset: royalty)
+- classes/Lion Legionnaire (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Mystic Fire Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Noble Heart (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Phoenix Disciple (Monk): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Purple Staff (Cleric): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Red Falcon (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Ruby Rose Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Shadow Sword (Ranger): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Shooting Star (Ranger): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Triadic Knight: unknown class skill name(s) for FG ruleset: royalty)
+- classes/Vigilant Eye of Helm (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Wary Swordknight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+
+## Warnings
+
+- **[warning]** `class_missing_classskills` — Berronar Valkyrie (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Broken One (Monk): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Claw of the Sun and the Ankh (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Crescent Moon Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Darksong Knight (Fighter): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Dukar (Wizard): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Eternal Order (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Fangshields Barbarian: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Fangshields Druid: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Fangshields Ranger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fangshields Ranger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fangshields Ranger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fangshields Ranger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Fangshields Ranger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_classskills` — Fangshields Ranger: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Golden Cup (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Golden Lion (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Holy Judge (Paladin): unknown class skill name(s) for FG ruleset: royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Holy Judge (Paladin): Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_missing_classskills` — Lion Legionnaire (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Mystic Fire Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Noble Heart (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Phoenix Disciple (Monk): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Purple Staff (Cleric): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Red Falcon (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Ruby Rose Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Shadow Sword (Ranger): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Shooting Star (Ranger): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Triadic Knight: unknown class skill name(s) for FG ruleset: royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Triadic Knight: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_missing_classskills` — Vigilant Eye of Helm (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_classskills` — Wary Swordknight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `spell_missing_field` — Disk of Solar Vengeance: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Disk of Solar Vengeance: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dispel Silence: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dispel Silence: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dispel Silence: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dispel Silence: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Faith Healing Wand: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Golden Dragonmail: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Golden Dragonmail: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Holy Fire Shield: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Holy Fire Shield: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Holy Fire Shield: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Holy Fire Shield: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Holy Fire Shield: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Horrible Taste: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Horrible Taste: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Shard Blessing Aura: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Shard Blessing Aura: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Silver Dragonmail: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Silver Dragonmail: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Skin of the Steel Dragon: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Skin of the Steel Dragon: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spellsong: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spellsong: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spellsong, Lesser: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spellsong, Lesser: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Stormvoice: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Stormvoice: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.

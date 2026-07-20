@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root dataversion="20230911" release="17.1|CoreRPG:6" version="4.4">
+	<name type="string">Unearthed Arcana</name>
+	<category type="string">Rules</category>
+	<author type="string">FG Modules Scraper</author>
+	<ruleset type="string">3.5E</ruleset>
+</root>

@@ -1,0 +1,184 @@
+# Player's Handbook II
+- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Player's Handbook II.mod`
+- **Book slug:** `players-handbook-ii--80`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 80
+- **Info:** 0
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 5 |
+| feat | 106 |
+| item | 1 |
+| spell | 125 |
+
+## Build warnings (embedded)
+
+- classes/Duskblade: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Knight: unknown class skill name(s) for FG ruleset: royalty)
+- classes/Metamagic Specialist: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Metamagic Specialist: missing classskills (FG will not auto-mark class skills at level 1)
+
+## Warnings
+
+- **[warning]** `class_unknown_skill` — Duskblade: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Duskblade: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_unknown_skill` — Knight: unknown class skill name(s) for FG ruleset: royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Knight: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Metamagic Specialist: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Metamagic Specialist: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `spell_missing_field` — Animalistic Power, Mass: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Animalistic Power, Mass: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Animalistic Power, Mass: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Animalistic Power, Mass: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — As the Frost: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — As the Frost: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Greater: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Greater: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Greater: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Greater: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Greater: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Lesser: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Celerity, Lesser: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Channeled Divine Shield: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Channeled Divine Shield: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Cloud of Knives: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Cloud of Knives: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Deflect: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Deflect: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Deflect, Lesser: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Deflect, Lesser: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dragonshape: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dragonshape: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Electric Vengeance, Greater: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Electric Vengeance, Greater: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Electric Vengeance, Greater: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Electric Vengeance, Greater: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge, Greater: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge, Greater: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge, Greater: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge, Greater: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Energy Surge, Greater: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Evard's Menacing Tentacles: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Evard's Menacing Tentacles: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Hunter's Eye: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Hunter's Eye: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Heavy Protection: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Heavy Protection: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Heavy Protection: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Heavy Protection: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Heavy Protection: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Moderate Protection: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Moderate Protection: Missing required field: range
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Moderate Protection: Missing required field: duration
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Moderate Protection: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Invest Moderate Protection: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Mirror Image, Greater: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Mirror Image, Greater: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Mystic Aegis: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Mystic Aegis: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sonic Shield: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sonic Shield: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sure Strike: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Sure Strike: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Trollshape: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Trollshape: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Visions of the Future: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Visions of the Future: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `missing_type_attr` — Talisman of Transference: Field 'cl' should have type="string"
+  - Remediation: Add type attributes per FG export conventions.

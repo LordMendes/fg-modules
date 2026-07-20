@@ -1,0 +1,13 @@
+.venv/
+data/dndtools/.cache/
+node_modules/
+.pnpm-store/
+web/node_modules/
+web/import-dndtools.mjs
+web/import-dndtools.cjs
+web/.env
+web/.next/
+web/lighthouse-reports/
+__pycache__/
+*.pyc
+.pytest_cache/

@@ -1,0 +1,8 @@
+scraped/
+scraped/.cache/
+modules/
+modulos-cesar/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

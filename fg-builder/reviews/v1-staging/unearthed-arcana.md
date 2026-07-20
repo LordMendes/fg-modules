@@ -1,0 +1,565 @@
+# Unearthed Arcana
+- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Unearthed Arcana.mod`
+- **Book slug:** `unearthed-arcana--90`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 239
+- **Info:** 0
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 50 |
+| feat | 95 |
+| spell | 2 |
+
+## Build warnings (embedded)
+
+- classes/Abjurer Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Abjurer Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Barbarian Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Barbarian Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Bard Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Bard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Bardic Sage: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Battle Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Cleric Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Cleric Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Cloistered Cleric: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Conjurer Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Conjurer Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Divine Bard: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Divine Bard: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Diviner Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Diviner Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Domain Wizard: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Domain Wizard: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Druid Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Druid Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Druidic Avenger: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Druidic Avenger: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Enchanter Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Enchanter Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Evoker Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Evoker Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Expert: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Fighter Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Fighter Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Illusionist Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Illusionist Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Monk Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Monk Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Monk Variant: Fighting Styles: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Monk Variant: Fighting Styles: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Necromancer Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Necromancer Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Paladin of Freedom: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Paladin of Freedom: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Paladin of Slaughter: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Paladin of Slaughter: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Paladin of Tyranny: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Paladin of Tyranny: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Paladin Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Planar Ranger: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Planar Ranger: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Prestige Paladin: unknown class skill name(s) for FG ruleset: royalty)
+- classes/Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Rogue Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Rogue Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Savage Bard: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Savage Bard: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Sorcerer/Wizard Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Sorcerer/Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Totem Barbarian: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Totem Barbarian: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Totem Barbarian
+- classes/Transmuter Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Transmuter Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Urban Ranger: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Warrior: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Wilderness Rogue: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Wilderness Rogue: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Wizard Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+
+## Warnings
+
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Abjurer Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Abjurer Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Barbarian Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Barbarian Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Bard Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Bard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Bardic Sage: unknown class skill name(s) for FG ruleset: engineering), royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Bardic Sage: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_missing_skillranks` — Battle Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Cleric Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Cleric Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_classskills` — Cloistered Cleric: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Conjurer Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Conjurer Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Divine Bard: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Divine Bard: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Diviner Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Diviner Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Domain Wizard: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Domain Wizard: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Druid Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Druid Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Druidic Avenger: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Druidic Avenger: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Elf Paragon: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Enchanter Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Enchanter Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Evoker Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Evoker Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Expert: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Expert: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Expert: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Expert: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_classskills` — Expert: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Fighter Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Fighter Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Illusionist Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Illusionist Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Monk Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Monk Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Monk Variant: Fighting Styles: Fighting Styles: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Monk Variant: Fighting Styles: Fighting Styles: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Necromancer Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Necromancer Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Paladin of Freedom: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Paladin of Freedom: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Paladin of Slaughter: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Paladin of Slaughter: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Paladin of Slaughter: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Paladin of Tyranny: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Paladin of Tyranny: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Paladin of Tyranny: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Paladin Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Planar Ranger: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Planar Ranger: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Prestige Paladin: unknown class skill name(s) for FG ruleset: royalty)
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_malformed_classskills` — Prestige Paladin: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
+  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Rogue Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Rogue Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Savage Bard: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Savage Bard: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Sorcerer/Wizard Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Sorcerer/Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Spellcaster: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Totem Barbarian: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Totem Barbarian: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Totem Barbarian: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Transmuter Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Transmuter Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Urban Ranger: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_field` — Warrior: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Warrior: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Warrior: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Warrior: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_classskills` — Warrior: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Wilderness Rogue: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Wilderness Rogue: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: hitdie
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_skillranks` — Wizard Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `spell_missing_field` — Auspicious Odds: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Auspicious Odds, Mass: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Auspicious Odds, Mass: Missing required field: castingtime
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Auspicious Odds, Mass: Missing required field: save
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Auspicious Odds, Mass: Missing required field: sr
+  - Remediation: Rebuild spell with complete reference fields.
