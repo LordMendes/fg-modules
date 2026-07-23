@@ -8,6 +8,7 @@ import {
   CATEGORY_FILTER_FIELDS,
   DESCRIPTION_SEARCH_CATEGORIES,
   DESCRIPTION_SEARCH_PLACEHOLDERS,
+  FEAT_QUICK_CATEGORY_CHIPS,
   buildListSearchParams,
   hasActiveFilters,
   type CategoryFilterOptions,
@@ -147,6 +148,29 @@ export function EntityListFilters({
           onChange={setEditions}
           searchable={false}
         />
+
+        {category === "feats" ? (
+          <div className="filter-chip-group">
+            <span className="multi-select-label">Flaws</span>
+            <div className="filter-chips">
+              {FEAT_QUICK_CATEGORY_CHIPS.map((opt) => {
+                const selected = fields.type ?? [];
+                const isOn = selected.includes(opt.value);
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    className={`filter-chip${isOn ? " is-active" : ""}`}
+                    aria-pressed={isOn}
+                    onClick={() => toggleChip("type", opt.value)}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
 
         {fieldDefs.map((def) => {
           if (def.ui === "chips") {

@@ -16,7 +16,12 @@ from ..html_utils import (
     wrap_paragraph,
 )
 from ..loader import BuildReport
-from ..validators import validate_class_skill_automation
+from ..validators import (
+    classify_spell_feature,
+    normalize_spell_feature_name,
+    validate_class_skill_automation,
+    validate_class_spellcasting_automation,
+)
 from ..xml_builder import (
     IdAllocator,
     make_category,
@@ -73,6 +78,13 @@ def _normalize_spell_text(text: str) -> str:
         count=1,
         flags=re.I,
     )
+    text = re.sub(
+        r"must have an? (\w+) score of (10(?:\s*\+\s*the spell'?s level)?[^.\n]*)",
+        r"must have a \1 score equal to \2",
+        text,
+        count=1,
+        flags=re.I,
+    )
     return re.sub(
         r"(To cast .+? must have an? \w+ score) of (10(?:\s*\+\s*the spell'?s level)?)",
         r"\1 equal to \2",
@@ -88,6 +100,33 @@ def _missing_spellcasting_body(feat_text: str, notes_text: str) -> str:
     return _extract_spell_requirement(notes_text)
 
 
+def _prepare_feature_for_output(
+    feat: dict[str, Any], detail: dict[str, Any]
+) -> dict[str, Any]:
+    """Return feat copy with FG spell-class hook name and normalized casting text."""
+    prepared = dict(feat)
+    notes_text = detail.get("notes_text", "")
+    kind = classify_spell_feature(feat, detail)
+    prepared["name"] = normalize_spell_feature_name(feat, detail)
+
+    if kind in ("primary_caster", "prestige_advancement"):
+        text = feat.get("text", "")
+        html = feat.get("text_html") or ""
+        extra = _missing_spellcasting_body(text, notes_text)
+        if extra:
+            text = f"{text}\n{extra}".strip() if text else extra
+            if html and extra not in html:
+                html = html + wrap_paragraph(extra)
+            elif not html:
+                html = wrap_paragraph(text)
+        text = _normalize_spell_text(text)
+        html = _normalize_spell_text(html)
+        prepared["text"] = text
+        prepared["text_html"] = html or wrap_paragraph(text)
+
+    return prepared
+
+
 def _prepare_feature_content(
     feat: dict[str, Any], notes_text: str
 ) -> tuple[str, str]:
@@ -95,7 +134,7 @@ def _prepare_feature_content(
     html = feat.get("text_html") or ""
     name = (feat.get("name") or "").strip().lower()
 
-    if name in ("spells", "spells per day"):
+    if name in ("spells", "spells per day", "alchemy") or name == "spellcasting":
         extra = _missing_spellcasting_body(text, notes_text)
         if extra:
             text = f"{text}\n{extra}".strip() if text else extra
@@ -261,18 +300,27 @@ def convert_classes(
         ):
             report.warnings.append(warning)
 
-        notes_text = detail.get("notes_text", "")
         features = detail.get("class_features") or []
-        if features:
+        prepared_features = [_prepare_feature_for_output(f, detail) for f in features]
+        for code, _severity, message in validate_class_spellcasting_automation(
+            rec.get("name", ""),
+            detail,
+            features=prepared_features,
+        ):
+            if code != "class_spell_variant_reference_only":
+                report.warnings.append(f"classes/{rec.get('name', '?')}: {message}")
+
+        notes_text = detail.get("notes_text", "")
+        if prepared_features:
             cf_el = ET.SubElement(node, "classfeatures")
-            for feat in features:
+            for prepared in prepared_features:
                 fid = ids.next_id("classfeature", rec.get("name", ""))
                 fnode = ET.SubElement(cf_el, fid)
-                typed_number(fnode, "level", feat.get("level", 1))
-                typed_string(fnode, "name", feat.get("name", ""))
-                if feat.get("type"):
-                    typed_string(fnode, "type", feat["type"])
-                html, _ = _prepare_feature_content(feat, notes_text)
+                typed_number(fnode, "level", prepared.get("level", 1))
+                typed_string(fnode, "name", prepared.get("name", ""))
+                if prepared.get("type"):
+                    typed_string(fnode, "type", prepared["type"])
+                html, _ = _prepare_feature_content(prepared, notes_text)
                 text_el = typed_formattedtext(fnode, "text", html)
                 set_formatted_inner(text_el, prepare_formatted_html(html))
 

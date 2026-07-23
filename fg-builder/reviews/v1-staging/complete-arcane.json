@@ -1,6 +1,6 @@
 {
   "module_name": "Complete Arcane",
-  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Arcane.mod",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Complete Arcane.mod",
   "book_slug": "complete-arcane--55",
   "load_ready": true,
   "automation_ready": false,
@@ -11,217 +11,21 @@
     "item": 1
   },
   "build_warnings": [
-    "classes/Alienist: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Argent Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Effigy Master: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Geometer: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Green Star Adept: unknown class skill name(s) for FG ruleset: engineering)",
-    "classes/Initiate of the Sevenfold Veil: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Mage of the Arcane Order: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Mindbender: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Sublime Chord: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Wayfarer Guide: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Wild Mage: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Wu Jen: unknown class skill name(s) for FG ruleset: engineering), royalty)"
+    "classes/Mage of the Arcane Order: Primary caster missing level-1 Spells classfeature for FG spell-class hook"
   ],
+  "spellclass_readiness": {
+    "spell_related_features": 20,
+    "named_spells": 2,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 18,
+    "score_equal_to_count": 4
+  },
   "totals": {
     "errors": 0,
-    "warnings": 75,
+    "warnings": 51,
     "info": 0
   },
   "issues": [
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Alienist",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Alienist",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Argent Savant",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Argent Savant",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Effigy Master",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Effigy Master",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Geometer",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Geometer",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Green Star Adept",
-      "message": "unknown class skill name(s) for FG ruleset: engineering)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Green Star Adept",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Initiate of the Sevenfold Veil",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Initiate of the Sevenfold Veil",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Mage of the Arcane Order",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Mage of the Arcane Order",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Mindbender",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Mindbender",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Sublime Chord",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Sublime Chord",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Wayfarer Guide",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Wayfarer Guide",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Wild Mage",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Wild Mage",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Wu Jen",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Wu Jen",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
     {
       "code": "spell_missing_field",
       "severity": "warning",

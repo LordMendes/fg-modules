@@ -6,8 +6,10 @@ import type { SpellComponentFlags } from "@/lib/spell-utils";
 import {
   CATEGORY_FILTER_FIELDS,
   CLASS_TYPE_FILTER_OPTIONS,
+  FEAT_QUICK_CATEGORY_CHIPS,
   SPELL_COMPONENT_FILTER_OPTIONS,
   formatBooleanFilterLabel,
+  mergePinnedFilterOptions,
   normalizeFilterValues,
   type CategoryFilterOptions,
   type FilterFieldDef,
@@ -621,9 +623,10 @@ async function getFieldFilterOptions(
         _count: { featType: true },
         orderBy: { _count: { featType: "desc" } },
       });
-      return rows
+      const dynamic = rows
         .filter((r) => r.featType)
         .map((r) => ({ value: r.featType!, label: r.featType! }));
+      return mergePinnedFilterOptions(FEAT_QUICK_CATEGORY_CHIPS, dynamic);
     }
     case "monsters": {
       if (field === "creatureType") {

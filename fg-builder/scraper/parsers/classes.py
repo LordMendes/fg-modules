@@ -39,6 +39,14 @@ FEATURE_STRONG_RE = re.compile(
     r"^(.+?)(?:\(([^)]+)\))?\s*:?\s*$",
 )
 ORDINAL_LEVEL_RE = re.compile(r"^(\d+)(?:st|nd|rd|th)?$", re.I)
+_SPELLCASTING_ADVANCEMENT_RE = re.compile(
+    r"(?:"
+    r"\+?\s*1\s+level of existing\b|"
+    r"gains new spells per day|"
+    r"determines spells per day"
+    r")",
+    re.I,
+)
 
 
 def parse_classes_index(soup: BeautifulSoup, page_url: str) -> list[dict[str, Any]]:
@@ -383,6 +391,10 @@ def _derive_progression(advancement: list[dict[str, Any]]) -> dict[str, str]:
     return result
 
 
+def _is_spellcasting_advancement(special: str) -> bool:
+    return bool(_SPELLCASTING_ADVANCEMENT_RE.search(special or ""))
+
+
 def _merge_advancement_features(
     features: list[dict[str, Any]],
     advancement: list[dict[str, Any]],
@@ -394,6 +406,21 @@ def _merge_advancement_features(
         if not special:
             continue
         level = row.get("level", 0)
+        if _is_spellcasting_advancement(special):
+            key = (level, "spells per day")
+            if key not in existing:
+                merged.append(
+                    {
+                        "level": level,
+                        "name": "Spells per Day",
+                        "type": "",
+                        "text_html": f"<p>{special}</p>",
+                        "text": special,
+                        "source": "advancement",
+                    }
+                )
+                existing.add(key)
+            continue
         for part in re.split(r"\s*,\s*|\s+and\s+", special):
             name = part.strip()
             if not name or len(name) < 3:

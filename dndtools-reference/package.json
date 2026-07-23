@@ -11,7 +11,8 @@
     "db:migrate": "pnpm --filter @fg-modules/web db:migrate",
     "db:deploy": "pnpm --filter @fg-modules/web db:deploy",
     "db:generate": "pnpm --filter @fg-modules/web db:generate",
-    "import:dndtools": "pnpm --filter @fg-modules/web import:dndtools"
+    "import:dndtools": "pnpm --filter @fg-modules/web import:dndtools",
+    "scrape:flaws": "python -m scraper.scrape_flaws"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

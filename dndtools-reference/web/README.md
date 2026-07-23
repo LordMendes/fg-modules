@@ -11,33 +11,151 @@ Part of the `dndtools-reference` pnpm workspace (`@fg-modules/web`).
 - PostgreSQL 16+ (or Docker)
 - Scraped JSON data in `../data/dndtools/`
 
-## Local Development
+## Running locally
 
-From **`dndtools-reference/`** (project root):
+All commands below assume your shell is in **`dndtools-reference/`** (the pnpm workspace root), not `web/` or the repo root `fg_modules/`.
+
+### Prerequisites
+
+| Requirement | Notes |
+|-------------|--------|
+| Node.js 22+ | `node -v` |
+| pnpm 10+ | `corepack enable` then `pnpm -v` |
+| Docker Desktop | Easiest way to run PostgreSQL 16 |
+| JSON data | Must exist at `../data/dndtools/` (bundled in repo) |
+
+### First-time setup
+
+**1. Start PostgreSQL**
 
 ```bash
-# Start PostgreSQL
 docker compose up -d postgres
+```
 
-# Install dependencies
+Wait until the container is healthy: `docker compose ps` should show `postgres` as running.
+
+**2. Install dependencies**
+
+```bash
 pnpm install
+```
 
-# Copy environment
+**3. Create environment file**
+
+Linux / macOS:
+
+```bash
 cp web/.env.example web/.env
+```
 
-# Run migrations
+Windows (PowerShell):
+
+```powershell
+Copy-Item web\.env.example web\.env
+```
+
+Edit `web/.env` if needed. Defaults match `docker-compose.yml`:
+
+| Variable | Default |
+|----------|---------|
+| `DATABASE_URL` | `postgresql://dndtools:dndtools@localhost:5432/dndtools?schema=public` |
+| `SITE_URL` | `http://localhost:3000` |
+| `SESSION_SECRET` | Replace with a random string (e.g. `openssl rand -base64 32`) |
+
+**4. Create database tables (required before `pnpm dev`)**
+
+```bash
 pnpm db:deploy
+```
 
-# Import JSON data (~13,800 records)
+This applies Prisma migrations and creates tables such as `Skill`, `Feat`, `Spell`, etc. **Skipping this step causes a 500 error** on the homepage (`The table public.Skill does not exist`, Prisma `P2021`).
+
+**5. Import JSON data (~13,800 records)**
+
+```bash
 pnpm import:dndtools
+```
 
-# Start dev server
+First run takes a few minutes. Re-running is safe (upserts on slug).
+
+**6. Start the dev server**
+
+```bash
 pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-You can also run commands from `web/` directly with `pnpm <script>`.
+### Daily development
+
+If Postgres is already running and data is imported:
+
+```bash
+docker compose up -d postgres   # if not already up
+pnpm dev
+```
+
+### Verify it works
+
+| Check | Expected |
+|-------|----------|
+| [http://localhost:3000](http://localhost:3000) | Home page with category counts (not 500) |
+| [http://localhost:3000/feats](http://localhost:3000/feats) | Feat list, default sort name A→Z |
+| [http://localhost:3000/feats?type=Flaw](http://localhost:3000/feats?type=Flaw) | Flaws filter (or `/flaws` redirect) |
+
+### Troubleshooting
+
+**`The table public.Skill does not exist` (P2021)**
+
+The app is connected to Postgres but migrations were never applied. Run:
+
+```bash
+pnpm db:deploy
+pnpm import:dndtools
+```
+
+Then restart `pnpm dev`.
+
+**Empty category pages**
+
+Run `pnpm import:dndtools`. Confirm JSON files exist under `data/dndtools/`.
+
+**Database connection refused**
+
+- `docker compose ps` — is `postgres` running?
+- `DATABASE_URL` in `web/.env` must match Docker credentials (`dndtools` / `dndtools` on port `5432`).
+
+**Port 5432 already in use**
+
+Change the host port in `docker-compose.yml` and update `DATABASE_URL` accordingly, or stop the conflicting Postgres instance.
+
+**Reset database (wipes all data)**
+
+```bash
+docker compose down -v
+docker compose up -d postgres
+pnpm db:deploy
+pnpm import:dndtools
+```
+
+### Production-style run (optional)
+
+```bash
+pnpm build
+pnpm start
+```
+
+Serves the production build on port 3000 (no hot reload).
+
+### Running from `web/` only
+
+You can `cd web` and run `pnpm dev`, but database commands are easiest from the workspace root:
+
+```bash
+pnpm db:deploy
+pnpm import:dndtools
+pnpm dev
+```
 
 ## Environment Variables
 

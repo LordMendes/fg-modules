@@ -1,9 +1,9 @@
 # Complete Arcane
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Arcane.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Complete Arcane.mod`
 - **Book slug:** `complete-arcane--55`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 75
+- **Warnings:** 51
 - **Info:** 0
 ## Record counts
 | Category | Count |
@@ -13,71 +13,22 @@
 | item | 1 |
 | spell | 149 |
 
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 20 |
+| Named `Spells` (FG hook) | 2 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 18 |
+| `score equal to` in class text | 4 |
+
 ## Build warnings (embedded)
 
-- classes/Alienist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Argent Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Effigy Master: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Geometer: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Green Star Adept: unknown class skill name(s) for FG ruleset: engineering)
-- classes/Initiate of the Sevenfold Veil: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Mage of the Arcane Order: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Mindbender: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Sublime Chord: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Wayfarer Guide: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Wild Mage: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Wu Jen: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Mage of the Arcane Order: Primary caster missing level-1 Spells classfeature for FG spell-class hook
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Alienist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Alienist: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Argent Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Argent Savant: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Effigy Master: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Effigy Master: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Geometer: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Geometer: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Green Star Adept: unknown class skill name(s) for FG ruleset: engineering)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Green Star Adept: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Initiate of the Sevenfold Veil: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Initiate of the Sevenfold Veil: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Mage of the Arcane Order: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Mage of the Arcane Order: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Mindbender: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Mindbender: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Sublime Chord: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Sublime Chord: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Wayfarer Guide: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Wayfarer Guide: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Wild Mage: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Wild Mage: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Wu Jen: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Wu Jen: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `spell_missing_field` — Absorption: Missing required field: save
   - Remediation: Rebuild spell with complete reference fields.
 - **[warning]** `spell_missing_field` — Absorption: Missing required field: sr

@@ -18,6 +18,10 @@ from .validators.class_skills import (
     parse_classskill_names,
     validate_class_skill_automation,
 )
+from .validators.class_spellcasting import (
+    summarize_spellclass_readiness,
+    validate_class_spellcasting_automation,
+)
 
 Severity = Literal["error", "warning", "info"]
 
@@ -60,7 +64,7 @@ TYPED_NUMBER_TAGS = frozenset({"skillranks", "weight", "cl", "mult", "stack"})
 TYPED_FORMATTED_TAGS = frozenset(
     {"description", "benefit", "normal", "special", "text", "requirements"}
 )
-MALFORMED_SKILL_ARTIFACTS = re.compile(r"(engineering\)|royalty\))")
+MALFORMED_SKILL_ARTIFACTS = re.compile(r"(?:^|,\s*)(?:engineering\)|royalty\))(?:\s|,|$)")
 
 REQUIRED_ROOT_ATTRS = ("version", "dataversion", "release")
 EXPECTED_VERSION = "4.4"
@@ -95,6 +99,7 @@ class ReviewReport:
     load_ready: bool = True
     record_counts: dict[str, int] = field(default_factory=dict)
     build_warnings: list[str] = field(default_factory=list)
+    spellclass_readiness: dict[str, int] = field(default_factory=dict)
     issues: list[ReviewIssue] = field(default_factory=list)
 
     @property
@@ -123,6 +128,7 @@ class ReviewReport:
             "automation_ready": self.load_ready and not self.warnings,
             "record_counts": self.record_counts,
             "build_warnings": self.build_warnings,
+            "spellclass_readiness": self.spellclass_readiness,
             "totals": {
                 "errors": len(self.errors),
                 "warnings": len(self.warnings),
@@ -439,6 +445,42 @@ def _check_class_record(report: ReviewReport, node: ET.Element) -> None:
                     )
                 )
 
+    for code, severity, message in validate_class_spellcasting_automation(
+        name,
+        {},
+        features=[
+            {
+                "level": int(_typed_value(feat.find("level")) or 0),
+                "name": _typed_value(feat.find("name")),
+                "text": _text(feat.find("text")),
+            }
+            for feat in (features or [])
+        ],
+    ):
+        remediation = "Normalize Spells feature text and rebuild module."
+        if code == "class_missing_spells_feature":
+            remediation = (
+                "Rename primary caster Spellcasting feature to Spells and include "
+                "'score equal to' ability text."
+            )
+        elif code == "class_missing_spells_per_day":
+            remediation = (
+                "Emit Spells per Day classfeatures for prestige spellcasting advancement rows."
+            )
+        elif code == "class_spell_variant_reference_only":
+            remediation = "Expected for variant classes that modify an existing caster."
+
+        report.add(
+            ReviewIssue(
+                code=code,
+                severity=severity,
+                category=section,
+                record_name=name,
+                message=message,
+                remediation=remediation,
+            )
+        )
+
     _check_typed_nodes(report, node, section, name)
 
 
@@ -737,6 +779,8 @@ def _validate_db_xml(report: ReviewReport, db_path: Path) -> ET.Element | None:
         "item": _check_item_record,
     }
 
+    spellclass_records: list[tuple[str, list[tuple[str, str]]]] = []
+
     for section in root:
         handler = section_handlers.get(section.tag)
         if handler is None:
@@ -749,6 +793,21 @@ def _validate_db_xml(report: ReviewReport, db_path: Path) -> ET.Element | None:
 
         for record in _iter_records(section):
             handler(report, record)
+            if section.tag == "class":
+                class_name = _typed_value(record.find("name")) or record.tag
+                feat_nodes = record.find("classfeatures")
+                feature_pairs = []
+                if feat_nodes is not None:
+                    for feat in feat_nodes:
+                        feat_name = _typed_value(feat.find("name"))
+                        feat_text = _text(feat.find("text"))
+                        feature_pairs.append((feat_name, feat_text))
+                spellclass_records.append((class_name, feature_pairs))
+
+    if spellclass_records:
+        report.spellclass_readiness = summarize_spellclass_readiness(
+            spellclass_records
+        )
 
     if not report.record_counts:
         report.add(

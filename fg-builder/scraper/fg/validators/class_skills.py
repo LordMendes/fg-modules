@@ -52,6 +52,28 @@ _SKILL_POINTS_IN_TEXT = re.compile(r"skill\s+points\s*:", re.I)
 _SKIP_SKILL_LISTS = frozenset({"any 10", "any ten"})
 
 
+def _split_classskill_parts(text: str) -> list[str]:
+    """Split classskills on commas outside parentheses; normalize trailing 'and'."""
+    text = re.sub(r",\s*and\s+", ", ", text.strip())
+    parts: list[str] = []
+    depth = 0
+    start = 0
+    for index, char in enumerate(text):
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth = max(0, depth - 1)
+        elif char == "," and depth == 0:
+            part = text[start:index].strip()
+            if part:
+                parts.append(part)
+            start = index + 1
+    tail = text[start:].strip()
+    if tail:
+        parts.append(tail)
+    return parts
+
+
 def parse_classskill_names(classskills: str) -> list[str]:
     """Extract base skill names from an FG classskills string."""
     text = (classskills or "").strip()
@@ -61,9 +83,8 @@ def parse_classskill_names(classskills: str) -> list[str]:
     if lowered in _SKIP_SKILL_LISTS:
         return []
 
-    text = text.replace(" and ", ",")
     names: list[str] = []
-    for part in (p.strip() for p in text.split(",") if p.strip()):
+    for part in _split_classskill_parts(text):
         entry = part
         while True:
             match = re.search(r"\((\w+)\)\s*$", entry)

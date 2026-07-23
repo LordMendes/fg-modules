@@ -1,9 +1,9 @@
 # Champions of Valor
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Champions of Valor.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Champions of Valor.mod`
 - **Book slug:** `champions-of-valor--28`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 60
+- **Warnings:** 59
 - **Info:** 0
 ## Record counts
 | Category | Count |
@@ -11,6 +11,16 @@
 | class | 28 |
 | feat | 30 |
 | spell | 33 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 2 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 2 |
+| Named `Spells per Day` (prestige hook) | 0 |
+| `score equal to` in class text | 0 |
 
 ## Build warnings (embedded)
 
@@ -77,10 +87,10 @@
   - Remediation: Add comma-separated classskills string.
 - **[warning]** `class_missing_classskills` — Golden Lion (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
-- **[warning]** `class_unknown_skill` — Holy Judge (Paladin): unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
 - **[warning]** `class_malformed_classskills` — Holy Judge (Paladin): Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
   - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_spell_ability_text` — Knight of the Weave: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `class_missing_classskills` — Lion Legionnaire (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
 - **[warning]** `class_missing_classskills` — Mystic Fire Knight (Paladin): missing classskills (FG will not auto-mark class skills at level 1)
@@ -99,8 +109,6 @@
   - Remediation: Add comma-separated classskills string.
 - **[warning]** `class_missing_classskills` — Shooting Star (Ranger): missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
-- **[warning]** `class_unknown_skill` — Triadic Knight: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
 - **[warning]** `class_malformed_classskills` — Triadic Knight: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
   - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `class_missing_classskills` — Vigilant Eye of Helm (Paladin): missing classskills (FG will not auto-mark class skills at level 1)

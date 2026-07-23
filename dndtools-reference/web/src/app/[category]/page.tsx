@@ -4,6 +4,7 @@ import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
 import { getCategoryFilterOptions, listEntities } from "@/lib/entities";
 import {
   hasActiveFilters,
+  isFlawsFeatFilter,
   parseListSearchParams,
   serializeFilters,
 } from "@/lib/entity-filters";
@@ -22,7 +23,11 @@ export async function generateMetadata({ params, searchParams }: Props) {
   const { category } = await params;
   const rawParams = await searchParams;
   if (!isCategoryKey(category)) return {};
-  const label = getCategoryLabel(category);
+  const filters = parseListSearchParams(category as CategoryKey, rawParams);
+  const label =
+    category === "feats" && isFlawsFeatFilter(filters)
+      ? "Flaws"
+      : getCategoryLabel(category);
   return buildPageMetadata({
     title: label,
     description: `Browse and search the complete ${label.toLowerCase()} compendium for D&D 3.5 Edition.`,
@@ -51,6 +56,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   ]);
 
   const { items, nextCursor } = listResult;
+  const flawsView = categoryKey === "feats" && isFlawsFeatFilter(filters);
+  const pageTitle = flawsView ? "Flaws" : getCategoryLabel(category);
   const sourceLabel =
     filters.sources.length === 1
       ? filters.sources[0]
@@ -60,7 +67,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const breadcrumbItems = [
     { name: "Home", path: "/" },
-    { name: getCategoryLabel(category), path: `/${category}` },
+    { name: pageTitle, path: flawsView ? "/feats?type=Flaw" : `/${category}` },
   ];
   if (filters.sources.length === 1) {
     breadcrumbItems.push({
@@ -73,7 +80,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     <>
       <JsonLd data={absoluteBreadcrumbJsonLd(breadcrumbItems, absoluteUrl)} />
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">Home</Link> / {getCategoryLabel(category)}
+        <Link href="/">Home</Link> / {pageTitle}
         {filters.sources.length === 1 && (
           <>
             {" "}/{" "}
@@ -82,13 +89,15 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         )}
       </nav>
       <div className="page-header">
-        <h1>{getCategoryLabel(category)}</h1>
+        <h1>{pageTitle}</h1>
         <p>
-          {hasActiveFilters(filters)
-            ? sourceLabel
-              ? `Filtered results${filters.sources.length === 1 ? ` from ${sourceLabel}` : ` across ${sourceLabel}`}.`
-              : "Filtered results for this category."
-            : `Browse and search the complete ${getCategoryLabel(category).toLowerCase()} compendium.`}
+          {flawsView
+            ? "Character flaws from Unearthed Arcana and other sources."
+            : hasActiveFilters(filters)
+              ? sourceLabel
+                ? `Filtered results${filters.sources.length === 1 ? ` from ${sourceLabel}` : ` across ${sourceLabel}`}.`
+                : "Filtered results for this category."
+              : `Browse and search the complete ${getCategoryLabel(category).toLowerCase()} compendium.`}
         </p>
       </div>
       <EntityListFilters

@@ -1,9 +1,9 @@
 # Complete Divine
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Divine.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Complete Divine.mod`
 - **Book slug:** `complete-divine--56`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 65
+- **Warnings:** 60
 - **Info:** 5
 ## Record counts
 | Category | Count |
@@ -13,32 +13,30 @@
 | item | 1 |
 | spell | 128 |
 
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 30 |
+| Named `Spells` (FG hook) | 3 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 27 |
+| `score equal to` in class text | 9 |
+
 ## Build warnings (embedded)
 
-- classes/Evangelist: unknown class skill name(s) for FG ruleset: engineering), royalty)
 - classes/Geomancer: unknown class skill name(s) for FG ruleset: Scry
 - classes/Moon Guardian: unknown class skill name(s) for FG ruleset: Control Shape
-- classes/Shugenja: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Void Disciple: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Shugenja: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Evangelist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Evangelist: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `class_unknown_skill` — Geomancer: unknown class skill name(s) for FG ruleset: Scry
   - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
 - **[warning]** `class_unknown_skill` — Moon Guardian: unknown class skill name(s) for FG ruleset: Control Shape
   - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_unknown_skill` — Shugenja: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Shugenja: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Void Disciple: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Void Disciple: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_spell_ability_text` — Shugenja: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `spell_missing_field` — Beast Claws: Missing required field: save
   - Remediation: Rebuild spell with complete reference fields.
 - **[warning]** `spell_missing_field` — Beast Claws: Missing required field: sr

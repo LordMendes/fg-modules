@@ -1,0 +1,869 @@
+{
+  "module_name": "Book of Exalted Deeds",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Book of Exalted Deeds.mod",
+  "book_slug": "book-of-exalted-deeds--52",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 22,
+    "feat": 53,
+    "spell": 121,
+    "item": 56,
+    "race": 1
+  },
+  "build_warnings": [
+    "classes/Apostle of Peace: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Emissary of Barachiel: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Exalted Arcanist: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes/Sentinel of Bharrai: unknown class skill name(s) for FG ruleset: Alchemy, engineering), royalty)",
+    "classes/Skylord: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Troubadour of Stars: unknown class skill name(s) for FG ruleset: engineering), royalty)",
+    "classes/Vassal of Bahamut: unknown class skill name(s) for FG ruleset: royalty)"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 16,
+    "named_spells": 6,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 10,
+    "score_equal_to_count": 6
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 104,
+    "info": 0
+  },
+  "issues": [
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Apostle of Peace",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Emissary of Barachiel",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Exalted Arcanist",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sentinel of Bharrai",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sentinel of Bharrai",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Skylord",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Troubadour of Stars",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vassal of Bahamut",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity",
+      "message": "Missing required field: castingtime",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Greater",
+      "message": "Missing required field: castingtime",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Greater",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Greater",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Greater",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Greater",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Lesser",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Aspect of the Deity, Lesser",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Blessed Sight",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Blessed Sight",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Blinding Beauty",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Blinding Beauty",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Channel Greater Celestial",
+      "message": "Missing required field: castingtime",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Channel Greater Celestial",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Channel Greater Celestial",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Channel Greater Celestial",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Channel Greater Celestial",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Divine Sacrifice",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Divine Sacrifice",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Eladrin Form",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Eladrin Form",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Path of the Exalted",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Path of the Exalted",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Quickshift",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Quickshift",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Radiant Shield",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Radiant Shield",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Righteous Glare",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Righteous Glare",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Shield of the Archons",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Shield of the Archons",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Smite Heretic",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Smite Heretic",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Unearthly Beauty",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Unearthly Beauty",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Angelic",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Antimagic Shackles",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Asura Shield",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Banishing",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Barsolidor, the Tyrant Bane",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Blessed",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Bow of the Solars",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Caduceus",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Celestial Blade",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Celestial Mace",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "item_missing_cost",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Cup and Talisman of Al’Akbar",
+      "message": "Missing cost field",
+      "remediation": "Add cost string from scraped price."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Dart of the Phoenix",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Demondoom",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Devilhusk",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Empyreal",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Enfeebling",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Exalted",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "item_missing_cost",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Ezrylon",
+      "message": "Missing cost field",
+      "remediation": "Add cost string from scraped price."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Ezrylon",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Hellpiercer",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Hwyrr, the Clarion Harp",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Iasalas, the Watershod",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Incense of Consecration",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Lunistra, the Heartstar",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Nightblade of Arvandor",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Paralyzing",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Darkskull",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Demon Armor",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Mace of Blood",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "item_missing_cost",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Nine Lives Stealer",
+      "message": "Missing cost field",
+      "remediation": "Add cost string from scraped price."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Nine Lives Stealer",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Robe of the Archmagi",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Rod of the Viper",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Redeemed Unholy Weapon",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Retributive Amulet",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Righteous",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Ring of Adamantine Touch",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Ring of Affliction",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Ring of Solar Wings",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Ring of Vengeance",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Roaring",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Sacred",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Seryl, the Laughing Bow",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Shackles of Silence",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Soulfire",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Staff of Rapture",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Starmantle Cloak",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Sunstaff",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "item_missing_cost",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "The Regalia of Good",
+      "message": "Missing cost field",
+      "remediation": "Add cost string from scraped price."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Thurible of Consecration",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Torvion, the Fifth Shield",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Trumpet of Doom",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Trumpet of Healing",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Twilight",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Vambraces of Evil’s Warding",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Vassal Armor",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Zaethwar, the Sinflayer",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    }
+  ]
+}

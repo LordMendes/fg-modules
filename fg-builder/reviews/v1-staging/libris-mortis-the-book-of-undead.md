@@ -1,9 +1,9 @@
 # Libris Mortis: The Book of Undead
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Libris Mortis: The Book of Undead.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Libris Mortis: The Book of Undead.mod`
 - **Book slug:** `libris-mortis-the-book-of-undead--71`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 58
+- **Warnings:** 56
 - **Info:** 0
 ## Record counts
 | Category | Count |
@@ -12,16 +12,18 @@
 | feat | 59 |
 | spell | 57 |
 
-## Build warnings (embedded)
+## Spell-class readiness
 
-- classes/Pale Master: unknown class skill name(s) for FG ruleset: engineering), royalty)
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 6 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 6 |
+| `score equal to` in class text | 0 |
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Pale Master: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Pale Master: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `spell_missing_field` — Consumptive Field, Greater: Missing required field: castingtime
   - Remediation: Rebuild spell with complete reference fields.
 - **[warning]** `spell_missing_field` — Consumptive Field, Greater: Missing required field: range

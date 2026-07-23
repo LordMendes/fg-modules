@@ -45,10 +45,14 @@ python -m scraper.scrape_all
 
 ### Web app
 
+See **[`web/README.md` → Running locally](web/README.md#running-locally)** for the full step-by-step tutorial (Docker, migrations, import, troubleshooting).
+
+Quick version:
+
 ```bash
 docker compose up -d postgres
-cp web/.env.example web/.env
-pnpm db:deploy
+cp web/.env.example web/.env   # Windows: Copy-Item web\.env.example web\.env
+pnpm db:deploy                # required — creates DB tables before dev
 pnpm import:dndtools
 pnpm dev
 ```

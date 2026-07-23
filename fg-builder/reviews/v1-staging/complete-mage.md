@@ -1,9 +1,9 @@
 # Complete Mage
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Mage.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Complete Mage.mod`
 - **Book slug:** `complete-mage--58`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 85
+- **Warnings:** 75
 - **Info:** 0
 ## Record counts
 | Category | Count |
@@ -12,36 +12,18 @@
 | feat | 65 |
 | spell | 132 |
 
-## Build warnings (embedded)
+## Spell-class readiness
 
-- classes/Lyric Thaumaturge: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Master Specialist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Nightmare Spinner: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Ultimate Magus: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Unseen Seer: unknown class skill name(s) for FG ruleset: engineering), royalty)
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 12 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 12 |
+| `score equal to` in class text | 0 |
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Lyric Thaumaturge: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Lyric Thaumaturge: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Master Specialist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Master Specialist: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Nightmare Spinner: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Nightmare Spinner: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Ultimate Magus: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Ultimate Magus: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Unseen Seer: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Unseen Seer: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `spell_missing_field` — Adamantine Wings: Missing required field: save
   - Remediation: Rebuild spell with complete reference fields.
 - **[warning]** `spell_missing_field` — Adamantine Wings: Missing required field: sr

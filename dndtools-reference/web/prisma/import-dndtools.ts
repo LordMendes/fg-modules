@@ -9,6 +9,8 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 const DATA_DIR = process.env.DATA_DIR ?? resolve(__dirname, "../../data/dndtools");
+const SUPPLEMENTAL_DIR = join(DATA_DIR, "supplemental");
+const SUPPLEMENTAL_FEAT_FILES = ["realmshelps_flaws.json", "dandwiki_flaws.json"] as const;
 const BATCH_SIZE = 500;
 
 const PLACEHOLDER_TEXT =
@@ -95,6 +97,20 @@ function loadJson(filename: string): RecordBase[] {
     throw new Error(`Missing data file: ${path}`);
   }
   return JSON.parse(readFileSync(path, "utf-8")) as RecordBase[];
+}
+
+function loadSupplementalFeats(): RecordBase[] {
+  const records: RecordBase[] = [];
+  for (const filename of SUPPLEMENTAL_FEAT_FILES) {
+    const path = join(SUPPLEMENTAL_DIR, filename);
+    if (!existsSync(path)) continue;
+    records.push(...(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]));
+  }
+  return records;
+}
+
+function loadAllFeatRecords(): RecordBase[] {
+  return [...loadJson("feats"), ...loadSupplementalFeats()];
 }
 
 function parseExternalId(id: unknown): number | null {
@@ -258,7 +274,7 @@ async function pass1Sources(): Promise<Map<string, string>> {
   const seen = new Set<string>();
 
   for (const file of CATEGORY_FILES) {
-    const records = loadJson(file);
+    const records = file === "feats" ? loadAllFeatRecords() : loadJson(file);
     for (const record of records) {
       const src = record.source ?? {};
       const index = record.index ?? {};
@@ -498,7 +514,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
 
   // Feats
   {
-    const records = loadJson("feats");
+    const records = loadAllFeatRecords();
     const importedSlugs = new Set(records.map((r) => r.slug));
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {

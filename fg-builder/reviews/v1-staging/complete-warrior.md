@@ -1,9 +1,9 @@
 # Complete Warrior
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Warrior.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Complete Warrior.mod`
 - **Book slug:** `complete-warrior--61`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 25
+- **Warnings:** 15
 - **Info:** 1
 ## Record counts
 | Category | Count |
@@ -12,35 +12,28 @@
 | feat | 95 |
 | spell | 8 |
 
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 9 |
+| Named `Spells` (FG hook) | 3 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 6 |
+| `score equal to` in class text | 3 |
+
 ## Build warnings (embedded)
 
-- classes/Cavalier: unknown class skill name(s) for FG ruleset: royalty)
 - classes/Invisible Blade: unknown class skill name(s) for FG ruleset: Innuendo
-- classes/Kensai: unknown class skill name(s) for FG ruleset: royalty)
-- classes/Knight Protector: unknown class skill name(s) for FG ruleset: royalty)
 - classes/Paladin Variant: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)
 - classes/Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
-- classes/Ronin: unknown class skill name(s) for FG ruleset: royalty)
-- classes/Samurai: unknown class skill name(s) for FG ruleset: royalty)
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Cavalier: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Cavalier: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `class_unknown_skill` — Invisible Blade: unknown class skill name(s) for FG ruleset: Innuendo
   - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_unknown_skill` — Kensai: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Kensai: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Knight Protector: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Knight Protector: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `class_missing_field` — Paladin Variant: Missing required field: hitdie
   - Remediation: Rebuild class with complete identity fields.
 - **[warning]** `class_missing_field` — Paladin Variant: Missing required field: bab
@@ -69,14 +62,6 @@
   - Remediation: Add skillranks as type="number".
 - **[warning]** `class_missing_classskills` — Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
-- **[warning]** `class_unknown_skill` — Ronin: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Ronin: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Samurai: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Samurai: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 
 ## Info
 

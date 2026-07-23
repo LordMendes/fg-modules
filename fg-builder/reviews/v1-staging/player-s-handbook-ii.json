@@ -1,6 +1,6 @@
 {
   "module_name": "Player's Handbook II",
-  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Player's Handbook II.mod",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Player's Handbook II.mod",
   "book_slug": "players-handbook-ii--80",
   "load_ready": true,
   "automation_ready": false,
@@ -11,48 +11,30 @@
     "item": 1
   },
   "build_warnings": [
-    "classes/Duskblade: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Knight: unknown class skill name(s) for FG ruleset: royalty)",
+    "classes/Duskblade: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
     "classes/Metamagic Specialist: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Metamagic Specialist: missing classskills (FG will not auto-mark class skills at level 1)"
   ],
+  "spellclass_readiness": {
+    "spell_related_features": 2,
+    "named_spells": 2,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 0,
+    "score_equal_to_count": 1
+  },
   "totals": {
     "errors": 0,
-    "warnings": 80,
+    "warnings": 77,
     "info": 0
   },
   "issues": [
     {
-      "code": "class_unknown_skill",
+      "code": "class_spell_ability_text",
       "severity": "warning",
       "category": "class",
       "record_name": "Duskblade",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Duskblade",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Knight",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Knight",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
+      "message": "Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+      "remediation": "Normalize Spells feature text and rebuild module."
     },
     {
       "code": "class_missing_field",

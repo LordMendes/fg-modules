@@ -1,6 +1,6 @@
 {
   "module_name": "Complete Mage",
-  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Mage.mod",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Complete Mage.mod",
   "book_slug": "complete-mage--58",
   "load_ready": true,
   "automation_ready": false,
@@ -9,99 +9,20 @@
     "feat": 65,
     "spell": 132
   },
-  "build_warnings": [
-    "classes/Lyric Thaumaturge: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Master Specialist: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Nightmare Spinner: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Ultimate Magus: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Unseen Seer: unknown class skill name(s) for FG ruleset: engineering), royalty)"
-  ],
+  "build_warnings": [],
+  "spellclass_readiness": {
+    "spell_related_features": 12,
+    "named_spells": 0,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 12,
+    "score_equal_to_count": 0
+  },
   "totals": {
     "errors": 0,
-    "warnings": 85,
+    "warnings": 75,
     "info": 0
   },
   "issues": [
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Lyric Thaumaturge",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Lyric Thaumaturge",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Master Specialist",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Master Specialist",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Nightmare Spinner",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Nightmare Spinner",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Ultimate Magus",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Ultimate Magus",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Unseen Seer",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Unseen Seer",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
     {
       "code": "spell_missing_field",
       "severity": "warning",

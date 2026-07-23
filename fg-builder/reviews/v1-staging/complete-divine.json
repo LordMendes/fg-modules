@@ -1,6 +1,6 @@
 {
   "module_name": "Complete Divine",
-  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Divine.mod",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Complete Divine.mod",
   "book_slug": "complete-divine--56",
   "load_ready": true,
   "automation_ready": false,
@@ -11,34 +11,23 @@
     "item": 1
   },
   "build_warnings": [
-    "classes/Evangelist: unknown class skill name(s) for FG ruleset: engineering), royalty)",
     "classes/Geomancer: unknown class skill name(s) for FG ruleset: Scry",
     "classes/Moon Guardian: unknown class skill name(s) for FG ruleset: Control Shape",
-    "classes/Shugenja: unknown class skill name(s) for FG ruleset: engineering), royalty)",
-    "classes/Void Disciple: unknown class skill name(s) for FG ruleset: engineering), royalty)"
+    "classes/Shugenja: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells"
   ],
+  "spellclass_readiness": {
+    "spell_related_features": 30,
+    "named_spells": 3,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 27,
+    "score_equal_to_count": 9
+  },
   "totals": {
     "errors": 0,
-    "warnings": 65,
+    "warnings": 60,
     "info": 5
   },
   "issues": [
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Evangelist",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Evangelist",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
     {
       "code": "class_unknown_skill",
       "severity": "warning",
@@ -72,36 +61,12 @@
       "remediation": "Manually select class skills in FG if using optional rules."
     },
     {
-      "code": "class_unknown_skill",
+      "code": "class_spell_ability_text",
       "severity": "warning",
       "category": "class",
       "record_name": "Shugenja",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Shugenja",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Void Disciple",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Void Disciple",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
+      "message": "Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+      "remediation": "Normalize Spells feature text and rebuild module."
     },
     {
       "code": "feat_missing_summary",

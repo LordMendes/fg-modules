@@ -24,6 +24,13 @@ class TestParseClassskillNames:
         text = "Knowledge (religion) (Int), Spellcraft (Int)"
         assert parse_classskill_names(text) == ["Knowledge", "Spellcraft"]
 
+    def test_knowledge_subskill_with_and_in_name(self):
+        text = (
+            "Knowledge (architecture and engineering) (Int), "
+            "Knowledge (nobility and royalty) (Int)"
+        )
+        assert parse_classskill_names(text) == ["Knowledge", "Knowledge"]
+
     def test_speak_language(self):
         text = "Perform (Cha), and Speak Language (None)"
         assert parse_classskill_names(text) == ["Perform", "Speak Language"]

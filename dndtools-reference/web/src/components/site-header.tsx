@@ -13,11 +13,21 @@ export function SiteHeader() {
         </Link>
         <nav className="header-nav" aria-label="Primary navigation">
           <Link href="/sources">Sources</Link>
-          {CATEGORIES.slice(0, 6).map((c) => (
-            <Link key={c.key} href={`/${c.key}`}>
-              {c.label}
-            </Link>
-          ))}
+          {CATEGORIES.slice(0, 6).flatMap((c) => {
+            const links = [
+              <Link key={c.key} href={`/${c.key}`}>
+                {c.label}
+              </Link>,
+            ];
+            if (c.key === "feats") {
+              links.push(
+                <Link key="flaws" href="/feats?type=Flaw">
+                  Flaws
+                </Link>,
+              );
+            }
+            return links;
+          })}
         </nav>
         <div className="header-actions">
           <SearchBar />

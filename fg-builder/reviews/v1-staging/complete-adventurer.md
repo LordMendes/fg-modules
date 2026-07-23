@@ -1,9 +1,9 @@
 # Complete Adventurer
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Adventurer.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Complete Adventurer.mod`
 - **Book slug:** `complete-adventurer--54`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 83
+- **Warnings:** 75
 - **Info:** 1
 ## Record counts
 | Category | Count |
@@ -13,39 +13,30 @@
 | item | 13 |
 | spell | 70 |
 
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 9 |
+| Named `Spells` (FG hook) | 1 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 8 |
+| `score equal to` in class text | 1 |
+
 ## Build warnings (embedded)
 
-- classes/Exemplar: unknown class skill name(s) for FG ruleset: Autohypnosis, Control Shape, Iaijutsu Focus, engineering), royalty), Martial Lore, Psicraft, Truespeak, Use Psionic Device
-- classes/Fochlucan Lyrist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Maester: unknown class skill name(s) for FG ruleset: engineering)
-- classes/Ollam: unknown class skill name(s) for FG ruleset: engineering), royalty)
+- classes/Exemplar: unknown class skill name(s) for FG ruleset: Autohypnosis, Control Shape, Iaijutsu Focus, Martial Lore, Psicraft, Truespeak, Use Psionic Device
 - classes/Shadowmind: unknown class skill name(s) for FG ruleset: Autohypnosis, Psicraft
-- classes/Spymaster: unknown class skill name(s) for FG ruleset: royalty)
+- classes/Spellthief: Spells feature at level 4 missing 'score equal to' ability requirement text for handleClassFeatureSpells
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Exemplar: unknown class skill name(s) for FG ruleset: Autohypnosis, Control Shape, Iaijutsu Focus, engineering), royalty), Martial Lore, Psicraft, Truespeak, Use Psionic Device
+- **[warning]** `class_unknown_skill` — Exemplar: unknown class skill name(s) for FG ruleset: Autohypnosis, Control Shape, Iaijutsu Focus, Martial Lore, Psicraft, Truespeak, Use Psionic Device
   - Remediation: Psionic skills require Expanded Psionics Handbook module loaded.
-- **[warning]** `class_malformed_classskills` — Exemplar: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Fochlucan Lyrist: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Fochlucan Lyrist: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Maester: unknown class skill name(s) for FG ruleset: engineering)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Maester: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Ollam: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Ollam: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `class_unknown_skill` — Shadowmind: unknown class skill name(s) for FG ruleset: Autohypnosis, Psicraft
   - Remediation: Psionic skills require Expanded Psionics Handbook module loaded.
-- **[warning]** `class_unknown_skill` — Spymaster: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Spymaster: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_spell_ability_text` — Spellthief: Spells feature at level 4 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `spell_missing_field` — Accelerated Movement: Missing required field: save
   - Remediation: Rebuild spell with complete reference fields.
 - **[warning]** `spell_missing_field` — Accelerated Movement: Missing required field: sr

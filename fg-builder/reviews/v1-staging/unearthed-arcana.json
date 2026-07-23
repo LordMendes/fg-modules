@@ -1,6 +1,6 @@
 {
   "module_name": "Unearthed Arcana",
-  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Unearthed Arcana.mod",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Unearthed Arcana.mod",
   "book_slug": "unearthed-arcana--90",
   "load_ready": true,
   "automation_ready": false,
@@ -16,8 +16,8 @@
     "classes/Barbarian Variant: missing classskills (FG will not auto-mark class skills at level 1)",
     "classes/Bard Variant: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Bard Variant: missing classskills (FG will not auto-mark class skills at level 1)",
-    "classes/Bardic Sage: unknown class skill name(s) for FG ruleset: engineering), royalty)",
     "classes/Battle Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Battle Sorcerer: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
     "classes/Cleric Variant: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Cleric Variant: missing classskills (FG will not auto-mark class skills at level 1)",
     "classes/Cloistered Cleric: missing classskills (FG will not auto-mark class skills at level 1)",
@@ -58,7 +58,7 @@
     "classes/Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)",
     "classes/Planar Ranger: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Planar Ranger: missing classskills (FG will not auto-mark class skills at level 1)",
-    "classes/Prestige Paladin: unknown class skill name(s) for FG ruleset: royalty)",
+    "classes/Prestige Bard: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
     "classes/Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)",
     "classes/Rogue Variant: missing skillranks (no skill_ranks or skill_points parsed)",
@@ -79,10 +79,17 @@
     "classes/Wizard Variant: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)"
   ],
+  "spellclass_readiness": {
+    "spell_related_features": 49,
+    "named_spells": 2,
+    "named_spellcasting": 11,
+    "named_spells_per_day": 36,
+    "score_equal_to_count": 0
+  },
   "totals": {
     "errors": 0,
-    "warnings": 239,
-    "info": 0
+    "warnings": 238,
+    "info": 10
   },
   "issues": [
     {
@@ -254,20 +261,12 @@
       "remediation": "Add comma-separated classskills string."
     },
     {
-      "code": "class_unknown_skill",
-      "severity": "warning",
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
       "category": "class",
       "record_name": "Bardic Sage",
-      "message": "unknown class skill name(s) for FG ruleset: engineering), royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Bardic Sage",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
     },
     {
       "code": "class_missing_skillranks",
@@ -278,6 +277,14 @@
       "remediation": "Add skillranks as type=\"number\"."
     },
     {
+      "code": "class_spell_ability_text",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Battle Sorcerer",
+      "message": "Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+      "remediation": "Normalize Spells feature text and rebuild module."
+    },
+    {
       "code": "class_missing_field",
       "severity": "warning",
       "category": "class",
@@ -374,6 +381,14 @@
       "remediation": "Add comma-separated classskills string."
     },
     {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Cloistered Cleric",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
+    },
+    {
       "code": "class_missing_field",
       "severity": "warning",
       "category": "class",
@@ -478,6 +493,14 @@
       "remediation": "Add comma-separated classskills string."
     },
     {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Divine Bard",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
+    },
+    {
       "code": "class_missing_field",
       "severity": "warning",
       "category": "class",
@@ -588,6 +611,14 @@
       "record_name": "Domain Wizard",
       "message": "missing classskills (FG will not auto-mark class skills at level 1)",
       "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_spell_ability_text",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Domain Wizard",
+      "message": "Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+      "remediation": "Normalize Spells feature text and rebuild module."
     },
     {
       "code": "class_missing_field",
@@ -1198,6 +1229,14 @@
       "remediation": "Add comma-separated classskills string."
     },
     {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Paladin of Freedom",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
+    },
+    {
       "code": "class_missing_field",
       "severity": "warning",
       "category": "class",
@@ -1220,6 +1259,14 @@
       "record_name": "Paladin of Slaughter",
       "message": "missing classskills (FG will not auto-mark class skills at level 1)",
       "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Paladin of Slaughter",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
     },
     {
       "code": "class_missing_field",
@@ -1246,6 +1293,14 @@
       "remediation": "Add comma-separated classskills string."
     },
     {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Paladin of Tyranny",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
+    },
+    {
       "code": "class_missing_field",
       "severity": "warning",
       "category": "class",
@@ -1358,20 +1413,20 @@
       "remediation": "Add comma-separated classskills string."
     },
     {
-      "code": "class_unknown_skill",
-      "severity": "warning",
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
       "category": "class",
-      "record_name": "Prestige Paladin",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+      "record_name": "Planar Ranger",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
     },
     {
-      "code": "class_malformed_classskills",
+      "code": "class_spell_ability_text",
       "severity": "warning",
       "category": "class",
-      "record_name": "Prestige Paladin",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
+      "record_name": "Prestige Bard",
+      "message": "Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+      "remediation": "Normalize Spells feature text and rebuild module."
     },
     {
       "code": "class_missing_field",
@@ -1540,6 +1595,14 @@
       "record_name": "Savage Bard",
       "message": "missing classskills (FG will not auto-mark class skills at level 1)",
       "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Savage Bard",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
     },
     {
       "code": "class_missing_field",
@@ -1604,6 +1667,14 @@
       "record_name": "Spellcaster",
       "message": "Missing required field: will",
       "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Spellcaster",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
     },
     {
       "code": "class_missing_field",
@@ -1804,6 +1875,14 @@
       "record_name": "Urban Ranger",
       "message": "missing skillranks (no skill_ranks or skill_points parsed)",
       "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_spell_variant_reference_only",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Urban Ranger",
+      "message": "Variant Spellcasting only — FG will not create a new spell-class track",
+      "remediation": "Expected for variant classes that modify an existing caster."
     },
     {
       "code": "class_missing_field",

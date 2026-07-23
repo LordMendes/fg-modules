@@ -1,9 +1,9 @@
 # Player's Handbook II
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Player's Handbook II.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Player's Handbook II.mod`
 - **Book slug:** `players-handbook-ii--80`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 80
+- **Warnings:** 77
 - **Info:** 0
 ## Record counts
 | Category | Count |
@@ -13,23 +13,26 @@
 | item | 1 |
 | spell | 125 |
 
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 2 |
+| Named `Spells` (FG hook) | 2 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 0 |
+| `score equal to` in class text | 1 |
+
 ## Build warnings (embedded)
 
-- classes/Duskblade: unknown class skill name(s) for FG ruleset: engineering), royalty)
-- classes/Knight: unknown class skill name(s) for FG ruleset: royalty)
+- classes/Duskblade: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
 - classes/Metamagic Specialist: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Metamagic Specialist: missing classskills (FG will not auto-mark class skills at level 1)
 
 ## Warnings
 
-- **[warning]** `class_unknown_skill` — Duskblade: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Duskblade: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
-- **[warning]** `class_unknown_skill` — Knight: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Knight: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_spell_ability_text` — Duskblade: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: hitdie
   - Remediation: Rebuild class with complete identity fields.
 - **[warning]** `class_missing_field` — Metamagic Specialist: Missing required field: bab

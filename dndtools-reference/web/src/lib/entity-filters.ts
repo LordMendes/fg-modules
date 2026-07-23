@@ -141,6 +141,28 @@ export const CLASS_TYPE_FILTER_OPTIONS = [
   { value: "prestige", label: "Prestige" },
 ];
 
+/** Pinned feat subcategories for quick chip filters (classic dndtools Feat Categories). */
+export const FEAT_QUICK_CATEGORY_CHIPS = [{ value: "Flaw", label: "Flaws" }] as const;
+
+export type FilterOption = { value: string; label: string };
+
+/** Merge pinned options first; dynamic DB values fill in the rest without duplicates. */
+export function mergePinnedFilterOptions(
+  pinned: readonly FilterOption[],
+  dynamic: FilterOption[],
+): FilterOption[] {
+  const byValue = new Map<string, FilterOption>();
+  for (const opt of pinned) byValue.set(opt.value, opt);
+  for (const opt of dynamic) {
+    if (!byValue.has(opt.value)) byValue.set(opt.value, opt);
+  }
+  return [...byValue.values()];
+}
+
+export function isFlawsFeatFilter(filters: ParsedListFilters): boolean {
+  return filters.fields.type?.includes("Flaw") ?? false;
+}
+
 function splitCsv(raw: string | string[] | undefined): string[] {
   if (raw == null) return [];
   const parts = Array.isArray(raw) ? raw : [raw];

@@ -1,6 +1,6 @@
 {
   "module_name": "Complete Warrior",
-  "module_path": "/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Complete Warrior.mod",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\Complete Warrior.mod",
   "book_slug": "complete-warrior--61",
   "load_ready": true,
   "automation_ready": false,
@@ -10,39 +10,25 @@
     "spell": 8
   },
   "build_warnings": [
-    "classes/Cavalier: unknown class skill name(s) for FG ruleset: royalty)",
     "classes/Invisible Blade: unknown class skill name(s) for FG ruleset: Innuendo",
-    "classes/Kensai: unknown class skill name(s) for FG ruleset: royalty)",
-    "classes/Knight Protector: unknown class skill name(s) for FG ruleset: royalty)",
     "classes/Paladin Variant: missing skillranks (no skill_ranks or skill_points parsed)",
     "classes/Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)",
     "classes/Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)",
-    "classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)",
-    "classes/Ronin: unknown class skill name(s) for FG ruleset: royalty)",
-    "classes/Samurai: unknown class skill name(s) for FG ruleset: royalty)"
+    "classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)"
   ],
+  "spellclass_readiness": {
+    "spell_related_features": 9,
+    "named_spells": 3,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 6,
+    "score_equal_to_count": 3
+  },
   "totals": {
     "errors": 0,
-    "warnings": 25,
+    "warnings": 15,
     "info": 1
   },
   "issues": [
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Cavalier",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Cavalier",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
     {
       "code": "class_unknown_skill",
       "severity": "warning",
@@ -60,38 +46,6 @@
       "remediation": "Manually select class skills in FG if using optional rules."
     },
     {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Kensai",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Kensai",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Knight Protector",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Knight Protector",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
       "code": "class_missing_field",
       "severity": "warning",
       "category": "class",
@@ -202,38 +156,6 @@
       "record_name": "Ranger Variant",
       "message": "missing classskills (FG will not auto-mark class skills at level 1)",
       "remediation": "Add comma-separated classskills string."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Ronin",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Ronin",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
-    },
-    {
-      "code": "class_unknown_skill",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Samurai",
-      "message": "unknown class skill name(s) for FG ruleset: royalty)",
-      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
-    },
-    {
-      "code": "class_malformed_classskills",
-      "severity": "warning",
-      "category": "class",
-      "record_name": "Samurai",
-      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
-      "remediation": "Fix classskills parser in classes.py and rebuild module."
     }
   ]
 }

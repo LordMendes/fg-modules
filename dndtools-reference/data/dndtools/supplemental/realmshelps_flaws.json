@@ -1,0 +1,2162 @@
+[
+  {
+    "slug": "aligned-devotion-rh",
+    "name": "Aligned Devotion",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Aligned_Devotion",
+    "scraped_at": "2026-07-23T18:13:00Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your healing powers are only effective for those whose alignment closely matches yours.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Aligned_Devotion"
+    },
+    "description_html": "<p>Your healing powers are only effective for those whose alignment closely matches yours.</p>",
+    "description_text": "Your healing powers are only effective for those whose alignment closely matches yours.",
+    "prerequisite_html": "<p>Ability to spontaneously cast cure spells.</p>",
+    "prerequisite_text": "Ability to spontaneously cast cure spells.",
+    "benefit_html": "<p>Your spells of the healing subschool have reduced effect on those who do not share your alignment. Those that have exactly the same alignment as you gain full benefit from your healing. Those with an alignment within one step of yours are cured half the normal amount of hit points from your healing spells. Characters with alignments more than one step different from yours gain no benefit from your healing at all. Your cure spells still deal full damage to undead.</p>",
+    "benefit_text": "Your spells of the healing subschool have reduced effect on those who do not share your alignment. Those that have exactly the same alignment as you gain full benefit from your healing. Those with an alignment within one step of yours are cured half the normal amount of hit points from your healing spells. Characters with alignments more than one step different from yours gain no benefit from your healing at all. Your cure spells still deal full damage to undead."
+  },
+  {
+    "slug": "arcane-conundrum-rh",
+    "name": "Arcane Conundrum",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Arcane_Conundrum",
+    "scraped_at": "2026-07-23T18:13:01Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are unable to use your inborn magical abilities.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Arcane_Conundrum"
+    },
+    "description_html": "<p>You are unable to use your inborn magical abilities.</p>",
+    "description_text": "You are unable to use your inborn magical abilities.",
+    "prerequisite_html": "<p>Gnome, Cha 10+.</p>",
+    "prerequisite_text": "Gnome, Cha 10+.",
+    "benefit_html": "<p>You may never use any spell-like abilities under any circumstances. In addition, you suffer a -2 penalty on saving throws versus spells of the illusion school.</p>",
+    "benefit_text": "You may never use any spell-like abilities under any circumstances. In addition, you suffer a -2 penalty on saving throws versus spells of the illusion school."
+  },
+  {
+    "slug": "arcane-fatigue-rh",
+    "name": "Arcane Fatigue",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Arcane_Fatigue",
+    "scraped_at": "2026-07-23T18:13:02Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Conjuring magical energies is especially draining for you.",
+      "source_abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #333"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Arcane_Fatigue"
+    },
+    "description_html": "<p>Conjuring magical energies is especially draining for you.</p>",
+    "description_text": "Conjuring magical energies is especially draining for you.",
+    "prerequisite_html": "<p>Ability to cast arcane spells.</p>",
+    "prerequisite_text": "Ability to cast arcane spells.",
+    "benefit_html": "<p>Whenever you successfully cast an arcane spell you must immediately make a Fortitude save (DC 10 + spell level). If you fail you become fatigued. If you are fatigued as a result of this flaw, it has no further effect until that condition is removed.</p>",
+    "benefit_text": "Whenever you successfully cast an arcane spell you must immediately make a Fortitude save (DC 10 + spell level). If you fail you become fatigued. If you are fatigued as a result of this flaw, it has no further effect until that condition is removed."
+  },
+  {
+    "slug": "arcane-parasites-rh",
+    "name": "Arcane Parasites",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Arcane_Parasites",
+    "scraped_at": "2026-07-23T18:13:03Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Thousands of unseen parasites within your flesh draw upon the arcane power held within every spell you cast.",
+      "source_abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #333"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Arcane_Parasites"
+    },
+    "description_html": "<p>Thousands of unseen parasites within your flesh draw upon the arcane power held within every spell you cast.</p>",
+    "description_text": "Thousands of unseen parasites within your flesh draw upon the arcane power held within every spell you cast.",
+    "prerequisite_html": "<p>Ability to cast arcane spells.</p>",
+    "prerequisite_text": "Ability to cast arcane spells.",
+    "benefit_html": "<p>Every arcane spell you cast has the DC to resist it lowered by 1. These parasites cannot be removed by any mortal means, even by a miracle or wish.</p>",
+    "benefit_text": "Every arcane spell you cast has the DC to resist it lowered by 1. These parasites cannot be removed by any mortal means, even by a miracle or wish."
+  },
+  {
+    "slug": "arcane-performer-rh",
+    "name": "Arcane Performer",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Arcane_Performer",
+    "scraped_at": "2026-07-23T18:13:04Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You depend upon your performance ability to aid in the casting of spells.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Arcane_Performer"
+    },
+    "description_html": "<p>You depend upon your performance ability to aid in the casting of spells.</p>",
+    "description_text": "You depend upon your performance ability to aid in the casting of spells.",
+    "prerequisite_html": "<p>Ability to cast arcane spells without preparation, Perform 1 rank.</p>",
+    "prerequisite_text": "Ability to cast arcane spells without preparation, Perform 1 rank.",
+    "benefit_html": "<p>In order to cast any spell, you must succeed at a Perform check (DC 10 + spell level). If you fail, you lose the spell.</p>",
+    "benefit_text": "In order to cast any spell, you must succeed at a Perform check (DC 10 + spell level). If you fail, you lose the spell."
+  },
+  {
+    "slug": "beady-eyes-rh",
+    "name": "Beady Eyes",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Beady_Eyes",
+    "scraped_at": "2026-07-23T18:13:06Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have narrow beady eyes that do not catch the light as well as they should.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Beady_Eyes"
+    },
+    "description_html": "<p>You have narrow beady eyes that do not catch the light as well as they should.</p>",
+    "description_text": "You have narrow beady eyes that do not catch the light as well as they should.",
+    "prerequisite_html": "<p>Darkvision.</p>",
+    "prerequisite_text": "Darkvision.",
+    "benefit_html": "<p>You do not have darkvision; instead you possess low-light vision. In addition, you suffer a -2 penalty on all Search and Spot checks.</p>",
+    "benefit_text": "You do not have darkvision; instead you possess low-light vision. In addition, you suffer a -2 penalty on all Search and Spot checks."
+  },
+  {
+    "slug": "beastly-rh",
+    "name": "Beastly",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Beastly",
+    "scraped_at": "2026-07-23T18:13:07Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have more in common with beasts than you do with your own race.",
+      "source_abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #329"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Beastly"
+    },
+    "description_html": "<p>You have more in common with beasts than you do with your own race.</p>",
+    "description_text": "You have more in common with beasts than you do with your own race.",
+    "prerequisite_html": "<p>Wild empathy.</p>",
+    "prerequisite_text": "Wild empathy.",
+    "benefit_html": "<p>You are vulnerable to the following list of spells that affect animals, as well as those which affect your own creature type: animal trance, calm animals, charm animal, dominate animal, hide from animals, hold animal . Additionally, you suffer a -2 penalty on all Charisma-based skill checks except Disguise, Handle Animal, and Use Magic Device. Anyone observing your mannerisms who possesses the wild empathy class ability can recognize this flaw immediately.</p>",
+    "benefit_text": "You are vulnerable to the following list of spells that affect animals, as well as those which affect your own creature type: animal trance, calm animals, charm animal, dominate animal, hide from animals, hold animal . Additionally, you suffer a -2 penalty on all Charisma-based skill checks except Disguise, Handle Animal, and Use Magic Device. Anyone observing your mannerisms who possesses the wild empathy class ability can recognize this flaw immediately."
+  },
+  {
+    "slug": "bestial-instinct-rh",
+    "name": "Bestial Instinct",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Bestial_Instinct",
+    "scraped_at": "2026-07-23T18:13:08Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You prefer to meet your foes so close that you can smell their blood.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Bestial_Instinct"
+    },
+    "description_html": "<p>You prefer to meet your foes so close that you can smell their blood.</p>",
+    "description_text": "You prefer to meet your foes so close that you can smell their blood.",
+    "benefit_html": "<p>You suffer a -2 penalty to hit while using anything other than unarmed strikes or natural weapons.</p>",
+    "benefit_text": "You suffer a -2 penalty to hit while using anything other than unarmed strikes or natural weapons.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "blind-rage-rh",
+    "name": "Blind Rage",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Blind_Rage",
+    "scraped_at": "2026-07-23T18:13:09Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your ability to distinguish between friend and foe is limited once you enter a rage.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Blind_Rage"
+    },
+    "description_html": "<p>Your ability to distinguish between friend and foe is limited once you enter a rage.</p>",
+    "description_text": "Your ability to distinguish between friend and foe is limited once you enter a rage.",
+    "prerequisite_html": "<p>Rage ability.</p>",
+    "prerequisite_text": "Rage ability.",
+    "benefit_html": "<p>You may not end your rage voluntarily. Once you enter a rage, you continue to rage for the entire duration. While in a rage, you must attack a creature every round if able. You can charge or move in order to make the attack, and you may move to attack a foe rather than stay still to attack a friend. If there are no creatures within sight, you attack the nearest breakable object. You may attempt a DC 15 Will save once per round on your turn in order stop attacking an ally. If foes become visible, you may immediately switch targets and engage them.</p>",
+    "benefit_text": "You may not end your rage voluntarily. Once you enter a rage, you continue to rage for the entire duration. While in a rage, you must attack a creature every round if able. You can charge or move in order to make the attack, and you may move to attack a foe rather than stay still to attack a friend. If there are no creatures within sight, you attack the nearest breakable object. You may attempt a DC 15 Will save once per round on your turn in order stop attacking an ally. If foes become visible, you may immediately switch targets and engage them."
+  },
+  {
+    "slug": "brash-rh",
+    "name": "Brash",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Brash",
+    "scraped_at": "2026-07-23T18:13:10Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You move about without careful consideration of foes.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Brash"
+    },
+    "description_html": "<p>You move about without careful consideration of foes.</p>",
+    "description_text": "You move about without careful consideration of foes.",
+    "benefit_html": "<p>You suffer a -6 penalty to your Armor Class against attacks of opportunity.</p>",
+    "benefit_text": "You suffer a -6 penalty to your Armor Class against attacks of opportunity.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "bravado-rh",
+    "name": "Bravado",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Bravado",
+    "scraped_at": "2026-07-23T18:13:11Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are rash in combat, refusing to show weakness by falling back from your enemies' blows.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Bravado"
+    },
+    "description_html": "<p>You are rash in combat, refusing to show weakness by falling back from your enemies' blows.</p>",
+    "description_text": "You are rash in combat, refusing to show weakness by falling back from your enemies' blows.",
+    "benefit_html": "<p>You may not gain the benefit of any kind of dodge bonuses to your Armor Class. Spells, items, and effects that provide a dodge bonus provide no benefit for you. You cannot use the withdraw action during combat.</p>",
+    "benefit_text": "You may not gain the benefit of any kind of dodge bonuses to your Armor Class. Spells, items, and effects that provide a dodge bonus provide no benefit for you. You cannot use the withdraw action during combat.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "cautious-flaw-rh",
+    "name": "Cautious (Flaw)",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Cautious_(Flaw)",
+    "scraped_at": "2026-07-23T18:13:12Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are uneasy engaging in behavior that carries a chance of failure.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Cautious_(Flaw)"
+    },
+    "description_html": "<p>You are uneasy engaging in behavior that carries a chance of failure.</p>",
+    "description_text": "You are uneasy engaging in behavior that carries a chance of failure.",
+    "benefit_html": "<p>You must spend twice as long performing any skill that requires an action. For example, deciphering a page of text would take 2 minutes for you instead of 1, while the Concentration skill is not affected by this flaw as it does not require an action. You also suffer a -2 penalty on initiative checks.</p>",
+    "benefit_text": "You must spend twice as long performing any skill that requires an action. For example, deciphering a page of text would take 2 minutes for you instead of 1, while the Concentration skill is not affected by this flaw as it does not require an action. You also suffer a -2 penalty on initiative checks.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "chivalrous-courtesy-rh",
+    "name": "Chivalrous Courtesy",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Chivalrous_Courtesy",
+    "scraped_at": "2026-07-23T18:13:14Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You despise raising your hand against creatures of the opposite gender.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Chivalrous_Courtesy"
+    },
+    "description_html": "<p>You despise raising your hand against creatures of the opposite gender.</p>",
+    "description_text": "You despise raising your hand against creatures of the opposite gender.",
+    "prerequisite_html": "<p>Good or lawful alignment.</p>",
+    "prerequisite_text": "Good or lawful alignment.",
+    "benefit_html": "<p>You suffer a -4 penalty on attack rolls to hit a creature you can tell is of the opposite gender.</p>",
+    "benefit_text": "You suffer a -4 penalty on attack rolls to hit a creature you can tell is of the opposite gender."
+  },
+  {
+    "slug": "city-slicker-flaw-rh",
+    "name": "City Slicker (flaw)",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/City_Slicker_(flaw)",
+    "scraped_at": "2026-07-23T18:13:15Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Although interested in the natural world, you suffer from a lack of experience in the wilds.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/City_Slicker_(flaw)"
+    },
+    "description_html": "<p>Although interested in the natural world, you suffer from a lack of experience in the wilds.</p>",
+    "description_text": "Although interested in the natural world, you suffer from a lack of experience in the wilds.",
+    "prerequisite_html": "<p>Survival as a class skill.</p>",
+    "prerequisite_text": "Survival as a class skill.",
+    "benefit_html": "<p>You suffer a -4 penalty on all Handle Animal, Knowledge (nature), and Survival checks.</p>",
+    "benefit_text": "You suffer a -4 penalty on all Handle Animal, Knowledge (nature), and Survival checks."
+  },
+  {
+    "slug": "claustrophobia-rh",
+    "name": "Claustrophobia",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Claustrophobia",
+    "scraped_at": "2026-07-23T18:13:16Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are uncomfortable in enclosed spaces.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Claustrophobia"
+    },
+    "description_html": "<p>You are uncomfortable in enclosed spaces.</p>",
+    "description_text": "You are uncomfortable in enclosed spaces.",
+    "benefit_html": "<p>You become shaken while in any space where you are within 10 feet of a wall or other solid surface on 2 or more sides, or if the ceiling is less than 10 feet above your head. (Such as while walking down a 20-foot-wide corridor or while you are in any room with a 10-foot-high ceiling.) Spells and effects that remove fear do not remove this condition.</p>",
+    "benefit_text": "You become shaken while in any space where you are within 10 feet of a wall or other solid surface on 2 or more sides, or if the ceiling is less than 10 feet above your head. (Such as while walking down a 20-foot-wide corridor or while you are in any room with a 10-foot-high ceiling.) Spells and effects that remove fear do not remove this condition.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "code-of-arms-rh",
+    "name": "Code of Arms",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Code_of_Arms",
+    "scraped_at": "2026-07-23T18:13:17Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Trained to only kill other armed warriors, you hesitate when attacking unarmed opponents.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Code_of_Arms"
+    },
+    "description_html": "<p>Trained to only kill other armed warriors, you hesitate when attacking unarmed opponents.</p>",
+    "description_text": "Trained to only kill other armed warriors, you hesitate when attacking unarmed opponents.",
+    "prerequisite_html": "<p>Good or lawful alignment.</p>",
+    "prerequisite_text": "Good or lawful alignment.",
+    "benefit_html": "<p>You suffer a -4 penalty on attack rolls made against an enemy not armed with a melee weapon. If the enemy uses a natural attack against you, you may then attack it without penalty.</p>",
+    "benefit_text": "You suffer a -4 penalty on attack rolls made against an enemy not armed with a melee weapon. If the enemy uses a natural attack against you, you may then attack it without penalty."
+  },
+  {
+    "slug": "cold-blooded-rh",
+    "name": "Cold-Blooded",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Cold-Blooded",
+    "scraped_at": "2026-07-23T18:13:18Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You were raised in the arctic and cannot tolerate heat.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Cold-Blooded"
+    },
+    "description_html": "<p>You were raised in the arctic and cannot tolerate heat.</p>",
+    "description_text": "You were raised in the arctic and cannot tolerate heat.",
+    "benefit_html": "<p>You automatically fail all Fortitude saves made to overcome the effects of high temperatures. Fire-based effects deal an additional 2 points of fire damage to you.</p>",
+    "benefit_text": "You automatically fail all Fortitude saves made to overcome the effects of high temperatures. Fire-based effects deal an additional 2 points of fire damage to you.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "coward-rh",
+    "name": "Coward",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Coward",
+    "scraped_at": "2026-07-23T18:13:19Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "In dangerous circumstances, you are likely to run away.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Coward"
+    },
+    "description_html": "<p>In dangerous circumstances, you are likely to run away.</p>",
+    "description_text": "In dangerous circumstances, you are likely to run away.",
+    "benefit_html": "<p>You automatically fail all saves against fear effects. An ability that makes you immune to fear (such as becoming a 3rd-level paladin) instead grants you a saving throw, but at a -4 penalty on the save.</p>",
+    "benefit_text": "You automatically fail all saves against fear effects. An ability that makes you immune to fear (such as becoming a 3rd-level paladin) instead grants you a saving throw, but at a -4 penalty on the save.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "curious-rh",
+    "name": "Curious",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Curious",
+    "scraped_at": "2026-07-23T18:13:21Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are easily distracted by the sights and sounds around you.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Curious"
+    },
+    "description_html": "<p>You are easily distracted by the sights and sounds around you.</p>",
+    "description_text": "You are easily distracted by the sights and sounds around you.",
+    "benefit_html": "<p>You suffer a -2 penalty on Listen and Spot checks. You also suffer a -2 penalty on initiative rolls.</p>",
+    "benefit_text": "You suffer a -2 penalty on Listen and Spot checks. You also suffer a -2 penalty on initiative rolls.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "divine-gesture-rh",
+    "name": "Divine Gesture",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Divine_Gesture",
+    "scraped_at": "2026-07-23T18:13:22Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your religious rites require elaborate gestures that cause you difficulty when casting divine spells while wearing armor or using a shield.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Divine_Gesture"
+    },
+    "description_html": "<p>Your religious rites require elaborate gestures that cause you difficulty when casting divine spells while wearing armor or using a shield.</p>",
+    "description_text": "Your religious rites require elaborate gestures that cause you difficulty when casting divine spells while wearing armor or using a shield.",
+    "prerequisite_html": "<p>Ability to cast divine spells.</p>",
+    "prerequisite_text": "Ability to cast divine spells.",
+    "benefit_html": "<p>You suffer a spell failure chance (due to armor, shields, or anything else which causes arcane spell failure) when casting divine spells, just as if they were arcane spells.</p>",
+    "benefit_text": "You suffer a spell failure chance (due to armor, shields, or anything else which causes arcane spell failure) when casting divine spells, just as if they were arcane spells."
+  },
+  {
+    "slug": "domain-devotion-rh",
+    "name": "Domain Devotion",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Domain_Devotion",
+    "scraped_at": "2026-07-23T18:13:23Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are limited to accessing only one of your deity's domains.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Domain_Devotion"
+    },
+    "description_html": "<p>You are limited to accessing only one of your deity's domains.</p>",
+    "description_text": "You are limited to accessing only one of your deity's domains.",
+    "prerequisite_html": "<p>Access to domains.</p>",
+    "prerequisite_text": "Access to domains.",
+    "benefit_html": "<p>You choose and have access to only one of your deity's domains. You may gain prestige domains from a prestige class as usual.</p>",
+    "benefit_text": "You choose and have access to only one of your deity's domains. You may gain prestige domains from a prestige class as usual."
+  },
+  {
+    "slug": "elven-pride-of-arms-rh",
+    "name": "Elven Pride of Arms",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Elven_Pride_of_Arms",
+    "scraped_at": "2026-07-23T18:13:24Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You only consider those weapons designed specifically for use by the noblest of elves to be fit to wield. Using any other object as a weapon is beneath your dignity.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Elven_Pride_of_Arms"
+    },
+    "description_html": "<p>You only consider those weapons designed specifically for use by the noblest of elves to be fit to wield. Using any other object as a weapon is beneath your dignity.</p>",
+    "description_text": "You only consider those weapons designed specifically for use by the noblest of elves to be fit to wield. Using any other object as a weapon is beneath your dignity.",
+    "prerequisite_html": "<p>Elven blood.</p>",
+    "prerequisite_text": "Elven blood.",
+    "benefit_html": "<p>You suffer a -4 penalty on attack rolls when using a weapon other than a longsword, rapier, or bow (long, short, or composite). Attacks made while fighting unarmed, touch attacks (including ranged touch attacks), or attacks made with natural weaponry also incur this penalty.</p>",
+    "benefit_text": "You suffer a -4 penalty on attack rolls when using a weapon other than a longsword, rapier, or bow (long, short, or composite). Attacks made while fighting unarmed, touch attacks (including ranged touch attacks), or attacks made with natural weaponry also incur this penalty."
+  },
+  {
+    "slug": "exhausting-rage-rh",
+    "name": "Exhausting Rage",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Exhausting_Rage",
+    "scraped_at": "2026-07-23T18:13:25Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You rage so powerfully that you become exhausted once you calm down.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Exhausting_Rage"
+    },
+    "description_html": "<p>You rage so powerfully that you become exhausted once you calm down.</p>",
+    "description_text": "You rage so powerfully that you become exhausted once you calm down.",
+    "prerequisite_html": "<p>Rage ability.</p>",
+    "prerequisite_text": "Rage ability.",
+    "benefit_html": "<p>When you end your rage, you become exhausted (instead of fatigued) for the duration of the encounter. If you gain the ability to rage tirelessly, as a 17th-level barbarian, you are instead fatigued after a rage.</p>",
+    "benefit_text": "When you end your rage, you become exhausted (instead of fatigued) for the duration of the encounter. If you gain the ability to rage tirelessly, as a 17th-level barbarian, you are instead fatigued after a rage."
+  },
+  {
+    "slug": "foe-specialist-flaw-rh",
+    "name": "Foe Specialist (flaw)",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Foe_Specialist_(flaw)",
+    "scraped_at": "2026-07-23T18:13:26Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your training is so specialized that you have difficulty tracking, predicting, or otherwise interacting with those foes you have not studied in great detail.",
+      "source_abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #329"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Foe_Specialist_(flaw)"
+    },
+    "description_html": "<p>Your training is so specialized that you have difficulty tracking, predicting, or otherwise interacting with those foes you have not studied in great detail.</p>",
+    "description_text": "Your training is so specialized that you have difficulty tracking, predicting, or otherwise interacting with those foes you have not studied in great detail.",
+    "prerequisite_html": "<p>Favored enemy.</p>",
+    "prerequisite_text": "Favored enemy.",
+    "benefit_html": "<p>You suffer a -1 penalty on attack rolls, Bluff, Sense Motive, Spot, and Survival checks made against creatures of any kind that isn't one of your favored enemies.</p>",
+    "benefit_text": "You suffer a -1 penalty on attack rolls, Bluff, Sense Motive, Spot, and Survival checks made against creatures of any kind that isn't one of your favored enemies."
+  },
+  {
+    "slug": "fool-rh",
+    "name": "Fool",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Fool",
+    "scraped_at": "2026-07-23T18:13:28Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your excessively lighthearted nature grates on your companions.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Fool"
+    },
+    "description_html": "<p>Your excessively lighthearted nature grates on your companions.</p>",
+    "description_text": "Your excessively lighthearted nature grates on your companions.",
+    "prerequisite_html": "<p>Bardic music.</p>",
+    "prerequisite_text": "Bardic music.",
+    "benefit_html": "<p>You lose the inspire courage, inspire competence, inspire greatness, and inspire heroics bardic music abilities.</p>",
+    "benefit_text": "You lose the inspire courage, inspire competence, inspire greatness, and inspire heroics bardic music abilities."
+  },
+  {
+    "slug": "forlorn-rh",
+    "name": "Forlorn",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Forlorn",
+    "scraped_at": "2026-07-23T18:13:29Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You lack the ability to summon a creature to do your bidding.",
+      "source_abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #333"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Forlorn"
+    },
+    "description_html": "<p>You lack the ability to summon a creature to do your bidding.</p>",
+    "description_text": "You lack the ability to summon a creature to do your bidding.",
+    "prerequisite_html": "<p>Ability to call a familiar.</p>",
+    "prerequisite_text": "Ability to call a familiar.",
+    "benefit_html": "<p>You lose the ability to call a familiar.</p>",
+    "benefit_text": "You lose the ability to call a familiar."
+  },
+  {
+    "slug": "forlorn-of-men-rh",
+    "name": "Forlorn of Men",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Forlorn_of_Men",
+    "scraped_at": "2026-07-23T18:13:30Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are uncomfortable in the presence of humanoids.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Forlorn_of_Men"
+    },
+    "description_html": "<p>You are uncomfortable in the presence of humanoids.</p>",
+    "description_text": "You are uncomfortable in the presence of humanoids.",
+    "benefit_html": "<p>You become shaken if there is more than one humanoid within 30 feet of you, including members of your adventuring party or other friends. Spells and effects that remove fear do not remove this condition.</p>",
+    "benefit_text": "You become shaken if there is more than one humanoid within 30 feet of you, including members of your adventuring party or other friends. Spells and effects that remove fear do not remove this condition.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "frail-flaw-rh",
+    "name": "Frail (Flaw)",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Frail_(Flaw)",
+    "scraped_at": "2026-07-23T18:13:31Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You become fatigued when your body is assaulted by poison or magic.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Frail_(Flaw)"
+    },
+    "description_html": "<p>You become fatigued when your body is assaulted by poison or magic.</p>",
+    "description_text": "You become fatigued when your body is assaulted by poison or magic.",
+    "prerequisite_html": "<p>Constitution 11 or lower.</p>",
+    "prerequisite_text": "Constitution 11 or lower.",
+    "benefit_html": "<p>Whenever you fail a Fortitude save, you become fatigued, in addition to any other effects you might suffer. This condition lasts until you get 8 hours of complete rest. This flaw applies only once to any given source that requires a Fortitude save. Failing a Fortitude save while fatigued causes you to become exhausted.</p>",
+    "benefit_text": "Whenever you fail a Fortitude save, you become fatigued, in addition to any other effects you might suffer. This condition lasts until you get 8 hours of complete rest. This flaw applies only once to any given source that requires a Fortitude save. Failing a Fortitude save while fatigued causes you to become exhausted."
+  },
+  {
+    "slug": "free-spirited-rh",
+    "name": "Free-Spirited",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Free-Spirited",
+    "scraped_at": "2026-07-23T18:13:32Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You seek to live your life freely, unburdened by excessive material possessions.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Free-Spirited"
+    },
+    "description_html": "<p>You seek to live your life freely, unburdened by excessive material possessions.</p>",
+    "description_text": "You seek to live your life freely, unburdened by excessive material possessions.",
+    "prerequisite_html": "<p>Chaotic alignment.</p>",
+    "prerequisite_text": "Chaotic alignment.",
+    "benefit_html": "<p>The weight of any gear you carry is considered double for the purposes of determining your load. For example, a half-elf with a Strength of 10 and 30 pounds of gear is treated as carrying 60 pounds, which is a medium load. In addition, any armor check penalties you have are also doubled (or tripled, in the case of making a Swim check).</p>",
+    "benefit_text": "The weight of any gear you carry is considered double for the purposes of determining your load. For example, a half-elf with a Strength of 10 and 30 pounds of gear is treated as carrying 60 pounds, which is a medium load. In addition, any armor check penalties you have are also doubled (or tripled, in the case of making a Swim check)."
+  },
+  {
+    "slug": "frivolous-performer-rh",
+    "name": "Frivolous Performer",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Frivolous_Performer",
+    "scraped_at": "2026-07-23T18:13:33Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Having focused your time on practicing and performing, you have gathered little useful information in your travels.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Frivolous_Performer"
+    },
+    "description_html": "<p>Having focused your time on practicing and performing, you have gathered little useful information in your travels.</p>",
+    "description_text": "Having focused your time on practicing and performing, you have gathered little useful information in your travels.",
+    "prerequisite_html": "<p>Bardic knowledge.</p>",
+    "prerequisite_text": "Bardic knowledge.",
+    "benefit_html": "<p>You suffer a -10 penalty on all bardic knowledge checks. This penalty does not apply if the relevant knowledge involves the Perform skill in which you have the most ranks. For example, if you have the most ranks in Perform (wind instrument), you may use bardic knowledge without penalty to identify famous wind instruments, to remember facts about famous wind instrument players, or to identify places that make quality wind instruments.</p>",
+    "benefit_text": "You suffer a -10 penalty on all bardic knowledge checks. This penalty does not apply if the relevant knowledge involves the Perform skill in which you have the most ranks. For example, if you have the most ranks in Perform (wind instrument), you may use bardic knowledge without penalty to identify famous wind instruments, to remember facts about famous wind instrument players, or to identify places that make quality wind instruments."
+  },
+  {
+    "slug": "fussy-rh",
+    "name": "Fussy",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Fussy",
+    "scraped_at": "2026-07-23T18:13:35Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are uncomfortable ingesting anything but a small range of preferred foods and drinks.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Fussy"
+    },
+    "description_html": "<p>You are uncomfortable ingesting anything but a small range of preferred foods and drinks.</p>",
+    "description_text": "You are uncomfortable ingesting anything but a small range of preferred foods and drinks.",
+    "benefit_html": "<p>You become sickened (no saving throw allowed) upon ingestion of any sort of potion for the duration of its effect. Potions with an instantaneous duration cause you to be sickened for a period of time equal to the potion's caster level in minutes. You also suffer a -4 penalty on saving throws made against ingested poisons.</p>",
+    "benefit_text": "You become sickened (no saving throw allowed) upon ingestion of any sort of potion for the duration of its effect. Potions with an instantaneous duration cause you to be sickened for a period of time equal to the potion's caster level in minutes. You also suffer a -4 penalty on saving throws made against ingested poisons.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "glory-hound-rh",
+    "name": "Glory-Hound",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Glory-Hound",
+    "scraped_at": "2026-07-23T18:13:36Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have an insatiable desire for glorious combat, fighting recklessly to prove yourself.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Glory-Hound"
+    },
+    "description_html": "<p>You have an insatiable desire for glorious combat, fighting recklessly to prove yourself.</p>",
+    "description_text": "You have an insatiable desire for glorious combat, fighting recklessly to prove yourself.",
+    "prerequisite_html": "<p>Base attack bonus +1.</p>",
+    "prerequisite_text": "Base attack bonus +1.",
+    "benefit_html": "<p>You suffer a -2 penalty to AC during combat until you drop an opponent. This penalty does not apply if the combat is against a single opponent.</p>",
+    "benefit_text": "You suffer a -2 penalty to AC during combat until you drop an opponent. This penalty does not apply if the combat is against a single opponent."
+  },
+  {
+    "slug": "grudge-keeper-rh",
+    "name": "Grudge Keeper",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Grudge_Keeper",
+    "scraped_at": "2026-07-23T18:13:37Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have an overpowering need for vengeance and have difficulty letting go of grudges.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Grudge_Keeper"
+    },
+    "description_html": "<p>You have an overpowering need for vengeance and have difficulty letting go of grudges.</p>",
+    "description_text": "You have an overpowering need for vengeance and have difficulty letting go of grudges.",
+    "benefit_html": "<p>If you are damaged in combat, you suffer a -2 penalty on attacks rolls, skill checks, saving throws, and ability checks until you damage the foe who caused you harm. This penalty does not apply if you cannot discern the source of the damage. This penalty disappears when the combat ends.</p>",
+    "benefit_text": "If you are damaged in combat, you suffer a -2 penalty on attacks rolls, skill checks, saving throws, and ability checks until you damage the foe who caused you harm. This penalty does not apply if you cannot discern the source of the damage. This penalty disappears when the combat ends.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "gullible-rh",
+    "name": "Gullible",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Gullible",
+    "scraped_at": "2026-07-23T18:13:38Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You believe what you see, and you trust others more than you should.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Gullible"
+    },
+    "description_html": "<p>You believe what you see, and you trust others more than you should.</p>",
+    "description_text": "You believe what you see, and you trust others more than you should.",
+    "benefit_html": "<p>You suffer a -2 penalty on saving throws made to resist enchantment and illusion spells and effects. You also suffer a -4 penalty on Sense Motive checks.</p>",
+    "benefit_text": "You suffer a -2 penalty on saving throws made to resist enchantment and illusion spells and effects. You also suffer a -4 penalty on Sense Motive checks.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "half-blood-outcast-rh",
+    "name": "Half-Blood Outcast",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Half-Blood_Outcast",
+    "scraped_at": "2026-07-23T18:13:39Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You despise your nonhuman side.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Half-Blood_Outcast"
+    },
+    "description_html": "<p>You despise your nonhuman side.</p>",
+    "description_text": "You despise your nonhuman side.",
+    "prerequisite_html": "<p>Half-elf or half-orc.</p>",
+    "prerequisite_text": "Half-elf or half-orc.",
+    "benefit_html": "<p>You suffer a -2 penalty on all attack rolls, saving throws, and skill checks when within line of sight of an elf (if you are a half-elf) or an orc if you are a half-orc).</p>",
+    "benefit_text": "You suffer a -2 penalty on all attack rolls, saving throws, and skill checks when within line of sight of an elf (if you are a half-elf) or an orc if you are a half-orc)."
+  },
+  {
+    "slug": "hatred-rh",
+    "name": "Hatred",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Hatred",
+    "scraped_at": "2026-07-23T18:13:40Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are engulfed by a deep hatred of your chosen foes and you become insensibly enraged in their presence.",
+      "source_abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #329"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Hatred"
+    },
+    "description_html": "<p>You are engulfed by a deep hatred of your chosen foes and you become insensibly enraged in their presence.</p>",
+    "description_text": "You are engulfed by a deep hatred of your chosen foes and you become insensibly enraged in their presence.",
+    "prerequisite_html": "<p>Favored enemy.</p>",
+    "prerequisite_text": "Favored enemy.",
+    "benefit_html": "<p>You suffer a -4 penalty to your Armor Class and on attack rolls and skill checks whenever you are not engaged in melee combat with a favored enemy and a favored enemy is close enough that you could engage it.</p>",
+    "benefit_text": "You suffer a -4 penalty to your Armor Class and on attack rolls and skill checks whenever you are not engaged in melee combat with a favored enemy and a favored enemy is close enough that you could engage it."
+  },
+  {
+    "slug": "haunted-rh",
+    "name": "Haunted",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Haunted",
+    "scraped_at": "2026-07-23T18:13:42Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are unable to prevent the occurrence of strange noises in your immediate vicinity.",
+      "source_abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #327"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Haunted"
+    },
+    "description_html": "<p>You are unable to prevent the occurrence of strange noises in your immediate vicinity.</p>",
+    "description_text": "You are unable to prevent the occurrence of strange noises in your immediate vicinity.",
+    "prerequisite_html": "<p>Ability to cast spells.</p>",
+    "prerequisite_text": "Ability to cast spells.",
+    "benefit_html": "<p>Spontaneous noises sometimes arise in your immediate vicinity. These noises are completely out of your control and cannot be used to communicate or distract other creatures. These sounds cease when you are unconscious, petrified, asleep, or dead. You suffer a -4 penalty on all Listen and Move Silently skill checks.</p>",
+    "benefit_text": "Spontaneous noises sometimes arise in your immediate vicinity. These noises are completely out of your control and cannot be used to communicate or distract other creatures. These sounds cease when you are unconscious, petrified, asleep, or dead. You suffer a -4 penalty on all Listen and Move Silently skill checks."
+  },
+  {
+    "slug": "honorable-challenge-rh",
+    "name": "Honorable Challenge",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Honorable_Challenge",
+    "scraped_at": "2026-07-23T18:13:43Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You only cross arms with foes who willingly engage you.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Honorable_Challenge"
+    },
+    "description_html": "<p>You only cross arms with foes who willingly engage you.</p>",
+    "description_text": "You only cross arms with foes who willingly engage you.",
+    "prerequisite_html": "<p>Lawful alignment.</p>",
+    "prerequisite_text": "Lawful alignment.",
+    "benefit_html": "<p>You suffer a -4 penalty on attack rolls against creatures that have not explicitly challenged you or made an attack against you. For the purposes of this feat, an attack against you includes any action that would end an invisibility spell.</p>",
+    "benefit_text": "You suffer a -4 penalty on attack rolls against creatures that have not explicitly challenged you or made an attack against you. For the purposes of this feat, an attack against you includes any action that would end an invisibility spell."
+  },
+  {
+    "slug": "honor-of-the-duel-rh",
+    "name": "Honor of The Duel",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Honor_of_The_Duel",
+    "scraped_at": "2026-07-23T18:13:44Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You strongly believe in one-on-one combat to decide a fight.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Honor_of_The_Duel"
+    },
+    "description_html": "<p>You strongly believe in one-on-one combat to decide a fight.</p>",
+    "description_text": "You strongly believe in one-on-one combat to decide a fight.",
+    "prerequisite_html": "<p>Good or lawful alignment.</p>",
+    "prerequisite_text": "Good or lawful alignment.",
+    "benefit_html": "<p>You must make a Will save (DC 10 + your level) to attack a creature in a square threatened by one of its other foes. A successful save allows you to attack such a creature, albeit with a -2 penalty on your attack rolls. A failed save prohibits you from attacking that creature.</p>",
+    "benefit_text": "You must make a Will save (DC 10 + your level) to attack a creature in a square threatened by one of its other foes. A successful save allows you to attack such a creature, albeit with a -2 penalty on your attack rolls. A failed save prohibits you from attacking that creature."
+  },
+  {
+    "slug": "hot-blooded-rh",
+    "name": "Hot-Blooded",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Hot-Blooded",
+    "scraped_at": "2026-07-23T18:13:45Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You were raised in the desert and cannot tolerate cold.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Hot-Blooded"
+    },
+    "description_html": "<p>You were raised in the desert and cannot tolerate cold.</p>",
+    "description_text": "You were raised in the desert and cannot tolerate cold.",
+    "benefit_html": "<p>You automatically fail all Fortitude saves made to overcome the effects of low temperatures. Cold-based effects deal an additional 2 points of cold damage to you.</p>",
+    "benefit_text": "You automatically fail all Fortitude saves made to overcome the effects of low temperatures. Cold-based effects deal an additional 2 points of cold damage to you.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "implacable-rh",
+    "name": "Implacable",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Implacable",
+    "scraped_at": "2026-07-23T18:13:46Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You refuse to retreat from even the most deadly of confrontations.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Implacable"
+    },
+    "description_html": "<p>You refuse to retreat from even the most deadly of confrontations.</p>",
+    "description_text": "You refuse to retreat from even the most deadly of confrontations.",
+    "prerequisite_html": "<p>Base attack bonus +1.</p>",
+    "prerequisite_text": "Base attack bonus +1.",
+    "benefit_html": "<p>If you move out of melee combat for any reason, you suffer a -2 penalty on all attack rolls, skill checks, and saving throws for 1 hour.</p>",
+    "benefit_text": "If you move out of melee combat for any reason, you suffer a -2 penalty on all attack rolls, skill checks, and saving throws for 1 hour."
+  },
+  {
+    "slug": "individualist-rh",
+    "name": "Individualist",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Individualist",
+    "scraped_at": "2026-07-23T18:13:48Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are committed to a path that requires complete independence from others.",
+      "source_abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #329"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Individualist"
+    },
+    "description_html": "<p>You are committed to a path that requires complete independence from others.</p>",
+    "description_text": "You are committed to a path that requires complete independence from others.",
+    "benefit_html": "<p>You suffer a -2 penalty on all attack rolls made using weapons that you have not personally crafted. In addition, the armor check penalty of any suit of armor you wear that you did not craft increases by +1.</p>",
+    "benefit_text": "You suffer a -2 penalty on all attack rolls made using weapons that you have not personally crafted. In addition, the armor check penalty of any suit of armor you wear that you did not craft increases by +1.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "insomniac-rh",
+    "name": "Insomniac",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Insomniac",
+    "scraped_at": "2026-07-23T18:13:49Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have great difficulty achieving a full and restful sleep.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Insomniac"
+    },
+    "description_html": "<p>You have great difficulty achieving a full and restful sleep.</p>",
+    "description_text": "You have great difficulty achieving a full and restful sleep.",
+    "benefit_html": "<p>In order to get a full night of rest you must succeed at a DC 15 Fortitude save. If you are sleeping and a disturbance wakes you during the night, you must make an additional save (at the same DC) to return to sleep. If you fail the Fortitude save you are fatigued when you rise in the morning. If you are fatigued when you try to sleep, you gain a +2 bonus on your save. If you are exhausted, you gain a +6 bonus. Comfortable conditions, such as those found in most inns, grant you a +4 bonus on this save. Poor conditions, such as sleeping on the ground or in armor, give you a -4 penalty on this save. Even if you sleep poorly, you may prepare arcane spells as normal after 8 hours of fitful rest.</p>",
+    "benefit_text": "In order to get a full night of rest you must succeed at a DC 15 Fortitude save. If you are sleeping and a disturbance wakes you during the night, you must make an additional save (at the same DC) to return to sleep. If you fail the Fortitude save you are fatigued when you rise in the morning. If you are fatigued when you try to sleep, you gain a +2 bonus on your save. If you are exhausted, you gain a +6 bonus. Comfortable conditions, such as those found in most inns, grant you a +4 bonus on this save. Poor conditions, such as sleeping on the ground or in armor, give you a -4 penalty on this save. Even if you sleep poorly, you may prepare arcane spells as normal after 8 hours of fitful rest.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "lightweight-rh",
+    "name": "Lightweight",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Lightweight",
+    "scraped_at": "2026-07-23T18:13:50Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are light for your size. Region : Constitution 13 or lower, you may not be Obese.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Lightweight"
+    },
+    "description_html": "<p>You are light for your size. Region : Constitution 13 or lower, you may not be Obese.</p>",
+    "description_text": "You are light for your size. Region : Constitution 13 or lower, you may not be Obese.",
+    "benefit_html": "<p>You have half the base weight of a normal character of your race. Height and weight modifiers are added normally. You suffer a -4 penalty when making or resisting bull rushes, grapples, overruns, or trip attacks. You gain no attack bonus when you charge, but you do suffer the -2 Armor Class penalty and take double damage from weapons set against charges you make.</p>",
+    "benefit_text": "You have half the base weight of a normal character of your race. Height and weight modifiers are added normally. You suffer a -4 penalty when making or resisting bull rushes, grapples, overruns, or trip attacks. You gain no attack bonus when you charge, but you do suffer the -2 Armor Class penalty and take double damage from weapons set against charges you make.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "light-sensitivity-rh",
+    "name": "Light Sensitivity",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Light_Sensitivity",
+    "scraped_at": "2026-07-23T18:13:51Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Accustomed only to the darker places in the world, your eyes open much wider than normal, making it difficult for you to see in bright light.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Light_Sensitivity"
+    },
+    "description_html": "<p>Accustomed only to the darker places in the world, your eyes open much wider than normal, making it difficult for you to see in bright light.</p>",
+    "description_text": "Accustomed only to the darker places in the world, your eyes open much wider than normal, making it difficult for you to see in bright light.",
+    "prerequisite_html": "<p>Darkvision.</p>",
+    "prerequisite_text": "Darkvision.",
+    "benefit_html": "<p>You become dazzled in bright sunlight or within the radius of a daylight spell. A dazzled creature takes a -1 penalty on attack rolls, Search checks, and Spot checks.</p>",
+    "benefit_text": "You become dazzled in bright sunlight or within the radius of a daylight spell. A dazzled creature takes a -1 penalty on attack rolls, Search checks, and Spot checks."
+  },
+  {
+    "slug": "living-faith-rh",
+    "name": "Living Faith",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Living_Faith",
+    "scraped_at": "2026-07-23T18:13:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your religious practices give you no special powers over the dead.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Living_Faith"
+    },
+    "description_html": "<p>Your religious practices give you no special powers over the dead.</p>",
+    "description_text": "Your religious practices give you no special powers over the dead.",
+    "prerequisite_html": "<p>Ability to turn or rebuke undead.</p>",
+    "prerequisite_text": "Ability to turn or rebuke undead.",
+    "benefit_html": "<p>You lose the ability to turn or rebuke undead. This does not extend to any other creatures a domain might grant you the ability to turn or rebuke, such as earth elementals for a cleric with the Air domain.</p>",
+    "benefit_text": "You lose the ability to turn or rebuke undead. This does not extend to any other creatures a domain might grant you the ability to turn or rebuke, such as earth elementals for a cleric with the Air domain."
+  },
+  {
+    "slug": "loner-rh",
+    "name": "Loner",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Loner",
+    "scraped_at": "2026-07-23T18:13:53Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You do not have the ability to summon a familiar or gain an animal companion.",
+      "source_abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #327"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Loner"
+    },
+    "description_html": "<p>You do not have the ability to summon a familiar or gain an animal companion.</p>",
+    "description_text": "You do not have the ability to summon a familiar or gain an animal companion.",
+    "prerequisite_html": "<p>Ability to summon a familiar or animal companion.</p>",
+    "prerequisite_text": "Ability to summon a familiar or animal companion.",
+    "benefit_html": "<p>You lose the ability to summon a familiar or gain an animal companion. You never gain the ability to gain a special companion, whether through animal companion, summon familiar, or some other class ability or feat. Possessing multiple classes that would grant you an animal companion or familiar does not negate the effects of this flaw.</p>",
+    "benefit_text": "You lose the ability to summon a familiar or gain an animal companion. You never gain the ability to gain a special companion, whether through animal companion, summon familiar, or some other class ability or feat. Possessing multiple classes that would grant you an animal companion or familiar does not negate the effects of this flaw."
+  },
+  {
+    "slug": "loudmouth-rh",
+    "name": "Loudmouth",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Loudmouth",
+    "scraped_at": "2026-07-23T18:13:55Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are a loud, obnoxious, boisterous, and compulsive talker.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Loudmouth"
+    },
+    "description_html": "<p>You are a loud, obnoxious, boisterous, and compulsive talker.</p>",
+    "description_text": "You are a loud, obnoxious, boisterous, and compulsive talker.",
+    "benefit_html": "<p>You suffer a -4 penalty on all Diplomacy and Move Silently checks.</p>",
+    "benefit_text": "You suffer a -4 penalty on all Diplomacy and Move Silently checks.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "love-of-nature-rh",
+    "name": "Love of Nature",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Love_of_Nature",
+    "scraped_at": "2026-07-23T18:13:56Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You do not wish harm upon any natural creature.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Love_of_Nature"
+    },
+    "description_html": "<p>You do not wish harm upon any natural creature.</p>",
+    "description_text": "You do not wish harm upon any natural creature.",
+    "benefit_html": "<p>You must succeed at a DC 12 Will save before you can attack any creature with the animal, plant, or vermin type, or you lose your action. Note that animals, plants, and vermin may attack you without penalty.</p>",
+    "benefit_text": "You must succeed at a DC 12 Will save before you can attack any creature with the animal, plant, or vermin type, or you lose your action. Note that animals, plants, and vermin may attack you without penalty.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "magical-fascination-rh",
+    "name": "Magical Fascination",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Magical_Fascination",
+    "scraped_at": "2026-07-23T18:13:57Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have a tendency to become fascinated by spells and elaborate magical effects.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Magical_Fascination"
+    },
+    "description_html": "<p>You have a tendency to become fascinated by spells and elaborate magical effects.</p>",
+    "description_text": "You have a tendency to become fascinated by spells and elaborate magical effects.",
+    "benefit_html": "<p>You suffer a -2 penalty on attack rolls and skill checks when in sight of a visible magical effect with a duration greater than instantaneous (such as a dancing lights, spiritual weapon , or wall of fire spell).</p>",
+    "benefit_text": "You suffer a -2 penalty on attack rolls and skill checks when in sight of a visible magical effect with a duration greater than instantaneous (such as a dancing lights, spiritual weapon , or wall of fire spell).",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "magical-overload-rh",
+    "name": "Magical Overload",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Magical_Overload",
+    "scraped_at": "2026-07-23T18:13:58Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have difficulty controlling your most powerful magic, being more comfortable with more familiar, lower-level spells.",
+      "source_abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #327"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Magical_Overload"
+    },
+    "description_html": "<p>You have difficulty controlling your most powerful magic, being more comfortable with more familiar, lower-level spells.</p>",
+    "description_text": "You have difficulty controlling your most powerful magic, being more comfortable with more familiar, lower-level spells.",
+    "prerequisite_html": "<p>Ability to cast spells.</p>",
+    "prerequisite_text": "Ability to cast spells.",
+    "benefit_html": "<p>You must use one spell slot of your highest spell level to cast or prepare a spell of a lower level. This spell slot may be used to cast or prepare any spell of any level lower than your highest level, effectively causing you to lose one of your highest-level spell slots to gain one of a lower level. For example, a 6th-level sorcerer would lose the ability to cast one 3rd-level spell per day, but would gain the ability to cast one additional 0, 1st-, or 2nd-level spell instead. This flaw always affects your highest spell level and changes the spell level it affects as you gain levels.</p>",
+    "benefit_text": "You must use one spell slot of your highest spell level to cast or prepare a spell of a lower level. This spell slot may be used to cast or prepare any spell of any level lower than your highest level, effectively causing you to lose one of your highest-level spell slots to gain one of a lower level. For example, a 6th-level sorcerer would lose the ability to cast one 3rd-level spell per day, but would gain the ability to cast one additional 0, 1st-, or 2nd-level spell instead. This flaw always affects your highest spell level and changes the spell level it affects as you gain levels."
+  },
+  {
+    "slug": "material-devotion-rh",
+    "name": "Material Devotion",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Material_Devotion",
+    "scraped_at": "2026-07-23T18:13:59Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are restricted to using magical objects created with your deity's domains in mind.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Material_Devotion"
+    },
+    "description_html": "<p>You are restricted to using magical objects created with your deity's domains in mind.</p>",
+    "description_text": "You are restricted to using magical objects created with your deity's domains in mind.",
+    "prerequisite_html": "<p>Access to domains.</p>",
+    "prerequisite_text": "Access to domains.",
+    "benefit_html": "<p>You may only use spell-trigger items (wands and staffs) that cast spells on your domain spell lists. Other spell-trigger items fail in your hands.</p>",
+    "benefit_text": "You may only use spell-trigger items (wands and staffs) that cast spells on your domain spell lists. Other spell-trigger items fail in your hands."
+  },
+  {
+    "slug": "metal-intolerance-rh",
+    "name": "Metal Intolerance",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Metal_Intolerance",
+    "scraped_at": "2026-07-23T18:14:00Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are allergic to metals.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Metal_Intolerance"
+    },
+    "description_html": "<p>You are allergic to metals.</p>",
+    "description_text": "You are allergic to metals.",
+    "benefit_html": "<p>You suffer an additional point of damage when struck by metal weapons. The natural attacks of inevitables, iron golems, and other creatures composed of metal also deal this additional damage.</p>",
+    "benefit_text": "You suffer an additional point of damage when struck by metal weapons. The natural attacks of inevitables, iron golems, and other creatures composed of metal also deal this additional damage.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "methodical-magical-methods-rh",
+    "name": "Methodical Magical Methods",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Methodical_Magical_Methods",
+    "scraped_at": "2026-07-23T18:14:02Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your spellcasting methods require a rigid posture that makes you vulnerable to your foes while casting.",
+      "source_abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #333"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Methodical_Magical_Methods"
+    },
+    "description_html": "<p>Your spellcasting methods require a rigid posture that makes you vulnerable to your foes while casting.</p>",
+    "description_text": "Your spellcasting methods require a rigid posture that makes you vulnerable to your foes while casting.",
+    "prerequisite_html": "<p>Ability to cast spells.</p>",
+    "prerequisite_text": "Ability to cast spells.",
+    "benefit_html": "<p>You are considered flat-footed with an effective Dexterity of 0 (-5 to AC) on any round in which you cast a spell. You may not cast spells defensively.</p>",
+    "benefit_text": "You are considered flat-footed with an effective Dexterity of 0 (-5 to AC) on any round in which you cast a spell. You may not cast spells defensively."
+  },
+  {
+    "slug": "meticulous-performer-rh",
+    "name": "Meticulous Performer",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Meticulous_Performer",
+    "scraped_at": "2026-07-23T18:14:03Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You get lost in your performances.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Meticulous_Performer"
+    },
+    "description_html": "<p>You get lost in your performances.</p>",
+    "description_text": "You get lost in your performances.",
+    "prerequisite_html": "<p>Bardic music.</p>",
+    "prerequisite_text": "Bardic music.",
+    "benefit_html": "<p>Initiating or maintaining any bardic music ability is a full-round action.</p>",
+    "benefit_text": "Initiating or maintaining any bardic music ability is a full-round action."
+  },
+  {
+    "slug": "mounted-warrior-rh",
+    "name": "Mounted Warrior",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Mounted_Warrior",
+    "scraped_at": "2026-07-23T18:14:04Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You only feel comfortable fighting from the saddle.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Mounted_Warrior"
+    },
+    "description_html": "<p>You only feel comfortable fighting from the saddle.</p>",
+    "description_text": "You only feel comfortable fighting from the saddle.",
+    "prerequisite_html": "<p>Ride 1 rank.</p>",
+    "prerequisite_text": "Ride 1 rank.",
+    "benefit_html": "<p>You suffer a -2 penalty on attack rolls made while not riding a mount.</p>",
+    "benefit_text": "You suffer a -2 penalty on attack rolls made while not riding a mount."
+  },
+  {
+    "slug": "murky-eyed-rh",
+    "name": "Murky-Eyed",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Murky-Eyed",
+    "scraped_at": "2026-07-23T18:14:05Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your vision is obscured.",
+      "source_abbrev": "UA",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Unearthed Arcana"
+    },
+    "source": {
+      "name": "Unearthed Arcana",
+      "abbrev": "UA",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Murky-Eyed"
+    },
+    "description_html": "<p>Your vision is obscured.</p>",
+    "description_text": "Your vision is obscured.",
+    "benefit_html": "<p>In combat, every time you attack an opponent that has concealment, roll your miss chance twice. If either or both results indicate that you miss, your attack fails.</p>",
+    "benefit_text": "In combat, every time you attack an opponent that has concealment, roll your miss chance twice. If either or both results indicate that you miss, your attack fails.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "no-time-for-book-learning-rh",
+    "name": "No Time For Book Learning",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/No_Time_For_Book_Learning",
+    "scraped_at": "2026-07-23T18:14:06Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You put no faith in the written word.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/No_Time_For_Book_Learning"
+    },
+    "description_html": "<p>You put no faith in the written word.</p>",
+    "description_text": "You put no faith in the written word.",
+    "benefit_html": "<p>You are illiterate. You can never learn to read any language, and you suffer a -2 penalty on all Knowledge checks except Knowledge (nature).</p>",
+    "benefit_text": "You are illiterate. You can never learn to read any language, and you suffer a -2 penalty on all Knowledge checks except Knowledge (nature).",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "obese-rh",
+    "name": "Obese",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Obese",
+    "scraped_at": "2026-07-23T18:14:07Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your great bulk can sometimes impede your actions.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Obese"
+    },
+    "description_html": "<p>Your great bulk can sometimes impede your actions.</p>",
+    "description_text": "Your great bulk can sometimes impede your actions.",
+    "prerequisite_html": "<p>Small size, Dexterity 13 or lower, you may not be Lightweight.</p>",
+    "prerequisite_text": "Small size, Dexterity 13 or lower, you may not be Lightweight.",
+    "benefit_html": "<p>You have double the base weight of a character of your race. Height and weight modifiers are added normally. You lose your +1 bonus to Armor Class and on attack rolls, as well as your +4 bonus on Hide checks. You must pay double the cost for armor but not for any magical enhancements the armor might have. Such armor does not weigh half the normal amount.</p>",
+    "benefit_text": "You have double the base weight of a character of your race. Height and weight modifiers are added normally. You lose your +1 bonus to Armor Class and on attack rolls, as well as your +4 bonus on Hide checks. You must pay double the cost for armor but not for any magical enhancements the armor might have. Such armor does not weigh half the normal amount."
+  },
+  {
+    "slug": "phantom-spark-rh",
+    "name": "Phantom Spark",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Phantom_Spark",
+    "scraped_at": "2026-07-23T18:14:09Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your body occasionally emits bursts of bright colored light.",
+      "source_abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #327"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Phantom_Spark"
+    },
+    "description_html": "<p>Your body occasionally emits bursts of bright colored light.</p>",
+    "description_text": "Your body occasionally emits bursts of bright colored light.",
+    "prerequisite_html": "<p>Ability to cast spells.</p>",
+    "prerequisite_text": "Ability to cast spells.",
+    "benefit_html": "<p>You spontaneously emit bursts of colored light. These lights are completely out of your control and cannot be used as a light source. They only cease when you are unconscious, petrified, asleep, or dead. You suffer a -4 penalty on all Hide and Spot skill checks.</p>",
+    "benefit_text": "You spontaneously emit bursts of colored light. These lights are completely out of your control and cannot be used as a light source. They only cease when you are unconscious, petrified, asleep, or dead. You suffer a -4 penalty on all Hide and Spot skill checks."
+  },
+  {
+    "slug": "ponderous-spellcaster-rh",
+    "name": "Ponderous Spellcaster",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Ponderous_Spellcaster",
+    "scraped_at": "2026-07-23T18:14:10Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your spells take additional time to cast.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Ponderous_Spellcaster"
+    },
+    "description_html": "<p>Your spells take additional time to cast.</p>",
+    "description_text": "Your spells take additional time to cast.",
+    "prerequisite_html": "<p>Ability to cast spells.</p>",
+    "prerequisite_text": "Ability to cast spells.",
+    "benefit_html": "<p>The casting time of all your spells are doubled. Spells that normally require a single action to cast require a full-round action to cast instead. Spells that normally require a free action to cast now require a standard action to cast instead.</p>",
+    "benefit_text": "The casting time of all your spells are doubled. Spells that normally require a single action to cast require a full-round action to cast instead. Spells that normally require a free action to cast now require a standard action to cast instead."
+  },
+  {
+    "slug": "pride-of-arms-rh",
+    "name": "Pride of Arms",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Pride_of_Arms",
+    "scraped_at": "2026-07-23T18:14:11Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You take great pride in knowing how to use weapons specifically designed for war. You consider all other weapons beneath your station and have allowed your training in them to atrophy.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Pride_of_Arms"
+    },
+    "description_html": "<p>You take great pride in knowing how to use weapons specifically designed for war. You consider all other weapons beneath your station and have allowed your training in them to atrophy.</p>",
+    "description_text": "You take great pride in knowing how to use weapons specifically designed for war. You consider all other weapons beneath your station and have allowed your training in them to atrophy.",
+    "prerequisite_html": "<p>Proficiency in all martial weapons.</p>",
+    "prerequisite_text": "Proficiency in all martial weapons.",
+    "benefit_html": "<p>You suffer a -4 penalty on all attack rolls made with exotic weapons, simple weapons, unarmed attacks, and touch attacks.</p>",
+    "benefit_text": "You suffer a -4 penalty on all attack rolls made with exotic weapons, simple weapons, unarmed attacks, and touch attacks."
+  },
+  {
+    "slug": "quarter-elf-rh",
+    "name": "Quarter Elf",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Quarter_Elf",
+    "scraped_at": "2026-07-23T18:14:12Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Elven blood is not particularly strong in your veins and its features are barely noticeable.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Quarter_Elf"
+    },
+    "description_html": "<p>Elven blood is not particularly strong in your veins and its features are barely noticeable.</p>",
+    "description_text": "Elven blood is not particularly strong in your veins and its features are barely noticeable.",
+    "prerequisite_html": "<p>Half-elf.</p>",
+    "prerequisite_text": "Half-elf.",
+    "benefit_html": "<p>You are not immune to sleep spells and do not gain a racial bonus on saving throws against enchantment spells or effects. You are not considered to have elven blood.</p>",
+    "benefit_text": "You are not immune to sleep spells and do not gain a racial bonus on saving throws against enchantment spells or effects. You are not considered to have elven blood."
+  },
+  {
+    "slug": "quick-burning-rage-rh",
+    "name": "Quick Burning Rage",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Quick_Burning_Rage",
+    "scraped_at": "2026-07-23T18:14:13Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your rages don't last very long.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Quick_Burning_Rage"
+    },
+    "description_html": "<p>Your rages don't last very long.</p>",
+    "description_text": "Your rages don't last very long.",
+    "prerequisite_html": "<p>Rage ability.</p>",
+    "prerequisite_text": "Rage ability.",
+    "benefit_html": "<p>Your rage only lasts for a number of rounds equal to your newly improved Constitution modifier.</p>",
+    "benefit_text": "Your rage only lasts for a number of rounds equal to your newly improved Constitution modifier."
+  },
+  {
+    "slug": "restricted-sorcery-rh",
+    "name": "Restricted Sorcery",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Restricted_Sorcery",
+    "scraped_at": "2026-07-23T18:14:14Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your magical powers manifest within a limited realm of effects.",
+      "source_abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #327"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr327",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Restricted_Sorcery"
+    },
+    "description_html": "<p>Your magical powers manifest within a limited realm of effects.</p>",
+    "description_text": "Your magical powers manifest within a limited realm of effects.",
+    "prerequisite_html": "<p>Ability to cast spells without preparation.</p>",
+    "prerequisite_text": "Ability to cast spells without preparation.",
+    "benefit_html": "<p>Choose two schools of magic to be your restricted schools. When you select spells to learn, you may not choose spells from these two restricted schools. In addition, you may not use wands or scrolls that cast spells from these restricted schools. You may not choose divination as one of your restricted schools.</p>",
+    "benefit_text": "Choose two schools of magic to be your restricted schools. When you select spells to learn, you may not choose spells from these two restricted schools. In addition, you may not use wands or scrolls that cast spells from these restricted schools. You may not choose divination as one of your restricted schools."
+  },
+  {
+    "slug": "short-attention-span-rh",
+    "name": "Short Attention Span",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Short_Attention_Span",
+    "scraped_at": "2026-07-23T18:14:16Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have little patience, causing you to have difficulty concentrating on repetitive tasks.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Short_Attention_Span"
+    },
+    "description_html": "<p>You have little patience, causing you to have difficulty concentrating on repetitive tasks.</p>",
+    "description_text": "You have little patience, causing you to have difficulty concentrating on repetitive tasks.",
+    "benefit_html": "<p>You suffer a -2 penalty on all skill checks made to retry an action that you previously failed. This penalty is cumulative, increasing by -2 for every failed attempt. In addition, you may not take 20 on any skill check.</p>",
+    "benefit_text": "You suffer a -2 penalty on all skill checks made to retry an action that you previously failed. This penalty is cumulative, increasing by -2 for every failed attempt. In addition, you may not take 20 on any skill check.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "short-of-breath-rh",
+    "name": "Short of Breath",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Short_of_Breath",
+    "scraped_at": "2026-07-23T18:14:17Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have limited stamina and you easily become exhausted by physical tasks.",
+      "source_abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #333"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Short_of_Breath"
+    },
+    "description_html": "<p>You have limited stamina and you easily become exhausted by physical tasks.</p>",
+    "description_text": "You have limited stamina and you easily become exhausted by physical tasks.",
+    "prerequisite_html": "<p>Constitution 13 or lower.</p>",
+    "prerequisite_text": "Constitution 13 or lower.",
+    "benefit_html": "<p>Whenever you make a Strength check, a Constitution check to continue running, or use the skills Climb, Jump, or Swim, you must make a Fortitude save at the same DC as the skill or ability check. If you fail this save, you become fatigued.</p>",
+    "benefit_text": "Whenever you make a Strength check, a Constitution check to continue running, or use the skills Climb, Jump, or Swim, you must make a Fortitude save at the same DC as the skill or ability check. If you fail this save, you become fatigued."
+  },
+  {
+    "slug": "short-temper-rh",
+    "name": "Short Temper",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Short_Temper",
+    "scraped_at": "2026-07-23T18:14:18Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You become angry and flustered under stressful circumstances.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Short_Temper"
+    },
+    "description_html": "<p>You become angry and flustered under stressful circumstances.</p>",
+    "description_text": "You become angry and flustered under stressful circumstances.",
+    "benefit_html": "<p>If you suffer any damage during combat, you must make a DC 15 Will save or become enraged. While enraged you suffer a -2 penalty to your Armor Class and you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except for Balance, Escape Artist, Intimidate, and Ride), the Concentration skill, or any abilities that require patience or concentration. You cannot cast spells or activate magic items that require a command word, a spell trigger (such as a wand), or spell completion (such as a scroll) to function. You can use any feat you possess except Combat Expertise, item creation feats, and metamagic feats. This enraged state lasts for a number of rounds equal to 3 + your Constitution modifier and cannot be ended prematurely. This penalty stacks with those from the use of the barbarian rage ability, resulting in a -4 AC penalty.</p>",
+    "benefit_text": "If you suffer any damage during combat, you must make a DC 15 Will save or become enraged. While enraged you suffer a -2 penalty to your Armor Class and you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except for Balance, Escape Artist, Intimidate, and Ride), the Concentration skill, or any abilities that require patience or concentration. You cannot cast spells or activate magic items that require a command word, a spell trigger (such as a wand), or spell completion (such as a scroll) to function. You can use any feat you possess except Combat Expertise, item creation feats, and metamagic feats. This enraged state lasts for a number of rounds equal to 3 + your Constitution modifier and cannot be ended prematurely. This penalty stacks with those from the use of the barbarian rage ability, resulting in a -4 AC penalty.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "skulker-rh",
+    "name": "Skulker",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Skulker",
+    "scraped_at": "2026-07-23T18:14:19Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are not prepared to stand face to face with your foes.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Skulker"
+    },
+    "description_html": "<p>You are not prepared to stand face to face with your foes.</p>",
+    "description_text": "You are not prepared to stand face to face with your foes.",
+    "benefit_html": "<p>You must make a DC 15 Will save or become shaken whenever a foe engages you in melee. This penalty takes effect as soon as an enemy attacks you while you are within its threatened area. You recover from your fear as soon as you are not within an area threatened by foes.</p>",
+    "benefit_text": "You must make a DC 15 Will save or become shaken whenever a foe engages you in melee. This penalty takes effect as soon as an enemy attacks you while you are within its threatened area. You recover from your fear as soon as you are not within an area threatened by foes.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "slow-healing-rh",
+    "name": "Slow Healing",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Slow_Healing",
+    "scraped_at": "2026-07-23T18:14:20Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You do not heal quickly.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Slow_Healing"
+    },
+    "description_html": "<p>You do not heal quickly.</p>",
+    "description_text": "You do not heal quickly.",
+    "prerequisite_html": "<p>Constitution 13 or lower.</p>",
+    "prerequisite_text": "Constitution 13 or lower.",
+    "benefit_html": "<p>You do not normally recover hit points or temporary ability damage through natural healing. If you undergo complete bed rest for a full day, you may recover either 1 hit point or 1 point of temporary ability damage. In addition, any conjuration (healing) spell cast upon you works at only half its caster level. For example, a cure moderate wounds cast upon you by an 8th-level cleric would only heal 2d8+4 points of damage, instead of 2d8+8 points of damage.</p>",
+    "benefit_text": "You do not normally recover hit points or temporary ability damage through natural healing. If you undergo complete bed rest for a full day, you may recover either 1 hit point or 1 point of temporary ability damage. In addition, any conjuration (healing) spell cast upon you works at only half its caster level. For example, a cure moderate wounds cast upon you by an 8th-level cleric would only heal 2d8+4 points of damage, instead of 2d8+8 points of damage."
+  },
+  {
+    "slug": "slow-to-anger-rh",
+    "name": "Slow To Anger",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Slow_To_Anger",
+    "scraped_at": "2026-07-23T18:14:21Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "It takes you longer to get worked up.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Slow_To_Anger"
+    },
+    "description_html": "<p>It takes you longer to get worked up.</p>",
+    "description_text": "It takes you longer to get worked up.",
+    "prerequisite_html": "<p>Rage ability.</p>",
+    "prerequisite_text": "Rage ability.",
+    "benefit_html": "<p>Entering a rage requires a full- round action</p>",
+    "benefit_text": "Entering a rage requires a full- round action"
+  },
+  {
+    "slug": "solitary-paragon-rh",
+    "name": "Solitary Paragon",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Solitary_Paragon",
+    "scraped_at": "2026-07-23T18:14:23Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You prefer to fight alone.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Solitary_Paragon"
+    },
+    "description_html": "<p>You prefer to fight alone.</p>",
+    "description_text": "You prefer to fight alone.",
+    "benefit_html": "<p>You gain no benefit from flanking a foe and instead suffer a -4 penalty on attack rolls made against a foe you flank.</p>",
+    "benefit_text": "You gain no benefit from flanking a foe and instead suffer a -4 penalty on attack rolls made against a foe you flank.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "stubby-fingers-rh",
+    "name": "Stubby Fingers",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Stubby_Fingers",
+    "scraped_at": "2026-07-23T18:14:24Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have short stubby fingers, which are not well-suited for grasping.",
+      "source_abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #328"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr328",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Stubby_Fingers"
+    },
+    "description_html": "<p>You have short stubby fingers, which are not well-suited for grasping.</p>",
+    "description_text": "You have short stubby fingers, which are not well-suited for grasping.",
+    "prerequisite_html": "<p>Dwarf, gnome, or halfling.</p>",
+    "prerequisite_text": "Dwarf, gnome, or halfling.",
+    "benefit_html": "<p>You suffer a -4 penalty on all attack rolls made when you use a light or one-handed weapon (natural weapons and unarmed attacks do not incur this penalty). In addition, you suffer a -4 penalty on all Disable Device, Open Lock, Sleight of Hand, and Use Rope checks.</p>",
+    "benefit_text": "You suffer a -4 penalty on all attack rolls made when you use a light or one-handed weapon (natural weapons and unarmed attacks do not incur this penalty). In addition, you suffer a -4 penalty on all Disable Device, Open Lock, Sleight of Hand, and Use Rope checks."
+  },
+  {
+    "slug": "superstitious-rh",
+    "name": "Superstitious",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Superstitious",
+    "scraped_at": "2026-07-23T18:14:25Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You fear magic, and avoid it when possible.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Superstitious"
+    },
+    "description_html": "<p>You fear magic, and avoid it when possible.</p>",
+    "description_text": "You fear magic, and avoid it when possible.",
+    "prerequisite_html": "<p>Inability to cast spells.</p>",
+    "prerequisite_text": "Inability to cast spells.",
+    "benefit_html": "<p>Whenever you see an item, effect, or location obviously created by magic (whether by spell or some other means), you become frightened. The frightened condition lasts until you can no longer see the obviously magical item, effect, or location.</p>",
+    "benefit_text": "Whenever you see an item, effect, or location obviously created by magic (whether by spell or some other means), you become frightened. The frightened condition lasts until you can no longer see the obviously magical item, effect, or location."
+  },
+  {
+    "slug": "terrain-specialist-rh",
+    "name": "Terrain Specialist",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Terrain_Specialist",
+    "scraped_at": "2026-07-23T18:14:26Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You were trained to use your abilities in only one type of environment and are uncomfortable and less competent in all others.",
+      "source_abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #329"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Terrain_Specialist"
+    },
+    "description_html": "<p>You were trained to use your abilities in only one type of environment and are uncomfortable and less competent in all others.</p>",
+    "description_text": "You were trained to use your abilities in only one type of environment and are uncomfortable and less competent in all others.",
+    "prerequisite_html": "<p>Track, wild empathy.</p>",
+    "prerequisite_text": "Track, wild empathy.",
+    "benefit_html": "<p>Choose one terrain type (aquatic, desert, forest, hills, marsh, mountain, or plains). That is your home terrain, in which you are most comfortable. In all other terrains you suffer a -2 penalty on all wild empathy checks, as well as on Search or Survival checks made to track. You may only use your camouflage and hide in plain sight abilities in your chosen terrain.</p>",
+    "benefit_text": "Choose one terrain type (aquatic, desert, forest, hills, marsh, mountain, or plains). That is your home terrain, in which you are most comfortable. In all other terrains you suffer a -2 penalty on all wild empathy checks, as well as on Search or Survival checks made to track. You may only use your camouflage and hide in plain sight abilities in your chosen terrain."
+  },
+  {
+    "slug": "trivial-performer-rh",
+    "name": "Trivial Performer",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Trivial_Performer",
+    "scraped_at": "2026-07-23T18:14:27Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Your performance is lighthearted and has limited effect on others.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Trivial_Performer"
+    },
+    "description_html": "<p>Your performance is lighthearted and has limited effect on others.</p>",
+    "description_text": "Your performance is lighthearted and has limited effect on others.",
+    "prerequisite_html": "<p>Bardic music.</p>",
+    "prerequisite_text": "Bardic music.",
+    "benefit_html": "<p>The save DC against your fascinate, suggestion, and mass suggestion abilities is half normal (rounded down). If you use the inspire courage, inspire greatness, or inspire heroics bardic music abilities, their benefits end as soon as you stop performing (rather than lasting for an additional 5 rounds).</p>",
+    "benefit_text": "The save DC against your fascinate, suggestion, and mass suggestion abilities is half normal (rounded down). If you use the inspire courage, inspire greatness, or inspire heroics bardic music abilities, their benefits end as soon as you stop performing (rather than lasting for an additional 5 rounds)."
+  },
+  {
+    "slug": "uncontrollable-rage-rh",
+    "name": "Uncontrollable Rage",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Uncontrollable_Rage",
+    "scraped_at": "2026-07-23T18:14:28Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You have no ability to control your rage.",
+      "source_abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #325"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr325",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Uncontrollable_Rage"
+    },
+    "description_html": "<p>You have no ability to control your rage.</p>",
+    "description_text": "You have no ability to control your rage.",
+    "prerequisite_html": "<p>Rage ability.</p>",
+    "prerequisite_text": "Rage ability.",
+    "benefit_html": "<p>You cannot enter a rage voluntarily. If during the previous round something dealt you damage, grappled or immobilized you, or you failed a saving throw against a spell, you may enter a rage; if you do not wish to enter a rage after such an event, you must succeed at a DC 15 Will save or enter the rage involuntarily. You cannot enter a rage more times per day than you are normally entitled to.</p>",
+    "benefit_text": "You cannot enter a rage voluntarily. If during the previous round something dealt you damage, grappled or immobilized you, or you failed a saving throw against a spell, you may enter a rage; if you do not wish to enter a rage after such an event, you must succeed at a DC 15 Will save or enter the rage involuntarily. You cannot enter a rage more times per day than you are normally entitled to."
+  },
+  {
+    "slug": "warrior-of-the-phalanx-rh",
+    "name": "Warrior of The Phalanx",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Warrior_of_The_Phalanx",
+    "scraped_at": "2026-07-23T18:14:30Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Trained to fight in a group, you have difficulties when fighting alone.",
+      "source_abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #324"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr324",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Warrior_of_The_Phalanx"
+    },
+    "description_html": "<p>Trained to fight in a group, you have difficulties when fighting alone.</p>",
+    "description_text": "Trained to fight in a group, you have difficulties when fighting alone.",
+    "benefit_html": "<p>You suffer a -4 penalty on attack rolls you make when not adjacent to an ally.</p>",
+    "benefit_text": "You suffer a -4 penalty on attack rolls you make when not adjacent to an ally.",
+    "prerequisite_html": null,
+    "prerequisite_text": null
+  },
+  {
+    "slug": "weapon-bound-rh",
+    "name": "Weapon Bound",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Weapon_Bound",
+    "scraped_at": "2026-07-23T18:14:31Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You are attuned to your deity's weapon and no other.",
+      "source_abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #326"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr326",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Weapon_Bound"
+    },
+    "description_html": "<p>You are attuned to your deity's weapon and no other.</p>",
+    "description_text": "You are attuned to your deity's weapon and no other.",
+    "prerequisite_html": "<p>Devotion to a specific deity.</p>",
+    "prerequisite_text": "Devotion to a specific deity.",
+    "benefit_html": "<p>You lose proficiency with all weapons except the favored weapon of your deity. This flaw does not grant you proficiency with that weapon.</p>",
+    "benefit_text": "You lose proficiency with all weapons except the favored weapon of your deity. This flaw does not grant you proficiency with that weapon."
+  },
+  {
+    "slug": "wild-rh",
+    "name": "Wild",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Wild",
+    "scraped_at": "2026-07-23T18:14:32Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Accustomed only to a free life in the wild, you panic when captured or restrained.",
+      "source_abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #329"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr329",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": "https://realmshelps.net/charbuild/feat/Wild"
+    },
+    "description_html": "<p>Accustomed only to a free life in the wild, you panic when captured or restrained.</p>",
+    "description_text": "Accustomed only to a free life in the wild, you panic when captured or restrained.",
+    "prerequisite_html": "<p>Survival 1 rank.</p>",
+    "prerequisite_text": "Survival 1 rank.",
+    "benefit_html": "<p>Whenever you are entangled, pinned, or bound, you immediately become panicked. Your fear is alleviated 1 round after you are free of all bonds. Spells and effects that remove fear do not prevent this effect.</p>",
+    "benefit_text": "Whenever you are entangled, pinned, or bound, you immediately become panicked. Your fear is alleviated 1 round after you are free of all bonds. Spells and effects that remove fear do not prevent this effect."
+  }
+]

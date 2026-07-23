@@ -1,16 +1,26 @@
 # Unearthed Arcana
-- **Path:** `/mnt/c/Users/User/Documents/fg_modules/fg-builder/reviews/v1-staging/Unearthed Arcana.mod`
+- **Path:** `C:\Users\User\Documents\fg_modules\fg-builder\reviews\v1-staging\Unearthed Arcana.mod`
 - **Book slug:** `unearthed-arcana--90`
 - **Load ready:** yes
 - **Errors:** 0
-- **Warnings:** 239
-- **Info:** 0
+- **Warnings:** 238
+- **Info:** 10
 ## Record counts
 | Category | Count |
 |----------|------:|
 | class | 50 |
 | feat | 95 |
 | spell | 2 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 49 |
+| Named `Spells` (FG hook) | 2 |
+| Named `Spellcasting` (variant/reference) | 11 |
+| Named `Spells per Day` (prestige hook) | 36 |
+| `score equal to` in class text | 0 |
 
 ## Build warnings (embedded)
 
@@ -20,8 +30,8 @@
 - classes/Barbarian Variant: missing classskills (FG will not auto-mark class skills at level 1)
 - classes/Bard Variant: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Bard Variant: missing classskills (FG will not auto-mark class skills at level 1)
-- classes/Bardic Sage: unknown class skill name(s) for FG ruleset: engineering), royalty)
 - classes/Battle Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Battle Sorcerer: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
 - classes/Cleric Variant: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Cleric Variant: missing classskills (FG will not auto-mark class skills at level 1)
 - classes/Cloistered Cleric: missing classskills (FG will not auto-mark class skills at level 1)
@@ -62,7 +72,7 @@
 - classes/Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)
 - classes/Planar Ranger: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Planar Ranger: missing classskills (FG will not auto-mark class skills at level 1)
-- classes/Prestige Paladin: unknown class skill name(s) for FG ruleset: royalty)
+- classes/Prestige Bard: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
 - classes/Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)
 - classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
 - classes/Rogue Variant: missing skillranks (no skill_ranks or skill_points parsed)
@@ -127,12 +137,10 @@
   - Remediation: Add skillranks as type="number".
 - **[warning]** `class_missing_classskills` — Bard Variant: missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
-- **[warning]** `class_unknown_skill` — Bardic Sage: unknown class skill name(s) for FG ruleset: engineering), royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Bardic Sage: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
 - **[warning]** `class_missing_skillranks` — Battle Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)
   - Remediation: Add skillranks as type="number".
+- **[warning]** `class_spell_ability_text` — Battle Sorcerer: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `class_missing_field` — Cleric Variant: Missing required field: hitdie
   - Remediation: Rebuild class with complete identity fields.
 - **[warning]** `class_missing_field` — Cleric Variant: Missing required field: bab
@@ -211,6 +219,8 @@
   - Remediation: Add skillranks as type="number".
 - **[warning]** `class_missing_classskills` — Domain Wizard: missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_spell_ability_text` — Domain Wizard: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `class_missing_field` — Druid Variant: Missing required field: hitdie
   - Remediation: Rebuild class with complete identity fields.
 - **[warning]** `class_missing_field` — Druid Variant: Missing required field: bab
@@ -403,10 +413,8 @@
   - Remediation: Add skillranks as type="number".
 - **[warning]** `class_missing_classskills` — Planar Ranger: missing classskills (FG will not auto-mark class skills at level 1)
   - Remediation: Add comma-separated classskills string.
-- **[warning]** `class_unknown_skill` — Prestige Paladin: unknown class skill name(s) for FG ruleset: royalty)
-  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
-- **[warning]** `class_malformed_classskills` — Prestige Paladin: Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug
-  - Remediation: Fix classskills parser in classes.py and rebuild module.
+- **[warning]** `class_spell_ability_text` — Prestige Bard: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells
+  - Remediation: Normalize Spells feature text and rebuild module.
 - **[warning]** `class_missing_field` — Ranger Variant: Missing required field: hitdie
   - Remediation: Rebuild class with complete identity fields.
 - **[warning]** `class_missing_field` — Ranger Variant: Missing required field: bab
@@ -563,3 +571,26 @@
   - Remediation: Rebuild spell with complete reference fields.
 - **[warning]** `spell_missing_field` — Auspicious Odds, Mass: Missing required field: sr
   - Remediation: Rebuild spell with complete reference fields.
+
+## Info
+
+- **[info]** `class_spell_variant_reference_only` — Bardic Sage: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Cloistered Cleric: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Divine Bard: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Paladin of Freedom: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Paladin of Slaughter: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Paladin of Tyranny: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Planar Ranger: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Savage Bard: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Spellcaster: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.
+- **[info]** `class_spell_variant_reference_only` — Urban Ranger: Variant Spellcasting only — FG will not create a new spell-class track
+  - Remediation: Expected for variant classes that modify an existing caster.

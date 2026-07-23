@@ -1,0 +1,78 @@
+{
+  "module_name": "CityScape",
+  "module_path": "C:\\Users\\User\\Documents\\fg_modules\\fg-builder\\reviews\\v1-staging\\CityScape.mod",
+  "book_slug": "cityscape--53",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 3,
+    "feat": 14,
+    "spell": 8
+  },
+  "build_warnings": [
+    "classes/Ebonmar Infiltrator: unknown class skill name(s) for FG ruleset: royalty)",
+    "classes/Urban Savant: unknown class skill name(s) for FG ruleset: engineering), royalty)"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 3,
+    "named_spells": 2,
+    "named_spellcasting": 1,
+    "named_spells_per_day": 0,
+    "score_equal_to_count": 2
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 6,
+    "info": 0
+  },
+  "issues": [
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ebonmar Infiltrator",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "class_malformed_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Urban Savant",
+      "message": "Malformed classskills tokens (engineering), royalty)) from Knowledge sub-skill parse bug",
+      "remediation": "Fix classskills parser in classes.py and rebuild module."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Zone of Peace",
+      "message": "Missing required field: range",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Zone of Peace",
+      "message": "Missing required field: duration",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Zone of Peace",
+      "message": "Missing required field: save",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Zone of Peace",
+      "message": "Missing required field: sr",
+      "remediation": "Rebuild spell with complete reference fields."
+    }
+  ]
+}
