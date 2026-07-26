@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { CATEGORIES, CATEGORY_KEYS } from "@/lib/categories";
+import { TOOLS } from "@/lib/tools";
 import {
   listEntitySlugsForSitemap,
   listSourceAbbrevsForSitemap,
@@ -45,6 +46,18 @@ export default async function sitemap(props: {
         changeFrequency: "weekly",
         priority: 0.7,
       },
+      {
+        url: `${base}/tools`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
+      ...TOOLS.map((tool) => ({
+        url: `${base}${tool.href}`,
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.6,
+      })),
       {
         url: `${base}/search`,
         lastModified: now,
