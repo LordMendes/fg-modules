@@ -327,11 +327,7 @@ export function LeadershipCalculator() {
                   <input
                     type="checkbox"
                     checked={Boolean(input.reputation[modifier.key])}
-                    onChange={() =>
-                      toggleReputation(
-                        modifier.key as keyof LeadershipInput["reputation"],
-                      )
-                    }
+                    onChange={() => toggleReputation(modifier.key)}
                   />
                   <span>
                     {modifier.label} ({formatModifier(modifier.value)})

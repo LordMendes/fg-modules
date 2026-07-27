@@ -4,15 +4,33 @@ import type {
   ReputationKey,
 } from "./types";
 
-export type ModifierDefinition = {
-  key: ReputationKey | CohortModifierKey | FollowerModifierKey;
+type ModifierDefinitionBase = {
   label: string;
   value: number;
-  scope: "reputation" | "cohort" | "follower";
   description?: string;
 };
 
-export const REPUTATION_MODIFIERS: ModifierDefinition[] = [
+export type ReputationModifierDefinition = ModifierDefinitionBase & {
+  key: ReputationKey;
+  scope: "reputation";
+};
+
+export type CohortModifierDefinition = ModifierDefinitionBase & {
+  key: CohortModifierKey;
+  scope: "cohort";
+};
+
+export type FollowerModifierDefinition = ModifierDefinitionBase & {
+  key: FollowerModifierKey;
+  scope: "follower";
+};
+
+export type ModifierDefinition =
+  | ReputationModifierDefinition
+  | CohortModifierDefinition
+  | FollowerModifierDefinition;
+
+export const REPUTATION_MODIFIERS: ReputationModifierDefinition[] = [
   {
     key: "greatRenown",
     label: "Great renown",
@@ -51,7 +69,7 @@ export const REPUTATION_MODIFIERS: ModifierDefinition[] = [
   },
 ];
 
-export const COHORT_MODIFIERS: ModifierDefinition[] = [
+export const COHORT_MODIFIERS: CohortModifierDefinition[] = [
   {
     key: "familiarMountCompanion",
     label: "Has familiar, special mount, or animal companion",
@@ -73,7 +91,7 @@ export const COHORT_MODIFIERS: ModifierDefinition[] = [
   },
 ];
 
-export const FOLLOWER_MODIFIERS: ModifierDefinition[] = [
+export const FOLLOWER_MODIFIERS: FollowerModifierDefinition[] = [
   {
     key: "stronghold",
     label: "Has stronghold, base, guildhouse, or similar",

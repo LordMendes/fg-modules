@@ -62,7 +62,7 @@ export function strengthModifierFromInput(input: LeadershipInput): number {
 
 function sumReputationModifiers(input: LeadershipInput): number {
   return REPUTATION_MODIFIERS.reduce((total, modifier) => {
-    if (input.reputation[modifier.key as keyof typeof input.reputation]) {
+    if (input.reputation[modifier.key]) {
       return total + modifier.value;
     }
     return total;
