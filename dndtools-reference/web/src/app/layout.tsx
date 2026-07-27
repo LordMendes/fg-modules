@@ -59,7 +59,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning className={`${plusJakarta.variable} ${inter.variable} h-full`}>
-      <body className="min-h-full min-w-0 flex flex-col antialiased">
+      <body
+        className="min-h-full min-w-0 flex flex-col antialiased"
+        suppressHydrationWarning
+      >
         <JsonLd
           data={{
             "@context": "https://schema.org",

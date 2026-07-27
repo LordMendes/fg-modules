@@ -17,6 +17,15 @@ export const TOOLS = [
       "Price magic weapons, armor, and shields with DMG rules plus Complete-series special abilities. Shows base item cost and total equivalent bonus.",
     source: "DMG + Complete Series",
   },
+  {
+    key: "leadership-calculator",
+    label: "Leadership Calculator",
+    icon: "👑",
+    href: "/tools/leadership-calculator",
+    description:
+      "Calculate Leadership score, cohort level, and followers by level using PHB and Epic Leadership rules.",
+    source: "PHB / DMG",
+  },
 ] as const;
 
 export type ToolKey = (typeof TOOLS)[number]["key"];

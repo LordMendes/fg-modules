@@ -6,7 +6,7 @@ import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 export const metadata = buildPageMetadata({
   title: "Tools",
   description:
-    "Interactive D&D 3.5 Edition utilities — stronghold building, and more.",
+    "Interactive D&D 3.5 Edition utilities — stronghold building, leadership, magic items, and more.",
   path: "/tools",
 });
 

@@ -2309,6 +2309,113 @@ body {
   }
 }
 
+/* Leadership Calculator */
+.leadership-calculator {
+  margin-top: 1rem;
+}
+
+.tool-field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.leadership-modifier-groups {
+  display: grid;
+  gap: 1rem;
+}
+
+.leadership-callout {
+  margin-top: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-left: 3px solid var(--accent-gold);
+  background: rgba(180, 140, 40, 0.08);
+}
+
+.leadership-score-detail {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.leadership-follower-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+}
+
+.leadership-table-wrap {
+  overflow-x: auto;
+}
+
+.leadership-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.leadership-table th,
+.leadership-table td {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.leadership-table th {
+  background: var(--bg-card);
+  font-weight: 600;
+}
+
+.leadership-table td:first-child,
+.leadership-table th:first-child {
+  text-align: left;
+}
+
+.leadership-row-cohort {
+  background: rgba(180, 140, 40, 0.12);
+}
+
+.leadership-row-follower {
+  outline: 2px solid rgba(59, 130, 246, 0.45);
+  outline-offset: -2px;
+}
+
+.leadership-row-cohort.leadership-row-follower {
+  background: rgba(180, 140, 40, 0.18);
+  outline: 2px solid rgba(59, 130, 246, 0.55);
+}
+
+.leadership-table-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.leadership-legend-cohort::before,
+.leadership-legend-follower::before {
+  content: "";
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-right: 0.375rem;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.leadership-legend-cohort::before {
+  background: rgba(180, 140, 40, 0.35);
+}
+
+.leadership-legend-follower::before {
+  border: 2px solid rgba(59, 130, 246, 0.55);
+  background: transparent;
+}
+
 /* Magic Item Builder */
 .mi-calculator {
   margin-top: 1rem;

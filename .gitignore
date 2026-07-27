@@ -1,5 +1,6 @@
 .venv/
 .cursor/
 node_modules/
+3.5E/
 
 # Project-specific ignores live in fg-builder/.gitignore and dndtools-reference/.gitignore
