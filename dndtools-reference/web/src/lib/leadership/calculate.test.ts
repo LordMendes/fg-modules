@@ -1,12 +1,14 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { calculateLeadership } from "./calculate";
+import { calculateLeadership, convertAbilityInputValue } from "./calculate";
 import type { LeadershipInput } from "./types";
 
 const defaultInput: LeadershipInput = {
   characterLevel: 10,
   charismaMode: "modifier",
   charismaValue: 2,
+  strengthMode: "modifier",
+  strengthValue: 0,
   reputation: {},
   cohortModifiers: {
     familiarMountCompanion: false,
@@ -24,6 +26,9 @@ const defaultInput: LeadershipInput = {
     epicLeadership: false,
     naturalLeader: false,
     extraFollowers: false,
+    improvedLeadership: false,
+    mightMakesRight: false,
+    legendaryCommander: false,
   },
 };
 
@@ -58,7 +63,7 @@ describe("calculateLeadership", () => {
       ...defaultInput,
       characterLevel: 9,
       charismaMode: "modifier",
-      charismaValue: 2,
+      charismaValue: 3,
     });
     assert.equal(capped.tableCohortLevel, 8);
     assert.equal(capped.effectiveCohortLevel, 7);
@@ -67,6 +72,8 @@ describe("calculateLeadership", () => {
     const improved = calculateLeadership({
       ...defaultInput,
       characterLevel: 9,
+      charismaMode: "modifier",
+      charismaValue: 3,
       feats: { ...defaultInput.feats, improvedCohort: true },
     });
     assert.equal(improved.effectiveCohortLevel, 8);
@@ -142,6 +149,32 @@ describe("calculateLeadership", () => {
     assert.equal(result.followers?.level1, 15);
   });
 
+  it("applies +2 Leadership score from Improved Leadership (Dragon #317)", () => {
+    const result = calculateLeadership({
+      ...defaultInput,
+      feats: { ...defaultInput.feats, improvedLeadership: true },
+    });
+    assert.equal(result.featScoreBonus, 2);
+    assert.equal(result.baseScore, 14);
+    assert.equal(result.tableCohortLevel, 10);
+    assert.equal(result.followers?.level1, 15);
+  });
+
+  it("stacks Natural Leader and Improved Leadership for +4 total", () => {
+    const result = calculateLeadership({
+      ...defaultInput,
+      feats: {
+        ...defaultInput.feats,
+        naturalLeader: true,
+        improvedLeadership: true,
+      },
+    });
+    assert.equal(result.featScoreBonus, 4);
+    assert.equal(result.baseScore, 16);
+    assert.equal(result.tableCohortLevel, 11);
+    assert.equal(result.followers?.level1, 25);
+  });
+
   it("doubles follower counts with Extra Followers", () => {
     const result = calculateLeadership({
       ...defaultInput,
@@ -151,6 +184,63 @@ describe("calculateLeadership", () => {
     assert.equal(result.followers?.level1, 16);
     assert.equal(result.followersMultiplier, 2);
     assert.equal(result.tableCohortLevel, 8);
+  });
+
+  it("applies Might Makes Right to follower score only", () => {
+    const result = calculateLeadership({
+      ...defaultInput,
+      strengthMode: "modifier",
+      strengthValue: 4,
+      feats: { ...defaultInput.feats, mightMakesRight: true },
+    });
+    assert.equal(result.cohortScore, 12);
+    assert.equal(result.followerScoreBonus, 4);
+    assert.equal(result.followerScore, 16);
+    assert.equal(result.tableCohortLevel, 8);
+    assert.equal(result.tableFollowers?.level1, 25);
+    assert.equal(result.followers?.level1, 25);
+  });
+
+  it("converts strength score to modifier for Might Makes Right", () => {
+    const result = calculateLeadership({
+      ...defaultInput,
+      strengthMode: "score",
+      strengthValue: 16,
+      feats: { ...defaultInput.feats, mightMakesRight: true },
+    });
+    assert.equal(result.strengthModifier, 3);
+    assert.equal(result.followerScoreBonus, 3);
+    assert.equal(result.followerScore, 15);
+  });
+
+  it("multiplies followers by 10 with Legendary Commander", () => {
+    const result = calculateLeadership({
+      ...defaultInput,
+      feats: {
+        ...defaultInput.feats,
+        epicLeadership: true,
+        legendaryCommander: true,
+      },
+    });
+    assert.equal(result.tableFollowers?.level1, 8);
+    assert.equal(result.followers?.level1, 80);
+    assert.equal(result.followersMultiplier, 10);
+    assert.equal(result.tableCohortLevel, 8);
+  });
+
+  it("stacks Extra Followers and Legendary Commander for ×20 followers", () => {
+    const result = calculateLeadership({
+      ...defaultInput,
+      feats: {
+        ...defaultInput.feats,
+        extraFollowers: true,
+        epicLeadership: true,
+        legendaryCommander: true,
+      },
+    });
+    assert.equal(result.tableFollowers?.level1, 8);
+    assert.equal(result.followers?.level1, 160);
+    assert.equal(result.followersMultiplier, 20);
   });
 
   it("accumulates cohort death penalties", () => {
@@ -163,5 +253,15 @@ describe("calculateLeadership", () => {
     });
     assert.equal(result.cohortScore, 8);
     assert.equal(result.tableCohortLevel, 5);
+  });
+});
+
+describe("convertAbilityInputValue", () => {
+  it("converts modifier 3 to score 16 when switching to score mode", () => {
+    assert.equal(convertAbilityInputValue(3, "modifier", "score"), 16);
+  });
+
+  it("converts score 16 to modifier 3 when switching to modifier mode", () => {
+    assert.equal(convertAbilityInputValue(16, "score", "modifier"), 3);
   });
 });

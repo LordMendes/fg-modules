@@ -11,6 +11,29 @@ function totalFollowers(followers: FollowerCounts): number {
   return Object.values(followers).reduce((sum, count) => sum + count, 0);
 }
 
+function featScoreBreakdown(bonus: number): string {
+  if (bonus <= 0) {
+    return "";
+  }
+  return `feat bonuses ${formatModifier(bonus)}`;
+}
+
+function followerMultiplierBreakdown(multiplier: number): string | null {
+  if (multiplier <= 1) {
+    return null;
+  }
+  if (multiplier === 20) {
+    return "Table ×2 (Extra Followers) ×10 (Legendary Commander) = ×20.";
+  }
+  if (multiplier === 10) {
+    return "Table ×10 (Legendary Commander).";
+  }
+  if (multiplier === 2) {
+    return "Table ×2 (Extra Followers).";
+  }
+  return `Table values ×${multiplier}.`;
+}
+
 function FollowerBreakdown({ followers }: { followers: FollowerCounts }) {
   const entries = [
     { label: "1st", count: followers.level1 },
@@ -41,6 +64,9 @@ function FollowerBreakdown({ followers }: { followers: FollowerCounts }) {
 }
 
 export function LeadershipSummary({ result }: { result: LeadershipResult }) {
+  const featBreakdown = featScoreBreakdown(result.featScoreBonus);
+  const multiplierNote = followerMultiplierBreakdown(result.followersMultiplier);
+
   return (
     <aside className="tool-summary" aria-live="polite">
       <h2>Results</h2>
@@ -52,10 +78,7 @@ export function LeadershipSummary({ result }: { result: LeadershipResult }) {
           <span className="leadership-score-detail">
             {" "}
             (level + Cha {formatModifier(result.charismaModifier)}
-            {result.featScoreBonus > 0
-              ? ` + Natural Leader ${formatModifier(result.featScoreBonus)}`
-              : ""}
-            )
+            {featBreakdown ? ` + ${featBreakdown}` : ""})
           </span>
         </span>
       </div>
@@ -67,7 +90,15 @@ export function LeadershipSummary({ result }: { result: LeadershipResult }) {
         </div>
         <div>
           <dt>Follower score</dt>
-          <dd>{result.followerScore}</dd>
+          <dd>
+            {result.followerScore}
+            {result.followerScoreBonus !== 0 && (
+              <span className="leadership-score-detail">
+                {" "}
+                (includes Str {formatModifier(result.followerScoreBonus)})
+              </span>
+            )}
+          </dd>
         </div>
         <div>
           <dt>Table cohort level</dt>
@@ -96,10 +127,8 @@ export function LeadershipSummary({ result }: { result: LeadershipResult }) {
       {result.followers && (
         <section className="tool-summary-section">
           <h3>Followers by Level</h3>
-          {result.followersMultiplier > 1 && (
-            <p className="tool-step-desc">
-              Table values ×{result.followersMultiplier} (Extra Followers).
-            </p>
+          {multiplierNote && (
+            <p className="tool-step-desc">{multiplierNote}</p>
           )}
           <FollowerBreakdown followers={result.followers} />
         </section>

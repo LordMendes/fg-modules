@@ -1,4 +1,17 @@
-export { calculateLeadership, abilityModifier, charismaModifierFromInput } from "./calculate";
+export {
+  calculateLeadership,
+  abilityModifier,
+  charismaModifierFromInput,
+  convertAbilityInputValue,
+  modifierToScore,
+  strengthModifierFromInput,
+} from "./calculate";
+export {
+  computeFollowersMultiplier,
+  LEADERSHIP_SCORE_FEATS,
+  mightMakesRightStrengthBonus,
+  sumFeatScoreBonus,
+} from "./feats";
 export {
   COHORT_MODIFIERS,
   FOLLOWER_MODIFIERS,

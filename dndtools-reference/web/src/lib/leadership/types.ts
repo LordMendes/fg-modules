@@ -20,6 +20,8 @@ export type LeadershipInput = {
   characterLevel: number;
   charismaMode: "score" | "modifier";
   charismaValue: number;
+  strengthMode: "score" | "modifier";
+  strengthValue: number;
   reputation: Partial<Record<ReputationKey, boolean>>;
   cohortModifiers: {
     familiarMountCompanion: boolean;
@@ -37,6 +39,9 @@ export type LeadershipInput = {
     epicLeadership: boolean;
     naturalLeader: boolean;
     extraFollowers: boolean;
+    improvedLeadership: boolean;
+    mightMakesRight: boolean;
+    legendaryCommander: boolean;
   };
 };
 
@@ -68,6 +73,7 @@ export type LeadershipWarning = {
 export type LeadershipResult = {
   baseScore: number;
   charismaModifier: number;
+  strengthModifier: number;
   cohortScore: number;
   followerScore: number;
   cohortLookup: LeadershipTableRow | null;
@@ -82,4 +88,5 @@ export type LeadershipResult = {
   displayTable: LeadershipTableRow[];
   warnings: LeadershipWarning[];
   featScoreBonus: number;
+  followerScoreBonus: number;
 };

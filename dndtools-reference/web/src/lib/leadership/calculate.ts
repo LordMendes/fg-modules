@@ -1,4 +1,9 @@
 import {
+  computeFollowersMultiplier,
+  mightMakesRightStrengthBonus,
+  sumFeatScoreBonus,
+} from "./feats";
+import {
   COHORT_MODIFIERS,
   FOLLOWER_MODIFIERS,
   REPUTATION_MODIFIERS,
@@ -20,11 +25,39 @@ export function abilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
 }
 
+export function modifierToScore(modifier: number): number {
+  return 10 + modifier * 2;
+}
+
+export function convertAbilityInputValue(
+  value: number,
+  fromMode: LeadershipInput["charismaMode"],
+  toMode: LeadershipInput["charismaMode"],
+): number {
+  if (fromMode === toMode) {
+    return value;
+  }
+
+  if (toMode === "modifier") {
+    return fromMode === "score" ? abilityModifier(value) : value;
+  }
+
+  const modifier = fromMode === "modifier" ? value : abilityModifier(value);
+  return modifierToScore(modifier);
+}
+
 export function charismaModifierFromInput(input: LeadershipInput): number {
   if (input.charismaMode === "modifier") {
     return input.charismaValue;
   }
   return abilityModifier(input.charismaValue);
+}
+
+export function strengthModifierFromInput(input: LeadershipInput): number {
+  if (input.strengthMode === "modifier") {
+    return input.strengthValue;
+  }
+  return abilityModifier(input.strengthValue);
 }
 
 function sumReputationModifiers(input: LeadershipInput): number {
@@ -112,25 +145,28 @@ function hasFollowers(followers: FollowerCounts): boolean {
   return Object.values(followers).some((count) => count > 0);
 }
 
-function doubleFollowers(followers: FollowerCounts): FollowerCounts {
+function scaleFollowers(
+  followers: FollowerCounts,
+  multiplier: number,
+): FollowerCounts {
   return {
-    level1: followers.level1 * 2,
-    level2: followers.level2 * 2,
-    level3: followers.level3 * 2,
-    level4: followers.level4 * 2,
-    level5: followers.level5 * 2,
-    level6: followers.level6 * 2,
+    level1: followers.level1 * multiplier,
+    level2: followers.level2 * multiplier,
+    level3: followers.level3 * multiplier,
+    level4: followers.level4 * multiplier,
+    level5: followers.level5 * multiplier,
+    level6: followers.level6 * multiplier,
     ...(followers.level7 !== undefined
-      ? { level7: followers.level7 * 2 }
+      ? { level7: followers.level7 * multiplier }
       : {}),
     ...(followers.level8 !== undefined
-      ? { level8: followers.level8 * 2 }
+      ? { level8: followers.level8 * multiplier }
       : {}),
     ...(followers.level9 !== undefined
-      ? { level9: followers.level9 * 2 }
+      ? { level9: followers.level9 * multiplier }
       : {}),
     ...(followers.level10 !== undefined
-      ? { level10: followers.level10 * 2 }
+      ? { level10: followers.level10 * multiplier }
       : {}),
   };
 }
@@ -159,11 +195,20 @@ function applyCohortCap(
 export function calculateLeadership(input: LeadershipInput): LeadershipResult {
   const warnings: LeadershipWarning[] = [];
   const charismaModifier = charismaModifierFromInput(input);
-  const featScoreBonus = input.feats.naturalLeader ? 2 : 0;
+  const strengthModifier = strengthModifierFromInput(input);
+  const featScoreBonus = sumFeatScoreBonus(input.feats);
+  const followerScoreBonus = mightMakesRightStrengthBonus(
+    input.feats,
+    strengthModifier,
+  );
   const baseScore = input.characterLevel + charismaModifier + featScoreBonus;
   const reputationTotal = sumReputationModifiers(input);
   const cohortScore = baseScore + reputationTotal + sumCohortModifiers(input);
-  const followerScore = baseScore + reputationTotal + sumFollowerModifiers(input);
+  const followerScore =
+    baseScore +
+    followerScoreBonus +
+    reputationTotal +
+    sumFollowerModifiers(input);
 
   const useEpicTable = input.feats.epicLeadership;
   const needsEpicTable =
@@ -193,16 +238,23 @@ export function calculateLeadership(input: LeadershipInput): LeadershipResult {
     followerLookup && hasFollowers(followerLookup.followers)
       ? followerLookup.followers
       : null;
-  const followersMultiplier = input.feats.extraFollowers ? 2 : 1;
+  const followersMultiplier = computeFollowersMultiplier(input.feats);
   const followers =
     tableFollowers && followersMultiplier > 1
-      ? doubleFollowers(tableFollowers)
+      ? scaleFollowers(tableFollowers, followersMultiplier)
       : tableFollowers;
 
   if (input.characterLevel < 6) {
     warnings.push({
       message:
         "Leadership requires character level 6 or higher. Results are shown for reference only.",
+    });
+  }
+
+  if (input.feats.legendaryCommander && !input.feats.epicLeadership) {
+    warnings.push({
+      message:
+        "Legendary Commander requires Epic Leadership (Epic Level Handbook). Results are shown for reference only.",
     });
   }
 
@@ -227,6 +279,7 @@ export function calculateLeadership(input: LeadershipInput): LeadershipResult {
   return {
     baseScore,
     charismaModifier,
+    strengthModifier,
     cohortScore,
     followerScore,
     cohortLookup,
@@ -241,5 +294,6 @@ export function calculateLeadership(input: LeadershipInput): LeadershipResult {
     displayTable,
     warnings,
     featScoreBonus,
+    followerScoreBonus,
   };
 }

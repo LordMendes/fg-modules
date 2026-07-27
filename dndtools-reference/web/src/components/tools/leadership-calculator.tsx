@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { LeadershipSummary } from "@/components/tools/leadership-summary";
 import {
   calculateLeadership,
+  convertAbilityInputValue,
   COHORT_MODIFIERS,
   FOLLOWER_MODIFIERS,
   REPUTATION_MODIFIERS,
@@ -16,6 +17,8 @@ const defaultInput: LeadershipInput = {
   characterLevel: 10,
   charismaMode: "modifier",
   charismaValue: 2,
+  strengthMode: "modifier",
+  strengthValue: 0,
   reputation: {},
   cohortModifiers: {
     familiarMountCompanion: false,
@@ -33,6 +36,9 @@ const defaultInput: LeadershipInput = {
     epicLeadership: false,
     naturalLeader: false,
     extraFollowers: false,
+    improvedLeadership: false,
+    mightMakesRight: false,
+    legendaryCommander: false,
   },
 };
 
@@ -274,11 +280,19 @@ export function LeadershipCalculator() {
                 id="charisma-mode"
                 className="tool-select"
                 value={input.charismaMode}
-                onChange={(e) =>
-                  updateInput({
-                    charismaMode: e.target.value as LeadershipInput["charismaMode"],
-                  })
-                }
+                onChange={(e) => {
+                  const charismaMode = e.target
+                    .value as LeadershipInput["charismaMode"];
+                  setInput((prev) => ({
+                    ...prev,
+                    charismaMode,
+                    charismaValue: convertAbilityInputValue(
+                      prev.charismaValue,
+                      prev.charismaMode,
+                      charismaMode,
+                    ),
+                  }));
+                }}
               >
                 <option value="modifier">Modifier</option>
                 <option value="score">Score</option>
@@ -489,6 +503,30 @@ export function LeadershipCalculator() {
                 />
                 <span>Extra Followers (double follower counts by level)</span>
               </label>
+              <label className="tool-checkbox">
+                <input
+                  type="checkbox"
+                  checked={input.feats.improvedLeadership}
+                  onChange={() => toggleFeat("improvedLeadership")}
+                />
+                <span>Improved Leadership (+2 Leadership score, Dragon #317)</span>
+              </label>
+              <label className="tool-checkbox">
+                <input
+                  type="checkbox"
+                  checked={input.feats.mightMakesRight}
+                  onChange={() => toggleFeat("mightMakesRight")}
+                />
+                <span>Might Makes Right (+Str mod to follower score only)</span>
+              </label>
+              <label className="tool-checkbox">
+                <input
+                  type="checkbox"
+                  checked={input.feats.legendaryCommander}
+                  onChange={() => toggleFeat("legendaryCommander")}
+                />
+                <span>Legendary Commander (×10 follower counts)</span>
+              </label>
             </div>
           </fieldset>
           {input.feats.extraFollowers && (
@@ -496,6 +534,64 @@ export function LeadershipCalculator() {
               Extra Followers doubles the number of followers at each level from
               the table. It does not affect cohort level. See{" "}
               <Link href="/feats/extra-followers-1020">Extra Followers</Link>.
+            </p>
+          )}
+          {input.feats.mightMakesRight && (
+            <>
+              <div className="tool-field-row">
+                <div className="tool-field">
+                  <Label htmlFor="strength-mode">Strength input</Label>
+                  <select
+                    id="strength-mode"
+                    className="tool-select"
+                    value={input.strengthMode}
+                    onChange={(e) => {
+                      const strengthMode = e.target
+                        .value as LeadershipInput["strengthMode"];
+                      setInput((prev) => ({
+                        ...prev,
+                        strengthMode,
+                        strengthValue: convertAbilityInputValue(
+                          prev.strengthValue,
+                          prev.strengthMode,
+                          strengthMode,
+                        ),
+                      }));
+                    }}
+                  >
+                    <option value="modifier">Modifier</option>
+                    <option value="score">Score</option>
+                  </select>
+                </div>
+                <NumberField
+                  id="strength-value"
+                  label={
+                    input.strengthMode === "modifier"
+                      ? "Strength modifier"
+                      : "Strength score"
+                  }
+                  value={input.strengthValue}
+                  min={input.strengthMode === "modifier" ? -5 : 1}
+                  max={input.strengthMode === "modifier" ? 20 : 50}
+                  onChange={(value) => updateInput({ strengthValue: value })}
+                />
+              </div>
+              <p className="tool-step-desc leadership-callout">
+                Might Makes Right adds your Strength modifier to your Leadership
+                score when determining followers only. See{" "}
+                <Link href="/feats/might-makes-right-1942">Might Makes Right</Link>
+                .
+              </p>
+            </>
+          )}
+          {input.feats.legendaryCommander && (
+            <p className="tool-step-desc leadership-callout">
+              Legendary Commander multiplies follower counts by 10 and stacks
+              with Extra Followers (×20 total). Requires Epic Leadership. See{" "}
+              <Link href="/feats/legendary-commander-1750">
+                Legendary Commander
+              </Link>
+              .
             </p>
           )}
           {input.feats.dragonCohort && (

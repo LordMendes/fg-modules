@@ -39,8 +39,9 @@ export default function LeadershipCalculatorPage() {
         <p>
           Compute cohort and follower leadership scores using the{" "}
           <em>Player&apos;s Handbook</em> / <em>Dungeon Master&apos;s Guide</em>{" "}
-          Leadership rules. Supports Improved Cohort, Dragon Cohort, Natural
-          Leader (Dragon #346), Extra Followers, and Epic Leadership.
+          Leadership rules. Supports Improved Cohort, Extra Followers, Legendary
+          Commander, Might Makes Right, Natural Leader, Improved Leadership,
+          Dragon Cohort, and Epic Leadership.
         </p>
       </div>
 
