@@ -1,46 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { LeadershipSummary } from "@/components/tools/leadership-summary";
 import {
+  buildLeadershipSearchParams,
   calculateLeadership,
   convertAbilityInputValue,
   COHORT_MODIFIERS,
   FOLLOWER_MODIFIERS,
+  parseLeadershipSearchParams,
   REPUTATION_MODIFIERS,
   type LeadershipInput,
   type LeadershipTableRow,
 } from "@/lib/leadership";
-
-const defaultInput: LeadershipInput = {
-  characterLevel: 10,
-  charismaMode: "modifier",
-  charismaValue: 2,
-  strengthMode: "modifier",
-  strengthValue: 0,
-  reputation: {},
-  cohortModifiers: {
-    familiarMountCompanion: false,
-    differentAlignment: false,
-    cohortDeaths: 0,
-  },
-  followerModifiers: {
-    stronghold: false,
-    movesAround: false,
-    followerDeaths: 0,
-  },
-  feats: {
-    improvedCohort: false,
-    dragonCohort: false,
-    epicLeadership: false,
-    naturalLeader: false,
-    extraFollowers: false,
-    improvedLeadership: false,
-    mightMakesRight: false,
-    legendaryCommander: false,
-  },
-};
 
 function Label({
   htmlFor,
@@ -205,8 +179,27 @@ function LeadershipTable({
 }
 
 export function LeadershipCalculator() {
-  const [input, setInput] = useState<LeadershipInput>(defaultInput);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [input, setInput] = useState<LeadershipInput>(() =>
+    parseLeadershipSearchParams(Object.fromEntries(searchParams.entries())),
+  );
   const result = useMemo(() => calculateLeadership(input), [input]);
+
+  useEffect(() => {
+    const params = buildLeadershipSearchParams(input);
+    const nextQuery = params.toString();
+    const currentQuery = searchParams.toString();
+
+    if (nextQuery === currentQuery) {
+      return;
+    }
+
+    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
+      scroll: false,
+    });
+  }, [input, pathname, router, searchParams]);
 
   function updateInput(patch: Partial<LeadershipInput>) {
     setInput((prev) => ({ ...prev, ...patch }));

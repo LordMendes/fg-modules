@@ -6,6 +6,7 @@ export {
   modifierToScore,
   strengthModifierFromInput,
 } from "./calculate";
+export { DEFAULT_LEADERSHIP_INPUT } from "./defaults";
 export {
   computeFollowersMultiplier,
   LEADERSHIP_SCORE_FEATS,
@@ -22,6 +23,11 @@ export {
   PHB_LEADERSHIP_TABLE,
   formatOrdinalLevel,
 } from "./tables";
+export {
+  buildLeadershipSearchParams,
+  parseLeadershipSearchParams,
+  serializeLeadershipInput,
+} from "./url-state";
 export type {
   CohortModifierKey,
   FollowerCounts,

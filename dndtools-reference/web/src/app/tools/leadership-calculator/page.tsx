@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { LeadershipCalculator } from "@/components/tools/leadership-calculator";
 import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
@@ -45,7 +46,9 @@ export default function LeadershipCalculatorPage() {
         </p>
       </div>
 
-      <LeadershipCalculator />
+      <Suspense fallback={null}>
+        <LeadershipCalculator />
+      </Suspense>
     </>
   );
 }
