@@ -2389,6 +2389,37 @@ body {
   outline: 2px solid rgba(59, 130, 246, 0.55);
 }
 
+.leadership-row-dragon-eligible {
+  background: rgba(180, 140, 40, 0.06);
+}
+
+.leadership-dragon-option-list,
+.leadership-dragon-selection-list {
+  margin: 0;
+  padding-left: 1.125rem;
+  text-align: left;
+}
+
+.leadership-dragon-option-list li + li,
+.leadership-dragon-selection-list li + li {
+  margin-top: 0.25rem;
+}
+
+.leadership-dragon-selection {
+  margin-bottom: 1rem;
+}
+
+.leadership-dragon-selection-title {
+  margin: 0 0 0.375rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.leadership-legend-dragon-eligible::before {
+  background: rgba(180, 140, 40, 0.12);
+  border: 1px solid var(--border-color);
+}
+
 .leadership-table-legend {
   display: flex;
   flex-wrap: wrap;

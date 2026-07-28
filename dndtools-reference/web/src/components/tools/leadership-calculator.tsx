@@ -9,9 +9,15 @@ import {
   calculateLeadership,
   convertAbilityInputValue,
   COHORT_MODIFIERS,
+  DRAGON_COHORT_TABLE,
   FOLLOWER_MODIFIERS,
+  adjustedDragonEcl,
+  formatDragonCohortLabel,
+  formatOrdinalLevel,
+  isDragonCohortEligible,
   parseLeadershipSearchParams,
   REPUTATION_MODIFIERS,
+  selectDragonCohortOptions,
   type LeadershipInput,
   type LeadershipTableRow,
 } from "@/lib/leadership";
@@ -178,6 +184,64 @@ function LeadershipTable({
   );
 }
 
+function DragonCohortTable({
+  effectiveCohortLevel,
+}: {
+  effectiveCohortLevel: number | null;
+}) {
+  const selection = selectDragonCohortOptions(effectiveCohortLevel);
+
+  return (
+    <div className="leadership-table-wrap">
+      <table className="leadership-table">
+        <thead>
+          <tr>
+            <th>Listed ECL</th>
+            <th>Adjusted ECL</th>
+            <th>Dragon options</th>
+          </tr>
+        </thead>
+        <tbody>
+          {DRAGON_COHORT_TABLE.map((row) => {
+            const eligible = isDragonCohortEligible(row.ecl, effectiveCohortLevel);
+            const isBestTier = selection.maxListedEcl === row.ecl && eligible;
+
+            return (
+              <tr
+                key={row.ecl}
+                className={
+                  eligible
+                    ? isBestTier
+                      ? "leadership-row-cohort"
+                      : "leadership-row-dragon-eligible"
+                    : undefined
+                }
+              >
+                <td>{row.ecl}</td>
+                <td>{adjustedDragonEcl(row.ecl)}</td>
+                <td>
+                  <ul className="leadership-dragon-option-list">
+                    {row.options.map((option) => (
+                      <li key={`${row.ecl}-${option.kind}-${option.age}`}>
+                        {formatDragonCohortLabel(option)} ({option.alignment})
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <p className="tool-step-desc leadership-table-legend">
+        <span className="leadership-legend-cohort">Best eligible tier</span>
+        <span className="leadership-legend-dragon-eligible">Other eligible tiers</span>
+        <span>Adjusted ECL subtracts 3 for the Dragon Cohort feat.</span>
+      </p>
+    </div>
+  );
+}
+
 export function LeadershipCalculator() {
   const router = useRouter();
   const pathname = usePathname();
@@ -186,6 +250,10 @@ export function LeadershipCalculator() {
     parseLeadershipSearchParams(Object.fromEntries(searchParams.entries())),
   );
   const result = useMemo(() => calculateLeadership(input), [input]);
+  const dragonSelection = useMemo(
+    () => selectDragonCohortOptions(result.effectiveCohortLevel),
+    [result.effectiveCohortLevel],
+  );
 
   useEffect(() => {
     const params = buildLeadershipSearchParams(input);
@@ -592,9 +660,68 @@ export function LeadershipCalculator() {
           )}
         </section>
 
+        {input.feats.dragonCohort && (
+          <section className="tool-step entity-filters">
+            <h2>
+              <span className="tool-step-num">5</span> Dragon Cohort
+            </h2>
+            <p className="tool-step-desc">
+              Draconomicon Table 3-14 (p. 139). Eligibility uses your effective
+              cohort level and the feat&apos;s −3 ECL adjustment. Alignment must
+              not oppose yours; your DM chooses the exact dragon.
+            </p>
+            {input.characterLevel < 9 && (
+              <p className="tool-warning" role="status">
+                Dragon Cohort requires character level 9.
+              </p>
+            )}
+            {result.effectiveCohortLevel === null ? (
+              <p className="tool-step-desc">
+                No cohort is available at the current leadership score.
+              </p>
+            ) : (
+              <>
+                <div className="leadership-dragon-selection">
+                  <h3 className="leadership-dragon-selection-title">
+                    Eligible at your cohort cap
+                  </h3>
+                  <p className="tool-step-desc">
+                    Effective cohort level{" "}
+                    {formatOrdinalLevel(result.effectiveCohortLevel)} — listed
+                    ECL up to {dragonSelection.maxListedEcl ?? "—"} (treated as{" "}
+                    {dragonSelection.adjustedCohortLevel !== null
+                      ? formatOrdinalLevel(dragonSelection.adjustedCohortLevel)
+                      : "—"}
+                    ).
+                  </p>
+                  {dragonSelection.best.length > 0 ? (
+                    <ul className="leadership-dragon-selection-list">
+                      {dragonSelection.best.map((option) => (
+                        <li
+                          key={`${option.kind}-${option.age}-${option.alignment}`}
+                        >
+                          {formatDragonCohortLabel(option)} ({option.alignment})
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="tool-step-desc">None</p>
+                  )}
+                </div>
+                <DragonCohortTable
+                  effectiveCohortLevel={result.effectiveCohortLevel}
+                />
+              </>
+            )}
+          </section>
+        )}
+
         <section className="tool-step entity-filters">
           <h2>
-            <span className="tool-step-num">5</span> Leadership Table
+            <span className="tool-step-num">
+              {input.feats.dragonCohort ? "6" : "5"}
+            </span>{" "}
+            Leadership Table
           </h2>
           <p className="tool-step-desc">
             {result.tableKind === "epic"

@@ -24,6 +24,14 @@ export {
   formatOrdinalLevel,
 } from "./tables";
 export {
+  DRAGON_COHORT_TABLE,
+  adjustedDragonEcl,
+  formatDragonCohortLabel,
+  isDragonCohortEligible,
+  selectDragonCohortOptions,
+} from "./dragon-cohorts";
+export type { DragonCohortOption, DragonCohortRow, DragonCohortSelection } from "./dragon-cohorts";
+export {
   buildLeadershipSearchParams,
   parseLeadershipSearchParams,
   serializeLeadershipInput,
