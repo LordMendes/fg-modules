@@ -1,0 +1,116 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        30
+      ],
+      "medium": [
+        1,
+        20
+      ],
+      "major": null,
+      "label": "Darkwood buckler",
+      "price": "205 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        31,
+        80
+      ],
+      "medium": [
+        21,
+        45
+      ],
+      "major": null,
+      "label": "Darkwood shield",
+      "price": "257 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        81,
+        95
+      ],
+      "medium": [
+        46,
+        70
+      ],
+      "major": null,
+      "label": "Mithral heavy shield",
+      "price": "1,020 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        96,
+        100
+      ],
+      "medium": [
+        71,
+        85
+      ],
+      "major": [
+        1,
+        20
+      ],
+      "label": "Caster's shield",
+      "price": "3,153 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        86,
+        90
+      ],
+      "major": [
+        21,
+        40
+      ],
+      "label": "Spined shield",
+      "price": "5,580 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        91,
+        95
+      ],
+      "major": [
+        41,
+        60
+      ],
+      "label": "Lion's shield",
+      "price": "9,170 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        100
+      ],
+      "major": [
+        61,
+        90
+      ],
+      "label": "Winged shield",
+      "price": "17,257 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        91,
+        100
+      ],
+      "label": "Absorbing shield",
+      "price": "50,170 gp",
+      "action": "item"
+    }
+  ]
+}

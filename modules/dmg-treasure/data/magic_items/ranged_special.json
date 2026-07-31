@@ -1,0 +1,291 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        12
+      ],
+      "medium": [
+        1,
+        8
+      ],
+      "major": [
+        1,
+        4
+      ],
+      "label": "Bane",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        13,
+        25
+      ],
+      "medium": [
+        9,
+        16
+      ],
+      "major": [
+        5,
+        8
+      ],
+      "label": "Distance",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        26,
+        40
+      ],
+      "medium": [
+        17,
+        28
+      ],
+      "major": [
+        9,
+        12
+      ],
+      "label": "Flaming",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        41,
+        55
+      ],
+      "medium": [
+        29,
+        40
+      ],
+      "major": [
+        13,
+        16
+      ],
+      "label": "Frost",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        56,
+        60
+      ],
+      "medium": [
+        41,
+        42
+      ],
+      "major": null,
+      "label": "Merciful",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        61,
+        68
+      ],
+      "medium": [
+        43,
+        47
+      ],
+      "major": [
+        17,
+        21
+      ],
+      "label": "Returning",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        69,
+        83
+      ],
+      "medium": [
+        48,
+        59
+      ],
+      "major": [
+        22,
+        25
+      ],
+      "label": "Shock",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        84,
+        93
+      ],
+      "medium": [
+        60,
+        64
+      ],
+      "major": [
+        26,
+        27
+      ],
+      "label": "Seeking",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        94,
+        99
+      ],
+      "medium": [
+        65,
+        68
+      ],
+      "major": [
+        28,
+        29
+      ],
+      "label": "Thundering",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        69,
+        71
+      ],
+      "major": [
+        30,
+        34
+      ],
+      "label": "Anarchic",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        72,
+        74
+      ],
+      "major": [
+        35,
+        39
+      ],
+      "label": "Axiomatic",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        75,
+        79
+      ],
+      "major": [
+        40,
+        49
+      ],
+      "label": "Flaming burst",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        80,
+        82
+      ],
+      "major": [
+        50,
+        54
+      ],
+      "label": "Holy",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        83,
+        87
+      ],
+      "major": [
+        55,
+        64
+      ],
+      "label": "Icy burst",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        88,
+        92
+      ],
+      "major": [
+        65,
+        74
+      ],
+      "label": "Shocking burst",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        93,
+        95
+      ],
+      "major": [
+        75,
+        79
+      ],
+      "label": "Unholy",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        80,
+        84
+      ],
+      "label": "Speed",
+      "price": "+3 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        85,
+        90
+      ],
+      "label": "Brilliant energy",
+      "price": "+4 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        100,
+        100
+      ],
+      "medium": [
+        96,
+        100
+      ],
+      "major": [
+        91,
+        100
+      ],
+      "label": "Roll again twice2",
+      "price": "-",
+      "action": "roll_twice"
+    }
+  ]
+}

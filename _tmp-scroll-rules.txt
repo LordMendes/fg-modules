@@ -1,0 +1,56 @@
+﻿=== arcane-magical-writings-239 Arcane Magical Writings ===
+rehensible to even the most powerful wizard until she takes time to study and decipher it.
+To decipher an arcane magical writing (such as a single spell in written form in anotherÆs spellbook or on a scroll), a character must make a
+Spellcraft
+check (DC 20 + the spellÆs level). If the
+skill check
+fails, the character cannot attempt to read that particular spell again until the next day. A
+read magic
+spell automatically deciphers a magical writing without a skill check. If the person who created the magical writing is on hand to help the reader, success is also automatic.
+Once a character deciphers a particular magical writing, she does not need to decipher it again. Deciphering a magical writing allows the reader to identify the spell and gives some idea of its effects (as explained in the spell description). If the magical writing was a scroll and the reader can cast arcane spells, she can attempt to use the scroll.
+Wizard Spells and Borrowed Spellbooks
+A
+wizard
+can use a borrowed spellbook to prepare a spell she already knows and has recorded in her own spellbook, but preparation success is not assured. First, the wizard must decipher the writing in the book (see Arcane Magical Writings, above). Once a spell from another spellcasterÆs book is deciphered, the reader must make a
+Spellcraft
+check (DC 15 + spellÆs level) to prepare the spell. If the check succeeds, the wizard can prepare the spell. She must repeat the check to prepare the spell again, no matter how many times she has prepared it before. If the check fails, she cannot try to prepare the spell from the same source again until the next day. (However, as explained above, she does not need to repeat a check to decipher the writing.)
+Adding Spells to a WizardÆs Spellbook
+Wizards
+can add new spells to their spellbooks through several methods. If a wizard has chosen to specialize in a school of magic, she can learn spells only from schools whose spells she can cast.
+Spells Gained at a New Level
+Wizards
+perform a certain amount of spell research between adventures. Each time a character attains a new wizard level, she gains two spells of her choice to add to her spellbook. The two free spells must be of spell levels she can cast. If she has chosen to specialize in a school of magic, one of the two free spells must be from her specialty school.
+Spells Copied from AnotherÆs Spellbook or a Scroll
+A
+wizard
+can also add a spell to her book whenever she encounters one on a magic scroll or in another wizardÆs spellbook. No matter what the spellÆs source, the wizard must first decipher the magical writing (see Arcane Magical Writings, above). Next, she must spend a day studying the spell. At the end of the day, she must make a
+Spellcraft
+check (DC 15 + spellÆs level). A wizard who has specialized in a school of spells gains a +2 bonus on the
+Spellcraft
+check if the new spell is from her specialty school. She cannot, however, learn any spells from her prohibited schools. If the check succeeds, the wizard understands the spell and can copy it into her spellbook (see Writing a New Spell into a Spellbook, below). The process leaves a spellbook that was copied from unharmed, but a spell successfully copied from a magic scroll disappears from the parchment.
+If the check fails, the wizard cannot understand or copy the spell. She cannot attempt to learn or copy that spell again until she gains another rank in
+Spellcraft
+. A spell that was being copied from a scroll does not vanish from the scroll.
+In most cases, wizards charge a fee for the privilege of copying spells from their spellbooks. This fee is usually equal to the spellÆs level Î 50 gp.
+Independent Research
+A
+wizard
+also can research a spell independently, duplicating an existing spell or creating an entirely new one.
+Writing a New Spell into a Spellbook
+Once a
+wizard
+understands a new spell, she can record it into her spellbook.
+Time
+The process takes 24 hours, regardless of the spellÆs level.
+Space in the Spellbook
+A spell takes up one page of the spellbook per spell level. Even a 0-level spell (cantrip) takes one page. A spellbook has one hundred pages.
+Materials and Costs
+Materials for writing the spell cost 100 gp per 
+---
+=== magic-item-gold-piece-values-114 Magic Item Gold Piece Values ===
+mulas arenÆt enough to truly gauge the exact differences between items. The price of a magic item may be modified based on its actual worth. The formulas only provide a starting point. The pricing of scrolls assumes that, whenever possible, a
+wizard
+or
+cleric
+created it. Potions and wands follow the formulas exactly. Staffs follow the formulas closely, and other items require at least some judgment calls.
+---

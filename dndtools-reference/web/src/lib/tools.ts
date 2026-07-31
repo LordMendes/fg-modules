@@ -26,6 +26,15 @@ export const TOOLS = [
       "Calculate Leadership score, cohort level, and followers by level using PHB and Epic Leadership rules.",
     source: "PHB / DMG",
   },
+  {
+    key: "npc-creator",
+    label: "NPC Creator",
+    icon: "🗡️",
+    href: "/tools/npc-creator",
+    description:
+      "Build D&D 3.5 NPCs with archetypes and monster templates, preview a Fantasy Grounds–style sheet, and download importable FG XML.",
+    source: "SRD 3.5 / Fantasy Grounds",
+  },
 ] as const;
 
 export type ToolKey = (typeof TOOLS)[number]["key"];

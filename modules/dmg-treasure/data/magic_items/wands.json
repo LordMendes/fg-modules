@@ -1,0 +1,1023 @@
+{
+  "rows": [
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "---",
+      "price": "---",
+      "action": "item"
+    },
+    {
+      "minor": [
+        1,
+        2
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Detect magic",
+      "price": "375 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        3,
+        4
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Light",
+      "price": "375 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        5,
+        7
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Burning hands",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        8,
+        10
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Charm animal",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        11,
+        13
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Charm person",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        14,
+        16
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Color spray",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        17,
+        19
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Cure light wounds",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        20,
+        22
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Detect secret doors",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        23,
+        25
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Enlarge person",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        26,
+        28
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Magic missile (1st)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        29,
+        31
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Shocking grasp",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        32,
+        34
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Summon monster I",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        35,
+        36
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Magic missile (3rd)",
+      "price": "2,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        37,
+        37
+      ],
+      "medium": [
+        1,
+        3
+      ],
+      "major": null,
+      "label": "Magic missile (5th)",
+      "price": "3,750 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        38,
+        40
+      ],
+      "medium": [
+        4,
+        7
+      ],
+      "major": null,
+      "label": "Bear\u2019s endurance",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        41,
+        43
+      ],
+      "medium": [
+        8,
+        11
+      ],
+      "major": null,
+      "label": "Bull\u2019s strength",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        44,
+        46
+      ],
+      "medium": [
+        12,
+        15
+      ],
+      "major": null,
+      "label": "Cat\u2019s grace",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        47,
+        49
+      ],
+      "medium": [
+        16,
+        20
+      ],
+      "major": null,
+      "label": "Cure moderate wounds",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        50,
+        51
+      ],
+      "medium": [
+        21,
+        22
+      ],
+      "major": null,
+      "label": "Darkness",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        52,
+        54
+      ],
+      "medium": [
+        23,
+        24
+      ],
+      "major": null,
+      "label": "Daylight",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        55,
+        57
+      ],
+      "medium": [
+        25,
+        27
+      ],
+      "major": null,
+      "label": "Delay poison",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        58,
+        60
+      ],
+      "medium": [
+        28,
+        31
+      ],
+      "major": null,
+      "label": "Eagle\u2019s splendor",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        61,
+        63
+      ],
+      "medium": [
+        32,
+        33
+      ],
+      "major": null,
+      "label": "False life",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        64,
+        66
+      ],
+      "medium": [
+        34,
+        37
+      ],
+      "major": null,
+      "label": "Fox\u2019s cunning",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        67,
+        68
+      ],
+      "medium": [
+        38,
+        38
+      ],
+      "major": null,
+      "label": "Ghoul touch",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        69,
+        71
+      ],
+      "medium": [
+        39,
+        39
+      ],
+      "major": null,
+      "label": "Hold person",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        72,
+        74
+      ],
+      "medium": [
+        40,
+        42
+      ],
+      "major": null,
+      "label": "Invisibility",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        75,
+        77
+      ],
+      "medium": [
+        43,
+        44
+      ],
+      "major": null,
+      "label": "Knock",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        78,
+        80
+      ],
+      "medium": [
+        45,
+        45
+      ],
+      "major": null,
+      "label": "Levitate",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        81,
+        83
+      ],
+      "medium": [
+        46,
+        47
+      ],
+      "major": null,
+      "label": "Acid arrow",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        84,
+        86
+      ],
+      "medium": [
+        48,
+        49
+      ],
+      "major": null,
+      "label": "Mirror image",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        87,
+        89
+      ],
+      "medium": [
+        50,
+        53
+      ],
+      "major": null,
+      "label": "Owl\u2019s wisdom",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        90,
+        91
+      ],
+      "medium": [
+        54,
+        54
+      ],
+      "major": null,
+      "label": "Shatter",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        92,
+        94
+      ],
+      "medium": [
+        55,
+        56
+      ],
+      "major": null,
+      "label": "Silence",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        95,
+        97
+      ],
+      "medium": [
+        57,
+        57
+      ],
+      "major": null,
+      "label": "Summon monster II",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        98,
+        100
+      ],
+      "medium": [
+        58,
+        59
+      ],
+      "major": null,
+      "label": "Web",
+      "price": "4,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        60,
+        62
+      ],
+      "major": [
+        1,
+        2
+      ],
+      "label": "Magic missile (7th)",
+      "price": "",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        63,
+        64
+      ],
+      "major": [
+        3,
+        5
+      ],
+      "label": "Magic missile (9th)",
+      "price": "",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        65,
+        67
+      ],
+      "major": [
+        6,
+        7
+      ],
+      "label": "Call lightning (5th)",
+      "price": "",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        68,
+        68
+      ],
+      "major": [
+        8,
+        8
+      ],
+      "label": "Charm person,heightened (3rd-level spell)",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        69,
+        70
+      ],
+      "major": [
+        9,
+        10
+      ],
+      "label": "Contagion",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        71,
+        74
+      ],
+      "major": [
+        11,
+        13
+      ],
+      "label": "Cure serious wounds",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        75,
+        77
+      ],
+      "major": [
+        14,
+        15
+      ],
+      "label": "Dispel magic",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        78,
+        81
+      ],
+      "major": [
+        16,
+        17
+      ],
+      "label": "Fireball (5th)",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        82,
+        83
+      ],
+      "major": [
+        18,
+        19
+      ],
+      "label": "Keen edge",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        84,
+        87
+      ],
+      "major": [
+        20,
+        21
+      ],
+      "label": "Lightning bolt (5th)",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        88,
+        89
+      ],
+      "major": [
+        22,
+        23
+      ],
+      "label": "Major image",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        90,
+        91
+      ],
+      "major": [
+        24,
+        25
+      ],
+      "label": "Slow",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        92,
+        94
+      ],
+      "major": [
+        26,
+        27
+      ],
+      "label": "Suggestion",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        95,
+        97
+      ],
+      "major": [
+        28,
+        29
+      ],
+      "label": "Summon monster III",
+      "price": "11,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        98,
+        98
+      ],
+      "major": [
+        30,
+        31
+      ],
+      "label": "Fireball (6th)",
+      "price": "13,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        99,
+        99
+      ],
+      "major": [
+        32,
+        33
+      ],
+      "label": "Lightning bolt (6th)",
+      "price": "13,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        100,
+        100
+      ],
+      "major": [
+        34,
+        35
+      ],
+      "label": "Searing light (6th)",
+      "price": "13,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        36,
+        37
+      ],
+      "label": "Call lightning (8th)",
+      "price": "18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        38,
+        39
+      ],
+      "label": "Fireball (8th)",
+      "price": "18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        40,
+        41
+      ],
+      "label": "Lightning bolt (8th)",
+      "price": "18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        42,
+        45
+      ],
+      "label": "Charm monster",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        46,
+        50
+      ],
+      "label": "Cure critical wounds",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        51,
+        52
+      ],
+      "label": "Dimensional anchor",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        53,
+        55
+      ],
+      "label": "Fear",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        56,
+        59
+      ],
+      "label": "Greater invisibility",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        60,
+        60
+      ],
+      "label": "Hold person, heightened (4th level)",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        61,
+        65
+      ],
+      "label": "Ice storm",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        66,
+        68
+      ],
+      "label": "Inflict critical wounds",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        69,
+        72
+      ],
+      "label": "Neutralize poison",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        73,
+        74
+      ],
+      "label": "Poison",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        75,
+        77
+      ],
+      "label": "Polymorph",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        78,
+        78
+      ],
+      "label": "Ray of enfeeblement, heightened (4th level)",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        79,
+        79
+      ],
+      "label": "Suggestion, heightened (4th level)",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        80,
+        82
+      ],
+      "label": "Summon monster IV",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        83,
+        86
+      ],
+      "label": "Wall of fire",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        87,
+        90
+      ],
+      "label": "Wall of ice",
+      "price": "21,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        91,
+        91
+      ],
+      "label": "Dispel magic (10th)",
+      "price": "22,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        92,
+        92
+      ],
+      "label": "Fireball (10th)",
+      "price": "22,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        93,
+        93
+      ],
+      "label": "Lightning bolt (10th)",
+      "price": "22,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        94,
+        94
+      ],
+      "label": "Chaos hammer (8th)",
+      "price": "24,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        95,
+        95
+      ],
+      "label": "Holy smite (8th)",
+      "price": "24,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        96,
+        96
+      ],
+      "label": "Order\u2019s wrath (8th)",
+      "price": "24,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        97,
+        97
+      ],
+      "label": "Unholy blight (8th)",
+      "price": "24,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        98,
+        99
+      ],
+      "label": "Restoration",
+      "price": "26,000 gp1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        100,
+        100
+      ],
+      "label": "Stoneskin",
+      "price": "33,500 gp2",
+      "action": "item"
+    }
+  ]
+}

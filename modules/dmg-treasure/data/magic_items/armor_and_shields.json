@@ -1,0 +1,246 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        60
+      ],
+      "medium": [
+        1,
+        5
+      ],
+      "major": null,
+      "label": "+1 shield",
+      "price": "1,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": [
+        61,
+        80
+      ],
+      "medium": [
+        6,
+        10
+      ],
+      "major": null,
+      "label": "+1 armor",
+      "price": "1,000 gp",
+      "action": "subtable",
+      "target": "magic_armor_type"
+    },
+    {
+      "minor": [
+        81,
+        85
+      ],
+      "medium": [
+        11,
+        20
+      ],
+      "major": null,
+      "label": "+2 shield",
+      "price": "4,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": [
+        86,
+        87
+      ],
+      "medium": [
+        21,
+        30
+      ],
+      "major": null,
+      "label": "+2 armor",
+      "price": "4,000 gp",
+      "action": "subtable",
+      "target": "magic_armor_type"
+    },
+    {
+      "minor": null,
+      "medium": [
+        31,
+        40
+      ],
+      "major": [
+        1,
+        8
+      ],
+      "label": "+3 shield",
+      "price": "9,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": [
+        41,
+        50
+      ],
+      "major": [
+        9,
+        16
+      ],
+      "label": "+3 armor",
+      "price": "9,000 gp",
+      "action": "subtable",
+      "target": "magic_armor_type"
+    },
+    {
+      "minor": null,
+      "medium": [
+        51,
+        55
+      ],
+      "major": [
+        17,
+        27
+      ],
+      "label": "+4 shield",
+      "price": "16,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": [
+        56,
+        57
+      ],
+      "major": [
+        28,
+        38
+      ],
+      "label": "+4 armor",
+      "price": "16,000 gp",
+      "action": "subtable",
+      "target": "magic_armor_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        39,
+        49
+      ],
+      "label": "+5 shield",
+      "price": "25,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        50,
+        57
+      ],
+      "label": "+5 armor",
+      "price": "25,000 gp",
+      "action": "subtable",
+      "target": "magic_armor_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+6 armor/shield 1",
+      "price": "36,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+7 armor/shield 1",
+      "price": "49,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+8 armor/shield 1",
+      "price": "64,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+9 armor/shield 1",
+      "price": "81,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+10 armor/shield 1",
+      "price": "100,000 gp",
+      "action": "subtable",
+      "target": "magic_shield_type"
+    },
+    {
+      "minor": [
+        88,
+        89
+      ],
+      "medium": [
+        58,
+        60
+      ],
+      "major": [
+        58,
+        60
+      ],
+      "label": "Specific armor2",
+      "price": "-",
+      "action": "subtable",
+      "target": "magic_specific_armors"
+    },
+    {
+      "minor": [
+        90,
+        91
+      ],
+      "medium": [
+        61,
+        63
+      ],
+      "major": [
+        61,
+        63
+      ],
+      "label": "Specific shield3",
+      "price": "-",
+      "action": "subtable",
+      "target": "magic_specific_shields"
+    },
+    {
+      "minor": [
+        92,
+        100
+      ],
+      "medium": [
+        64,
+        100
+      ],
+      "major": [
+        64,
+        100
+      ],
+      "label": "Special ability and roll again4",
+      "price": "-",
+      "action": "roll_again"
+    }
+  ]
+}

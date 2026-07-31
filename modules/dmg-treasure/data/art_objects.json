@@ -1,0 +1,86 @@
+[
+  {
+    "from": 1,
+    "to": 10,
+    "value": "1d10 \u00d7 10 gp",
+    "average": "55 gp",
+    "examples": "Silver ewer; carved bone or ivory statuette; finely wrought small gold bracelet"
+  },
+  {
+    "from": 11,
+    "to": 25,
+    "value": "3d6 \u00d7 10 gp",
+    "average": "105 gp",
+    "examples": "Cloth of gold vestments; black velvet mask with numerous citrines; silver chalice with lapis lazuli gems"
+  },
+  {
+    "from": 26,
+    "to": 40,
+    "value": "1d6 \u00d7 100 gp",
+    "average": "350 gp",
+    "examples": "Large well-done wool tapestry; brass mug with jade inlays"
+  },
+  {
+    "from": 41,
+    "to": 50,
+    "value": "1d10 \u00d7 100 gp",
+    "average": "550 gp",
+    "examples": "Silver comb with moonstones; silver-plated steel longsword with jet jewel in hilt"
+  },
+  {
+    "from": 51,
+    "to": 60,
+    "value": "2d6 \u00d7 100 gp",
+    "average": "700 gp",
+    "examples": "Carved harp of exotic wood with ivory inlay and zircon gems; solid gold idol (10 lb.)"
+  },
+  {
+    "from": 61,
+    "to": 70,
+    "value": "3d6 \u00d7 100 gp",
+    "average": "1,050 gp",
+    "examples": "Gold dragon comb with red garnet eye; gold and topaz bottle stopper cork; ceremonial electrum dagger with a star ruby in the pommel"
+  },
+  {
+    "from": 71,
+    "to": 80,
+    "value": "4d6 \u00d7 100 gp",
+    "average": "1,400 gp",
+    "examples": "Eyepatch with mock eye of sapphire and moonstone; fire opal pendant on a fine gold chain; old masterpiece painting"
+  },
+  {
+    "from": 81,
+    "to": 85,
+    "value": "5d6 \u00d7 100 gp",
+    "average": "1,750 gp",
+    "examples": "Embroidered silk and velvet mantle with numerous moonstones; sapphire pendant on gold chain"
+  },
+  {
+    "from": 86,
+    "to": 90,
+    "value": "1d4 \u00d7 1,000 gp",
+    "average": "2,500 gp",
+    "examples": "Embroidered and bejeweled glove; jeweled anklet; gold music box"
+  },
+  {
+    "from": 91,
+    "to": 95,
+    "value": "1d6 \u00d7 1,000 gp",
+    "average": "3,500 gp",
+    "examples": "Golden circlet with four aquamarines; a string of small pink pearls (necklace)"
+  },
+  {
+    "from": 96,
+    "to": 99,
+    "value": "2d4 \u00d7 1,000 gp",
+    "average": "5,000 gp",
+    "examples": "Jeweled gold crown; jeweled electrum ring"
+  },
+  {
+    "from": 100,
+    "to": 100,
+    "value": "2d6 \u00d7 1,000 gp",
+    "average": "7,000 gp",
+    "examples": "Gold and ruby ring; gold cup set with emeralds"
+  }
+]

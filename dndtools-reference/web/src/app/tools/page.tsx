@@ -26,7 +26,7 @@ export default function ToolsPage() {
         <h1>Tools</h1>
         <p>
           Interactive utilities for D&amp;D 3.5 Edition — calculators and
-          builders based on official rulebooks.
+          builders based on official rulebooks and Fantasy Grounds export.
         </p>
       </div>
 

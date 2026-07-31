@@ -1,0 +1,124 @@
+{
+  "rows": [
+    {
+      "d_pct": [
+        1,
+        1
+      ],
+      "label": "Padded",
+      "price": "+155 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        2,
+        2
+      ],
+      "label": "Leather",
+      "price": "+160 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        3,
+        17
+      ],
+      "label": "Studded leather",
+      "price": "+175 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        18,
+        32
+      ],
+      "label": "Chain shirt",
+      "price": "+250 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        33,
+        42
+      ],
+      "label": "Hide",
+      "price": "+165 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        43,
+        43
+      ],
+      "label": "Scale mail",
+      "price": "+200 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        44,
+        44
+      ],
+      "label": "Chainmail",
+      "price": "+300 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        45,
+        57
+      ],
+      "label": "Breastplate",
+      "price": "+350 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        58,
+        58
+      ],
+      "label": "Splint mail",
+      "price": "+350 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        59,
+        59
+      ],
+      "label": "Banded mail",
+      "price": "+400 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        60,
+        60
+      ],
+      "label": "Half-plate",
+      "price": "+750 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        61,
+        100
+      ],
+      "label": "Full plate",
+      "price": "+1,650 gp",
+      "action": "item",
+      "target": null
+    }
+  ]
+}

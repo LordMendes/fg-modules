@@ -1,0 +1,42 @@
+{
+  "arcane": [
+    {"from": 1, "to": 4, "spell": "acid splash"},
+    {"from": 5, "to": 8, "spell": "arcane mark"},
+    {"from": 9, "to": 13, "spell": "dancing lights"},
+    {"from": 14, "to": 17, "spell": "daze"},
+    {"from": 18, "to": 24, "spell": "detect magic"},
+    {"from": 25, "to": 28, "spell": "detect poison"},
+    {"from": 29, "to": 32, "spell": "disrupt undead"},
+    {"from": 33, "to": 37, "spell": "flare"},
+    {"from": 38, "to": 42, "spell": "ghost sound"},
+    {"from": 43, "to": 44, "spell": "know direction"},
+    {"from": 45, "to": 50, "spell": "light"},
+    {"from": 51, "to": 52, "spell": "lullaby"},
+    {"from": 53, "to": 57, "spell": "mage hand"},
+    {"from": 58, "to": 62, "spell": "mending"},
+    {"from": 63, "to": 67, "spell": "message"},
+    {"from": 68, "to": 72, "spell": "open/close"},
+    {"from": 73, "to": 77, "spell": "prestidigitation"},
+    {"from": 78, "to": 81, "spell": "ray of frost"},
+    {"from": 82, "to": 87, "spell": "read magic"},
+    {"from": 88, "to": 94, "spell": "resistance"},
+    {"from": 95, "to": 96, "spell": "summon instrument"},
+    {"from": 97, "to": 100, "spell": "touch of fatigue"}
+  ],
+  "divine": [
+    {"from": 1, "to": 7, "spell": "create water"},
+    {"from": 8, "to": 14, "spell": "cure minor wounds"},
+    {"from": 15, "to": 22, "spell": "detect magic"},
+    {"from": 23, "to": 29, "spell": "detect poison"},
+    {"from": 30, "to": 36, "spell": "flare"},
+    {"from": 37, "to": 43, "spell": "guidance"},
+    {"from": 44, "to": 50, "spell": "inflict minor wounds"},
+    {"from": 51, "to": 57, "spell": "know direction"},
+    {"from": 58, "to": 65, "spell": "light"},
+    {"from": 66, "to": 72, "spell": "mending"},
+    {"from": 73, "to": 79, "spell": "purify food and drink"},
+    {"from": 80, "to": 86, "spell": "read magic"},
+    {"from": 87, "to": 93, "spell": "resistance"},
+    {"from": 94, "to": 100, "spell": "virtue"}
+  ]
+}

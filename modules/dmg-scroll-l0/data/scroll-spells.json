@@ -1,0 +1,3716 @@
+{
+  "arcane": {
+    "0": [
+      {
+        "from": 1,
+        "to": 4,
+        "spell": "acid splash"
+      },
+      {
+        "from": 5,
+        "to": 8,
+        "spell": "arcane mark"
+      },
+      {
+        "from": 9,
+        "to": 13,
+        "spell": "dancing lights"
+      },
+      {
+        "from": 14,
+        "to": 17,
+        "spell": "daze"
+      },
+      {
+        "from": 18,
+        "to": 24,
+        "spell": "detect magic"
+      },
+      {
+        "from": 25,
+        "to": 28,
+        "spell": "detect poison"
+      },
+      {
+        "from": 29,
+        "to": 32,
+        "spell": "disrupt undead"
+      },
+      {
+        "from": 33,
+        "to": 37,
+        "spell": "flare"
+      },
+      {
+        "from": 38,
+        "to": 42,
+        "spell": "ghost sound"
+      },
+      {
+        "from": 43,
+        "to": 44,
+        "spell": "know direction"
+      },
+      {
+        "from": 45,
+        "to": 50,
+        "spell": "light"
+      },
+      {
+        "from": 51,
+        "to": 52,
+        "spell": "lullaby"
+      },
+      {
+        "from": 53,
+        "to": 57,
+        "spell": "mage hand"
+      },
+      {
+        "from": 58,
+        "to": 62,
+        "spell": "mending"
+      },
+      {
+        "from": 63,
+        "to": 67,
+        "spell": "message"
+      },
+      {
+        "from": 68,
+        "to": 72,
+        "spell": "open/close"
+      },
+      {
+        "from": 73,
+        "to": 77,
+        "spell": "prestidigitation"
+      },
+      {
+        "from": 78,
+        "to": 81,
+        "spell": "ray of frost"
+      },
+      {
+        "from": 82,
+        "to": 87,
+        "spell": "read magic"
+      },
+      {
+        "from": 88,
+        "to": 94,
+        "spell": "resistance"
+      },
+      {
+        "from": 95,
+        "to": 96,
+        "spell": "summon instrument"
+      },
+      {
+        "from": 97,
+        "to": 100,
+        "spell": "touch of fatigue"
+      }
+    ],
+    "1": [
+      {
+        "from": 1,
+        "to": 3,
+        "spell": "alarm"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "spell": "animate rope"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "spell": "burning hands"
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "spell": "cause fear"
+      },
+      {
+        "from": 10,
+        "to": 12,
+        "spell": "charm person"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "spell": "chill touch"
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "spell": "color spray"
+      },
+      {
+        "from": 17,
+        "to": 19,
+        "spell": "comprehend languages"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "spell": "confusion, lesser"
+      },
+      {
+        "from": 21,
+        "to": 21,
+        "spell": "cure light wounds"
+      },
+      {
+        "from": 22,
+        "to": 24,
+        "spell": "detect secret doors"
+      },
+      {
+        "from": 25,
+        "to": 26,
+        "spell": "detect undead"
+      },
+      {
+        "from": 27,
+        "to": 29,
+        "spell": "disguise self"
+      },
+      {
+        "from": 30,
+        "to": 32,
+        "spell": "endure elements"
+      },
+      {
+        "from": 33,
+        "to": 35,
+        "spell": "enlarge person"
+      },
+      {
+        "from": 36,
+        "to": 37,
+        "spell": "erase"
+      },
+      {
+        "from": 38,
+        "to": 40,
+        "spell": "expeditious retreat"
+      },
+      {
+        "from": 41,
+        "to": 41,
+        "spell": "feather fall"
+      },
+      {
+        "from": 42,
+        "to": 43,
+        "spell": "grease"
+      },
+      {
+        "from": 44,
+        "to": 45,
+        "spell": "hold portal"
+      },
+      {
+        "from": 46,
+        "to": 47,
+        "spell": "hypnotism"
+      },
+      {
+        "from": 48,
+        "to": 49,
+        "spell": "identify"
+      },
+      {
+        "from": 50,
+        "to": 51,
+        "spell": "jump"
+      },
+      {
+        "from": 52,
+        "to": 54,
+        "spell": "mage armor"
+      },
+      {
+        "from": 55,
+        "to": 56,
+        "spell": "magic missile"
+      },
+      {
+        "from": 57,
+        "to": 59,
+        "spell": "magic weapon"
+      },
+      {
+        "from": 60,
+        "to": 62,
+        "spell": "mount"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "magic aura"
+      },
+      {
+        "from": 65,
+        "to": 66,
+        "spell": "obscuring mist"
+      },
+      {
+        "from": 67,
+        "to": 74,
+        "spell": "protection from chaos/ evil/ good/ law"
+      },
+      {
+        "from": 75,
+        "to": 76,
+        "spell": "ray of enfeeblement"
+      },
+      {
+        "from": 77,
+        "to": 78,
+        "spell": "reduce person"
+      },
+      {
+        "from": 79,
+        "to": 80,
+        "spell": "remove fear"
+      },
+      {
+        "from": 81,
+        "to": 82,
+        "spell": "shield"
+      },
+      {
+        "from": 83,
+        "to": 84,
+        "spell": "shocking grasp"
+      },
+      {
+        "from": 85,
+        "to": 86,
+        "spell": "silent image"
+      },
+      {
+        "from": 87,
+        "to": 88,
+        "spell": "sleep"
+      },
+      {
+        "from": 89,
+        "to": 90,
+        "spell": "summon monster I"
+      },
+      {
+        "from": 91,
+        "to": 93,
+        "spell": "floating disk"
+      },
+      {
+        "from": 94,
+        "to": 95,
+        "spell": "true strike"
+      },
+      {
+        "from": 96,
+        "to": 96,
+        "spell": "undetectable alignment"
+      },
+      {
+        "from": 97,
+        "to": 98,
+        "spell": "unseen servant"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "ventriloquism"
+      }
+    ],
+    "2": [
+      {
+        "from": 1,
+        "to": 1,
+        "spell": "animal messenger"
+      },
+      {
+        "from": 2,
+        "to": 2,
+        "spell": "animal trance"
+      },
+      {
+        "from": 3,
+        "to": 3,
+        "spell": "arcane lock"
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "spell": "bear's endurance"
+      },
+      {
+        "from": 7,
+        "to": 8,
+        "spell": "blindness/deafness"
+      },
+      {
+        "from": 9,
+        "to": 10,
+        "spell": "blur"
+      },
+      {
+        "from": 11,
+        "to": 13,
+        "spell": "bull's strength"
+      },
+      {
+        "from": 14,
+        "to": 14,
+        "spell": "calm emotions"
+      },
+      {
+        "from": 15,
+        "to": 17,
+        "spell": "cat's grace"
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "spell": "command undead"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "spell": "continual flame"
+      },
+      {
+        "from": 21,
+        "to": 21,
+        "spell": "cure moderate wounds"
+      },
+      {
+        "from": 22,
+        "to": 22,
+        "spell": "darkness"
+      },
+      {
+        "from": 23,
+        "to": 25,
+        "spell": "darkvision"
+      },
+      {
+        "from": 26,
+        "to": 26,
+        "spell": "daze monster"
+      },
+      {
+        "from": 27,
+        "to": 27,
+        "spell": "delay poison"
+      },
+      {
+        "from": 28,
+        "to": 29,
+        "spell": "detect thoughts"
+      },
+      {
+        "from": 30,
+        "to": 31,
+        "spell": "disguise self"
+      },
+      {
+        "from": 32,
+        "to": 34,
+        "spell": "eagle's splendor"
+      },
+      {
+        "from": 35,
+        "to": 35,
+        "spell": "enthrall"
+      },
+      {
+        "from": 36,
+        "to": 37,
+        "spell": "false life"
+      },
+      {
+        "from": 38,
+        "to": 39,
+        "spell": "flaming sphere"
+      },
+      {
+        "from": 40,
+        "to": 40,
+        "spell": "fog cloud"
+      },
+      {
+        "from": 41,
+        "to": 43,
+        "spell": "fox's cunning"
+      },
+      {
+        "from": 44,
+        "to": 44,
+        "spell": "ghoul touch"
+      },
+      {
+        "from": 45,
+        "to": 46,
+        "spell": "glitterdust"
+      },
+      {
+        "from": 47,
+        "to": 47,
+        "spell": "gust of wind"
+      },
+      {
+        "from": 48,
+        "to": 49,
+        "spell": "hypnotic pattern"
+      },
+      {
+        "from": 50,
+        "to": 52,
+        "spell": "invisibility"
+      },
+      {
+        "from": 53,
+        "to": 55,
+        "spell": "knock"
+      },
+      {
+        "from": 56,
+        "to": 56,
+        "spell": "phantom trap"
+      },
+      {
+        "from": 57,
+        "to": 58,
+        "spell": "levitate"
+      },
+      {
+        "from": 59,
+        "to": 59,
+        "spell": "locate object"
+      },
+      {
+        "from": 60,
+        "to": 60,
+        "spell": "magic mouth"
+      },
+      {
+        "from": 61,
+        "to": 62,
+        "spell": "acid arrow"
+      },
+      {
+        "from": 63,
+        "to": 63,
+        "spell": "minor image"
+      },
+      {
+        "from": 64,
+        "to": 65,
+        "spell": "mirror image"
+      },
+      {
+        "from": 66,
+        "to": 66,
+        "spell": "misdirection"
+      },
+      {
+        "from": 67,
+        "to": 67,
+        "spell": "obscure object"
+      },
+      {
+        "from": 68,
+        "to": 70,
+        "spell": "owl's wisdom"
+      },
+      {
+        "from": 71,
+        "to": 73,
+        "spell": "protection from arrows"
+      },
+      {
+        "from": 74,
+        "to": 75,
+        "spell": "pyrotechnics"
+      },
+      {
+        "from": 76,
+        "to": 78,
+        "spell": "resist energy"
+      },
+      {
+        "from": 79,
+        "to": 79,
+        "spell": "rope trick"
+      },
+      {
+        "from": 80,
+        "to": 80,
+        "spell": "scare"
+      },
+      {
+        "from": 81,
+        "to": 82,
+        "spell": "scorching ray"
+      },
+      {
+        "from": 83,
+        "to": 85,
+        "spell": "see invisibility"
+      },
+      {
+        "from": 86,
+        "to": 86,
+        "spell": "shatter"
+      },
+      {
+        "from": 87,
+        "to": 87,
+        "spell": "silence"
+      },
+      {
+        "from": 88,
+        "to": 88,
+        "spell": "sound burst"
+      },
+      {
+        "from": 89,
+        "to": 89,
+        "spell": "spectral hand"
+      },
+      {
+        "from": 90,
+        "to": 91,
+        "spell": "spider climb"
+      },
+      {
+        "from": 92,
+        "to": 93,
+        "spell": "summon monster II"
+      },
+      {
+        "from": 94,
+        "to": 95,
+        "spell": "summon swarm"
+      },
+      {
+        "from": 96,
+        "to": 96,
+        "spell": "hideous laughter"
+      },
+      {
+        "from": 97,
+        "to": 97,
+        "spell": "touch of idiocy"
+      },
+      {
+        "from": 98,
+        "to": 99,
+        "spell": "web"
+      },
+      {
+        "from": 100,
+        "to": 100,
+        "spell": "whispering wind"
+      }
+    ],
+    "3": [
+      {
+        "from": 1,
+        "to": 2,
+        "spell": "arcane sight"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "spell": "blink"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "spell": "clairaudience/clairvoyance"
+      },
+      {
+        "from": 7,
+        "to": 7,
+        "spell": "cure serious wounds"
+      },
+      {
+        "from": 8,
+        "to": 10,
+        "spell": "daylight"
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "spell": "deep slumber"
+      },
+      {
+        "from": 13,
+        "to": 15,
+        "spell": "dispel magic"
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "spell": "displacement"
+      },
+      {
+        "from": 18,
+        "to": 18,
+        "spell": "explosive runes"
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "spell": "fireball"
+      },
+      {
+        "from": 21,
+        "to": 22,
+        "spell": "flame arrow"
+      },
+      {
+        "from": 23,
+        "to": 25,
+        "spell": "fly"
+      },
+      {
+        "from": 26,
+        "to": 27,
+        "spell": "gaseous form"
+      },
+      {
+        "from": 28,
+        "to": 29,
+        "spell": "gentle repose"
+      },
+      {
+        "from": 30,
+        "to": 30,
+        "spell": "glibness"
+      },
+      {
+        "from": 31,
+        "to": 31,
+        "spell": "good hope"
+      },
+      {
+        "from": 32,
+        "to": 33,
+        "spell": "halt undead"
+      },
+      {
+        "from": 34,
+        "to": 36,
+        "spell": "haste"
+      },
+      {
+        "from": 37,
+        "to": 38,
+        "spell": "heroism"
+      },
+      {
+        "from": 39,
+        "to": 40,
+        "spell": "hold person"
+      },
+      {
+        "from": 41,
+        "to": 41,
+        "spell": "illusory script"
+      },
+      {
+        "from": 42,
+        "to": 44,
+        "spell": "invisibility sphere"
+      },
+      {
+        "from": 45,
+        "to": 47,
+        "spell": "keen edge"
+      },
+      {
+        "from": 48,
+        "to": 49,
+        "spell": "tiny hut"
+      },
+      {
+        "from": 50,
+        "to": 51,
+        "spell": "lightning bolt"
+      },
+      {
+        "from": 52,
+        "to": 59,
+        "spell": "magic circle against chaos/ evil/ good/ law"
+      },
+      {
+        "from": 60,
+        "to": 62,
+        "spell": "magic weapon, greater"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "major image"
+      },
+      {
+        "from": 65,
+        "to": 66,
+        "spell": "nondetection"
+      },
+      {
+        "from": 67,
+        "to": 68,
+        "spell": "phantom steed"
+      },
+      {
+        "from": 69,
+        "to": 71,
+        "spell": "protection from energy"
+      },
+      {
+        "from": 72,
+        "to": 73,
+        "spell": "rage"
+      },
+      {
+        "from": 74,
+        "to": 75,
+        "spell": "ray of exhaustion"
+      },
+      {
+        "from": 76,
+        "to": 76,
+        "spell": "sculpt sound"
+      },
+      {
+        "from": 77,
+        "to": 77,
+        "spell": "secret page"
+      },
+      {
+        "from": 78,
+        "to": 78,
+        "spell": "sepia snake sigil"
+      },
+      {
+        "from": 79,
+        "to": 79,
+        "spell": "shrink item"
+      },
+      {
+        "from": 80,
+        "to": 81,
+        "spell": "sleet storm"
+      },
+      {
+        "from": 82,
+        "to": 83,
+        "spell": "slow"
+      },
+      {
+        "from": 84,
+        "to": 84,
+        "spell": "speak with animals"
+      },
+      {
+        "from": 85,
+        "to": 86,
+        "spell": "stinking cloud"
+      },
+      {
+        "from": 87,
+        "to": 88,
+        "spell": "suggestion"
+      },
+      {
+        "from": 89,
+        "to": 90,
+        "spell": "summon monster III"
+      },
+      {
+        "from": 91,
+        "to": 93,
+        "spell": "tongues"
+      },
+      {
+        "from": 94,
+        "to": 95,
+        "spell": "vampiric touch"
+      },
+      {
+        "from": 96,
+        "to": 98,
+        "spell": "water breathing"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "wind wall"
+      }
+    ],
+    "4": [
+      {
+        "from": 1,
+        "to": 2,
+        "spell": "animate dead"
+      },
+      {
+        "from": 3,
+        "to": 5,
+        "spell": "arcane eye"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "spell": "bestow curse"
+      },
+      {
+        "from": 8,
+        "to": 10,
+        "spell": "charm monster"
+      },
+      {
+        "from": 11,
+        "to": 13,
+        "spell": "confusion"
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "spell": "contagion"
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "spell": "crushing despair"
+      },
+      {
+        "from": 18,
+        "to": 18,
+        "spell": "cure critical wounds"
+      },
+      {
+        "from": 19,
+        "to": 19,
+        "spell": "detect scrying"
+      },
+      {
+        "from": 20,
+        "to": 23,
+        "spell": "dimension door"
+      },
+      {
+        "from": 24,
+        "to": 26,
+        "spell": "dimensional anchor"
+      },
+      {
+        "from": 27,
+        "to": 28,
+        "spell": "enervation"
+      },
+      {
+        "from": 29,
+        "to": 30,
+        "spell": "enlarge person, mass"
+      },
+      {
+        "from": 31,
+        "to": 32,
+        "spell": "black tentacles"
+      },
+      {
+        "from": 33,
+        "to": 34,
+        "spell": "fear"
+      },
+      {
+        "from": 35,
+        "to": 37,
+        "spell": "fire shield"
+      },
+      {
+        "from": 38,
+        "to": 39,
+        "spell": "fire trap"
+      },
+      {
+        "from": 40,
+        "to": 42,
+        "spell": "freedom of movement"
+      },
+      {
+        "from": 43,
+        "to": 43,
+        "spell": "geas, lesser"
+      },
+      {
+        "from": 44,
+        "to": 46,
+        "spell": "globe of invulnerability, lesser"
+      },
+      {
+        "from": 47,
+        "to": 48,
+        "spell": "hallucinatory terrain"
+      },
+      {
+        "from": 49,
+        "to": 50,
+        "spell": "ice storm"
+      },
+      {
+        "from": 51,
+        "to": 52,
+        "spell": "illusory wall"
+      },
+      {
+        "from": 53,
+        "to": 55,
+        "spell": "invisibility, greater"
+      },
+      {
+        "from": 56,
+        "to": 57,
+        "spell": "secure shelter"
+      },
+      {
+        "from": 58,
+        "to": 58,
+        "spell": "locate creature"
+      },
+      {
+        "from": 59,
+        "to": 60,
+        "spell": "minor creation"
+      },
+      {
+        "from": 61,
+        "to": 61,
+        "spell": "modify memory"
+      },
+      {
+        "from": 62,
+        "to": 62,
+        "spell": "neutralize poison"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "resilient sphere"
+      },
+      {
+        "from": 65,
+        "to": 66,
+        "spell": "phantasmal killer"
+      },
+      {
+        "from": 67,
+        "to": 68,
+        "spell": "polymorph"
+      },
+      {
+        "from": 69,
+        "to": 70,
+        "spell": "rainbow pattern"
+      },
+      {
+        "from": 71,
+        "to": 71,
+        "spell": "mnemonic enhancer"
+      },
+      {
+        "from": 72,
+        "to": 73,
+        "spell": "reduce person, mass"
+      },
+      {
+        "from": 74,
+        "to": 76,
+        "spell": "remove curse"
+      },
+      {
+        "from": 77,
+        "to": 77,
+        "spell": "repel vermin"
+      },
+      {
+        "from": 78,
+        "to": 79,
+        "spell": "scrying"
+      },
+      {
+        "from": 80,
+        "to": 81,
+        "spell": "shadow conjuration"
+      },
+      {
+        "from": 82,
+        "to": 83,
+        "spell": "shout"
+      },
+      {
+        "from": 84,
+        "to": 85,
+        "spell": "solid fog"
+      },
+      {
+        "from": 86,
+        "to": 86,
+        "spell": "speak with plants"
+      },
+      {
+        "from": 87,
+        "to": 88,
+        "spell": "stone shape"
+      },
+      {
+        "from": 89,
+        "to": 91,
+        "spell": "stoneskin"
+      },
+      {
+        "from": 92,
+        "to": 93,
+        "spell": "summon monster IV"
+      },
+      {
+        "from": 94,
+        "to": 96,
+        "spell": "wall of fire"
+      },
+      {
+        "from": 97,
+        "to": 99,
+        "spell": "wall of ice"
+      },
+      {
+        "from": 100,
+        "to": 100,
+        "spell": "zone of silence"
+      }
+    ],
+    "5": [
+      {
+        "from": 1,
+        "to": 2,
+        "spell": "animal growth"
+      },
+      {
+        "from": 3,
+        "to": 5,
+        "spell": "baleful polymorph"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "spell": "interposing hand"
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "spell": "blight"
+      },
+      {
+        "from": 10,
+        "to": 12,
+        "spell": "break enchantment"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "spell": "cloudkill"
+      },
+      {
+        "from": 15,
+        "to": 17,
+        "spell": "cone of cold"
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "spell": "contact other plane"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "spell": "cure light wounds, mass"
+      },
+      {
+        "from": 21,
+        "to": 23,
+        "spell": "dismissal"
+      },
+      {
+        "from": 24,
+        "to": 26,
+        "spell": "dispel magic, greater"
+      },
+      {
+        "from": 27,
+        "to": 28,
+        "spell": "dominate person"
+      },
+      {
+        "from": 29,
+        "to": 29,
+        "spell": "dream"
+      },
+      {
+        "from": 30,
+        "to": 31,
+        "spell": "fabricate"
+      },
+      {
+        "from": 32,
+        "to": 33,
+        "spell": "false vision"
+      },
+      {
+        "from": 34,
+        "to": 35,
+        "spell": "feeblemind"
+      },
+      {
+        "from": 36,
+        "to": 39,
+        "spell": "hold monster"
+      },
+      {
+        "from": 40,
+        "to": 40,
+        "spell": "secret chest"
+      },
+      {
+        "from": 41,
+        "to": 41,
+        "spell": "magic jar"
+      },
+      {
+        "from": 42,
+        "to": 43,
+        "spell": "major creation"
+      },
+      {
+        "from": 44,
+        "to": 45,
+        "spell": "mind fog"
+      },
+      {
+        "from": 46,
+        "to": 47,
+        "spell": "mirage arcana"
+      },
+      {
+        "from": 48,
+        "to": 49,
+        "spell": "mage's faithful hound"
+      },
+      {
+        "from": 50,
+        "to": 51,
+        "spell": "mage's private sanctum"
+      },
+      {
+        "from": 52,
+        "to": 53,
+        "spell": "nightmare"
+      },
+      {
+        "from": 54,
+        "to": 57,
+        "spell": "overland flight"
+      },
+      {
+        "from": 58,
+        "to": 60,
+        "spell": "passwall"
+      },
+      {
+        "from": 61,
+        "to": 61,
+        "spell": "permanency"
+      },
+      {
+        "from": 62,
+        "to": 63,
+        "spell": "persistent image"
+      },
+      {
+        "from": 64,
+        "to": 65,
+        "spell": "planar binding, lesser"
+      },
+      {
+        "from": 66,
+        "to": 67,
+        "spell": "prying eyes"
+      },
+      {
+        "from": 68,
+        "to": 69,
+        "spell": "telepathic bond"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "seeming"
+      },
+      {
+        "from": 72,
+        "to": 74,
+        "spell": "sending"
+      },
+      {
+        "from": 75,
+        "to": 76,
+        "spell": "shadow evocation"
+      },
+      {
+        "from": 77,
+        "to": 77,
+        "spell": "song of discord"
+      },
+      {
+        "from": 78,
+        "to": 79,
+        "spell": "summon monster V"
+      },
+      {
+        "from": 80,
+        "to": 80,
+        "spell": "symbol of pain"
+      },
+      {
+        "from": 81,
+        "to": 81,
+        "spell": "symbol of sleep"
+      },
+      {
+        "from": 82,
+        "to": 83,
+        "spell": "telekinesis"
+      },
+      {
+        "from": 84,
+        "to": 88,
+        "spell": "teleport"
+      },
+      {
+        "from": 89,
+        "to": 90,
+        "spell": "transmute mud to rock"
+      },
+      {
+        "from": 91,
+        "to": 92,
+        "spell": "transmute rock to mud"
+      },
+      {
+        "from": 93,
+        "to": 95,
+        "spell": "wall of force"
+      },
+      {
+        "from": 96,
+        "to": 98,
+        "spell": "wall of stone"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "waves of fatigue"
+      }
+    ],
+    "6": [
+      {
+        "from": 1,
+        "to": 2,
+        "spell": "acid fog"
+      },
+      {
+        "from": 3,
+        "to": 5,
+        "spell": "analyze dweomer"
+      },
+      {
+        "from": 6,
+        "to": 6,
+        "spell": "animate objects"
+      },
+      {
+        "from": 7,
+        "to": 9,
+        "spell": "antimagic field"
+      },
+      {
+        "from": 10,
+        "to": 12,
+        "spell": "bear's endurance, mass"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "spell": "forceful hand"
+      },
+      {
+        "from": 15,
+        "to": 17,
+        "spell": "bull's strength, mass"
+      },
+      {
+        "from": 18,
+        "to": 20,
+        "spell": "cat's grace, mass"
+      },
+      {
+        "from": 21,
+        "to": 23,
+        "spell": "chain lightning"
+      },
+      {
+        "from": 24,
+        "to": 25,
+        "spell": "circle of death"
+      },
+      {
+        "from": 26,
+        "to": 26,
+        "spell": "contingency"
+      },
+      {
+        "from": 27,
+        "to": 28,
+        "spell": "control water"
+      },
+      {
+        "from": 29,
+        "to": 29,
+        "spell": "create undead"
+      },
+      {
+        "from": 30,
+        "to": 30,
+        "spell": "cure moderate wounds, mass"
+      },
+      {
+        "from": 31,
+        "to": 33,
+        "spell": "disintegrate"
+      },
+      {
+        "from": 34,
+        "to": 37,
+        "spell": "dispel magic, greater"
+      },
+      {
+        "from": 38,
+        "to": 40,
+        "spell": "eagle's splendor, mass"
+      },
+      {
+        "from": 41,
+        "to": 42,
+        "spell": "eyebite"
+      },
+      {
+        "from": 43,
+        "to": 43,
+        "spell": "find the path"
+      },
+      {
+        "from": 44,
+        "to": 45,
+        "spell": "flesh to stone"
+      },
+      {
+        "from": 46,
+        "to": 48,
+        "spell": "fox's cunning, mass"
+      },
+      {
+        "from": 49,
+        "to": 49,
+        "spell": "geas/quest"
+      },
+      {
+        "from": 50,
+        "to": 52,
+        "spell": "globe of invulnerability"
+      },
+      {
+        "from": 53,
+        "to": 53,
+        "spell": "guards and wards"
+      },
+      {
+        "from": 54,
+        "to": 54,
+        "spell": "heroes' feast"
+      },
+      {
+        "from": 55,
+        "to": 56,
+        "spell": "heroism, greater"
+      },
+      {
+        "from": 57,
+        "to": 57,
+        "spell": "legend lore"
+      },
+      {
+        "from": 58,
+        "to": 59,
+        "spell": "mislead"
+      },
+      {
+        "from": 60,
+        "to": 60,
+        "spell": "mage's lucubration"
+      },
+      {
+        "from": 61,
+        "to": 62,
+        "spell": "move earth"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "freezing sphere"
+      },
+      {
+        "from": 65,
+        "to": 67,
+        "spell": "owl's wisdom, mass"
+      },
+      {
+        "from": 68,
+        "to": 69,
+        "spell": "permanent image"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "planar binding"
+      },
+      {
+        "from": 72,
+        "to": 73,
+        "spell": "programmed image"
+      },
+      {
+        "from": 74,
+        "to": 75,
+        "spell": "repulsion"
+      },
+      {
+        "from": 76,
+        "to": 78,
+        "spell": "shadow walk"
+      },
+      {
+        "from": 79,
+        "to": 81,
+        "spell": "stone to flesh"
+      },
+      {
+        "from": 82,
+        "to": 83,
+        "spell": "suggestion, mass"
+      },
+      {
+        "from": 84,
+        "to": 85,
+        "spell": "summon monster VI"
+      },
+      {
+        "from": 86,
+        "to": 86,
+        "spell": "symbol of fear"
+      },
+      {
+        "from": 87,
+        "to": 87,
+        "spell": "symbol of persuasion"
+      },
+      {
+        "from": 88,
+        "to": 88,
+        "spell": "sympathetic vibration"
+      },
+      {
+        "from": 89,
+        "to": 90,
+        "spell": "transformation"
+      },
+      {
+        "from": 91,
+        "to": 93,
+        "spell": "true seeing"
+      },
+      {
+        "from": 94,
+        "to": 95,
+        "spell": "undeath to death"
+      },
+      {
+        "from": 96,
+        "to": 97,
+        "spell": "veil"
+      },
+      {
+        "from": 98,
+        "to": 100,
+        "spell": "wall of iron"
+      }
+    ],
+    "7": [
+      {
+        "from": 1,
+        "to": 3,
+        "spell": "arcane sight, greater"
+      },
+      {
+        "from": 4,
+        "to": 7,
+        "spell": "banishment"
+      },
+      {
+        "from": 8,
+        "to": 10,
+        "spell": "grasping hand"
+      },
+      {
+        "from": 11,
+        "to": 13,
+        "spell": "control undead"
+      },
+      {
+        "from": 14,
+        "to": 16,
+        "spell": "control weather"
+      },
+      {
+        "from": 17,
+        "to": 19,
+        "spell": "delayed blast fireball"
+      },
+      {
+        "from": 20,
+        "to": 21,
+        "spell": "instant summons"
+      },
+      {
+        "from": 22,
+        "to": 25,
+        "spell": "ethereal jaunt"
+      },
+      {
+        "from": 26,
+        "to": 28,
+        "spell": "finger of death"
+      },
+      {
+        "from": 29,
+        "to": 31,
+        "spell": "forcecage"
+      },
+      {
+        "from": 32,
+        "to": 35,
+        "spell": "hold person, mass"
+      },
+      {
+        "from": 36,
+        "to": 38,
+        "spell": "insanity"
+      },
+      {
+        "from": 39,
+        "to": 42,
+        "spell": "invisibility, mass"
+      },
+      {
+        "from": 43,
+        "to": 43,
+        "spell": "limited wish"
+      },
+      {
+        "from": 44,
+        "to": 45,
+        "spell": "mage's magnificent mansion"
+      },
+      {
+        "from": 46,
+        "to": 48,
+        "spell": "mage's sword"
+      },
+      {
+        "from": 49,
+        "to": 51,
+        "spell": "phase door"
+      },
+      {
+        "from": 52,
+        "to": 54,
+        "spell": "plane shift"
+      },
+      {
+        "from": 55,
+        "to": 57,
+        "spell": "power word blind"
+      },
+      {
+        "from": 58,
+        "to": 61,
+        "spell": "prismatic spray"
+      },
+      {
+        "from": 62,
+        "to": 64,
+        "spell": "project image"
+      },
+      {
+        "from": 65,
+        "to": 67,
+        "spell": "reverse gravity"
+      },
+      {
+        "from": 68,
+        "to": 70,
+        "spell": "scrying, greater"
+      },
+      {
+        "from": 71,
+        "to": 73,
+        "spell": "sequester"
+      },
+      {
+        "from": 74,
+        "to": 76,
+        "spell": "shadow conjuration, greater"
+      },
+      {
+        "from": 77,
+        "to": 77,
+        "spell": "simulacrum"
+      },
+      {
+        "from": 78,
+        "to": 80,
+        "spell": "spell turning"
+      },
+      {
+        "from": 81,
+        "to": 82,
+        "spell": "statue"
+      },
+      {
+        "from": 83,
+        "to": 85,
+        "spell": "summon monster VII"
+      },
+      {
+        "from": 86,
+        "to": 86,
+        "spell": "symbol of stunning"
+      },
+      {
+        "from": 87,
+        "to": 87,
+        "spell": "symbol of weakness"
+      },
+      {
+        "from": 88,
+        "to": 90,
+        "spell": "teleport object"
+      },
+      {
+        "from": 91,
+        "to": 95,
+        "spell": "teleport, greater"
+      },
+      {
+        "from": 96,
+        "to": 97,
+        "spell": "vision"
+      },
+      {
+        "from": 98,
+        "to": 100,
+        "spell": "waves of exhaustion"
+      }
+    ],
+    "8": [
+      {
+        "from": 1,
+        "to": 2,
+        "spell": "antipathy"
+      },
+      {
+        "from": 3,
+        "to": 5,
+        "spell": "clenched fist"
+      },
+      {
+        "from": 6,
+        "to": 8,
+        "spell": "binding"
+      },
+      {
+        "from": 9,
+        "to": 12,
+        "spell": "charm monster, mass"
+      },
+      {
+        "from": 13,
+        "to": 13,
+        "spell": "clone"
+      },
+      {
+        "from": 14,
+        "to": 16,
+        "spell": "create greater undead"
+      },
+      {
+        "from": 17,
+        "to": 19,
+        "spell": "demand"
+      },
+      {
+        "from": 20,
+        "to": 22,
+        "spell": "dimensional lock"
+      },
+      {
+        "from": 23,
+        "to": 26,
+        "spell": "discern location"
+      },
+      {
+        "from": 27,
+        "to": 29,
+        "spell": "horrid wilting"
+      },
+      {
+        "from": 30,
+        "to": 32,
+        "spell": "incendiary cloud"
+      },
+      {
+        "from": 33,
+        "to": 35,
+        "spell": "iron body"
+      },
+      {
+        "from": 36,
+        "to": 38,
+        "spell": "maze"
+      },
+      {
+        "from": 39,
+        "to": 41,
+        "spell": "mind blank"
+      },
+      {
+        "from": 42,
+        "to": 44,
+        "spell": "moment of prescience"
+      },
+      {
+        "from": 45,
+        "to": 48,
+        "spell": "telekinetic sphere"
+      },
+      {
+        "from": 49,
+        "to": 51,
+        "spell": "irresistible dance"
+      },
+      {
+        "from": 52,
+        "to": 54,
+        "spell": "planar binding, greater"
+      },
+      {
+        "from": 55,
+        "to": 57,
+        "spell": "polar ray"
+      },
+      {
+        "from": 58,
+        "to": 60,
+        "spell": "polymorph any object"
+      },
+      {
+        "from": 61,
+        "to": 63,
+        "spell": "power word stun"
+      },
+      {
+        "from": 64,
+        "to": 66,
+        "spell": "prismatic wall"
+      },
+      {
+        "from": 67,
+        "to": 70,
+        "spell": "protection from spells"
+      },
+      {
+        "from": 71,
+        "to": 73,
+        "spell": "prying eyes, greater"
+      },
+      {
+        "from": 74,
+        "to": 76,
+        "spell": "scintillating pattern"
+      },
+      {
+        "from": 77,
+        "to": 78,
+        "spell": "screen"
+      },
+      {
+        "from": 79,
+        "to": 81,
+        "spell": "shadow evocation, greater"
+      },
+      {
+        "from": 82,
+        "to": 84,
+        "spell": "shout, greater"
+      },
+      {
+        "from": 85,
+        "to": 87,
+        "spell": "summon monster VIII"
+      },
+      {
+        "from": 88,
+        "to": 90,
+        "spell": "sunburst"
+      },
+      {
+        "from": 91,
+        "to": 91,
+        "spell": "symbol of death"
+      },
+      {
+        "from": 92,
+        "to": 92,
+        "spell": "symbol of insanity"
+      },
+      {
+        "from": 93,
+        "to": 94,
+        "spell": "sympathy"
+      },
+      {
+        "from": 95,
+        "to": 98,
+        "spell": "temporal stasis"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "trap the soul"
+      }
+    ],
+    "9": [
+      {
+        "from": 1,
+        "to": 3,
+        "spell": "astral projection"
+      },
+      {
+        "from": 4,
+        "to": 7,
+        "spell": "crushing hand"
+      },
+      {
+        "from": 8,
+        "to": 12,
+        "spell": "dominate monster"
+      },
+      {
+        "from": 13,
+        "to": 16,
+        "spell": "energy drain"
+      },
+      {
+        "from": 17,
+        "to": 21,
+        "spell": "etherealness"
+      },
+      {
+        "from": 22,
+        "to": 25,
+        "spell": "foresight"
+      },
+      {
+        "from": 26,
+        "to": 31,
+        "spell": "freedom"
+      },
+      {
+        "from": 32,
+        "to": 36,
+        "spell": "gate"
+      },
+      {
+        "from": 37,
+        "to": 40,
+        "spell": "hold monster, mass"
+      },
+      {
+        "from": 41,
+        "to": 44,
+        "spell": "imprisonment"
+      },
+      {
+        "from": 45,
+        "to": 49,
+        "spell": "meteor swarm"
+      },
+      {
+        "from": 50,
+        "to": 53,
+        "spell": "mage's disjunction"
+      },
+      {
+        "from": 54,
+        "to": 58,
+        "spell": "power word kill"
+      },
+      {
+        "from": 59,
+        "to": 62,
+        "spell": "prismatic sphere"
+      },
+      {
+        "from": 63,
+        "to": 66,
+        "spell": "refuge"
+      },
+      {
+        "from": 67,
+        "to": 70,
+        "spell": "shades"
+      },
+      {
+        "from": 71,
+        "to": 76,
+        "spell": "shapechange"
+      },
+      {
+        "from": 77,
+        "to": 79,
+        "spell": "soul bind"
+      },
+      {
+        "from": 80,
+        "to": 83,
+        "spell": "summon monster IX"
+      },
+      {
+        "from": 84,
+        "to": 86,
+        "spell": "teleportation circle"
+      },
+      {
+        "from": 87,
+        "to": 91,
+        "spell": "time stop"
+      },
+      {
+        "from": 92,
+        "to": 95,
+        "spell": "wail of the banshee"
+      },
+      {
+        "from": 96,
+        "to": 99,
+        "spell": "weird"
+      },
+      {
+        "from": 100,
+        "to": 100,
+        "spell": "wish"
+      }
+    ]
+  },
+  "divine": {
+    "0": [
+      {
+        "from": 1,
+        "to": 7,
+        "spell": "create water"
+      },
+      {
+        "from": 8,
+        "to": 14,
+        "spell": "cure minor wounds"
+      },
+      {
+        "from": 15,
+        "to": 22,
+        "spell": "detect magic"
+      },
+      {
+        "from": 23,
+        "to": 29,
+        "spell": "detect poison"
+      },
+      {
+        "from": 30,
+        "to": 36,
+        "spell": "flare"
+      },
+      {
+        "from": 37,
+        "to": 43,
+        "spell": "guidance"
+      },
+      {
+        "from": 44,
+        "to": 50,
+        "spell": "inflict minor wounds"
+      },
+      {
+        "from": 51,
+        "to": 57,
+        "spell": "know direction"
+      },
+      {
+        "from": 58,
+        "to": 65,
+        "spell": "light"
+      },
+      {
+        "from": 66,
+        "to": 72,
+        "spell": "mending"
+      },
+      {
+        "from": 73,
+        "to": 79,
+        "spell": "purify food and drink"
+      },
+      {
+        "from": 80,
+        "to": 86,
+        "spell": "read magic"
+      },
+      {
+        "from": 87,
+        "to": 93,
+        "spell": "resistance"
+      },
+      {
+        "from": 94,
+        "to": 100,
+        "spell": "virtue"
+      }
+    ],
+    "1": [
+      {
+        "from": 1,
+        "to": 1,
+        "spell": "alarm"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "spell": "bane"
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "spell": "bless"
+      },
+      {
+        "from": 7,
+        "to": 9,
+        "spell": "bless water"
+      },
+      {
+        "from": 10,
+        "to": 10,
+        "spell": "bless weapon"
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "spell": "calm animals"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "spell": "cause fear"
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "spell": "charm animal"
+      },
+      {
+        "from": 17,
+        "to": 19,
+        "spell": "command"
+      },
+      {
+        "from": 20,
+        "to": 21,
+        "spell": "comprehend languages"
+      },
+      {
+        "from": 22,
+        "to": 26,
+        "spell": "cure light wounds"
+      },
+      {
+        "from": 27,
+        "to": 28,
+        "spell": "curse water"
+      },
+      {
+        "from": 29,
+        "to": 30,
+        "spell": "deathwatch"
+      },
+      {
+        "from": 31,
+        "to": 32,
+        "spell": "detect animals or plants"
+      },
+      {
+        "from": 33,
+        "to": 35,
+        "spell": "detect chaos/ evil/ good/ law"
+      },
+      {
+        "from": 36,
+        "to": 37,
+        "spell": "detect snares and pits"
+      },
+      {
+        "from": 38,
+        "to": 39,
+        "spell": "detect undead"
+      },
+      {
+        "from": 40,
+        "to": 41,
+        "spell": "divine favor"
+      },
+      {
+        "from": 42,
+        "to": 43,
+        "spell": "doom"
+      },
+      {
+        "from": 44,
+        "to": 48,
+        "spell": "endure elements"
+      },
+      {
+        "from": 49,
+        "to": 50,
+        "spell": "entangle"
+      },
+      {
+        "from": 51,
+        "to": 52,
+        "spell": "entropic shield"
+      },
+      {
+        "from": 53,
+        "to": 54,
+        "spell": "faerie fire"
+      },
+      {
+        "from": 55,
+        "to": 56,
+        "spell": "goodberry"
+      },
+      {
+        "from": 57,
+        "to": 58,
+        "spell": "hide from animals"
+      },
+      {
+        "from": 59,
+        "to": 60,
+        "spell": "hide from undead"
+      },
+      {
+        "from": 61,
+        "to": 62,
+        "spell": "inflict light wounds"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "jump"
+      },
+      {
+        "from": 65,
+        "to": 66,
+        "spell": "longstrider"
+      },
+      {
+        "from": 67,
+        "to": 68,
+        "spell": "magic fang"
+      },
+      {
+        "from": 69,
+        "to": 72,
+        "spell": "magic stone"
+      },
+      {
+        "from": 73,
+        "to": 74,
+        "spell": "magic weapon"
+      },
+      {
+        "from": 75,
+        "to": 78,
+        "spell": "obscuring mist"
+      },
+      {
+        "from": 79,
+        "to": 80,
+        "spell": "pass without trace"
+      },
+      {
+        "from": 81,
+        "to": 82,
+        "spell": "produce flame"
+      },
+      {
+        "from": 83,
+        "to": 86,
+        "spell": "protection from chaos/ evil/ good/ law"
+      },
+      {
+        "from": 87,
+        "to": 88,
+        "spell": "remove fear"
+      },
+      {
+        "from": 89,
+        "to": 90,
+        "spell": "sanctuary"
+      },
+      {
+        "from": 91,
+        "to": 92,
+        "spell": "shield of faith"
+      },
+      {
+        "from": 93,
+        "to": 94,
+        "spell": "shillelagh"
+      },
+      {
+        "from": 95,
+        "to": 96,
+        "spell": "speak with animals"
+      },
+      {
+        "from": 97,
+        "to": 98,
+        "spell": "summon monster I"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "summon nature's ally I"
+      }
+    ],
+    "2": [
+      {
+        "from": 1,
+        "to": 1,
+        "spell": "animal messenger"
+      },
+      {
+        "from": 2,
+        "to": 2,
+        "spell": "animal trance"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "spell": "augury"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "spell": "barkskin"
+      },
+      {
+        "from": 7,
+        "to": 9,
+        "spell": "bear's endurance"
+      },
+      {
+        "from": 10,
+        "to": 12,
+        "spell": "bull's strength"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "spell": "calm emotions"
+      },
+      {
+        "from": 15,
+        "to": 17,
+        "spell": "cat's grace"
+      },
+      {
+        "from": 18,
+        "to": 18,
+        "spell": "chill metal"
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "spell": "consecrate"
+      },
+      {
+        "from": 21,
+        "to": 24,
+        "spell": "cure moderate wounds"
+      },
+      {
+        "from": 25,
+        "to": 26,
+        "spell": "darkness"
+      },
+      {
+        "from": 27,
+        "to": 27,
+        "spell": "death knell"
+      },
+      {
+        "from": 28,
+        "to": 30,
+        "spell": "delay poison"
+      },
+      {
+        "from": 31,
+        "to": 32,
+        "spell": "desecrate"
+      },
+      {
+        "from": 33,
+        "to": 35,
+        "spell": "eagle's splendor"
+      },
+      {
+        "from": 36,
+        "to": 37,
+        "spell": "enthrall"
+      },
+      {
+        "from": 38,
+        "to": 39,
+        "spell": "find traps"
+      },
+      {
+        "from": 40,
+        "to": 40,
+        "spell": "fire trap"
+      },
+      {
+        "from": 41,
+        "to": 42,
+        "spell": "flame blade"
+      },
+      {
+        "from": 43,
+        "to": 44,
+        "spell": "flaming sphere"
+      },
+      {
+        "from": 45,
+        "to": 46,
+        "spell": "fog cloud"
+      },
+      {
+        "from": 47,
+        "to": 47,
+        "spell": "gentle repose"
+      },
+      {
+        "from": 48,
+        "to": 48,
+        "spell": "gust of wind"
+      },
+      {
+        "from": 49,
+        "to": 49,
+        "spell": "heat metal"
+      },
+      {
+        "from": 50,
+        "to": 51,
+        "spell": "hold animal"
+      },
+      {
+        "from": 52,
+        "to": 54,
+        "spell": "hold person"
+      },
+      {
+        "from": 55,
+        "to": 56,
+        "spell": "inflict moderate wounds"
+      },
+      {
+        "from": 57,
+        "to": 58,
+        "spell": "make whole"
+      },
+      {
+        "from": 59,
+        "to": 61,
+        "spell": "owl's wisdom"
+      },
+      {
+        "from": 62,
+        "to": 62,
+        "spell": "reduce animal"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "remove paralysis"
+      },
+      {
+        "from": 65,
+        "to": 67,
+        "spell": "resist energy"
+      },
+      {
+        "from": 68,
+        "to": 70,
+        "spell": "restoration, lesser"
+      },
+      {
+        "from": 71,
+        "to": 72,
+        "spell": "shatter"
+      },
+      {
+        "from": 73,
+        "to": 74,
+        "spell": "shield other"
+      },
+      {
+        "from": 75,
+        "to": 76,
+        "spell": "silence"
+      },
+      {
+        "from": 77,
+        "to": 77,
+        "spell": "snare"
+      },
+      {
+        "from": 78,
+        "to": 78,
+        "spell": "soften earth and stone"
+      },
+      {
+        "from": 79,
+        "to": 80,
+        "spell": "sound burst"
+      },
+      {
+        "from": 81,
+        "to": 81,
+        "spell": "speak with plants"
+      },
+      {
+        "from": 82,
+        "to": 83,
+        "spell": "spider climb"
+      },
+      {
+        "from": 84,
+        "to": 85,
+        "spell": "spiritual weapon"
+      },
+      {
+        "from": 86,
+        "to": 86,
+        "spell": "status"
+      },
+      {
+        "from": 87,
+        "to": 88,
+        "spell": "summon monster II"
+      },
+      {
+        "from": 89,
+        "to": 90,
+        "spell": "summon nature's ally II"
+      },
+      {
+        "from": 91,
+        "to": 92,
+        "spell": "summon swarm"
+      },
+      {
+        "from": 93,
+        "to": 93,
+        "spell": "tree shape"
+      },
+      {
+        "from": 94,
+        "to": 95,
+        "spell": "undetectable alignment"
+      },
+      {
+        "from": 96,
+        "to": 97,
+        "spell": "warp wood"
+      },
+      {
+        "from": 98,
+        "to": 98,
+        "spell": "wood shape"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "zone of truth"
+      }
+    ],
+    "3": [
+      {
+        "from": 1,
+        "to": 2,
+        "spell": "animate dead"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "spell": "bestow curse"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "spell": "blindness/deafness"
+      },
+      {
+        "from": 7,
+        "to": 8,
+        "spell": "call lightning"
+      },
+      {
+        "from": 9,
+        "to": 10,
+        "spell": "contagion"
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "spell": "continual flame"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "spell": "create food and water"
+      },
+      {
+        "from": 15,
+        "to": 18,
+        "spell": "cure serious wounds"
+      },
+      {
+        "from": 19,
+        "to": 19,
+        "spell": "darkvision"
+      },
+      {
+        "from": 20,
+        "to": 21,
+        "spell": "daylight"
+      },
+      {
+        "from": 22,
+        "to": 23,
+        "spell": "deeper darkness"
+      },
+      {
+        "from": 24,
+        "to": 25,
+        "spell": "diminish plants"
+      },
+      {
+        "from": 26,
+        "to": 27,
+        "spell": "dispel magic"
+      },
+      {
+        "from": 28,
+        "to": 29,
+        "spell": "dominate animal"
+      },
+      {
+        "from": 30,
+        "to": 31,
+        "spell": "glyph of warding"
+      },
+      {
+        "from": 32,
+        "to": 32,
+        "spell": "heal mount"
+      },
+      {
+        "from": 33,
+        "to": 34,
+        "spell": "helping hand"
+      },
+      {
+        "from": 35,
+        "to": 36,
+        "spell": "inflict serious wounds"
+      },
+      {
+        "from": 37,
+        "to": 38,
+        "spell": "invisibility purge"
+      },
+      {
+        "from": 39,
+        "to": 40,
+        "spell": "locate object"
+      },
+      {
+        "from": 41,
+        "to": 46,
+        "spell": "magic circle against chaos/ evil/ good/ law"
+      },
+      {
+        "from": 47,
+        "to": 48,
+        "spell": "magic fang, greater"
+      },
+      {
+        "from": 49,
+        "to": 50,
+        "spell": "magic vestment"
+      },
+      {
+        "from": 51,
+        "to": 52,
+        "spell": "meld into stone"
+      },
+      {
+        "from": 53,
+        "to": 55,
+        "spell": "neutralize poison"
+      },
+      {
+        "from": 56,
+        "to": 57,
+        "spell": "obscure object"
+      },
+      {
+        "from": 58,
+        "to": 59,
+        "spell": "plant growth"
+      },
+      {
+        "from": 60,
+        "to": 62,
+        "spell": "prayer"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "protection from energy"
+      },
+      {
+        "from": 65,
+        "to": 66,
+        "spell": "quench"
+      },
+      {
+        "from": 67,
+        "to": 69,
+        "spell": "remove blindness/deafness"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "remove curse"
+      },
+      {
+        "from": 72,
+        "to": 73,
+        "spell": "remove disease"
+      },
+      {
+        "from": 74,
+        "to": 76,
+        "spell": "searing light"
+      },
+      {
+        "from": 77,
+        "to": 78,
+        "spell": "sleet storm"
+      },
+      {
+        "from": 79,
+        "to": 80,
+        "spell": "snare"
+      },
+      {
+        "from": 81,
+        "to": 83,
+        "spell": "speak with dead"
+      },
+      {
+        "from": 84,
+        "to": 85,
+        "spell": "speak with plants"
+      },
+      {
+        "from": 86,
+        "to": 87,
+        "spell": "spike growth"
+      },
+      {
+        "from": 88,
+        "to": 89,
+        "spell": "stone shape"
+      },
+      {
+        "from": 90,
+        "to": 91,
+        "spell": "summon monster III"
+      },
+      {
+        "from": 92,
+        "to": 93,
+        "spell": "summon nature's ally III"
+      },
+      {
+        "from": 94,
+        "to": 96,
+        "spell": "water breathing"
+      },
+      {
+        "from": 97,
+        "to": 98,
+        "spell": "water walk"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "wind wall"
+      }
+    ],
+    "4": [
+      {
+        "from": 1,
+        "to": 5,
+        "spell": "air walk"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "spell": "antiplant shell"
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "spell": "blight"
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "spell": "break enchantment"
+      },
+      {
+        "from": 12,
+        "to": 13,
+        "spell": "command plants"
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "spell": "control water"
+      },
+      {
+        "from": 16,
+        "to": 21,
+        "spell": "cure critical wounds"
+      },
+      {
+        "from": 22,
+        "to": 26,
+        "spell": "death ward"
+      },
+      {
+        "from": 27,
+        "to": 31,
+        "spell": "dimensional anchor"
+      },
+      {
+        "from": 32,
+        "to": 34,
+        "spell": "discern lies"
+      },
+      {
+        "from": 35,
+        "to": 37,
+        "spell": "dismissal"
+      },
+      {
+        "from": 38,
+        "to": 39,
+        "spell": "divination"
+      },
+      {
+        "from": 40,
+        "to": 42,
+        "spell": "divine power"
+      },
+      {
+        "from": 43,
+        "to": 47,
+        "spell": "freedom of movement"
+      },
+      {
+        "from": 48,
+        "to": 49,
+        "spell": "giant vermin"
+      },
+      {
+        "from": 50,
+        "to": 51,
+        "spell": "holy sword"
+      },
+      {
+        "from": 52,
+        "to": 54,
+        "spell": "imbue with spell ability"
+      },
+      {
+        "from": 55,
+        "to": 57,
+        "spell": "inflict critical wounds"
+      },
+      {
+        "from": 58,
+        "to": 60,
+        "spell": "magic weapon, greater"
+      },
+      {
+        "from": 61,
+        "to": 62,
+        "spell": "nondetection"
+      },
+      {
+        "from": 63,
+        "to": 64,
+        "spell": "planar ally, lesser"
+      },
+      {
+        "from": 65,
+        "to": 67,
+        "spell": "poison"
+      },
+      {
+        "from": 68,
+        "to": 69,
+        "spell": "reincarnate"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "repel vermin"
+      },
+      {
+        "from": 72,
+        "to": 76,
+        "spell": "restoration"
+      },
+      {
+        "from": 77,
+        "to": 78,
+        "spell": "rusting grasp"
+      },
+      {
+        "from": 79,
+        "to": 81,
+        "spell": "sending"
+      },
+      {
+        "from": 82,
+        "to": 85,
+        "spell": "spell immunity"
+      },
+      {
+        "from": 86,
+        "to": 87,
+        "spell": "spike stones"
+      },
+      {
+        "from": 88,
+        "to": 90,
+        "spell": "summon monster IV"
+      },
+      {
+        "from": 91,
+        "to": 93,
+        "spell": "summon nature's ally IV"
+      },
+      {
+        "from": 94,
+        "to": 98,
+        "spell": "tongues"
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "spell": "tree stride"
+      }
+    ],
+    "5": [
+      {
+        "from": 1,
+        "to": 3,
+        "spell": "animal growth"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "spell": "atonement"
+      },
+      {
+        "from": 6,
+        "to": 6,
+        "spell": "awaken"
+      },
+      {
+        "from": 7,
+        "to": 9,
+        "spell": "baleful polymorph"
+      },
+      {
+        "from": 10,
+        "to": 13,
+        "spell": "break enchantment"
+      },
+      {
+        "from": 14,
+        "to": 16,
+        "spell": "call lightning storm"
+      },
+      {
+        "from": 17,
+        "to": 20,
+        "spell": "command, greater"
+      },
+      {
+        "from": 21,
+        "to": 21,
+        "spell": "commune"
+      },
+      {
+        "from": 22,
+        "to": 22,
+        "spell": "commune with nature"
+      },
+      {
+        "from": 23,
+        "to": 24,
+        "spell": "control winds"
+      },
+      {
+        "from": 25,
+        "to": 30,
+        "spell": "cure light wounds, mass"
+      },
+      {
+        "from": 31,
+        "to": 34,
+        "spell": "dispel chaos/ evil/ good/ law"
+      },
+      {
+        "from": 35,
+        "to": 38,
+        "spell": "disrupting weapon"
+      },
+      {
+        "from": 39,
+        "to": 41,
+        "spell": "flame strike"
+      },
+      {
+        "from": 42,
+        "to": 43,
+        "spell": "hallow"
+      },
+      {
+        "from": 44,
+        "to": 46,
+        "spell": "ice storm"
+      },
+      {
+        "from": 47,
+        "to": 49,
+        "spell": "inflict light wounds, mass"
+      },
+      {
+        "from": 50,
+        "to": 52,
+        "spell": "insect plague"
+      },
+      {
+        "from": 53,
+        "to": 53,
+        "spell": "mark of justice"
+      },
+      {
+        "from": 54,
+        "to": 56,
+        "spell": "plane shift"
+      },
+      {
+        "from": 57,
+        "to": 58,
+        "spell": "raise dead"
+      },
+      {
+        "from": 59,
+        "to": 61,
+        "spell": "righteous might"
+      },
+      {
+        "from": 62,
+        "to": 63,
+        "spell": "scrying"
+      },
+      {
+        "from": 64,
+        "to": 66,
+        "spell": "slay living"
+      },
+      {
+        "from": 67,
+        "to": 69,
+        "spell": "spell resistance"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "stoneskin"
+      },
+      {
+        "from": 72,
+        "to": 74,
+        "spell": "summon monster V"
+      },
+      {
+        "from": 75,
+        "to": 77,
+        "spell": "summon nature's ally V"
+      },
+      {
+        "from": 78,
+        "to": 78,
+        "spell": "symbol of pain"
+      },
+      {
+        "from": 79,
+        "to": 79,
+        "spell": "symbol of sleep"
+      },
+      {
+        "from": 80,
+        "to": 82,
+        "spell": "transmute mud to rock"
+      },
+      {
+        "from": 83,
+        "to": 85,
+        "spell": "transmute rock to mud"
+      },
+      {
+        "from": 86,
+        "to": 89,
+        "spell": "true seeing"
+      },
+      {
+        "from": 90,
+        "to": 91,
+        "spell": "unhallow"
+      },
+      {
+        "from": 92,
+        "to": 94,
+        "spell": "wall of fire"
+      },
+      {
+        "from": 95,
+        "to": 97,
+        "spell": "wall of stone"
+      },
+      {
+        "from": 98,
+        "to": 100,
+        "spell": "wall of thorns"
+      }
+    ],
+    "6": [
+      {
+        "from": 1,
+        "to": 3,
+        "spell": "animate objects"
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "spell": "antilife shell"
+      },
+      {
+        "from": 7,
+        "to": 9,
+        "spell": "banishment"
+      },
+      {
+        "from": 10,
+        "to": 13,
+        "spell": "bear's endurance, mass"
+      },
+      {
+        "from": 14,
+        "to": 16,
+        "spell": "blade barrier"
+      },
+      {
+        "from": 17,
+        "to": 20,
+        "spell": "bull's strength, mass"
+      },
+      {
+        "from": 21,
+        "to": 24,
+        "spell": "cat's grace, mass"
+      },
+      {
+        "from": 25,
+        "to": 25,
+        "spell": "create undead"
+      },
+      {
+        "from": 26,
+        "to": 29,
+        "spell": "cure moderate wounds, mass"
+      },
+      {
+        "from": 30,
+        "to": 33,
+        "spell": "dispel magic, greater"
+      },
+      {
+        "from": 34,
+        "to": 37,
+        "spell": "eagle's splendor, mass"
+      },
+      {
+        "from": 38,
+        "to": 40,
+        "spell": "find the path"
+      },
+      {
+        "from": 41,
+        "to": 43,
+        "spell": "fire seeds"
+      },
+      {
+        "from": 44,
+        "to": 44,
+        "spell": "forbiddance"
+      },
+      {
+        "from": 45,
+        "to": 45,
+        "spell": "geas/quest"
+      },
+      {
+        "from": 46,
+        "to": 46,
+        "spell": "glyph of warding, greater"
+      },
+      {
+        "from": 47,
+        "to": 49,
+        "spell": "harm"
+      },
+      {
+        "from": 50,
+        "to": 52,
+        "spell": "heal"
+      },
+      {
+        "from": 53,
+        "to": 55,
+        "spell": "heroes' feast"
+      },
+      {
+        "from": 56,
+        "to": 58,
+        "spell": "inflict moderate wounds, mass"
+      },
+      {
+        "from": 59,
+        "to": 61,
+        "spell": "ironwood"
+      },
+      {
+        "from": 62,
+        "to": 62,
+        "spell": "liveoak"
+      },
+      {
+        "from": 63,
+        "to": 65,
+        "spell": "move earth"
+      },
+      {
+        "from": 66,
+        "to": 69,
+        "spell": "owl's wisdom, mass"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "planar ally"
+      },
+      {
+        "from": 72,
+        "to": 74,
+        "spell": "repel wood"
+      },
+      {
+        "from": 75,
+        "to": 77,
+        "spell": "spellstaff"
+      },
+      {
+        "from": 78,
+        "to": 80,
+        "spell": "stone tell"
+      },
+      {
+        "from": 81,
+        "to": 83,
+        "spell": "summon monster VI"
+      },
+      {
+        "from": 84,
+        "to": 86,
+        "spell": "summon nature's ally VI"
+      },
+      {
+        "from": 87,
+        "to": 87,
+        "spell": "symbol of fear"
+      },
+      {
+        "from": 88,
+        "to": 88,
+        "spell": "symbol of persuasion"
+      },
+      {
+        "from": 89,
+        "to": 91,
+        "spell": "transport via plants"
+      },
+      {
+        "from": 92,
+        "to": 94,
+        "spell": "undeath to death"
+      },
+      {
+        "from": 95,
+        "to": 97,
+        "spell": "wind walk"
+      },
+      {
+        "from": 98,
+        "to": 100,
+        "spell": "word of recall"
+      }
+    ],
+    "7": [
+      {
+        "from": 1,
+        "to": 5,
+        "spell": "animate plants"
+      },
+      {
+        "from": 6,
+        "to": 9,
+        "spell": "blasphemy"
+      },
+      {
+        "from": 10,
+        "to": 14,
+        "spell": "changestaff"
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "spell": "control weather"
+      },
+      {
+        "from": 17,
+        "to": 21,
+        "spell": "creeping doom"
+      },
+      {
+        "from": 22,
+        "to": 27,
+        "spell": "cure serious wounds, mass"
+      },
+      {
+        "from": 28,
+        "to": 32,
+        "spell": "destruction"
+      },
+      {
+        "from": 33,
+        "to": 36,
+        "spell": "dictum"
+      },
+      {
+        "from": 37,
+        "to": 41,
+        "spell": "ethereal jaunt"
+      },
+      {
+        "from": 42,
+        "to": 45,
+        "spell": "holy word"
+      },
+      {
+        "from": 46,
+        "to": 50,
+        "spell": "inflict serious wounds, mass"
+      },
+      {
+        "from": 51,
+        "to": 55,
+        "spell": "refuge"
+      },
+      {
+        "from": 56,
+        "to": 60,
+        "spell": "regenerate"
+      },
+      {
+        "from": 61,
+        "to": 65,
+        "spell": "repulsion"
+      },
+      {
+        "from": 66,
+        "to": 69,
+        "spell": "restoration, greater"
+      },
+      {
+        "from": 70,
+        "to": 71,
+        "spell": "resurrection"
+      },
+      {
+        "from": 72,
+        "to": 76,
+        "spell": "scrying, greater"
+      },
+      {
+        "from": 77,
+        "to": 81,
+        "spell": "summon monster VII"
+      },
+      {
+        "from": 82,
+        "to": 85,
+        "spell": "summon nature's ally VII"
+      },
+      {
+        "from": 86,
+        "to": 90,
+        "spell": "sunbeam"
+      },
+      {
+        "from": 91,
+        "to": 91,
+        "spell": "symbol of stunning"
+      },
+      {
+        "from": 92,
+        "to": 92,
+        "spell": "symbol of weakness"
+      },
+      {
+        "from": 93,
+        "to": 97,
+        "spell": "transmute metal to wood"
+      },
+      {
+        "from": 98,
+        "to": 100,
+        "spell": "word of chaos"
+      }
+    ],
+    "8": [
+      {
+        "from": 1,
+        "to": 4,
+        "spell": "animal shapes"
+      },
+      {
+        "from": 5,
+        "to": 10,
+        "spell": "antimagic field"
+      },
+      {
+        "from": 11,
+        "to": 13,
+        "spell": "cloak of chaos"
+      },
+      {
+        "from": 14,
+        "to": 17,
+        "spell": "control plants"
+      },
+      {
+        "from": 18,
+        "to": 20,
+        "spell": "create greater undead"
+      },
+      {
+        "from": 21,
+        "to": 27,
+        "spell": "cure critical wounds, mass"
+      },
+      {
+        "from": 28,
+        "to": 32,
+        "spell": "dimensional lock"
+      },
+      {
+        "from": 33,
+        "to": 36,
+        "spell": "discern location"
+      },
+      {
+        "from": 37,
+        "to": 41,
+        "spell": "earthquake"
+      },
+      {
+        "from": 42,
+        "to": 45,
+        "spell": "finger of death"
+      },
+      {
+        "from": 46,
+        "to": 49,
+        "spell": "fire storm"
+      },
+      {
+        "from": 50,
+        "to": 52,
+        "spell": "holy aura"
+      },
+      {
+        "from": 53,
+        "to": 56,
+        "spell": "inflict critical wounds, mass"
+      },
+      {
+        "from": 57,
+        "to": 60,
+        "spell": "planar ally, greater"
+      },
+      {
+        "from": 61,
+        "to": 65,
+        "spell": "repel metal or stone"
+      },
+      {
+        "from": 66,
+        "to": 69,
+        "spell": "reverse gravity"
+      },
+      {
+        "from": 70,
+        "to": 72,
+        "spell": "shield of law"
+      },
+      {
+        "from": 73,
+        "to": 76,
+        "spell": "spell immunity, greater"
+      },
+      {
+        "from": 77,
+        "to": 80,
+        "spell": "summon monster VIII"
+      },
+      {
+        "from": 81,
+        "to": 84,
+        "spell": "summon nature's ally VIII"
+      },
+      {
+        "from": 85,
+        "to": 89,
+        "spell": "sunburst"
+      },
+      {
+        "from": 90,
+        "to": 91,
+        "spell": "symbol of death"
+      },
+      {
+        "from": 92,
+        "to": 93,
+        "spell": "symbol of insanity"
+      },
+      {
+        "from": 94,
+        "to": 96,
+        "spell": "unholy aura"
+      },
+      {
+        "from": 97,
+        "to": 100,
+        "spell": "whirlwind"
+      }
+    ],
+    "9": [
+      {
+        "from": 1,
+        "to": 4,
+        "spell": "antipathy"
+      },
+      {
+        "from": 5,
+        "to": 7,
+        "spell": "astral projection"
+      },
+      {
+        "from": 8,
+        "to": 13,
+        "spell": "elemental swarm"
+      },
+      {
+        "from": 14,
+        "to": 19,
+        "spell": "energy drain"
+      },
+      {
+        "from": 20,
+        "to": 25,
+        "spell": "etherealness"
+      },
+      {
+        "from": 26,
+        "to": 31,
+        "spell": "foresight"
+      },
+      {
+        "from": 32,
+        "to": 37,
+        "spell": "gate"
+      },
+      {
+        "from": 38,
+        "to": 46,
+        "spell": "heal, mass"
+      },
+      {
+        "from": 47,
+        "to": 53,
+        "spell": "implosion"
+      },
+      {
+        "from": 54,
+        "to": 55,
+        "spell": "miracle"
+      },
+      {
+        "from": 56,
+        "to": 61,
+        "spell": "regenerate"
+      },
+      {
+        "from": 62,
+        "to": 66,
+        "spell": "shambler"
+      },
+      {
+        "from": 67,
+        "to": 72,
+        "spell": "shapechange"
+      },
+      {
+        "from": 73,
+        "to": 77,
+        "spell": "soul bind"
+      },
+      {
+        "from": 78,
+        "to": 83,
+        "spell": "storm of vengeance"
+      },
+      {
+        "from": 84,
+        "to": 89,
+        "spell": "summon monster IX"
+      },
+      {
+        "from": 90,
+        "to": 95,
+        "spell": "summon nature's ally IX"
+      },
+      {
+        "from": 96,
+        "to": 99,
+        "spell": "sympathy"
+      },
+      {
+        "from": 100,
+        "to": 100,
+        "spell": "true resurrection"
+      }
+    ]
+  }
+}

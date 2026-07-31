@@ -1,0 +1,420 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        10
+      ],
+      "medium": [
+        1,
+        6
+      ],
+      "major": [
+        1,
+        3
+      ],
+      "label": "Bane",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        11,
+        17
+      ],
+      "medium": [
+        7,
+        12
+      ],
+      "major": null,
+      "label": "Defending",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        18,
+        27
+      ],
+      "medium": [
+        13,
+        19
+      ],
+      "major": [
+        4,
+        6
+      ],
+      "label": "Flaming",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        28,
+        37
+      ],
+      "medium": [
+        20,
+        26
+      ],
+      "major": [
+        7,
+        9
+      ],
+      "label": "Frost",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        38,
+        47
+      ],
+      "medium": [
+        27,
+        33
+      ],
+      "major": [
+        10,
+        12
+      ],
+      "label": "Shock",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        48,
+        56
+      ],
+      "medium": [
+        34,
+        38
+      ],
+      "major": [
+        13,
+        15
+      ],
+      "label": "Ghost touch",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        57,
+        67
+      ],
+      "medium": [
+        39,
+        44
+      ],
+      "major": null,
+      "label": "Keen2",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        68,
+        71
+      ],
+      "medium": [
+        45,
+        48
+      ],
+      "major": [
+        16,
+        19
+      ],
+      "label": "Ki Focus",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        72,
+        75
+      ],
+      "medium": [
+        49,
+        50
+      ],
+      "major": null,
+      "label": "Merciful",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        76,
+        82
+      ],
+      "medium": [
+        51,
+        54
+      ],
+      "major": [
+        20,
+        21
+      ],
+      "label": "Mighty cleaving",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        83,
+        87
+      ],
+      "medium": [
+        55,
+        59
+      ],
+      "major": [
+        22,
+        24
+      ],
+      "label": "Spell storing",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        88,
+        91
+      ],
+      "medium": [
+        60,
+        63
+      ],
+      "major": [
+        25,
+        28
+      ],
+      "label": "Throwing",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        92,
+        95
+      ],
+      "medium": [
+        64,
+        65
+      ],
+      "major": [
+        29,
+        32
+      ],
+      "label": "Thundering",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        96,
+        99
+      ],
+      "medium": [
+        66,
+        69
+      ],
+      "major": [
+        33,
+        36
+      ],
+      "label": "Vicious",
+      "price": "+1 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        70,
+        72
+      ],
+      "major": [
+        37,
+        41
+      ],
+      "label": "Anarchic",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        73,
+        75
+      ],
+      "major": [
+        42,
+        46
+      ],
+      "label": "Axiomatic",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        76,
+        78
+      ],
+      "major": [
+        47,
+        49
+      ],
+      "label": "Disruption3",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        79,
+        81
+      ],
+      "major": [
+        50,
+        54
+      ],
+      "label": "Flaming burst",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        82,
+        84
+      ],
+      "major": [
+        55,
+        59
+      ],
+      "label": "Icy burst",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        85,
+        87
+      ],
+      "major": [
+        60,
+        64
+      ],
+      "label": "Holy",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        88,
+        90
+      ],
+      "major": [
+        65,
+        69
+      ],
+      "label": "Shocking burst",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        91,
+        93
+      ],
+      "major": [
+        70,
+        74
+      ],
+      "label": "Unholy",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        94,
+        95
+      ],
+      "major": [
+        75,
+        78
+      ],
+      "label": "Wounding",
+      "price": "+2 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        79,
+        83
+      ],
+      "label": "Speed",
+      "price": "+3 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        84,
+        86
+      ],
+      "label": "Brilliant energy",
+      "price": "+4 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        87,
+        88
+      ],
+      "label": "Dancing",
+      "price": "+4 bonus",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        89,
+        90
+      ],
+      "label": "Vorpal2",
+      "price": "+5 bonus",
+      "action": "item"
+    },
+    {
+      "minor": [
+        100,
+        100
+      ],
+      "medium": [
+        96,
+        100
+      ],
+      "major": [
+        91,
+        100
+      ],
+      "label": "Roll again twice4",
+      "price": "-",
+      "action": "roll_twice"
+    }
+  ]
+}

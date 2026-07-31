@@ -1,0 +1,146 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        70
+      ],
+      "medium": [
+        1,
+        10
+      ],
+      "major": null,
+      "label": "+1",
+      "price": "2,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        71,
+        85
+      ],
+      "medium": [
+        11,
+        29
+      ],
+      "major": null,
+      "label": "+2",
+      "price": "8,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        30,
+        58
+      ],
+      "major": [
+        1,
+        20
+      ],
+      "label": "+3",
+      "price": "18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        59,
+        62
+      ],
+      "major": [
+        21,
+        38
+      ],
+      "label": "+4",
+      "price": "32,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        39,
+        49
+      ],
+      "label": "+5",
+      "price": "50,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+62",
+      "price": "72,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+72",
+      "price": "98,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+82",
+      "price": "128,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+92",
+      "price": "162,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "+102",
+      "price": "200,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        86,
+        90
+      ],
+      "medium": [
+        63,
+        68
+      ],
+      "major": [
+        50,
+        63
+      ],
+      "label": "Specific weapon3",
+      "price": "-",
+      "action": "subtable",
+      "target": "magic_specific_weapons"
+    },
+    {
+      "minor": [
+        91,
+        100
+      ],
+      "medium": [
+        69,
+        100
+      ],
+      "major": [
+        64,
+        100
+      ],
+      "label": "Special ability and roll again4",
+      "price": "-",
+      "action": "roll_again"
+    }
+  ]
+}

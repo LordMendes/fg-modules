@@ -1,0 +1,267 @@
+{
+  "rows": [
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "---",
+      "price": "---",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        1,
+        15
+      ],
+      "major": [
+        1,
+        3
+      ],
+      "label": "Charming",
+      "price": "16,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        16,
+        30
+      ],
+      "major": [
+        4,
+        9
+      ],
+      "label": "Fire",
+      "price": "17,750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        31,
+        40
+      ],
+      "major": [
+        10,
+        11
+      ],
+      "label": "Swarming insects",
+      "price": "24,750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        41,
+        60
+      ],
+      "major": [
+        12,
+        17
+      ],
+      "label": "Healing",
+      "price": "27,750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        61,
+        75
+      ],
+      "major": [
+        18,
+        19
+      ],
+      "label": "Size alteration",
+      "price": "29,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        76,
+        90
+      ],
+      "major": [
+        20,
+        24
+      ],
+      "label": "Illumination",
+      "price": "48,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        91,
+        95
+      ],
+      "major": [
+        25,
+        31
+      ],
+      "label": "Frost",
+      "price": "56,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        100
+      ],
+      "major": [
+        32,
+        38
+      ],
+      "label": "Defense",
+      "price": "58,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        39,
+        43
+      ],
+      "label": "Abjuration",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        44,
+        48
+      ],
+      "label": "Conjuration",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        49,
+        53
+      ],
+      "label": "Enchantment",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        54,
+        58
+      ],
+      "label": "Evocation",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        59,
+        63
+      ],
+      "label": "Illusion",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        64,
+        68
+      ],
+      "label": "Necromancy",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        69,
+        73
+      ],
+      "label": "Transmutation",
+      "price": "65,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        74,
+        77
+      ],
+      "label": "Divination",
+      "price": "73,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        78,
+        82
+      ],
+      "label": "Earth and stone",
+      "price": "80,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        83,
+        87
+      ],
+      "label": "Woodlands",
+      "price": "101,250 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        88,
+        92
+      ],
+      "label": "Life",
+      "price": "155,750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        93,
+        97
+      ],
+      "label": "Passage",
+      "price": "170,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        98,
+        100
+      ],
+      "label": "Power",
+      "price": "211,000 gp",
+      "action": "item"
+    }
+  ]
+}

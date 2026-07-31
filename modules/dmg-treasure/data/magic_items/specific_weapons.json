@@ -1,0 +1,420 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        15
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Sleep arrow",
+      "price": "132 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        16,
+        25
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Screaming bolt",
+      "price": "267 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        26,
+        45
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Silver dagger, masterwork",
+      "price": "322 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        46,
+        65
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Cold iron longsword, masterwork",
+      "price": "330 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        66,
+        75
+      ],
+      "medium": [
+        1,
+        9
+      ],
+      "major": null,
+      "label": "Javelin of lightning",
+      "price": "1,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        76,
+        80
+      ],
+      "medium": [
+        10,
+        15
+      ],
+      "major": null,
+      "label": "Slaying arrow",
+      "price": "2,282 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        81,
+        90
+      ],
+      "medium": [
+        16,
+        24
+      ],
+      "major": null,
+      "label": "Adamantine dagger",
+      "price": "3,002 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        91,
+        100
+      ],
+      "medium": [
+        25,
+        33
+      ],
+      "major": null,
+      "label": "Adamantine battleaxe",
+      "price": "3,010 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        34,
+        37
+      ],
+      "major": null,
+      "label": "Slaying arrow (greater)",
+      "price": "4,057 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        38,
+        40
+      ],
+      "major": null,
+      "label": "Shatterspike",
+      "price": "4,315 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        41,
+        46
+      ],
+      "major": null,
+      "label": "Dagger of venom",
+      "price": "8,302 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        47,
+        51
+      ],
+      "major": null,
+      "label": "Trident of warning",
+      "price": "10,115 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        52,
+        57
+      ],
+      "major": [
+        1,
+        4
+      ],
+      "label": "Assassin's dagger",
+      "price": "10,302 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        58,
+        62
+      ],
+      "major": [
+        5,
+        7
+      ],
+      "label": "Shifter's sorrow",
+      "price": "12,780 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        63,
+        66
+      ],
+      "major": [
+        8,
+        9
+      ],
+      "label": "Trident of fish command",
+      "price": "18,650 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        67,
+        74
+      ],
+      "major": [
+        10,
+        13
+      ],
+      "label": "Flame tongue",
+      "price": "20,715 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        75,
+        79
+      ],
+      "major": [
+        14,
+        17
+      ],
+      "label": "Luck blade (0 wishes)",
+      "price": "22,060 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        80,
+        86
+      ],
+      "major": [
+        18,
+        24
+      ],
+      "label": "Sword of subtlety",
+      "price": "22,310 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        87,
+        91
+      ],
+      "major": [
+        25,
+        31
+      ],
+      "label": "Sword of the planes",
+      "price": "22,315 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        92,
+        95
+      ],
+      "major": [
+        32,
+        37
+      ],
+      "label": "Nine lives stealer",
+      "price": "23,057 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        98
+      ],
+      "major": [
+        38,
+        42
+      ],
+      "label": "Sword of life stealing",
+      "price": "25,715 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        99,
+        100
+      ],
+      "major": [
+        43,
+        46
+      ],
+      "label": "oathbow",
+      "price": "25,600 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        47,
+        51
+      ],
+      "label": "Mace of terror",
+      "price": "38,552 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        52,
+        57
+      ],
+      "label": "Life-drinker",
+      "price": "40,320 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        58,
+        62
+      ],
+      "label": "Sylvan scimitar",
+      "price": "47,315 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        63,
+        67
+      ],
+      "label": "Rapier of puncturing",
+      "price": "50,320 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        68,
+        73
+      ],
+      "label": "Sun blade",
+      "price": "50,335 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        74,
+        79
+      ],
+      "label": "Frost brand",
+      "price": "54,475 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        80,
+        84
+      ],
+      "label": "Dwarven thrower",
+      "price": "60,312 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        85,
+        91
+      ],
+      "label": "Luck blade (1 wish)",
+      "price": "62,360 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        92,
+        95
+      ],
+      "label": "Mace of smiting",
+      "price": "75,312 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        96,
+        97
+      ],
+      "label": "Luck blade (2 wishes)",
+      "price": "102,660 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        98,
+        99
+      ],
+      "label": "Holy avenger",
+      "price": "120,630 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        100,
+        100
+      ],
+      "label": "Luck blade (3 wishes)",
+      "price": "142,960 gp",
+      "action": "item"
+    }
+  ]
+}
