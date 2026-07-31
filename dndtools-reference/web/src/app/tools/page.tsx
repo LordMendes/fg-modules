@@ -37,7 +37,12 @@ export default function ToolsPage() {
         {TOOLS.map((tool) => (
           <Link key={tool.key} href={tool.href} className="category-card">
             <div className="icon">{tool.icon}</div>
-            <h3>{tool.label}</h3>
+            <h3>
+              {tool.label}
+              {"badge" in tool && tool.badge ? (
+                <span className="tool-badge">{tool.badge}</span>
+              ) : null}
+            </h3>
             <span className="count">{tool.source}</span>
             <p className="tool-card-desc">{tool.description}</p>
           </Link>

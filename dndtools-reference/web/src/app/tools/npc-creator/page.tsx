@@ -2,6 +2,7 @@ import Link from "next/link";
 import { NpcCreator } from "@/components/tools/npc-creator";
 import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getTool } from "@/lib/tools";
 
 export const metadata = buildPageMetadata({
   title: "NPC Creator",
@@ -11,6 +12,8 @@ export const metadata = buildPageMetadata({
 });
 
 export default function NpcCreatorPage() {
+  const tool = getTool("npc-creator");
+
   return (
     <>
       <JsonLd
@@ -32,7 +35,12 @@ export default function NpcCreatorPage() {
       </nav>
 
       <div className="page-header">
-        <h1>NPC Creator</h1>
+        <h1>
+          {tool?.label ?? "NPC Creator"}
+          {tool && "badge" in tool && tool.badge ? (
+            <span className="tool-badge">{tool.badge}</span>
+          ) : null}
+        </h1>
         <p>
           Create D&amp;D 3.5 NPC stat blocks for Fantasy Grounds: stack
           level-free archetypes with class-level and monster templates (resolve

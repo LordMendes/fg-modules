@@ -43,6 +43,7 @@ export const TOOLS = [
     description:
       "Build D&D 3.5 NPCs with archetypes and monster templates, preview a Fantasy Grounds–style sheet, and download importable FG XML.",
     source: "SRD 3.5 / Fantasy Grounds",
+    badge: "Beta",
   },
 ] as const;
 
