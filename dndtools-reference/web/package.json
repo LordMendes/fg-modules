@@ -13,7 +13,7 @@
     "db:generate": "prisma generate",
     "import:dndtools": "tsx prisma/import-dndtools.ts",
     "import:bundle": "esbuild prisma/import-dndtools.ts --bundle --platform=node --format=esm --outfile=import-dndtools.mjs --external:pg --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
-    "test": "tsx --test src/lib/stronghold/calculate.test.ts src/lib/magic-item/pricing.test.ts src/lib/leadership/calculate.test.ts src/lib/npc-creator/npc-creator.test.ts src/lib/fg-spell-actions/buildActionXml.test.ts"
+    "test": "tsx --test src/lib/stronghold/calculate.test.ts src/lib/magic-item/pricing.test.ts src/lib/leadership/calculate.test.ts src/lib/npc-creator/npc-creator.test.ts src/lib/fg-spell-actions/buildActionXml.test.ts src/lib/encounter/calculateEl.test.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",

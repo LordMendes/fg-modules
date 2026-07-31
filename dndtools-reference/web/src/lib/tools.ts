@@ -27,6 +27,15 @@ export const TOOLS = [
     source: "PHB / DMG",
   },
   {
+    key: "encounter-builder",
+    label: "Encounter Builder",
+    icon: "🐉",
+    href: "/tools/encounter-builder",
+    description:
+      "Build encounters from the monster compendium, calculate EL, and save encounters for later.",
+    source: "DMG",
+  },
+  {
     key: "npc-creator",
     label: "NPC Creator",
     icon: "🗡️",

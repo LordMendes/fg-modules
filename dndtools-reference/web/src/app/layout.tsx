@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { EncounterProvider } from "@/components/encounter/encounter-provider";
+import { EncounterDockHost } from "@/components/encounter/encounter-dock";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
 import { SessionProvider } from "@/components/session-provider";
@@ -85,11 +87,14 @@ export default async function RootLayout({
         </a>
         <Providers>
           <SessionProvider nonce={nonce}>
-            <SiteHeader />
-            <main id="main-content" className="main-content min-w-0 w-full">{children}</main>
-            <footer className="site-footer">
-              D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
-            </footer>
+            <EncounterProvider>
+              <SiteHeader />
+              <main id="main-content" className="main-content min-w-0 w-full">{children}</main>
+              <EncounterDockHost />
+              <footer className="site-footer">
+                D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
+              </footer>
+            </EncounterProvider>
           </SessionProvider>
         </Providers>
       </body>

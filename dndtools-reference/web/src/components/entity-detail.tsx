@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-button";
 import type { EntityDetail } from "@/lib/entities";
 import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
@@ -41,6 +42,15 @@ export function EntityDetailView({
             {entity.source.page && <>, p. {entity.source.page}</>}
           </span>
           <span className="edition-chip">{entity.source.edition}</span>
+          {category === "monsters" && (
+            <AddToEncounterButton
+              monster={{
+                slug: entity.slug,
+                name: entity.name,
+                cr: entity.fields["Challenge Rating"] ?? "—",
+              }}
+            />
+          )}
         </div>
       </header>
 
