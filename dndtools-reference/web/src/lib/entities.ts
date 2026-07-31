@@ -78,6 +78,17 @@ export type SpellPreview = {
   descriptionText: string | null;
 };
 
+export type EntityPreview = {
+  category: CategoryKey;
+  slug: string;
+  name: string;
+  source: { name: string; abbrev: string | null; edition: string };
+  fields: Record<string, string | null>;
+  descriptionHtml: string | null;
+  descriptionText: string | null;
+  statLine?: string | null;
+};
+
 export function formatSpellLevelLabel(level: number): string {
   if (level === 0) return "0 Level";
   const mod100 = level % 100;
@@ -1289,28 +1300,34 @@ export async function getClassSpellsAtLevel(
 }
 
 export async function getSpellPreview(spellSlug: string): Promise<SpellPreview | null> {
-  const r = await prisma.spell.findUnique({
-    where: { slug: spellSlug },
-    include: { source: { select: { name: true, abbrev: true, edition: true } } },
-  });
-  if (!r) return null;
+  const preview = await getEntityPreview("spells", spellSlug);
+  if (!preview) return null;
+  return {
+    slug: preview.slug,
+    name: preview.name,
+    source: preview.source,
+    fields: preview.fields,
+    descriptionHtml: preview.descriptionHtml,
+    descriptionText: preview.descriptionText,
+  };
+}
+
+export async function getEntityPreview(
+  category: CategoryKey,
+  slug: string,
+): Promise<EntityPreview | null> {
+  const entity = await getEntityDetail(category, slug);
+  if (!entity) return null;
 
   return {
-    slug: r.slug,
-    name: r.name,
-    source: r.source,
-    fields: {
-      School: r.school,
-      "Casting Time": r.castingTime,
-      Components: r.components,
-      Range: r.range,
-      Target: r.target,
-      Duration: r.duration,
-      "Saving Throw": r.savingThrow,
-      "Spell Resistance": r.spellResistance,
-    },
-    descriptionHtml: r.descriptionHtml,
-    descriptionText: r.descriptionText,
+    category,
+    slug: entity.slug,
+    name: entity.name,
+    source: entity.source,
+    fields: entity.fields,
+    descriptionHtml: entity.descriptionHtml,
+    descriptionText: entity.descriptionText,
+    statLine: entity.statLine ?? null,
   };
 }
 

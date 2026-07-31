@@ -8,6 +8,7 @@ import {
   createSession,
   parseSessionToken,
 } from "@/lib/session";
+import { AUTH_COOKIE_NAME } from "@/lib/auth/session";
 
 function ensureSession(request: NextRequest) {
   const existing = request.cookies.get(COOKIE_NAME)?.value;
@@ -25,6 +26,16 @@ export function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/api/") && pathname !== "/api/health") {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  if (pathname === "/profile" || pathname.startsWith("/profile/")) {
+    const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+    if (!authToken) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/login";
+      loginUrl.searchParams.set("next", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   const { session, token, isNew } = ensureSession(request);

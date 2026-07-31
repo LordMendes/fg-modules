@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-button";
+import { SaveToListButton } from "@/components/save-to-list-button";
+import type { CategoryKey } from "@/lib/categories";
 import type { EntityDetail } from "@/lib/entities";
 import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
@@ -18,7 +20,7 @@ export function EntityDetailView({
   category,
   entity,
 }: {
-  category: string;
+  category: CategoryKey;
   entity: EntityDetail;
 }) {
   const fields = Object.entries(entity.fields).filter(([, v]) => v);
@@ -42,6 +44,7 @@ export function EntityDetailView({
             {entity.source.page && <>, p. {entity.source.page}</>}
           </span>
           <span className="edition-chip">{entity.source.edition}</span>
+          <SaveToListButton category={category} slug={entity.slug} name={entity.name} />
           {category === "monsters" && (
             <AddToEncounterButton
               monster={{

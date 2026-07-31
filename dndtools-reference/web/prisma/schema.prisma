@@ -510,9 +510,47 @@ model ImportRun {
 }
 
 model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  username     String        @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  sessions     UserSession[]
+  lists        SavedList[]
+}
+
+model UserSession {
   id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+}
+
+model SavedList {
+  id        String          @id @default(cuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  items     SavedListItem[]
+
+  @@unique([userId, name])
+}
+
+model SavedListItem {
+  id         String    @id @default(cuid())
+  listId     String
+  list       SavedList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  category   String
+  entitySlug String
+  entityName String
+  createdAt  DateTime  @default(now())
+
+  @@unique([listId, category, entitySlug])
+  @@index([listId])
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-button";
+import { SaveToListButton } from "@/components/save-to-list-button";
 import { SortableTh } from "@/components/sortable-th";
 import { DEFAULT_ENTITY_SORT } from "@/lib/entity-sort";
 import type { EntityListItem } from "@/lib/entities";
@@ -105,6 +106,7 @@ export function EntityTable({
             ))}
             <SortableTh column="source" label="Source" sort={activeSort} onSort={handleSort} />
             <SortableTh column="edition" label="Edition" sort={activeSort} onSort={handleSort} />
+            <th scope="col">Save</th>
             {category === "monsters" && <th scope="col">Encounter</th>}
           </tr>
         </thead>
@@ -129,6 +131,14 @@ export function EntityTable({
                 )}
               </td>
               <td className="edition-cell">{item.edition ?? "—"}</td>
+              <td className="save-cell">
+                <SaveToListButton
+                  compact
+                  category={category}
+                  slug={item.slug}
+                  name={item.name}
+                />
+              </td>
               {category === "monsters" && (
                 <td className="encounter-cell">
                   <AddToEncounterButton

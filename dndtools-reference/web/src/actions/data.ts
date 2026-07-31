@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import {
   getClassSpellsAtLevel,
+  getEntityPreview,
   getSpellPreview,
   listEntities,
   searchAll,
@@ -151,4 +152,38 @@ export async function fetchSpellPreview(input: SpellPreviewInput): Promise<Spell
   if (!spell) return { success: false, error: "Spell not found" };
 
   return { success: true, spell };
+}
+
+export type EntityPreviewInput = {
+  category: string;
+  slug: string;
+  nonce: string;
+};
+
+export type EntityPreviewResult = {
+  success: boolean;
+  error?: string;
+  entity?: Awaited<ReturnType<typeof getEntityPreview>>;
+};
+
+export async function fetchEntityPreview(
+  input: EntityPreviewInput,
+): Promise<EntityPreviewResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`entity-preview:${ip}`, 120, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  if (!isCategoryKey(input.category)) {
+    return { success: false, error: "Invalid category" };
+  }
+
+  const entity = await getEntityPreview(input.category, input.slug);
+  if (!entity) return { success: false, error: "Entry not found" };
+
+  return { success: true, entity };
 }

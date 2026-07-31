@@ -6,7 +6,9 @@ import { EncounterDockHost } from "@/components/encounter/encounter-dock";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
 import { SessionProvider } from "@/components/session-provider";
+import { AuthProvider } from "@/components/auth-provider";
 import { JsonLd } from "@/components/json-ld";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getSession, SESSION_NONCE_HEADER } from "@/lib/session";
 import {
   absoluteUrl,
@@ -58,6 +60,7 @@ export default async function RootLayout({
   const headerStore = await headers();
   const nonce =
     headerStore.get(SESSION_NONCE_HEADER) ?? (await getSession())?.nonce ?? "";
+  const user = await getCurrentUser();
 
   return (
     <html lang="en" suppressHydrationWarning className={`${plusJakarta.variable} ${inter.variable} h-full`}>
@@ -87,14 +90,16 @@ export default async function RootLayout({
         </a>
         <Providers>
           <SessionProvider nonce={nonce}>
-            <EncounterProvider>
-              <SiteHeader />
-              <main id="main-content" className="main-content min-w-0 w-full">{children}</main>
-              <EncounterDockHost />
-              <footer className="site-footer">
-                D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
-              </footer>
-            </EncounterProvider>
+            <AuthProvider user={user}>
+              <EncounterProvider>
+                <SiteHeader user={user} />
+                <main id="main-content" className="main-content min-w-0 w-full">{children}</main>
+                <EncounterDockHost />
+                <footer className="site-footer">
+                  D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
+                </footer>
+              </EncounterProvider>
+            </AuthProvider>
           </SessionProvider>
         </Providers>
       </body>
