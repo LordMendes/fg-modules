@@ -123,6 +123,9 @@ model Monster {
   subtypes        String?
   challengeRating String?
   hitDice         String?
+  alignment       String?
+  environment     String?
+  treasure        String?
   searchVector    Unsupported("tsvector")?
 
   source         Source                  @relation(fields: [sourceId], references: [id])
@@ -133,6 +136,9 @@ model Monster {
   @@index([sourceId])
   @@index([creatureType])
   @@index([challengeRating])
+  @@index([alignment])
+  @@index([environment])
+  @@index([treasure])
   @@index([name])
 }
 

@@ -670,6 +670,39 @@ async function getFieldFilterOptions(
           .filter((r) => r.challengeRating)
           .map((r) => ({ value: r.challengeRating!, label: r.challengeRating! }));
       }
+      if (field === "alignment") {
+        const rows = await prisma.monster.groupBy({
+          by: ["alignment"],
+          where: { alignment: { not: null } },
+          _count: { alignment: true },
+          orderBy: { _count: { alignment: "desc" } },
+        });
+        return rows
+          .filter((r) => r.alignment)
+          .map((r) => ({ value: r.alignment!, label: r.alignment! }));
+      }
+      if (field === "environment") {
+        const rows = await prisma.monster.groupBy({
+          by: ["environment"],
+          where: { environment: { not: null } },
+          _count: { environment: true },
+          orderBy: { _count: { environment: "desc" } },
+        });
+        return rows
+          .filter((r) => r.environment)
+          .map((r) => ({ value: r.environment!, label: r.environment! }));
+      }
+      if (field === "treasure") {
+        const rows = await prisma.monster.groupBy({
+          by: ["treasure"],
+          where: { treasure: { not: null } },
+          _count: { treasure: true },
+          orderBy: { _count: { treasure: "desc" } },
+        });
+        return rows
+          .filter((r) => r.treasure)
+          .map((r) => ({ value: r.treasure!, label: r.treasure! }));
+      }
       break;
     }
     case "classes": {

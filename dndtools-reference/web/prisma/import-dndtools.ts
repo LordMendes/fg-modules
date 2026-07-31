@@ -205,6 +205,17 @@ const MONSTER_STAT_KEYS = [
   "stat_line",
 ] as const;
 
+/** Normalize scraped monster stat text for filter columns (case + hyphen spacing). */
+function normalizeMonsterFilterValue(raw: unknown): string | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  return trimmed
+    .replace(/-/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\b\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+}
+
 function monsterIndexData(record: Record<string, unknown>): object {
   const index = (record.index ?? {}) as Record<string, unknown>;
   const source = record.source as SourceData | undefined;
@@ -721,6 +732,9 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           subtypes: (r.subtypes as string) ?? index?.subtypes ?? null,
           challengeRating: (r.challenge_rating as string) ?? index?.cr ?? null,
           hitDice: (r.hit_dice as string) ?? index?.hd ?? null,
+          alignment: normalizeMonsterFilterValue(r.alignment),
+          environment: normalizeMonsterFilterValue(r.environment),
+          treasure: normalizeMonsterFilterValue(r.treasure),
         };
         await prisma.monster.upsert({
           where: { slug: r.slug },

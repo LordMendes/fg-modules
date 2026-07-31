@@ -74,6 +74,9 @@ export const CATEGORY_FILTER_FIELDS: Record<CategoryKey, FilterFieldDef[]> = {
     { param: "type", label: "Type", prismaField: "creatureType" },
     { param: "subtype", label: "Subtype", prismaField: "subtypes" },
     { param: "cr", label: "CR", prismaField: "challengeRating" },
+    { param: "alignment", label: "Alignment", prismaField: "alignment" },
+    { param: "environment", label: "Environment", prismaField: "environment" },
+    { param: "treasure", label: "Treasure", prismaField: "treasure" },
   ],
   classes: [
     {
