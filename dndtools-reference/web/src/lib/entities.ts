@@ -16,7 +16,7 @@ import {
   type FilterFieldDef,
 } from "@/lib/entity-filters";
 import { buildEntityOrderBy } from "@/lib/entity-sort";
-import { parseCr } from "@/lib/encounter/parseCr";
+import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
 import type { TableSort } from "@/lib/table-sort";
 
 export type EntityListItem = {
@@ -672,23 +672,17 @@ async function getFieldFilterOptions(
           .map((r) => ({ value: r.size!, label: r.size! }));
         return mergePinnedFilterOptions(MONSTER_SIZE_FILTER_OPTIONS, dynamic);
       }
-      if (field === "challengeRating") {
+      if (def.valueType === "cr" && field === "challengeRating") {
         const rows = await prisma.monster.groupBy({
           by: ["challengeRating"],
           where: { challengeRating: { not: null } },
           _count: { challengeRating: true },
         });
-        return rows
-          .filter((r) => r.challengeRating)
-          .map((r) => ({ value: r.challengeRating!, label: r.challengeRating! }))
-          .sort((a, b) => {
-            const aNum = parseCr(a.value);
-            const bNum = parseCr(b.value);
-            if (aNum == null && bNum == null) return a.label.localeCompare(b.label);
-            if (aNum == null) return 1;
-            if (bNum == null) return -1;
-            return aNum - bNum || a.label.localeCompare(b.label);
-          });
+        return sortCrFilterOptions(
+          rows
+            .filter((r) => r.challengeRating)
+            .map((r) => ({ value: r.challengeRating!, label: r.challengeRating! })),
+        );
       }
       if (field === "alignment") {
         const rows = await prisma.monster.groupBy({

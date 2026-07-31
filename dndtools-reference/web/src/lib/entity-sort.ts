@@ -60,7 +60,7 @@ export function buildEntityOrderBy(
     monsters: {
       name: { name: direction },
       type: { creatureType: direction },
-      cr: { challengeRating: direction },
+      cr: { challengeRatingNum: direction },
       hd: { hitDice: direction },
     },
     classes: {

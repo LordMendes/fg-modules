@@ -2,6 +2,7 @@ import "dotenv/config";
 import { readFileSync, existsSync } from "fs";
 import { join, resolve } from "path";
 import { PrismaClient, EntityCategory, DomainType } from "../src/generated/prisma/client";
+import { parseCr } from "../src/lib/encounter/parseCr";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -742,6 +743,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
+        const challengeRating = (r.challenge_rating as string) ?? index?.cr ?? null;
         const monsterData = {
           name: r.name,
           sourceUrl: r.source_url ?? null,
@@ -752,7 +754,8 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           creatureType: (r.type as string) ?? index?.type ?? null,
           subtypes: (r.subtypes as string) ?? index?.subtypes ?? null,
           size: parseMonsterSize(r.stat_line),
-          challengeRating: (r.challenge_rating as string) ?? index?.cr ?? null,
+          challengeRating,
+          challengeRatingNum: parseCr(challengeRating),
           hitDice: (r.hit_dice as string) ?? index?.hd ?? null,
           alignment: normalizeMonsterFilterValue(r.alignment),
           environment: normalizeMonsterFilterValue(r.environment),

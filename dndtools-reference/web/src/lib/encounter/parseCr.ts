@@ -21,3 +21,20 @@ export function formatCrDisplay(cr: string | null | undefined): string {
   if (!cr?.trim() || cr.trim() === "—") return "—";
   return cr.trim();
 }
+
+/** Compare two CR strings numerically for sort/filter ordering. */
+export function compareCrValues(a: string, b: string): number {
+  const aNum = parseCr(a);
+  const bNum = parseCr(b);
+  if (aNum == null && bNum == null) return a.localeCompare(b);
+  if (aNum == null) return 1;
+  if (bNum == null) return -1;
+  return aNum - bNum || a.localeCompare(b);
+}
+
+export type CrFilterOption = { value: string; label: string };
+
+/** Sort CR filter dropdown options in ascending numeric order. */
+export function sortCrFilterOptions<T extends CrFilterOption>(options: T[]): T[] {
+  return [...options].sort((a, b) => compareCrValues(a.value, b.value));
+}

@@ -123,6 +123,7 @@ model Monster {
   subtypes        String?
   size            String?
   challengeRating String?
+  challengeRatingNum Float?
   hitDice         String?
   alignment       String?
   environment     String?
@@ -138,6 +139,7 @@ model Monster {
   @@index([creatureType])
   @@index([size])
   @@index([challengeRating])
+  @@index([challengeRatingNum])
   @@index([alignment])
   @@index([environment])
   @@index([treasure])

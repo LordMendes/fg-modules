@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { calculateEncounterSummary } from "./calculateEl";
-import { parseCr } from "./parseCr";
+import { compareCrValues, parseCr, sortCrFilterOptions } from "./parseCr";
 import { elFromTotalXp, xpForCR } from "./xpTable";
 import type { EncounterEntry } from "./types";
 
@@ -16,6 +16,35 @@ describe("parseCr", () => {
     assert.equal(parseCr("—"), null);
     assert.equal(parseCr(""), null);
     assert.equal(parseCr(null), null);
+  });
+});
+
+describe("compareCrValues", () => {
+  it("orders integer CRs numerically, not lexicographically", () => {
+    assert.ok(compareCrValues("1", "2") < 0);
+    assert.ok(compareCrValues("2", "10") < 0);
+    assert.ok(compareCrValues("9", "10") < 0);
+    assert.ok(compareCrValues("10", "2") > 0);
+  });
+
+  it("orders fractional CRs numerically", () => {
+    assert.ok(compareCrValues("1/3", "1/2") < 0);
+    assert.ok(compareCrValues("0.5", "1") < 0);
+  });
+});
+
+describe("sortCrFilterOptions", () => {
+  it("sorts filter options in ascending CR order", () => {
+    const sorted = sortCrFilterOptions([
+      { value: "10", label: "10" },
+      { value: "1", label: "1" },
+      { value: "1/2", label: "1/2" },
+      { value: "2", label: "2" },
+    ]);
+    assert.deepEqual(
+      sorted.map((opt) => opt.value),
+      ["1/2", "1", "2", "10"],
+    );
   });
 });
 

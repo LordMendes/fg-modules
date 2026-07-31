@@ -11,7 +11,7 @@ export type FilterFieldDef = {
   /** Prisma model field name (or virtual key for special filters). */
   prismaField: string;
   /** How to interpret filter values when building Prisma where clauses. */
-  valueType?: "string" | "int" | "boolean" | "enum" | "component" | "relation" | "prestige";
+  valueType?: "string" | "int" | "boolean" | "enum" | "component" | "relation" | "prestige" | "cr";
   /** Render as toggle chips instead of a dropdown (e.g. spell components). */
   ui?: "multiselect" | "chips";
 };
@@ -74,7 +74,7 @@ export const CATEGORY_FILTER_FIELDS: Record<CategoryKey, FilterFieldDef[]> = {
     { param: "type", label: "Type", prismaField: "creatureType" },
     { param: "subtype", label: "Subtype", prismaField: "subtypes" },
     { param: "size", label: "Size", prismaField: "size" },
-    { param: "cr", label: "CR", prismaField: "challengeRating" },
+    { param: "cr", label: "CR", prismaField: "challengeRating", valueType: "cr" },
     { param: "alignment", label: "Alignment", prismaField: "alignment" },
     { param: "environment", label: "Environment", prismaField: "environment" },
     { param: "treasure", label: "Treasure", prismaField: "treasure" },
