@@ -46,8 +46,33 @@ Mirror **`NpcFgExportState`** in `wiki/src/tools/npc-fg-export/types.ts`. XML fr
 | `offense` | `atk`, `fullatk`, `babgrp`, `speed`, `spaceReach`, `specialattacks`. |
 | `aura`, `senses`, `languages`, `feats`, `skills` | Free strings. |
 | DR / SR | `dr`, `spellResistance`, `immunities`, `resistances`, `vulnerabilities`, `specialqualitiesExtra`, or `useLegacySpecialqualitiesOnly` + `specialqualitiesManual`. |
+| `notesFormattedHtml` | FG HTML for the NPC **Notes** block — written to `<text type="formattedtext">` in XML (`buildXml.ts`). |
+| `magicalEffectsNotes` | Plain-text magical-effects line; appended as `<p><b>Magical effects:</b> …</p>` after `notesFormattedHtml`. |
 | `spellcasting` | `enabled`, `mode`, `label`, `casterLevel`, `dcAbility`, `dcMisc`, `slots[]`, `spells[]`, `spellsetXmlOverride`. |
 | `spellDisplayMode` | e.g. `"action"`. |
+
+## Formatted notes (`notesFormattedHtml`)
+
+NPC lore, tactics, and GM reminders live in the FG **Notes** pane. Set `notesFormattedHtml` to FG HTML (not Markdown, not a full HTML document).
+
+**References**
+
+- FG HTML tags and rules: `fg-builder/skills/reference/fantasy-grounds/fg-export-json-conventions.md` (section **FG HTML-like text**)
+- XML output: `dndtools-reference/web/src/lib/npc-creator/buildXml.ts` → `<text type="formattedtext">`
+- Import round-trip: `parseNpcFgXml.ts` reads the same block back into `notesFormattedHtml`
+
+**Allowed tags** (same as class/feat/race exports): `<p>`, `<list><li>`, `<b>`, `<i>`, `<h>`, `<table>`.
+
+**Example**
+
+```json
+{
+  "notesFormattedHtml": "<p><b>Tactics:</b> Opens with <i>bless</i>, then closes to melee.</p><list><li>Will flee below 10 HP</li><li>Speaks Elven and Common</li></list>",
+  "magicalEffectsNotes": "+2 deflection to AC (ring of protection +2)"
+}
+```
+
+Use `magicalEffectsNotes` for a separate **Magical effects** line; keep long narrative text in `notesFormattedHtml`.
 
 ## Spell rows (`NpcFgSpellRow`)
 
@@ -150,6 +175,7 @@ Library supplies `action2` damage for Inflict Light Wounds automatically.
 | `area` confused with effect action | `area` = target line; `action2.type: "effect"` = condition |
 | Replacing spell list when you only have FG XML | Use `spellsetXmlOverride` |
 | Inventing `meta` versions | Copy from exported NPC when possible |
+| Notes as Markdown or plain text | FG HTML in `notesFormattedHtml` — see **Formatted notes** above |
 
 ## Campaign canon
 

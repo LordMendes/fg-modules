@@ -45,8 +45,33 @@ XML from \`buildXml.ts\`.
 | \`offense\` | \`atk\`, \`fullatk\`, \`babgrp\`, \`speed\`, \`spaceReach\`, \`specialattacks\` |
 | \`aura\`, \`senses\`, \`languages\`, \`feats\`, \`skills\` | Free strings |
 | DR / SR | \`dr\`, \`spellResistance\`, \`immunities\`, \`resistances\`, \`vulnerabilities\`, \`specialqualitiesExtra\` |
+| \`notesFormattedHtml\` | FG HTML for the NPC **Notes** block — written to \`<text type="formattedtext">\` in XML (\`buildXml.ts\`) |
+| \`magicalEffectsNotes\` | Plain-text magical-effects line; appended as \`<p><b>Magical effects:</b> …</p>\` after \`notesFormattedHtml\` |
 | \`spellcasting\` | \`enabled\`, \`mode\`, \`label\`, \`casterLevel\`, \`dcAbility\`, \`dcMisc\`, \`slots[]\`, \`spells[]\`, \`spellsetXmlOverride\` |
 | \`media\` | \`picturePath\`, \`tokenPath\`, \`token3DPath\` (FG paths); data URLs are preview-only |
+
+## Formatted notes (\`notesFormattedHtml\`)
+
+NPC lore, tactics, and GM reminders live in the FG **Notes** pane. Set \`notesFormattedHtml\` to FG HTML (not Markdown, not a full HTML document).
+
+**References**
+
+- FG HTML tags and rules: \`fg-builder/skills/reference/fantasy-grounds/fg-export-json-conventions.md\` (section **FG HTML-like text**)
+- XML output: \`dndtools-reference/web/src/lib/npc-creator/buildXml.ts\` → \`<text type="formattedtext">\`
+- Import round-trip: \`parseNpcFgXml.ts\` reads the same block back into \`notesFormattedHtml\`
+
+**Allowed tags** (same as class/feat/race exports): \`<p>\`, \`<list><li>\`, \`<b>\`, \`<i>\`, \`<h>\`, \`<table>\`.
+
+**Example**
+
+\`\`\`json
+{
+  "notesFormattedHtml": "<p><b>Tactics:</b> Opens with <i>bless</i>, then closes to melee.</p><list><li>Will flee below 10 HP</li><li>Speaks Elven and Common</li></list>",
+  "magicalEffectsNotes": "+2 deflection to AC (ring of protection +2)"
+}
+\`\`\`
+
+Use \`magicalEffectsNotes\` for a separate **Magical effects** line; keep long narrative text in \`notesFormattedHtml\`.
 
 ## Spell list shorthand
 
@@ -92,6 +117,7 @@ XML from \`buildXml.ts\`.
 | \`"savetype": "Fortitude"\` | \`"savetype": "fort"\` |
 | Missing \`dmgType\` on damage \`action2\` | Always set \`dmgType\` |
 | Effect \`label: "dazzled"\` | \`"Dazzled"\` (FG title case) |
+| Notes as Markdown or plain text | FG HTML in \`notesFormattedHtml\` — see **Formatted notes** above |
 
 ## Expected output
 
