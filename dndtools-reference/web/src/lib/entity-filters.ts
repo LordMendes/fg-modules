@@ -73,6 +73,7 @@ export const CATEGORY_FILTER_FIELDS: Record<CategoryKey, FilterFieldDef[]> = {
   monsters: [
     { param: "type", label: "Type", prismaField: "creatureType" },
     { param: "subtype", label: "Subtype", prismaField: "subtypes" },
+    { param: "size", label: "Size", prismaField: "size" },
     { param: "cr", label: "CR", prismaField: "challengeRating" },
     { param: "alignment", label: "Alignment", prismaField: "alignment" },
     { param: "environment", label: "Environment", prismaField: "environment" },
@@ -146,6 +147,19 @@ export const CLASS_TYPE_FILTER_OPTIONS = [
 
 /** Pinned feat subcategories for quick chip filters (classic dndtools Feat Categories). */
 export const FEAT_QUICK_CATEGORY_CHIPS = [{ value: "Flaw", label: "Flaws" }] as const;
+
+/** Canonical 3.5 size order for monster filter dropdowns. */
+export const MONSTER_SIZE_FILTER_OPTIONS = [
+  "Fine",
+  "Diminutive",
+  "Tiny",
+  "Small",
+  "Medium",
+  "Large",
+  "Huge",
+  "Gargantuan",
+  "Colossal",
+].map((s) => ({ value: s, label: s }));
 
 export type FilterOption = { value: string; label: string };
 

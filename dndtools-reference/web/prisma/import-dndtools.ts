@@ -216,6 +216,27 @@ function normalizeMonsterFilterValue(raw: unknown): string | null {
     .replace(/\b\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
 }
 
+const MONSTER_SIZES = [
+  "Fine",
+  "Diminutive",
+  "Tiny",
+  "Small",
+  "Medium",
+  "Large",
+  "Huge",
+  "Gargantuan",
+  "Colossal",
+] as const;
+
+/** Parse size from stat_line first token (e.g. "Medium Outsider (Native) — CR 0.5"). */
+function parseMonsterSize(statLine: unknown): string | null {
+  if (typeof statLine !== "string") return null;
+  const first = statLine.trim().split(/\s+/)[0];
+  if (!first) return null;
+  const lower = first.toLowerCase();
+  return MONSTER_SIZES.find((size) => size.toLowerCase() === lower) ?? null;
+}
+
 function monsterIndexData(record: Record<string, unknown>): object {
   const index = (record.index ?? {}) as Record<string, unknown>;
   const source = record.source as SourceData | undefined;
@@ -730,6 +751,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           descriptionText: (r.description_text as string) ?? null,
           creatureType: (r.type as string) ?? index?.type ?? null,
           subtypes: (r.subtypes as string) ?? index?.subtypes ?? null,
+          size: parseMonsterSize(r.stat_line),
           challengeRating: (r.challenge_rating as string) ?? index?.cr ?? null,
           hitDice: (r.hit_dice as string) ?? index?.hd ?? null,
           alignment: normalizeMonsterFilterValue(r.alignment),

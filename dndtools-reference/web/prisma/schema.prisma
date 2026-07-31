@@ -121,6 +121,7 @@ model Monster {
   descriptionText String?  @db.Text
   creatureType    String?
   subtypes        String?
+  size            String?
   challengeRating String?
   hitDice         String?
   alignment       String?
@@ -135,6 +136,7 @@ model Monster {
 
   @@index([sourceId])
   @@index([creatureType])
+  @@index([size])
   @@index([challengeRating])
   @@index([alignment])
   @@index([environment])

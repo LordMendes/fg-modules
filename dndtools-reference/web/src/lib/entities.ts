@@ -7,6 +7,7 @@ import {
   CATEGORY_FILTER_FIELDS,
   CLASS_TYPE_FILTER_OPTIONS,
   FEAT_QUICK_CATEGORY_CHIPS,
+  MONSTER_SIZE_FILTER_OPTIONS,
   SPELL_COMPONENT_FILTER_OPTIONS,
   formatBooleanFilterLabel,
   mergePinnedFilterOptions,
@@ -659,6 +660,17 @@ async function getFieldFilterOptions(
           value: t,
           label: t,
         }));
+      }
+      if (field === "size") {
+        const rows = await prisma.monster.groupBy({
+          by: ["size"],
+          where: { size: { not: null } },
+          _count: { size: true },
+        });
+        const dynamic = rows
+          .filter((r) => r.size)
+          .map((r) => ({ value: r.size!, label: r.size! }));
+        return mergePinnedFilterOptions(MONSTER_SIZE_FILTER_OPTIONS, dynamic);
       }
       if (field === "challengeRating") {
         const rows = await prisma.monster.groupBy({
