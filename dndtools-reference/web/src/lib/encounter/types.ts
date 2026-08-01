@@ -10,6 +10,8 @@ export type EncounterSummary = {
   totalXpPerPc: number;
   creatureCount: number;
   invalidCrCount: number;
+  targetEl: number | null;
+  elDelta: number | null;
 };
 
 export type SavedEncounter = {

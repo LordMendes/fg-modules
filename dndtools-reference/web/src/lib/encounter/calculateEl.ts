@@ -1,9 +1,12 @@
+import { calculateEncounterEl } from "./encounterNumbers";
+import { calculateTargetEl, type PartyConfig } from "./partyConfig";
 import { parseCr } from "./parseCr";
 import type { EncounterEntry, EncounterSummary } from "./types";
-import { elFromTotalXp, xpForCR } from "./xpTable";
+import { xpForCR } from "./xpTable";
 
 export function calculateEncounterSummary(
   entries: EncounterEntry[],
+  partyConfig?: PartyConfig,
 ): EncounterSummary {
   let totalXpPerPc = 0;
   let creatureCount = 0;
@@ -20,11 +23,18 @@ export function calculateEncounterSummary(
     totalXpPerPc += xpForCR(crNum) * entry.count;
   }
 
+  const el = calculateEncounterEl(entries);
+  const targetEl = partyConfig ? calculateTargetEl(partyConfig) : null;
+  const elDelta =
+    el !== null && targetEl !== null ? el - targetEl : null;
+
   return {
-    el: elFromTotalXp(totalXpPerPc),
+    el,
     totalXpPerPc,
     creatureCount,
     invalidCrCount,
+    targetEl,
+    elDelta,
   };
 }
 

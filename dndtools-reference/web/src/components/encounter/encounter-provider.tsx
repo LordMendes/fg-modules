@@ -14,14 +14,21 @@ import {
   defaultEncounterName,
 } from "@/lib/encounter/calculateEl";
 import {
+  DEFAULT_PARTY_CONFIG,
+  normalizePartyConfig,
+  type PartyConfig,
+} from "@/lib/encounter/partyConfig";
+import {
   clearDraft,
   deleteSavedEncounter,
   getSavedEncounter,
   loadDraft,
+  loadPartyConfig,
   loadSavedEncounters,
   renameSavedEncounter,
   saveDraft,
   saveEncounter,
+  savePartyConfig,
 } from "@/lib/encounter/storage";
 import type {
   EncounterEntry,
@@ -33,11 +40,13 @@ import type {
 type EncounterContextValue = {
   entries: EncounterEntry[];
   summary: EncounterSummary;
+  partyConfig: PartyConfig;
   savedEncounters: SavedEncounter[];
   addMonster: (monster: MonsterRef) => void;
   setCount: (slug: string, count: number) => void;
   removeEntry: (slug: string) => void;
   clearEncounter: () => void;
+  setPartyConfig: (config: PartyConfig) => void;
   saveCurrentEncounter: (name: string) => { ok: boolean; error?: string };
   loadEncounter: (id: string) => boolean;
   renameEncounter: (id: string, name: string) => void;
@@ -50,11 +59,15 @@ const EncounterContext = createContext<EncounterContextValue | null>(null);
 
 export function EncounterProvider({ children }: { children: ReactNode }) {
   const [entries, setEntries] = useState<EncounterEntry[]>([]);
+  const [partyConfig, setPartyConfigState] = useState<PartyConfig>(
+    DEFAULT_PARTY_CONFIG,
+  );
   const [savedEncounters, setSavedEncounters] = useState<SavedEncounter[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     setEntries(loadDraft());
+    setPartyConfigState(loadPartyConfig());
     setSavedEncounters(loadSavedEncounters());
     setHydrated(true);
   }, []);
@@ -68,7 +81,15 @@ export function EncounterProvider({ children }: { children: ReactNode }) {
     }
   }, [entries, hydrated]);
 
-  const summary = useMemo(() => calculateEncounterSummary(entries), [entries]);
+  useEffect(() => {
+    if (!hydrated) return;
+    savePartyConfig(partyConfig);
+  }, [partyConfig, hydrated]);
+
+  const summary = useMemo(
+    () => calculateEncounterSummary(entries, partyConfig),
+    [entries, partyConfig],
+  );
 
   const defaultSaveName = useMemo(
     () => defaultEncounterName(summary),
@@ -116,6 +137,10 @@ export function EncounterProvider({ children }: { children: ReactNode }) {
     setEntries([]);
   }, []);
 
+  const setPartyConfig = useCallback((config: PartyConfig) => {
+    setPartyConfigState(normalizePartyConfig(config));
+  }, []);
+
   const saveCurrentEncounter = useCallback(
     (name: string) => {
       if (entries.length === 0) {
@@ -149,11 +174,13 @@ export function EncounterProvider({ children }: { children: ReactNode }) {
     (): EncounterContextValue => ({
       entries,
       summary,
+      partyConfig,
       savedEncounters,
       addMonster,
       setCount,
       removeEntry,
       clearEncounter,
+      setPartyConfig,
       saveCurrentEncounter,
       loadEncounter,
       renameEncounter,
@@ -164,11 +191,13 @@ export function EncounterProvider({ children }: { children: ReactNode }) {
     [
       entries,
       summary,
+      partyConfig,
       savedEncounters,
       addMonster,
       setCount,
       removeEntry,
       clearEncounter,
+      setPartyConfig,
       saveCurrentEncounter,
       loadEncounter,
       renameEncounter,

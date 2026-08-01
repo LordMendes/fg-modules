@@ -3688,6 +3688,82 @@ body {
   padding: 0 1rem 1rem 2.5rem;
 }
 
+.encounter-party-config {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.encounter-party-config--compact {
+  margin-bottom: 0.75rem;
+}
+
+.encounter-party-config-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.encounter-party-target {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.encounter-party-target strong {
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}
+
+.encounter-el-on-target {
+  color: var(--accent-green, #2d8a4e);
+}
+
+.encounter-el-over {
+  color: var(--accent-red, #c0392b);
+}
+
+.encounter-el-under {
+  color: var(--accent-blue, #2980b9);
+}
+
+.encounter-builder-panel {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.encounter-builder-panel h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.encounter-builder-panel-desc {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.encounter-builder-draft {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.encounter-builder-draft h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.encounter-builder-draft p {
+  margin: 0 0 0.75rem;
+  color: var(--text-secondary);
+}
+
 @media (max-width: 640px) {
   .encounter-dock-bar {
     flex-wrap: wrap;
@@ -3705,6 +3781,10 @@ body {
   .encounter-saved-card-actions {
     width: 100%;
     justify-content: flex-end;
+  }
+
+  .encounter-party-config-fields {
+    grid-template-columns: 1fr;
   }
 }
 

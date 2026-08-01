@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { EncounterSavedList } from "@/components/encounter/encounter-saved-list";
+import { EncounterBuilderContent } from "@/components/encounter/encounter-builder-content";
 import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
@@ -35,8 +35,8 @@ export default function EncounterBuilderPage() {
         <h1>Encounter Builder</h1>
         <p>
           Browse the monster compendium, add creatures to an encounter, and see
-          the calculated Encounter Level (EL). Saved encounters are stored in
-          your browser.
+          the calculated Encounter Level (EL) against your target difficulty.
+          Saved encounters are stored in your browser.
         </p>
         <p>
           <Link href="/monsters" className="tool-btn-primary">
@@ -45,7 +45,7 @@ export default function EncounterBuilderPage() {
         </p>
       </div>
 
-      <EncounterSavedList />
+      <EncounterBuilderContent />
     </>
   );
 }

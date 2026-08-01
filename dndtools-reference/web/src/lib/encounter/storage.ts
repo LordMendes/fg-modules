@@ -1,7 +1,13 @@
 import type { EncounterEntry, SavedEncounter } from "./types";
+import {
+  DEFAULT_PARTY_CONFIG,
+  normalizePartyConfig,
+  type PartyConfig,
+} from "./partyConfig";
 
 export const DRAFT_STORAGE_KEY = "arcane-archives-encounter-draft";
 export const SAVES_STORAGE_KEY = "arcane-archives-encounter-saves";
+export const PARTY_CONFIG_STORAGE_KEY = "arcane-archives-encounter-party-config";
 export const MAX_SAVED_ENCOUNTERS = 50;
 
 function safeParse<T>(raw: string | null, fallback: T): T {
@@ -50,6 +56,30 @@ export function clearDraft(): void {
     localStorage.removeItem(DRAFT_STORAGE_KEY);
   } catch {
     // ignore
+  }
+}
+
+export function loadPartyConfig(): PartyConfig {
+  if (typeof localStorage === "undefined") return DEFAULT_PARTY_CONFIG;
+  try {
+    const raw = localStorage.getItem(PARTY_CONFIG_STORAGE_KEY);
+    const parsed = safeParse<Partial<PartyConfig>>(raw, {});
+    return normalizePartyConfig(parsed);
+  } catch {
+    return DEFAULT_PARTY_CONFIG;
+  }
+}
+
+export function savePartyConfig(config: PartyConfig): boolean {
+  if (typeof localStorage === "undefined") return false;
+  try {
+    localStorage.setItem(
+      PARTY_CONFIG_STORAGE_KEY,
+      JSON.stringify(normalizePartyConfig(config)),
+    );
+    return true;
+  } catch {
+    return false;
   }
 }
 

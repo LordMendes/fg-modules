@@ -65,16 +65,20 @@ export function xpForCR(cr: number): number {
 export function elFromTotalXp(totalXpPerPc: number): number | null {
   if (totalXpPerPc <= 0) return null;
 
-  let bestCr = XP_BY_CR[0][0];
-  let bestDiff = Math.abs(totalXpPerPc - XP_BY_CR[0][1]);
-
   for (const [cr, xp] of XP_BY_CR) {
-    const diff = Math.abs(totalXpPerPc - xp);
-    if (diff < bestDiff) {
-      bestDiff = diff;
-      bestCr = cr;
+    if (xp === totalXpPerPc) return cr;
+  }
+
+  let floorCr: number | null = null;
+  for (const [cr, xp] of XP_BY_CR) {
+    if (xp <= totalXpPerPc) {
+      floorCr = cr;
+    } else {
+      break;
     }
   }
+
+  if (floorCr !== null) return floorCr;
 
   if (totalXpPerPc > XP_BY_CR[XP_BY_CR.length - 1][1]) {
     const lastCr = XP_BY_CR[XP_BY_CR.length - 1][0];
@@ -91,5 +95,5 @@ export function elFromTotalXp(totalXpPerPc: number): number | null {
     return diffHigh <= diffLow ? cr : cr - 1;
   }
 
-  return bestCr;
+  return XP_BY_CR[0][0];
 }

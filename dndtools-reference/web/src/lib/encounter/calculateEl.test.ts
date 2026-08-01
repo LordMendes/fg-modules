@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { calculateEncounterSummary } from "./calculateEl";
+import {
+  combinePair,
+  elForSameCrGroup,
+  elOffsetForCount,
+} from "./encounterNumbers";
+import { calculateTargetEl, DEFAULT_PARTY_CONFIG } from "./partyConfig";
 import { compareCrValues, parseCr, sortCrFilterOptions } from "./parseCr";
 import { elFromTotalXp, xpForCR } from "./xpTable";
 import type { EncounterEntry } from "./types";
@@ -56,6 +62,27 @@ describe("xpForCR", () => {
   });
 });
 
+describe("encounterNumbers", () => {
+  it("returns Table 3-1 count offsets", () => {
+    assert.equal(elOffsetForCount(1), 0);
+    assert.equal(elOffsetForCount(2), 2);
+    assert.equal(elOffsetForCount(4), 4);
+    assert.equal(elOffsetForCount(7), 6);
+  });
+
+  it("computes same-CR group EL", () => {
+    assert.equal(elForSameCrGroup(5, 1), 5);
+    assert.equal(elForSameCrGroup(5, 2), 7);
+    assert.equal(elForSameCrGroup(2, 4), 6);
+    assert.equal(elForSameCrGroup(1 / 3, 4), 1 / 3 + 4);
+  });
+
+  it("combines mixed pairs per DMG approximation", () => {
+    assert.equal(combinePair(7, 5), 8);
+    assert.equal(combinePair(10, 7), 12);
+  });
+});
+
 describe("calculateEncounterSummary", () => {
   function entry(
     slug: string,
@@ -87,10 +114,24 @@ describe("calculateEncounterSummary", () => {
     assert.equal(summary.el, 12);
   });
 
-  it("handles fractional CR", () => {
+  it("returns EL 8 for CR 7 plus CR 5", () => {
+    const summary = calculateEncounterSummary([
+      entry("aboleth", "7", 1),
+      entry("troll", "5", 1),
+    ]);
+    assert.equal(summary.el, 8);
+  });
+
+  it("handles fractional CR mob with Table 3-1 EL", () => {
     const summary = calculateEncounterSummary([entry("goblin", "1/3", 4)]);
     assert.equal(summary.totalXpPerPc, 135 * 4);
     assert.equal(summary.creatureCount, 4);
+    assert.equal(summary.el, 1 / 3 + 4);
+  });
+
+  it("returns EL 6 for four CR 2 ogres", () => {
+    const summary = calculateEncounterSummary([entry("ogre", "2", 4)]);
+    assert.equal(summary.el, 6);
   });
 
   it("counts invalid CR separately", () => {
@@ -107,10 +148,59 @@ describe("calculateEncounterSummary", () => {
     assert.equal(summary.el, null);
     assert.equal(summary.creatureCount, 0);
   });
+
+  it("computes target EL and delta from party config", () => {
+    const summary = calculateEncounterSummary([entry("troll", "5", 2)], {
+      partySize: 4,
+      partyLevel: 5,
+      difficulty: "medium",
+    });
+    assert.equal(summary.targetEl, 5);
+    assert.equal(summary.elDelta, 2);
+  });
+});
+
+describe("calculateTargetEl", () => {
+  it("applies difficulty and party size adjustments", () => {
+    assert.equal(
+      calculateTargetEl({
+        partySize: 4,
+        partyLevel: 6,
+        difficulty: "medium",
+      }),
+      6,
+    );
+    assert.equal(
+      calculateTargetEl({
+        partySize: 4,
+        partyLevel: 6,
+        difficulty: "hard",
+      }),
+      8,
+    );
+    assert.equal(
+      calculateTargetEl({
+        partySize: 6,
+        partyLevel: 5,
+        difficulty: "medium",
+      }),
+      7,
+    );
+  });
+
+  it("uses defaults for medium at level 5", () => {
+    assert.equal(calculateTargetEl(DEFAULT_PARTY_CONFIG), 5);
+  });
 });
 
 describe("elFromTotalXp", () => {
   it("maps 3600 XP to EL 7", () => {
     assert.equal(elFromTotalXp(3600), 7);
+  });
+
+  it("floors to highest EL with XP less than or equal to total", () => {
+    assert.equal(elFromTotalXp(3500), 6);
+    assert.equal(elFromTotalXp(3600), 7);
+    assert.equal(elFromTotalXp(2700), 6);
   });
 });

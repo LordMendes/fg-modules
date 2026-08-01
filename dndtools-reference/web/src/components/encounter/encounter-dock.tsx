@@ -4,6 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronUp, Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import {
+  EncounterPartyConfig,
+  elDeltaClassName,
+  formatElDelta,
+} from "@/components/encounter/encounter-party-config";
 import { useEncounter } from "@/components/encounter/encounter-provider";
 import { formatEl, formatXp } from "@/lib/encounter/formatEl";
 
@@ -14,6 +19,8 @@ export function EncounterDock() {
   const {
     entries,
     summary,
+    partyConfig,
+    setPartyConfig,
     setCount,
     removeEntry,
     clearEncounter,
@@ -81,6 +88,8 @@ export function EncounterDock() {
     }
   }
 
+  const deltaLabel = formatElDelta(summary.elDelta);
+
   return (
     <aside
       className={`encounter-dock${expanded ? " encounter-dock--expanded" : ""}`}
@@ -106,6 +115,21 @@ export function EncounterDock() {
               <>
                 {" "}
                 · EL {formatEl(summary.el)}
+              </>
+            )}
+            {summary.targetEl !== null && (
+              <>
+                {" "}
+                · Target {formatEl(summary.targetEl)}
+              </>
+            )}
+            {deltaLabel && (
+              <>
+                {" "}
+                ·{" "}
+                <span className={elDeltaClassName(summary.elDelta)}>
+                  {deltaLabel}
+                </span>
               </>
             )}
             {summary.totalXpPerPc > 0 && (
@@ -173,6 +197,13 @@ export function EncounterDock() {
               {saveMessage}
             </p>
           )}
+
+          <EncounterPartyConfig
+            config={partyConfig}
+            targetEl={summary.targetEl}
+            onChange={setPartyConfig}
+            compact
+          />
 
           <div className="table-wrap">
             <table className="entity-table encounter-dock-table">
@@ -248,8 +279,21 @@ export function EncounterDock() {
 
           <div className="encounter-dock-footer">
             <span>
-              EL {formatEl(summary.el)} · {formatXp(summary.totalXpPerPc)} XP
-              per PC
+              EL {formatEl(summary.el)}
+              {summary.targetEl !== null && (
+                <> · Target {formatEl(summary.targetEl)}</>
+              )}
+              {deltaLabel && (
+                <>
+                  {" "}
+                  ·{" "}
+                  <span className={elDeltaClassName(summary.elDelta)}>
+                    {deltaLabel}
+                  </span>
+                </>
+              )}
+              {" "}
+              · {formatXp(summary.totalXpPerPc)} XP per PC
             </span>
           </div>
         </div>
