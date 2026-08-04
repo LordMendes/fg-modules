@@ -117,7 +117,7 @@ export function parseSkillBonuses(text: string): Record<string, number> {
 /** e.g. human: 4 extra at 1st level + 1 per additional level. */
 export function parseRacialSkillPointBonus(text: string): RacialSkillPointBonus | null {
   const match = text.match(
-    /(\d+)\s+extra skill points?\s+at\s+(?:1st|first)\s+level.*?(\d+)\s+extra skill points?\s+at\s+each\s+additional\s+level/is,
+    /(\d+)\s+extra skill points?\s+at\s+(?:1st|first)\s+level\s+and\s+(\d+)\s+extra skill points?\s+at\s+each\s+additional\s+level/i,
   );
   if (!match) return null;
   return {
