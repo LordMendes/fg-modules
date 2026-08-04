@@ -1,25 +1,34 @@
 import Link from "next/link";
 import { EncounterBuilderContent } from "@/components/encounter/encounter-builder-content";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
+const TOOL_PATH = "/tools/encounter-builder";
+const TOOL_NAME = "Encounter Builder";
+const TOOL_DESCRIPTION =
+  "Build D&D 3.5 encounters from the monster compendium, calculate Encounter Level (EL), and save encounters for later.";
+
 export const metadata = buildPageMetadata({
-  title: "Encounter Builder",
-  description:
-    "Build D&D 3.5 encounters from the monster compendium, calculate Encounter Level (EL), and save encounters for later.",
-  path: "/tools/encounter-builder",
+  title: TOOL_NAME,
+  description: TOOL_DESCRIPTION,
+  path: TOOL_PATH,
 });
 
 export default function EncounterBuilderPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
+        data={toolPageJsonLd(
           [
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
-            { name: "Encounter Builder", path: "/tools/encounter-builder" },
+            { name: TOOL_NAME, path: TOOL_PATH },
           ],
+          {
+            name: TOOL_NAME,
+            description: TOOL_DESCRIPTION,
+            url: absoluteUrl(TOOL_PATH),
+          },
           absoluteUrl,
         )}
       />

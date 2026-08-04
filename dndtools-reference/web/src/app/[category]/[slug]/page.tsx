@@ -4,7 +4,7 @@ import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
 import { getEntityDetail } from "@/lib/entities";
 import { EntityDetailView } from "@/components/entity-detail";
 import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
-import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { absoluteUrl, buildEntityMetadata, truncateMetaDescription } from "@/lib/seo";
 import type { CategoryKey } from "@/lib/categories";
 
 /** Entity pages change only on data import — revalidate daily for crawl efficiency. */
@@ -19,16 +19,7 @@ export async function generateMetadata({ params }: Props) {
   if (!isCategoryKey(category)) return {};
   const entity = await getEntityDetail(category as CategoryKey, slug);
   if (!entity) return {};
-  const label = getCategoryLabel(category);
-  const description =
-    entity.descriptionText?.slice(0, 160) ??
-    `${entity.name} — ${label} reference for D&D 3.5 Edition.`;
-  return buildPageMetadata({
-    title: entity.name,
-    description,
-    path: `/${category}/${slug}`,
-    type: "article",
-  });
+  return buildEntityMetadata(entity, category as CategoryKey, slug);
 }
 
 export default async function EntityDetailPage({ params }: Props) {
@@ -40,8 +31,11 @@ export default async function EntityDetailPage({ params }: Props) {
 
   const label = getCategoryLabel(category);
   const description =
-    entity.descriptionText?.slice(0, 300) ??
-    `${entity.name} — ${label} reference for D&D 3.5 Edition.`;
+    truncateMetaDescription(
+      entity.descriptionText ??
+        `${entity.name} — ${label} reference for D&D 3.5 Edition.`,
+      300,
+    );
 
   return (
     <>

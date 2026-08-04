@@ -64,12 +64,6 @@ export default async function sitemap(props: {
         changeFrequency: "monthly",
         priority: 0.3,
       },
-      {
-        url: `${base}/flaws`,
-        lastModified: now,
-        changeFrequency: "weekly",
-        priority: 0.7,
-      },
       ...categoryUrls,
     ];
   }

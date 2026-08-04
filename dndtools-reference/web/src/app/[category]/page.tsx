@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
-import { getCategoryFilterOptions, listEntities } from "@/lib/entities";
+import { getCategoryFilterOptions, getCategoryCounts, listEntities } from "@/lib/entities";
 import {
   hasActiveFilters,
   isFlawsFeatFilter,
@@ -10,8 +10,13 @@ import {
 } from "@/lib/entity-filters";
 import { PaginatedEntityList } from "@/components/paginated-list";
 import { EntityListFilters } from "@/components/entity-list-filters";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
-import { absoluteUrl, buildPageMetadata, hasQueryParams } from "@/lib/seo";
+import { JsonLd, absoluteBreadcrumbJsonLd, collectionPageJsonLd } from "@/components/json-ld";
+import {
+  absoluteUrl,
+  buildCategoryHubDescription,
+  buildPageMetadata,
+  hasQueryParams,
+} from "@/lib/seo";
 import type { CategoryKey } from "@/lib/categories";
 
 type Props = {
@@ -28,9 +33,11 @@ export async function generateMetadata({ params, searchParams }: Props) {
     category === "feats" && isFlawsFeatFilter(filters)
       ? "Flaws"
       : getCategoryLabel(category);
+  const counts = await getCategoryCounts();
+  const count = counts[category as CategoryKey];
   return buildPageMetadata({
     title: label,
-    description: `Browse and search the complete ${label.toLowerCase()} compendium for D&D 3.5 Edition.`,
+    description: buildCategoryHubDescription(label, count),
     path: `/${category}`,
     noindex: hasQueryParams(rawParams),
   });
@@ -43,7 +50,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const categoryKey = category as CategoryKey;
   const filters = parseListSearchParams(categoryKey, rawParams);
-  const [listResult, filterOptions] = await Promise.all([
+  const [listResult, filterOptions, counts] = await Promise.all([
     listEntities(categoryKey, {
       search: filters.search || undefined,
       description: filters.description || undefined,
@@ -53,11 +60,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       sort: filters.sort,
     }),
     getCategoryFilterOptions(categoryKey),
+    getCategoryCounts(),
   ]);
 
   const { items, nextCursor } = listResult;
   const flawsView = categoryKey === "feats" && isFlawsFeatFilter(filters);
   const pageTitle = flawsView ? "Flaws" : getCategoryLabel(category);
+  const categoryCount = counts[categoryKey];
+  const hubDescription = buildCategoryHubDescription(pageTitle, categoryCount);
   const sourceLabel =
     filters.sources.length === 1
       ? filters.sources[0]
@@ -78,7 +88,21 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <JsonLd data={absoluteBreadcrumbJsonLd(breadcrumbItems, absoluteUrl)} />
+      <JsonLd
+        data={[
+          absoluteBreadcrumbJsonLd(breadcrumbItems, absoluteUrl),
+          ...(!hasQueryParams(rawParams)
+            ? [
+                collectionPageJsonLd({
+                  name: pageTitle,
+                  description: hubDescription,
+                  url: absoluteUrl(`/${category}`),
+                  numberOfItems: categoryCount,
+                }),
+              ]
+            : []),
+        ]}
+      />
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link> / {pageTitle}
         {filters.sources.length === 1 && (

@@ -1,25 +1,34 @@
 import Link from "next/link";
 import { MagicItemCalculator } from "@/components/tools/magic-item-calculator";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
+const TOOL_PATH = "/tools/magic-item-builder";
+const TOOL_NAME = "Magic Item Builder";
+const TOOL_DESCRIPTION =
+  "Calculate D&D 3.5 magic weapon and armor prices using DMG rules, with Complete-series special abilities. Includes base item cost and total equivalent bonus.";
+
 export const metadata = buildPageMetadata({
-  title: "Magic Item Builder",
-  description:
-    "Calculate D&D 3.5 magic weapon and armor prices using DMG rules, with Complete-series special abilities. Includes base item cost and total equivalent bonus.",
-  path: "/tools/magic-item-builder",
+  title: TOOL_NAME,
+  description: TOOL_DESCRIPTION,
+  path: TOOL_PATH,
 });
 
 export default function MagicItemBuilderPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
+        data={toolPageJsonLd(
           [
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
-            { name: "Magic Item Builder", path: "/tools/magic-item-builder" },
+            { name: TOOL_NAME, path: TOOL_PATH },
           ],
+          {
+            name: TOOL_NAME,
+            description: TOOL_DESCRIPTION,
+            url: absoluteUrl(TOOL_PATH),
+          },
           absoluteUrl,
         )}
       />

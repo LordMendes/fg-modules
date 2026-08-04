@@ -1,5 +1,13 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/components/login-form";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "Sign in",
+  description: "Sign in to access your saved lists and profile.",
+  path: "/login",
+  noindex: true,
+});
 
 export default function LoginPage() {
   return (

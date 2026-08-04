@@ -1,29 +1,35 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { LeadershipCalculator } from "@/components/tools/leadership-calculator";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
+const TOOL_PATH = "/tools/leadership-calculator";
+const TOOL_NAME = "Leadership Calculator";
+const TOOL_DESCRIPTION =
+  "Calculate D&D 3.5 Leadership scores, cohort level, and followers using PHB and Epic Leadership rules.";
+
 export const metadata = buildPageMetadata({
-  title: "Leadership Calculator",
-  description:
-    "Calculate D&D 3.5 Leadership scores, cohort level, and followers using PHB and Epic Leadership rules.",
-  path: "/tools/leadership-calculator",
+  title: TOOL_NAME,
+  description: TOOL_DESCRIPTION,
+  path: TOOL_PATH,
 });
 
 export default function LeadershipCalculatorPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
+        data={toolPageJsonLd(
           [
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
-            {
-              name: "Leadership Calculator",
-              path: "/tools/leadership-calculator",
-            },
+            { name: TOOL_NAME, path: TOOL_PATH },
           ],
+          {
+            name: TOOL_NAME,
+            description: TOOL_DESCRIPTION,
+            url: absoluteUrl(TOOL_PATH),
+          },
           absoluteUrl,
         )}
       />

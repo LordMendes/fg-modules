@@ -1,14 +1,18 @@
 import Link from "next/link";
 import { NpcCreator } from "@/components/tools/npc-creator";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 import { getTool } from "@/lib/tools";
 
+const TOOL_PATH = "/tools/npc-creator";
+const TOOL_NAME = "NPC Creator";
+const TOOL_DESCRIPTION =
+  "Build D&D 3.5 NPCs with archetypes and monster templates, preview a Fantasy Grounds–style sheet, and download importable FG XML.";
+
 export const metadata = buildPageMetadata({
-  title: "NPC Creator",
-  description:
-    "Build D&D 3.5 NPCs with archetypes and monster templates, preview a Fantasy Grounds–style sheet, and download importable FG XML.",
-  path: "/tools/npc-creator",
+  title: TOOL_NAME,
+  description: TOOL_DESCRIPTION,
+  path: TOOL_PATH,
 });
 
 export default function NpcCreatorPage() {
@@ -17,12 +21,17 @@ export default function NpcCreatorPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
+        data={toolPageJsonLd(
           [
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
-            { name: "NPC Creator", path: "/tools/npc-creator" },
+            { name: TOOL_NAME, path: TOOL_PATH },
           ],
+          {
+            name: TOOL_NAME,
+            description: TOOL_DESCRIPTION,
+            url: absoluteUrl(TOOL_PATH),
+          },
           absoluteUrl,
         )}
       />

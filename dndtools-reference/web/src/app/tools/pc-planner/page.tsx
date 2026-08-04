@@ -1,15 +1,19 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { PcPlanner } from "@/components/tools/pc-planner";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 import { getTool } from "@/lib/tools";
 
+const TOOL_PATH = "/tools/pc-planner";
+const TOOL_NAME = "PC Planner";
+const TOOL_DESCRIPTION =
+  "Plan D&D 3.5 player characters with a Fantasy Grounds character sheet, compendium feat and spell search, and automatic spell slot calculation.";
+
 export const metadata = buildPageMetadata({
-  title: "PC Planner",
-  description:
-    "Plan D&D 3.5 player characters with a Fantasy Grounds character sheet, compendium feat and spell search, and automatic spell slot calculation.",
-  path: "/tools/pc-planner",
+  title: TOOL_NAME,
+  description: TOOL_DESCRIPTION,
+  path: TOOL_PATH,
 });
 
 export default function PcPlannerPage() {
@@ -18,12 +22,17 @@ export default function PcPlannerPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
+        data={toolPageJsonLd(
           [
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
-            { name: "PC Planner", path: "/tools/pc-planner" },
+            { name: TOOL_NAME, path: TOOL_PATH },
           ],
+          {
+            name: TOOL_NAME,
+            description: TOOL_DESCRIPTION,
+            url: absoluteUrl(TOOL_PATH),
+          },
           absoluteUrl,
         )}
       />

@@ -1,5 +1,13 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "Profile",
+  description: "Manage your saved lists and character plans.",
+  path: "/profile",
+  noindex: true,
+});
 
 export default async function ProfileLayout({
   children,

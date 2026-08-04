@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       // Thin/duplicate URLs are handled via per-page robots noindex
       // (filtered category lists and /search?q=…). Keep crawl of hubs.
-      disallow: ["/api/", "/health"],
+      disallow: ["/api/", "/health", "/login", "/register", "/profile"],
     },
     // generateSitemaps serves chunks at /sitemap/[id].xml. Listing each chunk
     // here avoids a root /sitemap.xml index (conflicts with [category]).

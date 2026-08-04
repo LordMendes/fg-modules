@@ -1,25 +1,34 @@
 import Link from "next/link";
 import { StrongholdCalculator } from "@/components/tools/stronghold-calculator";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
+const TOOL_PATH = "/tools/stronghold-builder";
+const TOOL_NAME = "Stronghold Builder";
+const TOOL_DESCRIPTION =
+  "Calculate D&D 3.5 stronghold cost, build time, and staff upkeep using the Stronghold Builder's Guidebook rules.";
+
 export const metadata = buildPageMetadata({
-  title: "Stronghold Builder",
-  description:
-    "Calculate D&D 3.5 stronghold cost, build time, and staff upkeep using the Stronghold Builder's Guidebook rules.",
-  path: "/tools/stronghold-builder",
+  title: TOOL_NAME,
+  description: TOOL_DESCRIPTION,
+  path: TOOL_PATH,
 });
 
 export default function StrongholdBuilderPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
+        data={toolPageJsonLd(
           [
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
-            { name: "Stronghold Builder", path: "/tools/stronghold-builder" },
+            { name: TOOL_NAME, path: TOOL_PATH },
           ],
+          {
+            name: TOOL_NAME,
+            description: TOOL_DESCRIPTION,
+            url: absoluteUrl(TOOL_PATH),
+          },
           absoluteUrl,
         )}
       />
