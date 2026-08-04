@@ -109,7 +109,7 @@ export default async function RootLayout({
         <Script
           defer
           data-domain="dnd-helper.com"
-          src="http://analytics.lcmendes.com/js/script.file-downloads.hash.outbound-links.pageview-props.tagged-events.js"
+          src="https://analytics.lcmendes.com/js/script.file-downloads.hash.outbound-links.pageview-props.tagged-events.js"
           strategy="afterInteractive"
         />
       </body>
