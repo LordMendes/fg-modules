@@ -1,8 +1,8 @@
-/** Cursor skill text for generating NPC FG JSON (Arcane Archives NPC Creator). */
+/** Cursor skill text for generating NPC FG JSON (DnD Helper NPC Creator). */
 export const NPC_FG_SKILL_MARKDOWN = `---
 name: npc-fg-wiki-json
 description: >-
-  Generates partial or complete JSON compatible with the Arcane Archives
+  Generates partial or complete JSON compatible with the DnD Helper
   NPC Creator (#/tools/npc-creator) Paste JSON → Apply. Use when the user asks
   for wiki JSON, exportable NpcFgExportState, or to fill DR/SR/spells before XML.
 ---

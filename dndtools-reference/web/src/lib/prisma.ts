@@ -18,8 +18,30 @@ function createPrismaClient(): PrismaClient {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+/** Delegates that must exist after schema changes (dev hot reload can cache stale clients). */
+const REQUIRED_DELEGATES = ["savedList", "pcPlan"] as const;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+function isPrismaClientReady(client: PrismaClient): boolean {
+  return REQUIRED_DELEGATES.every((key) => key in client);
 }
+
+function getPrismaClient(): PrismaClient {
+  const cached = globalForPrisma.prisma;
+  if (cached && isPrismaClientReady(cached)) {
+    return cached;
+  }
+  const client = createPrismaClient();
+  globalForPrisma.prisma = client;
+  return client;
+}
+
+export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
+  get(_target, prop, receiver) {
+    const client = getPrismaClient();
+    const value = Reflect.get(client, prop, receiver);
+    if (typeof value === "function") {
+      return value.bind(client);
+    }
+    return value;
+  },
+});

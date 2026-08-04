@@ -45,6 +45,16 @@ export const TOOLS = [
     source: "SRD 3.5 / Fantasy Grounds",
     badge: "Beta",
   },
+  {
+    key: "pc-planner",
+    label: "PC Planner",
+    icon: "🧙",
+    href: "/tools/pc-planner",
+    description:
+      "Plan player characters with a Fantasy Grounds character sheet, compendium feat and spell search, and automatic spell slot calculation.",
+    source: "SRD 3.5 / Fantasy Grounds",
+    badge: "Beta",
+  },
 ] as const;
 
 export type ToolKey = (typeof TOOLS)[number]["key"];

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
+import { SITE_NAME } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SearchBar } from "@/components/search-bar";
 import { LogoutButton } from "@/components/logout-button";
@@ -11,7 +12,7 @@ export function SiteHeader({ user }: { user: AuthUser | null }) {
       <div className="header-inner">
         <Link href="/" className="site-logo">
           <span className="logo-icon">⚔</span>
-          <span className="logo-text">Arcane Archives</span>
+          <span className="logo-text">{SITE_NAME}</span>
         </Link>
         <nav className="header-nav" aria-label="Primary navigation">
           <Link href="/sources">Sources</Link>

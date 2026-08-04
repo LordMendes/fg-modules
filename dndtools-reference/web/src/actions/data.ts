@@ -2,6 +2,8 @@
 
 import { headers } from "next/headers";
 import {
+  getClassSkillsBySlugs,
+  getPcCompendiumBundle,
   getClassSpellsAtLevel,
   getEntityPreview,
   getSpellPreview,
@@ -186,4 +188,58 @@ export async function fetchEntityPreview(
   if (!entity) return { success: false, error: "Entry not found" };
 
   return { success: true, entity };
+}
+
+export type ClassSkillsInput = {
+  classSlugs: string[];
+  nonce: string;
+};
+
+export type ClassSkillsResult = {
+  success: boolean;
+  error?: string;
+  skills?: Awaited<ReturnType<typeof getClassSkillsBySlugs>>;
+};
+
+export async function fetchClassSkills(input: ClassSkillsInput): Promise<ClassSkillsResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`class-skills:${ip}`, 60, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  const skills = await getClassSkillsBySlugs(input.classSlugs);
+  return { success: true, skills };
+}
+
+export type PcCompendiumInput = {
+  classLevels: { classSlug: string; className: string; level: number }[];
+  raceSlug?: string | null;
+  nonce: string;
+};
+
+export type PcCompendiumResult = {
+  success: boolean;
+  error?: string;
+  bundle?: Awaited<ReturnType<typeof getPcCompendiumBundle>>;
+};
+
+export async function fetchPcCompendium(input: PcCompendiumInput): Promise<PcCompendiumResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`pc-compendium:${ip}`, 60, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  const bundle = await getPcCompendiumBundle({
+    classLevels: input.classLevels,
+    raceSlug: input.raceSlug,
+  });
+  return { success: true, bundle };
 }

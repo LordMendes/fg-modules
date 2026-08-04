@@ -2,11 +2,17 @@ type JsonLdProps = {
   data: Record<string, unknown> | Record<string, unknown>[];
 };
 
+function serializeJsonLd(data: JsonLdProps["data"]): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+/** JSON-LD for SEO; rendered from server components only. */
 export function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
+      suppressHydrationWarning
     />
   );
 }

@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
 import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
+import { SITE_NAME } from "@/lib/seo";
 import { getEntityDetail } from "@/lib/entities";
 import type { CategoryKey } from "@/lib/categories";
 
-export const alt = "Arcane Archives entity";
+export const alt = `${SITE_NAME} entity`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const revalidate = 86400;
@@ -48,7 +49,7 @@ export default async function Image({ params }: Props) {
           }}
         >
           <span>⚔</span>
-          <span>Arcane Archives</span>
+          <span>{SITE_NAME}</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <div

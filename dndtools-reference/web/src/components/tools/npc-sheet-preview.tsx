@@ -1,10 +1,17 @@
 "use client";
 
+import { FgSheetTabs } from "@/components/fg-sheet-tabs";
 import { NpcMediaSlot } from "@/components/tools/npc-media-slot";
 import { buildMergedSpecialQualities } from "@/lib/npc-creator/buildXml";
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
 
-export type SheetTab = "main" | "spells" | "other";
+const NPC_SHEET_TABS = [
+  { id: "main" as const, label: "Main" },
+  { id: "spells" as const, label: "Spells" },
+  { id: "other" as const, label: "Other" },
+];
+
+export type SheetTab = (typeof NPC_SHEET_TABS)[number]["id"];
 
 export function NpcSheetPreview({
   state,
@@ -57,28 +64,7 @@ export function NpcSheetPreview({
         />
       </div>
 
-      <div className="npc-sheet-tabs" role="tablist">
-        {(
-          [
-            ["main", "Main"],
-            ["spells", "Spells"],
-            ["other", "Other"],
-          ] as const
-        ).map(([id, label]) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={tab === id}
-            className={
-              tab === id ? "npc-sheet-tab npc-sheet-tab-active" : "npc-sheet-tab"
-            }
-            onClick={() => onTabChange(id)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      <FgSheetTabs tabs={NPC_SHEET_TABS} value={tab} onChange={onTabChange} />
 
       {tab === "main" && (
         <div className="npc-sheet-panel" role="tabpanel">

@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
+import { SITE_NAME } from "@/lib/seo";
 
-export const alt = "Arcane Archives — D&D 3.5 Reference";
+export const alt = `${SITE_NAME} — D&D 3.5 Reference`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -45,7 +46,7 @@ export default function Image() {
             letterSpacing: "-0.02em",
           }}
         >
-          Arcane Archives
+          {SITE_NAME}
         </div>
         <div
           style={{

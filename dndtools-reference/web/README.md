@@ -1,4 +1,4 @@
-# Arcane Archives — D&D 3.5 Reference Website
+# DnD Helper — D&D 3.5 Reference Website
 
 Self-hosted Next.js SSR reference site for D&D 3.5 Edition content, backed by PostgreSQL + Prisma.
 

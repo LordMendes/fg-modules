@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
 import { getCategoryCounts } from "@/lib/entities";
 import { HomeSearch } from "@/components/home-search";
-import { buildPageMetadata, DEFAULT_DESCRIPTION } from "@/lib/seo";
+import { buildPageMetadata, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   description: DEFAULT_DESCRIPTION,
@@ -15,7 +15,7 @@ export default async function HomePage() {
   return (
     <>
       <section className="hero">
-        <h1>Arcane Archives</h1>
+        <h1>{SITE_NAME}</h1>
         <p>
           Your gateway to D&D 3.5 Edition — browse spells, feats, monsters,
           classes, and thousands more entries from across the multiverse.

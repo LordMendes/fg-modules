@@ -1,0 +1,410 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import {
+  createPcPlan,
+  deletePcPlan,
+  duplicatePcPlan,
+  getPcPlan,
+  getUserPcPlans,
+  renamePcPlan,
+  savePcPlan,
+  type PcPlanSummary,
+} from "@/actions/pc-plans";
+import { fetchPcCompendium } from "@/actions/data";
+import { useAuthUser } from "@/components/auth-provider";
+import { useSessionNonce } from "@/components/session-provider";
+import { PcPlanList } from "@/components/tools/pc-plan-list";
+import { PcSheet } from "@/components/tools/pc-sheet";
+import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
+import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
+import { applyDerivedFromRace } from "@/lib/pc-planner/syncDerived";
+import {
+  compendiumSyncKey,
+  mergeClassSkillsIntoRows,
+} from "@/lib/pc-planner/syncSkills";
+import type { PcCompendiumBundle } from "@/lib/entities";
+import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
+
+type SaveStatus = "idle" | "saving" | "saved" | "error";
+
+export function PcPlanner() {
+  const user = useAuthUser();
+  const nonce = useSessionNonce();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const planIdParam = searchParams.get("id");
+  const [planId, setPlanId] = useState<string | null>(null);
+  const [plans, setPlans] = useState<PcPlanSummary[]>([]);
+  const [listError, setListError] = useState<string | null>(null);
+  const [shortcut, setShortcut] = useState("");
+  const [state, setState] = useState<PcPlanState>(() => createDefaultPcPlanState());
+  const [sheetTab, setSheetTab] = useState<PcSheetTab>("main");
+  const [activeSpellClassIndex, setActiveSpellClassIndex] = useState(0);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+  const [pending, startTransition] = useTransition();
+  const saveTimer = useRef<number | null>(null);
+  const lastCompendiumSync = useRef("");
+  const [compendium, setCompendium] = useState<PcCompendiumBundle | null>(null);
+  const [compendiumLoading, setCompendiumLoading] = useState(false);
+
+  const compendiumKeyValue = compendiumSyncKey(
+    state.identity.classLevels,
+    state.identity.raceSlug,
+  );
+
+  const patch = useCallback(
+    (fn: (draft: PcPlanState) => void) => {
+      setState((prev) => {
+        const next = structuredClone(prev);
+        fn(next);
+        return finalizePcPlanState(next, compendium?.raceFeatures ?? null);
+      });
+    },
+    [compendium?.raceFeatures],
+  );
+
+  async function refreshPlans() {
+    const refreshed = await getUserPcPlans();
+    setPlans(refreshed);
+  }
+
+  useEffect(() => {
+    setActiveSpellClassIndex((index) => {
+      const count = state.spellClasses.length;
+      if (count === 0) return 0;
+      return Math.min(index, count - 1);
+    });
+  }, [state.spellClasses.length]);
+
+  useEffect(() => {
+    if (!hydrated || !user || !planIdParam) return;
+
+    const key = compendiumKeyValue;
+    if (key === lastCompendiumSync.current) return;
+
+    lastCompendiumSync.current = key;
+    setCompendiumLoading(true);
+    startTransition(async () => {
+      const result = await fetchPcCompendium({
+        classLevels: state.identity.classLevels,
+        raceSlug: state.identity.raceSlug,
+        nonce,
+      });
+      if (!result.success || !result.bundle) {
+        lastCompendiumSync.current = "";
+        setCompendiumLoading(false);
+        return;
+      }
+      setCompendium(result.bundle);
+      setState((prev) => {
+        const next = structuredClone(prev);
+        if (result.bundle!.skills.length > 0 || prev.identity.classLevels.length === 0) {
+          next.skills =
+            prev.identity.classLevels.length === 0
+              ? []
+              : mergeClassSkillsIntoRows(result.bundle!.skills, prev.skills);
+        }
+        applyDerivedFromRace(next, result.bundle!.raceFeatures);
+        return finalizePcPlanState(next, result.bundle!.raceFeatures);
+      });
+      setCompendiumLoading(false);
+    });
+  }, [compendiumKeyValue, hydrated, user, nonce, planIdParam]);
+
+  useEffect(() => {
+    if (!user) {
+      setHydrated(true);
+      return;
+    }
+
+    setHydrated(false);
+
+    startTransition(async () => {
+      if (!planIdParam) {
+        const userPlans = await getUserPcPlans();
+        setPlans(userPlans);
+        setPlanId(null);
+        setHydrated(true);
+        return;
+      }
+
+      const plan = await getPcPlan(planIdParam);
+      if (plan) {
+        lastCompendiumSync.current = "";
+        setPlanId(plan.id);
+        setShortcut(plan.shortcut ?? "");
+        setState(plan.state);
+        setHydrated(true);
+        return;
+      }
+
+      setListError("Character not found.");
+      router.replace("/tools/pc-planner");
+      const userPlans = await getUserPcPlans();
+      setPlans(userPlans);
+      setPlanId(null);
+      setHydrated(true);
+    });
+  }, [user, planIdParam, router]);
+
+  useEffect(() => {
+    if (!hydrated || !planId || !user || !planIdParam) return;
+
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = window.setTimeout(() => {
+      setSaveStatus("saving");
+      startTransition(async () => {
+        const result = await savePcPlan(planId, state);
+        setSaveStatus(result.success ? "saved" : "error");
+      });
+    }, 600);
+
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, [state, hydrated, planId, user, planIdParam]);
+
+  function handleShortcutSelect(plan: PcPlanSummary) {
+    router.push(`/tools/pc-planner?id=${plan.id}`);
+    startTransition(async () => {
+      const loaded = await getPcPlan(plan.id);
+      if (loaded) {
+        lastCompendiumSync.current = "";
+        setPlanId(loaded.id);
+        setShortcut(loaded.shortcut ?? "");
+        setState(loaded.state);
+        setStatusMessage(null);
+      }
+    });
+  }
+
+  function handleNewPlan() {
+    setListError(null);
+    startTransition(async () => {
+      const result = await createPcPlan();
+      if (!result.success || !result.plan) {
+        setListError(result.error ?? "Could not create character");
+        return;
+      }
+      lastCompendiumSync.current = "";
+      setPlanId(result.plan.id);
+      setShortcut(result.plan.shortcut ?? "");
+      setState(result.plan.state);
+      router.push(`/tools/pc-planner?id=${result.plan.id}`);
+    });
+  }
+
+  function handleDuplicate() {
+    if (!planId) return;
+    startTransition(async () => {
+      const result = await duplicatePcPlan(planId);
+      if (result.success && result.plan) {
+        lastCompendiumSync.current = "";
+        setPlanId(result.plan.id);
+        setShortcut(result.plan.shortcut ?? "");
+        setState(result.plan.state);
+        router.push(`/tools/pc-planner?id=${result.plan.id}`);
+        setStatusMessage("Character duplicated.");
+      }
+    });
+  }
+
+  function handleDeleteFromList(id: string) {
+    setListError(null);
+    return new Promise<boolean>((resolve) => {
+      startTransition(async () => {
+        const result = await deletePcPlan(id);
+        if (!result.success) {
+          setListError(result.error ?? "Could not delete character");
+          resolve(false);
+          return;
+        }
+        setPlans((prev) => prev.filter((p) => p.id !== id));
+        resolve(true);
+      });
+    });
+  }
+
+  function handleDeleteFromEditor() {
+    if (!planId || !window.confirm("Delete this character permanently?")) return;
+    startTransition(async () => {
+      const result = await deletePcPlan(planId);
+      if (!result.success) {
+        setStatusMessage(result.error ?? "Could not delete character");
+        return;
+      }
+      router.push("/tools/pc-planner");
+      setPlanId(null);
+      setStatusMessage(null);
+      await refreshPlans();
+    });
+  }
+
+  function handleBackToList() {
+    router.push("/tools/pc-planner");
+    setPlanId(null);
+    setStatusMessage(null);
+    startTransition(async () => {
+      await refreshPlans();
+    });
+  }
+
+  function updateAbility(key: AbilityKey, value: number) {
+    patch((s) => {
+      if (!s.abilityBase) s.abilityBase = { ...s.abilities };
+      s.abilityBase[key] = value;
+    });
+  }
+
+  function addFeat(slug: string, name: string) {
+    patch((s) => {
+      if (s.feats.some((f) => f.slug === slug)) return;
+      s.feats.push({ slug, name });
+    });
+  }
+
+  function removeFeat(slug: string) {
+    patch((s) => {
+      s.feats = s.feats.filter((f) => f.slug !== slug);
+    });
+  }
+
+  function addSpell(slug: string, name: string, level: number) {
+    patch((s) => {
+      const target = s.spellClasses[activeSpellClassIndex];
+      if (!target || target.spells.some((sp) => sp.slug === slug)) return;
+      target.spells.push({ slug, name, level });
+    });
+  }
+
+  function removeSpell(slug: string) {
+    patch((s) => {
+      const target = s.spellClasses[activeSpellClassIndex];
+      if (!target) return;
+      target.spells = target.spells.filter((sp) => sp.slug !== slug);
+    });
+  }
+
+  function addInventoryRow() {
+    patch((s) => {
+      s.inventory.push({ name: "", quantity: 1, weight: 0 });
+    });
+  }
+
+  if (!user) {
+    return (
+      <div className="pc-planner-auth-gate">
+        <p>
+          PC Planner saves character builds to your account. Sign in to use the Fantasy
+          Grounds character sheet with automatic spell slot calculation.
+        </p>
+        <Link href="/login?next=/tools/pc-planner" className="tool-btn">
+          Sign in to continue
+        </Link>
+      </div>
+    );
+  }
+
+  if (!hydrated) {
+    return <p className="pc-planner-loading">Loading…</p>;
+  }
+
+  if (!planIdParam) {
+    return (
+      <>
+        {statusMessage ? (
+          <p className="npc-creator-status pc-sheet-status" role="status">
+            {statusMessage}
+          </p>
+        ) : null}
+        <PcPlanList
+          plans={plans}
+          pending={pending}
+          error={listError}
+          onCreate={handleNewPlan}
+          onDelete={handleDeleteFromList}
+        />
+      </>
+    );
+  }
+
+  return (
+    <div className="pc-sheet-frame npc-sheet">
+      <div className="pc-sheet-toolbar">
+        <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
+          ← All characters
+        </button>
+        <PcShortcutSearch onSelect={handleShortcutSelect} />
+        <div className="pc-sheet-toolbar-actions">
+          <span className="pc-save-status" aria-live="polite">
+            {saveStatus === "saving"
+              ? "Saving…"
+              : saveStatus === "saved"
+                ? "Saved"
+                : saveStatus === "error"
+                  ? "Save failed"
+                  : null}
+          </span>
+          <button type="button" className="tool-btn tool-btn--ghost" onClick={handleNewPlan}>
+            New
+          </button>
+          <button
+            type="button"
+            className="tool-btn tool-btn--ghost"
+            onClick={handleDuplicate}
+            disabled={!planId || pending}
+          >
+            Duplicate
+          </button>
+          <button
+            type="button"
+            className="tool-btn tool-btn--ghost tool-btn--danger"
+            onClick={handleDeleteFromEditor}
+            disabled={!planId || pending}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+
+      {statusMessage ? (
+        <p className="npc-creator-status pc-sheet-status" role="status">
+          {statusMessage}
+        </p>
+      ) : null}
+
+      <PcSheet
+        state={state}
+        patch={patch}
+        sheetTab={sheetTab}
+        onTabChange={setSheetTab}
+        shortcut={shortcut}
+        onShortcutChange={setShortcut}
+        onNameBlur={() => {
+          if (!planId) return;
+          void renamePcPlan(planId, state.identity.name || "Unnamed");
+        }}
+        onShortcutBlur={() => {
+          if (!planId) return;
+          void renamePcPlan(planId, state.identity.name, shortcut || null);
+        }}
+        activeSpellClassIndex={activeSpellClassIndex}
+        onSpellClassIndexChange={setActiveSpellClassIndex}
+        compendium={compendium}
+        compendiumLoading={compendiumLoading}
+        onAddFeat={addFeat}
+        onRemoveFeat={removeFeat}
+        onAddSpell={addSpell}
+        onRemoveSpell={removeSpell}
+        onAddInventoryRow={addInventoryRow}
+        updateAbility={updateAbility}
+      />
+    </div>
+  );
+}

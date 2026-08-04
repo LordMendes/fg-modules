@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const SITE_NAME = "Arcane Archives";
+export const SITE_NAME = "DnD Helper";
 
 export const DEFAULT_DESCRIPTION =
   "A comprehensive D&D 3.5 Edition reference — spells, feats, monsters, classes, and more.";

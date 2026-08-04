@@ -18,6 +18,18 @@ import {
 import { buildEntityOrderBy } from "@/lib/entity-sort";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
 import type { TableSort } from "@/lib/table-sort";
+import {
+  parseClassAbilities,
+  parseClassProficiencies,
+  parseRacialProficiencies,
+  type ClassAbilityEntry,
+} from "@/lib/pc-planner/parseClassFeatures";
+import {
+  deriveClassFeatures,
+  type ClassDerivedFeatures,
+} from "@/lib/pc-planner/parseClassAbilityEffects";
+import { parseRaceFeatures, type RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
+import { parseClassSkillPointBase } from "@/lib/pc-planner/skillPoints";
 
 export type EntityListItem = {
   slug: string;
@@ -231,6 +243,119 @@ function parseClassSkills(value: unknown): ClassSkillRef[] {
       return { name, slug, ability };
     })
     .filter((item): item is ClassSkillRef => item !== null);
+}
+
+export async function getClassSkillsBySlugs(classSlugs: string[]): Promise<ClassSkillRef[]> {
+  const unique = [...new Set(classSlugs.filter(Boolean))];
+  if (unique.length === 0) return [];
+
+  const rows = await prisma.dndClass.findMany({
+    where: { slug: { in: unique } },
+    select: { indexData: true },
+  });
+
+  const merged = new Map<string, ClassSkillRef>();
+  for (const row of rows) {
+    const indexData = row.indexData as Record<string, unknown>;
+    for (const skill of parseClassSkills(indexData?.classSkills)) {
+      const key = skill.slug ?? skill.name.toLowerCase();
+      if (!merged.has(key)) merged.set(key, skill);
+    }
+  }
+
+  return [...merged.values()].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export type PcCompendiumBundle = {
+  skills: ClassSkillRef[];
+  /** Class slug → skill point base before Int (e.g. rogue → 8). */
+  classSkillPointBases: Record<string, number>;
+  proficiencies: string[];
+  classAbilities: ClassAbilityEntry[];
+  classFeatures: ClassDerivedFeatures;
+  racialTraits: string[];
+  racialProficiencies: string[];
+  raceFeatures: RaceDerivedFeatures | null;
+};
+
+export async function getPcCompendiumBundle(input: {
+  classLevels: { classSlug: string; className: string; level: number }[];
+  raceSlug?: string | null;
+}): Promise<PcCompendiumBundle> {
+  const classSlugs = [...new Set(input.classLevels.map((cl) => cl.classSlug).filter(Boolean))];
+  const skills = await getClassSkillsBySlugs(classSlugs);
+
+  const proficiencies: string[] = [];
+  const classAbilities: ClassAbilityEntry[] = [];
+  const classDescriptions = new Map<string, string>();
+  const classSkillPointBases: Record<string, number> = {};
+
+  if (classSlugs.length > 0) {
+    const classRows = await prisma.dndClass.findMany({
+      where: { slug: { in: classSlugs } },
+      select: { slug: true, name: true, descriptionText: true, indexData: true, skillPoints: true },
+    });
+
+    for (const row of classRows) {
+      const levelEntry = input.classLevels.find((cl) => cl.classSlug === row.slug);
+      if (!levelEntry) continue;
+      const parsedBase = parseClassSkillPointBase(row.skillPoints);
+      if (parsedBase != null) classSkillPointBases[row.slug] = parsedBase;
+      if (row.descriptionText) classDescriptions.set(row.slug, row.descriptionText);
+      proficiencies.push(
+        ...parseClassProficiencies(row.descriptionText).map(
+          (line) => `${levelEntry.className || row.name}: ${line}`,
+        ),
+      );
+      const indexData = row.indexData as Record<string, unknown>;
+      classAbilities.push(
+        ...parseClassAbilities(
+          indexData?.advancement,
+          row.slug,
+          levelEntry.className || row.name,
+          levelEntry.level,
+        ),
+      );
+    }
+  }
+
+  const classFeatures = deriveClassFeatures(classAbilities, classDescriptions);
+
+  let racialTraits: string[] = [];
+  let racialProficiencies: string[] = [];
+  let raceFeatures: RaceDerivedFeatures | null = null;
+
+  if (input.raceSlug) {
+    const race = await prisma.race.findUnique({
+      where: { slug: input.raceSlug },
+      select: { descriptionText: true, size: true, indexData: true },
+    });
+    if (race) {
+      const indexData = race.indexData as Record<string, unknown>;
+      const speedFromIndex =
+        typeof indexData?.speed === "string" ? indexData.speed : null;
+      raceFeatures = parseRaceFeatures({
+        descriptionText: race.descriptionText,
+        size: race.size,
+        speed: speedFromIndex,
+      });
+      racialTraits = raceFeatures.traits;
+      racialProficiencies = parseRacialProficiencies(race.descriptionText);
+    }
+  }
+
+  return {
+    skills,
+    classSkillPointBases,
+    proficiencies: [...new Set(proficiencies)],
+    classAbilities: classAbilities.sort(
+      (a, b) => a.level - b.level || a.name.localeCompare(b.name),
+    ),
+    classFeatures,
+    racialTraits,
+    racialProficiencies,
+    raceFeatures,
+  };
 }
 
 export type ListEntitiesOptions = {

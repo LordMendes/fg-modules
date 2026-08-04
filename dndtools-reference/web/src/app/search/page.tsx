@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { searchAll } from "@/lib/entities";
 import { getCategoryLabel, isCategoryKey } from "@/lib/categories";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, SITE_NAME } from "@/lib/seo";
 
 type Props = {
   searchParams: Promise<{ q?: string }>;
@@ -12,7 +12,7 @@ export async function generateMetadata({ searchParams }: Props) {
   const query = q?.trim() ?? "";
   return buildPageMetadata({
     title: query ? `Search: ${query}` : "Search",
-    description: "Search the Arcane Archives D&D 3.5 Edition reference.",
+    description: `Search the ${SITE_NAME} D&D 3.5 Edition reference.`,
     path: "/search",
     noindex: Boolean(query),
   });
