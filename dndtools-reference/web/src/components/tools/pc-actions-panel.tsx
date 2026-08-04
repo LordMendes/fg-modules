@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { PcCompendiumBundle } from "@/lib/entities";
-import { EntitySearchCombobox } from "@/components/entity-search-combobox";
+import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
+import { PcSpellListItem } from "@/components/tools/pc-spell-list-item";
 import { castingModeLabel } from "@/lib/pc-planner/classCasting";
 import {
   computeCombatStats,
@@ -105,6 +106,7 @@ export function PcActionsPanel({
   onUpdateSpellPrepared,
 }: PcActionsPanelProps) {
   const [pendingSpellLevel, setPendingSpellLevel] = useState(1);
+  const [spellPickerOpen, setSpellPickerOpen] = useState(false);
   const spellClass = state.spellClasses[activeSpellClassIndex];
   const computed = spellClass
     ? computeSpellClass(
@@ -114,6 +116,11 @@ export function PcActionsPanel({
         state.abilities,
       )
     : null;
+
+  const addedSpellSlugs = useMemo(
+    () => new Set(spellClass?.spells.map((spell) => spell.slug) ?? []),
+    [spellClass?.spells],
+  );
 
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-actions-panel" role="tabpanel">
@@ -187,11 +194,6 @@ export function PcActionsPanel({
           <div className="npc-sheet-block">
             <h3>{computed.mode === "spontaneous" ? "Spells known" : "Preparation"}</h3>
             <div className="pc-spell-add-row">
-              <EntitySearchCombobox
-                categories={["spells"]}
-                placeholder="Search spells to add…"
-                onSelect={(hit) => onAddSpell(hit.slug, hit.name, pendingSpellLevel)}
-              />
               <label className="pc-spell-level-pick">
                 <span className="npc-sheet-sub">Level</span>
                 <select
@@ -206,7 +208,24 @@ export function PcActionsPanel({
                   ))}
                 </select>
               </label>
+              <button
+                type="button"
+                className="tool-btn"
+                onClick={() => setSpellPickerOpen(true)}
+              >
+                Add spell
+              </button>
             </div>
+
+            <PcSpellPickerDialog
+              open={spellPickerOpen}
+              onClose={() => setSpellPickerOpen(false)}
+              classSlug={spellClass.classSlug}
+              classLabel={spellClass.label}
+              level={pendingSpellLevel}
+              addedSpellSlugs={addedSpellSlugs}
+              onAddSpell={(slug, name) => onAddSpell(slug, name, pendingSpellLevel)}
+            />
 
             {spellClass.spells.length === 0 ? (
               <p className="pc-sheet-empty">No spells added.</p>
@@ -225,34 +244,18 @@ export function PcActionsPanel({
                           ? ` (${preparedTotal}/${slotLimit} prepared)`
                           : ` (${atLevel.length} known · ${slotLimit}/day)`}
                       </strong>
-                      <ul className="pc-feat-list pc-feat-list--editable">
+                      <ul className="pc-feat-list pc-feat-list--editable pc-spell-accordion-list">
                         {atLevel.map((sp) => (
-                          <li key={sp.slug} className="pc-sheet-editable-row">
-                            <span>{sp.name}</span>
-                            {computed.mode === "preparation" ? (
-                              <label className="pc-spell-prepared">
-                                <span className="npc-sheet-sub">Prep</span>
-                                <input
-                                  type="number"
-                                  className="pc-sheet-input pc-sheet-input--narrow"
-                                  min={0}
-                                  max={slotLimit}
-                                  value={sp.prepared ?? 1}
-                                  aria-label={`${sp.name} prepared count`}
-                                  onChange={(e) =>
-                                    onUpdateSpellPrepared(sp.slug, Number(e.target.value))
-                                  }
-                                />
-                              </label>
-                            ) : null}
-                            <button
-                              type="button"
-                              className="tool-btn tool-btn--ghost tool-btn--compact"
-                              onClick={() => onRemoveSpell(sp.slug)}
-                            >
-                              Remove
-                            </button>
-                          </li>
+                          <PcSpellListItem
+                            key={sp.slug}
+                            spell={sp}
+                            mode={computed.mode}
+                            slotLimit={slotLimit}
+                            onRemove={() => onRemoveSpell(sp.slug)}
+                            onUpdatePrepared={(prepared) =>
+                              onUpdateSpellPrepared(sp.slug, prepared)
+                            }
+                          />
                         ))}
                       </ul>
                     </li>

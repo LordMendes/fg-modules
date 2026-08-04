@@ -3,6 +3,12 @@ import { readFileSync, existsSync } from "fs";
 import { join, resolve } from "path";
 import { PrismaClient, EntityCategory, DomainType } from "../src/generated/prisma/client";
 import { parseCr } from "../src/lib/encounter/parseCr";
+import {
+  isCastingClassVariant,
+  parseClassSpellOriginSlug,
+  pickLargestSpellListSlug,
+} from "../src/lib/class-spell-origin";
+import { getClassCastingInfo } from "../src/lib/pc-planner/classCasting";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -167,6 +173,13 @@ function classIndexData(
 
   const requirementsHtml = cleanImportedText(record.requirements_html);
   const requirementsText = cleanImportedText(record.requirements_text);
+  const classSlug = typeof record.slug === "string" ? record.slug : undefined;
+  const className = typeof record.name === "string" ? record.name : undefined;
+  const spellListOriginSlug = parseClassSpellOriginSlug(
+    cleanImportedText(record.description_html),
+    className,
+    classSlug,
+  );
 
   return {
     ...index,
@@ -177,6 +190,7 @@ function classIndexData(
     ...(classSkills.length ? { classSkills } : {}),
     ...(requirementsHtml ? { requirementsHtml } : {}),
     ...(requirementsText ? { requirementsText } : {}),
+    ...(spellListOriginSlug ? { spellListOriginSlug } : {}),
   };
 }
 
@@ -915,6 +929,60 @@ async function pass3Junctions(): Promise<void> {
       }
     }
   }
+
+  const directLinksByClassId = new Map<string, number>();
+  for (const row of spellClassRows) {
+    directLinksByClassId.set(row.classId, (directLinksByClassId.get(row.classId) ?? 0) + 1);
+  }
+
+  const classIdToSlug = new Map<string, string>();
+  for (const [slug, id] of slugMaps.classes.entries()) {
+    classIdToSlug.set(id, slug);
+  }
+
+  const spellLinksWithSlug = spellClassRows.map((row) => ({
+    classSlug: classIdToSlug.get(row.classId) ?? "",
+  }));
+
+  const classRecords = loadJson("classes");
+  const inheritedRows: { spellId: string; classId: string; level: number }[] = [];
+  for (const record of classRecords) {
+    const slug = record.slug as string;
+    const name = record.name as string;
+    const classId = lookupRef("classes", { slug });
+    if (!classId || (directLinksByClassId.get(classId) ?? 0) > 0) continue;
+
+    let originSlug = parseClassSpellOriginSlug(
+      cleanImportedText(record.description_html),
+      name,
+      slug,
+    );
+    if (!originSlug && isCastingClassVariant(slug, name)) {
+      const info = getClassCastingInfo(slug, name);
+      if (info) {
+        originSlug = pickLargestSpellListSlug(
+          spellLinksWithSlug,
+          info.fgClassName.toLowerCase(),
+        );
+      }
+    }
+    if (!originSlug || originSlug === slug) continue;
+
+    const originClassId = lookupRef("classes", { slug: originSlug });
+    if (!originClassId) continue;
+
+    for (const row of spellClassRows) {
+      if (row.classId === originClassId) {
+        inheritedRows.push({ spellId: row.spellId, classId, level: row.level });
+      }
+    }
+  }
+
+  if (inheritedRows.length > 0) {
+    spellClassRows.push(...inheritedRows);
+    console.log(`  inherited spell-class links for variants: ${inheritedRows.length}`);
+  }
+
   await prisma.spellClassLevel.deleteMany();
   await batchUpsert(spellClassRows, async (batch) => {
     await prisma.spellClassLevel.createMany({ data: batch, skipDuplicates: true });

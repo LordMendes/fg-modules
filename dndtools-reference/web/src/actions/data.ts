@@ -99,6 +99,7 @@ export async function searchEntities(input: SearchInput): Promise<SearchResult> 
 
 export type ClassSpellsInput = {
   classSlug: string;
+  className?: string;
   level: number;
   nonce: string;
 };
@@ -125,7 +126,7 @@ export async function fetchClassSpellsAtLevel(
     return { success: false, error: "Invalid spell level" };
   }
 
-  const spells = await getClassSpellsAtLevel(input.classSlug, input.level);
+  const spells = await getClassSpellsAtLevel(input.classSlug, input.level, input.className);
   return { success: true, spells };
 }
 

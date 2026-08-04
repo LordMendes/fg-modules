@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { Search } from "lucide-react";
 import { useSessionNonce } from "@/components/session-provider";
-import { paginateEntities } from "@/actions/data";
+import { fetchClassSpellsAtLevel, paginateEntities } from "@/actions/data";
 import type { CategoryKey } from "@/lib/categories";
 
 export type EntitySearchHit = {
@@ -20,7 +20,13 @@ type EntitySearchComboboxProps = {
   placeholder?: string;
   label?: string;
   className?: string;
+  /** Limit spell search to a class spell list at a specific level. */
+  spellFilter?: { classSlug: string; level: number };
 };
+
+function spellFilterKey(classSlug: string, level: number) {
+  return `${classSlug}:${level}`;
+}
 
 export function EntitySearchCombobox({
   categories,
@@ -28,6 +34,7 @@ export function EntitySearchCombobox({
   placeholder = "Search compendium…",
   label = "Search compendium",
   className,
+  spellFilter,
 }: EntitySearchComboboxProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<EntitySearchHit[]>([]);
@@ -38,6 +45,10 @@ export function EntitySearchCombobox({
   const rootRef = useRef<HTMLDivElement>(null);
   const listId = useId();
   const requestId = useRef(0);
+  const spellCacheRef = useRef<Map<string, EntitySearchHit[]>>(new Map());
+
+  const spellClassSlug = spellFilter?.classSlug;
+  const spellLevel = spellFilter?.level;
 
   useEffect(() => {
     const trimmed = query.trim();
@@ -51,6 +62,41 @@ export function EntitySearchCombobox({
     const timer = window.setTimeout(() => {
       const id = ++requestId.current;
       startTransition(async () => {
+        if (spellClassSlug != null && spellLevel != null) {
+          const cacheKey = spellFilterKey(spellClassSlug, spellLevel);
+          let spells = spellCacheRef.current.get(cacheKey);
+          if (!spells) {
+            const result = await fetchClassSpellsAtLevel({
+              classSlug: spellClassSlug,
+              level: spellLevel,
+              nonce,
+            });
+            if (id !== requestId.current) return;
+            if (!result.success || !result.spells) {
+              setResults([]);
+              setOpen(false);
+              setActiveIndex(-1);
+              return;
+            }
+            spells = result.spells.map((spell) => ({
+              slug: spell.slug,
+              name: spell.name,
+              sourceAbbrev: spell.sourceAbbrev,
+            }));
+            spellCacheRef.current.set(cacheKey, spells);
+          }
+
+          const needle = trimmed.toLowerCase();
+          const hits = spells
+            .filter((spell) => spell.name.toLowerCase().includes(needle))
+            .slice(0, 20);
+          if (id !== requestId.current) return;
+          setResults(hits);
+          setOpen(hits.length > 0);
+          setActiveIndex(-1);
+          return;
+        }
+
         const hits: EntitySearchHit[] = [];
         for (const category of categories) {
           const result = await paginateEntities({
@@ -78,7 +124,7 @@ export function EntitySearchCombobox({
     }, DEBOUNCE_MS);
 
     return () => window.clearTimeout(timer);
-  }, [query, nonce, categories]);
+  }, [query, nonce, categories, spellClassSlug, spellLevel]);
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent) {

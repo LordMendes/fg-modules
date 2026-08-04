@@ -18,6 +18,8 @@ import {
 import { buildEntityOrderBy } from "@/lib/entity-sort";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
 import type { TableSort } from "@/lib/table-sort";
+import { isCastingClassVariant, resolveClassSpellOriginSlug } from "@/lib/class-spell-origin";
+import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import {
   parseClassAbilities,
   parseClassProficiencies,
@@ -1173,12 +1175,20 @@ export async function getEntityDetail(
       });
       if (!r) return null;
 
-      const levelCounts = await prisma.spellClassLevel.groupBy({
-        by: ["level"],
-        where: { classId: r.id },
-        _count: { spellId: true },
-        orderBy: { level: "asc" },
+      const listSlug = await resolveClassSpellListSlug(r.slug, r.name);
+      const listClass = await prisma.dndClass.findUnique({
+        where: { slug: listSlug },
+        select: { id: true },
       });
+
+      const levelCounts = listClass
+        ? await prisma.spellClassLevel.groupBy({
+            by: ["level"],
+            where: { classId: listClass.id },
+            _count: { spellId: true },
+            orderBy: { level: "asc" },
+          })
+        : [];
 
       const indexData = r.indexData as Record<string, unknown>;
       return {
@@ -1391,12 +1401,66 @@ export async function searchAll(query: string, limit = 20): Promise<
   return results;
 }
 
+async function resolveClassSpellListSlug(
+  classSlug: string,
+  className?: string,
+): Promise<string> {
+  const cls = await prisma.dndClass.findUnique({
+    where: { slug: classSlug },
+    select: {
+      slug: true,
+      name: true,
+      descriptionHtml: true,
+      indexData: true,
+      _count: { select: { spellLevels: true } },
+    },
+  });
+  if (!cls) return classSlug;
+
+  const resolvedName = className ?? cls.name;
+  let fallbackOriginSlug: string | null = null;
+
+  if (
+    cls._count.spellLevels === 0 &&
+    isCastingClassVariant(cls.slug, resolvedName)
+  ) {
+    const info = getClassCastingInfo(cls.slug, resolvedName);
+    if (info) {
+      const grouped = await prisma.spellClassLevel.groupBy({
+        by: ["classId"],
+        where: { class: { slug: { startsWith: `${info.fgClassName.toLowerCase()}-` } } },
+        _count: { spellId: true },
+        orderBy: { _count: { spellId: "desc" } },
+        take: 1,
+      });
+      if (grouped.length > 0) {
+        const origin = await prisma.dndClass.findUnique({
+          where: { id: grouped[0].classId },
+          select: { slug: true },
+        });
+        fallbackOriginSlug = origin?.slug ?? null;
+      }
+    }
+  }
+
+  return resolveClassSpellOriginSlug({
+    classSlug: cls.slug,
+    className: resolvedName,
+    descriptionHtml: cls.descriptionHtml,
+    indexData: cls.indexData,
+    directSpellLinkCount: cls._count.spellLevels,
+    fallbackOriginSlug,
+  });
+}
+
 export async function getClassSpellsAtLevel(
   classSlug: string,
   level: number,
+  className?: string,
 ): Promise<ClassSpellRef[]> {
+  const listSlug = await resolveClassSpellListSlug(classSlug, className);
   const rows = await prisma.spellClassLevel.findMany({
-    where: { class: { slug: classSlug }, level },
+    where: { class: { slug: listSlug }, level },
     orderBy: { spell: { name: "asc" } },
     select: {
       spell: {

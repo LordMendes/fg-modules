@@ -26,7 +26,14 @@ const CASTING_BY_NAME: Record<string, ClassCastingInfo> = Object.fromEntries(
 function matchCastingBySlug(classSlug: string): ClassCastingInfo | null {
   const slugLower = classSlug.toLowerCase();
   for (const [key, info] of Object.entries(CASTING_BY_SLUG)) {
-    if (slugLower === key || slugLower.startsWith(`${key}-`)) return info;
+    if (
+      slugLower === key ||
+      slugLower.startsWith(`${key}-`) ||
+      slugLower.includes(`-${key}-`) ||
+      slugLower.endsWith(`-${key}`)
+    ) {
+      return info;
+    }
   }
   return null;
 }
@@ -43,6 +50,20 @@ function matchCastingByName(className: string): ClassCastingInfo | null {
 
 export function getClassCastingInfo(classSlug: string, className?: string): ClassCastingInfo | null {
   return matchCastingBySlug(classSlug) ?? (className ? matchCastingByName(className) : null);
+}
+
+/** True when spell-class rows are stored under this slug (not a variant like battle-sorcerer). */
+export function usesDirectClassSpellList(classSlug: string, className?: string): boolean {
+  const info = getClassCastingInfo(classSlug, className);
+  if (!info) return true;
+  const base = info.fgClassName.toLowerCase();
+  const slugLower = classSlug.toLowerCase();
+  return slugLower === base || slugLower.startsWith(`${base}-`);
+}
+
+export function spellListSlugPrefix(classSlug: string, className?: string): string | null {
+  const info = getClassCastingInfo(classSlug, className);
+  return info ? info.fgClassName.toLowerCase() : null;
 }
 
 export function spellModeFromProgression(progression: CastingProgression): SpellMode {

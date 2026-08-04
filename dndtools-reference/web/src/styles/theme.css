@@ -4430,9 +4430,8 @@ body {
   margin-bottom: 0.75rem;
 }
 
-.pc-spell-add-row .entity-search-combobox {
-  flex: 1;
-  min-width: 12rem;
+.pc-spell-add-row .tool-btn {
+  margin-bottom: 0.1rem;
 }
 
 .pc-spell-level-pick {
@@ -5000,6 +4999,84 @@ body {
   gap: 0.35rem;
 }
 
+.pc-spell-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pc-spell-accordion-item {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+
+.pc-spell-accordion-item.is-open {
+  border-color: var(--border-ornament);
+}
+
+.pc-spell-accordion-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.pc-spell-accordion-expand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+}
+
+.pc-spell-accordion-expand:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+.pc-spell-accordion-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-spell-accordion-body {
+  padding: 0 0.75rem 0.75rem 2.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.pc-spell-cast-details {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.65rem 0 0;
+  font-size: 0.875rem;
+}
+
+.pc-spell-cast-details dt {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pc-spell-cast-details dd {
+  margin: 0.15rem 0 0;
+}
+
+.pc-spell-cast-empty {
+  margin: 0.65rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
 .profile-pc-plans {
   margin-bottom: 2rem;
 }
@@ -5015,5 +5092,247 @@ body {
 
 .profile-section-header h2 {
   margin: 0;
+}
+
+/* Draggable dialog */
+.draggable-dialog-root {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  pointer-events: none;
+}
+
+.draggable-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1px);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.draggable-dialog-panel {
+  position: fixed;
+  z-index: 1;
+  width: min(720px, calc(100vw - 2rem));
+  max-height: min(85vh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 2px solid var(--border-ornament);
+  border-radius: 6px;
+  box-shadow: 0 16px 48px var(--shadow);
+  pointer-events: auto;
+}
+
+.draggable-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-card);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.draggable-dialog-header:active {
+  cursor: grabbing;
+}
+
+.draggable-dialog-header h2 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 1.25rem;
+  margin: 0;
+  padding-right: 0.5rem;
+}
+
+.draggable-dialog-close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.draggable-dialog-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+.draggable-dialog-body {
+  overflow: auto;
+  padding: 1rem;
+}
+
+/* PC spell picker dialog */
+.pc-spell-picker-dialog {
+  width: min(760px, calc(100vw - 2rem));
+}
+
+.pc-spell-picker-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.pc-spell-picker-search-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.pc-spell-picker-search {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-spell-picker-count {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.pc-spell-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pc-spell-picker-item {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+
+.pc-spell-picker-item.is-open {
+  border-color: var(--border-ornament);
+}
+
+.pc-spell-picker-item-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.pc-spell-picker-item-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+}
+
+.pc-spell-picker-item-row:hover {
+  background: var(--bg-secondary);
+}
+
+.pc-spell-picker-item-expand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.pc-spell-picker-item-expand:hover {
+  color: var(--text-primary);
+  background: var(--surface-raised);
+}
+
+.pc-spell-picker-item-name {
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pc-spell-picker-item-meta {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pc-spell-picker-item-icon {
+  width: 1.25rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.pc-spell-picker-item-header > .tool-btn {
+  align-self: center;
+  margin-right: 0.5rem;
+}
+
+.pc-spell-picker-item-body {
+  padding: 0 0.875rem 0.875rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.pc-spell-picker-stats {
+  margin: 0.75rem 0;
+}
+
+.pc-spell-picker-summary {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+}
+
+.pc-spell-picker-summary dt {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pc-spell-picker-summary dd {
+  margin: 0.15rem 0 0;
+}
+
+.pc-spell-picker-summary-desc dd {
+  white-space: pre-wrap;
+}
+
+.pc-spell-picker-text {
+  margin: 0.75rem 0 0;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+.pc-spell-picker-status,
+.pc-spell-picker-error {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.pc-spell-picker-error {
+  color: var(--danger, #c44);
 }
 

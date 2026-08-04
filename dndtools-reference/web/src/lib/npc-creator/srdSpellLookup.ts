@@ -7,6 +7,10 @@ type SpellTemplate = Omit<NpcFgSpellRow, "level" | "prepared">;
 
 const LIBRARY = spellLibrary as Record<string, SpellTemplate>;
 
+export function tryLookupSrdSpell(name: string): SpellTemplate | null {
+  return LIBRARY[normalizeSpellKey(name)] ?? null;
+}
+
 export function normalizeSpellKey(name: string): string {
   return name
     .trim()

@@ -19,6 +19,12 @@ describe("getClassCastingInfo", () => {
     assert.equal(info?.dcAbility, "cha");
   });
 
+  it("matches variant class slugs containing base caster name", () => {
+    const info = getClassCastingInfo("battle-sorcerer-119");
+    assert.equal(info?.progression, "spontaneous");
+    assert.equal(info?.fgClassName, "Sorcerer");
+  });
+
   it("returns null for non-casters", () => {
     assert.equal(getClassCastingInfo("fighter-93", "Fighter"), null);
   });
