@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
 import { SITE_NAME } from "@/lib/seo";
 
 export const OG_SIZE = { width: 1200, height: 630 };
@@ -14,7 +14,7 @@ export const OG_COLORS = {
   border: "#9B7FD4",
 } as const;
 
-export function ogImageResponse(content: ReactNode) {
+export function ogImageResponse(content: ReactElement) {
   return new ImageResponse(content, OG_SIZE);
 }
 
