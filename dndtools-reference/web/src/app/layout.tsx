@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import Script from "next/script";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { EncounterProvider } from "@/components/encounter/encounter-provider";
 import { EncounterDockHost } from "@/components/encounter/encounter-dock";
@@ -102,6 +103,15 @@ export default async function RootLayout({
             </AuthProvider>
           </SessionProvider>
         </Providers>
+        <Script id="plausible-init" strategy="beforeInteractive">
+          {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
+        </Script>
+        <Script
+          defer
+          data-domain="dnd-helper.com"
+          src="http://analytics.lcmendes.com/js/script.file-downloads.hash.outbound-links.pageview-props.tagged-events.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

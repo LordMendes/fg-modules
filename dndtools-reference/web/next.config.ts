@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 
 const monorepoRoot = path.join(__dirname, "..");
 const isDev = process.env.NODE_ENV === "development";
+const plausibleOrigin = "http://analytics.lcmendes.com";
 
 /**
  * Security headers for Lighthouse Best Practices (CSP, clickjacking, COOP, HSTS).
@@ -13,10 +14,11 @@ const isDev = process.env.NODE_ENV === "development";
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' ${plausibleOrigin}${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data:",
   "font-src 'self' data:",
+  `connect-src 'self' ${plausibleOrigin}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

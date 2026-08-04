@@ -122,6 +122,18 @@ export function PcActionsPanel({
     [spellClass?.spells],
   );
 
+  const castContext = useMemo(
+    () =>
+      computed && spellClass
+        ? {
+            casterLevel: spellClass.casterLevel,
+            spellLevel: pendingSpellLevel,
+            dcModifier: computed.dcModifier,
+          }
+        : null,
+    [computed, spellClass, pendingSpellLevel],
+  );
+
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-actions-panel" role="tabpanel">
       <CombatSummary state={state} compendium={compendium} patch={patch} />
@@ -223,6 +235,7 @@ export function PcActionsPanel({
               classSlug={spellClass.classSlug}
               classLabel={spellClass.label}
               level={pendingSpellLevel}
+              castContext={castContext!}
               addedSpellSlugs={addedSpellSlugs}
               onAddSpell={(slug, name) => onAddSpell(slug, name, pendingSpellLevel)}
             />
@@ -251,6 +264,11 @@ export function PcActionsPanel({
                             spell={sp}
                             mode={computed.mode}
                             slotLimit={slotLimit}
+                            castContext={{
+                              casterLevel: spellClass.casterLevel,
+                              spellLevel: sp.level,
+                              dcModifier: computed.dcModifier,
+                            }}
                             onRemove={() => onRemoveSpell(sp.slug)}
                             onUpdatePrepared={(prepared) =>
                               onUpdateSpellPrepared(sp.slug, prepared)

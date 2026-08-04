@@ -9,9 +9,10 @@ import { useSessionNonce } from "@/components/session-provider";
 import type { ClassSpellRef, SpellPreview } from "@/lib/entities";
 import {
   getSpellCastDetailsFromFields,
-  getSpellCastDetailsFromSrd,
   hasSpellCastDetails,
   mergeSpellCastDetails,
+  resolveSpellCastDetails,
+  type SpellCastContext,
 } from "@/lib/spell-cast-details";
 
 type SpellAccordionState = {
@@ -25,6 +26,7 @@ type SpellAccordionState = {
 function SpellPickerItem({
   spell,
   level,
+  castContext,
   added,
   state,
   onToggle,
@@ -32,42 +34,56 @@ function SpellPickerItem({
 }: {
   spell: ClassSpellRef;
   level: number;
+  castContext: SpellCastContext;
   added: boolean;
   state: SpellAccordionState | undefined;
   onToggle: () => void;
   onAdd: () => void;
 }) {
   const isOpen = state?.open ?? false;
-  const srdDetails = getSpellCastDetailsFromSrd(spell.name, level);
+  const resolvedDetails = resolveSpellCastDetails(spell.name, {
+    ...castContext,
+    spellLevel: level,
+  });
   const previewDetails = state?.preview
-    ? getSpellCastDetailsFromFields(state.preview.fields, state.preview.descriptionText)
+    ? getSpellCastDetailsFromFields(
+        state.preview.fields,
+        state.preview.descriptionText,
+        { ...castContext, spellLevel: level },
+      )
     : { save: null, damage: null, effect: null };
-  const details = mergeSpellCastDetails(srdDetails, previewDetails);
+  const details = mergeSpellCastDetails(resolvedDetails, previewDetails);
 
   return (
     <div className={`pc-spell-picker-item${isOpen ? " is-open" : ""}`}>
       <div className="pc-spell-picker-item-header">
-        <div className="pc-spell-picker-item-row">
+        <div
+          className="pc-spell-picker-item-row"
+          role="button"
+          tabIndex={0}
+          aria-expanded={isOpen}
+          onClick={onToggle}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              onToggle();
+            }
+          }}
+        >
           <a
             href={`/spells/${spell.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="pc-spell-picker-item-name pc-feat-link"
+            onClick={(event) => event.stopPropagation()}
           >
             {spell.name}
           </a>
+          <span className="pc-spell-picker-item-row-fill" aria-hidden="true" />
           <span className="pc-spell-picker-item-meta">{spell.school ?? "—"}</span>
-          <button
-            type="button"
-            className="pc-spell-picker-item-expand"
-            aria-expanded={isOpen}
-            aria-label={`${isOpen ? "Collapse" : "Expand"} ${spell.name}`}
-            onClick={onToggle}
-          >
-            <span className="pc-spell-picker-item-icon" aria-hidden="true">
-              {isOpen ? "−" : "+"}
-            </span>
-          </button>
+          <span className="pc-spell-picker-item-icon" aria-hidden="true">
+            {isOpen ? "−" : "+"}
+          </span>
         </div>
         <button
           type="button"
@@ -98,6 +114,7 @@ export function PcSpellPickerDialog({
   classSlug,
   classLabel,
   level,
+  castContext,
   addedSpellSlugs,
   onAddSpell,
 }: {
@@ -106,6 +123,7 @@ export function PcSpellPickerDialog({
   classSlug: string;
   classLabel: string;
   level: number;
+  castContext: SpellCastContext;
   addedSpellSlugs: Set<string>;
   onAddSpell: (slug: string, name: string) => void;
 }) {
@@ -197,7 +215,7 @@ export function PcSpellPickerDialog({
         return;
       }
 
-      if (hasSpellCastDetails(getSpellCastDetailsFromSrd(spellName, level))) {
+      if (hasSpellCastDetails(resolveSpellCastDetails(spellName, { ...castContext, spellLevel: level }))) {
         setItemState((prev) => ({
           ...prev,
           [slug]: {
@@ -213,7 +231,7 @@ export function PcSpellPickerDialog({
 
       void loadPreview(slug);
     },
-    [itemState, level, loadPreview],
+    [itemState, level, castContext, loadPreview],
   );
 
   return (
@@ -252,6 +270,7 @@ export function PcSpellPickerDialog({
               key={spell.slug}
               spell={spell}
               level={level}
+              castContext={castContext}
               added={addedSpellSlugs.has(spell.slug)}
               state={itemState[spell.slug]}
               onToggle={() => toggleSpell(spell.slug, spell.name)}
