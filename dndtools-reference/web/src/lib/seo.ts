@@ -57,7 +57,14 @@ type BuildPageMetadataInput = {
   path?: string;
   noindex?: boolean;
   type?: "website" | "article";
+  /** Override OG image alt; defaults to ogTitle. */
+  imageAlt?: string;
 };
+
+function ogImageUrl(path: string): string {
+  const normalized = path === "/" ? "" : path.replace(/\/$/, "");
+  return absoluteUrl(`${normalized}/opengraph-image`);
+}
 
 export function buildPageMetadata({
   title,
@@ -65,12 +72,15 @@ export function buildPageMetadata({
   path = "/",
   noindex = false,
   type = "website",
+  imageAlt,
 }: BuildPageMetadataInput): Metadata {
   const url = absoluteUrl(path);
   const canonical = path.startsWith("/") ? path : `/${path}`;
   const ogTitle = title
     ? `${title} — ${SITE_NAME}`
     : `${SITE_NAME} — D&D 3.5 Reference`;
+  const alt = imageAlt ?? ogTitle;
+  const image = ogImageUrl(canonical);
 
   return {
     ...(title !== undefined ? { title } : {}),
@@ -86,11 +96,22 @@ export function buildPageMetadata({
       siteName: SITE_NAME,
       type,
       locale: "en_US",
+      images: [
+        {
+          url: image,
+          secureUrl: image,
+          width: 1200,
+          height: 630,
+          alt,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description,
+      images: [image],
     },
   };
 }
@@ -183,6 +204,7 @@ export function buildEntityMetadata(
     description,
     path: `/${category}/${slug}`,
     type: "article",
+    imageAlt: `${entity.name} — D&D 3.5 ${singular}`,
   });
 }
 

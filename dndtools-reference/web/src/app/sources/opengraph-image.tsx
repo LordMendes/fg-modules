@@ -5,8 +5,12 @@ export const alt = `${SITE_NAME} — Sources & Rulebooks`;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
-export default function Image() {
+export default async function Image() {
   return ogImageResponse(
-    <OgHubLayout badge="Sources" title="Sources & Rulebooks" />,
+    <OgHubLayout
+      badge="Sources"
+      title="Sources & Rulebooks"
+      footer="Browse every D&D 3.5 publication · dnd-helper.com"
+    />,
   );
 }
