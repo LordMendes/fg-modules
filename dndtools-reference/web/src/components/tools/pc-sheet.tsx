@@ -3,11 +3,11 @@
 import { useState } from "react";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
+import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
-import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import {
   computeSkillPointSummary,
   computeSkillTotal,
@@ -46,6 +46,7 @@ export type PcSheetProps = {
   onRemoveFeat: (slug: string) => void;
   onAddSpell: (slug: string, name: string, level: number) => void;
   onRemoveSpell: (slug: string) => void;
+  onUpdateSpellPrepared: (slug: string, prepared: number) => void;
   onAddInventoryRow: () => void;
   updateAbility: (key: AbilityKey, value: number) => void;
 };
@@ -75,10 +76,10 @@ export function PcSheet({
   onRemoveFeat,
   onAddSpell,
   onRemoveSpell,
+  onUpdateSpellPrepared,
   onAddInventoryRow,
   updateAbility,
 }: PcSheetProps) {
-  const [pendingSpellLevel, setPendingSpellLevel] = useState(1);
   const [racePickerOpen, setRacePickerOpen] = useState(false);
 
   const classLevels = state.identity.classLevels;
@@ -88,15 +89,6 @@ export function PcSheet({
   const hasRace = Boolean(state.identity.raceSlug);
   const showRacePicker = !hasRace || racePickerOpen;
 
-  const spellClass = state.spellClasses[activeSpellClassIndex];
-  const computed = spellClass
-    ? computeSpellClass(
-        spellClass.classSlug,
-        spellClass.label,
-        spellClass.casterLevel,
-        state.abilities,
-      )
-    : null;
   const skillPoints = computeSkillPointSummary(
     state,
     compendium?.classSkillPointBases ?? {},
@@ -551,122 +543,16 @@ export function PcSheet({
         )}
 
         {sheetTab === "actions" && (
-          <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
-            {!spellClass || !computed ? (
-              <p className="pc-sheet-empty">
-                Select a spellcasting class on the Main tab to configure spells.
-              </p>
-            ) : (
-              <>
-                <div className="npc-sheet-block">
-                  <h3>Spellcasting</h3>
-                  {state.spellClasses.length > 1 ? (
-                    <label className="pc-spell-class-picker">
-                      <span className="npc-sheet-sub">Spell class</span>
-                      <select
-                        className="pc-sheet-input pc-sheet-select"
-                        value={activeSpellClassIndex}
-                        onChange={(e) => onSpellClassIndexChange(Number(e.target.value))}
-                      >
-                        {state.spellClasses.map((sc, i) => (
-                          <option key={sc.classSlug} value={i}>
-                            {sc.label} (CL {sc.casterLevel})
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  ) : (
-                    <p className="npc-sheet-sub">
-                      {spellClass.label} · CL {spellClass.casterLevel}
-                    </p>
-                  )}
-
-                  <p className="npc-sheet-sub pc-sheet-slots-label">Slots per day</p>
-                  <div
-                    className="pc-slot-grid"
-                    title="Computed from class level and casting ability"
-                  >
-                    {Array.from({ length: 10 }, (_, lvl) => (
-                      <div
-                        key={lvl}
-                        className={
-                          computed.slots[lvl] > 0
-                            ? "pc-slot-cell pc-slot-cell--active"
-                            : "pc-slot-cell"
-                        }
-                      >
-                        <span className="pc-slot-label">L{lvl}</span>
-                        <span className="pc-slot-count">{computed.slots[lvl]}</span>
-                        {computed.bonusSlots[lvl] > 0 && (
-                          <span className="pc-slot-bonus" title="Ability bonus slots">
-                            +{computed.bonusSlots[lvl]}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="npc-sheet-block">
-                  <h3>Spells</h3>
-                  <div className="pc-spell-add-row">
-                    <EntitySearchCombobox
-                      categories={["spells"]}
-                      placeholder="Search spells to add…"
-                      onSelect={(hit) => onAddSpell(hit.slug, hit.name, pendingSpellLevel)}
-                    />
-                    <label className="pc-spell-level-pick">
-                      <span className="npc-sheet-sub">Level</span>
-                      <select
-                        className="pc-sheet-input pc-sheet-select pc-sheet-input--narrow"
-                        value={pendingSpellLevel}
-                        onChange={(e) => setPendingSpellLevel(Number(e.target.value))}
-                      >
-                        {Array.from({ length: 10 }, (_, lvl) => (
-                          <option key={lvl} value={lvl}>
-                            L{lvl}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
-
-                  {spellClass.spells.length === 0 ? (
-                    <p className="pc-sheet-empty">No spells added.</p>
-                  ) : (
-                    <ul className="pc-spell-by-level">
-                      {Array.from({ length: 10 }, (_, lvl) => {
-                        const atLevel = spellClass.spells.filter((s) => s.level === lvl);
-                        if (atLevel.length === 0) return null;
-                        const limit = computed.slots[lvl] ?? 0;
-                        return (
-                          <li key={lvl}>
-                            <strong>
-                              Level {lvl} ({atLevel.length}/{limit})
-                            </strong>
-                            <ul className="pc-feat-list pc-feat-list--editable">
-                              {atLevel.map((sp) => (
-                                <li key={sp.slug} className="pc-sheet-editable-row">
-                                  <span>{sp.name}</span>
-                                  <button
-                                    type="button"
-                                    className="tool-btn tool-btn--ghost tool-btn--compact"
-                                    onClick={() => onRemoveSpell(sp.slug)}
-                                  >
-                                    Remove
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                </div>
-              </>
-            )}
-          </div>
+          <PcActionsPanel
+            state={state}
+            patch={patch}
+            compendium={compendium}
+            activeSpellClassIndex={activeSpellClassIndex}
+            onSpellClassIndexChange={onSpellClassIndexChange}
+            onAddSpell={onAddSpell}
+            onRemoveSpell={onRemoveSpell}
+            onUpdateSpellPrepared={onUpdateSpellPrepared}
+          />
         )}
       </div>
     </div>

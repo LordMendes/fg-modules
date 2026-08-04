@@ -34,6 +34,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
         classSlug: "wizard",
         casterLevel: 1,
         dcAbility: wizardInfo.dcAbility,
+        mode: "preparation",
         spells: [],
       },
     ],

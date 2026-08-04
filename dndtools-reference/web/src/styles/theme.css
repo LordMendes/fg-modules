@@ -4946,6 +4946,60 @@ body {
   padding: 0;
 }
 
+.pc-actions-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pc-actions-combat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 0 0 1rem;
+}
+
+.pc-actions-combat-grid dt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+.pc-actions-combat-grid dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-actions-attacks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pc-actions-casting-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 0.75rem 0;
+}
+
+.pc-actions-casting-meta dt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.pc-actions-casting-meta dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+}
+
+.pc-spell-prepared {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .profile-pc-plans {
   margin-bottom: 2rem;
 }

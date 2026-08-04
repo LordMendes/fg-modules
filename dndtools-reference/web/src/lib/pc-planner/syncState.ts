@@ -1,4 +1,4 @@
-import { getClassCastingInfo } from "./classCasting";
+import { getClassCastingInfo, spellModeFromProgression } from "./classCasting";
 import { computeSpellClass } from "./spellSlots";
 import { normalizeCombatState } from "./combatStats";
 import { normalizeAbilityBase, syncEffectiveAbilities } from "./syncDerived";
@@ -17,6 +17,7 @@ function buildSpellClassFromLevel(
     classSlug,
     casterLevel: level,
     dcAbility: info.dcAbility,
+    mode: spellModeFromProgression(info.progression),
     spells: [],
   };
 }
@@ -38,6 +39,9 @@ export function syncPcPlanState(
       ...sc,
       label: cl.className,
       casterLevel: cl.level,
+      mode: spellModeFromProgression(
+        getClassCastingInfo(cl.classSlug, cl.className)?.progression ?? "prepared",
+      ),
     };
 
     const computed = computeSpellClass(
@@ -49,14 +53,27 @@ export function syncPcPlanState(
 
     const kept: SpellClassState["spells"] = [];
     const levelCounts = new Map<number, number>();
+    const preparedCounts = new Map<number, number>();
     for (const sp of updated.spells) {
       if (sp.level > computed.maxSpellLevel) continue;
       const limit = computed.slots[sp.level] ?? 0;
       const used = levelCounts.get(sp.level) ?? 0;
-      if (used < limit) {
-        kept.push(sp);
-        levelCounts.set(sp.level, used + 1);
+      if (used >= limit) continue;
+
+      let prepared = sp.prepared ?? 1;
+      if (computed.mode === "preparation") {
+        const preparedLimit = limit;
+        const preparedUsed = preparedCounts.get(sp.level) ?? 0;
+        if (preparedUsed >= preparedLimit) continue;
+        prepared = Math.min(prepared, preparedLimit - preparedUsed);
+        if (prepared <= 0) continue;
+        preparedCounts.set(sp.level, preparedUsed + prepared);
       }
+
+      kept.push(
+        computed.mode === "preparation" ? { ...sp, prepared } : { ...sp, prepared: undefined },
+      );
+      levelCounts.set(sp.level, used + 1);
     }
 
     nextSpellClasses.push({ ...updated, spells: kept });

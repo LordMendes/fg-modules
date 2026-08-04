@@ -11,10 +11,14 @@ export type FeatEntry = {
   name: string;
 };
 
+export type SpellMode = "preparation" | "spontaneous";
+
 export type SpellEntry = {
   slug: string;
   name: string;
   level: number;
+  /** Times prepared per day (preparation casters only). */
+  prepared?: number;
 };
 
 export type SpellClassState = {
@@ -22,6 +26,7 @@ export type SpellClassState = {
   classSlug: string;
   casterLevel: number;
   dcAbility: AbilityKey;
+  mode: SpellMode;
   spells: SpellEntry[];
 };
 

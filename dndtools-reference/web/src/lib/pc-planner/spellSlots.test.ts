@@ -79,5 +79,21 @@ describe("computeSpellClass", () => {
     assert.equal(result.slots[1], 3);
     assert.equal(result.slots[2], 2);
     assert.equal(result.maxSpellLevel, 2);
+    assert.equal(result.mode, "preparation");
+    assert.equal(result.dcAbility, "int");
+    assert.equal(result.dcModifier, 3);
+  });
+
+  it("computes sorcerer slots and spontaneous mode from compendium slug", () => {
+    const result = computeSpellClass(
+      "sorcerer-98",
+      "Battle Sorcerer",
+      3,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 14 },
+    );
+    assert.equal(result.mode, "spontaneous");
+    assert.equal(result.dcAbility, "cha");
+    assert.equal(result.slots[0], 6);
+    assert.equal(result.slots[1], 6);
   });
 });

@@ -21,6 +21,7 @@ import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
 import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
+import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import { applyDerivedFromRace } from "@/lib/pc-planner/syncDerived";
 import {
   compendiumSyncKey,
@@ -279,7 +280,18 @@ export function PcPlanner() {
     patch((s) => {
       const target = s.spellClasses[activeSpellClassIndex];
       if (!target || target.spells.some((sp) => sp.slug === slug)) return;
-      target.spells.push({ slug, name, level });
+      const computed = computeSpellClass(
+        target.classSlug,
+        target.label,
+        target.casterLevel,
+        s.abilities,
+      );
+      target.spells.push({
+        slug,
+        name,
+        level,
+        prepared: computed.mode === "preparation" ? 1 : undefined,
+      });
     });
   }
 
@@ -288,6 +300,16 @@ export function PcPlanner() {
       const target = s.spellClasses[activeSpellClassIndex];
       if (!target) return;
       target.spells = target.spells.filter((sp) => sp.slug !== slug);
+    });
+  }
+
+  function updateSpellPrepared(slug: string, prepared: number) {
+    patch((s) => {
+      const target = s.spellClasses[activeSpellClassIndex];
+      if (!target) return;
+      const spell = target.spells.find((sp) => sp.slug === slug);
+      if (!spell) return;
+      spell.prepared = Math.max(0, prepared);
     });
   }
 
@@ -402,6 +424,7 @@ export function PcPlanner() {
         onRemoveFeat={removeFeat}
         onAddSpell={addSpell}
         onRemoveSpell={removeSpell}
+        onUpdateSpellPrepared={updateSpellPrepared}
         onAddInventoryRow={addInventoryRow}
         updateAbility={updateAbility}
       />
