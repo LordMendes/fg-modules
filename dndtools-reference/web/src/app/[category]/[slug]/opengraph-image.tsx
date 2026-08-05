@@ -12,30 +12,38 @@ type Props = {
   params: Promise<{ category: string; slug: string }>;
 };
 
+function formatSlugTitle(slug: string | undefined): string {
+  if (!slug) {
+    return SITE_NAME;
+  }
+
+  return slug.replace(/-/g, " ");
+}
+
 export async function generateImageMetadata({ params }: Props) {
   const { category, slug } = await params;
   const label = isCategoryKey(category) ? getCategoryLabel(category) : category;
-  let alt = `${slug.replace(/-/g, " ")} — ${label}`;
+  let alt = `${formatSlugTitle(slug)} — ${label}`;
 
-  if (isCategoryKey(category)) {
+  if (category && slug && isCategoryKey(category)) {
     const entity = await getEntityDetail(category as CategoryKey, slug);
     if (entity) {
       alt = `${entity.name} — D&D 3.5 ${label}`;
     }
   }
 
-  return [{ alt, size: OG_SIZE, contentType: OG_CONTENT_TYPE }];
+  return [{ id: slug ?? "default", alt, size: OG_SIZE, contentType: OG_CONTENT_TYPE }];
 }
 
 export default async function Image({ params }: Props) {
   const { category, slug } = await params;
   const label = isCategoryKey(category) ? getCategoryLabel(category) : category;
-  let name = slug.replace(/-/g, " ");
+  let name = formatSlugTitle(slug);
   let statLine: string | null = null;
   let sourceLine: string | null = null;
   let snippet: string | null = null;
 
-  if (isCategoryKey(category)) {
+  if (category && slug && isCategoryKey(category)) {
     const entity = await getEntityDetail(category as CategoryKey, slug);
     if (entity) {
       name = entity.name;

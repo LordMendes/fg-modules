@@ -31,8 +31,9 @@ export type EntityMetaInput = {
   fields: Record<string, string | null>;
 };
 
-function normalizeSiteUrl(raw: string): string {
-  const trimmed = raw.trim().replace(/\/$/, "");
+function normalizeSiteUrl(raw: string | undefined): string {
+  const trimmed = (raw ?? "").trim().replace(/\/$/, "");
+  if (!trimmed) return "http://localhost:3000";
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
   return `https://${trimmed}`;
 }

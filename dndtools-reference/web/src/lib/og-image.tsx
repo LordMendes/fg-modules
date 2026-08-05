@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import type { ReactElement } from "react";
 import { getTool, type ToolKey } from "@/lib/tools";
 import { SITE_NAME } from "@/lib/seo";
@@ -16,8 +18,8 @@ export const OG_COLORS = {
   border: "#9B7FD4",
 } as const;
 
-const PLUS_JAKARTA_BOLD =
-  "https://fonts.gstatic.com/s/plusjakartasans/v8/LDIbaomQNQcsA88c7O9yZ4KMCoOg4Ko70yygg_vbd-E.woff";
+const OG_FONT_FAMILY = "Inter";
+const OG_FONT_PATH = join(process.cwd(), "assets/fonts/Inter-Bold.woff");
 
 type OgFont = {
   name: string;
@@ -30,16 +32,17 @@ let fontsPromise: Promise<OgFont[]> | null = null;
 
 export async function loadOgFonts(): Promise<OgFont[]> {
   if (!fontsPromise) {
-    fontsPromise = fetch(PLUS_JAKARTA_BOLD, { cache: "force-cache" })
-      .then((res) => res.arrayBuffer())
-      .then((data) => [
-        {
-          name: "Plus Jakarta Sans",
-          data,
-          weight: 700,
-          style: "normal",
-        },
-      ]);
+    fontsPromise = readFile(OG_FONT_PATH).then((data) => [
+      {
+        name: OG_FONT_FAMILY,
+        data: data.buffer.slice(
+          data.byteOffset,
+          data.byteOffset + data.byteLength,
+        ),
+        weight: 700,
+        style: "normal",
+      },
+    ]);
   }
   return fontsPromise;
 }
@@ -59,7 +62,7 @@ function OgBackground({ children }: { children: React.ReactNode }) {
         flexDirection: "column",
         background: OG_COLORS.background,
         color: OG_COLORS.text,
-        fontFamily: "Plus Jakarta Sans, system-ui, sans-serif",
+        fontFamily: `${OG_FONT_FAMILY}, system-ui, sans-serif`,
         position: "relative",
       }}
     >

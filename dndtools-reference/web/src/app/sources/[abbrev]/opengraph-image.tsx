@@ -12,20 +12,27 @@ type Props = {
 
 export async function generateImageMetadata({ params }: Props) {
   const { abbrev } = await params;
-  const source = await getSourceByAbbrev(abbrev);
+  const safeAbbrev = abbrev ?? "Source";
+  const source = abbrev ? await getSourceByAbbrev(abbrev) : null;
   const alt = source
-    ? `${source.name} (${abbrev}) — ${SITE_NAME}`
-    : `${abbrev} — ${SITE_NAME}`;
-  return [{ alt, size: OG_SIZE, contentType: OG_CONTENT_TYPE }];
+    ? `${source.name} (${safeAbbrev}) — ${SITE_NAME}`
+    : `${safeAbbrev} — ${SITE_NAME}`;
+  return [{
+    id: safeAbbrev,
+    alt,
+    size: OG_SIZE,
+    contentType: OG_CONTENT_TYPE,
+  }];
 }
 
 export default async function Image({ params }: Props) {
   const { abbrev } = await params;
-  const source = await getSourceByAbbrev(abbrev);
+  const safeAbbrev = abbrev ?? "Source";
+  const source = abbrev ? await getSourceByAbbrev(abbrev) : null;
 
   if (!source) {
     return ogImageResponse(
-      <OgHubLayout badge="Source" title={abbrev} footer={SITE_NAME} />,
+      <OgHubLayout badge="Source" title={safeAbbrev} footer={SITE_NAME} />,
     );
   }
 

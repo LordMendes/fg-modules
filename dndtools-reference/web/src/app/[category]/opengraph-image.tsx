@@ -14,16 +14,25 @@ type Props = {
 
 export async function generateImageMetadata({ params }: Props) {
   const { category } = await params;
-  const label = isCategoryKey(category) ? getCategoryLabel(category) : category;
-  return [{ alt: `${label} — ${SITE_NAME}`, size: OG_SIZE, contentType: OG_CONTENT_TYPE }];
+  const label = category && isCategoryKey(category)
+    ? getCategoryLabel(category)
+    : category ?? SITE_NAME;
+  return [{
+    id: category ?? "default",
+    alt: `${label} — ${SITE_NAME}`,
+    size: OG_SIZE,
+    contentType: OG_CONTENT_TYPE,
+  }];
 }
 
 export default async function Image({ params }: Props) {
   const { category } = await params;
-  const label = isCategoryKey(category) ? getCategoryLabel(category) : category;
+  const label = category && isCategoryKey(category)
+    ? getCategoryLabel(category)
+    : category ?? SITE_NAME;
   let footer = "D&D 3.5 Edition Reference";
 
-  if (isCategoryKey(category)) {
+  if (category && isCategoryKey(category)) {
     const counts = await getCategoryCounts();
     const count = counts[category as CategoryKey];
     footer = `${count.toLocaleString("en-US")} entries · dnd-helper.com`;
