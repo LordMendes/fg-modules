@@ -27,6 +27,15 @@ export const TOOLS = [
     source: "PHB / DMG",
   },
   {
+    key: "turn-undead-calculator",
+    label: "Turn Undead Calculator",
+    icon: "✝️",
+    href: "/tools/turn-undead-calculator",
+    description:
+      "Resolve turn undead checks and damage pool allocation for clerics and paladins using PHB Table 8-9.",
+    source: "PHB / SRD",
+  },
+  {
     key: "encounter-builder",
     label: "Encounter Builder",
     icon: "🐉",
