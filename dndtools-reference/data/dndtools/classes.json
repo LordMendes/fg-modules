@@ -15219,7 +15219,7 @@
     "spells_forranger": null
   },
   {
-    "id": null,
+    "id": 90,
     "slug": "bard",
     "name": "Bard",
     "source_url": "https://new.dndtools.org/classes/bard",

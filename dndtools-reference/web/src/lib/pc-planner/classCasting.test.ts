@@ -28,6 +28,10 @@ describe("getClassCastingInfo", () => {
   it("returns null for non-casters", () => {
     assert.equal(getClassCastingInfo("fighter-93", "Fighter"), null);
   });
+
+  it("does not treat Constructor as a bard match via prototype lookup", () => {
+    assert.equal(getClassCastingInfo("constructor-995", "Constructor"), null);
+  });
 });
 
 describe("spellModeFromProgression", () => {

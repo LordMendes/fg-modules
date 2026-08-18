@@ -204,42 +204,42 @@ def _parse_damage_and_heal(words: list[str]) -> tuple[list[dict[str, Any]], list
             half_level = False
             max_roll_dice: str | None = None
 
-            if _is_word(words[k], "+1") and _is_word(words[k + 1], "point"):
+            if _is_word(_word_at(words, k), "+1") and _is_word(_word_at(words, k + 1), "point"):
                 point_mode = True
                 k += 2
             elif (
-                _is_word(words[k], "+")
-                and _is_word(words[k + 1], "1")
-                and _is_word(words[k + 2], "point")
+                _is_word(_word_at(words, k), "+")
+                and _is_word(_word_at(words, k + 1), "1")
+                and _is_word(_word_at(words, k + 2), "point")
             ):
                 point_mode = True
                 k += 3
 
-            if _is_word(words[k], "per"):
+            if _is_word(_word_at(words, k), "per"):
                 k += 1
-                if _is_word(words[k], "two"):
+                if _is_word(_word_at(words, k), "two"):
                     k += 1
                     half_level = True
-                if _is_word(words[k], "caster"):
+                if _is_word(_word_at(words, k), "caster"):
                     k += 1
-                if _is_word(words[k], ("level", "levels")):
+                if _is_word(_word_at(words, k), ("level", "levels")):
                     k += 1
                     scaling = True
                     if (
-                        _is_word(words[k], "of")
-                        and _is_word(words[k + 1], "the")
-                        and _is_word(words[k + 2], "caster")
+                        _is_word(_word_at(words, k), "of")
+                        and _is_word(_word_at(words, k + 1), "the")
+                        and _is_word(_word_at(words, k + 2), "caster")
                     ):
                         k += 3
-                    if _is_word(words[k], "maximum"):
-                        max_roll_dice = words[k + 1]
+                    if _is_word(_word_at(words, k), "maximum"):
+                        max_roll_dice = _word_at(words, k + 1)
                     elif (
-                        _is_word(words[k], "to")
-                        and _is_word(words[k + 1], "a")
-                        and _is_word(words[k + 2], "maximum")
-                        and _is_word(words[k + 3], "of")
+                        _is_word(_word_at(words, k), "to")
+                        and _is_word(_word_at(words, k + 1), "a")
+                        and _is_word(_word_at(words, k + 2), "maximum")
+                        and _is_word(_word_at(words, k + 3), "of")
                     ):
-                        max_roll_dice = words[k + 4]
+                        max_roll_dice = _word_at(words, k + 4)
                 else:
                     scaling = False
             else:

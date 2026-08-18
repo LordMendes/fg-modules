@@ -40,8 +40,9 @@ function matchCastingBySlug(classSlug: string): ClassCastingInfo | null {
 
 function matchCastingByName(className: string): ClassCastingInfo | null {
   const nameLower = className.toLowerCase();
-  const exact = CASTING_BY_NAME[nameLower];
-  if (exact) return exact;
+  if (Object.prototype.hasOwnProperty.call(CASTING_BY_NAME, nameLower)) {
+    return CASTING_BY_NAME[nameLower];
+  }
   for (const [key, info] of Object.entries(CASTING_BY_SLUG)) {
     if (nameLower.includes(key)) return info;
   }

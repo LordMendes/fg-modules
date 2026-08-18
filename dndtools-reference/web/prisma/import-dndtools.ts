@@ -433,9 +433,20 @@ async function buildSlugMaps(): Promise<void> {
   }
 }
 
+/** Legacy dndtools slugs that differ from scraped class records. */
+const CLASS_SLUG_ALIASES: Record<string, string> = {
+  "bard-90": "bard",
+};
+
+function resolveClassRefSlug(slug: string | null | undefined): string | null | undefined {
+  if (!slug) return slug;
+  return CLASS_SLUG_ALIASES[slug] ?? slug;
+}
+
 function lookupRef(category: string, ref: LinkRef): string | null {
   const slugMap = slugMaps[category];
-  if (ref.slug && slugMap?.has(ref.slug)) return slugMap.get(ref.slug)!;
+  const slug = category === "classes" ? resolveClassRefSlug(ref.slug) : ref.slug;
+  if (slug && slugMap?.has(slug)) return slugMap.get(slug)!;
   const extId = parseExternalId(ref.id);
   if (extId !== null) {
     const extMap = slugMaps[`${category}_ext`] as unknown as Map<number, string>;
@@ -536,6 +547,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           },
           update: {
             name: r.name,
+            externalId: parseExternalId(r.id),
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap),
