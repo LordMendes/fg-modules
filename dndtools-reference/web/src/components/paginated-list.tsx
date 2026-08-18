@@ -7,6 +7,7 @@ import { useSessionNonce } from "@/components/session-provider";
 import type { EntityListItem } from "@/lib/entities";
 import type { CategoryKey } from "@/lib/categories";
 import { getCategoryLabel } from "@/lib/categories";
+import type { ParsedListFilters } from "@/lib/entity-filters";
 import type { TableSort } from "@/lib/table-sort";
 
 export function PaginatedEntityList({
@@ -18,6 +19,7 @@ export function PaginatedEntityList({
   sources,
   editions,
   fields,
+  ranges,
   sort,
 }: {
   category: CategoryKey;
@@ -28,6 +30,7 @@ export function PaginatedEntityList({
   sources?: string[];
   editions?: string[];
   fields?: Record<string, string[]>;
+  ranges?: ParsedListFilters["ranges"];
   sort?: TableSort | null;
 }) {
   const [items, setItems] = useState(initialItems);
@@ -55,6 +58,7 @@ export function PaginatedEntityList({
           sources,
           editions,
           fields,
+          ranges,
           sort,
         });
         if (!result.success) {
@@ -75,7 +79,7 @@ export function PaginatedEntityList({
         loadingRef.current = false;
       }
     });
-  }, [category, nonce, cursor, search, description, sources, editions, fields, sort]);
+  }, [category, nonce, cursor, search, description, sources, editions, fields, ranges, sort]);
 
   useEffect(() => {
     if (!cursor) return;

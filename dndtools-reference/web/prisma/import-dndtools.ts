@@ -2,7 +2,7 @@ import "dotenv/config";
 import { readFileSync, existsSync } from "fs";
 import { join, resolve } from "path";
 import { PrismaClient, EntityCategory, DomainType } from "../src/generated/prisma/client";
-import { parseCr } from "../src/lib/encounter/parseCr";
+import { parseCr, parseHitDice } from "../src/lib/encounter/parseCr";
 import {
   isCastingClassVariant,
   parseClassSpellOriginSlug,
@@ -758,6 +758,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
         const challengeRating = (r.challenge_rating as string) ?? index?.cr ?? null;
+        const hitDice = (r.hit_dice as string) ?? index?.hd ?? null;
         const monsterData = {
           name: r.name,
           sourceUrl: r.source_url ?? null,
@@ -770,7 +771,8 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           size: parseMonsterSize(r.stat_line),
           challengeRating,
           challengeRatingNum: parseCr(challengeRating),
-          hitDice: (r.hit_dice as string) ?? index?.hd ?? null,
+          hitDice,
+          hitDiceNum: parseHitDice(hitDice),
           alignment: normalizeMonsterFilterValue(r.alignment),
           environment: normalizeMonsterFilterValue(r.environment),
           treasure: normalizeMonsterFilterValue(r.treasure),

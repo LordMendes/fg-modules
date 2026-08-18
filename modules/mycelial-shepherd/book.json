@@ -1,0 +1,139 @@
+{
+  "title": "Lordcaca homebrew",
+  "book_slug": "mycelial-shepherd",
+  "source_url": "",
+  "categories": {
+    "classes": [
+      {
+        "name": "Mycelial Shepherd",
+        "source_url": "",
+        "book_slug": "mycelial-shepherd",
+        "category": "classes",
+        "index": {
+          "is_prestige": true
+        },
+        "detail": {
+          "class_type": "prestige",
+          "hit_die": "d8",
+          "bab": "Medium",
+          "fort": "Good",
+          "ref": "Bad",
+          "will": "Good",
+          "skill_points": "4 + Int",
+          "skill_ranks": 4,
+          "class_skills": "Concentration (Con), Craft (Int), Handle Animal (Cha), Heal (Wis), Hide (Dex), Knowledge (nature) (Int), Listen (Wis), Move Silently (Dex), Profession (Wis), Spellcraft (Int), Spot (Wis), Survival (Wis)",
+          "requirements_structured": {
+            "skills": ["Knowledge (nature) 8 ranks"],
+            "feats": ["Natural Spell"],
+            "special": "Ability to cast 3rd-level divine spells; Wild Shape class feature"
+          },
+          "description_html": "<p><i>To most druids, decay is merely the end of life. To the Mycelial Shepherd, it is the beginning of countless others.</i></p><p>Unlike other druids, members of the Mycelial Shepherd cultivate vast fungal colonies that thrive upon death and decomposition. They learn to channel symbiotic spores through their own bodies, surrounding themselves with clouds of invisible fungi that consume the living and nourish the cycle of nature.</p><p>Unlike most druids, a Mycelial Shepherd thrives in close combat. Symbiotic Entity transforms Wild Shape from a purely transformational ability into a powerful combat enhancement, while Halo of Spores steadily weakens nearby enemies. Rather than commanding large numbers of undead, practitioners rely on a handful of temporary fungal servants to overwhelm opponents and reclaim the fallen for the natural cycle.</p><p>At 5th level, a practitioner may stop there — mastering Sovereign of Spores — or commit to Sovereign Ascension, trading animal Wild Shape and social ease for plant forms, permanent aura expansion, and a body rebuilt by the colony.</p><p><b>Prerequisites:</b></p><p><b>Skills:</b> Knowledge (nature) 8 ranks</p><p><b>Feats:</b> Natural Spell</p><p><b>Special:</b> Ability to cast 3rd-level divine spells; Wild Shape class feature</p>",
+          "advancement": [
+            {
+              "level": 1,
+              "bab": "+0",
+              "fort": "+2",
+              "ref": "+0",
+              "will": "+2",
+              "special": "Halo of Spores"
+            },
+            {
+              "level": 2,
+              "bab": "+1",
+              "fort": "+3",
+              "ref": "+0",
+              "will": "+3",
+              "special": "Symbiotic Entity, animal companion progression"
+            },
+            {
+              "level": 3,
+              "bab": "+2",
+              "fort": "+3",
+              "ref": "+1",
+              "will": "+3",
+              "special": "Fungal Infestation"
+            },
+            {
+              "level": 4,
+              "bab": "+3",
+              "fort": "+4",
+              "ref": "+1",
+              "will": "+4",
+              "special": "Spreading Spores"
+            },
+            {
+              "level": 5,
+              "bab": "+3",
+              "fort": "+4",
+              "ref": "+1",
+              "will": "+4",
+              "special": "Sovereign of Spores, Sovereign Ascension (optional), animal companion progression"
+            }
+          ],
+          "class_features": [
+            {
+              "level": 1,
+              "name": "Weapon and Armor Proficiency",
+              "type": "Ex",
+              "text_html": "<p>A Mycelial Shepherd gains no proficiency with any weapon or armor.</p>"
+            },
+            {
+              "level": 1,
+              "name": "Spells per Day",
+              "type": "Ex",
+              "text": "At every level, a Mycelial Shepherd gains new spells per day and an increase in caster level as if you had also gained a level in an existing divine spellcasting class to which she belonged before entering this prestige class. She does not, however, gain any other benefit a character of that class would have gained. If the character possessed more than one divine spellcasting class before becoming a Mycelial Shepherd, she must choose which class to advance.",
+              "text_html": "<p>At every level, a Mycelial Shepherd gains new spells per day and an increase in caster level (for the purpose of variable, level-dependent spell effects, caster level checks, and saving throw DCs) as if you had also gained a level in an existing divine spellcasting class to which she belonged before entering this prestige class. She does not, however, gain any other benefit a character of that class would have gained (such as increased spells known if she is a spontaneous caster, improved wild shape, and so on).</p><p>If the character possessed more than one divine spellcasting class before becoming a Mycelial Shepherd, she must choose which class to advance.</p>"
+            },
+            {
+              "level": 1,
+              "name": "Halo of Spores",
+              "type": "Su",
+              "text_html": "<p>Beginning at 1st level, invisible toxic spores constantly surround the Mycelial Shepherd.</p><p>Once per round, as an <b>immediate action</b>, whenever a living creature enters a square within <b>10 feet</b> of the Mycelial Shepherd or begins its turn there, the druid may force that creature to attempt a Fortitude save.</p><p><b>Save DC:</b> 10 + class level + Wisdom modifier.</p><p>A failed save deals <b>acid damage</b> according to the table below. This damage is treated as a poison effect for the purpose of resistances, immunities, and special abilities.</p><table><tr><td><b>Class Level</b></td><td><b>Damage</b></td></tr><tr><td>1st–2nd</td><td>1d6 acid</td></tr><tr><td>3rd–4th</td><td>2d6 acid</td></tr><tr><td>5th</td><td>2d8 acid</td></tr></table><p>Creatures without a Constitution score are immune to this effect.</p><p>Halo of Spores may affect only one creature each round.</p>"
+            },
+            {
+              "level": 2,
+              "name": "Animal Companion Progression",
+              "type": "Ex",
+              "text_html": "<p>Levels in Mycelial Shepherd stack with druid levels for the purpose of determining her animal companion's bonus HD, natural armor adjustment, Strength/Dexterity adjustment, and special tricks known.</p>"
+            },
+            {
+              "level": 2,
+              "name": "Symbiotic Entity",
+              "type": "Su",
+              "text_html": "<p>At 2nd level, a Mycelial Shepherd may expend one daily use of Wild Shape without assuming another form. Instead, she awakens the fungal colony living within her body. This effect lasts <b>10 minutes per class level</b>.</p><p>While Symbiotic Entity is active, the Mycelial Shepherd gains:</p><list><li>Temporary hit points equal to <b>twice her character level</b></li><li>+2 enhancement bonus to natural armor</li><li>Halo of Spores damage increases by one step on the Halo of Spores damage table</li><li>All natural attacks deal an additional <b>1d6 acid damage</b> (treated as a poison effect for the purpose of resistances and immunities; manufactured weapons do not gain this benefit)</li><li>All natural weapons are treated as magic weapons for the purpose of overcoming damage reduction</li></list><p>Symbiotic Entity does not prevent the character from later assuming a Wild Shape form. If she does so while the effect is active, all benefits of Symbiotic Entity continue to function.</p>"
+            },
+            {
+              "level": 3,
+              "name": "Fungal Infestation",
+              "type": "Su",
+              "text_html": "<p>Beginning at 3rd level, the Mycelial Shepherd may infest the recently dead with parasitic fungi. Whenever a Small or Medium living creature dies within <b>30 feet</b>, the druid may, as an immediate action, animate the corpse as a fungal servant.</p><p>This ability may be used a number of times per day equal to the druid's Wisdom modifier.</p><p>A fungal servant functions as a zombie created by the <i>animate dead</i> spell, except that it possesses both the Undead and Plant subtypes, and except as follows:</p><list><li>No material component is required.</li><li>Only one fungal servant may exist at a time.</li><li>The servant remains animated for <b>1 minute per class level</b>.</li><li>The servant acts immediately after the druid's turn.</li><li>A fungal servant may only take move actions, attack actions, charge actions, or full attack actions.</li></list><p>At 5th level, this ability may also animate <b>Large creatures</b>. However, the fungal colony requires time to consume and animate the larger corpse. A Large creature rises <b>1d4 rounds</b> after death, provided the corpse has not been destroyed or moved farther than 30 feet from where it fell.</p>"
+            },
+            {
+              "level": 4,
+              "name": "Spreading Spores",
+              "type": "Su",
+              "text_html": "<p>Beginning at 4th level, while Symbiotic Entity is active, the Mycelial Shepherd may project her fungal colony away from herself.</p><p>As a <b>swift action</b>, she may create a <b>10-foot-radius spread</b> centered on any point within <b>30 feet</b>. The cloud lasts for <b>1 round per class level</b>.</p><p>While the cloud exists:</p><list><li>Any creature entering or beginning its turn within the cloud is subject to Halo of Spores.</li><li>The Mycelial Shepherd may choose to have Halo of Spores originate from the cloud instead of herself.</li><li>While the cloud is active, the Mycelial Shepherd cannot use Halo of Spores from her own space during the same round.</li></list><p>The cloud counts as light undergrowth, providing difficult terrain but not concealment.</p>"
+            },
+            {
+              "level": 5,
+              "name": "Sovereign of Spores",
+              "type": "Su",
+              "text_html": "<p>At 5th level, the Mycelial Shepherd becomes the unquestioned master of her symbiotic fungal colony.</p><p>While Symbiotic Entity is active:</p><list><li>Halo of Spores radius increases to <b>15 feet</b>.</li><li>Halo of Spores damage becomes <b>2d8</b>.</li><li>The Mycelial Shepherd gains immunity to poison and disease.</li><li>Fungal Infestation limit on simultaneous fungal servants increases to <b>one-half the Mycelial Shepherd's Wisdom modifier</b> (minimum 1).</li></list><p>In addition, as a standard action, the Mycelial Shepherd may touch her animal companion, familiar, or another animal/magical beast with which she shares a deep, established bond (subject to DM discretion).</p><p>For <b>1 minute per class level</b>, the target creature gains:</p><list><li>+2 enhancement bonus to Strength</li><li>+2 enhancement bonus to natural armor</li><li>Fast Healing 2</li></list><p>A creature may benefit from this ability only once every 24 hours.</p>"
+            },
+            {
+              "level": 5,
+              "name": "Sovereign Ascension",
+              "type": "Su",
+              "text_html": "<p>At 5th level, upon reaching the pinnacle of the prestige class, a Mycelial Shepherd may choose to undergo <b>Sovereign Ascension</b>, permanently transforming her connection to the natural world and embracing absolute mastery of the fungal kingdom. This choice is <b>permanent and irreversible</b> by any means short of a <i>miracle</i> or <i>wish</i> spell.</p><p><b>The Incubation Ritual</b></p><p>To complete the ascension, the character must undergo a strict physiological transformation process:</p><list><li><b>Seclusion and fasting:</b> The Mycelial Shepherd must spend <b>7 consecutive days</b> in complete, uninterrupted seclusion within a damp, subterranean, or heavily overgrown dark environment. During this time, she must fast entirely, subsisting only on spores and ambient moisture.</li><li><b>Resource investment:</b> Rare subterranean minerals, fungal substrates, and decomposition catalysts valued at no less than <b>5,000 gp</b> must be consumed or integrated during the setup.</li><li><b>The chrysalis:</b> On the final day, the character enters a catatonic state as a dense chrysalis of specialized sovereign mycelium envelops her entirely.</li></list><p><b>The Transformation</b></p><p>At the end of the 7-day incubation period, the chrysalis breaks open, permanently altering her physiology, senses, and connection to Wild Shape:</p><list><li><b>Ability score adjustments:</b> +2 Constitution, +2 Wisdom, −2 Dexterity, and −2 Charisma.</li><li><b>Darkvision:</b> Darkvision out to 60 feet.</li><li><b>Light sensitivity:</b> −1 penalty on attack rolls, checks, and saves in bright sunlight or within the radius of a <i>daylight</i> spell.</li><li><b>Fungal regeneration (regrowth):</b> Lost limbs or appendages completely regrow over a period determined by rolling on the Regrowth Table below.</li><li><b>Social aversion:</b> −2 penalty on all social skill checks when interacting with non-plant, non-fungal living creatures.</li><li><b>Lore of the Wild:</b> +2 insight bonus on Knowledge (nature) checks.</li><li><b>Expanded Halo:</b> Halo of Spores radius permanently increases by 5 feet (base 10 feet becomes 15 feet, or stacks with Sovereign of Spores to reach 20 feet).</li><li><b>Plant Wild Shape:</b> Permanently loses the ability to assume animal forms; gains the ability to assume plant creature forms through Wild Shape. For determining valid plant forms, treat druid level as actual druid level plus Mycelial Shepherd level. Retains original creature type; does not gain permanent Plant traits.</li></list><p><b>Regrowth Table</b></p><table><tr><td><b>1d4 Roll</b></td><td><b>Regrowth Duration</b></td></tr><tr><td>1</td><td>2 weeks (rapid cellular division)</td></tr><tr><td>2</td><td>3 weeks (standard fungal grafting)</td></tr><tr><td>3</td><td>4 weeks (extended mycelial reconstruction)</td></tr><tr><td>4</td><td>5 weeks (complex structural stabilization)</td></tr></table>"
+            }
+          ]
+        }
+      }
+    ],
+    "feats": [],
+    "spells": [],
+    "skills": [],
+    "items": [],
+    "races": []
+  }
+}

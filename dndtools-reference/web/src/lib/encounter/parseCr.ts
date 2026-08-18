@@ -38,3 +38,37 @@ export type CrFilterOption = { value: string; label: string };
 export function sortCrFilterOptions<T extends CrFilterOption>(options: T[]): T[] {
   return [...options].sort((a, b) => compareCrValues(a.value, b.value));
 }
+
+const UNICODE_FRACTIONS: Record<string, number> = {
+  "½": 0.5,
+  "¼": 0.25,
+  "¾": 0.75,
+};
+
+function parseDiceCount(raw: string): number | null {
+  const trimmed = raw.trim();
+  if (trimmed in UNICODE_FRACTIONS) return UNICODE_FRACTIONS[trimmed];
+  return parseCr(trimmed);
+}
+
+/** Parse monster HD strings ("12d8+36", "8d8+56 plus 10d4+70") to total dice count. */
+export function parseHitDice(hd: string | null | undefined): number | null {
+  if (!hd) return null;
+  const trimmed = hd.trim();
+  if (!trimmed || trimmed === "—" || trimmed === "-") return null;
+
+  const segments = trimmed.split(/\s+plus\s+/i);
+  let total = 0;
+  let found = false;
+
+  for (const segment of segments) {
+    const match = segment.trim().match(/^((?:\d+\s*\/\s*\d+)|[\d½¼¾]+)\s*d\s*\d+/i);
+    if (!match) continue;
+    const count = parseDiceCount(match[1]);
+    if (count == null) continue;
+    total += count;
+    found = true;
+  }
+
+  return found ? total : null;
+}

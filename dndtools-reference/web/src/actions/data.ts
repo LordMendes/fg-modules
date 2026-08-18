@@ -14,6 +14,7 @@ import { validateSessionNonce } from "@/lib/session";
 import { rateLimit, getClientIp } from "@/lib/ratelimit";
 import type { CategoryKey } from "@/lib/categories";
 import { isCategoryKey } from "@/lib/categories";
+import type { ParsedListFilters } from "@/lib/entity-filters";
 import type { TableSort } from "@/lib/table-sort";
 
 export type PaginateInput = {
@@ -25,6 +26,7 @@ export type PaginateInput = {
   sources?: string[];
   editions?: string[];
   fields?: Record<string, string[]>;
+  ranges?: ParsedListFilters["ranges"];
   sort?: TableSort | null;
   /** @deprecated Prefer `sources`. */
   sourceAbbrev?: string;
@@ -60,6 +62,7 @@ export async function paginateEntities(input: PaginateInput): Promise<PaginateRe
     sources: input.sources,
     editions: input.editions,
     fields: input.fields,
+    ranges: input.ranges,
     sort: input.sort,
     sourceAbbrev: input.sourceAbbrev,
     edition: input.edition,

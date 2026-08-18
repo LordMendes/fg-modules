@@ -57,6 +57,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       sources: filters.sources,
       editions: filters.editions,
       fields: filters.fields,
+      ranges: filters.ranges,
       sort: filters.sort,
     }),
     getCategoryFilterOptions(categoryKey),
@@ -140,6 +141,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         sources={filters.sources}
         editions={filters.editions}
         fields={filters.fields}
+        ranges={filters.ranges}
         sort={filters.sort}
       />
     </>

@@ -189,6 +189,9 @@ def get_content_title(soup: BeautifulSoup) -> str:
     heading = soup.select_one("#content h2")
     if heading:
         return heading.get_text(strip=True)
+    heading = soup.find("h1")
+    if heading:
+        return heading.get_text(" ", strip=True)
     return ""
 
 

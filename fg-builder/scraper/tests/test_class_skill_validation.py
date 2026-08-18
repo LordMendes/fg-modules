@@ -132,5 +132,33 @@ class TestBuildWarningsIntegration:
         assert "Bluff (Cha)" in text
 
 
+def test_unearthed_arcana_variant_gets_skill_automation(tmp_path: Path):
+    book = {
+        "title": "Unearthed Arcana",
+        "book_slug": "unearthed-arcana",
+        "categories": {
+            "classes": [
+                {
+                    "name": "Battle Sorcerer",
+                    "category": "classes",
+                    "detail": {"class_type": "base"},
+                }
+            ]
+        },
+    }
+    scraped_dir = tmp_path / "unearthed-arcana"
+    scraped_dir.mkdir()
+    (scraped_dir / "book.json").write_text(json.dumps(book), encoding="utf-8")
+
+    out = tmp_path / "out"
+    report = build_module(scraped_dir, out, ["classes"], "Author")
+    text = (out / "db.xml").read_text(encoding="utf-8")
+
+    assert report.written["classes"] == 1
+    assert not report.warnings
+    assert '<skillranks type="number">2</skillranks>' in text
+    assert "Intimidate (Cha)" in text
+
+
 def test_fg_skill_names_count():
     assert len(FG_SKILL_NAMES) == 36

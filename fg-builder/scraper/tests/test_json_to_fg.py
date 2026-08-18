@@ -427,6 +427,31 @@ class TestCompleteDivineIntegration:
         assert db.find("item") is not None
         assert db.find(".//actions") is not None
 
+    def test_radiant_servant_features_are_levelled_once(
+        self, scraped_dir: Path, tmp_path: Path
+    ):
+        out = tmp_path / "complete-divine-radiant-servant"
+        build_module(scraped_dir, out, ["classes"], "Test Author")
+        db = ET.parse(out / "db.xml").getroot()
+        record = next(
+            node
+            for node in db.findall(".//class/category/*")
+            if node.findtext("name") == "Radiant Servant of Pelor"
+        )
+        features = [
+            (node.findtext("level"), node.findtext("name"))
+            for node in record.findall("./classfeatures/*")
+        ]
+        assert ("1", "Bonus Domain") not in features
+        assert ("1", "Divine Health") not in features
+        assert ("1", "Empower Healing") not in features
+        assert ("5", "Bonus Domain") in features
+        assert ("2", "Divine Health") in features
+        assert ("2", "Empower Healing") in features
+        assert len(
+            [feature for feature in features if feature[1] == "Bonus Domain"]
+        ) == 1
+
     def test_complete_divine_spells_have_actions(
         self, scraped_dir: Path, tmp_path: Path
     ):

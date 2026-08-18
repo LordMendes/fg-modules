@@ -260,6 +260,28 @@ class TestDetailParsers:
         assert "Spells" in {f["name"] for f in detail["class_features"]}
         assert len(detail["spell_progression"]) >= 1
 
+    def test_class_radiant_servant_modern_detail(self):
+        html = load_fixture("class_radiant-servant-modern.html")
+        detail = parse_class_detail(
+            html, "https://new.dndtools.org/classes/radiant-servant-of-pelor-245"
+        )
+        assert detail["title"] == "Radiant Servant of Pelor"
+        assert detail["class_type"] == "prestige"
+        assert detail["hit_die"] == "d6"
+        assert detail["skill_ranks"] == 2
+        assert detail["class_skills"] == "Concentration, and Heal"
+        assert detail["requirements_structured"]["base_save_bonus"] == "Will +5."
+        assert detail["requirements_structured"]["spells"].startswith("Able to cast")
+        assert detail["requirements_structured"]["special"] == (
+            "Must have Pelor as patron deity."
+        )
+        assert len(detail["advancement"]) == 3
+        assert detail["advancement"][0]["spellcasting"].startswith("+1 level")
+        features = {(f["level"], f["name"]) for f in detail["class_features"]}
+        assert (2, "Divine Health") in features
+        assert (3, "Aura of Warding") in features
+        assert (1, "Spells per Day") in features
+
     def test_class_black_flame_detail_preserves_paragraph_html(self):
         html = load_fixture("class_detail.html")
         detail = parse_class_detail(html, "http://example.com/classes/black-flame-zealot/")

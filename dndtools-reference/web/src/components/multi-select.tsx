@@ -15,6 +15,7 @@ export function MultiSelect({
   onChange,
   searchable = true,
   placeholder = "Any",
+  showLabel = true,
 }: {
   label: string;
   options: MultiSelectOption[];
@@ -22,6 +23,7 @@ export function MultiSelect({
   onChange: (next: string[]) => void;
   searchable?: boolean;
   placeholder?: string;
+  showLabel?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -90,13 +92,14 @@ export function MultiSelect({
 
   return (
     <div className={`multi-select${open ? " is-open" : ""}`} ref={rootRef}>
-      <span className="multi-select-label">{label}</span>
+      {showLabel ? <span className="multi-select-label">{label}</span> : null}
       <button
         type="button"
         className="multi-select-trigger"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
+        aria-label={showLabel ? undefined : label}
         onClick={() => setOpen((prev) => !prev)}
       >
         <span className="multi-select-summary">{summary}</span>

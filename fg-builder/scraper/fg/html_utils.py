@@ -134,6 +134,10 @@ def structured_requirements_to_html(req: dict[str, Any], *, indent: bool = False
         lines.append(
             f"<b>Base Attack Bonus:</b> {_clean_req_value(req['base_attack_bonus'])}"
         )
+    if req.get("base_save_bonus"):
+        lines.append(
+            f"<b>Base Save Bonus:</b> {_clean_req_value(req['base_save_bonus'])}"
+        )
     skills = req.get("skills") or []
     if skills:
         skills_text = _clean_req_value(
@@ -148,6 +152,8 @@ def structured_requirements_to_html(req: dict[str, Any], *, indent: bool = False
         )
         if feats_text:
             lines.append(f"<b>Feats:</b> {feats_text}")
+    if req.get("spells"):
+        lines.append(f"<b>Spells:</b> {_clean_req_value(req['spells'])}")
     if req.get("special"):
         lines.append(f"<b>Special:</b> {_clean_req_value(req['special'])}")
     return _requirements_html_from_lines(lines, indent=indent)

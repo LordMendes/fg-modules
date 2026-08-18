@@ -125,6 +125,7 @@ model Monster {
   challengeRating String?
   challengeRatingNum Float?
   hitDice         String?
+  hitDiceNum      Float?
   alignment       String?
   environment     String?
   treasure        String?
@@ -140,6 +141,7 @@ model Monster {
   @@index([size])
   @@index([challengeRating])
   @@index([challengeRatingNum])
+  @@index([hitDiceNum])
   @@index([alignment])
   @@index([environment])
   @@index([treasure])

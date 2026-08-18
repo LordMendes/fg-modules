@@ -7,6 +7,7 @@ import {
   CATEGORY_FILTER_FIELDS,
   CLASS_TYPE_FILTER_OPTIONS,
   FEAT_QUICK_CATEGORY_CHIPS,
+  MONSTER_RANGE_FILTERS,
   MONSTER_SIZE_FILTER_OPTIONS,
   SPELL_COMPONENT_FILTER_OPTIONS,
   formatBooleanFilterLabel,
@@ -14,6 +15,7 @@ import {
   normalizeFilterValues,
   type CategoryFilterOptions,
   type FilterFieldDef,
+  type RangeFilterValue,
 } from "@/lib/entity-filters";
 import { buildEntityOrderBy } from "@/lib/entity-sort";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
@@ -372,6 +374,8 @@ export type ListEntitiesOptions = {
   editions?: string[];
   /** Map of URL param → selected values (multi). */
   fields?: Record<string, string[]>;
+  /** Min/max numeric filters (monsters: CR, HD). */
+  ranges?: Record<string, RangeFilterValue>;
   sort?: TableSort | null;
 };
 
@@ -462,6 +466,26 @@ function buildFieldWhere(
   return where;
 }
 
+/** Build Prisma min/max filters for monster CR and HD numeric columns. */
+function buildRangeWhere(
+  category: CategoryKey,
+  ranges: Record<string, RangeFilterValue> | undefined,
+): Record<string, unknown> {
+  if (!ranges || category !== "monsters") return {};
+  const where: Record<string, unknown> = {};
+
+  for (const def of MONSTER_RANGE_FILTERS) {
+    const range = ranges[def.param];
+    if (!range) continue;
+    const clause: Record<string, number> = {};
+    if (range.min != null) clause.gte = range.min;
+    if (range.max != null) clause.lte = range.max;
+    if (Object.keys(clause).length) where[def.prismaField] = clause;
+  }
+
+  return where;
+}
+
 export async function listEntities(
   category: CategoryKey,
   options: ListEntitiesOptions = {},
@@ -470,6 +494,7 @@ export async function listEntities(
 
   const sourceWhere = buildSourceWhere(options);
   const fieldWhere = buildFieldWhere(category, fields);
+  const rangeWhere = buildRangeWhere(category, options.ranges);
 
   const baseWhere = {
     ...(search ? { name: { contains: search, mode: "insensitive" as const } } : {}),
@@ -478,6 +503,7 @@ export async function listEntities(
       : {}),
     ...(sourceWhere ? { source: sourceWhere } : {}),
     ...fieldWhere,
+    ...rangeWhere,
   };
 
   const take = PAGE_SIZE + 1;

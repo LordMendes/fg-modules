@@ -73,6 +73,104 @@ NPC lore, tactics, and GM reminders live in the FG **Notes** pane. Set \`notesFo
 
 Use \`magicalEffectsNotes\` for a separate **Magical effects** line; keep long narrative text in \`notesFormattedHtml\`.
 
+## Attack lines (\`offense.atk\` / \`offense.fullatk\`)
+
+FG stores attacks as plain strings in \`<atk>\` and \`<fullatk>\`. Fantasy Grounds parses the parenthetical for damage and critical info — always include it when known.
+
+### Format (Monster Manual style)
+
+\`\`\`
+Attack +BAB melee|ranged (damage[/threat[/×multiplier]])
+\`\`\`
+
+- **\`atk\`**: best single attack — usually highest-damage melee, or the creature's primary natural attack.
+- **\`fullatk\`**: full attack routine; list every attack, separated by \` and \` or \` or \`.
+- Always include **weapon or attack name**, **bonus**, **mode** (\`melee\` / \`ranged\`), and a **damage parenthetical**. Never leave \`"Weapon +5 melee"\` without \`(…)\` damage.
+- **Threat range** (critical range): append \`/19-20\` or \`/18-20\` when not the default 20.
+- **Multiplier**: append \`/×3\` or \`/×4\` when not ×2. Combine when both differ from default, e.g. \`(1d6+2/18-20)\` or \`(1d12+4/×3)\`.
+- **Iterative attacks**: repeat the bonus after a slash — \`Longsword +9/+4 melee (1d8+4/19-20)\`.
+
+### When to show crit info
+
+| Case | Show in parenthetical | Example |
+|------|----------------------|---------|
+| Standard 20/×2 | damage only | \`(1d8+3)\` |
+| Expanded threat | \`/19-20\` or \`/18-20\` | \`(1d8+3/19-20)\` |
+| Non-×2 multiplier | \`/×3\` or \`/×4\` | \`(1d8+3/×3)\` |
+| Both non-default | both parts | \`(1d6+2/18-20)\` or \`(1d12+4/×3)\` |
+
+Do **not** append \`/x2\` or \`/20\` — those are the default and are omitted in MM stat blocks.
+
+### Main manufactured weapons (SRD)
+
+| Weapon | Threat / mult | Example parenthetical |
+|--------|---------------|----------------------|
+| Longsword, shortsword, greatsword, bastard sword, dagger | 19–20/×2 | \`(1d8+3/19-20)\` |
+| Rapier, scimitar, falchion, kukri | 18–20/×2 | \`(1d6+2/18-20)\` |
+| Light crossbow, heavy crossbow, hand crossbow, repeating crossbow | 19–20/×2 | \`(1d8/19-20)\` |
+| Greataxe, longbow, shortbow, composite bows, lance, spear, guisarme, halberd, handaxe, warhammer | 20/×3 | \`(1d12+4/×3)\` |
+| Light pick, heavy pick, scythe | 20/×4 | \`(1d6+2/×4)\` |
+| Club, mace, morningstar, quarterstaff, trident, flail, sickle, javelin, sling, greatclub | 20/×2 | \`(1d8+1)\` — omit crit |
+
+Composite bows: add Str bonus inside the parens — \`(1d8+3/×3)\`.
+
+### Natural attacks
+
+Most natural attacks default to **20/×2**. Omit the slash suffix unless the creature's stat block or template lists a different threat or multiplier.
+
+| Attack | Typical damage (Medium) | Default crit |
+|--------|------------------------|--------------|
+| Bite | 1d6 + Str (1d8 Large, 2d6 Huge) | 20/×2 |
+| Claw | 1d4 + Str (1d6 Large, 1d8 Huge) | 20/×2 |
+| Gore | 1d6 + Str (1d8 Large) | 20/×2 |
+| Slam | 1d4 + Str (1d6 Large, 1d8 Huge) | 20/×2 |
+| Tail slap | 1d4 + Str (1d6 Large) | 20/×2 |
+| Sting | 1d4 + Str | 20/×2 |
+| Tentacle | 1d4 + Str (1d6 Large) | 20/×2 |
+| Wing buffet | 1d4 + Str (1d6 Huge) | 20/×2 |
+
+Natural attack rules:
+
+- **Primary** natural attacks add full Str to damage; **secondary** attacks add **½ Str** (round down) unless the stat block says otherwise.
+- **Multiattack** full lines list each attack: \`Bite +11 (2d6+6) and 2 claws +6 (1d8+3)\`.
+- Poison, disease, grab, swallow, etc. belong in \`specialattacks\`, not in the damage parenthetical.
+- When copying SRD monsters, use their published attack line — some templates change damage or add unusual crit (e.g. vorpal, keen weapons).
+
+### Attack examples
+
+Humanoid (manufactured):
+
+\`\`\`json
+"offense": {
+  "atk": "Longsword +9 melee (1d8+4/19-20)",
+  "fullatk": "Longsword +9/+4 melee (1d8+4/19-20)"
+}
+\`\`\`
+
+Monster (natural):
+
+\`\`\`json
+"offense": {
+  "atk": "Bite +11 melee (2d6+6)",
+  "fullatk": "Bite +11 melee (2d6+6) and 2 claws +6 melee (1d8+3) and tail slap +6 melee (1d8+3)"
+}
+\`\`\`
+
+Mixed melee / ranged:
+
+\`\`\`json
+"offense": {
+  "atk": "Composite longbow +8 ranged (1d8+3/×3) or longsword +7 melee (1d8+2/19-20)",
+  "fullatk": "Composite longbow +8 ranged (1d8+3/×3) or longsword +7/+2 melee (1d8+2/19-20)"
+}
+\`\`\`
+
+### Modifiers that change threat range
+
+- **Keen** (magic weapon) or **Improved Critical** (feat): double threat range — longsword 19–20 → 17–20; rapier 18–20 → 15–20.
+- **Keen edge** spell: same doubling as keen.
+- Expanded ranges from different sources do **not** stack; use the best single effect.
+
 ## Spell list shorthand
 
 \`\`\`json
@@ -118,6 +216,11 @@ Use \`magicalEffectsNotes\` for a separate **Magical effects** line; keep long n
 | Missing \`dmgType\` on damage \`action2\` | Always set \`dmgType\` |
 | Effect \`label: "dazzled"\` | \`"Dazzled"\` (FG title case) |
 | Notes as Markdown or plain text | FG HTML in \`notesFormattedHtml\` — see **Formatted notes** above |
+| \`(1d8+4)\` on longsword / crossbow | \`(1d8+4/19-20)\` — include non-default threat |
+| \`(1d12+4/19-20)\` on greataxe | \`(1d12+4/×3)\` — show multiplier, not threat |
+| \`(1d8+4/19-20/x2)\` | \`(1d8+4/19-20)\` — omit default ×2 |
+| \`"Weapon +5 melee"\` with no damage | \`Longsword +5 melee (1d8+2/19-20)\` — name weapon + parenthetical |
+| \`/19-20\` on claw/bite/slam by default | \`(1d6+2)\` — natural attacks are 20/×2 unless stat block says otherwise |
 
 ## Expected output
 

@@ -44,6 +44,121 @@ def _format_classskills(skills: str) -> str:
     return (skills or "").strip()
 
 
+_UA_BASE_SKILLS = {
+    "wizard": "Concentration (Con), Craft (Int), Knowledge (all) (Int), Profession (Wis), and Spellcraft (Int)",
+    "sorcerer": "Concentration (Con), Craft (Int), Knowledge (arcana) (Int), Profession (Wis), and Spellcraft (Int)",
+    "barbarian": "Climb (Str), Craft (Int), Handle Animal (Cha), Intimidate (Cha), Jump (Str), Listen (Wis), Ride (Dex), Survival (Wis), and Swim (Str)",
+    "bard": "Appraise (Int), Balance (Dex), Bluff (Cha), Climb (Str), Concentration (Con), Craft (Int), Decipher Script (Int), Diplomacy (Cha), Disguise (Cha), Escape Artist (Dex), Gather Information (Cha), Hide (Dex), Jump (Str), Knowledge (all) (Int), Listen (Wis), Move Silently (Dex), Perform (Cha), Profession (Wis), Sense Motive (Wis), Sleight of Hand (Dex), Speak Language (None), Spellcraft (Int), Swim (Str), Tumble (Dex), and Use Magic Device (Cha)",
+    "cleric": "Concentration (Con), Craft (Int), Diplomacy (Cha), Heal (Wis), Knowledge (arcana) (Int), Knowledge (religion) (Int), Profession (Wis), and Spellcraft (Int)",
+    "druid": "Concentration (Con), Craft (Int), Diplomacy (Cha), Handle Animal (Cha), Heal (Wis), Knowledge (nature) (Int), Listen (Wis), Profession (Wis), Ride (Dex), Spellcraft (Int), Spot (Wis), Survival (Wis), and Swim (Str)",
+    "fighter": "Climb (Str), Craft (Int), Handle Animal (Cha), Intimidate (Cha), Jump (Str), Ride (Dex), and Swim (Str)",
+    "monk": "Balance (Dex), Climb (Str), Concentration (Con), Craft (Int), Diplomacy (Cha), Escape Artist (Dex), Hide (Dex), Jump (Str), Knowledge (arcana) (Int), Knowledge (religion) (Int), Listen (Wis), Move Silently (Dex), Perform (Cha), Profession (Wis), Sense Motive (Wis), Spot (Wis), Swim (Str), and Tumble (Dex)",
+    "paladin": "Concentration (Con), Craft (Int), Diplomacy (Cha), Handle Animal (Cha), Heal (Wis), Knowledge (nobility and royalty) (Int), Knowledge (religion) (Int), Profession (Wis), Ride (Dex), and Sense Motive (Wis)",
+    "ranger": "Climb (Str), Craft (Int), Handle Animal (Cha), Heal (Wis), Hide (Dex), Jump (Str), Knowledge (dungeoneering) (Int), Knowledge (geography) (Int), Knowledge (nature) (Int), Listen (Wis), Move Silently (Dex), Profession (Wis), Ride (Dex), Search (Int), Spot (Wis), Survival (Wis), Swim (Str), and Use Rope (Dex)",
+    "rogue": "Appraise (Int), Balance (Dex), Bluff (Cha), Climb (Str), Craft (Int), Decipher Script (Int), Diplomacy (Cha), Disable Device (Int), Disguise (Cha), Escape Artist (Dex), Forgery (Int), Gather Information (Cha), Hide (Dex), Intimidate (Cha), Jump (Str), Knowledge (local) (Int), Listen (Wis), Move Silently (Dex), Open Lock (Dex), Perform (Cha), Profession (Wis), Search (Int), Sense Motive (Wis), Sleight of Hand (Dex), Spot (Wis), Swim (Str), Tumble (Dex), Use Magic Device (Cha), and Use Rope (Dex)",
+}
+
+_UA_VARIANT_BASES = {
+    "Abjurer Variant": "wizard",
+    "Barbarian Variant": "barbarian",
+    "Bard Variant": "bard",
+    "Cleric Variant": "cleric",
+    "Conjurer Variant": "wizard",
+    "Divine Bard": "bard",
+    "Diviner Variant": "wizard",
+    "Druid Variant": "druid",
+    "Druidic Avenger": "druid",
+    "Domain Wizard": "wizard",
+    "Enchanter Variant": "wizard",
+    "Evoker Variant": "wizard",
+    "Fighter Variant": "fighter",
+    "Illusionist Variant": "wizard",
+    "Monk Variant": "monk",
+    "Monk Variant: Fighting Styles": "monk",
+    "Necromancer Variant": "wizard",
+    "Paladin Variant": "paladin",
+    "Paladin of Freedom": "paladin",
+    "Paladin of Slaughter": "paladin",
+    "Paladin of Tyranny": "paladin",
+    "Planar Ranger": "ranger",
+    "Ranger Variant": "ranger",
+    "Rogue Variant": "rogue",
+    "Savage Bard": "bard",
+    "Totem Barbarian": "barbarian",
+    "Transmuter Variant": "wizard",
+    "Urban Ranger": "ranger",
+    "Wilderness Rogue": "rogue",
+    "Wizard Variant": "wizard",
+    "Warrior": "fighter",
+}
+
+_UA_SKILL_RANKS = {
+    "Abjurer Variant": 2,
+    "Barbarian Variant": 4,
+    "Bard Variant": 6,
+    "Battle Sorcerer": 2,
+    "Cleric Variant": 2,
+    "Conjurer Variant": 2,
+    "Divine Bard": 6,
+    "Diviner Variant": 2,
+    "Druid Variant": 4,
+    "Druidic Avenger": 4,
+    "Domain Wizard": 2,
+    "Enchanter Variant": 2,
+    "Evoker Variant": 2,
+    "Fighter Variant": 2,
+    "Illusionist Variant": 2,
+    "Monk Variant": 4,
+    "Monk Variant: Fighting Styles": 4,
+    "Necromancer Variant": 2,
+    "Paladin Variant": 2,
+    "Paladin of Freedom": 2,
+    "Paladin of Slaughter": 2,
+    "Paladin of Tyranny": 2,
+    "Planar Ranger": 6,
+    "Ranger Variant": 6,
+    "Rogue Variant": 8,
+    "Savage Bard": 6,
+    "Sorcerer/Wizard Variant": 2,
+    "Totem Barbarian": 4,
+    "Transmuter Variant": 2,
+    "Urban Ranger": 6,
+    "Wilderness Rogue": 8,
+    "Wizard Variant": 2,
+    "Warrior": 2,
+}
+
+_UA_SKILL_OVERRIDES = {
+    "Battle Sorcerer": (
+        2,
+        "Concentration (Con), Craft (Int), Intimidate (Cha), Knowledge (arcana) (Int), Profession (Wis), and Spellcraft (Int)",
+    ),
+    "Cloistered Cleric": (
+        6,
+        "Concentration (Con), Craft (Int), Decipher Script (Int), Diplomacy (Cha), Heal (Wis), Knowledge (all) (Int), Profession (Wis), and Spellcraft (Int)",
+    ),
+    "Expert": (6, "All skills"),
+}
+
+
+def _apply_ua_skill_metadata(book_title: str, name: str, detail: dict[str, Any]) -> dict[str, Any]:
+    """Fill variant skill automation from UA's stated base-class rules."""
+    if book_title.lower() != "unearthed arcana":
+        return detail
+    result = dict(detail)
+    override = _UA_SKILL_OVERRIDES.get(name)
+    ranks = override[0] if override else _UA_SKILL_RANKS.get(name)
+    base = _UA_VARIANT_BASES.get(name)
+    if ranks is not None and not result.get("skill_ranks"):
+        result["skill_ranks"] = ranks
+        result["skill_points"] = f"{ranks} + Int"
+    if override and override[1] and not result.get("class_skills"):
+        result["class_skills"] = override[1]
+    elif base and not result.get("class_skills"):
+        result["class_skills"] = _UA_BASE_SKILLS[base]
+    return result
+
+
 _SPELL_ABILITY_RE = re.compile(
     r"must have an? (\w+) score (?:equal to|of (?:at least )?10)",
     re.I,
@@ -177,8 +292,11 @@ def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
     if not rows:
         return ""
     has_saves = any(r.get("bab") for r in rows)
+    has_spellcasting = any(r.get("spellcasting") for r in rows)
     if has_saves:
         headers = ["Level", "BAB", "Fort", "Ref", "Will", "Special"]
+        if has_spellcasting:
+            headers.append("Spellcasting")
     else:
         headers = ["Level", "Special"]
 
@@ -200,6 +318,8 @@ def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
                     f"<td>{row.get('special', '')}</td>",
                 ]
             )
+            if has_spellcasting:
+                parts.append(f"<td>{row.get('spellcasting', '')}</td>")
         else:
             parts.extend(
                 [
@@ -255,7 +375,9 @@ def convert_classes(
     category = make_category(section, book_title)
 
     for rec in records:
-        detail = rec.get("detail") or {}
+        detail = _apply_ua_skill_metadata(
+            book_title, rec.get("name", ""), rec.get("detail") or {}
+        )
         index = rec.get("index") or {}
         rec_id = ids.next_id("class", book_title)
         node = ET.SubElement(category, rec_id)

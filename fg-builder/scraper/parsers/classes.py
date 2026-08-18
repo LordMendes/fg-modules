@@ -32,7 +32,8 @@ ABILITY_MAP = {
 }
 
 LEVEL_IN_TEXT_RE = re.compile(
-    r"\bat\s+(\d+)(?:st|nd|rd|th)\s+level\b",
+    r"\b(?:at|starting at|reaches|who is at least|of at least)\s+"
+    r"(\d+)(?:st|nd|rd|th)\s+level\b",
     re.I,
 )
 FEATURE_STRONG_RE = re.compile(
@@ -115,6 +116,17 @@ def _parse_h4_fields(content: Tag) -> dict[str, str]:
             fields["saves"] = value
         elif "class skill" in label and "feature" not in label:
             fields["class_skills"] = value
+    for dt in content.find_all("dt"):
+        label = dt.get_text(" ", strip=True).lower()
+        dd = dt.find_next_sibling("dd")
+        if not dd:
+            continue
+        value = dd.get_text(" ", strip=True)
+        value = re.sub(r"\bd\s+(\d+)\b", r"d\1", value, flags=re.I)
+        if "hit die" in label:
+            fields["hit_die"] = value
+        elif "skill point" in label:
+            fields["skill_points"] = value
     return fields
 
 
@@ -132,35 +144,53 @@ def _parse_requirements_block(content: Tag) -> dict[str, Any]:
         "alignment": "",
         "skills": [],
         "feats": [],
+        "spells": "",
         "special": "",
         "base_attack_bonus": "",
+        "base_save_bonus": "",
     }
-    for h4 in content.find_all("h4"):
-        if "requirement" not in h4.get_text(strip=True).lower():
+    headings = content.find_all(["h3", "h4", "h2"])
+    for heading in headings:
+        if "requirement" not in heading.get_text(strip=True).lower():
             continue
         block_parts: list[str] = []
         html_parts: list[str] = []
-        for sibling in h4.next_siblings:
-            if isinstance(sibling, Tag) and sibling.name == "h4":
+        for sibling in heading.next_siblings:
+            if isinstance(sibling, Tag) and sibling.name in ("h2", "h3", "h4"):
                 break
             if isinstance(sibling, Tag):
                 for p in sibling.find_all("p") if sibling.name != "p" else [sibling]:
-                    strong = p.find("strong")
-                    label = strong.get_text(strip=True).rstrip(":") if strong else ""
                     text = p.get_text(" ", strip=True)
                     block_parts.append(text)
                     html_parts.append(_paragraph_html(p))
-                    ll = label.lower()
-                    if ll == "alignment":
-                        result["alignment"] = text.replace("Alignment:", "").strip()
-                    elif ll == "skills":
-                        result["skills"].append(text.replace("Skills:", "").strip())
-                    elif ll == "feats":
-                        result["feats"].append(text.replace("Feats:", "").strip())
-                    elif ll == "special":
-                        result["special"] = text.replace("Special:", "").strip()
-                    elif "base attack" in ll:
-                        result["base_attack_bonus"] = text.replace("Base Attack Bonus:", "").strip()
+                    strongs = p.find_all("strong")
+                    for index, strong in enumerate(strongs):
+                        label = strong.get_text(strip=True).rstrip(":")
+                        start = p.contents.index(strong) + 1
+                        end = (
+                            p.contents.index(strongs[index + 1])
+                            if index + 1 < len(strongs)
+                            else len(p.contents)
+                        )
+                        value_html = "".join(str(node) for node in p.contents[start:end])
+                        value = BeautifulSoup(value_html, "lxml").get_text(
+                            " ", strip=True
+                        )
+                        ll = label.lower()
+                        if ll == "alignment":
+                            result["alignment"] = value
+                        elif ll == "skills":
+                            result["skills"].append(value)
+                        elif ll == "feats":
+                            result["feats"].append(value)
+                        elif ll == "spells":
+                            result["spells"] = value
+                        elif ll == "special":
+                            result["special"] = value
+                        elif "base attack" in ll:
+                            result["base_attack_bonus"] = value
+                        elif "base save" in ll:
+                            result["base_save_bonus"] = value
         result["text"] = "\n".join(block_parts).strip()
         result["html"] = "".join(html_parts)
         break
@@ -211,13 +241,13 @@ def _parse_class_features_section(content: Tag) -> tuple[list[dict[str, Any]], s
     notes_html = ""
     notes_text = ""
 
-    for h4 in content.find_all("h4"):
-        if "class feature" not in h4.get_text(strip=True).lower():
+    headings = content.find_all(["h3", "h4", "h2"])
+    for heading in headings:
+        if "class feature" not in heading.get_text(strip=True).lower():
             continue
-        container = h4.parent if h4.parent and h4.parent.name == "div" else content
         section_parts: list[str] = []
-        for sibling in h4.next_siblings:
-            if isinstance(sibling, Tag) and sibling.name == "h3":
+        for sibling in heading.next_siblings:
+            if isinstance(sibling, Tag) and sibling.name in ("h2", "h3", "h4"):
                 break
             if isinstance(sibling, Tag):
                 if sibling.name == "p":
@@ -252,10 +282,10 @@ def _stats_summary_html(h4_fields: dict[str, str]) -> str:
 def _parse_advancement_table(content: Tag) -> tuple[list[dict[str, Any]], str]:
     rows: list[dict[str, Any]] = []
     table_html = ""
-    for h3 in content.find_all("h3"):
-        if "advancement" not in h3.get_text(strip=True).lower():
+    for heading in content.find_all(["h2", "h3", "h4"]):
+        if "advancement" not in heading.get_text(strip=True).lower():
             continue
-        table = h3.find_next("table")
+        table = heading.find_next("table")
         if not table:
             continue
         table_html = html_inner(table)
@@ -282,6 +312,8 @@ def _parse_advancement_table(content: Tag) -> tuple[list[dict[str, Any]], str]:
                         "special": texts[5],
                     }
                 )
+                if len(texts) >= 7:
+                    row["spellcasting"] = texts[6]
             elif len(texts) >= 2:
                 row["special"] = texts[-1]
             rows.append(row)
@@ -338,10 +370,33 @@ def _parse_class_skills_table(content: Tag) -> tuple[list[dict[str, str]], str]:
         break
 
     if not skills:
+        heading = next(
+            (
+                h
+                for h in content.find_all(["h2", "h3", "h4"])
+                if "class skill" in h.get_text(" ", strip=True).lower()
+            ),
+            None,
+        )
+        if heading:
+            section = heading.find_next_sibling()
+            if section:
+                for link in section.find_all("a"):
+                    name = link.get_text(" ", strip=True)
+                    if name:
+                        skills.append({"name": name, "ability": ""})
+
+    if not skills:
         return [], ""
 
     formatted_parts = [
-        f"{s['name']} ({s['ability']})" for s in skills if s["name"]
+        (
+            f"{s['name']} ({s['ability']})"
+            if s.get("ability")
+            else s["name"]
+        )
+        for s in skills
+        if s["name"]
     ]
     if len(formatted_parts) > 1:
         fg_text = ", ".join(formatted_parts[:-1]) + f", and {formatted_parts[-1]}"
@@ -403,19 +458,33 @@ def _merge_advancement_features(
     existing = {(f.get("level"), f.get("name", "").lower()) for f in merged}
     for row in advancement:
         special = (row.get("special") or "").strip()
-        if not special:
+        spellcasting = (row.get("spellcasting") or "").strip()
+        if not spellcasting and _is_spellcasting_advancement(special):
+            spellcasting = special
+            special = ""
+        if not special and not spellcasting:
             continue
         level = row.get("level", 0)
-        if _is_spellcasting_advancement(special):
+        if _is_spellcasting_advancement(spellcasting):
             key = (level, "spells per day")
+            for feature in merged:
+                feature_name = (feature.get("name") or "").lower()
+                if level == feature.get("level") and (
+                    feature_name in {"spells", "spells per day", "spells per day/spells known"}
+                    or feature_name.startswith("spells per day/")
+                ):
+                    feature["name"] = "Spells per Day"
+                    existing.discard((level, feature_name))
+                    existing.add(key)
+                    break
             if key not in existing:
                 merged.append(
                     {
                         "level": level,
                         "name": "Spells per Day",
                         "type": "",
-                        "text_html": f"<p>{special}</p>",
-                        "text": special,
+                        "text_html": f"<p>{spellcasting}</p>",
+                        "text": spellcasting,
                         "source": "advancement",
                     }
                 )
@@ -428,6 +497,20 @@ def _merge_advancement_features(
             if name.lower() in {"or", "and", "the", "see", "text"}:
                 continue
             key = (level, name.lower())
+            matching = next(
+                (
+                    feature
+                    for feature in merged
+                    if (feature.get("name") or "").lower() == name.lower()
+                ),
+                None,
+            )
+            if matching:
+                old_key = (matching.get("level"), (matching.get("name") or "").lower())
+                matching["level"] = level
+                existing.discard(old_key)
+                existing.add(key)
+                continue
             if key in existing:
                 continue
             merged.append(
@@ -454,7 +537,7 @@ def _parse_skill_ranks_number(skill_points: str) -> int | None:
 
 def parse_class_detail(html: str, source_url: str) -> dict[str, Any]:
     soup = make_soup(html)
-    content = soup.select_one("#content")
+    content = soup.select_one("#content") or soup.find("main")
     if not content:
         return {"title": get_content_title(soup), "class_type": "base"}
 

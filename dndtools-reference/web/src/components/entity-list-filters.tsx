@@ -9,10 +9,15 @@ import {
   DESCRIPTION_SEARCH_CATEGORIES,
   DESCRIPTION_SEARCH_PLACEHOLDERS,
   FEAT_QUICK_CATEGORY_CHIPS,
+  MONSTER_RANGE_FILTER_LABELS,
   buildListSearchParams,
+  emptyMonsterRangeInputs,
   hasActiveFilters,
+  parseRangeInputs,
+  rangeInputsFromFilters,
   type CategoryFilterOptions,
   type ParsedListFilters,
+  type RangeFilterInputs,
 } from "@/lib/entity-filters";
 import type { CategoryKey } from "@/lib/categories";
 import { getCategoryLabel } from "@/lib/categories";
@@ -41,6 +46,11 @@ export function EntityListFilters({
     }
     return next;
   });
+  const [rangeInputs, setRangeInputs] = useState<RangeFilterInputs>(() =>
+    category === "monsters"
+      ? rangeInputsFromFilters(initialFilters.ranges)
+      : emptyMonsterRangeInputs(),
+  );
 
   const draftFilters: ParsedListFilters = useMemo(
     () => ({
@@ -49,9 +59,10 @@ export function EntityListFilters({
       sources,
       editions,
       fields,
+      ranges: category === "monsters" ? parseRangeInputs(rangeInputs) : {},
       sort: initialFilters.sort,
     }),
-    [search, description, sources, editions, fields, initialFilters.sort],
+    [search, description, sources, editions, fields, rangeInputs, category, initialFilters.sort],
   );
 
   const active = hasActiveFilters(draftFilters) || hasActiveFilters(initialFilters);
@@ -75,18 +86,92 @@ export function EntityListFilters({
     const cleared: Record<string, string[]> = {};
     for (const def of fieldDefs) cleared[def.param] = [];
     setFields(cleared);
+    const clearedRanges = emptyMonsterRangeInputs();
+    setRangeInputs(clearedRanges);
     applyFilters({
       search: "",
       description: "",
       sources: [],
       editions: [],
       fields: cleared,
+      ranges: {},
       sort: initialFilters.sort,
     });
   }
 
   function setField(param: string, values: string[]) {
     setFields((prev) => ({ ...prev, [param]: values }));
+  }
+
+  function setRangeInput(param: string, bound: "min" | "max", value: string) {
+    setRangeInputs((prev) => ({
+      ...prev,
+      [param]: { ...prev[param], [bound]: value },
+    }));
+  }
+
+  function renderRangeInputs(param: string, compact = false) {
+    const inputs = rangeInputs[param] ?? { min: "", max: "" };
+    const label = MONSTER_RANGE_FILTER_LABELS[param] ?? param.toUpperCase();
+    return (
+      <div
+        className={`filter-range${compact ? " filter-range--compact" : ""}`}
+        aria-label={`${label} range`}
+      >
+        <label className="filter-range-bound">
+          <span className="sr-only">{label} minimum</span>
+          <input
+            type="text"
+            inputMode="decimal"
+            value={inputs.min}
+            onChange={(e) => setRangeInput(param, "min", e.target.value)}
+            placeholder="Min"
+            aria-label={`${label} minimum`}
+          />
+        </label>
+        <span className="filter-range-sep" aria-hidden>
+          –
+        </span>
+        <label className="filter-range-bound">
+          <span className="sr-only">{label} maximum</span>
+          <input
+            type="text"
+            inputMode="decimal"
+            value={inputs.max}
+            onChange={(e) => setRangeInput(param, "max", e.target.value)}
+            placeholder="Max"
+            aria-label={`${label} maximum`}
+          />
+        </label>
+      </div>
+    );
+  }
+
+  function renderMonsterRangeField(param: "cr" | "hd", def?: (typeof fieldDefs)[number]) {
+    const label = MONSTER_RANGE_FILTER_LABELS[param] ?? param.toUpperCase();
+    const isCr = param === "cr" && def;
+
+    return (
+      <div
+        key={param}
+        className={`filter-field${isCr ? " filter-field--cr" : " filter-field--hd"}`}
+      >
+        <span className="multi-select-label">{label}</span>
+        <div className="filter-field-body">
+          {isCr ? (
+            <MultiSelect
+              label={def.label}
+              showLabel={false}
+              options={options.fields[def.param] ?? []}
+              value={fields[def.param] ?? []}
+              onChange={(next) => setField(def.param, next)}
+              searchable={(options.fields[def.param] ?? []).length > 8}
+            />
+          ) : null}
+          {renderRangeInputs(param, Boolean(isCr))}
+        </div>
+      </div>
+    );
   }
 
   function toggleChip(param: string, value: string) {
@@ -195,6 +280,15 @@ export function EntityListFilters({
                     );
                   })}
                 </div>
+              </div>
+            );
+          }
+
+          if (category === "monsters" && def.param === "cr") {
+            return (
+              <div key="monster-cr-hd-filters" className="filter-field-row">
+                {renderMonsterRangeField("cr", def)}
+                {renderMonsterRangeField("hd")}
               </div>
             );
           }

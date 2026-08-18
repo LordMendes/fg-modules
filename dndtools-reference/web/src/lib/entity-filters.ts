@@ -1,5 +1,6 @@
 import type { CategoryKey } from "@/lib/categories";
 import { DEFAULT_ENTITY_SORT, normalizeEntitySort } from "@/lib/entity-sort";
+import { parseCr } from "@/lib/encounter/parseCr";
 import { SPELL_COMPONENT_KEYS } from "@/lib/spell-utils";
 import type { TableSort } from "@/lib/table-sort";
 
@@ -16,12 +17,24 @@ export type FilterFieldDef = {
   ui?: "multiselect" | "chips";
 };
 
+export type RangeFilterDef = {
+  /** Logical key used in ParsedListFilters.ranges. */
+  param: string;
+  minParam: string;
+  maxParam: string;
+  prismaField: string;
+  parse: (value: string | null | undefined) => number | null;
+};
+
+export type RangeFilterValue = { min?: number; max?: number };
+
 export type ParsedListFilters = {
   search: string;
   description: string;
   sources: string[];
   editions: string[];
   fields: Record<string, string[]>;
+  ranges: Record<string, RangeFilterValue>;
   sort: TableSort | null;
 };
 
@@ -124,6 +137,29 @@ export const CATEGORY_FILTER_FIELDS: Record<CategoryKey, FilterFieldDef[]> = {
   ],
 };
 
+/** Min/max range filters for monster CR and HD (numeric DB columns). */
+export const MONSTER_RANGE_FILTERS: RangeFilterDef[] = [
+  {
+    param: "cr",
+    minParam: "crMin",
+    maxParam: "crMax",
+    prismaField: "challengeRatingNum",
+    parse: parseCr,
+  },
+  {
+    param: "hd",
+    minParam: "hdMin",
+    maxParam: "hdMax",
+    prismaField: "hitDiceNum",
+    parse: parseCr,
+  },
+];
+
+export const MONSTER_RANGE_FILTER_LABELS: Record<string, string> = {
+  cr: "CR",
+  hd: "HD",
+};
+
 export const SPELL_COMPONENT_FILTER_OPTIONS = SPELL_COMPONENT_KEYS.map((key) => ({
   value: key,
   label:
@@ -210,6 +246,33 @@ function readTextParam(
   return "";
 }
 
+function parseRangeBound(
+  searchParams: Record<string, string | string[] | undefined>,
+  key: string,
+  parse: RangeFilterDef["parse"],
+): number | undefined {
+  const raw = readTextParam(searchParams, key);
+  if (!raw) return undefined;
+  const parsed = parse(raw);
+  return parsed ?? undefined;
+}
+
+function parseMonsterRanges(
+  searchParams: Record<string, string | string[] | undefined>,
+): Record<string, RangeFilterValue> {
+  const ranges: Record<string, RangeFilterValue> = {};
+  for (const def of MONSTER_RANGE_FILTERS) {
+    const min = parseRangeBound(searchParams, def.minParam, def.parse);
+    const max = parseRangeBound(searchParams, def.maxParam, def.parse);
+    if (min == null && max == null) continue;
+    const range: RangeFilterValue = {};
+    if (min != null) range.min = min;
+    if (max != null) range.max = max;
+    ranges[def.param] = range;
+  }
+  return ranges;
+}
+
 /** Parse listing URL search params into a structured filter object. */
 export function parseListSearchParams(
   category: CategoryKey,
@@ -244,7 +307,9 @@ export function parseListSearchParams(
       ? null
       : normalizedSort;
 
-  return { search, description, sources, editions, fields, sort };
+  const ranges = category === "monsters" ? parseMonsterRanges(searchParams) : {};
+
+  return { search, description, sources, editions, fields, ranges, sort };
 }
 
 /** Build URLSearchParams from current filter state for client navigation. */
@@ -256,6 +321,13 @@ export function buildListSearchParams(filters: ParsedListFilters): URLSearchPara
   if (filters.editions.length) params.set("edition", filters.editions.join(","));
   for (const [key, values] of Object.entries(filters.fields)) {
     if (values.length) params.set(key, values.join(","));
+  }
+  if (filters.ranges) {
+    for (const def of MONSTER_RANGE_FILTERS) {
+      const range = filters.ranges[def.param];
+      if (range?.min != null) params.set(def.minParam, String(range.min));
+      if (range?.max != null) params.set(def.maxParam, String(range.max));
+    }
   }
   if (filters.sort) {
     params.set("sort", filters.sort.column);
@@ -275,8 +347,50 @@ export function hasActiveFilters(filters: ParsedListFilters): boolean {
     Boolean(filters.description) ||
     filters.sources.length > 0 ||
     filters.editions.length > 0 ||
-    Object.values(filters.fields).some((v) => v.length > 0)
+    Object.values(filters.fields).some((v) => v.length > 0) ||
+    Object.values(filters.ranges ?? {}).some((r) => r.min != null || r.max != null)
   );
+}
+
+export type RangeFilterInputs = Record<string, { min: string; max: string }>;
+
+export function emptyMonsterRangeInputs(): RangeFilterInputs {
+  const inputs: RangeFilterInputs = {};
+  for (const def of MONSTER_RANGE_FILTERS) {
+    inputs[def.param] = { min: "", max: "" };
+  }
+  return inputs;
+}
+
+export function rangeInputsFromFilters(
+  ranges: Record<string, RangeFilterValue> | undefined,
+): RangeFilterInputs {
+  const inputs = emptyMonsterRangeInputs();
+  if (!ranges) return inputs;
+  for (const def of MONSTER_RANGE_FILTERS) {
+    const range = ranges[def.param];
+    if (!range) continue;
+    inputs[def.param] = {
+      min: range.min != null ? String(range.min) : "",
+      max: range.max != null ? String(range.max) : "",
+    };
+  }
+  return inputs;
+}
+
+export function parseRangeInputs(inputs: RangeFilterInputs): Record<string, RangeFilterValue> {
+  const ranges: Record<string, RangeFilterValue> = {};
+  for (const def of MONSTER_RANGE_FILTERS) {
+    const raw = inputs[def.param] ?? { min: "", max: "" };
+    const min = raw.min.trim() ? def.parse(raw.min) : null;
+    const max = raw.max.trim() ? def.parse(raw.max) : null;
+    if (min == null && max == null) continue;
+    const range: RangeFilterValue = {};
+    if (min != null) range.min = min;
+    if (max != null) range.max = max;
+    ranges[def.param] = range;
+  }
+  return ranges;
 }
 
 /**

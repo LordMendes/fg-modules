@@ -61,7 +61,7 @@ export function buildEntityOrderBy(
       name: { name: direction },
       type: { creatureType: direction },
       cr: { challengeRatingNum: direction },
-      hd: { hitDice: direction },
+      hd: { hitDiceNum: direction },
     },
     classes: {
       name: { name: direction },
