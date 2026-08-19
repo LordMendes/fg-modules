@@ -10326,10 +10326,12 @@
     "index": {
       "type": "Humanoid",
       "subtypes": "Human, Shapechanger",
-      "cr": "ocodile Form",
+      "cr": "3",
       "hd": "1d8+1 plus 3d8+12 (30 hp)",
       "source_abbrev": "RH"
-    }
+    },
+    "challenge_rating": "3",
+    "stat_line": "Medium Humanoid (Human, Shapechanger) — CR 3"
   },
   {
     "name": "Werecrocodile (Human Form)",

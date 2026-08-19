@@ -20,6 +20,7 @@ from .config import CATEGORY_CONFIG, DEFAULT_WORKERS, FLUSH_EVERY, PREREQUISITE_
 from .http_client import AsyncHttpClient, HttpClient
 from .pagination import IndexPaginator, parse_pagination_total
 from .parsers import DETAIL_PARSERS, INDEX_PARSERS
+from .monster_cr import sanitize_monster_record
 from .parsers.base import merge_index_detail
 from .writer import (
     CategoryStats,
@@ -227,11 +228,17 @@ class ScrapeEngine:
                                 classic_lookup,
                                 async_client,
                             )
-                        records[position] = merge_index_detail(index_row, detail_data)
+                        merged = merge_index_detail(index_row, detail_data)
+                        if category == "monsters":
+                            merged = sanitize_monster_record(merged)
+                        records[position] = merged
                     except Exception as exc:
                         stats.errors += 1
                         append_error(self.errors, category, source_url, str(exc))
-                        records[position] = merge_index_detail(index_row, None)
+                        merged = merge_index_detail(index_row, None)
+                        if category == "monsters":
+                            merged = sanitize_monster_record(merged)
+                        records[position] = merged
                     async with progress_lock:
                         completed += 1
                         print_progress(category, completed, total, slug)

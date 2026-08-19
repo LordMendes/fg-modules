@@ -15223,13 +15223,13 @@
     "slug": "bard",
     "name": "Bard",
     "source_url": "https://new.dndtools.org/classes/bard",
-    "scraped_at": "2026-07-13T17:31:25Z",
+    "scraped_at": "2026-08-19T18:51:29Z",
     "index": {
       "prestige_level": "",
-      "hit_die": "—",
-      "skill_points": "—",
-      "source_abbrev": "ECS",
-      "edition": "Eberron (3.5)"
+      "hit_die": "6",
+      "skill_points": "6",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
     },
     "spells_forbard": [
       {
@@ -15285,10 +15285,10 @@
     "description_html": null,
     "description_text": null,
     "source": {
-      "name": "Core",
-      "abbrev": "ECS",
-      "edition": "Eberron (3.5)",
-      "page": null,
+      "name": "Player's Handbook",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
+      "page": 26,
       "url": null
     },
     "spells_forknight_of_the_chalice": null,
@@ -15344,7 +15344,253 @@
     "spells_forurban_druid": null,
     "spells_forcourt_herald": null,
     "spells_forjustice_of_weald_and_woe": null,
-    "class_skills": null,
+    "class_skills": [
+      {
+        "name": "Appraise",
+        "slug": "appraise",
+        "url": "/skills/appraise/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Balance",
+        "slug": "balance",
+        "url": "/skills/balance/",
+        "id": null,
+        "ability": "DEX"
+      },
+      {
+        "name": "Bluff",
+        "slug": "bluff",
+        "url": "/skills/bluff/",
+        "id": null,
+        "ability": "CHA"
+      },
+      {
+        "name": "Climb",
+        "slug": "climb",
+        "url": "/skills/climb/",
+        "id": null,
+        "ability": "STR"
+      },
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration/",
+        "id": null,
+        "ability": "CON"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Decipher Script",
+        "slug": "decipher-script",
+        "url": "/skills/decipher-script/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Diplomacy",
+        "slug": "diplomacy",
+        "url": "/skills/diplomacy/",
+        "id": null,
+        "ability": "CHA"
+      },
+      {
+        "name": "Disguise",
+        "slug": "disguise",
+        "url": "/skills/disguise/",
+        "id": null,
+        "ability": "CHA"
+      },
+      {
+        "name": "Escape Artist",
+        "slug": "escape-artist",
+        "url": "/skills/escape-artist/",
+        "id": null,
+        "ability": "DEX"
+      },
+      {
+        "name": "Gather Information",
+        "slug": "gather-information",
+        "url": "/skills/gather-information/",
+        "id": null,
+        "ability": "CHA"
+      },
+      {
+        "name": "Hide",
+        "slug": "hide",
+        "url": "/skills/hide/",
+        "id": null,
+        "ability": "DEX"
+      },
+      {
+        "name": "Jump",
+        "slug": "jump",
+        "url": "/skills/jump/",
+        "id": null,
+        "ability": "STR"
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (architecture and engineering)",
+        "slug": "knowledge-architecture-and-engineering",
+        "url": "/skills/knowledge-architecture-and-engineering/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (dungeoneering)",
+        "slug": "knowledge-dungeoneering",
+        "url": "/skills/knowledge-dungeoneering/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (geography)",
+        "slug": "knowledge-geography",
+        "url": "/skills/knowledge-geography/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (history)",
+        "slug": "knowledge-history",
+        "url": "/skills/knowledge-history/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (local)",
+        "slug": "knowledge-local",
+        "url": "/skills/knowledge-local/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (nature)",
+        "slug": "knowledge-nature",
+        "url": "/skills/knowledge-nature/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (nobility and royalty)",
+        "slug": "knowledge-nobility-and-royalty",
+        "url": "/skills/knowledge-nobility-and-royalty/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (psionics)",
+        "slug": "knowledge-psionics",
+        "url": "/skills/knowledge-psionics/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (religion)",
+        "slug": "knowledge-religion",
+        "url": "/skills/knowledge-religion/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Knowledge (the planes)",
+        "slug": "knowledge-the-planes",
+        "url": "/skills/knowledge-the-planes/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Listen",
+        "slug": "listen",
+        "url": "/skills/listen/",
+        "id": null,
+        "ability": "WIS"
+      },
+      {
+        "name": "Move Silently",
+        "slug": "move-silently",
+        "url": "/skills/move-silently/",
+        "id": null,
+        "ability": "DEX"
+      },
+      {
+        "name": "Perform",
+        "slug": "perform",
+        "url": "/skills/perform/",
+        "id": null,
+        "ability": "CHA"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession/",
+        "id": null,
+        "ability": "WIS"
+      },
+      {
+        "name": "Sense Motive",
+        "slug": "sense-motive",
+        "url": "/skills/sense-motive/",
+        "id": null,
+        "ability": "WIS"
+      },
+      {
+        "name": "Sleight of Hand",
+        "slug": "sleight-of-hand",
+        "url": "/skills/sleight-of-hand/",
+        "id": null,
+        "ability": "DEX"
+      },
+      {
+        "name": "Speak Language",
+        "slug": "speak-language",
+        "url": "/skills/speak-language/",
+        "id": null,
+        "ability": "None"
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft/",
+        "id": null,
+        "ability": "INT"
+      },
+      {
+        "name": "Swim",
+        "slug": "swim",
+        "url": "/skills/swim/",
+        "id": null,
+        "ability": "STR"
+      },
+      {
+        "name": "Tumble",
+        "slug": "tumble",
+        "url": "/skills/tumble/",
+        "id": null,
+        "ability": "DEX"
+      },
+      {
+        "name": "Use Magic Device",
+        "slug": "use-magic-device",
+        "url": "/skills/use-magic-device/",
+        "id": null,
+        "ability": "CHA"
+      }
+    ],
     "spells_forartificer": null,
     "spells_forblackguard": null,
     "spells_fordemonologist": null,
@@ -15367,9 +15613,9 @@
     "spells_forbladesinger": null,
     "spells_forwarmage": null,
     "spells_forsorcerer": null,
-    "advancement_html": null,
+    "advancement_html": "<table><tr>\n<th colspan=\"6\"></th>\n<th colspan=\"7\" style=\"text-align:center;\">Spells per Day </th>\n<td></td>\n</tr>\n<tr>\n<th>Level </th>\n<th><span class=\"caps\">BAB</span> </th>\n<th>Fort </th>\n<th>Ref </th>\n<th>Will </th>\n<th>Special </th>\n<th>0th </th>\n<th>1st </th>\n<th>2nd </th>\n<th>3rd </th>\n<th>4th </th>\n<th>5th </th>\n<th>6th </th>\n</tr>\n<tr>\n<td> 1st </td>\n<td> +0 </td>\n<td> +0 </td>\n<td> +2 </td>\n<td> +2 </td>\n<td> Bardic music, bardic knowledge, countersong, <em>fascinate</em>, inspire courage +1 </td>\n<td> 2 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 2nd </td>\n<td> +1 </td>\n<td> +0 </td>\n<td> +3 </td>\n<td> +3 </td>\n<td> </td>\n<td> 3 </td>\n<td> 0 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 3rd </td>\n<td> +2 </td>\n<td> +1 </td>\n<td> +3 </td>\n<td> +3 </td>\n<td> Inspire competence </td>\n<td> 3 </td>\n<td> 1 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 4th </td>\n<td> +3 </td>\n<td> +1 </td>\n<td> +4 </td>\n<td> +4 </td>\n<td> </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> 0 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 5th </td>\n<td> +3 </td>\n<td> +1 </td>\n<td> +4 </td>\n<td> +4 </td>\n<td> </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 1 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 6th </td>\n<td> +4 </td>\n<td> +2 </td>\n<td> +5 </td>\n<td> +5 </td>\n<td> <em>Suggestion</em> </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 7th </td>\n<td> +5 </td>\n<td> +2 </td>\n<td> +5 </td>\n<td> +5 </td>\n<td> </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> 0 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 8th </td>\n<td> +6/+1 </td>\n<td> +2 </td>\n<td> +6 </td>\n<td> +6 </td>\n<td> Inspire courage +2 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 1 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 9th </td>\n<td> +6/+1 </td>\n<td> +3 </td>\n<td> +6 </td>\n<td> +6 </td>\n<td> Inspire greatness </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> — </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 10th </td>\n<td> +7/+2 </td>\n<td> +3 </td>\n<td> +7 </td>\n<td> +7 </td>\n<td> </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> 0 </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 11th </td>\n<td> +8/+3 </td>\n<td> +3 </td>\n<td> +7 </td>\n<td> +7 </td>\n<td> </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 1 </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 12th </td>\n<td> +9/+4 </td>\n<td> +4 </td>\n<td> +8 </td>\n<td> +8 </td>\n<td> Song of freedom </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> — </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 13th </td>\n<td> +9/+4 </td>\n<td> +4 </td>\n<td> +8 </td>\n<td> +8 </td>\n<td> </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> 0 </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 14th </td>\n<td> +10/+5 </td>\n<td> +4 </td>\n<td> +9 </td>\n<td> +9 </td>\n<td> Inspire courage +3 </td>\n<td> 4 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 1 </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 15th </td>\n<td> +11/+6/+1 </td>\n<td> +5 </td>\n<td> +9 </td>\n<td> +9 </td>\n<td> Inspire heroics </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> — </td>\n</tr>\n<tr>\n<td> 16th </td>\n<td> +12/+7/+2 </td>\n<td> +5 </td>\n<td> +10 </td>\n<td> +10 </td>\n<td> </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 2 </td>\n<td> 0 </td>\n</tr>\n<tr>\n<td> 17th </td>\n<td> +12/+7/+2 </td>\n<td> +5 </td>\n<td> +10 </td>\n<td> +10 </td>\n<td> </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 3 </td>\n<td> 3 </td>\n<td> 1 </td>\n</tr>\n<tr>\n<td> 18th </td>\n<td> +13/+8/+3 </td>\n<td> +6 </td>\n<td> +11 </td>\n<td> +11 </td>\n<td> <em>Mass suggestion</em> </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 3 </td>\n<td> 2 </td>\n</tr>\n<tr>\n<td> 19th </td>\n<td> +14/+9/+4 </td>\n<td> +6 </td>\n<td> +11 </td>\n<td> +11 </td>\n<td> </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 3 </td>\n</tr>\n<tr>\n<td> 20th </td>\n<td> +15/+10/+5 </td>\n<td> +6 </td>\n<td> +12 </td>\n<td> +12 </td>\n<td> Inspire courage+4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n<td> 4 </td>\n</tr></table>",
     "spells_forjusticiar_of_taiia": null,
-    "skill_points": null,
+    "skill_points": "6+ Int",
     "advancement": null,
     "spells_forcleric": null,
     "spells_forchampion_of_gwynharwyf": null,
@@ -15377,7 +15623,7 @@
     "min_bab_req": null,
     "spells_forexalted_arcanist": null,
     "spells_forurban_ranger": null,
-    "hit_die": null,
+    "hit_die": "d6",
     "spells_forwarlock": null,
     "spells_forshaman": null,
     "spells_forranger": null

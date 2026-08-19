@@ -93553,7 +93553,7 @@
     "index": {
       "type": "Humanoid",
       "subtypes": "Human, Shapechanger",
-      "cr": "ocodile Form",
+      "cr": "3",
       "hd": "1d8+1 plus 3d8+12 (30 hp)",
       "source_abbrev": "RH"
     },
@@ -93570,10 +93570,10 @@
     "wis": "11",
     "cha": "8",
     "fort_ref_will": "+9 / +4 / +1",
-    "challenge_rating": "ocodile Form",
+    "challenge_rating": "3",
     "alignment": "Always neutral evil",
     "level_adjustment": "+3",
-    "stat_line": "Medium Humanoid (Human, Shapechanger) — CR ocodile Form",
+    "stat_line": "Medium Humanoid (Human, Shapechanger) — CR 3",
     "special_abilities": [
       {
         "name": "DR 10/silver",

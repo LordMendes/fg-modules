@@ -773,14 +773,14 @@
     "name": "Bard",
     "url": "https://new.dndtools.org/classes/bard",
     "slug": "bard",
-    "id": null,
+    "id": 90,
     "category": "classes",
     "index": {
       "prestige_level": "",
-      "hit_die": "—",
-      "skill_points": "—",
-      "source_abbrev": "ECS",
-      "edition": "Eberron (3.5)"
+      "hit_die": "6",
+      "skill_points": "6",
+      "source_abbrev": "PH",
+      "edition": "Core (3.5)"
     }
   },
   {

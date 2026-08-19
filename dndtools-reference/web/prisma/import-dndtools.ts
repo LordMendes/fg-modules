@@ -2,7 +2,7 @@ import "dotenv/config";
 import { readFileSync, existsSync } from "fs";
 import { join, resolve } from "path";
 import { PrismaClient, EntityCategory, DomainType } from "../src/generated/prisma/client";
-import { parseCr, parseHitDice } from "../src/lib/encounter/parseCr";
+import { parseCr, parseHitDice, sanitizeMonsterChallengeRating } from "../src/lib/encounter/parseCr";
 import {
   isCastingClassVariant,
   parseClassSpellOriginSlug,
@@ -769,13 +769,28 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
-        const challengeRating = (r.challenge_rating as string) ?? index?.cr ?? null;
+        const challengeRating = sanitizeMonsterChallengeRating(r) ?? null;
         const hitDice = (r.hit_dice as string) ?? index?.hd ?? null;
+        let statLine = (r.stat_line as string) ?? null;
+        if (
+          challengeRating &&
+          statLine &&
+          !/(?:—|-)\s*CR\s+[\d./]/.test(statLine.trim())
+        ) {
+          statLine = statLine.replace(/(?:—|-)\s*CR\s+.+\s*$/, ` — CR ${challengeRating}`);
+        }
         const monsterData = {
           name: r.name,
           sourceUrl: r.source_url ?? null,
           scrapedAt: parseDate(r.scraped_at),
-          indexData: monsterIndexData(r),
+          indexData: monsterIndexData({
+            ...r,
+            challenge_rating: challengeRating ?? r.challenge_rating,
+            stat_line: statLine ?? r.stat_line,
+            index: challengeRating
+              ? { ...(index ?? {}), cr: challengeRating }
+              : index,
+          }),
           descriptionHtml: (r.description_html as string) ?? null,
           descriptionText: (r.description_text as string) ?? null,
           creatureType: (r.type as string) ?? index?.type ?? null,
