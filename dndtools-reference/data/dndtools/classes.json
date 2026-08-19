@@ -17101,7 +17101,7 @@
     "index": {
       "prestige_level": "",
       "hit_die": "8",
-      "skill_points": "—",
+      "skill_points": "2",
       "source_abbrev": "UA",
       "edition": "Supplementals (3.5)"
     },
@@ -17413,7 +17413,7 @@
     "spells_forwarmage": null,
     "spells_forsorcerer": null,
     "spells_forjusticiar_of_taiia": null,
-    "skill_points": null,
+    "skill_points": "2+ Int",
     "spells_forcleric": null,
     "spells_forchampion_of_gwynharwyf": null,
     "spells_forthayan_slaver": null,
@@ -79922,7 +79922,7 @@
     "scraped_at": "2026-07-13T17:31:30Z",
     "index": {
       "prestige_level": "",
-      "hit_die": "—",
+      "hit_die": "6",
       "skill_points": "2",
       "source_abbrev": "UA",
       "edition": "Supplementals (3.5)"
@@ -80130,7 +80130,7 @@
     "min_bab_req": null,
     "spells_forexalted_arcanist": null,
     "spells_forurban_ranger": null,
-    "hit_die": null,
+    "hit_die": "d6",
     "spells_forwarlock": null,
     "spells_forshaman": null,
     "spells_forranger": null

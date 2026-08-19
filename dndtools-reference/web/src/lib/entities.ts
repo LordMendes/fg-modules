@@ -19,6 +19,7 @@ import {
 } from "@/lib/entity-filters";
 import { buildEntityOrderBy } from "@/lib/entity-sort";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
+import { buildSourceDisplayNameMap } from "@/lib/source-display";
 import type { TableSort } from "@/lib/table-sort";
 import { isCastingClassVariant, resolveClassSpellOriginSlug } from "@/lib/class-spell-origin";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
@@ -706,9 +707,28 @@ export async function getCategoryFilterOptions(
     orderBy: [{ abbrev: "asc" }],
   });
 
-  const sourceOpts: FilterOption[] = sourcesWithCategory
-    .filter((s) => s.abbrev)
-    .map((s) => ({ value: s.abbrev!, label: s.abbrev! }));
+  const abbrevsInCategory = [
+    ...new Set(
+      sourcesWithCategory
+        .map((s) => s.abbrev)
+        .filter((abbrev): abbrev is string => Boolean(abbrev)),
+    ),
+  ];
+
+  const sourceNameRows = abbrevsInCategory.length
+    ? await prisma.source.findMany({
+        where: { abbrev: { in: abbrevsInCategory } },
+        select: { name: true, abbrev: true },
+      })
+    : [];
+  const displayNames = buildSourceDisplayNameMap(sourceNameRows);
+
+  const sourceOpts: FilterOption[] = abbrevsInCategory
+    .map((abbrev) => ({
+      value: abbrev,
+      label: displayNames.get(abbrev) ?? abbrev,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   const editionSet = new Set<string>();
   for (const s of sourcesWithCategory) {

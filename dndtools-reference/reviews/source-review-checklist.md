@@ -6,7 +6,7 @@ Review on the site at `/sources/{abbrev}` (e.g. `/sources/BV`).
 
 **How to use:** Change `- [ ]` to `- [x]` when you finish reviewing a source.
 
-**Progress:** 2 / 130 reviewed
+**Progress:** 3 / 130 reviewed
 
 ---
 
@@ -140,7 +140,7 @@ Review on the site at `/sources/{abbrev}` (e.g. `/sources/BV`).
 | - [ ] | The Mind's Eye [Web 3.5] | `TME35` | Supplementals (3.5) | 40 |
 | - [ ] | Tome of Battle: The Book of Nine Swords | `ToB` | Supplementals (3.5) | 258 |
 | - [ ] | Tome of Magic | `TM` | Supplementals (3.5) | 98 |
-| - [ ] | Unearthed Arcana | `UA` | Supplementals (3.5) | 147 |
+| - [x] | Unearthed Arcana | `UA` | Supplementals (3.5) | 147 |
 | - [ ] | Weapons of Legacy | `WL` | Supplementals (3.5) | 19 |
 | - [ ] | Web 3.5 | `Web35` | Supplementals (3.5) | 3 |
 | - [ ] | — | `—` | — | 3 |
@@ -920,7 +920,12 @@ Categories: classes=18, feats=56, skills=1, spells=23
 
 Categories: classes=50, feats=95, spells=2
 
-- 
+- **2026-08-19:** audit — see [ua.md](ua.md)
+- **Verdict:** Reviewed with warnings
+- Patched **Elf Paragon** (`d6` hit die) and **Battle Sorcerer** (`2+ Int` skill points); 21 class variants correctly use `—` hit die + variant prose
+- **Expert** / **Warrior**: empty `class_skills` is by design (UA "choose any N skills" rules); description prose present
+- feats/spells: all records have description content; spell class links resolve
+- Site: `/sources/UA`
 
 ### Weapons of Legacy (`WL`)
 

@@ -69,12 +69,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const pageTitle = flawsView ? "Flaws" : getCategoryLabel(category);
   const categoryCount = counts[categoryKey];
   const hubDescription = buildCategoryHubDescription(pageTitle, categoryCount);
-  const sourceLabel =
+  const selectedSourceName =
     filters.sources.length === 1
-      ? filters.sources[0]
-      : filters.sources.length > 1
-        ? `${filters.sources.length} sources`
-        : null;
+      ? (filterOptions.sources.find((s) => s.value === filters.sources[0])?.label ??
+        filters.sources[0])
+      : null;
+  const sourceLabel =
+    selectedSourceName ??
+    (filters.sources.length > 1 ? `${filters.sources.length} sources` : null);
 
   const breadcrumbItems = [
     { name: "Home", path: "/" },
@@ -82,7 +84,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   ];
   if (filters.sources.length === 1) {
     breadcrumbItems.push({
-      name: filters.sources[0],
+      name: selectedSourceName ?? filters.sources[0],
       path: `/sources/${filters.sources[0]}`,
     });
   }
@@ -109,7 +111,9 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         {filters.sources.length === 1 && (
           <>
             {" "}/{" "}
-            <Link href={`/sources/${filters.sources[0]}`}>{filters.sources[0]}</Link>
+            <Link href={`/sources/${filters.sources[0]}`}>
+              {selectedSourceName ?? filters.sources[0]}
+            </Link>
           </>
         )}
       </nav>

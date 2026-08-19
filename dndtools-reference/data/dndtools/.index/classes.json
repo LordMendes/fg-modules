@@ -862,7 +862,7 @@
     "index": {
       "prestige_level": "",
       "hit_die": "8",
-      "skill_points": "—",
+      "skill_points": "2",
       "source_abbrev": "UA",
       "edition": "Supplementals (3.5)"
     }
@@ -4235,7 +4235,7 @@
     "category": "classes",
     "index": {
       "prestige_level": "",
-      "hit_die": "—",
+      "hit_die": "6",
       "skill_points": "2",
       "source_abbrev": "UA",
       "edition": "Supplementals (3.5)"
