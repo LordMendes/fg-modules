@@ -455,6 +455,11 @@ function buildFieldWhere(
       continue;
     }
 
+    if (def.valueType === "schoolArray") {
+      where[def.prismaField] = { hasSome: raw };
+      continue;
+    }
+
     const normalized = normalizeFilterValues(def, raw);
     if (!normalized.length) continue;
     where[def.prismaField] = { in: normalized };
@@ -781,16 +786,33 @@ async function getFieldFilterOptions(
             label: String(r.minLevel),
           }));
       }
-      if (field === "school") {
+      if (field === "schools") {
+        const rows = await prisma.$queryRaw<{ value: string }[]>`
+          SELECT DISTINCT unnest(schools) AS value
+          FROM "Spell"
+          WHERE cardinality(schools) > 0
+          ORDER BY value ASC
+        `;
+        return rows.map((r) => ({ value: r.value, label: r.value }));
+      }
+      if (field === "disciplines") {
+        const rows = await prisma.$queryRaw<{ value: string }[]>`
+          SELECT DISTINCT unnest(disciplines) AS value
+          FROM "Spell"
+          WHERE cardinality(disciplines) > 0
+          ORDER BY value ASC
+        `;
+        return rows.map((r) => ({ value: r.value, label: r.value }));
+      }
+      if (field === "subschool") {
         const rows = await prisma.spell.groupBy({
-          by: ["school"],
-          where: { school: { not: null } },
-          _count: { school: true },
-          orderBy: { _count: { school: "desc" } },
+          by: ["subschool"],
+          where: { subschool: { not: null } },
+          orderBy: { subschool: "asc" },
         });
         return rows
-          .filter((r) => r.school)
-          .map((r) => ({ value: r.school!, label: r.school! }));
+          .filter((r) => r.subschool)
+          .map((r) => ({ value: r.subschool!, label: r.subschool! }));
       }
       if (def.valueType === "relation" && def.param === "class") {
         const rows = await prisma.dndClass.findMany({

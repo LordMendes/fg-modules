@@ -65,6 +65,9 @@ model Spell {
   descriptionHtml String?  @db.Text
   descriptionText String?  @db.Text
   school          String?
+  schools         String[] @default([])
+  disciplines     String[] @default([])
+  subschool       String?
   castingTime     String?
   components      String?
   range           String?
@@ -82,6 +85,7 @@ model Spell {
 
   @@index([sourceId])
   @@index([school])
+  @@index([subschool])
   @@index([name])
   @@index([externalId])
 }

@@ -65,3 +65,29 @@ describe("monster range filters", () => {
     assert.deepEqual(filters.ranges, {});
   });
 });
+
+describe("spell school filters", () => {
+  it("parses school, discipline, and subschool params from URL", () => {
+    const filters = parseListSearchParams("spells", {
+      school: "Conjuration,Necromancy",
+      discipline: "Iron Heart",
+      subschool: "Creation",
+    });
+    assert.deepEqual(filters.fields.school, ["Conjuration", "Necromancy"]);
+    assert.deepEqual(filters.fields.discipline, ["Iron Heart"]);
+    assert.deepEqual(filters.fields.subschool, ["Creation"]);
+    assert.ok(hasActiveFilters(filters));
+  });
+
+  it("round-trips school, discipline, and subschool through buildListSearchParams", () => {
+    const filters = parseListSearchParams("spells", {
+      school: "Evocation",
+      discipline: "Shadow Hand",
+      subschool: "Stance",
+    });
+    const params = buildListSearchParams(filters);
+    assert.equal(params.get("school"), "Evocation");
+    assert.equal(params.get("discipline"), "Shadow Hand");
+    assert.equal(params.get("subschool"), "Stance");
+  });
+});

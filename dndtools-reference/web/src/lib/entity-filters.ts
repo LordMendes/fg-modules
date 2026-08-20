@@ -12,7 +12,7 @@ export type FilterFieldDef = {
   /** Prisma model field name (or virtual key for special filters). */
   prismaField: string;
   /** How to interpret filter values when building Prisma where clauses. */
-  valueType?: "string" | "int" | "boolean" | "enum" | "component" | "relation" | "prestige" | "cr";
+  valueType?: "string" | "int" | "boolean" | "enum" | "component" | "relation" | "prestige" | "cr" | "schoolArray";
   /** Render as toggle chips instead of a dropdown (e.g. spell components). */
   ui?: "multiselect" | "chips";
 };
@@ -71,7 +71,9 @@ export const DESCRIPTION_SEARCH_PLACEHOLDERS: Partial<Record<CategoryKey, string
  */
 export const CATEGORY_FILTER_FIELDS: Record<CategoryKey, FilterFieldDef[]> = {
   spells: [
-    { param: "school", label: "School", prismaField: "school" },
+    { param: "school", label: "School", prismaField: "schools", valueType: "schoolArray" },
+    { param: "discipline", label: "Discipline", prismaField: "disciplines", valueType: "schoolArray" },
+    { param: "subschool", label: "Subschool", prismaField: "subschool" },
     { param: "class", label: "Class", prismaField: "classLevels", valueType: "relation" },
     { param: "level", label: "Level", prismaField: "minLevel", valueType: "int" },
     {

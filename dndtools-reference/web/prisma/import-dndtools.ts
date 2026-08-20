@@ -9,6 +9,7 @@ import {
   pickLargestSpellListSlug,
 } from "../src/lib/class-spell-origin";
 import { getClassCastingInfo } from "../src/lib/pc-planner/classCasting";
+import { parseSpellSchool } from "../src/lib/spell-utils";
 import {
   PLACEHOLDER_SOURCE_NAME,
   buildSourceDisplayNameMap,
@@ -26,6 +27,18 @@ const BATCH_SIZE = 500;
 
 const PLACEHOLDER_TEXT =
   "Do not touch this field. Everything is handled from the corresponding twig file (the path is in the help text).";
+
+function spellSchoolFields(r: Record<string, unknown>) {
+  const school =
+    (r.school as string) ?? (r.index as Record<string, string> | undefined)?.school ?? null;
+  const parsed = parseSpellSchool(school);
+  return {
+    school,
+    schools: parsed.schools,
+    disciplines: parsed.disciplines,
+    subschool: parsed.subschool,
+  };
+}
 
 function isPlaceholderText(value: unknown): boolean {
   return typeof value === "string" && value.includes(PLACEHOLDER_TEXT);
@@ -899,6 +912,7 @@ async function pass2Entities(
         const classes = (r.classes as LinkRef[]) ?? [];
         const levels = classes.map((c) => c.level).filter((l): l is number => typeof l === "number");
         const minLevel = levels.length > 0 ? Math.min(...levels) : null;
+        const schoolFields = spellSchoolFields(r);
         await prisma.spell.upsert({
           where: { slug: r.slug },
           create: {
@@ -911,7 +925,7 @@ async function pass2Entities(
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
-            school: (r.school as string) ?? (r.index as Record<string, string>)?.school ?? null,
+            ...schoolFields,
             castingTime: (r.casting_time as string) ?? null,
             components: (r.components as string) ?? null,
             range: (r.range as string) ?? null,
@@ -921,7 +935,12 @@ async function pass2Entities(
             savingThrow: (r.saving_throw as string) ?? null,
             spellResistance: (r.spell_resistance as string) ?? null,
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object, minLevel },
+          update: {
+            name: r.name,
+            indexData: (r.index ?? {}) as object,
+            minLevel,
+            ...schoolFields,
+          },
         });
       }
     });
