@@ -51,6 +51,17 @@ def test_merge_source_index_fallback() -> None:
     assert source["edition"] == "Core (3.5)"
 
 
+def test_merge_source_uses_name_map() -> None:
+    source = merge_source(
+        None,
+        index_source_abbrev="CM",
+        index_edition="Supplementals (3.5)",
+        name_map={"CM": "Complete Mage"},
+    )
+    assert source["name"] == "Complete Mage"
+    assert source["abbrev"] == "CM"
+
+
 def test_clean_field_value_strips_placeholder() -> None:
     assert is_placeholder_text(PLACEHOLDER_TEXT)
     assert clean_field_value(PLACEHOLDER_TEXT) is None

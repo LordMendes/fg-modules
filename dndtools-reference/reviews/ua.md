@@ -21,55 +21,88 @@ Site route: `/sources/UA`
 | deities | 0 | 0 | OK |
 | templates | 0 | 0 | OK |
 
+No index/full mismatches. `source.abbrev` matches `index.source_abbrev` (`UA`) on all UA records. `source.name` is "Unearthed Arcana" (not the cosmetic "Core" mislabel).
+
 ## Classes (50)
 
-UA is mostly **alternate class variants** (21 with `—` hit die + "retained from base class" prose), **paragon classes** (3), **prestige alternate entry** classes (Prestige Bard/Paladin/Ranger), **NPC classes** (Expert, Warrior, Spellcaster, Thug), **tainted/scion** variants, and standalone alternates (Cloistered Cleric, Urban Ranger, etc.).
+UA is mostly **alternate class variants** (hit die `—` + "retained from base class" prose), **paragon classes**, **prestige alternate-entry** classes, **NPC classes**, **tainted/scion** prestige classes, and standalone alternates.
 
 | Group | Count | Status |
 |-------|------:|--------|
-| Base-class variants (`*-variant-*`) | 21 | OK — `—` hit die expected (variant prose) |
-| Standalone alternates | 17 | OK |
-| Paragon (Drow/Dwarf/Elf) | 3 | OK after patch |
-| NPC / generic (Expert, Warrior) | 2 | Warnings — see below |
+| Base-class / specialist variants (`—` hit die + variant prose) | 21 | OK — expected UA variant pattern |
+| Standalone alternates / prestige / paragons / NPC | 27 | OK after earlier patches; see warnings |
+| Expert / Warrior | 2 | Warnings — empty `class_skills` by design |
 
-### Fixes applied
+`audit_source.py UA`: 0 errors, 2 warnings (Expert, Warrior).
 
-- **Elf Paragon** (`elf-paragon-1002`): scraper left `hit_die` as `—`; patched to `d6` (matches Drow Paragon progression; Dwarf Paragon is `d10`).
-- **Battle Sorcerer** (`battle-sorcerer-119`): patched `skill_points` to `2+ Int` (same as base Sorcerer).
+### Fixes already in dataset
+
+- **Elf Paragon** (`elf-paragon-1002`): `hit_die` patched to `d6`.
+- **Battle Sorcerer** (`battle-sorcerer-119`): `skill_points` patched to `2+ Int`.
 
 ### Accepted warnings
 
-- **Expert** (`expert2-124`) and **Warrior** (`warrior2-135`): no fixed `class_skills` list — UA rules say "choose any twelve/six skills"; description prose documents this. Not a data bug.
+- **Expert** (`expert2-124`) and **Warrior** (`warrior2-135`): no `class_skills` array — UA text is "choose any twelve/six skills"; description prose documents this.
+- Several named alternates (Divine Bard, Cloistered Cleric, Totem Barbarian, Paladin of Freedom/Slaughter/Tyranny, Urban Ranger, Domain Wizard, Thug, etc.) keep `—` skill points or empty `class_skills` because they inherit from a PH base class. Audit treats this as variant prose, not an error.
 
-### Spot-checks (JSON)
+### Upstream garbled class text (not patched)
 
-- **Bardic Sage** — full advancement table, class skills, feature prose OK
-- **Tainted Sorcerer** — hit die, skills, advancement, description OK
-- **Barbarian Variant** — variant prose, no standalone advancement (expected)
-- **Paladin of Tyranny** — full prestige-style advancement and features OK
+`Paladin of Slaughter` (`paladin-of-slaughter-126`) and `Paladin of Tyranny` (`paladin-of-tyranny-127`) have broken sentences where the scraper wrapped neighboring phrases in spell links. Same text is on new.dndtools.org:
+
+- Slaughter **Detect Good** reads as using "paladin's ability to smite evil".
+- Slaughter **Deadly Touch** follow-up reads as "just as an paladin's aura of courage class feature".
+- Slaughter **Associates** names "paladin of tyranny" instead of slaughter.
+
+Advancement tables and most feature headings are present. Leave as upstream scrape quality; do not invent replacement rules text.
+
+### Spot-checks (JSON + local site)
+
+All returned HTTP 200:
+
+| Record | Route | Result |
+|--------|-------|--------|
+| Bardic Sage | `/classes/bardic-sage-118` | d6, 6+ Int, class skills, spellcasting prose, advancement |
+| Elf Paragon | `/classes/elf-paragon-1002` | d6, Elfsight, spells per day |
+| Tainted Sorcerer | `/classes/tainted-sorcerer-881` | d8, Blood Component, requirements |
+| Barbarian Variant | `/classes/barbarian-variant-950` | retained-from-base prose, no standalone table (expected) |
+| Paladin of Tyranny | `/classes/paladin-of-tyranny-127` | advancement table + features; Detect Good sentence still garbled |
+| Expert | `/classes/expert2-124` | "Choose any twelve skills" in description |
 
 ## Feats (95)
 
-All 95 records have description/benefit content. Mix of **Traits**, **Spelltouched**, **General**, **Racial**, etc. Spot-checked: Aggressive, Favored Class, Planar Traveler — prerequisites and benefit text present.
+All 95 have description/benefit content. Types: Trait 35, General 25, Spelltouched 17, Flaw 13, Item Creation 5.
+
+Spot-checked: Aggressive (`aggressive-47`, 200), Inatenttive (`inatentive-1600`, 200).
+
+### Naming quirks (accepted)
+
+- **Inatenttive** (`inatentive-1600`, Trait p. 88) vs **Inattentive** (`inattentive-1601`, Flaw p. 91): two different UA entries that share a name in the book. Trait is the complex-skill-check variant; Flaw is −4 Listen/Spot. Typo is upstream; slug left unchanged.
+- **Weapon Group (Slings and Thrown Weapons)** (`weapon-group-slings-and-thrown-weapon-3121`): display name was truncated (missing `s)`); patched locally. Slug kept.
 
 ## Spells (2)
 
-Both domain spells for the Luck domain variant:
+Both are Luck-domain-only (empty `classes[]` is correct):
 
-- **Auspicious Odds** — school, components, Luck domain level 3, description OK
-- **Auspicious Odds, Mass** — Luck domain level 5, description OK
+- **Auspicious Odds** (`auspicious-odds-3523`) — Evocation, Luck 3, description OK
+- **Auspicious Odds, Mass** (`auspicious-odds-mass-3524`) — Luck 5, description OK
 
-Spell class links resolve.
+Domain slug `luck-100` exists (PH Luck domain; UA spells are inserted into that list). Site `/spells/auspicious-odds-3523` 200.
 
 ## Scraper errors
 
-Two `errors.json` entries match the audit's `UA` substring filter (likely false positives from URLs containing `ua`, e.g. `urban-ranger`). Elf Paragon had a requirements scrape failure but full record content is present after manual review.
+Two `errors.json` hits are **false positives** from the `UA` substring filter:
+
+- `feats/ritual-transference-3782` (contains "ua")
+- `classes/planar-vanguard-1043` (contains "ua")
+
+Neither is an Unearthed Arcana record.
 
 ## Verdict
 
-**Reviewed with warnings** — no Bard-style stubs or index/full mismatches. Remaining gaps (Expert/Warrior class skills) reflect UA's "player chooses skills" design.
+**Reviewed with warnings** — no Bard-style stubs, no index/full mismatches, spell domain links resolve. Remaining gaps: Expert/Warrior pick-N skills, garbled Paladin of Slaughter/Tyranny sentences (upstream), Inatenttive typo (upstream).
 
 ## Follow-up
 
 - [ ] Re-import if production DB is stale: `cd web && npx tsx prisma/import-dndtools.ts` or `/docker-entrypoint.sh import`
-- [ ] Optional: model Expert/Warrior "pick N skills" in UI instead of empty class_skills list
+- [ ] Optional: model Expert/Warrior "pick N skills" in UI instead of empty `class_skills`
+- [ ] Optional: re-scrape Paladin of Slaughter/Tyranny if classic HTML is cleaner than new.dndtools.org

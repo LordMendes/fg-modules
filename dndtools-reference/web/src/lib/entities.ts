@@ -1582,15 +1582,40 @@ export async function listSources(): Promise<
     },
   });
 
-  return sources
-    .map((s) => ({
-      id: s.id,
-      name: s.name,
-      abbrev: s.abbrev,
-      edition: s.edition,
-      counts: Object.values(s._count).reduce((a, b) => a + b, 0),
-    }))
-    .filter((s) => s.counts > 0);
+  const displayNames = buildSourceDisplayNameMap(
+    sources.map((s) => ({ name: s.name, abbrev: s.abbrev })),
+  );
+
+  const grouped = new Map<
+    string,
+    { id: string; name: string; abbrev: string | null; edition: string; counts: number }
+  >();
+
+  for (const source of sources) {
+    const counts = Object.values(source._count).reduce((a, b) => a + b, 0);
+    if (counts <= 0) continue;
+
+    const groupKey = `${source.abbrev ?? ""}::${source.edition}`;
+    const displayName =
+      (source.abbrev ? displayNames.get(source.abbrev) : null) ?? source.name;
+    const existing = grouped.get(groupKey);
+    if (existing) {
+      existing.counts += counts;
+      continue;
+    }
+
+    grouped.set(groupKey, {
+      id: source.id,
+      name: displayName,
+      abbrev: source.abbrev,
+      edition: source.edition,
+      counts,
+    });
+  }
+
+  return [...grouped.values()].sort((a, b) =>
+    a.edition.localeCompare(b.edition) || (a.abbrev ?? "").localeCompare(b.abbrev ?? ""),
+  );
 }
 
 /** Live entity totals per category for hub UI. */
@@ -1643,7 +1668,7 @@ export async function getCategoryCounts(): Promise<Record<CategoryKey, number>> 
 }
 
 export async function getSourceByAbbrev(abbrev: string) {
-  return prisma.source.findFirst({
+  const sources = await prisma.source.findMany({
     where: { abbrev },
     include: {
       _count: {
@@ -1655,6 +1680,47 @@ export async function getSourceByAbbrev(abbrev: string) {
       },
     },
   });
+
+  if (sources.length === 0) return null;
+
+  const displayNames = buildSourceDisplayNameMap(
+    sources.map((s) => ({ name: s.name, abbrev: s.abbrev })),
+  );
+  const displayName = displayNames.get(abbrev) ?? sources[0]!.name;
+
+  const aggregateCount = {
+    spells: 0,
+    feats: 0,
+    monsters: 0,
+    classes: 0,
+    skills: 0,
+    races: 0,
+    items: 0,
+    equipment: 0,
+    domains: 0,
+    deities: 0,
+    psionics: 0,
+    templates: 0,
+    rules: 0,
+  };
+
+  for (const source of sources) {
+    for (const key of Object.keys(aggregateCount) as Array<keyof typeof aggregateCount>) {
+      aggregateCount[key] += source._count[key];
+    }
+  }
+
+  const primary =
+    sources.find((source) =>
+      Object.values(source._count).some((count) => count > 0),
+    ) ?? sources[0]!;
+
+  return {
+    ...primary,
+    name: displayName,
+    edition: primary.edition,
+    _count: aggregateCount,
+  };
 }
 
 export async function getSourceContent(abbrev: string, category: CategoryKey, cursor?: string) {

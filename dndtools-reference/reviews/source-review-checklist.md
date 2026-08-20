@@ -922,9 +922,12 @@ Categories: classes=50, feats=95, spells=2
 
 - **2026-08-19:** audit — see [ua.md](ua.md)
 - **Verdict:** Reviewed with warnings
-- Patched **Elf Paragon** (`d6` hit die) and **Battle Sorcerer** (`2+ Int` skill points); 21 class variants correctly use `—` hit die + variant prose
+- Patched **Elf Paragon** (`d6` hit die), **Battle Sorcerer** (`2+ Int` skill points), and truncated feat name **Weapon Group (Slings and Thrown Weapons)**
+- 21 class variants correctly use `—` hit die + variant prose
 - **Expert** / **Warrior**: empty `class_skills` is by design (UA "choose any N skills" rules); description prose present
-- feats/spells: all records have description content; spell class links resolve
+- **Paladin of Slaughter/Tyranny**: garbled Detect Good / Deadly Touch sentences (same on new.dndtools.org)
+- **Inatenttive** trait vs **Inattentive** flaw: two UA entries; trait name typo is upstream
+- feats/spells: all records have description content; Luck-domain spells resolve via `luck-100`
 - Site: `/sources/UA`
 
 ### Weapons of Legacy (`WL`)

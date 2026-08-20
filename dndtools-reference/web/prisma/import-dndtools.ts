@@ -9,6 +9,10 @@ import {
   pickLargestSpellListSlug,
 } from "../src/lib/class-spell-origin";
 import { getClassCastingInfo } from "../src/lib/pc-planner/classCasting";
+import {
+  PLACEHOLDER_SOURCE_NAME,
+  buildSourceDisplayNameMap,
+} from "@/lib/source-display";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -135,19 +139,52 @@ function parseDate(value?: string): Date | null {
 function resolveSource(
   src: Partial<SourceData>,
   index: Record<string, unknown> = {},
+  abbrevNameMap?: Map<string, string>,
 ): { name: string; abbrev: string; edition: string } {
   const abbrevRaw =
     src.abbrev ?? (typeof index.source_abbrev === "string" ? index.source_abbrev : undefined);
+  const abbrev = abbrevRaw ?? "";
+  let name = src.name ?? PLACEHOLDER_SOURCE_NAME;
+  if (abbrev && abbrevNameMap?.has(abbrev)) {
+    name = abbrevNameMap.get(abbrev)!;
+  } else if (name === PLACEHOLDER_SOURCE_NAME && abbrev) {
+    name = abbrev;
+  }
   return {
-    name: src.name ?? "Core",
-    abbrev: abbrevRaw ?? "",
+    name,
+    abbrev,
     edition: src.edition ?? (typeof index.edition === "string" ? index.edition : undefined) ?? "3.5",
   };
 }
 
-function sourceKey(source: SourceData): string {
-  const { name, abbrev, edition } = resolveSource(source);
+function sourceKey(
+  source: SourceData,
+  abbrevNameMap?: Map<string, string>,
+): string {
+  const { name, abbrev, edition } = resolveSource(source, {}, abbrevNameMap);
   return `${name}::${abbrev}::${edition}`;
+}
+
+function collectAllRecords(): RecordBase[] {
+  const records: RecordBase[] = [];
+  for (const file of CATEGORY_FILES) {
+    records.push(...(file === "feats" ? loadAllFeatRecords() : loadJson(file)));
+  }
+  return records;
+}
+
+function buildAbbrevNameMap(records: RecordBase[]): Map<string, string> {
+  const rows: { name: string; abbrev: string | null }[] = [];
+  for (const record of records) {
+    const src = record.source ?? {};
+    const index = record.index ?? {};
+    const abbrev =
+      (typeof src.abbrev === "string" ? src.abbrev : null) ??
+      (typeof index.source_abbrev === "string" ? index.source_abbrev : null);
+    const name = typeof src.name === "string" ? src.name : PLACEHOLDER_SOURCE_NAME;
+    if (abbrev) rows.push({ name, abbrev });
+  }
+  return buildSourceDisplayNameMap(rows);
 }
 
 function classIndexData(
@@ -315,47 +352,48 @@ function buildSkillAbilityMap(): Map<string, string | null> {
   return map;
 }
 
-async function pass1Sources(): Promise<Map<string, string>> {
+async function pass1Sources(abbrevNameMap: Map<string, string>): Promise<Map<string, string>> {
   console.log("Pass 1: Importing sources...");
   const sourceMap = new Map<string, string>();
   const seen = new Set<string>();
 
-  for (const file of CATEGORY_FILES) {
-    const records = file === "feats" ? loadAllFeatRecords() : loadJson(file);
-    for (const record of records) {
-      const src = record.source ?? {};
-      const index = record.index ?? {};
-      const merged = resolveSource(src, index);
-      const key = sourceKey(merged);
-      if (seen.has(key)) continue;
-      seen.add(key);
+  for (const record of collectAllRecords()) {
+    const src = record.source ?? {};
+    const index = record.index ?? {};
+    const merged = resolveSource(src, index, abbrevNameMap);
+    const key = sourceKey(merged, abbrevNameMap);
+    if (seen.has(key)) continue;
+    seen.add(key);
 
-      const row = await prisma.source.upsert({
-        where: {
-          name_abbrev_edition: {
-            name: merged.name,
-            abbrev: merged.abbrev,
-            edition: merged.edition,
-          },
-        },
-        create: {
+    const row = await prisma.source.upsert({
+      where: {
+        name_abbrev_edition: {
           name: merged.name,
           abbrev: merged.abbrev,
           edition: merged.edition,
         },
-        update: {},
-      });
-      sourceMap.set(key, row.id);
-    }
+      },
+      create: {
+        name: merged.name,
+        abbrev: merged.abbrev,
+        edition: merged.edition,
+      },
+      update: {},
+    });
+    sourceMap.set(key, row.id);
   }
 
   console.log(`  ${sourceMap.size} unique sources`);
   return sourceMap;
 }
 
-function getSourceId(record: RecordBase, sourceMap: Map<string, string>): string {
-  const merged = resolveSource(record.source ?? {}, record.index ?? {});
-  const id = sourceMap.get(sourceKey(merged));
+function getSourceId(
+  record: RecordBase,
+  sourceMap: Map<string, string>,
+  abbrevNameMap: Map<string, string>,
+): string {
+  const merged = resolveSource(record.source ?? {}, record.index ?? {}, abbrevNameMap);
+  const id = sourceMap.get(sourceKey(merged, abbrevNameMap));
   if (!id) throw new Error(`Source not found for ${record.slug}`);
   return id;
 }
@@ -455,7 +493,10 @@ function lookupRef(category: string, ref: LinkRef): string | null {
   return null;
 }
 
-async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<string, number>> {
+async function pass2Entities(
+  sourceMap: Map<string, string>,
+  abbrevNameMap: Map<string, string>,
+): Promise<Record<string, number>> {
   console.log("Pass 2: Importing entities...");
   const counts: Record<string, number> = {};
 
@@ -472,7 +513,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -506,7 +547,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -537,7 +578,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: classIndexData(r, skillAbilities),
             descriptionHtml: cleanImportedText(r.description_html),
             descriptionText: cleanImportedText(r.description_text),
@@ -550,7 +591,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             externalId: parseExternalId(r.id),
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: classIndexData(r, skillAbilities),
             descriptionHtml: cleanImportedText(r.description_html),
             descriptionText: cleanImportedText(r.description_text),
@@ -592,12 +633,12 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           create: {
             slug: r.slug,
             externalId: parseExternalId(r.id),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             ...featData,
           },
           update: {
             ...featData,
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             externalId: parseExternalId(r.id),
           },
         });
@@ -627,7 +668,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -656,7 +697,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -686,7 +727,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -717,7 +758,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -747,7 +788,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -809,7 +850,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
           create: {
             slug: r.slug,
             externalId: parseExternalId(r.id),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             ...monsterData,
           },
           update: monsterData,
@@ -834,7 +875,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -866,7 +907,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -902,7 +943,7 @@ async function pass2Entities(sourceMap: Map<string, string>): Promise<Record<str
             name: r.name,
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
-            sourceId: getSourceId(r, sourceMap),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
             indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
@@ -1188,8 +1229,12 @@ async function main(): Promise<void> {
     unresolvedCount = 0;
     await prisma.unresolvedRef.deleteMany();
 
-    const sourceMap = await pass1Sources();
-    const counts = await pass2Entities(sourceMap);
+    const allRecords = collectAllRecords();
+    const abbrevNameMap = buildAbbrevNameMap(allRecords);
+    console.log(`  ${abbrevNameMap.size} canonical abbrev titles`);
+
+    const sourceMap = await pass1Sources(abbrevNameMap);
+    const counts = await pass2Entities(sourceMap, abbrevNameMap);
     await pass3Junctions();
     await updateSearchVectors();
 

@@ -23,9 +23,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -59,9 +59,9 @@
     "damage_type": "S",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -96,9 +96,9 @@
     "damage_type": "S",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -134,9 +134,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -170,9 +170,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -208,9 +208,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -245,9 +245,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -282,9 +282,9 @@
     "damage_type": "B",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -319,9 +319,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -356,9 +356,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -393,9 +393,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -430,9 +430,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -467,9 +467,9 @@
     "damage_type": "P or S",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -504,9 +504,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -540,9 +540,9 @@
     "damage_type": "S",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -577,9 +577,9 @@
     "damage_type": "S",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -614,9 +614,9 @@
     "damage_type": "B",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -651,9 +651,9 @@
     "damage_type": "B",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -689,9 +689,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -725,9 +725,9 @@
     "damage_type": "B",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -762,9 +762,9 @@
     "damage_type": "S",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -799,9 +799,9 @@
     "damage_type": "S",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -836,9 +836,9 @@
     "damage_type": "S",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -873,9 +873,9 @@
     "damage_type": "P or S",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -911,9 +911,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -947,9 +947,9 @@
     "damage_type": "B",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -984,9 +984,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1021,9 +1021,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1059,9 +1059,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1096,9 +1096,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1132,9 +1132,9 @@
     "damage_type": "S",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1169,9 +1169,9 @@
     "damage_type": "S",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1206,9 +1206,9 @@
     "damage_type": "P",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1244,9 +1244,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1280,9 +1280,9 @@
     "damage_type": "B",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1317,9 +1317,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1354,9 +1354,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1392,9 +1392,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1428,9 +1428,9 @@
     "damage_type": "P",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1465,9 +1465,9 @@
     "damage_type": "S",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1502,9 +1502,9 @@
     "damage_type": "B and P",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1540,9 +1540,9 @@
     "damage_type": "-",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1576,9 +1576,9 @@
     "damage_type": "B",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1614,9 +1614,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1650,9 +1650,9 @@
     "damage_type": "P",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1687,9 +1687,9 @@
     "damage_type": "P",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1724,9 +1724,9 @@
     "damage_type": "B",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1761,9 +1761,9 @@
     "damage_type": "P",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1799,9 +1799,9 @@
     "damage_type": "B or P",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1836,9 +1836,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1872,9 +1872,9 @@
     "damage_type": "S",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1910,9 +1910,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1946,9 +1946,9 @@
     "damage_type": "P",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -1984,9 +1984,9 @@
     "damage_type": "P",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2020,9 +2020,9 @@
     "damage_type": "P",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2057,9 +2057,9 @@
     "damage_type": "S",
     "handed": "light",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2095,9 +2095,9 @@
     "damage_type": "B",
     "handed": "ranged",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2132,9 +2132,9 @@
     "damage_type": "P",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2168,9 +2168,9 @@
     "damage_type": "P or S",
     "handed": "two",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2206,9 +2206,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2243,9 +2243,9 @@
     "speed_30": "30",
     "speed_20": "20",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2280,9 +2280,9 @@
     "speed_30": "20",
     "speed_20": "15",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2317,9 +2317,9 @@
     "damage_type": "P",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2353,9 +2353,9 @@
     "damage_type": "B",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },
@@ -2390,9 +2390,9 @@
     "damage_type": "S",
     "handed": "one",
     "source": {
-      "name": "Core",
-      "abbrev": null,
-      "edition": "3.5",
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)",
       "page": null,
       "url": null
     },

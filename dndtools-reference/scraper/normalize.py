@@ -92,6 +92,7 @@ def merge_source(
     detail_source: dict[str, Any] | None,
     index_source_abbrev: str | None = None,
     index_edition: str | None = None,
+    name_map: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     source = dict(DEFAULT_SOURCE)
     if detail_source:
@@ -102,6 +103,12 @@ def merge_source(
         source["edition"] = index_edition
     elif source.get("edition") is None:
         source["edition"] = "3.5"
+    if name_map:
+        from .source_names import resolve_canonical_name
+
+        abbrev = source.get("abbrev")
+        if isinstance(abbrev, str):
+            source["name"] = resolve_canonical_name(source.get("name"), abbrev, name_map)
     return source
 
 

@@ -18,6 +18,11 @@ from ..normalize import (
     merge_source,
     parse_source_line,
 )
+from ..source_names import (
+    EQUIPMENT_DEFAULT_SOURCE,
+    load_name_map,
+    parse_deity_source_lines,
+)
 
 ID_SUFFIX_RE = re.compile(r"-(\d+)$")
 SAMPLE_SUFFIX_RE = re.compile(r"-(sample)$", re.I)
@@ -486,13 +491,26 @@ def parse_detail_page(
     html: str,
     source_url: str,
     category: str,
+    name_map: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     soup = make_soup(html)
     name = get_detail_title(soup)
     slug, record_id = parse_slug_and_id(urlparse(source_url).path)
     muted_lines = get_muted_lines(soup)
-    detail_source = parse_detail_source(soup)
     dl_fields = parse_dl_grid(soup)
+    detail_source = parse_detail_source(soup)
+    if not detail_source and dl_fields.get("source"):
+        detail_source = parse_source_line(dl_fields["source"])
+
+    resolved_name_map = name_map if name_map is not None else load_name_map()
+
+    if category == "deities" and not detail_source:
+        pantheon = dl_fields.get("pantheon")
+        detail_source = parse_deity_source_lines(muted_lines, resolved_name_map, pantheon)
+
+    if category == "equipment" and not detail_source:
+        detail_source = dict(EQUIPMENT_DEFAULT_SOURCE)
+
     sections = parse_sections(soup)
     description_html, description_text = parse_main_prose(soup)
 
@@ -538,6 +556,7 @@ def parse_detail_page(
         detail_source,
         index_source_abbrev=index_fields.get("source_abbrev"),
         index_edition=index_fields.get("edition"),
+        name_map=resolved_name_map,
     )
 
     return detail
@@ -546,6 +565,7 @@ def parse_detail_page(
 def merge_index_detail(
     index_record: dict[str, Any],
     detail_record: dict[str, Any] | None,
+    name_map: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     merged: dict[str, Any] = {
         "id": index_record.get("id"),
@@ -557,6 +577,7 @@ def merge_index_detail(
     }
 
     index_data = index_record.get("index", {})
+    resolved_name_map = name_map if name_map is not None else load_name_map()
 
     if detail_record:
         for key, value in detail_record.items():
@@ -573,6 +594,7 @@ def merge_index_detail(
             detail_record.get("source"),
             index_source_abbrev=index_data.get("source_abbrev"),
             index_edition=index_data.get("edition"),
+            name_map=resolved_name_map,
         )
     else:
         index_data = index_record.get("index", {})
@@ -580,6 +602,7 @@ def merge_index_detail(
             None,
             index_source_abbrev=index_data.get("source_abbrev"),
             index_edition=index_data.get("edition"),
+            name_map=resolved_name_map,
         )
 
     return merged

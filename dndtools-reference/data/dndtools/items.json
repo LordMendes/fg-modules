@@ -3060,7 +3060,7 @@
     "description_html": "<p>The creature attacks with its mouth, dealing piercing, slashing, and bludgeoning damage.</p>",
     "description_text": "The creature attacks with its mouth, dealing piercing, slashing, and bludgeoning damage.",
     "source": {
-      "name": "Monster Manual",
+      "name": "Monster Manual v.3.5",
       "abbrev": "MM",
       "edition": "Core (3.0)",
       "page": 312,
@@ -8744,7 +8744,7 @@
     "description_html": "<p>A typical dorje is an elongated crystal of one color (or colorless), between 8 inches and 10 inches long and about 1/2 inch thick, which can weigh up to 1/4 pound. Occasionally, a dorje is decorated with carvings or inscribed runes along a face of the crystal.</p>",
     "description_text": "A typical dorje is an elongated crystal of one color (or colorless), between 8 inches and 10 inches long and about 1/2 inch thick, which can weigh up to 1/4 pound. Occasionally, a dorje is decorated with carvings or inscribed runes along a face of the crystal.",
     "source": {
-      "name": "Core",
+      "name": "—",
       "abbrev": "—",
       "edition": "—",
       "page": null,
@@ -13381,7 +13381,7 @@
       "edition": "Supplementals (3.0)"
     },
     "source": {
-      "name": "Core",
+      "name": "The Mind's Eye [Web 3.0]",
       "abbrev": "TME30",
       "edition": "Supplementals (3.0)",
       "page": null,
@@ -15788,7 +15788,7 @@
       "edition": "Supplementals (3.0)"
     },
     "source": {
-      "name": "Core",
+      "name": "The Mind's Eye [Web 3.0]",
       "abbrev": "TME30",
       "edition": "Supplementals (3.0)",
       "page": null,
@@ -23157,7 +23157,7 @@
     "description_html": "<p>This generic entry is for varied references. Do no touch it.</p>",
     "description_text": "This generic entry is for varied references. Do no touch it.",
     "source": {
-      "name": "Core",
+      "name": "—",
       "abbrev": "—",
       "edition": "—",
       "page": null,
