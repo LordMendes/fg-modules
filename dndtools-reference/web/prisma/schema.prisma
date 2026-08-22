@@ -73,6 +73,8 @@ model Spell {
   range           String?
   minLevel        Int?
   target          String?
+  area            String?
+  effect          String?
   duration        String?
   savingThrow     String?
   spellResistance String?

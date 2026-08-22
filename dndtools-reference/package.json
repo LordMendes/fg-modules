@@ -15,6 +15,10 @@
     "scrape:flaws": "python -m scraper.scrape_flaws"
   },
   "pnpm": {
+    "supportedArchitectures": {
+      "os": ["current", "win32", "linux"],
+      "cpu": ["current", "x64"]
+    },
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "esbuild",

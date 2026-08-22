@@ -1172,6 +1172,8 @@ export async function getEntityDetail(
           Components: r.components,
           Range: r.range,
           Target: r.target,
+          Area: r.area,
+          Effect: r.effect,
           Duration: r.duration,
           "Saving Throw": r.savingThrow,
           "Spell Resistance": r.spellResistance,
