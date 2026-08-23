@@ -30,7 +30,7 @@ CATEGORY_CONFIG: dict[str, dict[str, object]] = {
     "classes": {"path": "classes", "output": "classes.json", "expected": 1054},
     "skills": {"path": "skills", "output": "skills.json", "expected": 80},
     "equipment": {"path": "equipment", "output": "equipment.json", "expected": 65},
-    "items": {"path": "items", "output": "items.json", "expected": 816},
+    "items": {"path": "items", "output": "items.json", "expected": 1455},
     "races": {"path": "races", "output": "races.json", "expected": 150},
     "deities": {"path": "deities", "output": "deities.json", "expected": 670},
     "domains": {"path": "domains", "output": "domains.json", "expected": 368},

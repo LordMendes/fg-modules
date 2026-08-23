@@ -21,7 +21,8 @@ from scraper.parsers.base import (
     parse_slug_and_id,
 )
 from scraper.parsers.classes import parse_detail as parse_class_detail
-from scraper.parsers.classic import parse_classic_class_slug, parse_classic_feat_slug, parse_classic_monster_slug
+from scraper.parsers.classic import parse_classic_class_slug, parse_classic_feat_slug, parse_classic_item_slug, parse_classic_monster_slug
+from scraper.parsers.classic_items import parse_classic_item_detail, parse_classic_item_index
 from scraper.parsers.classic_monsters import parse_classic_monster_detail, parse_classic_monster_index
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -94,6 +95,36 @@ def test_parse_classic_monster_detail() -> None:
     assert record["flavor_text"]
     assert record["combat_text"]
     assert any(f["name"] == "Ability Focus" for f in record.get("feats", []))
+
+
+def test_parse_classic_item_detail_magic() -> None:
+    html = (FIXTURES / "items_detail_classic.html").read_text(encoding="utf-8")
+    url = "https://dndtools.org/items/dungeon-masters-guide-v35--4/absorbing-shield--96/"
+    record = parse_classic_item_detail(html, url)
+    assert record["name"] == "Absorbing Shield"
+    assert record["slug"] == "absorbing-shield-96"
+    assert record["price"] == "50,170 gp"
+    assert record["caster_level"] == "17"
+    assert record["source"]["name"] == "Dungeon Master's Guide v.3.5"
+    assert record["source"]["page"] == 221
+    assert record["description_text"]
+
+
+def test_parse_classic_item_detail_enhancement() -> None:
+    html = (FIXTURES / "items_detail_classic_enhancement.html").read_text(encoding="utf-8")
+    url = "https://dndtools.org/items/magic-item-compendium--73/acidic--2/"
+    record = parse_classic_item_detail(html, url)
+    assert record["name"] == "Acidic"
+    assert record["price_bonus"] == "+1 bonus"
+    assert record["index"]["type"] == "Magic Item"
+
+
+def test_parse_classic_item_index() -> None:
+    html = (FIXTURES / "items_index_classic.html").read_text(encoding="utf-8")
+    records, total = parse_classic_item_index(html, "https://dndtools.org")
+    assert total == 168
+    assert len(records) == 168
+    assert records[0]["name"] == "Absorbing Shield"
 
 
 def test_category_index_urls_use_new_site() -> None:

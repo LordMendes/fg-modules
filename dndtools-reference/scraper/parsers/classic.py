@@ -104,6 +104,11 @@ def parse_classic_monster_slug(href: str) -> tuple[str | None, int | None, str |
     return monster_part, None, book_slug
 
 
+def parse_classic_item_slug(href: str) -> tuple[str | None, int | None, str | None]:
+    """Return (slug, item_id, book_slug) from a classic item href."""
+    return parse_classic_monster_slug(href)
+
+
 def parse_classic_class_slug(href: str) -> tuple[str | None, int | None, str | None]:
     """Return (slug, book_id, book_slug) from a classic class href.
 

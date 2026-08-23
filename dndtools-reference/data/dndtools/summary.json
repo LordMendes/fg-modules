@@ -1,14 +1,14 @@
 {
-  "scraped_at": "2026-08-23T18:41:23.926602+00:00",
+  "scraped_at": "2026-08-23T18:49:24.659778+00:00",
   "base_url": "https://new.dndtools.org",
   "classic_base_url": "https://dndtools.org",
   "categories": {
-    "monsters": {
-      "expected": 1653,
-      "scraped": 1653,
+    "items": {
+      "expected": 1455,
+      "scraped": 1455,
       "errors": 0,
-      "duration_seconds": 14.37,
-      "pages_crawled": 34,
+      "duration_seconds": 52.83,
+      "pages_crawled": 30,
       "prerequisite_overlay": false
     }
   }

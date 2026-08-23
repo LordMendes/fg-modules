@@ -120,6 +120,14 @@ python -m scraper.scrape_classic_monsters --base-url https://dndtools.net
 
 Run this **after** `scrape_all --categories monsters` so new-site records take precedence.
 
+Classic-only **items** (magic/mundane gear from dndtools.org):
+
+```bash
+python -m scraper.scrape_classic_items
+```
+
+Run after `scrape_all --categories items`. Note: PHB **equipment** (weapons/armor) lives only on new.dndtools.org — classic sites have no `/equipment/` index.
+
 ## Output layout
 
 ```
