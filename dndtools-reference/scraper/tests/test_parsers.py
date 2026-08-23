@@ -21,7 +21,8 @@ from scraper.parsers.base import (
     parse_slug_and_id,
 )
 from scraper.parsers.classes import parse_detail as parse_class_detail
-from scraper.parsers.classic import parse_classic_class_slug, parse_classic_feat_slug
+from scraper.parsers.classic import parse_classic_class_slug, parse_classic_feat_slug, parse_classic_monster_slug
+from scraper.parsers.classic_monsters import parse_classic_monster_detail, parse_classic_monster_index
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -56,6 +57,43 @@ def test_parse_classic_class_slug() -> None:
     assert slug == "abjurant-champion-58"
     assert book_id == 58
     assert book == "complete-mage"
+
+
+def test_parse_classic_monster_slug() -> None:
+    slug, record_id, book = parse_classic_monster_slug(
+        "/monsters/book-of-exalted-deeds--52/apocalypse-frog-swarm--30/"
+    )
+    assert slug == "apocalypse-frog-swarm-30"
+    assert record_id == 30
+    assert book == "book-of-exalted-deeds"
+
+
+def test_parse_classic_monster_index() -> None:
+    html = (FIXTURES / "monsters_index_classic.html").read_text(encoding="utf-8")
+    records, total = parse_classic_monster_index(html, "https://dndtools.org")
+    assert total == 29
+    assert len(records) == 29
+    first = records[0]
+    assert first["name"] == "Achaierai"
+    assert first["category"] == "monsters"
+    assert first["index"]["rulebook"] == "Monster Manual v.3.5"
+
+
+def test_parse_classic_monster_detail() -> None:
+    html = (FIXTURES / "monsters_detail_classic.html").read_text(encoding="utf-8")
+    url = "https://dndtools.org/monsters/book-of-exalted-deeds--52/apocalypse-frog-swarm--30/"
+    record = parse_classic_monster_detail(html, url)
+    assert record["name"] == "Apocalypse Frog Swarm"
+    assert record["slug"] == "apocalypse-frog-swarm-30"
+    assert record["id"] == 30
+    assert record["challenge_rating"] == "4"
+    assert record["hit_dice"] == "5d10 (27 hp)"
+    assert record["source"]["name"] == "Book of Exalted Deeds"
+    assert record["source"]["page"] == 188
+    assert record["source"]["url"] is not None
+    assert record["flavor_text"]
+    assert record["combat_text"]
+    assert any(f["name"] == "Ability Focus" for f in record.get("feats", []))
 
 
 def test_category_index_urls_use_new_site() -> None:

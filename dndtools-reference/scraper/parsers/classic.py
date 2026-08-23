@@ -89,6 +89,21 @@ def parse_classic_feat_slug(href: str) -> tuple[str | None, int | None, str | No
     return feat_part, None, book_slug
 
 
+def parse_classic_monster_slug(href: str) -> tuple[str | None, int | None, str | None]:
+    """Return (slug, monster_id, book_slug) from a classic monster href."""
+    parts = [p for p in urlparse(href).path.strip("/").split("/") if p]
+    if len(parts) < 2:
+        return None, None, None
+    book_part = parts[-2]
+    monster_part = parts[-1]
+    book_match = CLASSIC_ID_RE.match(book_part)
+    monster_match = CLASSIC_ID_RE.match(monster_part)
+    book_slug = book_match.group(1) if book_match else book_part
+    if monster_match:
+        return f"{monster_match.group(1)}-{monster_match.group(2)}", int(monster_match.group(2)), book_slug
+    return monster_part, None, book_slug
+
+
 def parse_classic_class_slug(href: str) -> tuple[str | None, int | None, str | None]:
     """Return (slug, book_id, book_slug) from a classic class href.
 

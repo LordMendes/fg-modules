@@ -25,7 +25,7 @@ PREREQUISITE_OVERLAY_CATEGORIES = frozenset({"feats", "classes"})
 CATEGORY_CONFIG: dict[str, dict[str, object]] = {
     "spells": {"path": "spells", "output": "spells.json", "expected": 5035},
     "feats": {"path": "feats", "output": "feats.json", "expected": 3665},
-    "monsters": {"path": "monsters", "output": "monsters.json", "expected": 807},
+    "monsters": {"path": "monsters", "output": "monsters.json", "expected": 1653},
     "templates": {"path": "templates", "output": "templates.json", "expected": 155},
     "classes": {"path": "classes", "output": "classes.json", "expected": 1054},
     "skills": {"path": "skills", "output": "skills.json", "expected": 80},

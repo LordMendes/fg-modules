@@ -92,7 +92,7 @@ Do **not** run `python scrape_all.py` from inside `scraper/` — relative import
 | spells | `spells.json` | 5,035 |
 | feats | `feats.json` | 3,665 (+ classic prerequisites) |
 | classes | `classes.json` | 1,054 (+ classic requirements) |
-| monsters | `monsters.json` | 807 |
+| monsters | `monsters.json` | 1,653 (+ classic-only supplementals) |
 | items | `items.json` | 816 |
 | psionics | `psionics.json` | 703 |
 | deities | `deities.json` | 670 |
@@ -108,6 +108,17 @@ Resume after interruption:
 ```bash
 python -m scraper.scrape_all --resume
 ```
+
+### Classic-only monsters (dndtools.org / dndtools.net)
+
+The classic site indexes 29 supplemental monsters not on new.dndtools.org. Scrape and merge them into `monsters.json`:
+
+```bash
+python -m scraper.scrape_classic_monsters
+python -m scraper.scrape_classic_monsters --base-url https://dndtools.net
+```
+
+Run this **after** `scrape_all --categories monsters` so new-site records take precedence.
 
 ## Output layout
 
