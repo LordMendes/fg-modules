@@ -8,6 +8,7 @@ export type NavLink = {
 
 export type BrowseNavItem = NavLink & {
   child?: NavLink;
+  children?: NavLink[];
 };
 
 export type BrowseGroup = {
@@ -43,6 +44,18 @@ export const FLAWS_LINK: NavLink = {
   href: "/feats?type=Flaw",
 };
 
+export const EQUIPMENT_WEAPONS_LINK: NavLink = {
+  key: "equipment-weapons",
+  label: "Weapons",
+  href: "/equipment?kind=weapon",
+};
+
+export const EQUIPMENT_ARMOR_LINK: NavLink = {
+  key: "equipment-armor",
+  label: "Armor & Shields",
+  href: "/equipment?kind=armor",
+};
+
 const CORE_KEYS: CategoryKey[] = [
   "spells",
   "feats",
@@ -70,7 +83,16 @@ function categoryToLink(key: CategoryKey): BrowseNavItem {
   if (key === "feats") {
     link.child = FLAWS_LINK;
   }
+  if (key === "equipment") {
+    link.children = [EQUIPMENT_WEAPONS_LINK, EQUIPMENT_ARMOR_LINK];
+  }
   return link;
+}
+
+export function browseItemChildLinks(item: BrowseNavItem): NavLink[] {
+  if (item.children?.length) return item.children;
+  if (item.child) return [item.child];
+  return [];
 }
 
 export const BROWSE_GROUPS: BrowseGroup[] = [
@@ -120,9 +142,23 @@ export function isBrowseItemActive(
   if (href === FLAWS_LINK.href) {
     return pathname.startsWith("/feats") && searchParams.get("type") === "Flaw";
   }
-  const path = href.split("?")[0]!;
+  const [path, queryString] = href.split("?");
   if (pathname.startsWith("/feats") && searchParams.get("type") === "Flaw") {
     return false;
   }
-  return pathname === path || pathname.startsWith(`${path}/`);
+  if (pathname !== path && !pathname.startsWith(`${path}/`)) {
+    return false;
+  }
+  if (!queryString) {
+    if (path === "/equipment") {
+      const kind = searchParams.get("kind");
+      return !kind;
+    }
+    return true;
+  }
+  const expected = new URLSearchParams(queryString);
+  for (const [key, value] of expected.entries()) {
+    if (searchParams.get(key) !== value) return false;
+  }
+  return true;
 }

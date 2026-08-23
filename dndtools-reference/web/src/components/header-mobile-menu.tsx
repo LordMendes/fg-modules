@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import {
   BROWSE_GROUPS,
   PRIMARY_NAV,
+  browseItemChildLinks,
   isBrowseItemActive,
   isPrimaryNavActive,
 } from "@/lib/nav";
@@ -98,32 +99,25 @@ export function HeaderMobileMenu({ user }: { user: AuthUser | null }) {
                         >
                           {item.label}
                         </Link>
-                        {item.child ? (
+                        {browseItemChildLinks(item).map((child) => (
                           <Link
-                            href={item.child.href}
+                            key={child.key}
+                            href={child.href}
                             className={`header-mobile-link header-mobile-link--child${
-                              isBrowseItemActive(
-                                item.child.href,
-                                pathname,
-                                searchParams,
-                              )
+                              isBrowseItemActive(child.href, pathname, searchParams)
                                 ? " is-active"
                                 : ""
                             }`}
                             aria-current={
-                              isBrowseItemActive(
-                                item.child.href,
-                                pathname,
-                                searchParams,
-                              )
+                              isBrowseItemActive(child.href, pathname, searchParams)
                                 ? "page"
                                 : undefined
                             }
                             onClick={() => setOpen(false)}
                           >
-                            {item.child.label}
+                            {child.label}
                           </Link>
-                        ) : null}
+                        ))}
                       </li>
                     ))}
                   </ul>

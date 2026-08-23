@@ -896,6 +896,24 @@ body {
   background: var(--bg-secondary);
 }
 
+.equipment-kind-tabs {
+  margin-bottom: 1rem;
+}
+
+.equipment-description-cell {
+  max-width: 18rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.equipment-description-ellipsis {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
 .entity-link {
   color: var(--link-color);
   text-decoration: none;

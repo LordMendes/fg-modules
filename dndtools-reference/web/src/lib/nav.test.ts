@@ -2,6 +2,8 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
   FLAWS_LINK,
+  EQUIPMENT_ARMOR_LINK,
+  EQUIPMENT_WEAPONS_LINK,
   isBrowseActive,
   isBrowseItemActive,
   isPrimaryNavActive,
@@ -47,6 +49,33 @@ describe("nav helpers", () => {
     assert.equal(
       isBrowseItemActive("/feats", "/feats", new URLSearchParams("type=Flaw")),
       false,
+    );
+  });
+
+  it("marks equipment sub-links active by kind query", () => {
+    assert.equal(
+      isBrowseItemActive("/equipment", "/equipment", new URLSearchParams()),
+      true,
+    );
+    assert.equal(
+      isBrowseItemActive("/equipment", "/equipment", new URLSearchParams("kind=weapon")),
+      false,
+    );
+    assert.equal(
+      isBrowseItemActive(
+        EQUIPMENT_WEAPONS_LINK.href,
+        "/equipment",
+        new URLSearchParams("kind=weapon"),
+      ),
+      true,
+    );
+    assert.equal(
+      isBrowseItemActive(
+        EQUIPMENT_ARMOR_LINK.href,
+        "/equipment",
+        new URLSearchParams("kind=armor"),
+      ),
+      true,
     );
   });
 });

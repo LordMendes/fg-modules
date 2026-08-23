@@ -9,11 +9,16 @@ import { DEFAULT_ENTITY_SORT } from "@/lib/entity-sort";
 import type { EntityListItem } from "@/lib/entities";
 import type { CategoryKey } from "@/lib/categories";
 import { buildListSearchParams, parseListSearchParams } from "@/lib/entity-filters";
+import {
+  equipmentTableColumns,
+  type EquipmentTableColumn,
+  type EquipmentView,
+} from "@/lib/equipment-display";
 import { toggleSort, type TableSort } from "@/lib/table-sort";
 
-type Column = { key: string; label: string };
+type Column = { key: string; label: string; sortable?: boolean; title?: string };
 
-const CATEGORY_COLUMNS: Record<CategoryKey, Column[]> = {
+const CATEGORY_COLUMNS: Record<Exclude<CategoryKey, "equipment">, Column[]> = {
   spells: [
     { key: "school", label: "School" },
     { key: "level", label: "Level" },
@@ -41,10 +46,6 @@ const CATEGORY_COLUMNS: Record<CategoryKey, Column[]> = {
     { key: "type", label: "Type" },
     { key: "price", label: "Price" },
   ],
-  equipment: [
-    { key: "kind", label: "Kind" },
-    { key: "cost", label: "Cost" },
-  ],
   domains: [{ key: "type", label: "Type" }],
   deities: [
     { key: "alignment", label: "Alignment" },
@@ -64,18 +65,68 @@ const CATEGORY_COLUMNS: Record<CategoryKey, Column[]> = {
   ],
 };
 
+function resolveColumns(category: CategoryKey, equipmentView: EquipmentView): Column[] {
+  if (category === "equipment") {
+    return equipmentTableColumns(equipmentView).map((col: EquipmentTableColumn) => ({
+      key: col.key,
+      label: col.label,
+      sortable: col.sortable !== false,
+      title: col.title,
+    }));
+  }
+  return (CATEGORY_COLUMNS[category as Exclude<CategoryKey, "equipment">] ?? []).map((col) => ({
+    ...col,
+    sortable: true,
+  }));
+}
+
+function cellTitle(col: Column, item: EntityListItem): string | undefined {
+  if (col.key === "damage") {
+    const title = item.extra.damageTitle;
+    return title ?? undefined;
+  }
+  if (col.key === "speed") {
+    const title = item.extra.speedTitle;
+    return title ?? undefined;
+  }
+  return col.title;
+}
+
+function renderDataCell(col: Column, item: EntityListItem) {
+  const value = item.extra[col.key];
+  const title = cellTitle(col, item);
+
+  if (col.key === "description" || col.key === "summary") {
+    return (
+      <td key={col.key} className="equipment-description-cell">
+        <span className="equipment-description-ellipsis" title={value ?? undefined}>
+          {value ?? "—"}
+        </span>
+      </td>
+    );
+  }
+
+  return (
+    <td key={col.key} title={title}>
+      {value ?? "—"}
+    </td>
+  );
+}
+
 export function EntityTable({
   category,
   items,
   sort,
+  equipmentView = "all",
 }: {
   category: CategoryKey;
   items: EntityListItem[];
   sort: TableSort | null;
+  equipmentView?: EquipmentView;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const columns = CATEGORY_COLUMNS[category] ?? [];
+  const columns = resolveColumns(category, equipmentView);
   const activeSort = sort ?? DEFAULT_ENTITY_SORT;
 
   function handleSort(column: string) {
@@ -95,15 +146,21 @@ export function EntityTable({
         <thead>
           <tr>
             <SortableTh column="name" label="Name" sort={activeSort} onSort={handleSort} />
-            {columns.map((col) => (
-              <SortableTh
-                key={col.key}
-                column={col.key}
-                label={col.label}
-                sort={activeSort}
-                onSort={handleSort}
-              />
-            ))}
+            {columns.map((col) =>
+              col.sortable === false ? (
+                <th key={col.key} scope="col" title={col.title}>
+                  {col.label}
+                </th>
+              ) : (
+                <SortableTh
+                  key={col.key}
+                  column={col.key}
+                  label={col.label}
+                  sort={activeSort}
+                  onSort={handleSort}
+                />
+              ),
+            )}
             <SortableTh column="source" label="Source" sort={activeSort} onSort={handleSort} />
             <SortableTh column="edition" label="Edition" sort={activeSort} onSort={handleSort} />
             <th scope="col">Save</th>
@@ -118,9 +175,7 @@ export function EntityTable({
                   {item.name}
                 </Link>
               </td>
-              {columns.map((col) => (
-                <td key={col.key}>{item.extra[col.key] ?? "—"}</td>
-              ))}
+              {columns.map((col) => renderDataCell(col, item))}
               <td>
                 {item.sourceAbbrev ? (
                   <Link href={`/sources/${item.sourceAbbrev}`} className="source-badge">

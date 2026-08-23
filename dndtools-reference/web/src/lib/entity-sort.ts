@@ -12,7 +12,7 @@ export const ENTITY_SORT_COLUMNS: Record<CategoryKey, string[]> = {
   skills: ["name", "keyAbility", "trainedOnly", "source", "edition"],
   races: ["name", "type", "la", "source", "edition"],
   items: ["name", "type", "price", "source", "edition"],
-  equipment: ["name", "kind", "cost", "source", "edition"],
+  equipment: ["name", "kind", "category", "cost", "source", "edition"],
   domains: ["name", "type", "source", "edition"],
   deities: ["name", "alignment", "pantheon", "source", "edition"],
   psionics: ["name", "discipline", "powerPoints", "source", "edition"],
@@ -86,6 +86,7 @@ export function buildEntityOrderBy(
     equipment: {
       name: { name: direction },
       kind: { kind: direction },
+      category: { category: direction },
       cost: { cost: direction },
     },
     domains: {

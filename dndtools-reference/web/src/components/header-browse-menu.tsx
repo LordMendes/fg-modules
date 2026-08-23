@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import {
   BROWSE_GROUPS,
+  browseItemChildLinks,
   isBrowseActive,
   isBrowseItemActive,
 } from "@/lib/nav";
@@ -83,33 +84,26 @@ export function HeaderBrowseMenu() {
                       >
                         {item.label}
                       </Link>
-                      {item.child ? (
+                      {browseItemChildLinks(item).map((child) => (
                         <Link
-                          href={item.child.href}
+                          key={child.key}
+                          href={child.href}
                           className={`header-menu-item header-menu-item--child${
-                            isBrowseItemActive(
-                              item.child.href,
-                              pathname,
-                              searchParams,
-                            )
+                            isBrowseItemActive(child.href, pathname, searchParams)
                               ? " is-active"
                               : ""
                           }`}
                           role="menuitem"
                           aria-current={
-                            isBrowseItemActive(
-                              item.child.href,
-                              pathname,
-                              searchParams,
-                            )
+                            isBrowseItemActive(child.href, pathname, searchParams)
                               ? "page"
                               : undefined
                           }
                           onClick={() => setOpen(false)}
                         >
-                          {item.child.label}
+                          {child.label}
                         </Link>
-                      ) : null}
+                      ))}
                     </li>
                   );
                 })}

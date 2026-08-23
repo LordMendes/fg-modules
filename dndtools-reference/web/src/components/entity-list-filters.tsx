@@ -21,6 +21,7 @@ import {
 } from "@/lib/entity-filters";
 import type { CategoryKey } from "@/lib/categories";
 import { getCategoryLabel } from "@/lib/categories";
+import { parseEquipmentView } from "@/lib/equipment-display";
 
 export function EntityListFilters({
   category,
@@ -34,6 +35,8 @@ export function EntityListFilters({
   const router = useRouter();
   const fieldDefs = CATEGORY_FILTER_FIELDS[category];
   const showDescription = DESCRIPTION_SEARCH_CATEGORIES.has(category);
+  const equipmentView = category === "equipment" ? parseEquipmentView(initialFilters.fields) : "all";
+  const hideEquipmentKindFilter = category === "equipment" && equipmentView !== "all";
 
   const [search, setSearch] = useState(initialFilters.search);
   const [description, setDescription] = useState(initialFilters.description);
@@ -85,6 +88,9 @@ export function EntityListFilters({
     setEditions([]);
     const cleared: Record<string, string[]> = {};
     for (const def of fieldDefs) cleared[def.param] = [];
+    if (category === "equipment" && initialFilters.fields.kind?.length) {
+      cleared.kind = [...initialFilters.fields.kind];
+    }
     setFields(cleared);
     const clearedRanges = emptyMonsterRangeInputs();
     setRangeInputs(clearedRanges);
@@ -258,6 +264,10 @@ export function EntityListFilters({
         ) : null}
 
         {fieldDefs.map((def) => {
+          if (hideEquipmentKindFilter && def.param === "kind") {
+            return null;
+          }
+
           if (def.ui === "chips") {
             const selected = fields[def.param] ?? [];
             const chipOptions = options.fields[def.param] ?? [];

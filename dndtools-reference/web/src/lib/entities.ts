@@ -18,6 +18,13 @@ import {
   type RangeFilterValue,
 } from "@/lib/entity-filters";
 import { buildEntityOrderBy } from "@/lib/entity-sort";
+import {
+  buildEquipmentListExtras,
+  equipmentKindsForCategoryOptions,
+  parseEquipmentView,
+  resolveEquipmentKindFilter,
+  type EquipmentView,
+} from "@/lib/equipment-display";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
 import { buildSourceDisplayNameMap } from "@/lib/source-display";
 import type { TableSort } from "@/lib/table-sort";
@@ -456,6 +463,14 @@ function buildFieldWhere(
       continue;
     }
 
+    if (category === "equipment" && def.param === "kind") {
+      const expanded = resolveEquipmentKindFilter({ kind: raw });
+      if (expanded?.length) {
+        where[def.prismaField] = { in: expanded };
+      }
+      continue;
+    }
+
     if (def.valueType === "schoolArray") {
       where[def.prismaField] = { hasSome: raw };
       continue;
@@ -606,17 +621,35 @@ export async function listEntities(
       return formatList(rows, (r) => ({ type: r.itemType, price: r.price }));
     }
     case "equipment": {
+      const view = parseEquipmentView(fields);
       const rows = await prisma.equipment.findMany({
         where: baseWhere as Prisma.EquipmentWhereInput,
         take,
         ...(cursor ? { cursor: { slug: cursor }, skip: 1 } : {}),
         orderBy: orderBy as Prisma.EquipmentOrderByWithRelationInput[],
-        include: { source: sourceSelect() },
+        select: {
+          slug: true,
+          name: true,
+          kind: true,
+          category: true,
+          cost: true,
+          indexData: true,
+          descriptionText: true,
+          source: { select: { name: true, abbrev: true, edition: true } },
+        },
       });
-      return formatList(rows, (r) => ({
-        kind: r.kind,
-        cost: r.cost,
-      }));
+      return formatList(rows, (r) =>
+        buildEquipmentListExtras(
+          {
+            kind: r.kind,
+            category: r.category,
+            cost: r.cost,
+            indexData: r.indexData,
+            descriptionText: r.descriptionText,
+          },
+          view,
+        ),
+      );
     }
     case "domains": {
       // Domains description search should also match granted power text.
@@ -704,6 +737,7 @@ type FilterOption = { value: string; label: string };
 
 export async function getCategoryFilterOptions(
   category: CategoryKey,
+  options?: { equipmentView?: EquipmentView },
 ): Promise<CategoryFilterOptions> {
   const sourcesWithCategory = await prisma.source.findMany({
     where: {
@@ -748,7 +782,7 @@ export async function getCategoryFilterOptions(
   const fields: Record<string, FilterOption[]> = {};
 
   for (const def of fieldDefs) {
-    fields[def.param] = await getFieldFilterOptions(category, def);
+    fields[def.param] = await getFieldFilterOptions(category, def, options);
   }
 
   return {
@@ -761,6 +795,7 @@ export async function getCategoryFilterOptions(
 async function getFieldFilterOptions(
   category: CategoryKey,
   def: FilterFieldDef,
+  options?: { equipmentView?: EquipmentView },
 ): Promise<FilterOption[]> {
   const field = def.prismaField;
 
@@ -1012,9 +1047,13 @@ async function getFieldFilterOptions(
           .map((r) => ({ value: r.kind!, label: r.kind! }));
       }
       if (field === "category") {
+        const kindScope = equipmentKindsForCategoryOptions(options?.equipmentView ?? "all");
         const rows = await prisma.equipment.groupBy({
           by: ["category"],
-          where: { category: { not: null } },
+          where: {
+            category: { not: null },
+            ...(kindScope ? { kind: { in: kindScope } } : {}),
+          },
           _count: { category: true },
           orderBy: { _count: { category: "desc" } },
         });

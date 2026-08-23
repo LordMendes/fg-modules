@@ -21,6 +21,7 @@ export function PaginatedEntityList({
   fields,
   ranges,
   sort,
+  equipmentView = "all",
 }: {
   category: CategoryKey;
   initialItems: EntityListItem[];
@@ -32,6 +33,7 @@ export function PaginatedEntityList({
   fields?: Record<string, string[]>;
   ranges?: ParsedListFilters["ranges"];
   sort?: TableSort | null;
+  equipmentView?: "all" | "weapon" | "armor";
 }) {
   const [items, setItems] = useState(initialItems);
   const [cursor, setCursor] = useState(initialCursor);
@@ -100,7 +102,12 @@ export function PaginatedEntityList({
 
   return (
     <div className="min-w-0">
-      <EntityTable category={category} items={items} sort={sort ?? null} />
+      <EntityTable
+        category={category}
+        items={items}
+        sort={sort ?? null}
+        equipmentView={equipmentView}
+      />
       {error && <p className="error-text">{error}</p>}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {statusMessage}

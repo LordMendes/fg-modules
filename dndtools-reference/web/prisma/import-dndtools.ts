@@ -156,6 +156,32 @@ function loadAllEquipmentRecords(): RecordBase[] {
   return [...loadJson("equipment"), ...loadSupplementalEquipment()];
 }
 
+const EQUIPMENT_COMBAT_INDEX_KEYS = [
+  "damage_m",
+  "damage_s",
+  "critical",
+  "damage_type",
+  "handed",
+  "range_increment",
+  "ac_bonus",
+  "max_dex",
+  "armor_check_penalty",
+  "arcane_spell_failure",
+  "speed_30",
+  "speed_20",
+] as const;
+
+function buildEquipmentIndexData(record: RecordBase): object {
+  const index = { ...((record.index as Record<string, unknown> | undefined) ?? {}) };
+  for (const key of EQUIPMENT_COMBAT_INDEX_KEYS) {
+    const value = record[key];
+    if (typeof value === "string" && value.trim()) {
+      index[key] = value.trim();
+    }
+  }
+  return index;
+}
+
 function parseExternalId(id: unknown): number | null {
   if (typeof id === "number") return id;
   if (typeof id === "string" && /^\d+$/.test(id)) return parseInt(id, 10);
@@ -751,6 +777,7 @@ async function pass2Entities(
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
+        const indexData = buildEquipmentIndexData(r);
         await prisma.equipment.upsert({
           where: { slug: r.slug },
           create: {
@@ -760,7 +787,7 @@ async function pass2Entities(
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap, abbrevNameMap),
-            indexData: (r.index ?? {}) as object,
+            indexData,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
             kind: (r.kind as string) ?? index?.kind ?? null,
@@ -773,7 +800,7 @@ async function pass2Entities(
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap, abbrevNameMap),
-            indexData: (r.index ?? {}) as object,
+            indexData,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
             kind: (r.kind as string) ?? index?.kind ?? null,
