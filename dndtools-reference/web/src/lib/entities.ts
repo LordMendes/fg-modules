@@ -62,6 +62,7 @@ export type EntityDetail = {
   advancementHtml?: string | null;
   spellLevels?: ClassSpellLevelSummary[];
   classSkills?: ClassSkillRef[];
+  secondarySources?: { abbrev: string; name: string }[];
 };
 
 export type ClassSkillRef = {
@@ -1142,6 +1143,119 @@ function formatList<T extends { slug: string; name: string; source: { abbrev: st
   };
 }
 
+function parseRealmshelpsSources(raw: unknown): { abbrev: string; name: string }[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((entry) => String(entry))
+    .filter(Boolean)
+    .map((entry) => {
+      const splitIndex = entry.indexOf(":");
+      if (splitIndex === -1) return { abbrev: entry, name: entry };
+      return {
+        abbrev: entry.slice(0, splitIndex),
+        name: entry.slice(splitIndex + 1),
+      };
+    });
+}
+
+function formatGoodsFieldLabel(key: string): string {
+  return key
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+async function buildEquipmentDetail(
+  r: {
+    slug: string;
+    name: string;
+    sourceUrl: string | null;
+    descriptionHtml: string | null;
+    descriptionText: string | null;
+    kind: string | null;
+    category: string | null;
+    cost: string | null;
+    weight: string | null;
+    indexData: unknown;
+    source: { name: string; abbrev: string | null; edition: string };
+  },
+): Promise<EntityDetail> {
+  const index = (r.indexData ?? {}) as Record<string, unknown>;
+  const fields: Record<string, string | null> = {
+    Kind: r.kind,
+    Category: r.category,
+    Cost: r.cost,
+    Weight: r.weight,
+  };
+
+  for (const [rawKey, label] of [
+    ["damage_m", "Damage (M)"],
+    ["damage_s", "Damage (S)"],
+    ["critical", "Critical"],
+    ["range_increment", "Range Increment"],
+    ["damage_type", "Damage Type"],
+    ["ac_bonus", "Armor Bonus"],
+    ["max_dex", "Max Dex"],
+    ["armor_check_penalty", "ACP"],
+    ["arcane_spell_failure", "ASF"],
+    ["speed_30", "Speed (30 ft.)"],
+    ["speed_20", "Speed (20 ft.)"],
+  ] as const) {
+    const value = index[rawKey];
+    if (typeof value === "string" && value) fields[label] = value;
+  }
+
+  if (typeof index.stats === "string" && index.stats && !fields["Damage (M)"]) {
+    fields.Stats = index.stats;
+  }
+
+  const tableStats = index.table_stats as Record<string, string> | undefined;
+  if (tableStats) {
+    for (const [key, value] of Object.entries(tableStats)) {
+      if (value) fields[formatGoodsFieldLabel(key)] = value;
+    }
+  }
+
+  const relatedSlugs = Array.isArray(index.related_slugs)
+    ? (index.related_slugs as string[])
+    : [];
+  const relatedRows =
+    relatedSlugs.length > 0
+      ? await prisma.equipment.findMany({
+          where: { slug: { in: relatedSlugs } },
+          select: { slug: true, name: true },
+        })
+      : [];
+  const related = relatedRows.map((row) => ({
+    label: row.name,
+    href: `/equipment/${row.slug}`,
+  }));
+
+  const parsedSources = parseRealmshelpsSources(index.realmshelps_sources);
+  const secondarySources = parsedSources.filter(
+    (source) => source.abbrev !== r.source.abbrev,
+  );
+
+  const statLine =
+    typeof index.stats === "string"
+      ? index.stats
+      : typeof index.stats === "object" && index.stats !== null
+        ? Object.values(index.stats as Record<string, string>).join(" · ")
+        : null;
+
+  return {
+    slug: r.slug,
+    name: r.name,
+    sourceUrl: r.sourceUrl,
+    descriptionHtml: r.descriptionHtml,
+    descriptionText: r.descriptionText,
+    source: { ...r.source, page: null },
+    fields,
+    related,
+    statLine,
+    secondarySources: secondarySources.length > 0 ? secondarySources : undefined,
+  };
+}
+
 export async function getEntityDetail(
   category: CategoryKey,
   slug: string,
@@ -1317,13 +1431,19 @@ export async function getEntityDetail(
     case "equipment": {
       const r = await prisma.equipment.findUnique({ where: { slug }, include: { source: src } });
       if (!r) return null;
-      return {
-        slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
-        descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
-        source: { ...r.source, page: null },
-        fields: { Kind: r.kind, Category: r.category, Cost: r.cost, Weight: r.weight },
-        related: [],
-      };
+      return buildEquipmentDetail({
+        slug: r.slug,
+        name: r.name,
+        sourceUrl: r.sourceUrl,
+        descriptionHtml: r.descriptionHtml,
+        descriptionText: r.descriptionText,
+        kind: r.kind,
+        category: r.category,
+        cost: r.cost,
+        weight: r.weight,
+        indexData: r.indexData,
+        source: r.source,
+      });
     }
     case "domains": {
       const r = await prisma.domain.findUnique({
@@ -1448,6 +1568,16 @@ export async function searchAll(query: string, limit = 20): Promise<
     ["skills", () => prisma.skill.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
     ["races", () => prisma.race.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
     ["items", () => prisma.item.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
+    ["equipment", () => prisma.equipment.findMany({
+      where: {
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { descriptionText: { contains: query, mode: "insensitive" } },
+        ],
+      },
+      take: limit,
+      select: { slug: true, name: true, descriptionText: true },
+    })],
     ["domains", () => prisma.domain.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
     ["psionics", () => prisma.psionic.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
     ["rules", () => prisma.rule.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],

@@ -52,6 +52,12 @@ export default async function sitemap(props: {
         changeFrequency: "weekly",
         priority: 0.7,
       },
+      {
+        url: `${base}/stores/goods`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
       ...TOOLS.map((tool) => ({
         url: `${base}${tool.href}`,
         lastModified: now,

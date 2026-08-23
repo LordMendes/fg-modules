@@ -26,6 +26,7 @@ const SUPPLEMENTAL_FEAT_FILES = ["realmshelps_flaws.json", "dandwiki_flaws.json"
 const SUPPLEMENTAL_EQUIPMENT_FILES = [
   "realmshelps_weapons.json",
   "realmshelps_armor.json",
+  "realmshelps_goods.json",
 ] as const;
 const BATCH_SIZE = 500;
 
@@ -767,7 +768,19 @@ async function pass2Entities(
             cost: (r.cost as string) ?? index?.cost ?? null,
             weight: (r.weight as string) ?? index?.weight ?? null,
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object },
+          update: {
+            name: r.name,
+            sourceUrl: r.source_url ?? null,
+            scrapedAt: parseDate(r.scraped_at),
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
+            indexData: (r.index ?? {}) as object,
+            descriptionHtml: (r.description_html as string) ?? null,
+            descriptionText: (r.description_text as string) ?? null,
+            kind: (r.kind as string) ?? index?.kind ?? null,
+            category: (r.category as string) ?? index?.category ?? null,
+            cost: (r.cost as string) ?? index?.cost ?? null,
+            weight: (r.weight as string) ?? index?.weight ?? null,
+          },
         });
       }
     });

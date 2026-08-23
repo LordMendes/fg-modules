@@ -48,6 +48,9 @@ REALMSHELPS_BOOK_ALIASES: dict[str, tuple[str, str]] = {
         "SF",
         "Sword and Fist: A Guidebook to Monks and Fighters",
     ),
+    "frostfell": ("Fr", "Frostfell"),
+    "dungeonscape": ("Dun", "Dungeonscape"),
+    "stronghold builder's guidebook": ("SB", "Stronghold Builder's Guidebook"),
 }
 
 
@@ -209,6 +212,14 @@ def armor_stats(
     return " · ".join(parts)
 
 
+def goods_name_to_slug(name: str, suffix: str = "rh") -> str:
+    return slugify_name(name, suffix)
+
+
+def normalize_item_name(name: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", name.casefold())
+
+
 def build_equipment_record(
     *,
     name: str,
@@ -220,6 +231,8 @@ def build_equipment_record(
     index: dict[str, Any],
     all_sources: list[dict[str, str]] | None = None,
     note: str | None = None,
+    description_html: str | None = None,
+    description_text: str | None = None,
     **fields: Any,
 ) -> dict[str, Any]:
     index_data = {
@@ -272,4 +285,8 @@ def build_equipment_record(
             record[key] = value
             null_fields.pop(key, None)
     record.update(null_fields)
+    if description_html:
+        record["description_html"] = description_html
+    if description_text:
+        record["description_text"] = description_text
     return record

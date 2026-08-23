@@ -1,0 +1,1130 @@
+[
+  {
+    "section_slug": "light-and-vision",
+    "section_title": "Light and Vision",
+    "title": "Light Sources",
+    "headers": [
+      "Object",
+      "Light",
+      "Duration"
+    ],
+    "rows": [
+      [
+        "Candle",
+        "5 ft.",
+        "1 hr."
+      ],
+      [
+        "Lamp, common",
+        "15 ft.",
+        "6 hr./pint"
+      ],
+      [
+        "Lantern, bullseye",
+        "60-ft. cone*",
+        "6 hr./pint"
+      ],
+      [
+        "Lantern, hooded",
+        "30 ft.",
+        "6 hr./pint"
+      ],
+      [
+        "Sunrod",
+        "30ft.",
+        "6 hr."
+      ],
+      [
+        "Torch",
+        "20ft.",
+        "1 hr."
+      ],
+      [
+        "Spell",
+        "Light",
+        "Duration"
+      ],
+      [
+        "Continual flame",
+        "20 ft.",
+        "Permanent"
+      ],
+      [
+        "Dancing lights (torches)",
+        "20 ft. (each)",
+        "1 min."
+      ],
+      [
+        "Daylight",
+        "60 ft.",
+        "30 min."
+      ],
+      [
+        "Light",
+        "20 ft.",
+        "10 min."
+      ]
+    ],
+    "footnotes": [
+      "*cone 60 feet long and 20 feet wide at the far end."
+    ],
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "mounts",
+    "section_title": "Mounts And Related Gear",
+    "title": "*A mount wearing heavy armor moves at only triple normal rate when running instead of quadruple.",
+    "headers": [
+      "",
+      "Speed"
+    ],
+    "rows": [
+      [
+        "Barding",
+        "(40 ft.)",
+        "(50 ft.)",
+        "(60 ft.)"
+      ],
+      [
+        "Medium",
+        "30 ft.",
+        "35 ft.",
+        "40 ft."
+      ],
+      [
+        "Heavy",
+        "30 ft.*",
+        "35 ft*",
+        "40 ft*"
+      ]
+    ],
+    "footnotes": [
+      "*A mount wearing heavy armor moves at only triple normal rate when running instead of quadruple."
+    ],
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "mounts",
+    "section_title": "Mounts And Related Gear",
+    "title": "Hauling Vehicles",
+    "headers": [
+      "Item",
+      "Cost",
+      "Weight ***",
+      "Holds or Carries"
+    ],
+    "rows": [
+      [
+        "Cart",
+        "15 gp.",
+        "200 lb.",
+        "1/2 ton"
+      ],
+      [
+        "Sled",
+        "20 gp",
+        "300 lb.",
+        "1 ton"
+      ],
+      [
+        "Wagon",
+        "35 gp",
+        "400 lb.",
+        "2 tons"
+      ],
+      [
+        "Item",
+        "Cost",
+        "Weight ***",
+        "Holds or Carries"
+      ],
+      [
+        "Backpack",
+        "2 gp",
+        "2 lb.***",
+        "1 cu. ft."
+      ],
+      [
+        "Barrel",
+        "2 gp",
+        "30 lb.",
+        "10 cu. ft."
+      ],
+      [
+        "Basket",
+        "4 sp",
+        "1 lb.",
+        "2 cu. ft."
+      ],
+      [
+        "Bucket",
+        "5 sp",
+        "2 lb.",
+        "1 cu. ft."
+      ],
+      [
+        "Chest",
+        "2 gp",
+        "25 lb.",
+        "2 cu. ft."
+      ],
+      [
+        "Pouch, belt",
+        "1 gp",
+        "1/2 lb.**",
+        "1/5 cu. ft."
+      ],
+      [
+        "Sack",
+        "1 sp",
+        "1/2 lb.**",
+        "1 cu ft."
+      ],
+      [
+        "Saddlebags",
+        "4 gp",
+        "8 lb.",
+        "5 cu. ft."
+      ],
+      [
+        "Spell component pouch",
+        "5 gp",
+        "1/4 lb.**",
+        "1/8 cu. ft."
+      ],
+      [
+        "Item",
+        "Cost",
+        "Weight ***",
+        "Holds or Carries"
+      ],
+      [
+        "Bottle, wine, glass",
+        "2 gp",
+        "*",
+        "1 1/2 pint"
+      ],
+      [
+        "Flask",
+        "3 cp",
+        "*",
+        "1 pint"
+      ],
+      [
+        "Jug, clay",
+        "3 cp",
+        "1 lb.",
+        "1 gallon"
+      ],
+      [
+        "Mug/tankard, clay",
+        "2 cp",
+        "*",
+        "1 pint"
+      ],
+      [
+        "Pitcher, clay",
+        "2 cp",
+        "1 lb.",
+        "1/2 gallon"
+      ],
+      [
+        "Pot, iron",
+        "5 sp",
+        "2 lb.",
+        "1 gallon"
+      ],
+      [
+        "Vial, ink or potion",
+        "1 gp",
+        "*",
+        "1 ounce"
+      ],
+      [
+        "Waterskin",
+        "1 gp",
+        "*",
+        "1/2 gallon"
+      ]
+    ],
+    "footnotes": [
+      "*No weight worth noting. **These items weigh one-quarter this amount and carry one-quarter the normal amount when made for Small characters. ***Empty weight."
+    ],
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "ships",
+    "section_title": "Ships",
+    "title": "Ships",
+    "headers": [
+      "Item",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Rowboat",
+        "50 gp"
+      ],
+      [
+        "Oar",
+        "2 gp"
+      ],
+      [
+        "Galley",
+        "30,000 gp"
+      ],
+      [
+        "Longship",
+        "10,000 gp"
+      ],
+      [
+        "Keelboat",
+        "3,000 gp"
+      ],
+      [
+        "Sailing ship",
+        "10,000 gp"
+      ],
+      [
+        "Warship",
+        "25,000 gp"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Dungeon Master's Guide v.3.5",
+      "abbrev": "DMG",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "transportation",
+    "section_title": "Transportation",
+    "title": "Transportation",
+    "headers": [
+      "Item",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Ship's passage",
+        "1 sp per mile"
+      ],
+      [
+        "Coach cab",
+        "3 cp per mile"
+      ],
+      [
+        "Messenger",
+        "2 cp per mile"
+      ],
+      [
+        "Teleportation",
+        "Varies*"
+      ],
+      [
+        "Road or gate toll",
+        "1 cp"
+      ]
+    ],
+    "footnotes": [
+      "*See \"NPC Spellcasting,\" above."
+    ],
+    "source": {
+      "name": "Dungeon Master's Guide v.3.5",
+      "abbrev": "DMG",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "buildings",
+    "section_title": "Buildings",
+    "title": "Buildings",
+    "headers": [
+      "Item",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Simple house",
+        "1,000 gp"
+      ],
+      [
+        "Grand house",
+        "5,000 gp"
+      ],
+      [
+        "Mansion",
+        "100,000 gp"
+      ],
+      [
+        "Tower",
+        "50,000 gp"
+      ],
+      [
+        "Keep",
+        "150,000 gp"
+      ],
+      [
+        "Castle",
+        "500,000 gp"
+      ],
+      [
+        "Huge castle",
+        "1,000,000 gp"
+      ],
+      [
+        "Moat with bridge",
+        "50,000 gp"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Dungeon Master's Guide v.3.5",
+      "abbrev": "DMG",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "siege-engines",
+    "section_title": "Siege Engines",
+    "title": "Siege Engines",
+    "headers": [
+      "Item",
+      "Cost",
+      "Damage",
+      "Critical",
+      "Range Increment",
+      "Crew"
+    ],
+    "rows": [
+      [
+        "Catapult, heavy",
+        "800 gp",
+        "5d6",
+        "-",
+        "200 ft. (100 ft. minimum)",
+        "5"
+      ],
+      [
+        "Catapult, light",
+        "550 gp",
+        "3d6",
+        "-",
+        "150 ft. (100 ft. minimum)",
+        "2"
+      ],
+      [
+        "Ballista",
+        "500 gp",
+        "3d6",
+        "x3",
+        "120",
+        "1"
+      ],
+      [
+        "Ram",
+        "2,000 gp",
+        "4d6",
+        "x3",
+        "-",
+        "10"
+      ],
+      [
+        "Siege tower",
+        "1,000 gp",
+        "-",
+        "-",
+        "-",
+        "-"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Dungeon Master's Guide v.3.5",
+      "abbrev": "DMG",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "adventuring-items-faerun",
+    "section_title": "Adventuring Items of Faerûn",
+    "title": "Adventuring Items of Faerûn",
+    "headers": [
+      "Item",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Armor lubricant",
+        "40 gp",
+        "1 lb."
+      ],
+      [
+        "Caltrops, crystal",
+        "150 gp",
+        "2 lb."
+      ],
+      [
+        "Drogue wing",
+        "300 gp",
+        "30 lb."
+      ],
+      [
+        "Footsaw trap",
+        "700 gp",
+        "15 lb."
+      ],
+      [
+        "Mobile brace",
+        "10 gp",
+        "3 lb."
+      ],
+      [
+        "Potion bladder",
+        "2 gp",
+        "1/10 lb."
+      ],
+      [
+        "Rope climber",
+        "15 gp",
+        "3 lb."
+      ],
+      [
+        "Snowshoes",
+        "1 gp",
+        "2 lb."
+      ],
+      [
+        "Standard",
+        "75 gp",
+        "40 lb."
+      ],
+      [
+        "Sniper",
+        "100 gp",
+        "40 lb."
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Races of Faerûn",
+      "abbrev": "Rac",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "gear-for-greeners",
+    "section_title": "Gear for Greeners",
+    "title": "Gear for Greeners",
+    "headers": [
+      "Item",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Camouflage clothes",
+        "150 gp",
+        "6 lb."
+      ],
+      [
+        "Compass, magnetic",
+        "100 gp",
+        "1/2 lb."
+      ],
+      [
+        "Crookneck lantern",
+        "9 gp",
+        "1 lb"
+      ],
+      [
+        "Duster coat",
+        "25 gp",
+        "7 lb."
+      ],
+      [
+        "Finger chain saw",
+        "5 gp",
+        "-"
+      ],
+      [
+        "Kayak, inflatable",
+        "150 gp",
+        "35 lb."
+      ],
+      [
+        "Vest, tactical",
+        "5 gp",
+        "2 lb."
+      ],
+      [
+        "Waking herbs",
+        "30 gp",
+        "-"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr323",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "frostfell-gear",
+    "section_title": "Frostfell Gear",
+    "title": "Adventuring Gear",
+    "headers": [
+      "Adventuring Gear",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Crampons",
+        "5 gp",
+        "1 lb."
+      ],
+      [
+        "Fur clothing",
+        "8 gp",
+        "10 lb."
+      ],
+      [
+        "Hut, portable",
+        "125 gp",
+        "75 lb."
+      ],
+      [
+        "Skates",
+        "10 gp",
+        "3 lb."
+      ],
+      [
+        "Skis and poles",
+        "15 gp",
+        "6 lb."
+      ],
+      [
+        "Snow goggles",
+        "2 gp",
+        "-"
+      ],
+      [
+        "Snowshoes",
+        "15 gp",
+        "8 lb."
+      ],
+      [
+        "Winter fullcloth",
+        "4 gp",
+        "2 lb."
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Frostfell",
+      "abbrev": "Fr",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "clothing",
+    "section_title": "Clothing",
+    "title": "Adventuring Gear",
+    "headers": [
+      "Adventuring Gear",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Distillation kit",
+        "50 gp",
+        "20 lb."
+      ],
+      [
+        "Drill",
+        "5 gp",
+        "7 lb."
+      ],
+      [
+        "Filter mask",
+        "1 gp",
+        "-"
+      ],
+      [
+        "Parasol",
+        "3 gp",
+        "2 lb."
+      ],
+      [
+        "Sand tube¹",
+        "80 gp",
+        "5 lb."
+      ],
+      [
+        "Sun lenses",
+        "10 gp",
+        "-"
+      ],
+      [
+        "Desert outfit¹",
+        "6 gp",
+        "3 lb."
+      ],
+      [
+        "Heatsuit outfit¹",
+        "20 gp",
+        "15 lb."
+      ],
+      [
+        "Hydration suit¹",
+        "1,000 gp",
+        "10 lb."
+      ]
+    ],
+    "footnotes": [
+      "¹ These items weigh one-quarter this amount when made for Small characters. Containers for Small characters also carry one-quarter the normal amount."
+    ],
+    "source": {
+      "name": "Player's Handbook v.3.5",
+      "abbrev": "PH",
+      "edition": "Core (3.5)"
+    }
+  },
+  {
+    "section_slug": "vehicles",
+    "section_title": "Vehicles",
+    "title": "Vehicles",
+    "headers": [
+      "Vehicle",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Cloudskate",
+        "3,000 gp"
+      ],
+      [
+        "Frame wheel",
+        "15 gp"
+      ],
+      [
+        "Sand galley",
+        "16,000 gp"
+      ],
+      [
+        "Sand schooner",
+        "8,500 gp"
+      ],
+      [
+        "Sand skiff",
+        "150 gp"
+      ],
+      [
+        "Sledge",
+        "15 gp"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Sandstorm",
+      "abbrev": "Sa",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "planar",
+    "section_title": "Planar",
+    "title": "Planar",
+    "headers": [
+      "Vehicle",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Astral skiff",
+        "10,000 gp"
+      ],
+      [
+        "Ethereal tunneler",
+        "140,000 gp"
+      ],
+      [
+        "Gate zeppelin",
+        "160,000 gp"
+      ],
+      [
+        "Living astral ship",
+        "Variable"
+      ],
+      [
+        "Planar sailer",
+        "25,000 gp"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Planar Handbook",
+      "abbrev": "PlH",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "hired-passage",
+    "section_title": "Hired Passage",
+    "title": "Hired Passage",
+    "headers": [
+      "Service",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Passage in independent elsewhale",
+        "150 gp"
+      ],
+      [
+        "Passage on planar sailer",
+        "150 gp"
+      ],
+      [
+        "Passage on gate zeppelin",
+        "1,530 gp"
+      ],
+      [
+        "Planar guide",
+        "25 gp/day"
+      ],
+      [
+        "Passage in independently owned living astral ship",
+        "500 gp"
+      ],
+      [
+        "Planar allies",
+        "Varies"
+      ],
+      [
+        "Cubic gate, established",
+        "1,640 gp"
+      ],
+      [
+        "Planar ring gates, established",
+        "500 gp"
+      ],
+      [
+        "Planar ring gates, special commission",
+        "1,400+ gp"
+      ],
+      [
+        "Spellcasting",
+        "Cost"
+      ],
+      [
+        "Gate",
+        "1,620 gp"
+      ],
+      [
+        "Plane shift",
+        "900 gp¹"
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Planar Handbook",
+      "abbrev": "PlH",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "gear-of-the-waters",
+    "section_title": "Gear Of The Waters",
+    "title": "Adventuring Gear",
+    "headers": [
+      "Adventuring Gear",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Float bladder",
+        "10 gp",
+        "3 lb."
+      ],
+      [
+        "Swimming goggles",
+        "15 gp",
+        "1/2 lb."
+      ],
+      [
+        "Hat, bicorne¹",
+        "50 gp",
+        "1 lb."
+      ],
+      [
+        "Hat, tricorne¹",
+        "15 gp",
+        "1 lb."
+      ],
+      [
+        "Oilskin suit",
+        "10 gp",
+        "10 lb."
+      ],
+      [
+        "Tools and Skill Kits",
+        "Cost",
+        "Weight"
+      ],
+      [
+        "Sextant",
+        "250 gp",
+        "10 lb."
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Stormwrack",
+      "abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "gear-of-the-waters",
+    "section_title": "Gear Of The Waters",
+    "title": "Special Substances and Items",
+    "headers": [
+      "Special Substances and Items",
+      "Cost",
+      "Craft (Alchemy) DC",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Air plant",
+        "25 gp",
+        "-",
+        "-"
+      ],
+      [
+        "Stinkpot",
+        "50 gp",
+        "20",
+        "1 lb."
+      ]
+    ],
+    "footnotes": [
+      "- No weight, or no weight worth noting. ¹These items weigh one-quarter this amount when made for Small characters."
+    ],
+    "source": {
+      "name": "Stormwrack",
+      "abbrev": "Sto",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "gear-for-the-dungeoneer",
+    "section_title": "Gear for the Dungeoneer",
+    "title": "For the Dungeoneer",
+    "headers": [
+      "Goods",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Collapsible pole",
+        "20 gp",
+        "8 1b."
+      ],
+      [
+        "Adamantine",
+        "200 gp",
+        "1 lb."
+      ],
+      [
+        "Iron",
+        "10 gp",
+        "1 lb."
+      ],
+      [
+        "Wood",
+        "5gp",
+        "1 lb."
+      ],
+      [
+        "Finder's chalk",
+        "5 gp",
+        "-"
+      ],
+      [
+        "Finder's glass",
+        "400 gp",
+        "1/2 lb."
+      ],
+      [
+        "Flotation bladder",
+        "2 gp",
+        "2 1b."
+      ],
+      [
+        "Flour pouch",
+        "1 sp",
+        "-"
+      ],
+      [
+        "Grappling hook, mithral",
+        "1,000 gp",
+        "2 lb."
+      ],
+      [
+        "Grappling ladder",
+        "40 gp",
+        "8 lb."
+      ],
+      [
+        "Silk and mithral",
+        "650 gp",
+        "4 lb."
+      ],
+      [
+        "Adamantine",
+        "600 gp",
+        "1 lb."
+      ],
+      [
+        "Common",
+        "5 gp",
+        "1 lb."
+      ],
+      [
+        "Superior",
+        "20 gp",
+        "1 lb."
+      ],
+      [
+        "Lard",
+        "2sp",
+        "10 lb."
+      ],
+      [
+        "Listening cone",
+        "8 sp",
+        "1 lb."
+      ],
+      [
+        "Magnet",
+        "20 gp",
+        "2 1b."
+      ],
+      [
+        "Manacles, adamantine",
+        "2,000 gp",
+        "5 lb."
+      ],
+      [
+        "Periscope, hand",
+        "50 gp",
+        "2 1b."
+      ],
+      [
+        "Rubber ball",
+        "3 gp",
+        "-"
+      ],
+      [
+        "Rubbing kit",
+        "5 gp",
+        "1 lb."
+      ],
+      [
+        "Spike, iron",
+        "1 sp",
+        "1 lb."
+      ],
+      [
+        "Twine, roll (50 feet)",
+        "1 sp",
+        "-"
+      ],
+      [
+        "Wand bracer",
+        "300 gp",
+        "5 lb."
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Dungeonscape",
+      "abbrev": "Dun",
+      "edition": "Supplementals (3.5)"
+    }
+  },
+  {
+    "section_slug": "alternative-keys",
+    "section_title": "Alternative Keys",
+    "title": "Universal Keys",
+    "headers": [
+      "Item",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Acid injector",
+        "75 gp",
+        "2 lb."
+      ],
+      [
+        "Adamantine bolt cutter",
+        "250 gp",
+        "2 lb."
+      ],
+      [
+        "Adamantine sledge",
+        "2,500 gp",
+        "15 lb."
+      ],
+      [
+        "Adamantine toolkit",
+        "750 gp",
+        "5 lb."
+      ],
+      [
+        "Ironbane acid",
+        "30 gp",
+        "1/4 lb."
+      ],
+      [
+        "Stonebreaker acid",
+        "20 gp",
+        "1/4 lb."
+      ],
+      [
+        "Wood ripper acid",
+        "20 gp",
+        "1/4 lb."
+      ]
+    ],
+    "footnotes": [],
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr359",
+      "edition": "Supplementals (3.5)"
+    }
+  }
+]

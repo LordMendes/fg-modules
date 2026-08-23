@@ -17,6 +17,7 @@ export function SiteHeader({ user }: { user: AuthUser | null }) {
         <nav className="header-nav" aria-label="Primary navigation">
           <Link href="/sources">Sources</Link>
           <Link href="/tools">Tools</Link>
+          <Link href="/stores/goods">Goods</Link>
           {CATEGORIES.slice(0, 6).flatMap((c) => {
             const links = [
               <Link key={c.key} href={`/${c.key}`}>

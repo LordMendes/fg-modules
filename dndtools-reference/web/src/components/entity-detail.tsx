@@ -44,6 +44,22 @@ export function EntityDetailView({
             {entity.source.page && <>, p. {entity.source.page}</>}
           </span>
           <span className="edition-chip">{entity.source.edition}</span>
+          {entity.secondarySources && entity.secondarySources.length > 0 && (
+            <span className="secondary-sources">
+              Also cited in:{" "}
+              {entity.secondarySources.map((source, index) => (
+                <span key={source.abbrev}>
+                  {index > 0 ? ", " : ""}
+                  <Link href={`/sources/${source.abbrev}`}>{source.abbrev}</Link>
+                </span>
+              ))}
+            </span>
+          )}
+          {entity.sourceUrl && (
+            <a className="external-source-link" href={entity.sourceUrl} rel="noopener noreferrer">
+              View on Realms Helps
+            </a>
+          )}
           <SaveToListButton category={category} slug={entity.slug} name={entity.name} />
           {category === "monsters" && (
             <AddToEncounterButton
