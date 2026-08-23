@@ -23,6 +23,10 @@ const prisma = new PrismaClient({ adapter });
 const DATA_DIR = process.env.DATA_DIR ?? resolve(__dirname, "../../data/dndtools");
 const SUPPLEMENTAL_DIR = join(DATA_DIR, "supplemental");
 const SUPPLEMENTAL_FEAT_FILES = ["realmshelps_flaws.json", "dandwiki_flaws.json"] as const;
+const SUPPLEMENTAL_EQUIPMENT_FILES = [
+  "realmshelps_weapons.json",
+  "realmshelps_armor.json",
+] as const;
 const BATCH_SIZE = 500;
 
 const PLACEHOLDER_TEXT =
@@ -137,6 +141,20 @@ function loadAllFeatRecords(): RecordBase[] {
   return [...loadJson("feats"), ...loadSupplementalFeats()];
 }
 
+function loadSupplementalEquipment(): RecordBase[] {
+  const records: RecordBase[] = [];
+  for (const file of SUPPLEMENTAL_EQUIPMENT_FILES) {
+    const path = join(SUPPLEMENTAL_DIR, file);
+    if (!existsSync(path)) continue;
+    records.push(...(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]));
+  }
+  return records;
+}
+
+function loadAllEquipmentRecords(): RecordBase[] {
+  return [...loadJson("equipment"), ...loadSupplementalEquipment()];
+}
+
 function parseExternalId(id: unknown): number | null {
   if (typeof id === "number") return id;
   if (typeof id === "string" && /^\d+$/.test(id)) return parseInt(id, 10);
@@ -181,7 +199,7 @@ function sourceKey(
 function collectAllRecords(): RecordBase[] {
   const records: RecordBase[] = [];
   for (const file of CATEGORY_FILES) {
-    records.push(...(file === "feats" ? loadAllFeatRecords() : loadJson(file)));
+    records.push(...(file === "feats" ? loadAllFeatRecords() : file === "equipment" ? loadAllEquipmentRecords() : loadJson(file)));
   }
   return records;
 }
@@ -728,7 +746,7 @@ async function pass2Entities(
 
   // Equipment
   {
-    const records = loadJson("equipment");
+    const records = loadAllEquipmentRecords();
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;

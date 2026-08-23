@@ -1,0 +1,132 @@
+"""CLI for scraping mundane weapons and armor from Realms Helps."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+if sys.version_info < (3, 10):
+    version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    raise SystemExit(
+        f"Python 3.10+ is required (you are running {version}). "
+        "Use python3.11 or newer."
+    )
+
+from .config import DEFAULT_CACHE_DIR, DEFAULT_DELAY, DEFAULT_OUTPUT_DIR
+from .equipment_utils import REALMSHELPS_BASE
+from .http_client import HttpClient
+from .normalize import normalize_records
+from .parsers.realmshelps_equipment import (
+    ARMOR_URL,
+    WEAPONS_URL,
+    parse_armor_index,
+    parse_weapons_index,
+)
+from .writer import append_error
+
+DEFAULT_OUTPUT_FILES = {
+    "weapons": "realmshelps_weapons.json",
+    "armor": "realmshelps_armor.json",
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Scrape mundane 3.5 weapons and armor from Realms Helps."
+    )
+    parser.add_argument(
+        "--output",
+        default=str(Path(DEFAULT_OUTPUT_DIR) / "supplemental"),
+        help="Output directory for supplemental JSON files",
+    )
+    parser.add_argument(
+        "--cache",
+        default=str(DEFAULT_CACHE_DIR),
+        help="HTTP response cache directory",
+    )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=DEFAULT_DELAY,
+        help="Delay between HTTP requests in seconds",
+    )
+    parser.add_argument(
+        "--kind",
+        choices=("all", "weapons", "armor"),
+        default="all",
+        help="Which listings to scrape",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print scrape summary without writing JSON",
+    )
+    return parser.parse_args()
+
+
+def _write_json(path: Path, records: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    normalized = normalize_records(records)
+    path.write_text(json.dumps(normalized, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def scrape_weapons(client: HttpClient, errors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    print(f"Scraping Realms Helps weapons from {WEAPONS_URL} ...")
+    try:
+        html = client.fetch(WEAPONS_URL)
+        records = parse_weapons_index(html)
+    except Exception as exc:  # noqa: BLE001 - collect scrape failures
+        append_error(errors, "realmshelps_weapons", WEAPONS_URL, str(exc))
+        return []
+    print(f"  weapons: {len(records)} scraped")
+    return records
+
+
+def scrape_armor(client: HttpClient, errors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    print(f"Scraping Realms Helps armor from {ARMOR_URL} ...")
+    try:
+        html = client.fetch(ARMOR_URL)
+        records = parse_armor_index(html)
+    except Exception as exc:  # noqa: BLE001 - collect scrape failures
+        append_error(errors, "realmshelps_armor", ARMOR_URL, str(exc))
+        return []
+    print(f"  armor: {len(records)} scraped")
+    return records
+
+
+def main() -> None:
+    args = parse_args()
+    output_dir = Path(args.output)
+    cache_dir = Path(args.cache)
+    errors: list[dict[str, Any]] = []
+    client = HttpClient(cache_dir=cache_dir, delay=args.delay)
+
+    if args.kind in ("all", "weapons"):
+        weapons = scrape_weapons(client, errors)
+        if args.dry_run:
+            print(f"[dry-run] Would write {len(weapons)} weapons")
+        else:
+            out_path = output_dir / DEFAULT_OUTPUT_FILES["weapons"]
+            _write_json(out_path, weapons)
+            print(f"  Wrote {out_path}")
+
+    if args.kind in ("all", "armor"):
+        armor = scrape_armor(client, errors)
+        if args.dry_run:
+            print(f"[dry-run] Would write {len(armor)} armor")
+        else:
+            out_path = output_dir / DEFAULT_OUTPUT_FILES["armor"]
+            _write_json(out_path, armor)
+            print(f"  Wrote {out_path}")
+
+    if errors and not args.dry_run:
+        errors_path = output_dir / "equipment_errors.json"
+        errors_path.write_text(json.dumps(errors, indent=2), encoding="utf-8")
+        print(f"  Wrote {len(errors)} errors to {errors_path}")
+
+
+if __name__ == "__main__":
+    main()
