@@ -1821,6 +1821,12 @@ export async function getCategoryCounts(): Promise<Record<CategoryKey, number>> 
   };
 }
 
+/** Item count for the home-page Goods & Services card. */
+export async function getGoodsItemCount(): Promise<number> {
+  const { GOODS_KINDS } = await import("@/lib/stores/goods");
+  return prisma.equipment.count({ where: { kind: { in: [...GOODS_KINDS] } } });
+}
+
 export async function getSourceByAbbrev(abbrev: string) {
   const sources = await prisma.source.findMany({
     where: { abbrev },

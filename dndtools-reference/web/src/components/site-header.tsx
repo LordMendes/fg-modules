@@ -1,12 +1,57 @@
+"use client";
+
 import Link from "next/link";
-import { CATEGORIES } from "@/lib/categories";
+import { Suspense } from "react";
+import { usePathname } from "next/navigation";
 import { SITE_NAME } from "@/lib/seo";
+import { PRIMARY_NAV, isPrimaryNavActive } from "@/lib/nav";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { SearchBar } from "@/components/search-bar";
-import { LogoutButton } from "@/components/logout-button";
+import { HeaderBrowseMenu } from "@/components/header-browse-menu";
+import { HeaderAccountMenu } from "@/components/header-account-menu";
+import { HeaderMobileMenu } from "@/components/header-mobile-menu";
+import { HeaderSearch } from "@/components/header-search";
 import type { AuthUser } from "@/lib/auth/session";
 
-export function SiteHeader({ user }: { user: AuthUser | null }) {
+function HeaderNavLinks() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      <HeaderBrowseMenu />
+      {PRIMARY_NAV.map((item) => {
+        const active = isPrimaryNavActive(item.href, pathname);
+        return (
+          <Link
+            key={item.key}
+            href={item.href}
+            aria-current={active ? "page" : undefined}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+function HeaderAuth({ user }: { user: AuthUser | null }) {
+  if (user) {
+    return <HeaderAccountMenu user={user} />;
+  }
+
+  return (
+    <>
+      <Link href="/login" className="btn-ghost">
+        Log in
+      </Link>
+      <Link href="/register" className="btn-primary">
+        Sign up
+      </Link>
+    </>
+  );
+}
+
+function SiteHeaderInner({ user }: { user: AuthUser | null }) {
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -14,48 +59,32 @@ export function SiteHeader({ user }: { user: AuthUser | null }) {
           <span className="logo-icon">⚔</span>
           <span className="logo-text">{SITE_NAME}</span>
         </Link>
+
         <nav className="header-nav" aria-label="Primary navigation">
-          <Link href="/sources">Sources</Link>
-          <Link href="/tools">Tools</Link>
-          <Link href="/stores/goods">Goods</Link>
-          {CATEGORIES.slice(0, 6).flatMap((c) => {
-            const links = [
-              <Link key={c.key} href={`/${c.key}`}>
-                {c.label}
-              </Link>,
-            ];
-            if (c.key === "feats") {
-              links.push(
-                <Link key="flaws" href="/feats?type=Flaw">
-                  Flaws
-                </Link>,
-              );
-            }
-            return links;
-          })}
+          <Suspense fallback={null}>
+            <HeaderNavLinks />
+          </Suspense>
         </nav>
+
         <div className="header-actions">
-          <SearchBar />
-          {user ? (
-            <>
-              <Link href="/profile" className="header-auth-link">
-                Profile
-              </Link>
-              <LogoutButton />
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="header-auth-link">
-                Log in
-              </Link>
-              <Link href="/register" className="header-auth-link header-auth-primary">
-                Sign up
-              </Link>
-            </>
-          )}
-          <ThemeToggle />
+          <HeaderSearch />
+          <div className="header-actions-desktop">
+            <HeaderAuth user={user} />
+            <ThemeToggle />
+          </div>
+          <Suspense fallback={null}>
+            <HeaderMobileMenu user={user} />
+          </Suspense>
         </div>
       </div>
     </header>
+  );
+}
+
+export function SiteHeader({ user }: { user: AuthUser | null }) {
+  return (
+    <Suspense fallback={null}>
+      <SiteHeaderInner user={user} />
+    </Suspense>
   );
 }

@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import { useSessionNonce } from "@/components/session-provider";
 import { searchEntities } from "@/actions/data";
 import { getCategoryLabel, isCategoryKey } from "@/lib/categories";
@@ -17,7 +17,19 @@ type SearchHit = {
 
 const DEBOUNCE_MS = 250;
 
-export function HomeSearch() {
+type HomeSearchProps = {
+  variant?: "default" | "overlay";
+  autoFocus?: boolean;
+  inputId?: string;
+  onNavigate?: () => void;
+};
+
+export function HomeSearch({
+  variant = "default",
+  autoFocus = false,
+  inputId = "hero-search-input",
+  onNavigate,
+}: HomeSearchProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchHit[]>([]);
   const [open, setOpen] = useState(false);
@@ -26,15 +38,19 @@ export function HomeSearch() {
   const nonce = useSessionNonce();
   const router = useRouter();
   const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const requestId = useRef(0);
 
   useEffect(() => {
+    if (autoFocus) {
+      inputRef.current?.focus();
+    }
+  }, [autoFocus]);
+
+  useEffect(() => {
     const trimmed = query.trim();
     if (trimmed.length < 2) {
-      setResults([]);
-      setOpen(false);
-      setActiveIndex(-1);
       return;
     }
 
@@ -68,18 +84,23 @@ export function HomeSearch() {
     return () => document.removeEventListener("mousedown", handlePointerDown);
   }, []);
 
+  function navigateTo(path: string) {
+    setOpen(false);
+    onNavigate?.();
+    router.push(path);
+  }
+
   function goToSearchPage(value: string) {
     const trimmed = value.trim();
     if (trimmed.length < 2) return;
-    setOpen(false);
-    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+    navigateTo(`/search?q=${encodeURIComponent(trimmed)}`);
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (activeIndex >= 0 && results[activeIndex]) {
       const hit = results[activeIndex];
-      router.push(`/${hit.category}/${hit.slug}`);
+      navigateTo(`/${hit.category}/${hit.slug}`);
       return;
     }
     goToSearchPage(query);
@@ -104,14 +125,27 @@ export function HomeSearch() {
   }
 
   return (
-    <div className={`home-search${open ? " is-open" : ""}`} ref={rootRef}>
+    <div
+      className={`home-search home-search--${variant}${open ? " is-open" : ""}`}
+      ref={rootRef}
+    >
       <form onSubmit={handleSubmit} className="home-search-form" role="search">
         <Search className="home-search-icon h-5 w-5" aria-hidden />
         <input
+          ref={inputRef}
+          id={inputId}
           type="search"
           role="combobox"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const next = e.target.value;
+            setQuery(next);
+            if (next.trim().length < 2) {
+              setResults([]);
+              setOpen(false);
+              setActiveIndex(-1);
+            }
+          }}
           onFocus={() => {
             if (results.length > 0) setOpen(true);
           }}
@@ -124,11 +158,22 @@ export function HomeSearch() {
           aria-activedescendant={
             activeIndex >= 0 ? `${listId}-option-${activeIndex}` : undefined
           }
+          aria-describedby={isPending ? `${listId}-status` : undefined}
           className="home-search-input"
           autoComplete="off"
         />
-        <button type="submit" className="home-search-submit" disabled={isPending}>
-          {isPending ? "Searching…" : "Search"}
+        {isPending ? (
+          <span
+            id={`${listId}-status`}
+            className="home-search-status"
+            aria-live="polite"
+          >
+            <Loader2 className="home-search-spinner h-4 w-4" aria-hidden />
+            <span className="sr-only">Searching</span>
+          </span>
+        ) : null}
+        <button type="submit" className="btn-primary home-search-submit">
+          Search
         </button>
       </form>
 
@@ -148,12 +193,17 @@ export function HomeSearch() {
                   role="option"
                   aria-selected={active}
                   onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    onNavigate?.();
+                  }}
                 >
                   <span className="home-search-result-category">{label}</span>
                   <span className="home-search-result-name">{hit.name}</span>
                   {hit.snippet ? (
-                    <span className="home-search-result-snippet">{hit.snippet}…</span>
+                    <span className="home-search-result-snippet">
+                      {hit.snippet}…
+                    </span>
                   ) : null}
                 </Link>
               </li>

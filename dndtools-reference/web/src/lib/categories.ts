@@ -1,6 +1,6 @@
 export const CATEGORIES = [
   { key: "spells", label: "Spells", icon: "✦" },
-  { key: "feats", label: "Feats", icon: "⚔" },
+  { key: "feats", label: "Feats", icon: "🏅" },
   { key: "monsters", label: "Monsters", icon: "🐉" },
   { key: "classes", label: "Classes", icon: "📜" },
   { key: "skills", label: "Skills", icon: "🎯" },
