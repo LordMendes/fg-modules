@@ -12,6 +12,8 @@ import {
 describe("nav helpers", () => {
   it("marks primary nav active by prefix except goods exact path", () => {
     assert.equal(isPrimaryNavActive("/tools", "/tools/pc-planner"), true);
+    assert.equal(isPrimaryNavActive("/spells", "/spells/fireball"), true);
+    assert.equal(isPrimaryNavActive("/feats", "/feats"), true);
     assert.equal(isPrimaryNavActive("/stores/goods", "/stores/goods"), true);
     assert.equal(
       isPrimaryNavActive("/stores/goods", "/stores/goods/extra"),

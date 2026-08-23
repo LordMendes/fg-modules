@@ -37,6 +37,7 @@ export default async function HomePage() {
   ) as Record<CategoryKey, (typeof CATEGORIES)[number]>;
 
   const goodsCountLabel = `${goodsCount.toLocaleString()} items`;
+  const toolCount: number = TOOLS.length;
 
   const groupByLabel = Object.fromEntries(
     BROWSE_GROUPS.map((group) => [group.label, group]),
@@ -131,7 +132,7 @@ export default async function HomePage() {
               </p>
             </div>
             <span className="browse-section-count">
-              {TOOLS.length} {TOOLS.length === 1 ? "tool" : "tools"}
+              {toolCount} {toolCount === 1 ? "tool" : "tools"}
             </span>
           </header>
           <div className="category-grid">

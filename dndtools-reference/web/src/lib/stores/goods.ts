@@ -140,10 +140,10 @@ export function itemMatchesQuery(item: GoodsListItem, normalizedQuery: string): 
   if (!normalizedQuery) return true;
   return (
     item.name.toLowerCase().includes(normalizedQuery) ||
-    item.category?.toLowerCase().includes(normalizedQuery) ||
-    item.kind?.toLowerCase().includes(normalizedQuery) ||
-    item.cost?.toLowerCase().includes(normalizedQuery) ||
-    item.weight?.toLowerCase().includes(normalizedQuery)
+    (item.category?.toLowerCase().includes(normalizedQuery) ?? false) ||
+    (item.kind?.toLowerCase().includes(normalizedQuery) ?? false) ||
+    (item.cost?.toLowerCase().includes(normalizedQuery) ?? false) ||
+    (item.weight?.toLowerCase().includes(normalizedQuery) ?? false)
   );
 }
 

@@ -17,7 +17,20 @@ export type BrowseGroup = {
   items: BrowseNavItem[];
 };
 
+const TOP_BAR_CATEGORY_KEYS: CategoryKey[] = [
+  "feats",
+  "spells",
+  "classes",
+  "monsters",
+];
+
+function categoryPrimaryNavLink(key: CategoryKey): NavLink {
+  const cat = CATEGORIES.find((c) => c.key === key)!;
+  return { key: cat.key, label: cat.label, href: `/${cat.key}` };
+}
+
 export const PRIMARY_NAV = [
+  ...TOP_BAR_CATEGORY_KEYS.map(categoryPrimaryNavLink),
   { key: "tools", label: "Tools", href: "/tools" },
   { key: "sources", label: "Sources", href: "/sources" },
   { key: "goods", label: "Goods", href: "/stores/goods" },
