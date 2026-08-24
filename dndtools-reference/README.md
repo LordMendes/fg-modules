@@ -61,6 +61,24 @@ Open [http://localhost:3000](http://localhost:3000).
 
 See [`web/README.md`](web/README.md) for deployment, environment variables, and Coolify setup.
 
+### Refreshing the database after JSON changes
+
+Editing files under `data/dndtools/` does not update PostgreSQL until you re-run the import.
+
+**Local:**
+
+```bash
+pnpm import:dndtools
+```
+
+**Production** (Coolify **Execute Command** or `docker exec` into the running container):
+
+```bash
+/docker-entrypoint.sh import
+```
+
+Deploy first so the container image includes updated JSON (`/data/dndtools` is baked in at build time). Re-running import is idempotent (upserts on slug). See [`web/README.md` → Data Import](web/README.md#data-import) for details.
+
 ---
 
 ## Scraper CLI

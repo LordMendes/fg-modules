@@ -7,6 +7,7 @@ import {
   getClassSpellsAtLevel,
   getEntityPreview,
   getSpellPreview,
+  getWizardSpellPool,
   listEntities,
   searchAll,
 } from "@/lib/entities";
@@ -246,4 +247,38 @@ export async function fetchPcCompendium(input: PcCompendiumInput): Promise<PcCom
     raceSlug: input.raceSlug,
   });
   return { success: true, bundle };
+}
+
+export type WizardSpellPoolInput = {
+  sourceAbbrevs: string[];
+  nonce: string;
+};
+
+export type WizardSpellPoolResult = {
+  success: boolean;
+  error?: string;
+  spells?: Awaited<ReturnType<typeof getWizardSpellPool>>;
+};
+
+export async function fetchWizardSpellPool(
+  input: WizardSpellPoolInput,
+): Promise<WizardSpellPoolResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`wizard-spell-pool:${ip}`, 30, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  const sourceAbbrevs = input.sourceAbbrevs.filter(
+    (abbrev) => typeof abbrev === "string" && abbrev.trim().length > 0,
+  );
+  if (sourceAbbrevs.length === 0) {
+    return { success: false, error: "Select at least one source" };
+  }
+
+  const spells = await getWizardSpellPool(sourceAbbrevs);
+  return { success: true, spells };
 }

@@ -64,6 +64,15 @@ export const TOOLS = [
     source: "SRD 3.5 / Fantasy Grounds",
     badge: "Beta",
   },
+  {
+    key: "random-spellbook",
+    label: "Random Spellbook",
+    icon: "📖",
+    href: "/tools/random-spellbook",
+    description:
+      "Generate a wizard spellbook and level-scaled wishlist from selected compendium sources, with optional specialization and reproducible seeds.",
+    source: "PHB / SRD + selected sources",
+  },
 ] as const;
 
 export type ToolKey = (typeof TOOLS)[number]["key"];

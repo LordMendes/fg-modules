@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
+import { FieldTooltip } from "@/components/field-tooltip";
 
 export type MultiSelectOption = {
   value: string;
@@ -16,6 +17,7 @@ export function MultiSelect({
   searchable = true,
   placeholder = "Any",
   showLabel = true,
+  tooltip,
 }: {
   label: string;
   options: MultiSelectOption[];
@@ -24,6 +26,7 @@ export function MultiSelect({
   searchable?: boolean;
   placeholder?: string;
   showLabel?: boolean;
+  tooltip?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -92,7 +95,12 @@ export function MultiSelect({
 
   return (
     <div className={`multi-select${open ? " is-open" : ""}`} ref={rootRef}>
-      {showLabel ? <span className="multi-select-label">{label}</span> : null}
+      {showLabel ? (
+        <span className="multi-select-label-row">
+          <span className="multi-select-label">{label}</span>
+          {tooltip ? <FieldTooltip text={tooltip} /> : null}
+        </span>
+      ) : null}
       <button
         type="button"
         className="multi-select-trigger"

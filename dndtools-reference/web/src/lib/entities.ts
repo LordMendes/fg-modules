@@ -1727,6 +1727,85 @@ export async function getClassSpellsAtLevel(
   }));
 }
 
+const WIZARD_SPELL_LIST_SLUG = "wizard-99";
+
+export async function getWizardSpellPool(
+  sourceAbbrevs: string[],
+): Promise<import("@/lib/random-spellbook/types").WizardSpellRef[]> {
+  const abbrevs = [...new Set(sourceAbbrevs.filter(Boolean))];
+  if (abbrevs.length === 0) return [];
+
+  const rows = await prisma.spellClassLevel.findMany({
+    where: {
+      class: { slug: WIZARD_SPELL_LIST_SLUG },
+      level: { gte: 0, lte: 9 },
+      spell: { source: { abbrev: { in: abbrevs } } },
+    },
+    orderBy: [{ level: "asc" }, { spell: { name: "asc" } }],
+    select: {
+      level: true,
+      spell: {
+        select: {
+          slug: true,
+          name: true,
+          schools: true,
+          source: { select: { abbrev: true } },
+        },
+      },
+    },
+  });
+
+  return rows.map(({ level, spell }) => ({
+    slug: spell.slug,
+    name: spell.name,
+    level,
+    schools: spell.schools,
+    sourceAbbrev: spell.source.abbrev,
+  }));
+}
+
+export async function listWizardSpellSources(): Promise<
+  import("@/lib/random-spellbook/types").WizardSourceOption[]
+> {
+  const rows = await prisma.spellClassLevel.findMany({
+    where: {
+      class: { slug: WIZARD_SPELL_LIST_SLUG },
+      spell: { source: { abbrev: { not: null } } },
+    },
+    select: {
+      spell: {
+        select: {
+          source: { select: { abbrev: true, name: true } },
+        },
+      },
+    },
+  });
+
+  const counts = new Map<string, { name: string; spellCount: number }>();
+  for (const row of rows) {
+    const abbrev = row.spell.source.abbrev;
+    if (!abbrev) continue;
+    const existing = counts.get(abbrev);
+    if (existing) {
+      existing.spellCount += 1;
+    } else {
+      counts.set(abbrev, { name: row.spell.source.name, spellCount: 1 });
+    }
+  }
+
+  const displayNames = buildSourceDisplayNameMap(
+    [...counts.entries()].map(([abbrev, { name }]) => ({ name, abbrev })),
+  );
+
+  return [...counts.entries()]
+    .map(([abbrev, { name, spellCount }]) => ({
+      abbrev,
+      name: displayNames.get(abbrev) ?? name,
+      spellCount,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
 export async function getSpellPreview(spellSlug: string): Promise<SpellPreview | null> {
   const preview = await getEntityPreview("spells", spellSlug);
   if (!preview) return null;
