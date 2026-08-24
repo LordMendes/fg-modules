@@ -8,7 +8,10 @@ import {
 import { spellsOfInterestCount } from "./wizard-progression";
 import type { RandomSpellbookUrlState } from "./types";
 
-const SPECIALIZATION_OPTIONS = ARCANE_SCHOOLS.filter((school) => school !== "Universal");
+const SPECIALIZATION_OPTIONS = ARCANE_SCHOOLS.filter(
+  (school): school is Exclude<ArcaneSchool, "Universal"> => school !== "Universal",
+);
+const SPECIALIZATION_SET = new Set<string>(SPECIALIZATION_OPTIONS);
 const SCHOOL_SET = new Set<string>(ARCANE_SCHOOLS);
 
 function parseCsv(value: string | undefined): string[] {
@@ -42,9 +45,7 @@ function parseIntParam(
 
 function parseSchool(value: string | undefined): ArcaneSchool | "" {
   if (!value) return "";
-  return SPECIALIZATION_OPTIONS.includes(value as ArcaneSchool)
-    ? (value as ArcaneSchool)
-    : "";
+  return SPECIALIZATION_SET.has(value) ? (value as ArcaneSchool) : "";
 }
 
 function parseSchools(values: string[]): ArcaneSchool[] {
