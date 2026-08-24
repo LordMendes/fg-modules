@@ -7,6 +7,7 @@ import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
+import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import {
   computeSkillPointSummary,
@@ -23,6 +24,9 @@ import {
 } from "@/lib/pc-planner/types";
 
 const ABILITY_KEYS: AbilityKey[] = ["str", "dex", "con", "int", "wis", "cha"];
+
+const RACE_SEARCH_CATEGORIES: CategoryKey[] = ["races"];
+const CLASS_SEARCH_CATEGORIES: CategoryKey[] = ["classes"];
 
 function abilityMod(score: number): string {
   const m = Math.floor((score - 10) / 2);
@@ -142,7 +146,7 @@ export function PcSheet({
                   <dd>
                     {showRacePicker ? (
                       <EntitySearchCombobox
-                        categories={["races"]}
+                        categories={RACE_SEARCH_CATEGORIES}
                         placeholder="Search races…"
                         label="Search races"
                         onSelect={(hit) => {
@@ -259,7 +263,7 @@ export function PcSheet({
                 Total character level: {totalLevel || "—"}
               </p>
               <EntitySearchCombobox
-                categories={["classes"]}
+                categories={CLASS_SEARCH_CATEGORIES}
                 placeholder="Search classes to add…"
                 label="Add class"
                 onSelect={(hit) =>

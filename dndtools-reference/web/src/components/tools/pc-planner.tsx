@@ -86,10 +86,10 @@ export function PcPlanner() {
   useEffect(() => {
     if (!hydrated || !user || !planIdParam) return;
 
-    const key = compendiumKeyValue;
-    if (key === lastCompendiumSync.current) return;
+    const syncKey = `${compendiumKeyValue}:${nonce}`;
+    if (syncKey === lastCompendiumSync.current) return;
 
-    lastCompendiumSync.current = key;
+    lastCompendiumSync.current = syncKey;
     setCompendiumLoading(true);
     startTransition(async () => {
       const result = await fetchPcCompendium({
@@ -98,7 +98,6 @@ export function PcPlanner() {
         nonce,
       });
       if (!result.success || !result.bundle) {
-        lastCompendiumSync.current = "";
         setCompendiumLoading(false);
         return;
       }

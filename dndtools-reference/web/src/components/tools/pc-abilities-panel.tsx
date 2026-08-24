@@ -3,6 +3,9 @@
 import type { PcCompendiumBundle } from "@/lib/entities";
 import type { FeatEntry, PcPlanState } from "@/lib/pc-planner/types";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
+import type { CategoryKey } from "@/lib/categories";
+
+const FEAT_SEARCH_CATEGORIES: CategoryKey[] = ["feats"];
 
 export type PcAbilitiesPanelProps = {
   state: PcPlanState;
@@ -76,7 +79,7 @@ function FeatList({
     <div className="npc-sheet-block">
       <h3>Feats</h3>
       <EntitySearchCombobox
-        categories={["feats"]}
+        categories={FEAT_SEARCH_CATEGORIES}
         placeholder="Search feats to add…"
         onSelect={(hit) => onAddFeat(hit.slug, hit.name)}
       />

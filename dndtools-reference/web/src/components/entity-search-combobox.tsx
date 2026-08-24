@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { useSessionNonce } from "@/components/session-provider";
 import { fetchClassSpellsAtLevel, paginateEntities } from "@/actions/data";
@@ -42,6 +43,7 @@ export function EntitySearchCombobox({
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isPending, startTransition] = useTransition();
   const nonce = useSessionNonce();
+  const router = useRouter();
   const rootRef = useRef<HTMLDivElement>(null);
   const listId = useId();
   const requestId = useRef(0);
@@ -49,6 +51,7 @@ export function EntitySearchCombobox({
 
   const spellClassSlug = spellFilter?.classSlug;
   const spellLevel = spellFilter?.level;
+  const categoriesKey = categories.join(",");
 
   useEffect(() => {
     const trimmed = query.trim();
@@ -73,6 +76,7 @@ export function EntitySearchCombobox({
             });
             if (id !== requestId.current) return;
             if (!result.success || !result.spells) {
+              if (result.error === "Invalid session") router.refresh();
               setResults([]);
               setOpen(false);
               setActiveIndex(-1);
@@ -105,7 +109,11 @@ export function EntitySearchCombobox({
             search: trimmed,
           });
           if (id !== requestId.current) return;
-          if (!result.success || !result.items) continue;
+          if (!result.success) {
+            if (result.error === "Invalid session") router.refresh();
+            continue;
+          }
+          if (!result.items) continue;
           for (const item of result.items) {
             hits.push({
               slug: item.slug,
@@ -124,7 +132,7 @@ export function EntitySearchCombobox({
     }, DEBOUNCE_MS);
 
     return () => window.clearTimeout(timer);
-  }, [query, nonce, categories, spellClassSlug, spellLevel]);
+  }, [query, nonce, categoriesKey, categories, spellClassSlug, spellLevel, router]);
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent) {
@@ -185,7 +193,15 @@ export function EntitySearchCombobox({
           type="search"
           role="combobox"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const next = e.target.value;
+            setQuery(next);
+            if (next.trim().length < 2) {
+              setResults([]);
+              setOpen(false);
+              setActiveIndex(-1);
+            }
+          }}
           onFocus={() => {
             if (results.length > 0) setOpen(true);
           }}
@@ -198,6 +214,8 @@ export function EntitySearchCombobox({
           aria-activedescendant={
             activeIndex >= 0 ? `${listId}-option-${activeIndex}` : undefined
           }
+          className="home-search-input"
+          autoComplete="off"
         />
         {isPending && <span className="home-search-pending" aria-hidden />}
       </form>
@@ -212,7 +230,7 @@ export function EntitySearchCombobox({
                 aria-selected={index === activeIndex}
                 className={
                   index === activeIndex
-                    ? "home-search-result home-search-result-active"
+                    ? "home-search-result is-active"
                     : "home-search-result"
                 }
                 onMouseDown={(e) => e.preventDefault()}

@@ -107,7 +107,15 @@ export function PcShortcutSearch({
           type="search"
           role="combobox"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const next = e.target.value;
+            setQuery(next);
+            if (next.trim().length < 1) {
+              setResults([]);
+              setOpen(false);
+              setActiveIndex(-1);
+            }
+          }}
           onFocus={() => {
             if (results.length > 0) setOpen(true);
           }}
@@ -117,6 +125,8 @@ export function PcShortcutSearch({
           aria-autocomplete="list"
           aria-controls={listId}
           aria-expanded={open}
+          className="home-search-input"
+          autoComplete="off"
         />
         {isPending && <span className="home-search-pending" aria-hidden />}
       </form>
@@ -130,7 +140,7 @@ export function PcShortcutSearch({
                 aria-selected={index === activeIndex}
                 className={
                   index === activeIndex
-                    ? "home-search-result home-search-result-active"
+                    ? "home-search-result is-active"
                     : "home-search-result"
                 }
                 onMouseDown={(e) => e.preventDefault()}

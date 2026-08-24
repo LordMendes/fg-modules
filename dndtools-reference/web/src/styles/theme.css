@@ -5313,6 +5313,41 @@ body {
   width: 100%;
 }
 
+.entity-search-combobox .home-search-result,
+.pc-shortcut-search .home-search-result {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.entity-search-combobox .home-search-result-name,
+.pc-shortcut-search .home-search-result-name {
+  display: block;
+  grid-area: unset;
+}
+
+.home-search-result-meta {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.pc-sheet-toolbar .home-search,
+.pc-sheet-body .entity-search-combobox {
+  position: relative;
+  z-index: 40;
+}
+
+.pc-sheet-toolbar .home-search-results,
+.pc-sheet-body .home-search-results {
+  z-index: 50;
+}
+
 .fg-sheet-tabs {
   flex-wrap: wrap;
 }
