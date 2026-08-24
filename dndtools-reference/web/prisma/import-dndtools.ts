@@ -22,12 +22,21 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 const DATA_DIR = process.env.DATA_DIR ?? resolve(__dirname, "../../data/dndtools");
 const SUPPLEMENTAL_DIR = join(DATA_DIR, "supplemental");
-const SUPPLEMENTAL_FEAT_FILES = ["realmshelps_flaws.json", "dandwiki_flaws.json"] as const;
+const SUPPLEMENTAL_FEAT_FILES = [
+  "realmshelps_flaws.json",
+  "dandwiki_flaws.json",
+  "warcraft_rpg_feats.json",
+] as const;
 const SUPPLEMENTAL_EQUIPMENT_FILES = [
   "realmshelps_weapons.json",
   "realmshelps_armor.json",
   "realmshelps_goods.json",
+  "warcraft_rpg_equipment.json",
 ] as const;
+const SUPPLEMENTAL_RACE_FILES = ["warcraft_rpg_races.json"] as const;
+const SUPPLEMENTAL_CLASS_FILES = ["warcraft_rpg_classes.json"] as const;
+const SUPPLEMENTAL_ITEM_FILES = ["warcraft_rpg_items.json"] as const;
+const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json"] as const;
 const BATCH_SIZE = 500;
 
 const PLACEHOLDER_TEXT =
@@ -128,9 +137,9 @@ function loadJson(filename: string): RecordBase[] {
   return JSON.parse(readFileSync(path, "utf-8")) as RecordBase[];
 }
 
-function loadSupplementalFeats(): RecordBase[] {
+function loadSupplementalFiles(filenames: readonly string[]): RecordBase[] {
   const records: RecordBase[] = [];
-  for (const filename of SUPPLEMENTAL_FEAT_FILES) {
+  for (const filename of filenames) {
     const path = join(SUPPLEMENTAL_DIR, filename);
     if (!existsSync(path)) continue;
     records.push(...(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]));
@@ -138,22 +147,36 @@ function loadSupplementalFeats(): RecordBase[] {
   return records;
 }
 
+function loadSupplementalFeats(): RecordBase[] {
+  return loadSupplementalFiles(SUPPLEMENTAL_FEAT_FILES);
+}
+
 function loadAllFeatRecords(): RecordBase[] {
   return [...loadJson("feats"), ...loadSupplementalFeats()];
 }
 
 function loadSupplementalEquipment(): RecordBase[] {
-  const records: RecordBase[] = [];
-  for (const file of SUPPLEMENTAL_EQUIPMENT_FILES) {
-    const path = join(SUPPLEMENTAL_DIR, file);
-    if (!existsSync(path)) continue;
-    records.push(...(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]));
-  }
-  return records;
+  return loadSupplementalFiles(SUPPLEMENTAL_EQUIPMENT_FILES);
 }
 
 function loadAllEquipmentRecords(): RecordBase[] {
   return [...loadJson("equipment"), ...loadSupplementalEquipment()];
+}
+
+function loadAllRaceRecords(): RecordBase[] {
+  return [...loadJson("races"), ...loadSupplementalFiles(SUPPLEMENTAL_RACE_FILES)];
+}
+
+function loadAllClassRecords(): RecordBase[] {
+  return [...loadJson("classes"), ...loadSupplementalFiles(SUPPLEMENTAL_CLASS_FILES)];
+}
+
+function loadAllItemRecords(): RecordBase[] {
+  return [...loadJson("items"), ...loadSupplementalFiles(SUPPLEMENTAL_ITEM_FILES)];
+}
+
+function loadAllSpellRecords(): RecordBase[] {
+  return [...loadJson("spells"), ...loadSupplementalFiles(SUPPLEMENTAL_SPELL_FILES)];
 }
 
 const EQUIPMENT_COMBAT_INDEX_KEYS = [
@@ -223,10 +246,29 @@ function sourceKey(
   return `${name}::${abbrev}::${edition}`;
 }
 
+function loadCategoryRecords(category: (typeof CATEGORY_FILES)[number]): RecordBase[] {
+  switch (category) {
+    case "feats":
+      return loadAllFeatRecords();
+    case "equipment":
+      return loadAllEquipmentRecords();
+    case "races":
+      return loadAllRaceRecords();
+    case "classes":
+      return loadAllClassRecords();
+    case "items":
+      return loadAllItemRecords();
+    case "spells":
+      return loadAllSpellRecords();
+    default:
+      return loadJson(category);
+  }
+}
+
 function collectAllRecords(): RecordBase[] {
   const records: RecordBase[] = [];
   for (const file of CATEGORY_FILES) {
-    records.push(...(file === "feats" ? loadAllFeatRecords() : file === "equipment" ? loadAllEquipmentRecords() : loadJson(file)));
+    records.push(...loadCategoryRecords(file));
   }
   return records;
 }
@@ -622,7 +664,7 @@ async function pass2Entities(
 
   // Classes
   {
-    const records = loadJson("classes");
+    const records = loadAllClassRecords();
     const skillAbilities = buildSkillAbilityMap();
     const importedSlugs = new Set(records.map((r) => r.slug));
     await batchUpsert(records, async (batch) => {
@@ -714,7 +756,7 @@ async function pass2Entities(
 
   // Races
   {
-    const records = loadJson("races");
+    const records = loadAllRaceRecords();
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
@@ -817,7 +859,7 @@ async function pass2Entities(
 
   // Items
   {
-    const records = loadJson("items");
+    const records = loadAllItemRecords();
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const index = r.index as Record<string, string> | undefined;
@@ -964,7 +1006,7 @@ async function pass2Entities(
 
   // Spells
   {
-    const records = loadJson("spells");
+    const records = loadAllSpellRecords();
     await batchUpsert(records, async (batch) => {
       for (const r of batch) {
         const classes = (r.classes as LinkRef[]) ?? [];
@@ -1072,7 +1114,7 @@ async function pass3Junctions(): Promise<void> {
   }
 
   // Spell <-> Class
-  const spells = loadJson("spells");
+  const spells = loadAllSpellRecords();
   const spellClassRows: { spellId: string; classId: string; level: number }[] = [];
   for (const s of spells) {
     for (const ref of (s.classes as LinkRef[]) ?? []) {
@@ -1102,7 +1144,7 @@ async function pass3Junctions(): Promise<void> {
     classSlug: classIdToSlug.get(row.classId) ?? "",
   }));
 
-  const classRecords = loadJson("classes");
+  const classRecords = loadAllClassRecords();
   const inheritedRows: { spellId: string; classId: string; level: number }[] = [];
   for (const record of classRecords) {
     const slug = record.slug as string;

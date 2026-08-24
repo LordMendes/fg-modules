@@ -1,0 +1,1876 @@
+[
+  {
+    "slug": "cripple-wrpg",
+    "name": "Cripple",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Transmutation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Target's legs become weakened; speed halved and −2 on attack rolls, saves, and checks involving movement."
+    },
+    "school": "Transmutation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Close (25 ft. + 5 ft./2 levels)",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Fortitude partial",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 2,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 2,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Target's legs become weakened; speed halved and −2 on attack rolls, saves, and checks involving movement.</p>",
+    "description_text": "Target's legs become weakened; speed halved and −2 on attack rolls, saves, and checks involving movement.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "stasis-trap-wrpg",
+    "name": "Stasis Trap",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 115,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Abjuration",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Creates a magical trap that freezes the first creature entering the area for 1 round per level."
+    },
+    "school": "Abjuration",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Close",
+    "target": null,
+    "duration": "1 hour/level (D)",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 1,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Creates a magical trap that freezes the first creature entering the area for 1 round per level.</p>",
+    "description_text": "Creates a magical trap that freezes the first creature entering the area for 1 round per level.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "ice-armor-wrpg",
+    "name": "Ice Armor",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 115,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Abjuration",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Covers the subject in ice granting +4 armor bonus and 5 cold resistance."
+    },
+    "school": "Abjuration",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "1 hour/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 2,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 2,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 2,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Covers the subject in ice granting +4 armor bonus and 5 cold resistance.</p>",
+    "description_text": "Covers the subject in ice granting +4 armor bonus and 5 cold resistance.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "banish-wrpg",
+    "name": "Banish",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 116,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Abjuration",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Banishes extraplanar creatures to the Twisting Nether. Replaces planar banishment in the Warcraft cosmology."
+    },
+    "school": "Abjuration",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Will negates",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 8,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 8,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Banishes extraplanar creatures to the Twisting Nether. Replaces planar banishment in the Warcraft cosmology.</p>",
+    "description_text": "Banishes extraplanar creatures to the Twisting Nether. Replaces planar banishment in the Warcraft cosmology.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "healing-rain-wrpg",
+    "name": "Healing Rain",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 117,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Conjuration (Healing)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Healing rain restores 1d8 hit points per caster level (max 10d8) to all allies in the area."
+    },
+    "school": "Conjuration (Healing)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Will half (harmless)",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 5,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Healing rain restores 1d8 hit points per caster level (max 10d8) to all allies in the area.</p>",
+    "description_text": "Healing rain restores 1d8 hit points per caster level (max 10d8) to all allies in the area.",
+    "descriptors": [],
+    "domains": null,
+    "area": "20-ft. radius burst",
+    "effect": null
+  },
+  {
+    "slug": "fire-rain-wrpg",
+    "name": "Fire Rain",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 118,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Fire]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Flaming droplets deal 1d6 fire damage per level (max 10d6) in a 20-ft. radius."
+    },
+    "school": "Evocation [Fire]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Long",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Reflex half",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 4,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 4,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Flaming droplets deal 1d6 fire damage per level (max 10d6) in a 20-ft. radius.</p>",
+    "description_text": "Flaming droplets deal 1d6 fire damage per level (max 10d6) in a 20-ft. radius.",
+    "descriptors": [],
+    "domains": null,
+    "area": "20-ft. radius cylinder",
+    "effect": null
+  },
+  {
+    "slug": "bloodlust-wrpg",
+    "name": "Bloodlust",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 119,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Enchantment (Compulsion)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Allies gain +2 morale bonus on attack and damage rolls."
+    },
+    "school": "Enchantment (Compulsion)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "Will negates (harmless)",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 3,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 8,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 8,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Allies gain +2 morale bonus on attack and damage rolls.</p>",
+    "description_text": "Allies gain +2 morale bonus on attack and damage rolls.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "mana-burn-wrpg",
+    "name": "Mana Burn",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 120,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Deals 1d4 damage per spell level of the highest-level spell the target can cast."
+    },
+    "school": "Evocation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Will half",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 2,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 2,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Deals 1d4 damage per spell level of the highest-level spell the target can cast.</p>",
+    "description_text": "Deals 1d4 damage per spell level of the highest-level spell the target can cast.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "carrion-swarm-wrpg",
+    "name": "Carrion Swarm",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 121,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Conjuration (Summoning)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Summons a swarm of carrion insects that deals damage and may cause nausea."
+    },
+    "school": "Conjuration (Summoning)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Close",
+    "target": null,
+    "duration": "Concentration + 2 rounds",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 5,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 5,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Summons a swarm of carrion insects that deals damage and may cause nausea.</p>",
+    "description_text": "Summons a swarm of carrion insects that deals damage and may cause nausea.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "thorns-shield-wrpg",
+    "name": "Thorns Shield",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 122,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Abjuration",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Shield of thorns deals 1d6 damage to melee attackers."
+    },
+    "school": "Abjuration",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Druid of the Wild",
+        "slug": "druid-of-the-wild-wrpg",
+        "level": 3,
+        "url": "/classes/druid-of-the-wild-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 3,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 3,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Shield of thorns deals 1d6 damage to melee attackers.</p>",
+    "description_text": "Shield of thorns deals 1d6 damage to melee attackers.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "lightning-shield-wrpg",
+    "name": "Lightning Shield",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 123,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Electricity]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Creatures striking you in melee take 1d6 electricity damage + 1 per caster level."
+    },
+    "school": "Evocation [Electricity]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 4,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 4,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Creatures striking you in melee take 1d6 electricity damage + 1 per caster level.</p>",
+    "description_text": "Creatures striking you in melee take 1d6 electricity damage + 1 per caster level.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "death-coil-wrpg",
+    "name": "Death Coil",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 124,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Necromancy",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Ranged touch attack deals 1d8 damage per two caster levels (max 5d8) to undead or heals the same amount on a living ally"
+    },
+    "school": "Necromancy",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Close",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Will half (undead only)",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 3,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Ranged touch attack deals 1d8 damage per two caster levels (max 5d8) to undead or heals the same amount on a living ally.</p>",
+    "description_text": "Ranged touch attack deals 1d8 damage per two caster levels (max 5d8) to undead or heals the same amount on a living ally.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "lesser-death-coil-wrpg",
+    "name": "Lesser Death Coil",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 124,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Necromancy",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Lesser version dealing 1d8 damage or healing."
+    },
+    "school": "Necromancy",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Close",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 1,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Lesser version dealing 1d8 damage or healing.</p>",
+    "description_text": "Lesser version dealing 1d8 damage or healing.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "greater-death-coil-wrpg",
+    "name": "Greater Death Coil",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 125,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Necromancy",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Greater version dealing 1d8 per level (max 10d8)."
+    },
+    "school": "Necromancy",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Close",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 5,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Greater version dealing 1d8 per level (max 10d8).</p>",
+    "description_text": "Greater version dealing 1d8 per level (max 10d8).",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "falling-star-wrpg",
+    "name": "Falling Star",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 126,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Calls down a falling star dealing 20d6 fire damage in a 40-ft. radius."
+    },
+    "school": "Evocation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Long",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Reflex half",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Priest",
+        "slug": "priest-wrpg",
+        "level": 9,
+        "url": "/classes/priest-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 9,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 9,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Calls down a falling star dealing 20d6 fire damage in a 40-ft. radius.</p>",
+    "description_text": "Calls down a falling star dealing 20d6 fire damage in a 40-ft. radius.",
+    "descriptors": [],
+    "domains": null,
+    "area": "40-ft. radius",
+    "effect": null
+  },
+  {
+    "slug": "force-of-nature-wrpg",
+    "name": "Force of Nature",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 127,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Transmutation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Animates plants and natural terrain to hinder enemies."
+    },
+    "school": "Transmutation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Druid of the Wild",
+        "slug": "druid-of-the-wild-wrpg",
+        "level": 6,
+        "url": "/classes/druid-of-the-wild-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Animates plants and natural terrain to hinder enemies.</p>",
+    "description_text": "Animates plants and natural terrain to hinder enemies.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "greater-force-of-nature-wrpg",
+    "name": "Greater Force of Nature",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 128,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Transmutation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "As force of nature but affects a larger area and deals 2d6 bludgeoning damage per round."
+    },
+    "school": "Transmutation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Long",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Druid of the Wild",
+        "slug": "druid-of-the-wild-wrpg",
+        "level": 8,
+        "url": "/classes/druid-of-the-wild-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>As force of nature but affects a larger area and deals 2d6 bludgeoning damage per round.</p>",
+    "description_text": "As force of nature but affects a larger area and deals 2d6 bludgeoning damage per round.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "moon-glaive-spell-wrpg",
+    "name": "Moon Glaive",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 129,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Creates a magical moon glaive that attacks as a ranged touch for 1d8 + level damage."
+    },
+    "school": "Evocation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 2,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 1,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 1,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Creates a magical moon glaive that attacks as a ranged touch for 1d8 + level damage.</p>",
+    "description_text": "Creates a magical moon glaive that attacks as a ranged touch for 1d8 + level damage.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "immolation-wrpg",
+    "name": "Immolation",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 130,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Fire]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Target bursts into flames taking 1d6 fire damage per round."
+    },
+    "school": "Evocation [Fire]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "Reflex negates",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 4,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 4,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 4,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Target bursts into flames taking 1d6 fire damage per round.</p>",
+    "description_text": "Target bursts into flames taking 1d6 fire damage per round.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "glacial-burst-wrpg",
+    "name": "Glacial Burst",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 131,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Cold]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Burst of ice deals 1d6 cold damage per level (max 10d6) in a 10-ft. radius."
+    },
+    "school": "Evocation [Cold]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Reflex half",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 3,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 3,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 3,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Burst of ice deals 1d6 cold damage per level (max 10d6) in a 10-ft. radius.</p>",
+    "description_text": "Burst of ice deals 1d6 cold damage per level (max 10d6) in a 10-ft. radius.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "stormhammer-spell-wrpg",
+    "name": "Stormhammer",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 132,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Electricity]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Creates a hammer of lightning dealing 1d8 electricity damage per two levels on a melee touch attack."
+    },
+    "school": "Evocation [Electricity]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 2,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 2,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Creates a hammer of lightning dealing 1d8 electricity damage per two levels on a melee touch attack.</p>",
+    "description_text": "Creates a hammer of lightning dealing 1d8 electricity damage per two levels on a melee touch attack.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "blend-with-shadows-wrpg",
+    "name": "Blend with Shadows",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 133,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Illusion (Shadow)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Grants hide in plain sight in shadowy illumination."
+    },
+    "school": "Illusion (Shadow)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "10 min./level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 1,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 1,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Grants hide in plain sight in shadowy illumination.</p>",
+    "description_text": "Grants hide in plain sight in shadowy illumination.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "razor-blizzard-wrpg",
+    "name": "Razor Blizzard",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 134,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Cold]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Blizzard of ice shards deals 1d6 slashing and 1d6 cold damage per two levels."
+    },
+    "school": "Evocation [Cold]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Reflex half",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 3,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 3,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Blizzard of ice shards deals 1d6 slashing and 1d6 cold damage per two levels.</p>",
+    "description_text": "Blizzard of ice shards deals 1d6 slashing and 1d6 cold damage per two levels.",
+    "descriptors": [],
+    "domains": null,
+    "area": "20-ft. radius",
+    "effect": null
+  },
+  {
+    "slug": "shockwave-wrpg",
+    "name": "Shockwave",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 135,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Ground tremor knocks creatures prone in a 30-ft. line."
+    },
+    "school": "Evocation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "30 ft.",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Reflex negates",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 3,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      },
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 3,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 3,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Ground tremor knocks creatures prone in a 30-ft. line.</p>",
+    "description_text": "Ground tremor knocks creatures prone in a 30-ft. line.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "entangling-roots-wrpg",
+    "name": "Entangling Roots",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 136,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Transmutation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Roots entangle creatures in a 20-ft. radius, reducing speed and preventing movement."
+    },
+    "school": "Transmutation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 min./level",
+    "saving_throw": "Reflex partial",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 3,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Roots entangle creatures in a 20-ft. radius, reducing speed and preventing movement.</p>",
+    "description_text": "Roots entangle creatures in a 20-ft. radius, reducing speed and preventing movement.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "rejuvenation-wrpg",
+    "name": "Rejuvenation",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 137,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Conjuration (Healing)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Restores 4d8 + caster level hit points and removes one of fatigue, shaken, or sickened."
+    },
+    "school": "Conjuration (Healing)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 5,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Restores 4d8 + caster level hit points and removes one of fatigue, shaken, or sickened.</p>",
+    "description_text": "Restores 4d8 + caster level hit points and removes one of fatigue, shaken, or sickened.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "roar-wrpg",
+    "name": "Roar",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 138,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation [Sonic]",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Mighty roar deals 1d8 sonic damage and forces a Fort save or dazes for 1 round."
+    },
+    "school": "Evocation [Sonic]",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "15 ft.",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Fortitude partial",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Druid of the Wild",
+        "slug": "druid-of-the-wild-wrpg",
+        "level": 1,
+        "url": "/classes/druid-of-the-wild-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Mighty roar deals 1d8 sonic damage and forces a Fort save or dazes for 1 round.</p>",
+    "description_text": "Mighty roar deals 1d8 sonic damage and forces a Fort save or dazes for 1 round.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "second-soul-wrpg",
+    "name": "Second Soul",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 139,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Abjuration",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "If you would die, your soul transfers to a prepared vessel within 1 mile."
+    },
+    "school": "Abjuration",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "24 hours",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 9,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>If you would die, your soul transfers to a prepared vessel within 1 mile.</p>",
+    "description_text": "If you would die, your soul transfers to a prepared vessel within 1 mile.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "sentinel-wrpg",
+    "name": "Sentinel",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 140,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Divination",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Creates an invisible watcher that alerts you to intruders within 60 ft."
+    },
+    "school": "Divination",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "24 hours",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Elven Ranger",
+        "slug": "elven-ranger-wrpg",
+        "level": 3,
+        "url": "/classes/elven-ranger-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Creates an invisible watcher that alerts you to intruders within 60 ft.</p>",
+    "description_text": "Creates an invisible watcher that alerts you to intruders within 60 ft.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "blade-storm-wrpg",
+    "name": "Blade Storm",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 141,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Evocation",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Whirling blades deal 1d6 damage per two caster levels (max 5d6) to all creatures within 10 ft."
+    },
+    "school": "Evocation",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Personal",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "None",
+    "spell_resistance": "Yes",
+    "classes": [
+      {
+        "name": "Wizard (Warcraft)",
+        "slug": "wizard-wrpg",
+        "level": 3,
+        "url": "/classes/wizard-wrpg",
+        "id": null
+      },
+      {
+        "name": "Sorcerer (Warcraft)",
+        "slug": "sorcerer-wrpg",
+        "level": 3,
+        "url": "/classes/sorcerer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Whirling blades deal 1d6 damage per two caster levels (max 5d6) to all creatures within 10 ft.</p>",
+    "description_text": "Whirling blades deal 1d6 damage per two caster levels (max 5d6) to all creatures within 10 ft.",
+    "descriptors": [],
+    "domains": null,
+    "area": "10-ft. radius",
+    "effect": null
+  },
+  {
+    "slug": "touch-of-life-wrpg",
+    "name": "Touch of Life",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 142,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Conjuration (Healing)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Touch restores a dead creature to life as raise dead without level loss."
+    },
+    "school": "Conjuration (Healing)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "Will negates (harmless)",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Healer",
+        "slug": "healer-wrpg",
+        "level": 9,
+        "url": "/classes/healer-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Touch restores a dead creature to life as raise dead without level loss.</p>",
+    "description_text": "Touch restores a dead creature to life as raise dead without level loss.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "healing-totem-wrpg",
+    "name": "Healing Totem",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 143,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Conjuration (Healing)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Summons a totem that heals 1d8 + caster level to allies within 10 ft. each round."
+    },
+    "school": "Conjuration (Healing)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 3,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Summons a totem that heals 1d8 + caster level to allies within 10 ft. each round.</p>",
+    "description_text": "Summons a totem that heals 1d8 + caster level to allies within 10 ft. each round.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "serpent-totem-wrpg",
+    "name": "Serpent Totem",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 144,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Conjuration (Summoning)",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Summons a spirit serpent that attacks your enemies."
+    },
+    "school": "Conjuration (Summoning)",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Medium",
+    "target": null,
+    "duration": "1 round/level",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [
+      {
+        "name": "Shaman",
+        "slug": "shaman-wrpg",
+        "level": 3,
+        "url": "/classes/shaman-wrpg",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Summons a spirit serpent that attacks your enemies.</p>",
+    "description_text": "Summons a spirit serpent that attacks your enemies.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  },
+  {
+    "slug": "warcraft-cosmology-wrpg",
+    "name": "Warcraft Cosmology (Spell Changes)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 113,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "school": "Universal",
+      "components": {
+        "V": true,
+        "S": true,
+        "M": false,
+        "F": false,
+        "DF": false,
+        "XP": false
+      },
+      "description_snippet": "Setting reference: No Ethereal Plane (ethereal jaunt = intangible on Material Plane). No Astral Plane (astral projection"
+    },
+    "school": "Universal",
+    "casting_time": "1 standard action",
+    "components": "V, S",
+    "range": "Touch",
+    "target": null,
+    "duration": "Instantaneous",
+    "saving_throw": "None",
+    "spell_resistance": "No",
+    "classes": [],
+    "description_html": "<p>Setting reference: No Ethereal Plane (ethereal jaunt = intangible on Material Plane). No Astral Plane (astral projection travels to the Twisting Nether). Summon monster and planar anchor are Warlock-only and summon demons. Necromancy spells restricted to Necromancer (supplement). Lesser and greater planar ally summon elementals only. Divine casters draw power from philosophy and spirits, not domains.</p>",
+    "description_text": "Setting reference: No Ethereal Plane (ethereal jaunt = intangible on Material Plane). No Astral Plane (astral projection travels to the Twisting Nether). Summon monster and planar anchor are Warlock-only and summon demons. Necromancy spells restricted to Necromancer (supplement). Lesser and greater planar ally summon elementals only. Divine casters draw power from philosophy and spirits, not domains.",
+    "descriptors": [],
+    "domains": null,
+    "area": null,
+    "effect": null
+  }
+]

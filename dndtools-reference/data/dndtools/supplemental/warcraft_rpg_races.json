@@ -1,0 +1,236 @@
+[
+  {
+    "slug": "human-wrpg",
+    "name": "Human",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 12,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": ""
+    },
+    "size": "Medium",
+    "type": "Humanoid",
+    "speed": "Land 30 ft.",
+    "level_adjustment": null,
+    "languages_html": "Common",
+    "languages_text": "Common",
+    "description_html": "<p>Humans of the Alliance dominate much of Azeroth. They use the standard human racial traits from the Player's Handbook: +2 to any one ability score, Medium size, 30 ft. base speed, 1 extra feat at 1st level, 4 extra skill points at 1st level and 1 extra skill point per level thereafter, and any favored class. Bonus languages include regional tongues and any non-secret language.</p>",
+    "description_text": "Humans of the Alliance dominate much of Azeroth. They use the standard human racial traits from the Player's Handbook: +2 to any one ability score, Medium size, 30 ft. base speed, 1 extra feat at 1st level, 4 extra skill points at 1st level and 1 extra skill point per level thereafter, and any favored class. Bonus languages include regional tongues and any non-secret language."
+  },
+  {
+    "slug": "ironforge-dwarf-wrpg",
+    "name": "Ironforge Dwarf",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 14,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": ""
+    },
+    "size": "Medium",
+    "type": "Humanoid (dwarf)",
+    "speed": "Land 20 ft.",
+    "level_adjustment": null,
+    "languages_html": "Common, Dwarven",
+    "languages_text": "Common, Dwarven",
+    "description_html": "<p>Ironforge dwarves use PHB dwarf traits with these changes: +2 Constitution, −2 Charisma; darkvision 60 ft.; stonecunning; +2 racial bonus on Appraise and Craft checks related to stone or metal; +2 on saves vs. poison and spells; +1 attack vs. orcs and goblinoids; +4 dodge bonus vs. giants; +2 racial bonus on Listen checks; stability (+4 vs. bull rush/trip); +2 racial bonus on Craft (technological device) checks; proficiency with gunpowder weapons (blunderbuss, flintlock musket, long rifle treated as martial); Favored Class: Fighter. Racial trait — Stone Sense (Ex): +2 bonus on Search checks to notice unusual stonework and on Survival checks underground.</p>",
+    "description_text": "Ironforge dwarves use PHB dwarf traits with these changes: +2 Constitution, −2 Charisma; darkvision 60 ft.; stonecunning; +2 racial bonus on Appraise and Craft checks related to stone or metal; +2 on saves vs. poison and spells; +1 attack vs. orcs and goblinoids; +4 dodge bonus vs. giants; +2 racial bonus on Listen checks; stability (+4 vs. bull rush/trip); +2 racial bonus on Craft (technological device) checks; proficiency with gunpowder weapons (blunderbuss, flintlock musket, long rifle treated as martial); Favored Class: Fighter. Racial trait — Stone Sense (Ex): +2 bonus on Search checks to notice unusual stonework and on Survival checks underground."
+  },
+  {
+    "slug": "high-elf-wrpg",
+    "name": "High Elf",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 16,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": "1"
+    },
+    "size": "Medium",
+    "type": "Humanoid (elf)",
+    "speed": "Land 30 ft.",
+    "level_adjustment": "+1",
+    "languages_html": "Common, Elven",
+    "languages_text": "Common, Elven",
+    "description_html": "<p>High elves of the Alliance retain arcane tradition. +2 Dexterity, −2 Constitution; Medium; 30 ft.; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Listen, Search, Spot; automatic weapon proficiencies (longsword, rapier, longbow, shortbow); +2 racial bonus on Spellcraft and Knowledge (arcana); arcane cantrips (choose 0-level arcane spell, usable 1/day, caster level 1); +1 caster level with arcane spells; Magic Addiction (must cast arcane spells daily or suffer −1 penalty to ability checks, saves, and attack rolls, cumulative); Favored Class: Sorcerer or Wizard. Level Adjustment +1.</p>",
+    "description_text": "High elves of the Alliance retain arcane tradition. +2 Dexterity, −2 Constitution; Medium; 30 ft.; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Listen, Search, Spot; automatic weapon proficiencies (longsword, rapier, longbow, shortbow); +2 racial bonus on Spellcraft and Knowledge (arcana); arcane cantrips (choose 0-level arcane spell, usable 1/day, caster level 1); +1 caster level with arcane spells; Magic Addiction (must cast arcane spells daily or suffer −1 penalty to ability checks, saves, and attack rolls, cumulative); Favored Class: Sorcerer or Wizard. Level Adjustment +1."
+  },
+  {
+    "slug": "night-elf-wrpg",
+    "name": "Night Elf",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 18,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": "1"
+    },
+    "size": "Medium",
+    "type": "Humanoid (elf)",
+    "speed": "Land 30 ft.",
+    "level_adjustment": "+1",
+    "languages_html": "Common, Darnassian",
+    "languages_text": "Common, Darnassian",
+    "description_html": "<p>Night elves shun arcane magic. +2 Dexterity, −2 Intelligence; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Hide, Listen, Search, Spot; weapon proficiencies (longsword, scimitar, longbow, shortbow); +2 Move Silently; Shadowmeld (Ex): +4 Hide in shadowy areas; Weapon Focus (longbow) at 1st level; no arcane spellcasting — a night elf who takes levels in an arcane class becomes a high elf racially; Favored Class: Scout. Level Adjustment +1.</p>",
+    "description_text": "Night elves shun arcane magic. +2 Dexterity, −2 Intelligence; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Hide, Listen, Search, Spot; weapon proficiencies (longsword, scimitar, longbow, shortbow); +2 Move Silently; Shadowmeld (Ex): +4 Hide in shadowy areas; Weapon Focus (longbow) at 1st level; no arcane spellcasting — a night elf who takes levels in an arcane class becomes a high elf racially; Favored Class: Scout. Level Adjustment +1."
+  },
+  {
+    "slug": "goblin-wrpg",
+    "name": "Goblin",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 20,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": ""
+    },
+    "size": "Small",
+    "type": "Humanoid (goblinoid)",
+    "speed": "Land 30 ft.",
+    "level_adjustment": null,
+    "languages_html": "Common, Goblin",
+    "languages_text": "Common, Goblin",
+    "description_html": "<p>Small goblins excel at technology and craft. −2 Strength, +2 Dexterity, −2 Charisma; Small size (+1 AC, +1 attack, −4 Grapple, +4 Hide); 30 ft.; darkvision 60 ft.; +4 Move Silently; +2 Craft (technological device) and Use Technological Device; +2 Appraise (technological items); Favored Class: Tinker.</p>",
+    "description_text": "Small goblins excel at technology and craft. −2 Strength, +2 Dexterity, −2 Charisma; Small size (+1 AC, +1 attack, −4 Grapple, +4 Hide); 30 ft.; darkvision 60 ft.; +4 Move Silently; +2 Craft (technological device) and Use Technological Device; +2 Appraise (technological items); Favored Class: Tinker."
+  },
+  {
+    "slug": "half-elf-wrpg",
+    "name": "Half-Elf",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 22,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": ""
+    },
+    "size": "Medium",
+    "type": "Humanoid (elf)",
+    "speed": "Land 30 ft.",
+    "level_adjustment": null,
+    "languages_html": "Common, Elven",
+    "languages_text": "Common, Elven",
+    "description_html": "<p>Half-elves bridge human and elven cultures. +2 to any one ability score; immunity to magic sleep; +2 vs. enchantments; low-light vision; +1 Listen, Search, Spot; any favored class. Standard PHB half-elf traits adapted for the Alliance.</p>",
+    "description_text": "Half-elves bridge human and elven cultures. +2 to any one ability score; immunity to magic sleep; +2 vs. enchantments; low-light vision; +1 Listen, Search, Spot; any favored class. Standard PHB half-elf traits adapted for the Alliance."
+  },
+  {
+    "slug": "half-orc-wrpg",
+    "name": "Half-Orc",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 24,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": ""
+    },
+    "size": "Medium",
+    "type": "Humanoid (orc)",
+    "speed": "Land 30 ft.",
+    "level_adjustment": null,
+    "languages_html": "Common, Orc",
+    "languages_text": "Common, Orc",
+    "description_html": "<p>+2 Strength, −2 Intelligence, −2 Charisma; darkvision 60 ft.; treated as orc for all racial effects, prerequisites, and favored enemies; Favored Class: Barbarian. Standard PHB half-orc traits.</p>",
+    "description_text": "+2 Strength, −2 Intelligence, −2 Charisma; darkvision 60 ft.; treated as orc for all racial effects, prerequisites, and favored enemies; Favored Class: Barbarian. Standard PHB half-orc traits."
+  },
+  {
+    "slug": "orc-wrpg",
+    "name": "Orc",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 26,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": ""
+    },
+    "size": "Medium",
+    "type": "Humanoid (orc)",
+    "speed": "Land 30 ft.",
+    "level_adjustment": null,
+    "languages_html": "Common, Orc",
+    "languages_text": "Common, Orc",
+    "description_html": "<p>Horde orcs are fierce warriors. +4 Strength, −2 Intelligence, −2 Wisdom, −2 Charisma; Medium; 30 ft.; darkvision 60 ft.; Battle Fury (Ex): once per day when reduced below half hit points, gain +2 Strength and +1 morale bonus on saves vs. fear for 1 minute; proficiency with orc attack claws; Favored Class: Fighter.</p>",
+    "description_text": "Horde orcs are fierce warriors. +4 Strength, −2 Intelligence, −2 Wisdom, −2 Charisma; Medium; 30 ft.; darkvision 60 ft.; Battle Fury (Ex): once per day when reduced below half hit points, gain +2 Strength and +1 morale bonus on saves vs. fear for 1 minute; proficiency with orc attack claws; Favored Class: Fighter."
+  },
+  {
+    "slug": "tauren-wrpg",
+    "name": "Tauren",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "level_adjustment": "1"
+    },
+    "size": "Large",
+    "type": "Humanoid (tauren)",
+    "speed": "Land 40 ft.",
+    "level_adjustment": "+1",
+    "languages_html": "Common, Taur-ahe",
+    "languages_text": "Common, Taur-ahe",
+    "description_html": "<p>Large tauren warriors of the Horde. +2 Strength, +2 Constitution, −2 Dexterity; Large (−1 AC, −1 attack, +4 Grapple, −4 Hide); 40 ft.; +2 natural armor; Powerful Charge (Ex): deal 2d6 + 1½ Str gore on charge; +2 Handle Animal and Survival; weapon proficiencies (tauren polearm, tauren totem); Favored Class: Fighter. Level Adjustment +1.</p>",
+    "description_text": "Large tauren warriors of the Horde. +2 Strength, +2 Constitution, −2 Dexterity; Large (−1 AC, −1 attack, +4 Grapple, −4 Hide); 40 ft.; +2 natural armor; Powerful Charge (Ex): deal 2d6 + 1½ Str gore on charge; +2 Handle Animal and Survival; weapon proficiencies (tauren polearm, tauren totem); Favored Class: Fighter. Level Adjustment +1."
+  }
+]

@@ -1,0 +1,696 @@
+[
+  {
+    "slug": "barbarian-wrpg",
+    "name": "Barbarian (Warcraft)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 30,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "12",
+      "skill_points": "4",
+      "prestige_level": ""
+    },
+    "hit_die": "d12",
+    "skill_points": "4 + Int",
+    "class_skills": [
+      {
+        "name": "Climb",
+        "slug": "climb",
+        "url": "/skills/climb",
+        "id": null
+      },
+      {
+        "name": "Intimidate",
+        "slug": "intimidate",
+        "url": "/skills/intimidate",
+        "id": null
+      },
+      {
+        "name": "Jump",
+        "slug": "jump",
+        "url": "/skills/jump",
+        "id": null
+      },
+      {
+        "name": "Listen",
+        "slug": "listen",
+        "url": "/skills/listen",
+        "id": null
+      },
+      {
+        "name": "Survival",
+        "slug": "survival",
+        "url": "/skills/survival",
+        "id": null
+      },
+      {
+        "name": "Swim",
+        "slug": "swim",
+        "url": "/skills/swim",
+        "id": null
+      },
+      {
+        "name": "Knowledge (military tactics)",
+        "slug": "knowledge-military-tactics",
+        "url": "/skills/knowledge-military-tactics",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Uses the Player's Handbook barbarian with these changes: Knowledge (military tactics) is a class skill. Orc barbarians may rage one additional time per day.</p>",
+    "description_text": "Uses the Player's Handbook barbarian with these changes: Knowledge (military tactics) is a class skill. Orc barbarians may rage one additional time per day.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "fighter-wrpg",
+    "name": "Fighter (Warcraft)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 32,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "10",
+      "skill_points": "2",
+      "prestige_level": ""
+    },
+    "hit_die": "d10",
+    "skill_points": "2 + Int",
+    "class_skills": [
+      {
+        "name": "Climb",
+        "slug": "climb",
+        "url": "/skills/climb",
+        "id": null
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null
+      },
+      {
+        "name": "Handle Animal",
+        "slug": "handle-animal",
+        "url": "/skills/handle-animal",
+        "id": null
+      },
+      {
+        "name": "Intimidate",
+        "slug": "intimidate",
+        "url": "/skills/intimidate",
+        "id": null
+      },
+      {
+        "name": "Jump",
+        "slug": "jump",
+        "url": "/skills/jump",
+        "id": null
+      },
+      {
+        "name": "Ride",
+        "slug": "ride",
+        "url": "/skills/ride",
+        "id": null
+      },
+      {
+        "name": "Swim",
+        "slug": "swim",
+        "url": "/skills/swim",
+        "id": null
+      },
+      {
+        "name": "Knowledge (military tactics)",
+        "slug": "knowledge-military-tactics",
+        "url": "/skills/knowledge-military-tactics",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Uses the PHB fighter with Knowledge (military tactics) as a class skill and expanded bonus feat options: Mounted Elite Sharpshooter, Expert Rider, Butt Strike, Defender, War Tongue, Rapid Reload, Storm Arrow, Point-Blank Shot (no AoO), Skilled Shot.</p>",
+    "description_text": "Uses the PHB fighter with Knowledge (military tactics) as a class skill and expanded bonus feat options: Mounted Elite Sharpshooter, Expert Rider, Butt Strike, Defender, War Tongue, Rapid Reload, Storm Arrow, Point-Blank Shot (no AoO), Skilled Shot.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "rogue-wrpg",
+    "name": "Rogue (Warcraft)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 34,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "6",
+      "skill_points": "8",
+      "prestige_level": ""
+    },
+    "hit_die": "d6",
+    "skill_points": "8 + Int",
+    "class_skills": [],
+    "description_html": "<p>Uses the PHB rogue with Use Technological Device as a class skill.</p>",
+    "description_text": "Uses the PHB rogue with Use Technological Device as a class skill.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "sorcerer-wrpg",
+    "name": "Sorcerer (Warcraft)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "4",
+      "skill_points": "2",
+      "prestige_level": ""
+    },
+    "hit_die": "d4",
+    "skill_points": "2 + Int",
+    "class_skills": [],
+    "description_html": "<p>Uses the PHB sorcerer except: summon monster I–IX, planar anchor, and necromancy spells are not on the sorcerer list (summoning is Warlock-only; necromancy is Necromancer-only in supplements). Night elves who become sorcerers become high elves.</p>",
+    "description_text": "Uses the PHB sorcerer except: summon monster I–IX, planar anchor, and necromancy spells are not on the sorcerer list (summoning is Warlock-only; necromancy is Necromancer-only in supplements). Night elves who become sorcerers become high elves.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "wizard-wrpg",
+    "name": "Wizard (Warcraft)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "4",
+      "skill_points": "2",
+      "prestige_level": ""
+    },
+    "hit_die": "d4",
+    "skill_points": "2 + Int",
+    "class_skills": [],
+    "description_html": "<p>Uses the PHB wizard with the same spell list restrictions as the Warcraft sorcerer. Night elves who become wizards become high elves.</p>",
+    "description_text": "Uses the PHB wizard with the same spell list restrictions as the Warcraft sorcerer. Night elves who become wizards become high elves.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "scout-wrpg",
+    "name": "Scout",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "6",
+      "prestige_level": ""
+    },
+    "hit_die": "d8",
+    "skill_points": "6 + Int",
+    "class_skills": [
+      {
+        "name": "Hide",
+        "slug": "hide",
+        "url": "/skills/hide",
+        "id": null
+      },
+      {
+        "name": "Listen",
+        "slug": "listen",
+        "url": "/skills/listen",
+        "id": null
+      },
+      {
+        "name": "Move Silently",
+        "slug": "move-silently",
+        "url": "/skills/move-silently",
+        "id": null
+      },
+      {
+        "name": "Spot",
+        "slug": "spot",
+        "url": "/skills/spot",
+        "id": null
+      },
+      {
+        "name": "Survival",
+        "slug": "survival",
+        "url": "/skills/survival",
+        "id": null
+      },
+      {
+        "name": "Search",
+        "slug": "search",
+        "url": "/skills/search",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Wilderness warrior and tracker. Base attack bonus as fighter; good Ref and Will saves; favored class of night elves. Class features include wilderness stride, track, favored enemy, and combat style progression similar to a non-druidic ranger.</p>",
+    "description_text": "Wilderness warrior and tracker. Base attack bonus as fighter; good Ref and Will saves; favored class of night elves. Class features include wilderness stride, track, favored enemy, and combat style progression similar to a non-druidic ranger.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "healer-wrpg",
+    "name": "Healer",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 42,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": ""
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Divine spellcaster drawing power from the Light, Elune, or ancestral spirits. Has a dedicated spell list including Healing Rain, Moon Glaive, Entangling Roots, Rejuvenation, Death Coil, Second Soul, and Touch of Life. Does not use domains or turn undead.</p>",
+    "description_text": "Divine spellcaster drawing power from the Light, Elune, or ancestral spirits. Has a dedicated spell list including Healing Rain, Moon Glaive, Entangling Roots, Rejuvenation, Death Coil, Second Soul, and Touch of Life. Does not use domains or turn undead.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "tinker-wrpg",
+    "name": "Tinker",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 46,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "6",
+      "skill_points": "6",
+      "prestige_level": ""
+    },
+    "hit_die": "d6",
+    "skill_points": "6 + Int",
+    "class_skills": [
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null
+      },
+      {
+        "name": "Disable Device",
+        "slug": "disable-device",
+        "url": "/skills/disable-device",
+        "id": null
+      },
+      {
+        "name": "Knowledge (architecture and engineering)",
+        "slug": "knowledge-architecture-and-engineering",
+        "url": "/skills/knowledge-architecture-and-engineering",
+        "id": null
+      },
+      {
+        "name": "Use Technological Device",
+        "slug": "use-technological-device",
+        "url": "/skills/use-technological-device",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Goblin technological expert. Gains bonus technological feats (Create Firearms, Create Siege Engines, Create Small Devices, Create Vehicles, Emergency Repair, etc.) and can craft steam-tech devices using Craft (technological device).</p>",
+    "description_text": "Goblin technological expert. Gains bonus technological feats (Create Firearms, Create Siege Engines, Create Small Devices, Create Vehicles, Emergency Repair, etc.) and can craft steam-tech devices using Craft (technological device).",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "horde-assassin-wrpg",
+    "name": "Horde Assassin",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 50,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "6",
+      "skill_points": "6",
+      "prestige_level": "10"
+    },
+    "hit_die": "d6",
+    "skill_points": "6 + Int",
+    "class_skills": [],
+    "description_html": "<p>Horde-only prestige class. Master of stealth, poison, and assassination strikes.</p>",
+    "description_text": "Horde-only prestige class. Master of stealth, poison, and assassination strikes.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "warlock-wrpg",
+    "name": "Warlock",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 52,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "4",
+      "skill_points": "2",
+      "prestige_level": "10"
+    },
+    "hit_die": "d4",
+    "skill_points": "2 + Int",
+    "class_skills": [],
+    "description_html": "<p>Demon-pact conjurer. Gains summon monster I–IX and planar anchor spells; specializes in summoning demons from the Twisting Nether.</p>",
+    "description_text": "Demon-pact conjurer. Gains summon monster I–IX and planar anchor spells; specializes in summoning demons from the Twisting Nether.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "hunter-wrpg",
+    "name": "Hunter",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 54,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Horde-only skirmisher with divine spellcasting from shamanistic traditions.</p>",
+    "description_text": "Horde-only skirmisher with divine spellcasting from shamanistic traditions.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "mounted-combatant-wrpg",
+    "name": "Mounted Combatant",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 56,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Elite cavalry specialist with mounted combat feats and charge tactics.</p>",
+    "description_text": "Elite cavalry specialist with mounted combat feats and charge tactics.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "druid-of-the-wild-wrpg",
+    "name": "Druid of the Wild",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 58,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Night elf druidism. Wild shape, nature spells including Roar, Thorns Shield, Force of Nature, and standard druid-style progression.</p>",
+    "description_text": "Night elf druidism. Wild shape, nature spells including Roar, Thorns Shield, Force of Nature, and standard druid-style progression.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "gladiator-wrpg",
+    "name": "Gladiator",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 60,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "10",
+      "skill_points": "2",
+      "prestige_level": "10"
+    },
+    "hit_die": "d10",
+    "skill_points": "2 + Int",
+    "class_skills": [],
+    "description_html": "<p>Arena champion. Known as Sword Master among the Horde.</p>",
+    "description_text": "Arena champion. Known as Sword Master among the Horde.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "paladin-warrior-wrpg",
+    "name": "Paladin Warrior",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 62,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "10",
+      "skill_points": "2",
+      "prestige_level": "10"
+    },
+    "hit_die": "d10",
+    "skill_points": "2 + Int",
+    "class_skills": [],
+    "description_html": "<p>Alliance Silver Hand paladin. Requires human or Ironforge dwarf. Divine warrior with smite evil and auras.</p>",
+    "description_text": "Alliance Silver Hand paladin. Requires human or Ironforge dwarf. Divine warrior with smite evil and auras.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "infiltrator-wrpg",
+    "name": "Infiltrator",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 64,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "6",
+      "skill_points": "8",
+      "prestige_level": "10"
+    },
+    "hit_die": "d6",
+    "skill_points": "8 + Int",
+    "class_skills": [],
+    "description_html": "<p>Stealth and infiltration specialist.</p>",
+    "description_text": "Stealth and infiltration specialist.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "beastmaster-wrpg",
+    "name": "Beastmaster",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 66,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Animal companion and natural weapon master.</p>",
+    "description_text": "Animal companion and natural weapon master.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "elven-ranger-wrpg",
+    "name": "Elven Ranger",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 68,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Alliance elves only. Archery elite with Sentinel spell and woodland combat abilities.</p>",
+    "description_text": "Alliance elves only. Archery elite with Sentinel spell and woodland combat abilities.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "priest-wrpg",
+    "name": "Priest",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 70,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "6",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d6",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Divine caster of the Light, Elune, or shamanistic faiths. Dedicated spell list; no domains.</p>",
+    "description_text": "Divine caster of the Light, Elune, or shamanistic faiths. Dedicated spell list; no domains.",
+    "advancement_html": null,
+    "advancement_text": null
+  },
+  {
+    "slug": "shaman-wrpg",
+    "name": "Shaman",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 72,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [],
+    "description_html": "<p>Horde elemental and totem magic. Spell list includes Stasis Trap, Ice Armor, Bloodlust, Immolation, Shockwave, Healing Totem, and Serpent Totem.</p>",
+    "description_text": "Horde elemental and totem magic. Spell list includes Stasis Trap, Ice Armor, Bloodlust, Immolation, Shockwave, Healing Totem, and Serpent Totem.",
+    "advancement_html": null,
+    "advancement_text": null
+  }
+]

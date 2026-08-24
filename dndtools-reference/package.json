@@ -12,7 +12,8 @@
     "db:deploy": "pnpm --filter @fg-modules/web db:deploy",
     "db:generate": "pnpm --filter @fg-modules/web db:generate",
     "import:dndtools": "pnpm --filter @fg-modules/web import:dndtools",
-    "scrape:flaws": "python -m scraper.scrape_flaws"
+    "scrape:flaws": "python -m scraper.scrape_flaws",
+    "build:warcraft-rpg": "node scripts/build-warcraft-rpg-data.mjs"
   },
   "pnpm": {
     "supportedArchitectures": {

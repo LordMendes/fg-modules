@@ -5610,15 +5610,21 @@ body {
 
 .pc-skill-points-wrap {
   position: relative;
+  z-index: 1;
   display: inline-block;
   cursor: help;
   border-bottom: 1px dotted color-mix(in srgb, var(--accent-gold) 45%, transparent);
 }
 
+.pc-skill-points-wrap:hover,
+.pc-skill-points-wrap:focus-visible {
+  z-index: 70;
+}
+
 .pc-skill-tooltip {
   display: none;
   position: absolute;
-  z-index: 20;
+  z-index: 1;
   right: 0;
   bottom: calc(100% + 0.35rem);
   min-width: 7rem;

@@ -1,0 +1,210 @@
+[
+  {
+    "slug": "goblin-land-mine-wrpg",
+    "name": "Goblin Land Mine",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 106,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Magic Item",
+      "price": "3,000 gp"
+    },
+    "price": "3,000 gp",
+    "caster_level": "9",
+    "aura": "StrongAbjuration",
+    "activation": "—",
+    "weight": "5 lb.",
+    "description_html": "<p>Invisible glyph of warding combined with an explosive. 8d6 fire damage in a 15-ft. radius when triggered.</p>",
+    "description_text": "Invisible glyph of warding combined with an explosive. 8d6 fire damage in a 15-ft. radius when triggered."
+  },
+  {
+    "slug": "stormhammer-wrpg",
+    "name": "Stormhammer",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 107,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Magic Item",
+      "price": "+1 warhammer"
+    },
+    "price": "+1 warhammer",
+    "caster_level": "7",
+    "aura": "ModerateEvocation",
+    "activation": "—",
+    "weight": "5 lb.",
+    "description_html": "<p>+1 warhammer that deals an extra 1d6 electricity damage on a hit. Shocks any non-dwarf who wields it for 1d6 electricity.</p>",
+    "description_text": "+1 warhammer that deals an extra 1d6 electricity damage on a hit. Shocks any non-dwarf who wields it for 1d6 electricity."
+  },
+  {
+    "slug": "vampiric-rune-blade-wrpg",
+    "name": "Vampiric Rune Blade",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 108,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Magic Item",
+      "price": "+1 longsword"
+    },
+    "price": "+1 longsword",
+    "caster_level": "12",
+    "aura": "StrongNecromancy",
+    "activation": "—",
+    "weight": "4 lb.",
+    "description_html": "<p>+1 longsword dealing +2d6 negative energy damage and draining hit points to the wielder. Intelligent evil blade.</p>",
+    "description_text": "+1 longsword dealing +2d6 negative energy damage and draining hit points to the wielder. Intelligent evil blade."
+  },
+  {
+    "slug": "potion-of-invulnerability-wrpg",
+    "name": "Potion of Invulnerability",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Potion",
+      "price": "1,500 gp"
+    },
+    "price": "1,500 gp",
+    "caster_level": "15",
+    "aura": "StrongAbjuration",
+    "activation": "Standard (drink)",
+    "weight": "—",
+    "description_html": "<p>Grants DR 20/adamantine for 10 rounds. You take 1d4 damage each round while the effect lasts.</p>",
+    "description_text": "Grants DR 20/adamantine for 10 rounds. You take 1d4 damage each round while the effect lasts."
+  },
+  {
+    "slug": "potion-of-mana-wrpg",
+    "name": "Potion of Mana",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Potion",
+      "price": "300 gp"
+    },
+    "price": "300 gp",
+    "caster_level": "5",
+    "aura": "ModerateTransmutation",
+    "activation": "Standard (drink)",
+    "weight": "—",
+    "description_html": "<p>Recover the last 1st-, 2nd-, or 3rd-level spell you cast within the previous 2 rounds.</p>",
+    "description_text": "Recover the last 1st-, 2nd-, or 3rd-level spell you cast within the previous 2 rounds."
+  },
+  {
+    "slug": "potion-of-greater-mana-wrpg",
+    "name": "Potion of Greater Mana",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Potion",
+      "price": "900 gp"
+    },
+    "price": "900 gp",
+    "caster_level": "11",
+    "aura": "StrongTransmutation",
+    "activation": "Standard (drink)",
+    "weight": "—",
+    "description_html": "<p>Recover the last spell of any level you cast within the previous 2 rounds. Headache deals damage equal to the spell's level.</p>",
+    "description_text": "Recover the last spell of any level you cast within the previous 2 rounds. Headache deals damage equal to the spell's level."
+  },
+  {
+    "slug": "cloak-of-flames-wrpg",
+    "name": "Cloak of Flames",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Wondrous Item",
+      "price": "90,000 gp"
+    },
+    "price": "90,000 gp",
+    "caster_level": "15",
+    "aura": "StrongEvocation",
+    "activation": "Standard (command)",
+    "weight": "1 lb.",
+    "description_html": "<p>Deals 2d6 fire damage per round to all enemies within 5 ft. while worn.</p>",
+    "description_text": "Deals 2d6 fire damage per round to all enemies within 5 ft. while worn."
+  },
+  {
+    "slug": "gloves-of-swiftness-wrpg",
+    "name": "Gloves of Swiftness",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Wondrous Item",
+      "price": "4,000 gp"
+    },
+    "price": "4,000 gp",
+    "caster_level": "7",
+    "aura": "ModerateTransmutation",
+    "activation": "—",
+    "weight": "—",
+    "description_html": "<p>+2 bonus on initiative checks and Reflex saves.</p>",
+    "description_text": "+2 bonus on initiative checks and Reflex saves."
+  }
+]
