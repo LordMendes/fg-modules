@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { HomeSearch } from "@/components/home-search";
 
@@ -16,6 +17,11 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -67,9 +73,9 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     };
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  return createPortal(
     <div className="search-overlay-root" role="presentation">
       <button
         type="button"
@@ -100,6 +106,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
           <HomeSearch variant="overlay" autoFocus onNavigate={onClose} />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
