@@ -16,6 +16,41 @@ from ..xml_builder import (
 )
 
 
+_WEAPON_ARMOR_TYPE_RE = re.compile(
+    r"(?i)(?:this\s+)?(?:\*\*)?(?:\+[\d\w]+\s+)?"
+    r"(heavy|light|medium)\s+(?:steel\s+)?(shield|armor|breastplate|chain\s?shirt|"
+    r"full\s?plate|scale\s?mail|splint\s?mail|banded\s?mail|half-plate|"
+    r"studded\s?leather|leather|padded|hide|ring\s?mail|buckler|tower\s?shield)"
+)
+_WEAPON_NAME_RE = re.compile(
+    r"(?i)(?:this\s+)?(?:\*\*)?(?:\+[\d\w]+\s+)?"
+    r"(longsword|shortsword|greatsword|rapier|scimitar|kukri|warhammer|"
+    r"mace|dagger|spear|bow|crossbow|axe|club|staff|whip|flail|morningstar)"
+)
+
+
+def _infer_item_type(detail: dict[str, Any], index: dict[str, Any]) -> str:
+    slot = detail.get("slot") or index.get("slot_or_property") or detail.get("properties") or ""
+    if slot and slot.lower() not in ("magic item", "wondrous", ""):
+        return slot
+    text = " ".join(
+        str(detail.get(key) or "")
+        for key in ("description_html", "description_text", "name")
+    )
+    armor = _WEAPON_ARMOR_TYPE_RE.search(text)
+    if armor:
+        kind = armor.group(2).lower()
+        if "shield" in kind or "buckler" in kind:
+            return "Shield"
+        return "Armor"
+    if _WEAPON_NAME_RE.search(text):
+        return "Weapon"
+    index_type = (index.get("type") or "").strip()
+    if index_type and index_type.lower() not in ("magic item", "enhancement"):
+        return index_type
+    return slot or "Wondrous"
+
+
 def _parse_number(value: Any) -> int | None:
     if value is None or value == "":
         return None
@@ -61,8 +96,7 @@ def convert_items(
         if weight_num is not None:
             typed_number(node, "weight", weight_num)
 
-        slot = detail.get("slot") or index.get("slot_or_property") or detail.get("properties")
-        typed_string(node, "type", slot)
+        typed_string(node, "type", _infer_item_type(detail, index))
 
         typed_formattedtext(node, "description", detail.get("description_html", ""))
         ET.SubElement(node, "effectlist")

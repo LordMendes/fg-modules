@@ -1,0 +1,224 @@
+{
+  "module_name": "Player's Handbook II",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Player's Handbook II.mod",
+  "book_slug": "players-handbook-ii",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 5,
+    "feat": 106,
+    "spell": 125,
+    "item": 1,
+    "monsters": 3
+  },
+  "build_warnings": [
+    "classes/Metamagic Specialist: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Metamagic Specialist: missing classskills (FG will not auto-mark class skills at level 1)"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 0,
+    "named_spells": 0,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 0,
+    "score_equal_to_count": 0
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 24,
+    "info": 0
+  },
+  "issues": [
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beguiler",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beguiler",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beguiler",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beguiler",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dragon Shaman",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dragon Shaman",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dragon Shaman",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dragon Shaman",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Duskblade",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Duskblade",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Duskblade",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Duskblade",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Knight",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Knight",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Knight",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Knight",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Metamagic Specialist",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Talisman of Transference",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    }
+  ]
+}

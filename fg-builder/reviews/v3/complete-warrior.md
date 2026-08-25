@@ -1,0 +1,338 @@
+# Complete Warrior
+- **Path:** `C:\Users\User\Documents\fg-modules\fg-builder\reviews\v3\Complete Warrior.mod`
+- **Book slug:** `complete-warrior`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 148
+- **Info:** 1
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 41 |
+| domains | 5 |
+| feat | 95 |
+| item | 2 |
+| spell | 8 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 0 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 0 |
+| `score equal to` in class text | 0 |
+
+## Build warnings (embedded)
+
+- classes/Invisible Blade: unknown class skill name(s) for FG ruleset: Innuendo
+- classes/Nature's Warrior: Advancement grants spellcasting at level(s) [2, 4] but no Spells per Day classfeature
+- classes/Paladin Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
+
+## Warnings
+
+- **[warning]** `class_invalid_save` — Bear Warrior: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Bear Warrior: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Bear Warrior: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Bear Warrior: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Bladesinger: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Bladesinger: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Bladesinger: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Bladesinger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Cavalier: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Cavalier: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Cavalier: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Cavalier: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Dark Hunter: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Dark Hunter: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Darkwood Stalker: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Darkwood Stalker: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Darkwood Stalker: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Darkwood Stalker: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Dervish: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Dervish: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Dervish: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Dervish: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Drunken Master: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Drunken Master: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Drunken Master: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Drunken Master: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Exotic Weapon Master: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Exotic Weapon Master: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Eye of Gruumsh: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Eye of Gruumsh: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Eye of Gruumsh: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Eye of Gruumsh: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Frenzied Berserker: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Frenzied Berserker: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Frenzied Berserker: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Frenzied Berserker: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Gnome Giant-slayer: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Gnome Giant-slayer: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Gnome Giant-slayer: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Gnome Giant-slayer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Halfling Outrider: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Halfling Outrider: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Halfling Outrider: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Halfling Outrider: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Hexblade: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Hexblade: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Hexblade: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Hexblade: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Hulking Hurler: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Hulking Hurler: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Hunter of the Dead: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Hunter of the Dead: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Hunter of the Dead: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Hunter of the Dead: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Invisible Blade: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Invisible Blade: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Invisible Blade: unknown class skill name(s) for FG ruleset: Innuendo
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Justiciar: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Justiciar: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Justiciar: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Justiciar: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Kensai: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Kensai: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Kensai: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Kensai: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Knight Protector: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Knight Protector: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Knight Protector: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Knight Protector: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Knight of the Chalice: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Knight of the Chalice: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Knight of the Chalice: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Knight of the Chalice: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Master Thrower: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Master Thrower: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Master of the Unseen Hand: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Master of the Unseen Hand: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Mindspy: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Mindspy: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Nature's Warrior: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Nature's Warrior: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Occult Slayer: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Occult Slayer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Order of the Bow Initiate: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Order of the Bow Initiate: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Order of the Bow Initiate: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Order of the Bow Initiate: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Paladin Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Paladin Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Paladin Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_invalid_save` — Purple Dragon Knight: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Purple Dragon Knight: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Rage Mage: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Rage Mage: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Rage Mage: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Rage Mage: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Ranger Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Ranger Variant: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Ranger Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_invalid_save` — Ravager: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ravager: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ravager: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Ravager: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Reaping Mauler: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Reaping Mauler: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Reaping Mauler: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Ronin: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ronin: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ronin: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Ronin: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Samurai: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Samurai: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Samurai: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Samurai: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Spellsword: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spellsword: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spellsword: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Spellsword: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Stonelord: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Stonelord: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Stonelord: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Stonelord: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Swashbuckler: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Swashbuckler: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Swashbuckler: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Swashbuckler: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Tattooed Monk: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Tattooed Monk: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Tattooed Monk: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Tattooed Monk: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Thayan Knight: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Thayan Knight: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — War Chanter: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — War Chanter: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — War Chanter: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — War Chanter: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Warshaper: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Warshaper: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `spell_missing_field` — Cloak of Bravery, Greater: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Valiant Fury: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+
+## Info
+
+- **[info]** `class_legacy_skill` — Invisible Blade: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.

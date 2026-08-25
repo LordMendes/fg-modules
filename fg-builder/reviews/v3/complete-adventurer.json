@@ -1,0 +1,887 @@
+{
+  "module_name": "Complete Adventurer",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Complete Adventurer.mod",
+  "book_slug": "complete-adventurer",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 29,
+    "feat": 66,
+    "spell": 70,
+    "item": 13
+  },
+  "build_warnings": [
+    "classes/Exemplar: unknown class skill name(s) for FG ruleset: Autohypnosis, Control Shape, Iaijutsu Focus, Martial Lore, Psicraft, Truespeak, Use Psionic Device",
+    "classes/Shadowmind: unknown class skill name(s) for FG ruleset: Autohypnosis, Psicraft"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 0,
+    "named_spells": 0,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 0,
+    "score_equal_to_count": 0
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 106,
+    "info": 1
+  },
+  "issues": [
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Animal Lord",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Animal Lord",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Animal Lord",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Animal Lord",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beastmaster",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beastmaster",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beastmaster",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Beastmaster",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Bloodhound",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Bloodhound",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Bloodhound",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Bloodhound",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Mage",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Mage",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Mage",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Mage",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Shaper",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Shaper",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Shaper",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Daggerspell Shaper",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dread Pirate",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dread Pirate",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dread Pirate",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dread Pirate",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dungeon Delver",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dungeon Delver",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dungeon Delver",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Dungeon Delver",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Exemplar",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Exemplar",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Exemplar",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Exemplar",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Exemplar",
+      "message": "unknown class skill name(s) for FG ruleset: Autohypnosis, Control Shape, Iaijutsu Focus, Martial Lore, Psicraft, Truespeak, Use Psionic Device",
+      "remediation": "Psionic skills require Expanded Psionics Handbook module loaded."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Exemplar",
+      "message": "Legacy/optional 3.5E skill: Control Shape",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fochlucan Lyrist",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fochlucan Lyrist",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fochlucan Lyrist",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fochlucan Lyrist",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ghost-faced Killer",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ghost-faced Killer",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ghost-faced Killer",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ghost-faced Killer",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Highland Stalker",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Highland Stalker",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Highland Stalker",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Highland Stalker",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Maester",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Maester",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Master of Many Forms",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Master of Many Forms",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Master of Many Forms",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Master of Many Forms",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Enforcer",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Enforcer",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Enforcer",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Enforcer",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Infiltrator",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Infiltrator",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Infiltrator",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Nightsong Infiltrator",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ninja",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ninja",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ninja",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ninja",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ollam",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ollam",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Scout",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Scout",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Scout",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Scout",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Inquisitor",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Inquisitor",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Inquisitor",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Inquisitor",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Stalker",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Stalker",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Stalker",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowbane Stalker",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowmind",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowmind",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowmind",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowmind",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadowmind",
+      "message": "unknown class skill name(s) for FG ruleset: Autohypnosis, Psicraft",
+      "remediation": "Psionic skills require Expanded Psionics Handbook module loaded."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spellthief",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spellthief",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spellthief",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spellthief",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spymaster",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spymaster",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spymaster",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Spymaster",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Streetfighter",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Streetfighter",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Tempest",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Tempest",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thief-acrobat",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thief-acrobat",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vigilante",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vigilante",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vigilante",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vigilante",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Virtuoso",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Virtuoso",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Virtuoso",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Virtuoso",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wild Plains Outrider",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wild Plains Outrider",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    }
+  ]
+}

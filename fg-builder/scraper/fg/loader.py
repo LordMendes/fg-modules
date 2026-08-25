@@ -7,8 +7,30 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-ALL_CATEGORIES = ("spells", "feats", "classes", "skills", "items", "races")
-CATEGORY_ORDER = ("classes", "feats", "spells", "skills", "items", "races")
+ALL_CATEGORIES = (
+    "spells",
+    "feats",
+    "classes",
+    "skills",
+    "items",
+    "races",
+    "monsters",
+    "deities",
+    "domains",
+    "psionics",
+)
+CATEGORY_ORDER = (
+    "classes",
+    "feats",
+    "spells",
+    "psionics",
+    "skills",
+    "items",
+    "races",
+    "monsters",
+    "domains",
+    "deities",
+)
 
 
 @dataclass

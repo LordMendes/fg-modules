@@ -9,7 +9,7 @@ export default async function Image() {
     <OgHubLayout
       badge="Stores"
       title="Goods & Services"
-      footer="Realms Helps · dnd-helper.com"
+      footer="dnd-helper.com"
     />,
   );
 }

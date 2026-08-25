@@ -1,0 +1,19 @@
+{
+  "module_name": "Red Hand of Doom",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Red Hand of Doom.mod",
+  "book_slug": "red-hand-of-doom",
+  "load_ready": true,
+  "automation_ready": true,
+  "record_counts": {
+    "feat": 2,
+    "monsters": 174
+  },
+  "build_warnings": [],
+  "spellclass_readiness": {},
+  "totals": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0
+  },
+  "issues": []
+}

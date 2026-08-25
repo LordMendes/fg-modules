@@ -51,6 +51,8 @@ python -m scraper.build_edition "https://dnd.arkalseif.info/rulebooks/supplement
 | `python -m scraper.scrape_book URL` | Scrape a single rulebook to JSON |
 | `python -m scraper.scrape_edition URL` | Scrape all books in an edition index |
 | `python -m scraper.json_to_fg PATH` | Convert scraped JSON folder to `.mod` |
+| `python -m scraper.build_from_dndtools [books...]` | Build `.mod` from dndtools-reference web JSON |
+| `python scripts/audit_class_modules.py` | Gate: classfeatures, saves, skills, prereq/advancement merge |
 | `python -m scraper.review_modules` | Review packaged modules for FG compatibility |
 
 ### Output directories

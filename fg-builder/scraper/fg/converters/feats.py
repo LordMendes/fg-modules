@@ -5,7 +5,12 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 from typing import Any
 
-from ..html_utils import prepare_formatted_html, strip_html_to_text, wrap_paragraph
+from ..html_utils import (
+    prepare_formatted_html,
+    strip_html_to_text,
+    truncate_feat_prerequisites,
+    wrap_paragraph,
+)
 from ..loader import BuildReport
 from ..xml_builder import IdAllocator, set_formatted_inner, typed_formattedtext, typed_string
 
@@ -41,6 +46,7 @@ def convert_feats(
         typed_string(node, "type", detail.get("type", ""))
 
         prereq = detail.get("prerequisites", "")
+        prereq = truncate_feat_prerequisites(prereq)
         if prereq and "<" in prereq:
             prereq = strip_html_to_text(prereq)
         typed_string(node, "prerequisites", prereq)

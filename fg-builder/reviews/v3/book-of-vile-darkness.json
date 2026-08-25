@@ -1,0 +1,1029 @@
+{
+  "module_name": "Book of Vile Darkness",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Book of Vile Darkness.mod",
+  "book_slug": "book-of-vile-darkness",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 18,
+    "feat": 27,
+    "spell": 141,
+    "race": 2,
+    "domains": 7
+  },
+  "build_warnings": [
+    "classes/Cancer Mage: unknown class skill name(s) for FG ruleset: Alchemy, Intuit Direction, Pick Pocket",
+    "classes/Demonologist: unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+    "classes/Diabolist: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Disciple of Asmodeus: unknown class skill name(s) for FG ruleset: Innuendo, Scry",
+    "classes/Disciple of Baalzebul: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+    "classes/Disciple of Dispater: unknown class skill name(s) for FG ruleset: Innuendo",
+    "classes/Disciple of Mammon: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+    "classes/Disciple of Mephistopheles: unknown class skill name(s) for FG ruleset: Innuendo, Scry",
+    "classes/Mortal Hunter: unknown class skill name(s) for FG ruleset: Intuit Direction, Wilderness Lore",
+    "classes/Thrall of Demogorgon: unknown class skill name(s) for FG ruleset: Intuit Direction",
+    "classes/Thrall of Graz'zt: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket, Scry",
+    "classes/Thrall of Orcus: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Ur-priest: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Vermin Lord: unknown class skill name(s) for FG ruleset: Pick Pocket",
+    "classes/Warrior of Darkness: unknown class skill name(s) for FG ruleset: Alchemy, Scry"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 0,
+    "named_spells": 0,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 0,
+    "score_equal_to_count": 0
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 109,
+    "info": 14
+  },
+  "issues": [
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cancer Mage",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cancer Mage",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cancer Mage",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cancer Mage",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cancer Mage",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Intuit Direction, Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Demonologist",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Demonologist",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Demonologist",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Demonologist",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Demonologist",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Demonologist",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Diabolist",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Diabolist",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Diabolist",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Diabolist",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Diabolist",
+      "message": "unknown class skill name(s) for FG ruleset: Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Diabolist",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Asmodeus",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Baalzebul",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Baalzebul",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Baalzebul",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Baalzebul",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Baalzebul",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Baalzebul",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Dispater",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Dispater",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Dispater",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Dispater",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Dispater",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Dispater",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mammon",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mammon",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mammon",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mammon",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mammon",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Mammon",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Disciple of Mephistopheles",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Lifedrinker",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Lifedrinker",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Lifedrinker",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Lifedrinker",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mortal Hunter",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mortal Hunter",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mortal Hunter",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mortal Hunter",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Mortal Hunter",
+      "message": "unknown class skill name(s) for FG ruleset: Intuit Direction, Wilderness Lore",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Soul Eater",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Soul Eater",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Soul Eater",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Soul Eater",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Demogorgon",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Demogorgon",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Demogorgon",
+      "message": "unknown class skill name(s) for FG ruleset: Intuit Direction",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Graz'zt",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Graz'zt",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Graz'zt",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Graz'zt",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Thrall of Graz'zt",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Thrall of Graz'zt",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Juiblex",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Juiblex",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Juiblex",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Juiblex",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Orcus",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Orcus",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Orcus",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Orcus",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Thrall of Orcus",
+      "message": "unknown class skill name(s) for FG ruleset: Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Thrall of Orcus",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ur-priest",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ur-priest",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ur-priest",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ur-priest",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ur-priest",
+      "message": "unknown class skill name(s) for FG ruleset: Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Ur-priest",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vermin Lord",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vermin Lord",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vermin Lord",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vermin Lord",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Vermin Lord",
+      "message": "unknown class skill name(s) for FG ruleset: Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Warrior of Darkness",
+      "message": "Invalid fort save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Warrior of Darkness",
+      "message": "Invalid ref save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_invalid_save",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Warrior of Darkness",
+      "message": "Invalid will save: 'Poor'",
+      "remediation": "Use Good or Bad."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Warrior of Darkness",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Warrior of Darkness",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Warrior of Darkness",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Absorb Mind",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Absorb Strength",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Apocalypse from the Sky",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Claws of the Bebilith",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Consume Likeness",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Death by Thorns",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Devil's Ego",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Devil's Tail",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Devil's Tongue",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Eternity of Torture",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Evil Weather",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fangs of the Vampire King",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Forbidden Speech",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Hellfire",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Hellfire Storm",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Lahm's Finger Darts",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Love's Pain",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Plague of Nightmares",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Power Leech",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Rapture of Rupture",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Red Fester",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Rotting Curse of Urfestra",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Seething Eyebane",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Serpents of Theggeron",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Touch of Juiblex",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    }
+  ]
+}

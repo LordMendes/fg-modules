@@ -1,0 +1,486 @@
+# Unearthed Arcana
+- **Path:** `C:\Users\User\Documents\fg-modules\fg-builder\reviews\v3\Unearthed Arcana.mod`
+- **Book slug:** `unearthed-arcana`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 226
+- **Info:** 0
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 50 |
+| feat | 95 |
+| spell | 2 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 0 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 0 |
+| `score equal to` in class text | 0 |
+
+## Build warnings (embedded)
+
+- classes/Expert: unknown class skill name(s) for FG ruleset: All skills
+- classes/Faith Scion: Advancement grants spellcasting at level(s) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] but no Spells per Day classfeature
+- classes/Sorcerer/Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+- classes/Spell Scion: Advancement grants spellcasting at level(s) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] but no Spells per Day classfeature
+- classes/Tainted Sorcerer: Advancement grants spellcasting at level(s) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] but no Spells per Day classfeature
+
+## Warnings
+
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Abjurer Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Abjurer Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Barbarian Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Bard Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Bard Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Bardic Sage: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Bardic Sage: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Bardic Sage: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Bardic Sage: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Battle Scion: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Battle Scion: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Battle Scion: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Battle Scion: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Battle Sorcerer: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Battle Sorcerer: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Battle Sorcerer: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Battle Sorcerer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Cleric Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cloistered Cleric: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Cloistered Cleric: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Conjurer Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Conjurer Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Divine Bard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Divine Bard: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Diviner Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Diviner Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Domain Wizard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Domain Wizard: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Drow Paragon: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Drow Paragon: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Druid Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druidic Avenger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Druidic Avenger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Dwarf Paragon: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Dwarf Paragon: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Elf Paragon: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Elf Paragon: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Enchanter Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Enchanter Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Evoker Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Evoker Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Expert: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Expert: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Expert: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Expert: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Expert: unknown class skill name(s) for FG ruleset: All skills
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Faith Scion: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Faith Scion: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Faith Scion: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Faith Scion: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Fighter Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Illusionist Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Illusionist Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Monk Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk Variant: Fighting Styles: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Monk Variant: Fighting Styles: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Necromancer Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Necromancer Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Paladin Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Freedom: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Paladin of Freedom: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Paladin of Slaughter: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Slaughter: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Slaughter: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin of Slaughter: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Paladin of Slaughter: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_no_features` — Paladin of Tyranny: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Planar Ranger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Planar Ranger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Prestige Bard: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Prestige Bard: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Prestige Bard: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Prestige Bard: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Prestige Paladin: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Prestige Paladin: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Prestige Paladin: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Prestige Paladin: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Prestige Ranger: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Prestige Ranger: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Prestige Ranger: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Prestige Ranger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Ranger Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Rogue Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Savage Bard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Savage Bard: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer/Wizard Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Sorcerer/Wizard Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_classskills` — Sorcerer/Wizard Variant: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_invalid_save` — Spell Scion: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spell Scion: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spell Scion: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Spell Scion: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Spellcaster: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spellcaster: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Spellcaster: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Swift Scion: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Swift Scion: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Swift Scion: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Swift Scion: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Tainted Sorcerer: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Tainted Sorcerer: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Tainted Sorcerer: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Tainted Sorcerer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Tainted Warrior: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Tainted Warrior: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Tainted Warrior: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Tainted Warrior: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Thug: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Thug: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Thug: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Totem Barbarian: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Totem Barbarian: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Transmuter Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Transmuter Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Urban Ranger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Urban Ranger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Warrior: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Warrior: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Warrior: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Warrior: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wilderness Rogue: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Wilderness Rogue: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard Variant: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Wizard Variant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `spell_missing_field` — Auspicious Odds: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Auspicious Odds, Mass: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.

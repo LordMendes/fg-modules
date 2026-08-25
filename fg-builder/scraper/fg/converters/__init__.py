@@ -8,8 +8,12 @@ import xml.etree.ElementTree as ET
 
 from ..loader import BuildReport
 from .classes import convert_classes
+from .deities import convert_deities
+from .domains import convert_domains
 from .feats import convert_feats
 from .items import convert_items
+from .monsters import convert_monsters
+from .psionics import convert_psionics
 from .races import convert_races
 from .skills import convert_skills
 from .spells import convert_spells
@@ -23,4 +27,8 @@ CONVERTERS: dict[str, ConverterFn] = {
     "skills": convert_skills,
     "items": convert_items,
     "races": convert_races,
+    "monsters": convert_monsters,
+    "deities": convert_deities,
+    "domains": convert_domains,
+    "psionics": convert_psionics,
 }

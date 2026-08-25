@@ -49,7 +49,7 @@ def build_module(
         converter = CONVERTERS.get(cat)
         if not converter:
             continue
-        if cat == "spells":
+        if cat == "spells" or cat == "psionics":
             section = converter(
                 records, book.title, report, ids, spell_actions=spell_actions
             )

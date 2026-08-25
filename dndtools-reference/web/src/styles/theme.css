@@ -6832,15 +6832,10 @@ body {
   color: var(--text-secondary);
 }
 
-.secondary-sources,
-.external-source-link {
+.secondary-sources {
   display: block;
   font-size: 0.875rem;
   color: var(--text-secondary);
-}
-
-.external-source-link {
-  margin-top: 0.25rem;
 }
 
 @media (max-width: 900px) {

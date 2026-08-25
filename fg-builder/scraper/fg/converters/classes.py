@@ -273,7 +273,7 @@ def _description_html(detail: dict[str, Any]) -> str:
         if detail.get("hit_die") and "Hit Die:" not in html:
             html += f"<p><b>Hit Die:</b> {detail['hit_die']}</p>"
         html += f"<p><b>Skill Points:</b> {detail['skill_points']}</p>"
-    req_html = class_requirements_html(detail, indent=True)
+    req_html = class_requirements_html(detail, indent=False)
     if req_html and not _has_prerequisites_heading(html):
         html += f"<p><b>Prerequisites:</b></p>{req_html}"
     return html
@@ -356,7 +356,9 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
     else:
         advancement_html = ""
     if advancement_html:
-        parts.append(f"<h4>Advancement</h4>{advancement_html}")
+        # Use <p><b>…</b></p> instead of <h4> — FG can swallow h4 into the
+        # previous table cell when prerequisites/advancement are adjacent.
+        parts.append(f"<p><b>Advancement</b></p>{advancement_html}")
     if not parts:
         return ""
     return normalize_all_tables_in_html("".join(parts))

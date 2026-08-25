@@ -1,0 +1,295 @@
+# Book of Vile Darkness
+- **Path:** `C:\Users\User\Documents\fg-modules\fg-builder\reviews\v3\Book of Vile Darkness.mod`
+- **Book slug:** `book-of-vile-darkness`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 109
+- **Info:** 14
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 18 |
+| domains | 7 |
+| feat | 27 |
+| race | 2 |
+| spell | 141 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 0 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 0 |
+| `score equal to` in class text | 0 |
+
+## Build warnings (embedded)
+
+- classes/Cancer Mage: unknown class skill name(s) for FG ruleset: Alchemy, Intuit Direction, Pick Pocket
+- classes/Demonologist: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+- classes/Diabolist: unknown class skill name(s) for FG ruleset: Scry
+- classes/Disciple of Asmodeus: unknown class skill name(s) for FG ruleset: Innuendo, Scry
+- classes/Disciple of Baalzebul: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket
+- classes/Disciple of Dispater: unknown class skill name(s) for FG ruleset: Innuendo
+- classes/Disciple of Mammon: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket
+- classes/Disciple of Mephistopheles: unknown class skill name(s) for FG ruleset: Innuendo, Scry
+- classes/Mortal Hunter: unknown class skill name(s) for FG ruleset: Intuit Direction, Wilderness Lore
+- classes/Thrall of Demogorgon: unknown class skill name(s) for FG ruleset: Intuit Direction
+- classes/Thrall of Graz'zt: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket, Scry
+- classes/Thrall of Orcus: unknown class skill name(s) for FG ruleset: Scry
+- classes/Ur-priest: unknown class skill name(s) for FG ruleset: Scry
+- classes/Vermin Lord: unknown class skill name(s) for FG ruleset: Pick Pocket
+- classes/Warrior of Darkness: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+
+## Warnings
+
+- **[warning]** `class_invalid_save` — Cancer Mage: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Cancer Mage: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Cancer Mage: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Cancer Mage: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Cancer Mage: unknown class skill name(s) for FG ruleset: Alchemy, Intuit Direction, Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Demonologist: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Demonologist: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Demonologist: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Demonologist: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Demonologist: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Diabolist: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Diabolist: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Diabolist: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Diabolist: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Diabolist: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Disciple of Asmodeus: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Asmodeus: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Asmodeus: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Disciple of Asmodeus: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Disciple of Asmodeus: unknown class skill name(s) for FG ruleset: Innuendo, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Disciple of Baalzebul: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Baalzebul: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Baalzebul: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Disciple of Baalzebul: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Disciple of Baalzebul: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Disciple of Dispater: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Dispater: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Dispater: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Disciple of Dispater: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Disciple of Dispater: unknown class skill name(s) for FG ruleset: Innuendo
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Disciple of Mammon: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Mammon: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Mammon: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Disciple of Mammon: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Disciple of Mammon: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Disciple of Mephistopheles: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Mephistopheles: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Disciple of Mephistopheles: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Disciple of Mephistopheles: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Disciple of Mephistopheles: unknown class skill name(s) for FG ruleset: Innuendo, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Lifedrinker: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Lifedrinker: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Lifedrinker: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Lifedrinker: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Mortal Hunter: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Mortal Hunter: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Mortal Hunter: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Mortal Hunter: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Mortal Hunter: unknown class skill name(s) for FG ruleset: Intuit Direction, Wilderness Lore
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Soul Eater: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Soul Eater: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Soul Eater: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Soul Eater: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Thrall of Demogorgon: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Thrall of Demogorgon: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Thrall of Demogorgon: unknown class skill name(s) for FG ruleset: Intuit Direction
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Thrall of Graz'zt: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Thrall of Graz'zt: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Thrall of Graz'zt: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Thrall of Graz'zt: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Thrall of Juiblex: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Thrall of Juiblex: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Thrall of Juiblex: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Thrall of Juiblex: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Thrall of Orcus: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Thrall of Orcus: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Thrall of Orcus: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Thrall of Orcus: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Thrall of Orcus: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Ur-priest: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ur-priest: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ur-priest: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Ur-priest: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Ur-priest: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Vermin Lord: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Vermin Lord: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Vermin Lord: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Vermin Lord: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Vermin Lord: unknown class skill name(s) for FG ruleset: Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Warrior of Darkness: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Warrior of Darkness: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Warrior of Darkness: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Warrior of Darkness: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Warrior of Darkness: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `spell_missing_field` — Absorb Mind: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Absorb Strength: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Apocalypse from the Sky: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Claws of the Bebilith: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Consume Likeness: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Death by Thorns: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Devil's Ego: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Devil's Tail: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Devil's Tongue: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Eternity of Torture: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Evil Weather: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fangs of the Vampire King: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Forbidden Speech: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Hellfire: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Hellfire Storm: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Lahm's Finger Darts: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Love's Pain: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Plague of Nightmares: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Power Leech: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Rapture of Rupture: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Red Fester: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Rotting Curse of Urfestra: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Seething Eyebane: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Serpents of Theggeron: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Touch of Juiblex: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+
+## Info
+
+- **[info]** `class_legacy_skill` — Demonologist: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Diabolist: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Asmodeus: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Asmodeus: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Baalzebul: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Dispater: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Mammon: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Mephistopheles: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Disciple of Mephistopheles: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Thrall of Graz'zt: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Thrall of Graz'zt: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Thrall of Orcus: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Ur-priest: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Warrior of Darkness: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.

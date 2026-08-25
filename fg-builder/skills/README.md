@@ -6,6 +6,8 @@ Mirror of Cursor skills and Fantasy Grounds export support files. Copy into your
 
 | Folder | Purpose | Wiki route |
 |--------|---------|------------|
+| [`modules-refactoring/`](modules-refactoring/SKILL.md) | Refactor FG `.mod` books against dndtools web JSON | — |
+| [`fg-35e-effect-creation/`](fg-35e-effect-creation/SKILL.md) | BCE/BCEG effect strings + AoE `AURA:` syntax | — |
 | [`class-fg-wiki-json/`](class-fg-wiki-json/SKILL.md) | JSON → Export Class (FG) | `#/tools/class-fg-export` |
 | [`race-fg-wiki-json/`](race-fg-wiki-json/SKILL.md) | JSON → Export Race (FG) | `#/tools/race-fg-export` |
 | [`npc-fg-wiki-json/`](npc-fg-wiki-json/SKILL.md) | JSON → Export NPC (FG) | `#/tools/npc-fg-export` |
@@ -22,6 +24,8 @@ Copied from [`docs/09-recursos/fantasy-grounds/`](../docs/09-recursos/fantasy-gr
 - [`fg-export-json-conventions.md`](reference/fantasy-grounds/fg-export-json-conventions.md) — shared JSON/XML rules for all FG export skills
 - [`fg-35e-spell-action-mapping.md`](reference/fantasy-grounds/fg-35e-spell-action-mapping.md) — spellset cast/damage/heal/effect actions
 - [`fg-35e-race-trait-mapping.md`](reference/fantasy-grounds/fg-35e-race-trait-mapping.md) — race trait slug → FG `<name>` rules
+
+Per-category module refactor checks: [`modules-refactoring/reference.md`](modules-refactoring/reference.md).
 
 Canonical campaign docs remain under `docs/09-recursos/fantasy-grounds/`. Update both when conventions change.
 

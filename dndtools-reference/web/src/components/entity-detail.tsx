@@ -55,11 +55,6 @@ export function EntityDetailView({
               ))}
             </span>
           )}
-          {entity.sourceUrl && (
-            <a className="external-source-link" href={entity.sourceUrl} rel="noopener noreferrer">
-              View on Realms Helps
-            </a>
-          )}
           <SaveToListButton category={category} slug={entity.slug} name={entity.name} />
           {category === "monsters" && (
             <AddToEncounterButton

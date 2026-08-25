@@ -31,6 +31,20 @@ def strip_html_to_text(html: str) -> str:
     return sanitize_xml_text(BeautifulSoup(html, "lxml").get_text(" ", strip=True))
 
 
+_FEAT_SECTION_SPLIT_RE = re.compile(
+    r"(?:<h4>\s*(?:Benefit|Normal|Special)\s*</h4>|\n(?:Benefit|Normal|Special)\s*\n)",
+    re.I,
+)
+
+
+def truncate_feat_prerequisites(value: str) -> str:
+    """Drop Benefit/Normal/Special sections accidentally merged into prerequisites."""
+    if not value or not value.strip():
+        return ""
+    parts = _FEAT_SECTION_SPLIT_RE.split(value, maxsplit=1)
+    return parts[0].strip()
+
+
 def prepare_formatted_html(html: str) -> str:
     """Normalize scraper HTML for FG formattedtext nodes."""
     if not html or not html.strip():
@@ -39,6 +53,10 @@ def prepare_formatted_html(html: str) -> str:
     soup = BeautifulSoup(html, "lxml")
     for tag in soup.find_all(["script", "style"]):
         tag.decompose()
+    # Web feat/monster links often carry malformed attributes (e.g. data-cf-modified
+    # split into invalid XML names); FG formattedtext does not use hyperlinks.
+    for tag in soup.find_all("a"):
+        tag.unwrap()
 
     body = soup.body or soup
     inner = "".join(str(c) for c in body.children).strip()
@@ -67,6 +85,9 @@ def normalize_class_body_html(html: str) -> str:
         tag.decompose()
     for strong in soup.find_all("strong"):
         strong.name = "b"
+    # FG formattedtext uses <list>, not <ul>/<ol>.
+    for ul in soup.find_all(["ul", "ol"]):
+        ul.name = "list"
 
     body = soup.body or soup
     inner = "".join(str(c) for c in body.children).strip()
@@ -168,10 +189,22 @@ def class_requirements_html(detail: dict[str, Any], *, indent: bool = False) -> 
     req_text = req.get("text") or detail.get("requirements") or ""
     if req_text:
         return requirements_text_to_html(req_text, indent=indent)
-    req_html = req.get("html") or ""
+    req_html = req.get("html") or detail.get("requirements_html") or ""
     if req_html:
         plain = strip_html_to_text(req_html)
         if plain:
+            # Collapse scraper whitespace so we don't get one-word table rows.
+            plain = re.sub(r"\s+", " ", plain).strip()
+            # Prefer labeled lines if present.
+            labeled = re.findall(
+                r"(Alignment|Skills|Feats|Spells|Special|Base Attack Bonus|Base Save Bonus)\s*:\s*"
+                r"(.+?)(?=(?:Alignment|Skills|Feats|Spells|Special|Base Attack Bonus|Base Save Bonus)\s*:|$)",
+                plain,
+                flags=re.I | re.S,
+            )
+            if labeled:
+                lines = [f"{label}: {value.strip()}" for label, value in labeled]
+                return _requirements_html_from_lines(lines, indent=indent)
             return requirements_text_to_html(plain, indent=indent)
     return ""
 

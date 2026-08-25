@@ -1,0 +1,315 @@
+# Complete Divine
+- **Path:** `C:\Users\User\Documents\fg-modules\fg-builder\reviews\v3\Complete Divine.mod`
+- **Book slug:** `complete-divine`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 138
+- **Info:** 2
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 31 |
+| domains | 20 |
+| feat | 56 |
+| spell | 128 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 0 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 0 |
+| `score equal to` in class text | 0 |
+
+## Build warnings (embedded)
+
+- classes/Geomancer: unknown class skill name(s) for FG ruleset: Scry
+- classes/Moon Guardian: unknown class skill name(s) for FG ruleset: Control Shape
+
+## Warnings
+
+- **[warning]** `class_invalid_save` — Black Flame Zealot: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Black Flame Zealot: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Black Flame Zealot: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Black Flame Zealot: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Blighter: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Blighter: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Blighter: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Blighter: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Church Inquisitor: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Church Inquisitor: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Church Inquisitor: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Church Inquisitor: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Consecrated Harrier: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Consecrated Harrier: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Consecrated Harrier: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Consecrated Harrier: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Contemplative: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Contemplative: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Contemplative: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Contemplative: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Divine Crusader: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Divine Crusader: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Divine Crusader: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Divine Crusader: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Divine Oracle: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Divine Oracle: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Divine Oracle: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Divine Oracle: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Dweomerkeeper: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Dweomerkeeper: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Dweomerkeeper: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Dweomerkeeper: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Entropomancer: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Entropomancer: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Entropomancer: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Entropomancer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Evangelist: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Evangelist: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Favored Soul: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Favored Soul: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Favored Soul: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Favored Soul: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Geomancer: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Geomancer: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Geomancer: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Geomancer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Geomancer: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Holy Liberator: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Holy Liberator: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Holy Liberator: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Holy Liberator: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Hospitaler: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Hospitaler: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Hospitaler: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Hospitaler: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Master of Shrouds: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Master of Shrouds: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Master of Shrouds: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Master of Shrouds: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Moon Guardian: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Moon Guardian: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Moon Guardian: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_unknown_skill` — Moon Guardian: unknown class skill name(s) for FG ruleset: Control Shape
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_invalid_save` — Nightcloak: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Nightcloak: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Nightcloak: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Nightcloak: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Pious Templar: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Pious Templar: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Pious Templar: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Pious Templar: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Radiant Servant of Pelor: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Radiant Servant of Pelor: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Radiant Servant of Pelor: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Radiant Servant of Pelor: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Rainbow Servant: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Rainbow Servant: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Rainbow Servant: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Rainbow Servant: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Sacred Exorcist: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Sacred Exorcist: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Sacred Exorcist: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Sacred Exorcist: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Sacred Fist: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Sacred Fist: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Sacred Fist: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Sacred Fist: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Seeker of the Misty Isle: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Seeker of the Misty Isle: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Seeker of the Misty Isle: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Seeker of the Misty Isle: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Shining Blade of Heironeous: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Shining Blade of Heironeous: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Shining Blade of Heironeous: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Shining Blade of Heironeous: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Shugenja: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Shugenja: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Shugenja: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Shugenja: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Spirit Shaman: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spirit Shaman: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Spirit Shaman: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Spirit Shaman: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Stormlord: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Stormlord: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Stormlord: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Stormlord: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Temple Raider of Olidammara: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Temple Raider of Olidammara: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Temple Raider of Olidammara: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Temple Raider of Olidammara: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Ur-priest: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ur-priest: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Ur-priest: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Ur-priest: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Void Disciple: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Void Disciple: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Void Disciple: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Void Disciple: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_invalid_save` — Warpriest: Invalid fort save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Warpriest: Invalid ref save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_invalid_save` — Warpriest: Invalid will save: 'Poor'
+  - Remediation: Use Good or Bad.
+- **[warning]** `class_no_features` — Warpriest: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `spell_missing_field` — Blast of Force: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Bolts of Bedevilment: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Crown of Glory: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Curse of Lycanthropy: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Dream Sight: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Maddening Scream: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Monstrous Thrall: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Obedient Avalanche: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Otyugh Swarm: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Pavilion of Grandeur: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Plague of Rats: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Scourge: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Touch of Madness: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — True Creation: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — True Domination: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+
+## Info
+
+- **[info]** `class_legacy_skill` — Geomancer: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Moon Guardian: Legacy/optional 3.5E skill: Control Shape
+  - Remediation: Manually select class skills in FG if using optional rules.

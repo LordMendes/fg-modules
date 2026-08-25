@@ -17,7 +17,7 @@ import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 export const metadata = buildPageMetadata({
   title: "Goods & Services",
   description:
-    "Browse D&D 3.5 adventuring gear, tools, clothing, mounts, vehicles, buildings, and environment-specific equipment from Realms Helps.",
+    "Browse D&D 3.5 adventuring gear, tools, clothing, mounts, vehicles, buildings, and environment-specific equipment.",
   path: "/stores/goods",
 });
 
