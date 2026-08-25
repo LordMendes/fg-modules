@@ -1,33 +1,68 @@
 {
   "version": "v1",
-  "generated_at": "2026-08-25T03:45:05.370203+00:00",
+  "generated_at": "2026-08-25T19:34:31.966756+00:00",
   "modules": [
     {
-      "module_name": "Red Hand of Doom",
-      "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Red Hand of Doom.mod",
-      "book_slug": "red-hand-of-doom",
+      "module_name": "Races of Faerûn",
+      "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Races of Faerûn.mod",
+      "book_slug": "races-of-faerun",
       "load_ready": true,
-      "automation_ready": true,
+      "automation_ready": false,
       "record_counts": {
-        "feat": 2,
-        "monsters": 174
+        "class": 9,
+        "feat": 84,
+        "spell": 13,
+        "race": 35
       },
-      "build_warnings": [],
-      "spellclass_readiness": {},
+      "build_warnings": [
+        "classes/Elven High Mage: Advancement grants spellcasting at level(s) [3, 5, 7, 9] but no Spells per Day classfeature"
+      ],
+      "spellclass_readiness": {
+        "spell_related_features": 3,
+        "named_spells": 0,
+        "named_spellcasting": 0,
+        "named_spells_per_day": 3,
+        "score_equal_to_count": 0
+      },
       "totals": {
         "errors": 0,
-        "warnings": 0,
+        "warnings": 3,
         "info": 0
       },
-      "issues": []
+      "issues": [
+        {
+          "code": "class_missing_field",
+          "severity": "warning",
+          "category": "class",
+          "record_name": "Elven High Mage",
+          "message": "Missing required field: fort",
+          "remediation": "Rebuild class with complete identity fields."
+        },
+        {
+          "code": "class_missing_field",
+          "severity": "warning",
+          "category": "class",
+          "record_name": "Elven High Mage",
+          "message": "Missing required field: ref",
+          "remediation": "Rebuild class with complete identity fields."
+        },
+        {
+          "code": "class_missing_field",
+          "severity": "warning",
+          "category": "class",
+          "record_name": "Elven High Mage",
+          "message": "Missing required field: will",
+          "remediation": "Rebuild class with complete identity fields."
+        }
+      ]
     }
   ],
   "totals": {
     "modules": 1,
     "load_ready": 1,
     "errors": 0,
-    "warnings": 0,
+    "warnings": 3,
     "info": 0,
-    "records": 176
+    "records": 141
   }
 }

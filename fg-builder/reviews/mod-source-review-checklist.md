@@ -4,7 +4,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 
 **How to use:** Change `- [ ]` to `- [x]` when you finish reviewing a module.
 
-**Progress:** 10 / 14 reviewed
+**Progress:** 11 / 15 reviewed
 
 ---
 
@@ -25,6 +25,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 | - [ ] | Libris Mortis: The Book of Undead | `reviews/v1-staging/Libris Mortis The Book of Undead.mod` | [libris-mortis-the-book-of-undead.md](reviews/v1-staging/libris-mortis-the-book-of-undead.md) |
 | - [x] | Player's Handbook II | `modules/Player's Handbook II.mod` | [player-s-handbook-ii.md](reviews/v3/player-s-handbook-ii.md) |
 | - [x] | Red Hand of Doom | `modules/Red Hand of Doom.mod` | [red-hand-of-doom.md](reviews/v3/red-hand-of-doom.md) |
+| - [x] | Races of Faerûn | `modules/Races of Faerûn.mod` | [races-of-faerun.md](reviews/races-of-faerun.md) |
 | - [x] | Unearthed Arcana | `modules/Unearthed Arcana.mod` | [unearthed-arcana.md](reviews/v3/unearthed-arcana.md) |
 
 ---
@@ -103,6 +104,16 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 - **Verdict:** OK (0 errors, 0 warnings)
 - Categories: feats=2, monsters=174
 - Monsters: fixed malformed web anchor tags (7 records) via `<a>` unwrap in HTML sanitizer
+
+### Races of Faerûn
+
+Categories touched: classes=9, feats=84, spells=13, races=35
+
+- **2026-08-25:** built from dndtools JSON — see [races-of-faerun.md](reviews/races-of-faerun.md)
+- **Verdict:** Refactored with warnings (0 errors, 3 warnings)
+- Classes: 9 prestige classes; Elven High Mage missing save fields in web data
+- Feats: 84 records with prerequisites/benefit split
+- Races: 35 Faerûn subraces and variants
 
 ### Unearthed Arcana
 

@@ -22,6 +22,8 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Complete Champion": ("CC", "complete-champion"),
     "Player's Handbook II": ("PH2", "players-handbook-ii"),
     "Red Hand of Doom": ("RH", "red-hand-of-doom"),
+    "Races of Faerûn": ("Rac", "races-of-faerun"),
+    "Forgotten Realms Campaign Setting": ("FRCS", "forgotten-realms-campaign-setting"),
 }
 
 CATEGORY_FILES: dict[str, str] = {

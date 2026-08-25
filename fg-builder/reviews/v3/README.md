@@ -1,6 +1,6 @@
 # FG Module Compatibility Review — v1
 
-Generated: 2026-08-25 03:45 UTC
+Generated: 2026-08-25 19:34 UTC
 
 Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `skills/` and `.cursor/skills/fantasy-grounds/`).
 
@@ -8,15 +8,15 @@ Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `ski
 
 | Module | .mod | Load ready | Errors | Warnings | Info | Records |
 |--------|------|:----------:|-------:|---------:|-----:|--------:|
-| [Red Hand of Doom](red-hand-of-doom.md) | `Red Hand of Doom.mod` | yes | 0 | 0 | 0 | 176 |
+| [Races of Faerûn](races-of-faer-n.md) | `Races of Faerûn.mod` | yes | 0 | 3 | 0 | 141 |
 
 ## Rollup totals
 
 - **Modules reviewed:** 1
 - **Load ready:** 1 / 1
-- **Total records:** 176
+- **Total records:** 141
 - **Total errors:** 0
-- **Total warnings:** 0
+- **Total warnings:** 3
 - **Total info:** 0
 
 ## Verdict
