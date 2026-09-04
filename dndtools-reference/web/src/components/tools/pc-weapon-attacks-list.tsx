@@ -72,7 +72,7 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
           delete next[index];
           return next;
         });
-      }, 1400);
+      }, 3200);
       timers.push(timer);
     }
     return () => {

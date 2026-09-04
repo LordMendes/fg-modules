@@ -6,7 +6,6 @@ import { useCallback, useEffect, useRef, useState, useTransition, type ReactNode
 import {
   createPcPlan,
   deletePcPlan,
-  duplicatePcPlan,
   getPcPlan,
   getUserPcPlans,
   renamePcPlan,
@@ -24,11 +23,6 @@ import { PcPlanList } from "@/components/tools/pc-plan-list";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
-import {
-  buildPcFgXml,
-  downloadTextFile,
-  pcPlanExportBasename,
-} from "@/lib/pc-planner/buildFgXml";
 import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
 import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import {
@@ -249,21 +243,6 @@ function PcPlannerBody() {
     });
   }
 
-  function handleDuplicate() {
-    if (!planId) return;
-    startTransition(async () => {
-      const result = await duplicatePcPlan(planId);
-      if (result.success && result.plan) {
-        lastCompendiumSync.current = "";
-        setPlanId(result.plan.id);
-        setShortcut(result.plan.shortcut ?? "");
-        setState(result.plan.state);
-        router.push(`/tools/pc-planner?id=${result.plan.id}`);
-        setStatusMessage("Character duplicated.");
-      }
-    });
-  }
-
   function handleDeleteFromList(id: string) {
     setListError(null);
     return new Promise<boolean>((resolve) => {
@@ -277,21 +256,6 @@ function PcPlannerBody() {
         setPlans((prev) => prev.filter((p) => p.id !== id));
         resolve(true);
       });
-    });
-  }
-
-  function handleDeleteFromEditor() {
-    if (!planId || !window.confirm("Delete this character permanently?")) return;
-    startTransition(async () => {
-      const result = await deletePcPlan(planId);
-      if (!result.success) {
-        setStatusMessage(result.error ?? "Could not delete character");
-        return;
-      }
-      router.push("/tools/pc-planner");
-      setPlanId(null);
-      setStatusMessage(null);
-      await refreshPlans();
     });
   }
 
@@ -377,27 +341,6 @@ function PcPlannerBody() {
     });
   }
 
-  function handleDownloadXml() {
-    const xml = buildPcFgXml(state, {
-      raceFeatures: compendium?.raceFeatures ?? null,
-      classFeatures: compendium?.classFeatures ?? null,
-      classAdvancement: compendium?.classAdvancement ?? null,
-      classHitDice: compendium?.classHitDice ?? null,
-      classSkills: compendium?.skills ?? [],
-      classSpellTables: compendium?.classSpellTables ?? {},
-    });
-    downloadTextFile(`${pcPlanExportBasename(state)}.xml`, xml, "application/xml");
-  }
-
-  function handleDownloadJson() {
-    const json = JSON.stringify(state, null, 2);
-    downloadTextFile(
-      `${pcPlanExportBasename(state)}.json`,
-      json,
-      "application/json",
-    );
-  }
-
   if (!user) {
     return (
       <div className="pc-planner-auth-gate">
@@ -452,39 +395,6 @@ function PcPlannerBody() {
                     ? "Save failed"
                     : null}
             </span>
-            <button type="button" className="tool-btn tool-btn--ghost" onClick={handleNewPlan}>
-              New
-            </button>
-            <button
-              type="button"
-              className="tool-btn tool-btn--ghost"
-              onClick={handleDownloadXml}
-            >
-              Download XML
-            </button>
-            <button
-              type="button"
-              className="tool-btn tool-btn--ghost"
-              onClick={handleDownloadJson}
-            >
-              Download JSON
-            </button>
-            <button
-              type="button"
-              className="tool-btn tool-btn--ghost"
-              onClick={handleDuplicate}
-              disabled={!planId || pending}
-            >
-              Duplicate
-            </button>
-            <button
-              type="button"
-              className="tool-btn tool-btn--ghost tool-btn--danger"
-              onClick={handleDeleteFromEditor}
-              disabled={!planId || pending}
-            >
-              Delete
-            </button>
           </div>
         </div>
 

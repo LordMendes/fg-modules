@@ -1,24 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import type { PcCompendiumBundle } from "@/lib/entities";
-import { fetchInventoryItem } from "@/actions/data";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
+import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
-import { useSessionNonce } from "@/components/session-provider";
 import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
-import {
-  computeEquippedGear,
-  equipInventoryRow,
-  isArmorKind,
-  isShieldKind,
-} from "@/lib/pc-planner/equippedGear";
+import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
 import {
   computeSkillPointSummary,
   computeSkillTotal,
@@ -30,7 +23,6 @@ import {
 } from "@/lib/pc-planner/skillPoints";
 import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
 import { abilityRacialMod, racialModLabel } from "@/lib/pc-planner/syncDerived";
-import { needsWeaponStatBackfill } from "@/lib/pc-planner/weaponAttacks";
 import {
   PC_SHEET_TABS,
   type AbilityKey,
@@ -42,7 +34,6 @@ const ABILITY_KEYS: AbilityKey[] = ["str", "dex", "con", "int", "wis", "cha"];
 
 const RACE_SEARCH_CATEGORIES: CategoryKey[] = ["races"];
 const CLASS_SEARCH_CATEGORIES: CategoryKey[] = ["classes"];
-const INVENTORY_SEARCH_CATEGORIES: CategoryKey[] = ["equipment", "items"];
 const DEITY_SEARCH_CATEGORIES: CategoryKey[] = ["deities"];
 const DOMAIN_SEARCH_CATEGORIES: CategoryKey[] = ["domains"];
 
@@ -103,62 +94,6 @@ export function PcSheet({
   updateAbility,
 }: PcSheetProps) {
   const [racePickerOpen, setRacePickerOpen] = useState(false);
-  const [, startInventoryTransition] = useTransition();
-  const nonce = useSessionNonce();
-  const router = useRouter();
-  const weaponBackfillAttempted = useRef(new Set<string>());
-
-  /** Backfill weapon damage/crit for older inventory rows that only have kind. */
-  useEffect(() => {
-    const missing = (state.inventory ?? [])
-      .map((row, index) => ({ row, index }))
-      .filter(({ row }) => {
-        if (!needsWeaponStatBackfill(row) || !row.slug) return false;
-        const key = `${row.source ?? "equipment"}:${row.slug}`;
-        return !weaponBackfillAttempted.current.has(key);
-      });
-    if (missing.length === 0) return;
-
-    for (const { row } of missing) {
-      if (row.slug) {
-        weaponBackfillAttempted.current.add(
-          `${row.source ?? "equipment"}:${row.slug}`,
-        );
-      }
-    }
-
-    let cancelled = false;
-    startInventoryTransition(async () => {
-      for (const { row, index } of missing) {
-        if (cancelled || !row.slug) continue;
-        const result = await fetchInventoryItem({
-          source: "equipment",
-          slug: row.slug,
-          nonce,
-        });
-        if (cancelled) return;
-        if (!result.success || !result.item) continue;
-        const looked = result.item.row;
-        if (!looked.damageM && !looked.damageS) continue;
-        patch((s) => {
-          const current = s.inventory[index];
-          if (!current || current.slug !== row.slug) return;
-          if (current.damageM || current.damageS) return;
-          current.damageM = looked.damageM;
-          current.damageS = looked.damageS;
-          current.critical = looked.critical;
-          current.damageType = looked.damageType;
-          current.handed = looked.handed;
-          current.rangeIncrement = looked.rangeIncrement;
-          if (!current.kind) current.kind = looked.kind;
-        });
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [state.inventory, nonce, patch, startInventoryTransition]);
 
   const classLevels = state.identity.classLevels;
   const totalLevel = totalCharacterLevel(classLevels);
@@ -699,168 +634,11 @@ export function PcSheet({
         )}
 
         {sheetTab === "inventory" && (
-          <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
-            <div className="npc-sheet-block">
-              <h3>Inventory</h3>
-              <div className="pc-inventory-search">
-                <EntitySearchCombobox
-                  categories={INVENTORY_SEARCH_CATEGORIES}
-                  placeholder="Search equipment or magic items…"
-                  label="Add equipment or magic item"
-                  onSelect={(hit) => {
-                    startInventoryTransition(async () => {
-                      let result = await fetchInventoryItem({
-                        source: "equipment",
-                        slug: hit.slug,
-                        nonce,
-                      });
-                      if (!result.success || !result.item) {
-                        result = await fetchInventoryItem({
-                          source: "item",
-                          slug: hit.slug,
-                          nonce,
-                        });
-                      }
-                      if (!result.success || !result.item) {
-                        if (result.error === "Invalid session") router.refresh();
-                        patch((s) => {
-                          s.inventory.push({
-                            name: hit.name,
-                            quantity: 1,
-                            weight: 0,
-                            slug: hit.slug,
-                          });
-                        });
-                        return;
-                      }
-                      const looked = result.item;
-                      patch((s) => {
-                        s.inventory.push({
-                          ...looked.row,
-                          quantity: 1,
-                          equipped: false,
-                        });
-                      });
-                    });
-                  }}
-                />
-              </div>
-              {state.inventory.length === 0 ? (
-                <p className="pc-sheet-empty">No items yet.</p>
-              ) : (
-                <table className="entity-table pc-sheet-table">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Qty</th>
-                      <th>Wt</th>
-                      <th title="Equipped">Eq</th>
-                      <th aria-label="Actions" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {state.inventory.map((row, i) => {
-                      const canEquip = isArmorKind(row.kind) || isShieldKind(row.kind);
-                      return (
-                        <tr key={`${row.slug ?? row.name}-${i}`} className="pc-sheet-editable-row">
-                          <td>
-                            <input
-                              type="text"
-                              className="pc-sheet-input"
-                              value={row.name}
-                              placeholder="Item"
-                              onChange={(e) =>
-                                patch((s) => {
-                                  s.inventory[i].name = e.target.value;
-                                })
-                              }
-                            />
-                            {row.kind ? (
-                              <span className="pc-inventory-kind">{row.kind}</span>
-                            ) : null}
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="pc-sheet-input pc-sheet-input--narrow"
-                              value={row.quantity}
-                              onChange={(e) =>
-                                patch((s) => {
-                                  s.inventory[i].quantity = Number(e.target.value);
-                                })
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="pc-sheet-input pc-sheet-input--narrow"
-                              value={row.weight}
-                              onChange={(e) =>
-                                patch((s) => {
-                                  s.inventory[i].weight = Number(e.target.value);
-                                })
-                              }
-                            />
-                          </td>
-                          <td className="pc-inventory-equip">
-                            {canEquip ? (
-                              <input
-                                type="checkbox"
-                                checked={Boolean(row.equipped)}
-                                title="Equip"
-                                aria-label={`Equip ${row.name || "item"}`}
-                                onChange={(e) =>
-                                  patch((s) => {
-                                    if (e.target.checked) {
-                                      equipInventoryRow(s.inventory, i);
-                                    } else {
-                                      s.inventory[i].equipped = false;
-                                    }
-                                  })
-                                }
-                              />
-                            ) : (
-                              "—"
-                            )}
-                          </td>
-                          <td className="pc-sheet-row-actions">
-                            <button
-                              type="button"
-                              className="tool-btn tool-btn--ghost tool-btn--compact"
-                              onClick={() =>
-                                patch((s) => {
-                                  s.inventory.splice(i, 1);
-                                })
-                              }
-                            >
-                              Remove
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              )}
-              <button
-                type="button"
-                className="tool-btn pc-sheet-add-btn"
-                onClick={onAddInventoryRow}
-              >
-                Add custom item
-              </button>
-              {equippedGear.armorName || equippedGear.shieldName ? (
-                <p className="pc-inventory-equipped-hint">
-                  Equipped
-                  {equippedGear.armorName ? `: ${equippedGear.armorName}` : ""}
-                  {equippedGear.armorName && equippedGear.shieldName ? ", " : ""}
-                  {equippedGear.shieldName ? `${equippedGear.shieldName}` : ""}
-                  {equippedGear.acp !== 0 ? ` (ACP ${equippedGear.acp})` : ""}
-                </p>
-              ) : null}
-            </div>
-          </div>
+          <PcInventoryPanel
+            state={state}
+            patch={patch}
+            onAddInventoryRow={onAddInventoryRow}
+          />
         )}
 
         {sheetTab === "notes" && (
