@@ -380,7 +380,7 @@ function PcPlannerBody() {
     );
   } else {
     body = (
-      <div className="pc-sheet-frame npc-sheet">
+      <div className="pc-sheet-page">
         <div className="pc-sheet-toolbar">
           <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
             ← All characters
@@ -405,33 +405,35 @@ function PcPlannerBody() {
           </p>
         ) : null}
 
-        <PcSheet
-          state={state}
-          patch={patch}
-          sheetTab={sheetTab}
-          onTabChange={setSheetTab}
-          shortcut={shortcut}
-          onShortcutChange={setShortcut}
-          onNameBlur={() => {
-            if (!planId) return;
-            void renamePcPlan(planId, state.identity.name || "Unnamed");
-          }}
-          onShortcutBlur={() => {
-            if (!planId) return;
-            void renamePcPlan(planId, state.identity.name, shortcut || null);
-          }}
-          activeSpellClassIndex={activeSpellClassIndex}
-          onSpellClassIndexChange={setActiveSpellClassIndex}
-          compendium={compendium}
-          compendiumLoading={compendiumLoading}
-          onAddFeat={addFeat}
-          onRemoveFeat={removeFeat}
-          onAddSpell={addSpell}
-          onRemoveSpell={removeSpell}
-          onUpdateSpellPrepared={updateSpellPrepared}
-          onAddInventoryRow={addInventoryRow}
-          updateAbility={updateAbility}
-        />
+        <div className="pc-sheet-frame npc-sheet">
+          <PcSheet
+            state={state}
+            patch={patch}
+            sheetTab={sheetTab}
+            onTabChange={setSheetTab}
+            shortcut={shortcut}
+            onShortcutChange={setShortcut}
+            onNameBlur={() => {
+              if (!planId) return;
+              void renamePcPlan(planId, state.identity.name || "Unnamed");
+            }}
+            onShortcutBlur={() => {
+              if (!planId) return;
+              void renamePcPlan(planId, state.identity.name, shortcut || null);
+            }}
+            activeSpellClassIndex={activeSpellClassIndex}
+            onSpellClassIndexChange={setActiveSpellClassIndex}
+            compendium={compendium}
+            compendiumLoading={compendiumLoading}
+            onAddFeat={addFeat}
+            onRemoveFeat={removeFeat}
+            onAddSpell={addSpell}
+            onRemoveSpell={removeSpell}
+            onUpdateSpellPrepared={updateSpellPrepared}
+            onAddInventoryRow={addInventoryRow}
+            updateAbility={updateAbility}
+          />
+        </div>
       </div>
     );
   }
