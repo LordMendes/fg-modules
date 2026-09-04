@@ -10,7 +10,6 @@ import {
 import { DieIcon } from "@/components/dice/die-icon";
 import { useDice } from "@/components/dice/dice-provider";
 import { RollableStat } from "@/components/dice/rollable-stat";
-import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
 import { createRollId } from "@/lib/dice/notation";
 import type { DieSides } from "@/lib/dice/types";
 import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
@@ -23,7 +22,6 @@ import {
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
-import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
 import type { CombatState, PcPlanState } from "@/lib/pc-planner/types";
 
 type PcCombatPanelProps = {
@@ -245,7 +243,6 @@ export function PcCombatPanel({
     ...speedExtraFields,
     { label: "Misc", value: combat.speedMisc, editable: "speedMisc" as CombatNumberKey, signed: false },
   ];
-  const weapons = computeWeaponAttackRows(state, stats);
   const classNameBySlug = new Map(
     state.identity.classLevels.map((cl) => [cl.classSlug, cl.className]),
   );
@@ -589,8 +586,6 @@ export function PcCombatPanel({
       </div>
 
       <div className="npc-sheet-block pc-combat-attacks">
-        <h3>Weapons</h3>
-        <PcWeaponAttacksList weapons={weapons} />
         <label className="pc-actions-attacks">
           <span className="npc-sheet-sub">Special attacks</span>
           <textarea

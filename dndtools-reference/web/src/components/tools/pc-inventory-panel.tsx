@@ -12,8 +12,13 @@ import { formatDamageType } from "@/lib/equipment-display";
 import {
   computeEquippedGear,
   equipInventoryRow,
+  equipWeaponHand,
   isArmorKind,
   isShieldKind,
+  isWeaponKind,
+  unequipWeapon,
+  weaponAllowsOffHand,
+  weaponOccupiesBothHands,
 } from "@/lib/pc-planner/equippedGear";
 import {
   computeEncumbrance,
@@ -485,15 +490,19 @@ export function PcInventoryPanel({
         ) : (
           <ul className="pc-inventory-list" ref={listRef}>
             {inventory.map((row, i) => {
-              const canEquip = isArmorKind(row.kind) || isShieldKind(row.kind);
+              const isWeapon = isWeaponKind(row.kind);
+              const canEquipArmor = isArmorKind(row.kind) || isShieldKind(row.kind);
               const equipped = Boolean(row.equipped);
+              const weaponHand = row.weaponHand ?? null;
+              const allowsOff = isWeapon && weaponAllowsOffHand(row);
+              const bothHands = isWeapon && weaponOccupiesBothHands(row);
               const tone = kindTone(row);
               const Icon = KIND_ICONS[tone];
               const meta = inventoryRowMeta(row);
               return (
                 <li
                   key={row.id ?? `${row.slug ?? row.name}-${i}`}
-                  className={`pc-inventory-row${equipped ? " pc-inventory-row--equipped" : ""}${
+                  className={`pc-inventory-row${equipped || weaponHand ? " pc-inventory-row--equipped" : ""}${
                     pendingRemove === i ? " pc-inventory-row--pending-remove" : ""
                   }`}
                 >
@@ -527,12 +536,22 @@ export function PcInventoryPanel({
                             custom
                           </span>
                         ) : null}
+                        {weaponHand === "main" ? (
+                          <span className="pc-inventory-kind-chip pc-inventory-kind-chip--hand">
+                            main
+                          </span>
+                        ) : null}
+                        {weaponHand === "off" ? (
+                          <span className="pc-inventory-kind-chip pc-inventory-kind-chip--hand">
+                            off-hand
+                          </span>
+                        ) : null}
                         {meta ? <span className="pc-inventory-stats">{meta}</span> : null}
                       </div>
                     </div>
                   </div>
                   <div className="pc-inventory-row-controls">
-                    <label className="pc-inventory-field">
+                    <label className="pc-inventory-field pc-inventory-field--qty">
                       <span>Qty</span>
                       <input
                         type="number"
@@ -546,7 +565,7 @@ export function PcInventoryPanel({
                         }
                       />
                     </label>
-                    <label className="pc-inventory-field">
+                    <label className="pc-inventory-field pc-inventory-field--wt">
                       <span>Wt</span>
                       <input
                         type="number"
@@ -562,25 +581,96 @@ export function PcInventoryPanel({
                         }
                       />
                     </label>
-                    {canEquip ? (
-                      <button
-                        type="button"
-                        className="pc-inventory-equip-btn"
-                        aria-pressed={equipped}
-                        title={equipped ? "Unequip" : "Equip"}
-                        onClick={() =>
-                          patch((s) => {
-                            if (equipped) {
-                              s.inventory[i].equipped = false;
-                            } else {
-                              equipInventoryRow(s.inventory, i);
+                    <div className="pc-inventory-equip-slot">
+                      {allowsOff ? (
+                        <div
+                          className="pc-inventory-hand-btns"
+                          role="group"
+                          aria-label="Weapon hand"
+                        >
+                          <button
+                            type="button"
+                            className="pc-inventory-equip-btn"
+                            aria-pressed={weaponHand === "main"}
+                            title={
+                              weaponHand === "main"
+                                ? "Unequip main hand"
+                                : "Equip as main hand"
                             }
-                          })
-                        }
-                      >
-                        {equipped ? "Equipped" : "Equip"}
-                      </button>
-                    ) : null}
+                            onClick={() =>
+                              patch((s) => {
+                                if (s.inventory[i].weaponHand === "main") {
+                                  unequipWeapon(s.inventory, i);
+                                } else {
+                                  equipWeaponHand(s.inventory, i, "main");
+                                }
+                              })
+                            }
+                          >
+                            Main
+                          </button>
+                          <button
+                            type="button"
+                            className="pc-inventory-equip-btn"
+                            aria-pressed={weaponHand === "off"}
+                            title={
+                              weaponHand === "off"
+                                ? "Unequip off-hand"
+                                : "Equip as off-hand"
+                            }
+                            onClick={() =>
+                              patch((s) => {
+                                if (s.inventory[i].weaponHand === "off") {
+                                  unequipWeapon(s.inventory, i);
+                                } else {
+                                  equipWeaponHand(s.inventory, i, "off");
+                                }
+                              })
+                            }
+                          >
+                            Off
+                          </button>
+                        </div>
+                      ) : null}
+                      {bothHands ? (
+                        <button
+                          type="button"
+                          className="pc-inventory-equip-btn"
+                          aria-pressed={weaponHand === "main"}
+                          title={weaponHand === "main" ? "Unequip" : "Equip"}
+                          onClick={() =>
+                            patch((s) => {
+                              if (s.inventory[i].weaponHand === "main") {
+                                unequipWeapon(s.inventory, i);
+                              } else {
+                                equipWeaponHand(s.inventory, i, "main");
+                              }
+                            })
+                          }
+                        >
+                          {weaponHand === "main" ? "Equipped" : "Equip"}
+                        </button>
+                      ) : null}
+                      {canEquipArmor ? (
+                        <button
+                          type="button"
+                          className="pc-inventory-equip-btn"
+                          aria-pressed={equipped}
+                          title={equipped ? "Unequip" : "Equip"}
+                          onClick={() =>
+                            patch((s) => {
+                              if (equipped) {
+                                s.inventory[i].equipped = false;
+                              } else {
+                                equipInventoryRow(s.inventory, i);
+                              }
+                            })
+                          }
+                        >
+                          {equipped ? "Equipped" : "Equip"}
+                        </button>
+                      ) : null}
+                    </div>
                     {pendingRemove === i ? (
                       <div
                         ref={removeConfirmRef}
@@ -637,7 +727,10 @@ export function PcInventoryPanel({
           </ul>
         )}
 
-        {equippedGear.armorName || equippedGear.shieldName ? (
+        {equippedGear.armorName ||
+        equippedGear.shieldName ||
+        equippedGear.mainWeaponName ||
+        equippedGear.offWeaponName ? (
           <div className="pc-inventory-loadout">
             <span className="pc-inventory-loadout-label">Wearing</span>
             {equippedGear.armorName ? (
@@ -645,6 +738,16 @@ export function PcInventoryPanel({
             ) : null}
             {equippedGear.shieldName ? (
               <span className="pc-inventory-loadout-chip">{equippedGear.shieldName}</span>
+            ) : null}
+            {equippedGear.mainWeaponName ? (
+              <span className="pc-inventory-loadout-chip">
+                {equippedGear.mainWeaponName} (main)
+              </span>
+            ) : null}
+            {equippedGear.offWeaponName ? (
+              <span className="pc-inventory-loadout-chip">
+                {equippedGear.offWeaponName} (off-hand)
+              </span>
             ) : null}
             {equippedGear.acp !== 0 ? (
               <span className="pc-inventory-loadout-acp">ACP {equippedGear.acp}</span>

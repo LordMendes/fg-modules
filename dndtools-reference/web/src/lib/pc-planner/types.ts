@@ -85,6 +85,11 @@ export type InventoryRow = {
   slug?: string | null;
   source?: "equipment" | "item" | null;
   equipped?: boolean;
+  /**
+   * Weapon hand slot when equipped as a weapon.
+   * Synced with equipped for weapons: equipped === Boolean(weaponHand).
+   */
+  weaponHand?: "main" | "off" | null;
   kind?: string | null;
   /** Armor category: light | medium | heavy (from equipment). */
   category?: string | null;

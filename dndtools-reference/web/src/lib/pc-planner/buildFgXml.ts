@@ -180,7 +180,10 @@ function formatInventoryString(state: PcPlanState): string {
     .filter((row) => row.name.trim())
     .map((row) => {
       const qty = row.quantity !== 1 ? `×${row.quantity}` : "";
-      const eq = row.equipped ? " (equipped)" : "";
+      let eq = "";
+      if (row.weaponHand === "main") eq = " (main)";
+      else if (row.weaponHand === "off") eq = " (off-hand)";
+      else if (row.equipped) eq = " (equipped)";
       return `${row.name}${qty}${eq}`;
     })
     .join("; ");

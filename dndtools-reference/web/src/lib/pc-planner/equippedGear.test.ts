@@ -5,8 +5,10 @@ import { createDefaultPcPlanState } from "./defaultState";
 import {
   computeEquippedGear,
   equipInventoryRow,
+  equipWeaponHand,
   gearStatsFromEquipmentIndex,
   parseWeightPounds,
+  unequipWeapon,
 } from "./equippedGear";
 
 describe("parseWeightPounds", () => {
@@ -178,6 +180,189 @@ describe("equipInventoryRow", () => {
     equipInventoryRow(inventory, 1);
     assert.equal(inventory[0].equipped, false);
     assert.equal(inventory[1].equipped, true);
+  });
+
+  it("clears off-hand weapon when equipping a shield", () => {
+    const inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        handed: "one",
+        weaponHand: "main" as const,
+        equipped: true,
+      },
+      {
+        name: "Short Sword",
+        quantity: 1,
+        weight: 2,
+        kind: "weapon",
+        handed: "light",
+        weaponHand: "off" as const,
+        equipped: true,
+      },
+      {
+        name: "Heavy Steel Shield",
+        quantity: 1,
+        weight: 15,
+        kind: "shield",
+        equipped: false,
+        armorBonus: 2,
+      },
+    ];
+    equipInventoryRow(inventory, 2);
+    assert.equal(inventory[0].weaponHand, "main");
+    assert.equal(inventory[1].weaponHand, null);
+    assert.equal(inventory[1].equipped, false);
+    assert.equal(inventory[2].equipped, true);
+  });
+});
+
+describe("equipWeaponHand", () => {
+  it("assigns main and off exclusivity for one-handed weapons", () => {
+    const inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        handed: "one",
+      },
+      {
+        name: "Rapier",
+        quantity: 1,
+        weight: 2,
+        kind: "weapon",
+        handed: "one",
+      },
+      {
+        name: "Short Sword",
+        quantity: 1,
+        weight: 2,
+        kind: "weapon",
+        handed: "light",
+      },
+    ];
+    equipWeaponHand(inventory, 0, "main");
+    equipWeaponHand(inventory, 2, "off");
+    assert.equal(inventory[0].weaponHand, "main");
+    assert.equal(inventory[2].weaponHand, "off");
+    equipWeaponHand(inventory, 1, "main");
+    assert.equal(inventory[0].weaponHand, null);
+    assert.equal(inventory[0].equipped, false);
+    assert.equal(inventory[1].weaponHand, "main");
+    assert.equal(inventory[2].weaponHand, "off");
+  });
+
+  it("greatsword equip clears off-hand and shield", () => {
+    const inventory = [
+      {
+        name: "Short Sword",
+        quantity: 1,
+        weight: 2,
+        kind: "weapon",
+        handed: "light",
+        weaponHand: "off" as const,
+        equipped: true,
+      },
+      {
+        name: "Heavy Steel Shield",
+        quantity: 1,
+        weight: 15,
+        kind: "shield",
+        equipped: true,
+        armorBonus: 2,
+      },
+      {
+        name: "Greatsword",
+        quantity: 1,
+        weight: 8,
+        kind: "weapon",
+        handed: "two",
+      },
+    ];
+    equipWeaponHand(inventory, 2, "main");
+    assert.equal(inventory[2].weaponHand, "main");
+    assert.equal(inventory[2].equipped, true);
+    assert.equal(inventory[0].weaponHand, null);
+    assert.equal(inventory[0].equipped, false);
+    assert.equal(inventory[1].equipped, false);
+  });
+
+  it("off-hand equip unequips a shield", () => {
+    const inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        handed: "one",
+        weaponHand: "main" as const,
+        equipped: true,
+      },
+      {
+        name: "Short Sword",
+        quantity: 1,
+        weight: 2,
+        kind: "weapon",
+        handed: "light",
+      },
+      {
+        name: "Buckler",
+        quantity: 1,
+        weight: 5,
+        kind: "shield",
+        equipped: true,
+        armorBonus: 1,
+      },
+    ];
+    equipWeaponHand(inventory, 1, "off");
+    assert.equal(inventory[1].weaponHand, "off");
+    assert.equal(inventory[2].equipped, false);
+  });
+
+  it("unequipWeapon clears hand and equipped", () => {
+    const inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        handed: "one",
+        weaponHand: "main" as const,
+        equipped: true,
+      },
+    ];
+    unequipWeapon(inventory, 0);
+    assert.equal(inventory[0].weaponHand, null);
+    assert.equal(inventory[0].equipped, false);
+  });
+
+  it("reports main and off names in computeEquippedGear", () => {
+    const gear = computeEquippedGear(
+      [
+        {
+          name: "Longsword",
+          quantity: 1,
+          weight: 4,
+          kind: "weapon",
+          weaponHand: "main",
+          equipped: true,
+        },
+        {
+          name: "Dagger",
+          quantity: 1,
+          weight: 1,
+          kind: "weapon",
+          weaponHand: "off",
+          equipped: true,
+        },
+      ],
+      30,
+    );
+    assert.equal(gear.mainWeaponName, "Longsword");
+    assert.equal(gear.offWeaponName, "Dagger");
   });
 });
 

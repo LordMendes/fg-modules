@@ -17,7 +17,13 @@ export type EquippedGear = {
   shieldName: string | null;
   /** Equipped body armor category (shields ignored). */
   armorCategory: ArmorLoadCategory;
+  /** Main-hand / two-handed / ranged weapon name. */
+  mainWeaponName: string | null;
+  /** Off-hand weapon name (not a shield). */
+  offWeaponName: string | null;
 };
+
+export type WeaponHand = "main" | "off";
 
 function parseSignedNumber(raw: string | null | undefined): number | null {
   if (raw == null) return null;
@@ -50,6 +56,54 @@ export function isWeaponKind(kind: string | null | undefined): boolean {
   return (kind ?? "").toLowerCase() === "weapon";
 }
 
+function weaponHanded(row: InventoryRow): string {
+  return (row.handed ?? "").toLowerCase();
+}
+
+/** Two-handed or ranged weapons occupy both hands when equipped as Main. */
+export function weaponOccupiesBothHands(row: InventoryRow): boolean {
+  if (!isWeaponKind(row.kind)) return false;
+  const handed = weaponHanded(row);
+  return handed === "two" || handed === "ranged";
+}
+
+/** One-handed or light melee can be Main or Off. */
+export function weaponAllowsOffHand(row: InventoryRow): boolean {
+  if (!isWeaponKind(row.kind)) return false;
+  const handed = weaponHanded(row);
+  if (!handed) return true; // custom / unknown: allow either slot
+  return handed === "one" || handed === "light";
+}
+
+function clearWeaponHand(row: InventoryRow): void {
+  row.weaponHand = null;
+  if (isWeaponKind(row.kind)) {
+    row.equipped = false;
+  }
+}
+
+function unequipShields(inventory: InventoryRow[]): void {
+  for (const row of inventory) {
+    if (isShieldKind(row.kind) && row.equipped) {
+      row.equipped = false;
+    }
+  }
+}
+
+function clearHandSlot(inventory: InventoryRow[], hand: WeaponHand): void {
+  for (const row of inventory) {
+    if (!isWeaponKind(row.kind)) continue;
+    if (row.weaponHand === hand) clearWeaponHand(row);
+  }
+}
+
+function clearBothHandWeapons(inventory: InventoryRow[]): void {
+  for (const row of inventory) {
+    if (!isWeaponKind(row.kind)) continue;
+    if (row.weaponHand) clearWeaponHand(row);
+  }
+}
+
 function readIndexString(
   index: Record<string, unknown>,
   key: string,
@@ -68,6 +122,8 @@ export function emptyEquippedGear(): EquippedGear {
     armorName: null,
     shieldName: null,
     armorCategory: "none",
+    mainWeaponName: null,
+    offWeaponName: null,
   };
 }
 
@@ -92,6 +148,12 @@ export function computeEquippedGear(
   let shieldAcp = 0;
 
   for (const row of inventory) {
+    if (isWeaponKind(row.kind) && row.weaponHand === "main") {
+      result.mainWeaponName = row.name || null;
+    }
+    if (isWeaponKind(row.kind) && row.weaponHand === "off") {
+      result.offWeaponName = row.name || null;
+    }
     if (!row.equipped) continue;
     if (isArmorKind(row.kind)) {
       result.armor = effectiveArmorBonus(row);
@@ -116,6 +178,60 @@ export function computeEquippedGear(
   return result;
 }
 
+/**
+ * Equip a weapon into Main or Off. Enforces one weapon per slot and
+ * two-handed/ranged occupying both hands (clears Off + shield).
+ */
+export function equipWeaponHand(
+  inventory: InventoryRow[],
+  index: number,
+  hand: WeaponHand,
+): void {
+  const row = inventory[index];
+  if (!row || !isWeaponKind(row.kind)) return;
+
+  const bothHands = weaponOccupiesBothHands(row);
+  if (hand === "off" && (bothHands || !weaponAllowsOffHand(row))) return;
+
+  if (bothHands) {
+    clearBothHandWeapons(inventory);
+    unequipShields(inventory);
+    row.weaponHand = "main";
+    row.equipped = true;
+    return;
+  }
+
+  if (hand === "off") {
+    clearHandSlot(inventory, "off");
+    unequipShields(inventory);
+    // Two-handed/ranged Main cannot coexist with Off.
+    for (const other of inventory) {
+      if (
+        isWeaponKind(other.kind) &&
+        other.weaponHand === "main" &&
+        weaponOccupiesBothHands(other)
+      ) {
+        clearWeaponHand(other);
+      }
+    }
+    row.weaponHand = "off";
+    row.equipped = true;
+    return;
+  }
+
+  // Main, one-handed / light
+  clearHandSlot(inventory, "main");
+  row.weaponHand = "main";
+  row.equipped = true;
+}
+
+/** Clear a weapon's hand slot (and equipped flag). */
+export function unequipWeapon(inventory: InventoryRow[], index: number): void {
+  const row = inventory[index];
+  if (!row || !isWeaponKind(row.kind)) return;
+  clearWeaponHand(row);
+}
+
 /** Unequip other rows of the same armor/shield family when equipping one. */
 export function equipInventoryRow(inventory: InventoryRow[], index: number): void {
   const row = inventory[index];
@@ -123,12 +239,28 @@ export function equipInventoryRow(inventory: InventoryRow[], index: number): voi
   const equippingArmor = isArmorKind(row.kind);
   const equippingShield = isShieldKind(row.kind);
   row.equipped = true;
-  if (!equippingArmor && !equippingShield) return;
-  for (let i = 0; i < inventory.length; i++) {
-    if (i === index) continue;
-    const other = inventory[i];
-    if (equippingArmor && isArmorKind(other.kind)) other.equipped = false;
-    if (equippingShield && isShieldKind(other.kind)) other.equipped = false;
+  if (equippingArmor) {
+    for (let i = 0; i < inventory.length; i++) {
+      if (i === index) continue;
+      const other = inventory[i];
+      if (isArmorKind(other.kind)) other.equipped = false;
+    }
+    return;
+  }
+  if (equippingShield) {
+    for (let i = 0; i < inventory.length; i++) {
+      if (i === index) continue;
+      const other = inventory[i];
+      if (isShieldKind(other.kind)) other.equipped = false;
+    }
+    // Shield occupies off-hand: clear Off weapon and two-handed/ranged Main.
+    for (const other of inventory) {
+      if (!isWeaponKind(other.kind)) continue;
+      if (other.weaponHand === "off") clearWeaponHand(other);
+      if (other.weaponHand === "main" && weaponOccupiesBothHands(other)) {
+        clearWeaponHand(other);
+      }
+    }
   }
 }
 

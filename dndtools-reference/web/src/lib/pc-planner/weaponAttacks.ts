@@ -2,7 +2,6 @@ import type { DicePoolItem, DieSides } from "@/lib/dice/types";
 import { weaponDamageColor } from "@/lib/dice/damageTypeColors";
 import {
   abilityModifier,
-  formatIterativeAttacks,
   formatModifier,
   iterativeAttackBonuses,
   type CombatComputed,
@@ -30,21 +29,39 @@ export type WeaponDamagePart = {
   color: string;
 };
 
+export type TwfHand = "main" | "off";
+
 export type WeaponAttackRow = {
   /** Index into state.inventory */
   inventoryIndex: number;
   name: string;
   mode: WeaponAttackMode;
+  /** Unpenalized primary attack bonus (standard action). */
   attackBonus: number;
+  /** Alias of fullAttackBonuses (MM / legacy). */
   attackBonuses: number[];
+  /** Alias of fullAttackDisplay (MM / legacy). */
   attackDisplay: string;
+  /** Single standard-action attack bonus. */
+  standardBonuses: number[];
+  standardDisplay: string;
+  /** Full-attack routine (iteratives and/or TWF). */
+  fullAttackBonuses: number[];
+  fullAttackDisplay: string;
+  /** True when full attack differs from a single standard strike. */
+  showFullAttack: boolean;
+  /** Set when this weapon is part of an inferred two-weapon pair. */
+  twfHand: TwfHand | null;
   /** Primary weapon dice; multiplied on a critical. */
   damageDice: DicePoolItem[];
-  /** Extra energy / ability dice; not multiplied on a critical. */
+  /** Extra energy / property dice; not multiplied on a critical. */
   extraDamageDice: DicePoolItem[];
   /** Burst extras that apply only on a confirmed critical. */
   critOnlyDice: DicePoolItem[];
+  /** Damage ability/enhancement for a standard (one-weapon) attack. */
   damageModifier: number;
+  /** Damage when using this weapon in a full attack (1/2 Str off-hand). */
+  fullAttackDamageModifier: number;
   damageDisplay: string;
   extraDamageDisplay: string;
   critExtraDisplay: string;
@@ -211,16 +228,80 @@ export function applyCriticalDamage(
   };
 }
 
-function hasWeaponFinesse(feats: FeatEntry[]): boolean {
+function normalizeFeatName(name: string): string {
+  return name.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function featMatches(
+  feats: FeatEntry[],
+  displayName: string,
+  slugPrefix: string,
+): boolean {
   return feats.some((feat) => {
-    const name = feat.name.trim().toLowerCase().replace(/\s+/g, " ");
+    const name = normalizeFeatName(feat.name);
     const slug = feat.slug.toLowerCase();
     return (
-      name === "weapon finesse" ||
-      slug === "weapon-finesse" ||
-      slug.startsWith("weapon-finesse-")
+      name === displayName ||
+      slug === slugPrefix ||
+      slug.startsWith(`${slugPrefix}-`)
     );
   });
+}
+
+function hasWeaponFinesse(feats: FeatEntry[]): boolean {
+  return featMatches(feats, "weapon finesse", "weapon-finesse");
+}
+
+export type TwfFeatFlags = {
+  twoWeaponFighting: boolean;
+  improved: boolean;
+  greater: boolean;
+};
+
+export function getTwfFeatFlags(feats: FeatEntry[]): TwfFeatFlags {
+  return {
+    twoWeaponFighting: featMatches(
+      feats,
+      "two-weapon fighting",
+      "two-weapon-fighting",
+    ),
+    improved: featMatches(
+      feats,
+      "improved two-weapon fighting",
+      "improved-two-weapon-fighting",
+    ),
+    greater: featMatches(
+      feats,
+      "greater two-weapon fighting",
+      "greater-two-weapon-fighting",
+    ),
+  };
+}
+
+/** PHB 3.5 two-weapon fighting attack penalties. */
+export function twfAttackPenalties(
+  hasTwfFeat: boolean,
+  offHandLight: boolean,
+): { primary: number; offHand: number } {
+  if (hasTwfFeat) {
+    return offHandLight
+      ? { primary: -2, offHand: -2 }
+      : { primary: -4, offHand: -4 };
+  }
+  return offHandLight
+    ? { primary: -4, offHand: -8 }
+    : { primary: -6, offHand: -10 };
+}
+
+/** Off-hand damage: half positive Str bonus; full Str penalty. */
+export function offHandDamageAbilityBonus(strMod: number): number {
+  if (strMod > 0) return Math.floor(strMod / 2);
+  return strMod;
+}
+
+export function formatAttackBonuses(bonuses: number[]): string {
+  if (bonuses.length === 0) return formatModifier(0);
+  return bonuses.map(formatModifier).join("/");
 }
 
 export function isRangedWeapon(row: InventoryRow): boolean {
@@ -233,6 +314,64 @@ export function isLightWeapon(row: InventoryRow): boolean {
 
 export function isTwoHandedWeapon(row: InventoryRow): boolean {
   return (row.handed ?? "").toLowerCase() === "two";
+}
+
+export function isOneHandedWeapon(row: InventoryRow): boolean {
+  return (row.handed ?? "").toLowerCase() === "one";
+}
+
+/** Light or one-handed melee weapons can form a two-weapon pair. */
+export function canTwoWeaponFight(row: InventoryRow): boolean {
+  if (!isWeaponKind(row.kind) || !weaponHasDamage(row)) return false;
+  if (isRangedWeapon(row) || isTwoHandedWeapon(row)) return false;
+  const handed = (row.handed ?? "").toLowerCase();
+  if (!handed) return true;
+  return isLightWeapon(row) || isOneHandedWeapon(row);
+}
+
+/**
+ * Resolve TWF from explicit Main / Off slots when both are light or
+ * one-handed melee weapons.
+ */
+export function resolveTwfPair(
+  inventory: InventoryRow[],
+): { mainIndex: number; offIndex: number } | null {
+  let mainIndex = -1;
+  let offIndex = -1;
+  for (let i = 0; i < inventory.length; i++) {
+    const row = inventory[i];
+    if (!isWeaponKind(row.kind)) continue;
+    if (row.weaponHand === "main") mainIndex = i;
+    if (row.weaponHand === "off") offIndex = i;
+  }
+  if (mainIndex < 0 || offIndex < 0) return null;
+  if (!canTwoWeaponFight(inventory[mainIndex])) return null;
+  if (!canTwoWeaponFight(inventory[offIndex])) return null;
+  return { mainIndex, offIndex };
+}
+
+/** @deprecated Prefer resolveTwfPair; kept for older call sites. */
+export function inferTwfPair(
+  inventory: InventoryRow[],
+): { mainIndex: number; offIndex: number } | null {
+  return resolveTwfPair(inventory);
+}
+
+export function offHandAttackBonuses(
+  attackBonus: number,
+  offHandPenalty: number,
+  flags: TwfFeatFlags,
+): number[] {
+  const primary = attackBonus + offHandPenalty;
+  const bonuses = [primary];
+  if (flags.improved) bonuses.push(primary - 5);
+  if (flags.greater) bonuses.push(primary - 10);
+  return bonuses;
+}
+
+/** Full Attack is available only when the routine has two or more rolls. */
+export function showFullAttackFor(fullAttackBonuses: number[]): boolean {
+  return fullAttackBonuses.length > 1;
 }
 
 function lineHasDice(line: InventoryDamageLine, sizeMod: number): boolean {
@@ -360,15 +499,25 @@ export function computeWeaponAttackRows(
   const dexMod = abilityModifier(state.abilities.dex);
   const sizeMod = state.combat.sizeMod;
   const finesse = hasWeaponFinesse(state.feats);
+  const twfFlags = getTwfFeatFlags(state.feats);
+  const twfPair = resolveTwfPair(inventory);
+  const offHandLight = twfPair
+    ? isLightWeapon(inventory[twfPair.offIndex])
+    : false;
+  const twfPenalties = twfPair
+    ? twfAttackPenalties(twfFlags.twoWeaponFighting, offHandLight)
+    : null;
   const rows: WeaponAttackRow[] = [];
 
   for (let i = 0; i < inventory.length; i++) {
     const item = inventory[i];
     if (!isWeaponKind(item.kind) || !weaponHasDamage(item)) continue;
+    if (!item.weaponHand) continue;
 
     const mode: WeaponAttackMode = isRangedWeapon(item) ? "ranged" : "melee";
     const light = isLightWeapon(item);
-    const useDexToHit = mode === "ranged" || (finesse && light && mode === "melee");
+    const useDexToHit =
+      mode === "ranged" || (finesse && light && mode === "melee");
 
     const magicAttack = inventoryAttackBonus(item);
     const attackBonus =
@@ -410,19 +559,59 @@ export function computeWeaponAttackRows(
       .filter(Boolean)
       .join(" plus ");
 
-    let damageModifier = inventoryDamageBonus(item);
+    const magicDamage = inventoryDamageBonus(item);
+    const twoHanded = isTwoHandedWeapon(item);
+    let abilityDamage = 0;
     if (mode === "melee") {
-      damageModifier += meleeDamageAbilityBonus(strMod, isTwoHandedWeapon(item));
+      abilityDamage = meleeDamageAbilityBonus(strMod, twoHanded);
+    }
+    const damageModifier = magicDamage + abilityDamage;
+
+    let twfHand: TwfHand | null = null;
+    if (twfPair && twfPenalties) {
+      if (i === twfPair.mainIndex) twfHand = "main";
+      else if (i === twfPair.offIndex) twfHand = "off";
     }
 
-    const attackBonuses = iterativeAttackBonuses(attackBonus);
-    const attackDisplay = formatIterativeAttacks(attackBonus);
+    let fullAttackDamageModifier = damageModifier;
+    if (mode === "melee" && twfHand === "main") {
+      // Dual-wield main hand never gets 1.5× Str.
+      fullAttackDamageModifier = magicDamage + strMod;
+    } else if (mode === "melee" && twfHand === "off") {
+      fullAttackDamageModifier =
+        magicDamage + offHandDamageAbilityBonus(strMod);
+    }
+
+    const standardBonuses = [attackBonus];
+    const standardDisplay = formatAttackBonuses(standardBonuses);
+
+    let fullAttackBonuses: number[];
+    if (twfHand === "main" && twfPenalties) {
+      fullAttackBonuses = iterativeAttackBonuses(
+        attackBonus + twfPenalties.primary,
+      );
+    } else if (twfHand === "off" && twfPenalties) {
+      fullAttackBonuses = offHandAttackBonuses(
+        attackBonus,
+        twfPenalties.offHand,
+        twfFlags,
+      );
+    } else {
+      fullAttackBonuses = iterativeAttackBonuses(attackBonus);
+    }
+    const fullAttackDisplay = formatAttackBonuses(fullAttackBonuses);
+    const showFullAttack = showFullAttackFor(fullAttackBonuses);
+
     const primaryDiceText = formatDamageWithModifier(damageDice, damageModifier);
-    const damageBase = formatWeaponDamageText(primaryDiceText, extraDamageDisplay);
+    const damageBase = formatWeaponDamageText(
+      primaryDiceText,
+      extraDamageDisplay,
+    );
     const critSuffix = formatCritSuffix(item.critical);
     const damageDisplay = `${damageBase}${critSuffix}`;
-    const typeLabel = formatDamageType(primaryType) ?? (extraDamageDisplay || null);
-    const summary = `${item.name || "Weapon"} ${attackDisplay} ${mode} (${damageDisplay})`;
+    const typeLabel =
+      formatDamageType(primaryType) ?? (extraDamageDisplay || null);
+    const summary = `${item.name || "Weapon"} ${fullAttackDisplay} ${mode} (${damageDisplay})`;
     const critInfo = parseWeaponCritical(item.critical);
     const threatMin = inventoryHasKeen(item)
       ? applyKeenThreat(critInfo.threatMin)
@@ -445,12 +634,19 @@ export function computeWeaponAttackRows(
       name: item.name || "Weapon",
       mode,
       attackBonus,
-      attackBonuses,
-      attackDisplay,
+      attackBonuses: fullAttackBonuses,
+      attackDisplay: fullAttackDisplay,
+      standardBonuses,
+      standardDisplay,
+      fullAttackBonuses,
+      fullAttackDisplay,
+      showFullAttack,
+      twfHand,
       damageDice,
       extraDamageDice,
       critOnlyDice,
       damageModifier,
+      fullAttackDamageModifier,
       damageDisplay,
       extraDamageDisplay,
       critExtraDisplay,

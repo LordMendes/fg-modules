@@ -6707,8 +6707,9 @@ body {
 }
 
 .pc-inventory-row-controls {
-  display: flex;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 3.25rem 3.25rem 5.25rem 1.85rem 1.85rem;
+  align-items: end;
   gap: 0.4rem;
   flex: 0 0 auto;
   margin-left: auto;
@@ -6719,6 +6720,8 @@ body {
   flex-direction: column;
   gap: 0.12rem;
   align-items: center;
+  width: 100%;
+  min-width: 0;
 }
 
 .pc-inventory-field span {
@@ -6730,7 +6733,7 @@ body {
 }
 
 .pc-inventory-num {
-  width: 3.25rem;
+  width: 100%;
   max-width: 100%;
   text-align: center;
   font-variant-numeric: tabular-nums;
@@ -6748,9 +6751,19 @@ body {
   -moz-appearance: textfield;
 }
 
+.pc-inventory-equip-slot {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  min-width: 0;
+  min-height: 1.85rem;
+}
+
 .pc-inventory-equip-btn {
-  min-width: 5.25rem;
-  padding: 0.28rem 0.5rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.28rem 0.35rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm, 0.25rem);
   background: transparent;
@@ -6760,6 +6773,26 @@ body {
   font-weight: 600;
   letter-spacing: 0.02em;
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.pc-inventory-hand-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.pc-inventory-hand-btns .pc-inventory-equip-btn {
+  padding: 0.16rem 0.3rem;
+  font-size: 0.68rem;
+  line-height: 1.15;
+}
+
+.pc-inventory-kind-chip--hand {
+  border-color: color-mix(in srgb, var(--accent-gold) 55%, var(--border-color));
+  color: var(--accent-gold);
 }
 
 .pc-inventory-equip-btn:hover {
@@ -6771,6 +6804,11 @@ body {
   background: color-mix(in srgb, var(--accent-gold) 18%, transparent);
   border-color: var(--accent-gold);
   color: var(--accent-gold-text);
+}
+
+.pc-inventory-edit,
+.pc-inventory-remove {
+  justify-self: center;
 }
 
 .pc-inventory-remove {
@@ -6795,9 +6833,12 @@ body {
 }
 
 .pc-inventory-remove-confirm {
+  grid-column: 3 / -1;
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.3rem;
+  flex-wrap: wrap;
 }
 
 .pc-inventory-keep-btn {
@@ -6936,7 +6977,8 @@ body {
   .pc-inventory-row-controls {
     width: 100%;
     margin-left: 0;
-    justify-content: flex-end;
+    grid-template-columns: 3.25rem 3.25rem minmax(4.5rem, 1fr) 1.85rem 1.85rem;
+    justify-content: stretch;
   }
 
   .pc-inventory-add-custom {
@@ -7484,9 +7526,13 @@ body {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 8.5rem minmax(0, 1fr);
   gap: 0.55rem 0.85rem;
-  max-width: 28rem;
+  width: 100%;
+}
+
+.pc-weapon-attack-rolls--with-full {
+  grid-template-columns: 8.5rem 8.5rem minmax(0, 1fr);
 }
 
 .pc-weapon-attack-roll {
@@ -7494,6 +7540,17 @@ body {
   flex-direction: column;
   gap: 0.25rem;
   min-width: 0;
+}
+
+.pc-weapon-attack-roll--attack,
+.pc-weapon-attack-roll--full {
+  width: 8.5rem;
+}
+
+.pc-weapon-attack-roll--attack .pc-weapon-roll-btn.dice-rollable,
+.pc-weapon-attack-roll--full .pc-weapon-roll-btn.dice-rollable {
+  width: 100%;
+  max-width: 100%;
 }
 
 .pc-weapon-attack-label {
@@ -7506,9 +7563,16 @@ body {
 
 .pc-weapon-damage-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0.4rem 0.55rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.pc-weapon-damage-group .pc-weapon-roll-btn.dice-rollable {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .pc-weapon-roll-btn.dice-rollable {
@@ -7555,6 +7619,7 @@ body {
 }
 
 .pc-weapon-roll-value {
+  min-width: 0;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
 }
@@ -7574,6 +7639,7 @@ body {
 }
 
 .pc-weapon-attack-crit {
+  flex-shrink: 0;
   font-size: 0.75rem;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
@@ -7589,9 +7655,14 @@ body {
 }
 
 @media (max-width: 520px) {
-  .pc-weapon-attack-rolls {
+  .pc-weapon-attack-rolls,
+  .pc-weapon-attack-rolls--with-full {
     grid-template-columns: 1fr;
-    max-width: none;
+  }
+
+  .pc-weapon-attack-roll--attack,
+  .pc-weapon-attack-roll--full {
+    width: 100%;
   }
 
   .pc-weapon-crit-armed-badge {
