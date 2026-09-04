@@ -58,6 +58,8 @@ export type InventorySpellEffect = {
   slug: string;
   name: string;
   notes?: string;
+  /** Spell level used for item CL defaults and save DC (0–9). */
+  spellLevel?: number;
 };
 
 export type InventoryDamageLine = {
@@ -150,6 +152,12 @@ export type InventoryRow = {
   spellEffects?: InventorySpellEffect[];
   /** Structured bonuses applied when this row is equipped/worn. */
   statBonuses?: ItemStatBonus[];
+  /** Charges remaining on a wand, scroll, or other charged item. */
+  chargesCurrent?: number | null;
+  /** Maximum charges (e.g. 50 for a full wand, 1 for a scroll). */
+  chargesMax?: number | null;
+  /** Caster level of spells cast from this item. */
+  itemCasterLevel?: number | null;
   /** Cached armor/shield stats from the equipment record. */
   armorBonus?: number | null;
   maxDex?: number | null;

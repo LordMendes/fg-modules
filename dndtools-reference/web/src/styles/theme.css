@@ -7337,6 +7337,28 @@ body {
   font-weight: 600;
 }
 
+.pc-actions-item-spells {
+  margin-top: 0.25rem;
+}
+
+.pc-item-spell-meta {
+  font-size: 0.8rem;
+  color: var(--muted, #888);
+  white-space: nowrap;
+}
+
+.pc-item-spell-charges {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pc-item-spell-notes {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted, #888);
+}
+
 .pc-weapon-attacks-list {
   list-style: none;
   margin: 0 0 0.75rem;

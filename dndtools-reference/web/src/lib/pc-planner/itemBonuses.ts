@@ -81,8 +81,10 @@ export function canEquipAsWornItem(row: InventoryRow): boolean {
     return false;
   }
   if (row.source === "item") return true;
-  if ((row.kind ?? "").toLowerCase() === "item") return true;
+  const kind = (row.kind ?? "").toLowerCase();
+  if (kind === "item" || kind === "wand" || kind === "scroll") return true;
   if ((row.statBonuses?.length ?? 0) > 0) return true;
+  if ((row.spellEffects?.length ?? 0) > 0) return true;
   return false;
 }
 

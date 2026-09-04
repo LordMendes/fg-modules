@@ -5,12 +5,18 @@ import type { PcCompendiumBundle } from "@/lib/entities";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
 import { PcSpellListItem } from "@/components/tools/pc-spell-list-item";
+import { PcItemSpellListItem } from "@/components/tools/pc-item-spell-list-item";
 import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
 import { castingModeLabel, getClassCastingInfo, halfCasterEffectiveLevel, isHalfCaster } from "@/lib/pc-planner/classCasting";
 import {
   computeCombatStats,
   formatModifier,
 } from "@/lib/pc-planner/combatStats";
+import {
+  computeItemSpellActions,
+  restoreItemCharge,
+  spendItemCharge,
+} from "@/lib/pc-planner/itemSpells";
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import {
   computeSpellClass,
@@ -172,9 +178,40 @@ export function PcActionsPanel({
     };
   }, [computed, spellClass, pendingSpellLevel]);
 
+  const itemSpellActions = useMemo(
+    () => computeItemSpellActions(state),
+    [state.inventory],
+  );
+
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-actions-panel" role="tabpanel">
       <CombatSummary state={state} compendium={compendium} patch={patch} />
+
+      {itemSpellActions.length > 0 ? (
+        <div className="npc-sheet-block pc-actions-item-spells">
+          <h3>Item spells</h3>
+          <ul className="pc-spell-by-level">
+            {itemSpellActions.map((action) => (
+              <PcItemSpellListItem
+                key={`${action.inventoryIndex}-${action.slug}`}
+                action={action}
+                onUse={() =>
+                  patch((s) => {
+                    const row = s.inventory[action.inventoryIndex];
+                    if (row) spendItemCharge(row);
+                  })
+                }
+                onRestore={() =>
+                  patch((s) => {
+                    const row = s.inventory[action.inventoryIndex];
+                    if (row) restoreItemCharge(row);
+                  })
+                }
+              />
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       {!spellClass || !computed ? (
         <p className="pc-sheet-empty">

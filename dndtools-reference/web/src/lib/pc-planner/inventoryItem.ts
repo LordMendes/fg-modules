@@ -20,6 +20,7 @@ import {
   type SourceAbbrev,
 } from "@/lib/magic-item";
 import { formatDamageType } from "@/lib/equipment-display";
+import { isSpellItemKind, isWandKind, spellItemPriceGp } from "./itemSpells";
 import type { InventoryDamageLine, InventoryRow } from "./types";
 
 function isWeaponKind(kind: string | null | undefined): boolean {
@@ -395,6 +396,17 @@ function unmatchedArmorPrice(row: InventoryRow): PriceBreakdown {
 }
 
 export function priceInventoryItem(row: InventoryRow): PriceBreakdown | null {
+  if (isSpellItemKind(row.kind)) {
+    const gp = spellItemPriceGp(row);
+    if (gp == null) return null;
+    return {
+      lines: [{ label: isWandKind(row.kind) ? "Wand" : "Scroll", gp }],
+      totalGp: gp,
+      equivalentTotal: 0,
+      warnings: [],
+      itemName: row.name.trim() || "item",
+    };
+  }
   if (isWeaponKind(row.kind)) {
     const weaponId = matchBuilderWeaponId(row);
     if (weaponId) {

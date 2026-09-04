@@ -11,6 +11,8 @@ export type EntitySearchHit = {
   slug: string;
   name: string;
   sourceAbbrev?: string | null;
+  /** Spell min level from catalog (when searching spells). */
+  minLevel?: number | null;
 };
 
 const DEBOUNCE_MS = 250;
@@ -86,6 +88,7 @@ export function EntitySearchCombobox({
               slug: spell.slug,
               name: spell.name,
               sourceAbbrev: spell.sourceAbbrev,
+              minLevel: spellLevel,
             }));
             spellCacheRef.current.set(cacheKey, spells);
           }
@@ -115,10 +118,16 @@ export function EntitySearchCombobox({
           }
           if (!result.items) continue;
           for (const item of result.items) {
+            const levelRaw = item.extra?.level;
+            const parsedLevel =
+              levelRaw != null && levelRaw !== ""
+                ? Number.parseInt(levelRaw, 10)
+                : null;
             hits.push({
               slug: item.slug,
               name: item.name,
               sourceAbbrev: item.sourceAbbrev,
+              ...(Number.isFinite(parsedLevel) ? { minLevel: parsedLevel } : {}),
             });
             if (hits.length >= 20) break;
           }

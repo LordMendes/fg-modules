@@ -29,6 +29,15 @@ import {
   syncAbilityDamageLines,
   syncLegacyDamageFields,
 } from "@/lib/pc-planner/inventoryItem";
+import {
+  applySpellItemKindDefaults,
+  clampItemCharges,
+  isScrollKind,
+  isSpellItemKind,
+  isWandKind,
+  minItemCasterLevel,
+  suggestedSpellItemName,
+} from "@/lib/pc-planner/itemSpells";
 import { isArmorKind, isShieldKind, isWeaponKind } from "@/lib/pc-planner/equippedGear";
 import { canEquipAsWornItem } from "@/lib/pc-planner/itemBonuses";
 import type {
@@ -40,7 +49,15 @@ import type {
   ItemStatBonus,
 } from "@/lib/pc-planner/types";
 
-const ITEM_KINDS = ["weapon", "armor", "shield", "goods", "item"] as const;
+const ITEM_KINDS = [
+  "weapon",
+  "armor",
+  "shield",
+  "goods",
+  "item",
+  "wand",
+  "scroll",
+] as const;
 type ItemKindOption = (typeof ITEM_KINDS)[number];
 
 const HANDED_OPTIONS = [
@@ -143,17 +160,70 @@ export function PcInventoryItemEditor({
   const kindValue = coerceItemKind(row.kind);
   const isWeapon = isWeaponKind(kindValue);
   const isArmor = isArmorKind(kindValue) || isShieldKind(kindValue);
+  const isSpellItem = isSpellItemKind(kindValue);
   const showMagicBuilder = isWeapon || isArmor;
   const canWear = canEquipAsWornItem({ ...row, kind: kindValue });
   const enhancement = row.enhancementBonus ?? 0;
   const masterworkLocked = enhancement > 0;
   const damageLines = inventoryDamageLines(row);
-  const price = showMagicBuilder ? priceInventoryItem(row) : null;
+  const price = showMagicBuilder || isSpellItem ? priceInventoryItem(row) : null;
   const suggestedName = showMagicBuilder ? suggestedMagicItemName(row) : null;
   const showSuggestedName =
     suggestedName &&
     suggestedName.trim().toLowerCase() !== row.name.trim().toLowerCase();
   const statBonuses = row.statBonuses ?? [];
+  const primarySpell = row.spellEffects?.[0] ?? null;
+  const spellLevel =
+    primarySpell?.spellLevel != null && Number.isFinite(primarySpell.spellLevel)
+      ? primarySpell.spellLevel
+      : 1;
+  const itemCasterLevel =
+    row.itemCasterLevel != null && Number.isFinite(row.itemCasterLevel)
+      ? row.itemCasterLevel
+      : minItemCasterLevel(spellLevel);
+
+  function maybeRetitleSpellItem(
+    current: InventoryRow,
+    spellName: string,
+    previousSpellName?: string,
+  ) {
+    const kind = current.kind;
+    if (!isSpellItemKind(kind)) return;
+    const autoName = suggestedSpellItemName(kind, spellName);
+    const previousAuto = previousSpellName
+      ? suggestedSpellItemName(kind, previousSpellName)
+      : null;
+    const bareKindName = suggestedSpellItemName(kind, "");
+    const name = current.name.trim();
+    const isAuto =
+      !name ||
+      name.toLowerCase() === bareKindName.toLowerCase() ||
+      (previousAuto != null && name.toLowerCase() === previousAuto.toLowerCase());
+    if (isAuto) {
+      current.name = autoName;
+    }
+  }
+
+  function setSpellItemSpell(
+    current: InventoryRow,
+    hit: { slug: string; name: string; minLevel?: number | null },
+  ) {
+    const previous = current.spellEffects?.[0];
+    const level =
+      hit.minLevel != null && Number.isFinite(hit.minLevel)
+        ? Math.max(0, Math.floor(hit.minLevel))
+        : 1;
+    current.spellEffects = [
+      {
+        slug: hit.slug,
+        name: hit.name,
+        spellLevel: level,
+        notes: previous?.notes,
+      },
+    ];
+    current.itemCasterLevel = minItemCasterLevel(level);
+    maybeRetitleSpellItem(current, hit.name, previous?.name);
+  }
 
   const scopedWeaponAbilities = useMemo(() => {
     if (!isWeapon) return [];
@@ -263,7 +333,20 @@ export function PcInventoryItemEditor({
                 value={kindValue}
                 onChange={(event) =>
                   patchRow((current) => {
-                    current.kind = event.target.value;
+                    const nextKind = event.target.value;
+                    current.kind = nextKind;
+                    if (isSpellItemKind(nextKind)) {
+                      applySpellItemKindDefaults(
+                        current,
+                        nextKind as "wand" | "scroll",
+                      );
+                      const spell = current.spellEffects?.[0];
+                      if (spell) {
+                        maybeRetitleSpellItem(current, spell.name);
+                      } else if (!current.name.trim()) {
+                        current.name = suggestedSpellItemName(nextKind, "");
+                      }
+                    }
                   })
                 }
               >
@@ -983,59 +1066,281 @@ export function PcInventoryItemEditor({
         ) : null}
 
         <section className="pc-item-editor-section">
-          <h3>Spell effects</h3>
-          <EntitySearchCombobox
-            categories={["spells"]}
-            placeholder="Search spells to attach…"
-            label="Add spell effect"
-            onSelect={(hit) =>
-              patchRow((current) => {
-                const effects = current.spellEffects ?? [];
-                if (effects.some((effect) => effect.slug === hit.slug)) return;
-                current.spellEffects = [...effects, { slug: hit.slug, name: hit.name }];
-              })
-            }
-          />
-          {(row.spellEffects ?? []).length === 0 ? (
-            <p className="pc-sheet-empty">No spell effects on this item.</p>
+          <h3>
+            {isWandKind(kindValue)
+              ? "Wand"
+              : isScrollKind(kindValue)
+                ? "Scroll"
+                : "Spell effects"}
+          </h3>
+          {isSpellItem ? (
+            <>
+              <EntitySearchCombobox
+                categories={["spells"]}
+                placeholder="Search spell…"
+                label={isWandKind(kindValue) ? "Wand spell" : "Scroll spell"}
+                onSelect={(hit) =>
+                  patchRow((current) => {
+                    setSpellItemSpell(current, hit);
+                  })
+                }
+              />
+              {primarySpell ? (
+                <div className="pc-item-editor-grid">
+                  <label className="pc-item-editor-field pc-item-editor-field--wide">
+                    <span>Spell</span>
+                    <div className="pc-item-editor-spell">
+                      <a
+                        href={`/spells/${primarySpell.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pc-feat-link pc-item-editor-spell-name"
+                      >
+                        {primarySpell.name}
+                      </a>
+                      <button
+                        type="button"
+                        className="tool-btn-icon"
+                        title={`Remove ${primarySpell.name}`}
+                        aria-label={`Remove ${primarySpell.name}`}
+                        onClick={() =>
+                          patchRow((current) => {
+                            current.spellEffects = [];
+                          })
+                        }
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Spell level</span>
+                    <input
+                      type="number"
+                      min={0}
+                      max={9}
+                      className="pc-sheet-input"
+                      value={spellLevel}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          const effect = current.spellEffects?.[0];
+                          if (!effect) return;
+                          const next = Math.max(
+                            0,
+                            Math.min(9, Number(event.target.value) || 0),
+                          );
+                          effect.spellLevel = next;
+                          current.itemCasterLevel = minItemCasterLevel(next);
+                        })
+                      }
+                    />
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Caster level</span>
+                    <input
+                      type="number"
+                      min={1}
+                      className="pc-sheet-input"
+                      value={itemCasterLevel}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          current.itemCasterLevel = Math.max(
+                            1,
+                            Number(event.target.value) || 1,
+                          );
+                        })
+                      }
+                    />
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Charges left</span>
+                    <input
+                      type="number"
+                      min={0}
+                      className="pc-sheet-input"
+                      value={row.chargesCurrent ?? 0}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          current.chargesCurrent = Number(event.target.value);
+                          clampItemCharges(current);
+                        })
+                      }
+                    />
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Charges max</span>
+                    <input
+                      type="number"
+                      min={0}
+                      className="pc-sheet-input"
+                      value={row.chargesMax ?? 0}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          current.chargesMax = Number(event.target.value);
+                          clampItemCharges(current);
+                        })
+                      }
+                    />
+                  </label>
+                  <label className="pc-item-editor-field pc-item-editor-field--wide">
+                    <span>Notes</span>
+                    <input
+                      type="text"
+                      className="pc-sheet-input"
+                      value={primarySpell.notes ?? ""}
+                      placeholder="Optional notes…"
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          const effect = current.spellEffects?.[0];
+                          if (effect) effect.notes = event.target.value;
+                        })
+                      }
+                    />
+                  </label>
+                </div>
+              ) : (
+                <p className="pc-sheet-empty">
+                  {isWandKind(kindValue)
+                    ? "Pick a spell for this wand."
+                    : "Pick a spell for this scroll."}
+                </p>
+              )}
+              {price ? (
+                <p className="pc-item-editor-price">
+                  {formatGp(price.totalGp)} gp (SRD estimate)
+                </p>
+              ) : null}
+            </>
           ) : (
-            <ul className="pc-item-editor-spells">
-              {(row.spellEffects ?? []).map((effect) => (
-                <li key={effect.slug} className="pc-item-editor-spell">
-                  <span className="pc-item-editor-spell-name">{effect.name}</span>
-                  <input
-                    type="text"
-                    className="pc-sheet-input"
-                    value={effect.notes ?? ""}
-                    placeholder="1/day, CL 5…"
-                    aria-label={`${effect.name} usage notes`}
-                    onChange={(event) =>
-                      patchRow((current) => {
-                        const target = (current.spellEffects ?? []).find(
-                          (entry) => entry.slug === effect.slug,
-                        );
-                        if (target) target.notes = event.target.value;
-                      })
+            <>
+              <EntitySearchCombobox
+                categories={["spells"]}
+                placeholder="Search spells to attach…"
+                label="Add spell effect"
+                onSelect={(hit) =>
+                  patchRow((current) => {
+                    const effects = current.spellEffects ?? [];
+                    if (effects.some((effect) => effect.slug === hit.slug)) return;
+                    const level =
+                      hit.minLevel != null && Number.isFinite(hit.minLevel)
+                        ? Math.max(0, Math.floor(hit.minLevel))
+                        : undefined;
+                    current.spellEffects = [
+                      ...effects,
+                      {
+                        slug: hit.slug,
+                        name: hit.name,
+                        ...(level != null ? { spellLevel: level } : {}),
+                      },
+                    ];
+                    if (
+                      current.itemCasterLevel == null &&
+                      level != null &&
+                      Number.isFinite(level)
+                    ) {
+                      current.itemCasterLevel = minItemCasterLevel(level);
                     }
-                  />
-                  <button
-                    type="button"
-                    className="tool-btn-icon"
-                    title={`Remove ${effect.name}`}
-                    aria-label={`Remove ${effect.name}`}
-                    onClick={() =>
-                      patchRow((current) => {
-                        current.spellEffects = (current.spellEffects ?? []).filter(
-                          (entry) => entry.slug !== effect.slug,
-                        );
-                      })
-                    }
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                </li>
-              ))}
-            </ul>
+                  })
+                }
+              />
+              {(row.spellEffects ?? []).length === 0 ? (
+                <p className="pc-sheet-empty">No spell effects on this item.</p>
+              ) : (
+                <>
+                  <ul className="pc-item-editor-spells">
+                    {(row.spellEffects ?? []).map((effect) => (
+                      <li key={effect.slug} className="pc-item-editor-spell">
+                        <span className="pc-item-editor-spell-name">{effect.name}</span>
+                        <input
+                          type="text"
+                          className="pc-sheet-input"
+                          value={effect.notes ?? ""}
+                          placeholder="1/day, CL 5…"
+                          aria-label={`${effect.name} usage notes`}
+                          onChange={(event) =>
+                            patchRow((current) => {
+                              const target = (current.spellEffects ?? []).find(
+                                (entry) => entry.slug === effect.slug,
+                              );
+                              if (target) target.notes = event.target.value;
+                            })
+                          }
+                        />
+                        <button
+                          type="button"
+                          className="tool-btn-icon"
+                          title={`Remove ${effect.name}`}
+                          aria-label={`Remove ${effect.name}`}
+                          onClick={() =>
+                            patchRow((current) => {
+                              current.spellEffects = (current.spellEffects ?? []).filter(
+                                (entry) => entry.slug !== effect.slug,
+                              );
+                            })
+                          }
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pc-item-editor-grid">
+                    <label className="pc-item-editor-field">
+                      <span>Caster level</span>
+                      <input
+                        type="number"
+                        min={1}
+                        className="pc-sheet-input"
+                        value={row.itemCasterLevel ?? ""}
+                        placeholder="Optional"
+                        onChange={(event) =>
+                          patchRow((current) => {
+                            const value = event.target.value;
+                            current.itemCasterLevel =
+                              value === "" ? null : Math.max(1, Number(value) || 1);
+                          })
+                        }
+                      />
+                    </label>
+                    <label className="pc-item-editor-field">
+                      <span>Charges left</span>
+                      <input
+                        type="number"
+                        min={0}
+                        className="pc-sheet-input"
+                        value={row.chargesCurrent ?? ""}
+                        placeholder="—"
+                        onChange={(event) =>
+                          patchRow((current) => {
+                            const value = event.target.value;
+                            current.chargesCurrent =
+                              value === "" ? null : Number(value);
+                            if (current.chargesMax != null) clampItemCharges(current);
+                          })
+                        }
+                      />
+                    </label>
+                    <label className="pc-item-editor-field">
+                      <span>Charges max</span>
+                      <input
+                        type="number"
+                        min={0}
+                        className="pc-sheet-input"
+                        value={row.chargesMax ?? ""}
+                        placeholder="—"
+                        onChange={(event) =>
+                          patchRow((current) => {
+                            const value = event.target.value;
+                            current.chargesMax = value === "" ? null : Number(value);
+                            if (current.chargesMax != null) clampItemCharges(current);
+                          })
+                        }
+                      />
+                    </label>
+                  </div>
+                </>
+              )}
+            </>
           )}
         </section>
       </div>

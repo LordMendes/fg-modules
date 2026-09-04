@@ -21,6 +21,7 @@ import {
   weaponOccupiesBothHands,
 } from "@/lib/pc-planner/equippedGear";
 import { canEquipAsWornItem, inferItemBonuses } from "@/lib/pc-planner/itemBonuses";
+import { clampItemCharges, isChargedSpellItem } from "@/lib/pc-planner/itemSpells";
 import {
   computeEncumbrance,
   describeLoadEffects,
@@ -71,7 +72,7 @@ function kindTone(row: InventoryRow): KindTone {
   if (kind === "armor") return "armor";
   if (kind === "shield") return "shield";
   if (kind === "goods" || kind === "gear") return "gear";
-  if (row.source === "item") return "magic";
+  if (kind === "wand" || kind === "scroll" || row.source === "item") return "magic";
   return "item";
 }
 
@@ -203,6 +204,14 @@ function inventoryRowMeta(row: InventoryRow): string | null {
   if (abilities.length > 0) parts.push(abilities.join(", "));
   const spells = (row.spellEffects ?? []).map((effect) => effect.name);
   if (spells.length > 0) parts.push(spells.join(", "));
+  if (
+    row.chargesMax != null &&
+    Number.isFinite(row.chargesMax) &&
+    row.chargesCurrent != null &&
+    Number.isFinite(row.chargesCurrent)
+  ) {
+    parts.push(`${row.chargesCurrent}/${row.chargesMax} charges`);
+  }
   for (const bonus of row.statBonuses ?? []) {
     const signed = bonus.amount >= 0 ? `+${bonus.amount}` : `${bonus.amount}`;
     if (bonus.kind === "ability") parts.push(`${signed} ${bonus.ability.toUpperCase()}`);
@@ -641,6 +650,26 @@ export function PcInventoryPanel({
                         }
                       />
                     </label>
+                    {isChargedSpellItem(row) ? (
+                      <label className="pc-inventory-field pc-inventory-field--charges">
+                        <span>Chg</span>
+                        <input
+                          type="number"
+                          min={0}
+                          max={row.chargesMax ?? undefined}
+                          className="pc-sheet-input pc-inventory-num"
+                          value={row.chargesCurrent ?? 0}
+                          aria-label={`${row.name || "Item"} charges remaining`}
+                          onChange={(e) =>
+                            patch((s) => {
+                              const target = s.inventory[i];
+                              target.chargesCurrent = Number(e.target.value);
+                              clampItemCharges(target);
+                            })
+                          }
+                        />
+                      </label>
+                    ) : null}
                     <label className="pc-inventory-field pc-inventory-field--wt">
                       <span>Wt</span>
                       <input
