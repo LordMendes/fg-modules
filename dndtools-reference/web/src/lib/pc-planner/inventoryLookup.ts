@@ -39,6 +39,12 @@ export async function lookupInventoryItem(
         acp: stats.acp,
         speed30: stats.speed30,
         speed20: stats.speed20,
+        damageM: stats.damageM,
+        damageS: stats.damageS,
+        critical: stats.critical,
+        damageType: stats.damageType,
+        handed: stats.handed,
+        rangeIncrement: stats.rangeIncrement,
       },
     };
   }

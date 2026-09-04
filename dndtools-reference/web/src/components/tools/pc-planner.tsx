@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import {
   createPcPlan,
   deletePcPlan,
@@ -14,6 +14,10 @@ import {
   type PcPlanSummary,
 } from "@/actions/pc-plans";
 import { fetchPcCompendium } from "@/actions/data";
+import { DiceCanvas } from "@/components/dice/dice-canvas";
+import { DiceLogTray } from "@/components/dice/dice-log-tray";
+import { DiceProvider } from "@/components/dice/dice-provider";
+import { DiceTray } from "@/components/dice/dice-tray";
 import { useAuthUser } from "@/components/auth-provider";
 import { useSessionNonce } from "@/components/session-provider";
 import { PcPlanList } from "@/components/tools/pc-plan-list";
@@ -41,6 +45,14 @@ import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
 export function PcPlanner() {
+  return (
+    <DiceProvider>
+      <PcPlannerBody />
+    </DiceProvider>
+  );
+}
+
+function PcPlannerBody() {
   const user = useAuthUser();
   const nonce = useSessionNonce();
   const router = useRouter();
@@ -404,8 +416,9 @@ export function PcPlanner() {
     return <p className="pc-planner-loading">Loading…</p>;
   }
 
+  let body: ReactNode;
   if (!planIdParam) {
-    return (
+    body = (
       <>
         {statusMessage ? (
           <p className="npc-creator-status pc-sheet-status" role="status">
@@ -421,94 +434,103 @@ export function PcPlanner() {
         />
       </>
     );
+  } else {
+    body = (
+      <div className="pc-sheet-frame npc-sheet">
+        <div className="pc-sheet-toolbar">
+          <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
+            ← All characters
+          </button>
+          <PcShortcutSearch onSelect={handleShortcutSelect} />
+          <div className="pc-sheet-toolbar-actions">
+            <span className="pc-save-status" aria-live="polite">
+              {saveStatus === "saving"
+                ? "Saving…"
+                : saveStatus === "saved"
+                  ? "Saved"
+                  : saveStatus === "error"
+                    ? "Save failed"
+                    : null}
+            </span>
+            <button type="button" className="tool-btn tool-btn--ghost" onClick={handleNewPlan}>
+              New
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              onClick={handleDownloadXml}
+            >
+              Download XML
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              onClick={handleDownloadJson}
+            >
+              Download JSON
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              onClick={handleDuplicate}
+              disabled={!planId || pending}
+            >
+              Duplicate
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost tool-btn--danger"
+              onClick={handleDeleteFromEditor}
+              disabled={!planId || pending}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+
+        {statusMessage ? (
+          <p className="npc-creator-status pc-sheet-status" role="status">
+            {statusMessage}
+          </p>
+        ) : null}
+
+        <PcSheet
+          state={state}
+          patch={patch}
+          sheetTab={sheetTab}
+          onTabChange={setSheetTab}
+          shortcut={shortcut}
+          onShortcutChange={setShortcut}
+          onNameBlur={() => {
+            if (!planId) return;
+            void renamePcPlan(planId, state.identity.name || "Unnamed");
+          }}
+          onShortcutBlur={() => {
+            if (!planId) return;
+            void renamePcPlan(planId, state.identity.name, shortcut || null);
+          }}
+          activeSpellClassIndex={activeSpellClassIndex}
+          onSpellClassIndexChange={setActiveSpellClassIndex}
+          compendium={compendium}
+          compendiumLoading={compendiumLoading}
+          onAddFeat={addFeat}
+          onRemoveFeat={removeFeat}
+          onAddSpell={addSpell}
+          onRemoveSpell={removeSpell}
+          onUpdateSpellPrepared={updateSpellPrepared}
+          onAddInventoryRow={addInventoryRow}
+          updateAbility={updateAbility}
+        />
+      </div>
+    );
   }
 
   return (
-    <div className="pc-sheet-frame npc-sheet">
-      <div className="pc-sheet-toolbar">
-        <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
-          ← All characters
-        </button>
-        <PcShortcutSearch onSelect={handleShortcutSelect} />
-        <div className="pc-sheet-toolbar-actions">
-          <span className="pc-save-status" aria-live="polite">
-            {saveStatus === "saving"
-              ? "Saving…"
-              : saveStatus === "saved"
-                ? "Saved"
-                : saveStatus === "error"
-                  ? "Save failed"
-                  : null}
-          </span>
-          <button type="button" className="tool-btn tool-btn--ghost" onClick={handleNewPlan}>
-            New
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn--ghost"
-            onClick={handleDownloadXml}
-          >
-            Download XML
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn--ghost"
-            onClick={handleDownloadJson}
-          >
-            Download JSON
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn--ghost"
-            onClick={handleDuplicate}
-            disabled={!planId || pending}
-          >
-            Duplicate
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn--ghost tool-btn--danger"
-            onClick={handleDeleteFromEditor}
-            disabled={!planId || pending}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-
-      {statusMessage ? (
-        <p className="npc-creator-status pc-sheet-status" role="status">
-          {statusMessage}
-        </p>
-      ) : null}
-
-      <PcSheet
-        state={state}
-        patch={patch}
-        sheetTab={sheetTab}
-        onTabChange={setSheetTab}
-        shortcut={shortcut}
-        onShortcutChange={setShortcut}
-        onNameBlur={() => {
-          if (!planId) return;
-          void renamePcPlan(planId, state.identity.name || "Unnamed");
-        }}
-        onShortcutBlur={() => {
-          if (!planId) return;
-          void renamePcPlan(planId, state.identity.name, shortcut || null);
-        }}
-        activeSpellClassIndex={activeSpellClassIndex}
-        onSpellClassIndexChange={setActiveSpellClassIndex}
-        compendium={compendium}
-        compendiumLoading={compendiumLoading}
-        onAddFeat={addFeat}
-        onRemoveFeat={removeFeat}
-        onAddSpell={addSpell}
-        onRemoveSpell={removeSpell}
-        onUpdateSpellPrepared={updateSpellPrepared}
-        onAddInventoryRow={addInventoryRow}
-        updateAbility={updateAbility}
-      />
-    </div>
+    <>
+      {body}
+      <DiceCanvas />
+      <DiceTray />
+      <DiceLogTray />
+    </>
   );
 }

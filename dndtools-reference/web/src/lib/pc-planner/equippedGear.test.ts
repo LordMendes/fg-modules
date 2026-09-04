@@ -35,6 +35,45 @@ describe("gearStatsFromEquipmentIndex", () => {
     assert.equal(stats.speed30, 20);
     assert.equal(stats.weight, 35);
   });
+
+  it("reads longsword weapon combat fields", () => {
+    const stats = gearStatsFromEquipmentIndex({
+      kind: "weapon",
+      weight: "4 lb.",
+      indexData: {
+        damage_m: "1d8",
+        damage_s: "1d6",
+        critical: "19-20/x2",
+        damage_type: "S",
+        handed: "one",
+      },
+    });
+    assert.equal(stats.kind, "weapon");
+    assert.equal(stats.weight, 4);
+    assert.equal(stats.damageM, "1d8");
+    assert.equal(stats.damageS, "1d6");
+    assert.equal(stats.critical, "19-20/x2");
+    assert.equal(stats.damageType, "S");
+    assert.equal(stats.handed, "one");
+  });
+
+  it("reads ranged weapon fields including range increment", () => {
+    const stats = gearStatsFromEquipmentIndex({
+      kind: "weapon",
+      weight: "3 lb.",
+      indexData: {
+        damage_m: "1d8",
+        damage_s: "1d6",
+        critical: "x3",
+        damage_type: "P",
+        handed: "ranged",
+        range_increment: "100 ft.",
+      },
+    });
+    assert.equal(stats.handed, "ranged");
+    assert.equal(stats.rangeIncrement, "100 ft.");
+    assert.equal(stats.critical, "x3");
+  });
 });
 
 describe("computeEquippedGear", () => {

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { fetchInventoryItem } from "@/actions/data";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
+import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
 import { useSessionNonce } from "@/components/session-provider";
@@ -29,6 +30,7 @@ import {
 } from "@/lib/pc-planner/skillPoints";
 import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
 import { abilityRacialMod, racialModLabel } from "@/lib/pc-planner/syncDerived";
+import { needsWeaponStatBackfill } from "@/lib/pc-planner/weaponAttacks";
 import {
   PC_SHEET_TABS,
   type AbilityKey,
@@ -104,6 +106,59 @@ export function PcSheet({
   const [, startInventoryTransition] = useTransition();
   const nonce = useSessionNonce();
   const router = useRouter();
+  const weaponBackfillAttempted = useRef(new Set<string>());
+
+  /** Backfill weapon damage/crit for older inventory rows that only have kind. */
+  useEffect(() => {
+    const missing = (state.inventory ?? [])
+      .map((row, index) => ({ row, index }))
+      .filter(({ row }) => {
+        if (!needsWeaponStatBackfill(row) || !row.slug) return false;
+        const key = `${row.source ?? "equipment"}:${row.slug}`;
+        return !weaponBackfillAttempted.current.has(key);
+      });
+    if (missing.length === 0) return;
+
+    for (const { row } of missing) {
+      if (row.slug) {
+        weaponBackfillAttempted.current.add(
+          `${row.source ?? "equipment"}:${row.slug}`,
+        );
+      }
+    }
+
+    let cancelled = false;
+    startInventoryTransition(async () => {
+      for (const { row, index } of missing) {
+        if (cancelled || !row.slug) continue;
+        const result = await fetchInventoryItem({
+          source: "equipment",
+          slug: row.slug,
+          nonce,
+        });
+        if (cancelled) return;
+        if (!result.success || !result.item) continue;
+        const looked = result.item.row;
+        if (!looked.damageM && !looked.damageS) continue;
+        patch((s) => {
+          const current = s.inventory[index];
+          if (!current || current.slug !== row.slug) return;
+          if (current.damageM || current.damageS) return;
+          current.damageM = looked.damageM;
+          current.damageS = looked.damageS;
+          current.critical = looked.critical;
+          current.damageType = looked.damageType;
+          current.handed = looked.handed;
+          current.rangeIncrement = looked.rangeIncrement;
+          if (!current.kind) current.kind = looked.kind;
+        });
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [state.inventory, nonce, patch, startInventoryTransition]);
 
   const classLevels = state.identity.classLevels;
   const totalLevel = totalCharacterLevel(classLevels);
@@ -617,7 +672,11 @@ export function PcSheet({
                               : "—"}
                           </td>
                           <td className="pc-skill-total">
-                            {total == null ? "—" : formatSkillModifier(total)}
+                            {total == null ? (
+                              "—"
+                            ) : (
+                              <RollableStat label={row.name} modifier={total} />
+                            )}
                           </td>
                         </tr>
                       );

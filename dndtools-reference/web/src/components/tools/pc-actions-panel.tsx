@@ -2,8 +2,10 @@
 
 import { useMemo, useState } from "react";
 import type { PcCompendiumBundle } from "@/lib/entities";
+import { RollableStat } from "@/components/dice/rollable-stat";
 import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
 import { PcSpellListItem } from "@/components/tools/pc-spell-list-item";
+import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
 import { castingModeLabel, getClassCastingInfo, halfCasterEffectiveLevel, isHalfCaster } from "@/lib/pc-planner/classCasting";
 import {
   computeCombatStats,
@@ -14,6 +16,7 @@ import {
   computeSpellClass,
   preparedCountAtLevel,
 } from "@/lib/pc-planner/spellSlots";
+import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 export type PcActionsPanelProps = {
@@ -43,6 +46,7 @@ function CombatSummary({
     compendium?.classAdvancement ?? null,
     deriveFeatEffects(state.feats),
   );
+  const weapons = computeWeaponAttackRows(state, stats);
 
   return (
     <div className="npc-sheet-block pc-actions-combat">
@@ -50,7 +54,9 @@ function CombatSummary({
       <dl className="pc-actions-combat-grid">
         <div>
           <dt>Init</dt>
-          <dd>{formatModifier(stats.initiative.total)}</dd>
+          <dd>
+            <RollableStat label="Initiative" modifier={stats.initiative.total} />
+          </dd>
         </div>
         <div>
           <dt>AC</dt>
@@ -63,16 +69,33 @@ function CombatSummary({
           </dd>
         </div>
         <div>
-          <dt>Melee / Ranged</dt>
+          <dt>Melee</dt>
           <dd>
-            {formatModifier(stats.melee.total)} / {formatModifier(stats.ranged.total)}
+            <RollableStat label="Melee" modifier={stats.melee.total} />
           </dd>
         </div>
         <div>
-          <dt>Fort / Ref / Will</dt>
+          <dt>Ranged</dt>
           <dd>
-            {formatModifier(stats.fortitude.total)} / {formatModifier(stats.reflex.total)} /{" "}
-            {formatModifier(stats.will.total)}
+            <RollableStat label="Ranged" modifier={stats.ranged.total} />
+          </dd>
+        </div>
+        <div>
+          <dt>Fort</dt>
+          <dd>
+            <RollableStat label="Fortitude" modifier={stats.fortitude.total} />
+          </dd>
+        </div>
+        <div>
+          <dt>Ref</dt>
+          <dd>
+            <RollableStat label="Reflex" modifier={stats.reflex.total} />
+          </dd>
+        </div>
+        <div>
+          <dt>Will</dt>
+          <dd>
+            <RollableStat label="Will" modifier={stats.will.total} />
           </dd>
         </div>
         <div>
@@ -80,13 +103,19 @@ function CombatSummary({
           <dd>{stats.speed.total} ft.</dd>
         </div>
       </dl>
+
+      <div className="pc-actions-weapons">
+        <h4 className="pc-actions-weapons-heading">Weapons</h4>
+        <PcWeaponAttacksList weapons={weapons} />
+      </div>
+
       <label className="pc-actions-attacks">
-        <span className="npc-sheet-sub">Attacks</span>
+        <span className="npc-sheet-sub">Special attacks</span>
         <textarea
           className="pc-sheet-input pc-sheet-textarea"
-          rows={3}
+          rows={2}
           value={state.combat.attacks}
-          placeholder="Weapon attacks, special attacks…"
+          placeholder="Special attacks, natural weapons…"
           onChange={(e) =>
             patch((s) => {
               s.combat.attacks = e.target.value;

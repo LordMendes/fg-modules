@@ -39,6 +39,18 @@ export function isShieldKind(kind: string | null | undefined): boolean {
   return (kind ?? "").toLowerCase() === "shield";
 }
 
+export function isWeaponKind(kind: string | null | undefined): boolean {
+  return (kind ?? "").toLowerCase() === "weapon";
+}
+
+function readIndexString(
+  index: Record<string, unknown>,
+  key: string,
+): string | null {
+  const value = index[key];
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
 export function emptyEquippedGear(): EquippedGear {
   return {
     armor: null,
@@ -117,7 +129,19 @@ export function gearStatsFromEquipmentIndex(input: {
   indexData?: unknown;
 }): Pick<
   InventoryRow,
-  "kind" | "weight" | "armorBonus" | "maxDex" | "acp" | "speed30" | "speed20"
+  | "kind"
+  | "weight"
+  | "armorBonus"
+  | "maxDex"
+  | "acp"
+  | "speed30"
+  | "speed20"
+  | "damageM"
+  | "damageS"
+  | "critical"
+  | "damageType"
+  | "handed"
+  | "rangeIncrement"
 > {
   const index = (input.indexData ?? {}) as Record<string, unknown>;
   const kind =
@@ -143,6 +167,14 @@ export function gearStatsFromEquipmentIndex(input: {
     typeof index.speed_20 === "string" ? index.speed_20 : null,
   );
 
+  const damageM = readIndexString(index, "damage_m") ?? stats.damage ?? null;
+  const damageS = readIndexString(index, "damage_s");
+  const critical =
+    readIndexString(index, "critical") ?? stats.critical ?? null;
+  const damageType = readIndexString(index, "damage_type");
+  const handed = readIndexString(index, "handed");
+  const rangeIncrement = readIndexString(index, "range_increment");
+
   return {
     kind,
     weight: parseWeightPounds(input.weight),
@@ -151,5 +183,11 @@ export function gearStatsFromEquipmentIndex(input: {
     acp,
     speed30,
     speed20,
+    damageM,
+    damageS,
+    critical,
+    damageType,
+    handed,
+    rangeIncrement,
   };
 }

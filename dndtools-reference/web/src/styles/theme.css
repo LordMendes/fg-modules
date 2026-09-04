@@ -5935,6 +5935,59 @@ body {
   margin-top: 0.5rem;
 }
 
+.pc-combat-hp-rolls .pc-combat-header,
+.pc-combat-hp-rolls .pc-combat-row {
+  --combat-label: 8.5rem;
+  grid-template-columns:
+    var(--combat-label)
+    minmax(2.75rem, 0.85fr)
+    minmax(5.25rem, 1.5fr)
+    minmax(2.75rem, 0.85fr)
+    minmax(2.75rem, 0.85fr);
+}
+
+.pc-combat-hp-roll-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.pc-combat-hp-roll-cell .pc-combat-input {
+  flex: 1 1 auto;
+  min-width: 2.5rem;
+}
+
+.pc-combat-hp-roll-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 45%, var(--border-color));
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--accent-gold) 12%, var(--bg-card));
+  cursor: pointer;
+}
+
+.pc-combat-hp-roll-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-gold) 24%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--accent-gold) 70%, var(--border-color));
+}
+
+.pc-combat-hp-roll-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pc-combat-hp-roll-fallback {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
 .pc-combat-table {
   display: flex;
   flex-direction: column;
@@ -6306,6 +6359,169 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
+
+.pc-actions-weapons {
+  margin: 0 0 1rem;
+}
+
+.pc-actions-weapons-heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.pc-weapon-attacks-list {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pc-weapon-attack-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color, #333) 70%, transparent);
+}
+
+.pc-weapon-attack-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.pc-weapon-attack-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.65rem;
+}
+
+.pc-weapon-attack-name {
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+}
+
+.pc-weapon-attack-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pc-weapon-attack-mode {
+  color: var(--text-muted);
+}
+
+.pc-weapon-attack-meta-sep {
+  opacity: 0.55;
+}
+
+.pc-weapon-attack-type {
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 0.78rem;
+}
+
+.pc-weapon-attack-rolls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem 0.85rem;
+  max-width: 28rem;
+}
+
+.pc-weapon-attack-roll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.pc-weapon-attack-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pc-weapon-damage-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.55rem;
+}
+
+.pc-weapon-roll-btn.dice-rollable {
+  display: inline-flex;
+  width: auto;
+  max-width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  min-height: 2rem;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--accent-gold) 8%, var(--bg-card, transparent));
+  color: var(--accent-gold);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+}
+
+.pc-weapon-roll-btn.dice-rollable:hover:not(:disabled),
+.pc-weapon-roll-btn.dice-rollable:focus-visible {
+  background: color-mix(in srgb, var(--accent-gold) 20%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--accent-gold) 75%, var(--border-color));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-gold) 28%, transparent);
+}
+
+.pc-weapon-roll-value {
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.pc-weapon-roll-hint {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent-gold) 70%, var(--text-muted));
+  opacity: 0.9;
+}
+
+.pc-weapon-attack-crit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pc-combat-attacks .pc-weapon-attacks-list {
+  margin-bottom: 0.25rem;
+}
+
+.pc-combat-attacks .pc-actions-attacks {
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 520px) {
+  .pc-weapon-attack-rolls {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
 }
 
 .pc-actions-casting-meta {
@@ -6957,6 +7173,502 @@ body {
 
   .goods-toc-mobile {
     display: block;
+  }
+}
+
+/* --- PC Planner dice tray / overlay --- */
+
+.dice-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dice-overlay canvas,
+.dice-overlay .dice-box-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.dice-overlay .dice-box-canvas--hide {
+  opacity: 0;
+}
+
+.dice-tray {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 95;
+  max-width: min(22rem, calc(100vw - 2rem));
+  touch-action: none;
+}
+
+.dice-tray--throwing {
+  user-select: none;
+}
+
+.dice-tray-collapsed {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--border-ornament);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font: inherit;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 600;
+  box-shadow: 0 4px 16px var(--shadow);
+  cursor: grab;
+}
+
+.dice-tray-collapsed:active {
+  cursor: grabbing;
+}
+
+.dice-tray-collapsed:hover {
+  background: color-mix(in srgb, var(--accent-gold) 12%, var(--bg-card));
+}
+
+.dice-tray-collapsed-label {
+  font-size: 0.875rem;
+}
+
+.dice-tray-collapsed-result {
+  margin-left: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-gold) 18%, transparent);
+  color: var(--accent-gold-text, var(--accent-gold));
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+}
+
+.dice-tray-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.dice-tray-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  border: 2px solid var(--border-ornament);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--bg-card);
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.dice-tray-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dice-tray-drag-handle {
+  cursor: grab;
+  user-select: none;
+  padding: 0.15rem 0;
+  margin: -0.15rem 0;
+}
+
+.dice-tray-drag-handle:active {
+  cursor: grabbing;
+}
+
+.dice-tray-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 600;
+}
+
+.dice-tray-drag-hint {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dice-tray-hint {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.dice-tray-collapse-btn {
+  min-width: 2rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.dice-tray-dice-row {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dice-tray-die-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.25rem;
+  padding: 0.3rem 0.25rem 0.2rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 45%, var(--border-color));
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--accent-gold) 8%, var(--bg-elevated, var(--bg-card)));
+  color: var(--text-primary);
+  font: inherit;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.dice-tray-die-btn:active:not(:disabled) {
+  cursor: grabbing;
+}
+
+.dice-tray-die-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-gold) 20%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--accent-gold) 70%, var(--border-color));
+}
+
+.dice-tray-die-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.dice-die-icon {
+  display: block;
+  width: 2.75rem;
+  height: 2.75rem;
+  pointer-events: none;
+}
+
+.dice-die-icon--chip {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.dice-tray-throw-ghost {
+  position: fixed;
+  z-index: 120;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  padding: 0.2rem;
+  border: 2px solid var(--accent-gold);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--accent-gold) 22%, var(--bg-card));
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+.dice-tray-throw-ghost .dice-die-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.dice-tray-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  min-height: 1.75rem;
+  align-items: center;
+}
+
+.dice-tray-pool-empty {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.dice-tray-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-primary) 70%, var(--bg-card));
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.dice-tray-chip:hover:not(:disabled) {
+  border-color: var(--accent-gold);
+}
+
+.dice-tray-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dice-tray-mod {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.dice-tray-mod-input {
+  width: 3.5rem;
+  text-align: center;
+}
+
+.dice-tray-roll-btn {
+  font-weight: 600;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 55%, var(--border-color));
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--accent-gold) 18%, var(--bg-card));
+  color: var(--text-primary);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.dice-tray-roll-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-gold) 34%, var(--bg-card));
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-gold) 40%, transparent);
+}
+
+.dice-tray-roll-btn:active:not(:disabled) {
+  cursor: grabbing;
+  background: color-mix(in srgb, var(--accent-gold) 42%, var(--bg-card));
+}
+
+.dice-tray-roll-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.dice-tray-throw-ghost--pool {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.3rem 0.4rem;
+}
+
+.dice-tray-skin-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.dice-tray-skin,
+.dice-tray-color {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.dice-tray-skin-select {
+  min-width: 8rem;
+  font-size: 0.8125rem;
+}
+
+.dice-tray-color-input {
+  width: 2rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: transparent;
+  cursor: pointer;
+}
+
+.dice-tray-last {
+  margin: 0;
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--accent-gold) 12%, transparent);
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.dice-tray-history {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 6rem;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.dice-tray-history li {
+  padding: 0.125rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color) 60%, transparent);
+}
+
+.dice-tray-history li:last-child {
+  border-bottom: none;
+}
+
+.dice-tray-status {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Separate dice log tray (bottom-right by default) */
+.dice-log-tray {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 95;
+  max-width: min(20rem, calc(100vw - 2rem));
+  touch-action: none;
+}
+
+.dice-log-tray-collapsed {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--border-ornament);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font: inherit;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 600;
+  box-shadow: 0 4px 16px var(--shadow);
+  cursor: grab;
+}
+
+.dice-log-tray-collapsed:active {
+  cursor: grabbing;
+}
+
+.dice-log-tray-collapsed:hover {
+  background: color-mix(in srgb, var(--accent-gold) 12%, var(--bg-card));
+}
+
+.dice-log-tray-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  min-width: 14rem;
+  padding: 0.75rem;
+  border: 2px solid var(--border-ornament);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--bg-card);
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.dice-log-tray-history {
+  max-height: 12rem;
+}
+
+.dice-tray--expanded {
+  max-width: min(28rem, calc(100vw - 2rem));
+}
+
+.dice-rollable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: inherit;
+  margin: 0;
+  padding: inherit;
+  border: inherit;
+  border-radius: inherit;
+  background: inherit;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.dice-rollable:hover:not(:disabled),
+.dice-rollable:focus-visible {
+  background: color-mix(in srgb, var(--accent-gold) 22%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--accent-gold) 70%, var(--border-color));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-gold) 35%, transparent);
+  outline: none;
+}
+
+.dice-rollable:disabled {
+  cursor: wait;
+  opacity: 0.85;
+}
+
+.pc-combat-total .dice-rollable,
+.pc-combat-value .dice-rollable {
+  width: 100%;
+  height: 100%;
+  min-height: 1.75rem;
+}
+
+.pc-skill-total .dice-rollable {
+  display: inline;
+  width: auto;
+  padding: 0.125rem 0.35rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: transparent;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.pc-actions-combat-grid .dice-rollable {
+  display: inline;
+  width: auto;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: transparent;
+  color: inherit;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .dice-tray,
+  .dice-log-tray {
+    max-width: calc(100vw - 1rem);
   }
 }
 

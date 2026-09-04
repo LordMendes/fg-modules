@@ -4,8 +4,15 @@ import {
   computeCombatStats,
   formatIterativeAttacks,
   formatModifier,
+  abilityModifier,
   type ClassAdvancementMap,
 } from "@/lib/pc-planner/combatStats";
+import { DieIcon } from "@/components/dice/die-icon";
+import { useDice } from "@/components/dice/dice-provider";
+import { RollableStat } from "@/components/dice/rollable-stat";
+import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
+import { createRollId } from "@/lib/dice/notation";
+import type { DieSides } from "@/lib/dice/types";
 import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
 import {
   computeMaxHitPoints,
@@ -16,6 +23,7 @@ import {
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
+import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
 import type { CombatState, PcPlanState } from "@/lib/pc-planner/types";
 
 type PcCombatPanelProps = {
@@ -29,11 +37,29 @@ type PcCombatPanelProps = {
 
 type CombatNumberKey = Exclude<keyof CombatState, "attacks">;
 
-function CombatTotal({ value, signed = true }: { value: number; signed?: boolean }) {
+const ROLLABLE_HIT_DIE_SIDES = new Set<number>([4, 6, 8, 10, 12, 20, 100]);
+
+function asDieSides(sides: number): DieSides | null {
+  return ROLLABLE_HIT_DIE_SIDES.has(sides) ? (sides as DieSides) : null;
+}
+
+function CombatTotal({
+  value,
+  signed = true,
+  rollLabel,
+}: {
+  value: number;
+  signed?: boolean;
+  rollLabel?: string;
+}) {
   const text = signed ? formatModifier(value) : String(value);
   return (
     <div className="pc-combat-total pc-combat-value" aria-label={`Total ${text}`}>
-      {text}
+      {rollLabel ? (
+        <RollableStat label={rollLabel} modifier={value} signed={signed} />
+      ) : (
+        text
+      )}
     </div>
   );
 }
@@ -90,6 +116,7 @@ function SideStatBlock({
   columns,
   total,
   signedTotal = true,
+  rollLabel,
   fields,
   patch,
 }: {
@@ -97,6 +124,7 @@ function SideStatBlock({
   columns: string[];
   total: number;
   signedTotal?: boolean;
+  rollLabel?: string;
   fields: { label: string; value: number; editable: CombatNumberKey | null; signed?: boolean }[];
   patch: PcCombatPanelProps["patch"];
 }) {
@@ -109,7 +137,7 @@ function SideStatBlock({
       >
         <CombatTableHeader columns={columns} labeled={false} />
         <div className="pc-combat-row pc-combat-row--no-label">
-          <CombatTotal value={total} signed={signedTotal} />
+          <CombatTotal value={total} signed={signedTotal} rollLabel={rollLabel} />
           {fields.map(({ label, value, editable, signed = true }) =>
             editable ? (
               <CombatNumberInput
@@ -131,12 +159,26 @@ function SideStatBlock({
   );
 }
 
-function AttackTotal({ value, iterative }: { value: number; iterative?: boolean }) {
-  if (!iterative) return <CombatTotal value={value} />;
+function AttackTotal({
+  value,
+  iterative,
+  rollLabel,
+}: {
+  value: number;
+  iterative?: boolean;
+  rollLabel?: string;
+}) {
+  if (!iterative) return <CombatTotal value={value} rollLabel={rollLabel} />;
   const text = formatIterativeAttacks(value);
   return (
     <div className="pc-combat-total pc-combat-value pc-combat-iterative" aria-label={`Total ${text}`}>
-      {text}
+      {rollLabel ? (
+        <RollableStat label={rollLabel} modifier={value}>
+          {text}
+        </RollableStat>
+      ) : (
+        text
+      )}
     </div>
   );
 }
@@ -149,6 +191,7 @@ export function PcCombatPanel({
   classAdvancement = null,
   classHitDice = null,
 }: PcCombatPanelProps) {
+  const { roll, rolling, ready, themeColor } = useDice();
   const stats = computeCombatStats(
     state,
     raceFeatures,
@@ -160,11 +203,36 @@ export function PcCombatPanel({
   const hitDice = classHitDice ?? {};
   const maxHp = computeMaxHitPoints(state, hitDice);
   const hdString = formatHitDiceString(state.hitPoints?.rolls ?? [], hitDice);
+  const conScore = state.abilities.con;
+  const conMod = abilityModifier(conScore);
   const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
   const featEffects = deriveFeatEffects(state.feats);
+  const weapons = computeWeaponAttackRows(state, stats);
   const classNameBySlug = new Map(
     state.identity.classLevels.map((cl) => [cl.classSlug, cl.className]),
   );
+
+  function rollHitDie(index: number, sides: number, label: string) {
+    const dieSides = asDieSides(sides);
+    if (!dieSides || !ready || rolling) return;
+    roll(
+      {
+        id: createRollId(),
+        label: `${label} HD`,
+        dice: [{ qty: 1, sides: dieSides }],
+        modifier: 0,
+      },
+      (result) => {
+        const face = result.faces[0] ?? result.faceSum;
+        if (!Number.isFinite(face)) return;
+        patch((s) => {
+          const row = s.hitPoints?.rolls?.[index];
+          if (!row) return;
+          row.rolled = Math.max(1, Math.min(sides, Math.trunc(face)));
+        });
+      },
+    );
+  }
 
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-combat-panel" role="tabpanel">
@@ -175,6 +243,15 @@ export function PcCombatPanel({
             <div className="pc-combat-hp-stat">
               <span className="pc-combat-hp-label">Hit Dice</span>
               <span className="pc-combat-value pc-combat-value--readonly">{hdString}</span>
+            </div>
+            <div className="pc-combat-hp-stat">
+              <span className="pc-combat-hp-label">Constitution</span>
+              <span
+                className="pc-combat-total pc-combat-value"
+                aria-label={`Constitution ${conScore}, modifier ${formatModifier(conMod)}`}
+              >
+                {conScore} ({formatModifier(conMod)})
+              </span>
             </div>
             <div className="pc-combat-hp-stat">
               <span className="pc-combat-hp-label">Max HP</span>
@@ -206,35 +283,70 @@ export function PcCombatPanel({
             </div>
           </div>
           {(state.hitPoints?.rolls?.length ?? 0) > 0 ? (
-            <div className="pc-combat-table pc-combat-hp-rolls" style={{ ["--combat-cols" as string]: 3 }}>
-              <CombatTableHeader columns={["Class", "Die", "Roll"]} />
-              {state.hitPoints.rolls.map((roll, index) => {
-                const sides = parseHitDieSides(resolveHitDie(roll.classSlug, hitDice));
+            <div className="pc-combat-table pc-combat-hp-rolls" style={{ ["--combat-cols" as string]: 4 }}>
+              <CombatTableHeader columns={["Die", "Roll", "Con", "HP"]} />
+              {state.hitPoints.rolls.map((rollRow, index) => {
+                const sides = parseHitDieSides(resolveHitDie(rollRow.classSlug, hitDice));
+                const dieSides = asDieSides(sides);
                 const label =
-                  classNameBySlug.get(roll.classSlug) ?? roll.classSlug;
+                  classNameBySlug.get(rollRow.classSlug) ?? rollRow.classSlug;
+                const capped =
+                  sides > 0
+                    ? Math.min(Math.max(1, rollRow.rolled), sides)
+                    : Math.max(0, rollRow.rolled);
+                const levelHp = Math.max(1, capped + conMod);
                 return (
                   <div
-                    key={`${roll.classSlug}-${roll.classLevel}`}
+                    key={`${rollRow.classSlug}-${rollRow.classLevel}`}
                     className="pc-combat-row"
-                    style={{ ["--combat-cols" as string]: 3 }}
+                    style={{ ["--combat-cols" as string]: 4 }}
                   >
                     <div className="pc-combat-row-label">
-                      {label} {roll.classLevel}
+                      {label} {rollRow.classLevel}
                     </div>
-                    <CombatReadonly value={sides} signed={false} />
-                    <CombatNumberInput
-                      value={roll.rolled}
-                      onChange={(raw) =>
-                        patch((s) => {
-                          const next = Math.max(
-                            1,
-                            Math.min(sides || 99, raw === "" ? 1 : Number(raw)),
-                          );
-                          if (!s.hitPoints?.rolls?.[index]) return;
-                          s.hitPoints.rolls[index].rolled = next;
-                        })
-                      }
-                    />
+                    <span className="pc-combat-value pc-combat-value--readonly">
+                      {sides > 0 ? `d${sides}` : "—"}
+                    </span>
+                    <div className="pc-combat-hp-roll-cell">
+                      <CombatNumberInput
+                        value={rollRow.rolled}
+                        onChange={(raw) =>
+                          patch((s) => {
+                            const next = Math.max(
+                              1,
+                              Math.min(sides || 99, raw === "" ? 1 : Number(raw)),
+                            );
+                            if (!s.hitPoints?.rolls?.[index]) return;
+                            s.hitPoints.rolls[index].rolled = next;
+                          })
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="pc-combat-hp-roll-btn"
+                        disabled={!dieSides || !ready || rolling || sides <= 0}
+                        title={
+                          dieSides
+                            ? `Roll d${sides} for ${label} level ${rollRow.classLevel}`
+                            : "Cannot roll this die"
+                        }
+                        aria-label={`Roll hit die d${sides} for ${label} level ${rollRow.classLevel}`}
+                        onClick={() => rollHitDie(index, sides, `${label} ${rollRow.classLevel}`)}
+                      >
+                        {dieSides ? (
+                          <DieIcon
+                            sides={dieSides}
+                            color={themeColor}
+                            className="dice-die-icon--chip"
+                            labeled={false}
+                          />
+                        ) : (
+                          <span className="pc-combat-hp-roll-fallback">Roll</span>
+                        )}
+                      </button>
+                    </div>
+                    <CombatReadonly value={conMod} />
+                    <CombatTotal value={levelHp} signed={false} />
                   </div>
                 );
               })}
@@ -281,7 +393,7 @@ export function PcCombatPanel({
             ).map(({ label, key, misc, iterative }) => (
               <div key={label} className="pc-combat-row" style={{ ["--combat-cols" as string]: 5 }}>
                 <div className="pc-combat-row-label">{label}</div>
-                <AttackTotal value={key.total} iterative={iterative} />
+                <AttackTotal value={key.total} iterative={iterative} rollLabel={label} />
                 <CombatReadonly value={key.parts.bab} />
                 <CombatReadonly value={key.parts.stat} />
                 <CombatReadonly value={key.parts.size} />
@@ -303,6 +415,7 @@ export function PcCombatPanel({
             title="Initiative"
             columns={["Total", "Stat", "Misc"]}
             total={stats.initiative.total}
+            rollLabel="Initiative"
             fields={[
               { label: "Stat", value: stats.initiative.parts.stat, editable: null },
               {
@@ -356,7 +469,7 @@ export function PcCombatPanel({
             ).map(({ label, row, misc }) => (
               <div key={label} className="pc-combat-row" style={{ ["--combat-cols" as string]: 6 }}>
                 <div className="pc-combat-row-label">{label}</div>
-                <CombatTotal value={row.total} />
+                <CombatTotal value={row.total} rollLabel={label} />
                 <CombatReadonly value={row.parts.class} />
                 <CombatReadonly value={row.parts.stat} />
                 <CombatReadonly value={row.parts.ability ?? 0} />
@@ -447,18 +560,22 @@ export function PcCombatPanel({
       </div>
 
       <div className="npc-sheet-block pc-combat-attacks">
-        <h3>Attacks</h3>
-        <textarea
-          className="pc-sheet-input pc-sheet-textarea"
-          rows={4}
-          value={state.combat.attacks}
-          placeholder="Weapon attacks, special attacks…"
-          onChange={(e) =>
-            patch((s) => {
-              s.combat.attacks = e.target.value;
-            })
-          }
-        />
+        <h3>Weapons</h3>
+        <PcWeaponAttacksList weapons={weapons} />
+        <label className="pc-actions-attacks">
+          <span className="npc-sheet-sub">Special attacks</span>
+          <textarea
+            className="pc-sheet-input pc-sheet-textarea"
+            rows={3}
+            value={state.combat.attacks}
+            placeholder="Special attacks, natural weapons…"
+            onChange={(e) =>
+              patch((s) => {
+                s.combat.attacks = e.target.value;
+              })
+            }
+          />
+        </label>
       </div>
     </div>
   );

@@ -63,6 +63,14 @@ export type InventoryRow = {
   acp?: number | null;
   speed30?: number | null;
   speed20?: number | null;
+  /** Cached weapon stats from the equipment record. */
+  damageM?: string | null;
+  damageS?: string | null;
+  critical?: string | null;
+  damageType?: string | null;
+  /** light | one | two | ranged */
+  handed?: string | null;
+  rangeIncrement?: string | null;
 };
 
 /** One hit die for a specific class level. */
