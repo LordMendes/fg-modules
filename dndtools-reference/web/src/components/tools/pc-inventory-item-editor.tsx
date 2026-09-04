@@ -616,6 +616,7 @@ export function PcInventoryItemEditor({
                   <li className="mi-ability-empty">No abilities match the current filters.</li>
                 ) : (
                   availableAbilities.map((ability) => {
+                    const weaponAbility = isWeapon ? (ability as WeaponAbility) : null;
                     const selected = isWeapon
                       ? (row.weaponAbilities ?? []).find(
                           (entry) => entry.abilityId === ability.id,
@@ -650,14 +651,12 @@ export function PcInventoryItemEditor({
                         {ability.notes ? (
                           <p className="mi-ability-note">{ability.notes}</p>
                         ) : null}
-                        {isWeapon && selected && "subtype" in ability && ability.subtype ? (
+                        {weaponAbility?.subtype && selected ? (
                           <label className="pc-item-editor-field mi-subtype-field">
-                            <span>{ability.subtype.label}</span>
+                            <span>{weaponAbility.subtype.label}</span>
                             <select
                               className="pc-sheet-input"
-                              value={
-                                "subtype" in selected ? (selected.subtype ?? "") : ""
-                              }
+                              value={(selected as SelectedWeaponAbility).subtype ?? ""}
                               onChange={(event) =>
                                 patchRow((current) => {
                                   current.weaponAbilities = (current.weaponAbilities ?? []).map(
@@ -669,7 +668,7 @@ export function PcInventoryItemEditor({
                                 })
                               }
                             >
-                              {ability.subtype.options.map((option) => (
+                              {weaponAbility.subtype.options.map((option) => (
                                 <option key={option} value={option}>
                                   {option}
                                 </option>
