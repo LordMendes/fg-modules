@@ -270,9 +270,10 @@ function PcPlannerBody() {
   }
 
   function updateAbility(key: AbilityKey, value: number) {
+    const next = Number.isFinite(value) ? Math.max(1, Math.min(99, Math.round(value))) : 10;
     patch((s) => {
       if (!s.abilityBase) s.abilityBase = { ...s.abilities };
-      s.abilityBase[key] = value;
+      s.abilityBase[key] = next;
     });
   }
 

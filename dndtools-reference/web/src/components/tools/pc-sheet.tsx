@@ -70,8 +70,17 @@ function clampClassLevel(level: number): number {
   return Math.max(1, Math.min(20, level));
 }
 
+function clampAbilityScore(value: number): number {
+  if (!Number.isFinite(value)) return 10;
+  return Math.max(1, Math.min(99, Math.round(value)));
+}
+
 function totalCharacterLevel(classLevels: PcPlanState["identity"]["classLevels"]): number {
   return classLevels.reduce((sum, cl) => sum + cl.level, 0);
+}
+
+function formatClassLine(classLevels: PcPlanState["identity"]["classLevels"]): string {
+  return classLevels.map((cl) => `${cl.className} ${cl.level}`).join(" / ");
 }
 
 export function PcSheet({
@@ -99,6 +108,12 @@ export function PcSheet({
 
   const classLevels = state.identity.classLevels;
   const totalLevel = totalCharacterLevel(classLevels);
+  const raceLabel = state.identity.race.trim();
+  const alignLabel = state.identity.alignment.trim();
+  const classLine = formatClassLine(classLevels);
+  const identityBits = [raceLabel || null, classLine || null, alignLabel || null].filter(
+    (bit): bit is string => Boolean(bit),
+  );
   const abilityBase = state.abilityBase ?? state.abilities;
   const raceFeatures = compendium?.raceFeatures ?? null;
   const hasRace = Boolean(state.identity.raceSlug);
@@ -144,7 +159,7 @@ export function PcSheet({
       <div className="pc-sheet-panel-area">
         {sheetTab === "main" && (
           <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
-            <div className="npc-sheet-header">
+            <div className="npc-sheet-header pc-main-header">
               <input
                 type="text"
                 className="pc-sheet-input pc-sheet-input--title npc-sheet-name"
@@ -158,22 +173,18 @@ export function PcSheet({
                 }
                 onBlur={onNameBlur}
               />
-              <dl className="npc-sheet-stats pc-sheet-meta">
-                <div>
-                  <dt>Shortcut</dt>
-                  <dd>
-                    <input
-                      type="text"
-                      className="pc-sheet-input"
-                      placeholder="e.g. hwizard"
-                      value={shortcut}
-                      aria-label="Shortcut alias"
-                      onChange={(e) => onShortcutChange(e.target.value)}
-                      onBlur={onShortcutBlur}
-                    />
-                  </dd>
-                </div>
-                <div>
+              {identityBits.length > 0 || totalLevel > 0 ? (
+                <p className="pc-main-identity">
+                  {identityBits.length > 0 ? (
+                    <span className="pc-main-identity-core">{identityBits.join(" · ")}</span>
+                  ) : null}
+                  {totalLevel > 0 ? (
+                    <span className="pc-main-level">Level {totalLevel}</span>
+                  ) : null}
+                </p>
+              ) : null}
+              <dl className="pc-main-meta">
+                <div className="pc-main-meta-race">
                   <dt>Race</dt>
                   <dd>
                     {showRacePicker ? (
@@ -191,7 +202,7 @@ export function PcSheet({
                       />
                     ) : (
                       <div className="pc-sheet-race-value">
-                        <span>{state.identity.race}</span>
+                        <span className="pc-main-race-name">{state.identity.race}</span>
                         <button
                           type="button"
                           className="pc-sheet-link-btn"
@@ -212,7 +223,7 @@ export function PcSheet({
                     ) : null}
                   </dd>
                 </div>
-                <div>
+                <div className="pc-main-meta-align">
                   <dt>Alignment</dt>
                   <dd>
                     <input
@@ -231,7 +242,12 @@ export function PcSheet({
             </div>
 
             <div className="npc-sheet-block">
-              <h3>Classes</h3>
+              <div className="pc-skills-header">
+                <h3>Classes</h3>
+                {totalLevel > 0 ? (
+                  <span className="pc-main-level-badge">Level {totalLevel}</span>
+                ) : null}
+              </div>
               {classLevels.length === 0 ? (
                 <p className="pc-sheet-empty">Add a class below.</p>
               ) : (
@@ -239,9 +255,15 @@ export function PcSheet({
                   {classLevels.map((cl, index) => {
                     const info = getClassCastingInfo(cl.classSlug, cl.className);
                     const isFirstClass = state.identity.firstClassSlug === cl.classSlug;
+                    const showFirstSlot = classLevels.length > 1;
                     return (
-                      <li key={`${cl.classSlug}-${index}`} className="pc-class-row">
-                        <div className="pc-class-row-main">
+                      <li
+                        key={`${cl.classSlug}-${index}`}
+                        className={
+                          showFirstSlot ? "pc-class-row pc-class-row--multiclass" : "pc-class-row"
+                        }
+                      >
+                        <div className="pc-class-identity">
                           <a
                             href={`/classes/${cl.classSlug}`}
                             target="_blank"
@@ -250,21 +272,6 @@ export function PcSheet({
                           >
                             {cl.className}
                           </a>
-                          {isFirstClass ? (
-                            <span className="pc-class-first-badge">1st class (×4 skills)</span>
-                          ) : (
-                            <button
-                              type="button"
-                              className="pc-sheet-link-btn"
-                              onClick={() =>
-                                patch((s) => {
-                                  s.identity.firstClassSlug = cl.classSlug;
-                                })
-                              }
-                            >
-                              Set as 1st class
-                            </button>
-                          )}
                           {info ? (
                             <span className="pc-class-casting">
                               {info.dcAbility.toUpperCase()}
@@ -272,6 +279,26 @@ export function PcSheet({
                             </span>
                           ) : null}
                         </div>
+                        {showFirstSlot ? (
+                          isFirstClass ? (
+                            <span className="pc-class-first-badge" title="Skill points ×4 at 1st level">
+                              1st · ×4 skills
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              className="pc-class-first-btn"
+                              title="Use this class for ×4 skill points at 1st level"
+                              onClick={() =>
+                                patch((s) => {
+                                  s.identity.firstClassSlug = cl.classSlug;
+                                })
+                              }
+                            >
+                              Make 1st
+                            </button>
+                          )
+                        ) : null}
                         <label className="pc-class-level">
                           <span className="npc-sheet-sub">Lvl</span>
                           <input
@@ -293,7 +320,7 @@ export function PcSheet({
                         </label>
                         <button
                           type="button"
-                          className="tool-btn tool-btn--ghost tool-btn--compact"
+                          className="pc-class-remove"
                           onClick={() =>
                             patch((s) => {
                               s.identity.classLevels.splice(index, 1);
@@ -307,9 +334,6 @@ export function PcSheet({
                   })}
                 </ul>
               )}
-              <p className="npc-sheet-sub pc-class-total">
-                Total character level: {totalLevel || "—"}
-              </p>
               <EntitySearchCombobox
                 categories={CLASS_SEARCH_CATEGORIES}
                 placeholder="Search classes to add…"
@@ -452,6 +476,26 @@ export function PcSheet({
                         <div className="pc-ability-col pc-ability-col--score">
                           <span className="pc-ability-col-label">Score</span>
                           <div className="pc-ability-score-value">
+                            <div className="pc-ability-stepper">
+                              <button
+                                type="button"
+                                className="pc-ability-step"
+                                aria-label={`Increase ${key.toUpperCase()}`}
+                                disabled={abilityBase[key] >= 99}
+                                onClick={() => updateAbility(key, abilityBase[key] + 1)}
+                              >
+                                +
+                              </button>
+                              <button
+                                type="button"
+                                className="pc-ability-step"
+                                aria-label={`Decrease ${key.toUpperCase()}`}
+                                disabled={abilityBase[key] <= 1}
+                                onClick={() => updateAbility(key, abilityBase[key] - 1)}
+                              >
+                                −
+                              </button>
+                            </div>
                             <input
                               type="number"
                               className="pc-sheet-input pc-sheet-input--ability"
@@ -459,7 +503,7 @@ export function PcSheet({
                               max={99}
                               value={abilityBase[key]}
                               aria-label={`${key.toUpperCase()} score`}
-                              onChange={(e) => updateAbility(key, Number(e.target.value))}
+                              onChange={(e) => updateAbility(key, clampAbilityScore(Number(e.target.value)))}
                             />
                             {hasRace && abilityBase[key] !== state.abilities[key] ? (
                               <span className="pc-ability-effective" aria-label={`Effective ${key.toUpperCase()} with racial`}>
@@ -484,6 +528,22 @@ export function PcSheet({
                 })}
               </div>
             </div>
+
+            <details className="pc-main-shortcut">
+              <summary>{shortcut.trim() ? "Alias" : "Set alias"}</summary>
+              <label className="pc-main-shortcut-label">
+                <span>Shortcut</span>
+                <input
+                  type="text"
+                  className="pc-sheet-input pc-main-shortcut-input"
+                  placeholder="e.g. hwizard"
+                  value={shortcut}
+                  aria-label="Shortcut alias"
+                  onChange={(e) => onShortcutChange(e.target.value)}
+                  onBlur={onShortcutBlur}
+                />
+              </label>
+            </details>
           </div>
         )}
 

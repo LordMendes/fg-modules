@@ -12,7 +12,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY web/package.json ./web/
 COPY web/prisma ./web/prisma
 COPY web/prisma.config.ts ./web/
-RUN pnpm install --frozen-lockfile
+# Skip lifecycle scripts: postinstall needs web/scripts/ and public/, not copied in this stage.
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # --- Build ---
 FROM base AS builder
@@ -24,6 +25,7 @@ COPY data/dndtools /data/dndtools
 
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @fg-modules/web exec prisma generate
+RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
 RUN pnpm --filter @fg-modules/web import:bundle
 
