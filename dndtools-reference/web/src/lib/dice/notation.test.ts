@@ -6,6 +6,7 @@ import {
   consolidatePool,
   d20Check,
   formatRollSummary,
+  iterativeD20Checks,
   poolDieCount,
   removeOneDieFromPool,
   resultFromEngineGroups,
@@ -120,6 +121,26 @@ describe("dice notation", () => {
     ]);
     assert.equal(nat1.natural1, true);
     assert.equal(nat1.total, 6);
+  });
+
+  it("applies a bonus per iterative d20", () => {
+    const req = iterativeD20Checks("Longsword attack", [9, 4]);
+    assert.deepEqual(req.dice, [{ qty: 2, sides: 20 }]);
+    assert.deepEqual(req.iterativeModifiers, [9, 4]);
+    const result = resultFromEngineGroups(req, [
+      {
+        rolls: [
+          { value: 18, sides: 20 },
+          { value: 12, sides: 20 },
+        ],
+      },
+    ]);
+    assert.deepEqual(result.attackTotals, [27, 16]);
+    assert.equal(result.total, 27);
+    assert.match(
+      formatRollSummary(result),
+      /Longsword attack: 18\+9=27, 12\+4=16/,
+    );
   });
 });
 

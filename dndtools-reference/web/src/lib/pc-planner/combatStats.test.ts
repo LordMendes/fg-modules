@@ -6,6 +6,7 @@ import {
   computeBaseAttackBonus,
   computeClassSave,
   computeCombatStats,
+  iterativeAttackBonuses,
   normalizeCombatState,
 } from "./combatStats";
 
@@ -105,5 +106,14 @@ describe("normalizeCombatState", () => {
     assert.equal(combat.attacks, "Longsword +8");
     assert.equal(combat.speedBase, 30);
     assert.equal(combat.armor, 0);
+  });
+});
+
+describe("iterativeAttackBonuses", () => {
+  it("adds a second attack at -5 when the bonus stays positive", () => {
+    assert.deepEqual(iterativeAttackBonuses(5), [5]);
+    assert.deepEqual(iterativeAttackBonuses(6), [6, 1]);
+    assert.deepEqual(iterativeAttackBonuses(9), [9, 4]);
+    assert.deepEqual(iterativeAttackBonuses(11), [11, 6, 1]);
   });
 });

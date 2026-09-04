@@ -3,6 +3,7 @@ import {
   abilityModifier,
   formatIterativeAttacks,
   formatModifier,
+  iterativeAttackBonuses,
   type CombatComputed,
 } from "./combatStats";
 import { isWeaponKind } from "./equippedGear";
@@ -19,11 +20,14 @@ export type WeaponAttackRow = {
   name: string;
   mode: WeaponAttackMode;
   attackBonus: number;
+  attackBonuses: number[];
   attackDisplay: string;
   damageDice: DicePoolItem[];
   damageModifier: number;
   damageDisplay: string;
   critical: string | null;
+  threatMin: number;
+  critMultiplier: number;
   damageType: string | null;
   /** Full MM-style line, e.g. Longsword +9/+4 melee (1d8+3/19-20) */
   summary: string;
@@ -217,4 +221,77 @@ export function damageDiceForSize(
 
 /**
  * Melee damage ability bonus: full Str, or 1.5× Str bonus (round down) for
- * two-handed when Str is positive. Negative Str
+ * two-handed when Str is positive. Negative Str always applies the full penalty.
+ */
+export function meleeDamageAbilityBonus(
+  strMod: number,
+  twoHanded: boolean,
+): number {
+  if (!twoHanded) return strMod;
+  if (strMod > 0) return Math.floor(strMod * 1.5);
+  return strMod;
+}
+
+export function computeWeaponAttackRows(
+  state: PcPlanState,
+  combatStats: CombatComputed,
+): WeaponAttackRow[] {
+  const inventory = state.inventory ?? [];
+  const strMod = abilityModifier(state.abilities.str);
+  const dexMod = abilityModifier(state.abilities.dex);
+  const sizeMod = state.combat.sizeMod;
+  const finesse = hasWeaponFinesse(state.feats);
+  const rows: WeaponAttackRow[] = [];
+
+  for (let i = 0; i < inventory.length; i++) {
+    const item = inventory[i];
+    if (!isWeaponKind(item.kind) || !weaponHasDamage(item)) continue;
+
+    const mode: WeaponAttackMode = isRangedWeapon(item) ? "ranged" : "melee";
+    const light = isLightWeapon(item);
+    const useDexToHit = mode === "ranged" || (finesse && light && mode === "melee");
+
+    const attackBonus =
+      combatStats.bab +
+      (useDexToHit ? dexMod : strMod) +
+      sizeMod +
+      (mode === "ranged" ? state.combat.rangedMisc : state.combat.meleeMisc);
+
+    const damageRaw = damageDiceForSize(item, sizeMod);
+    const damageDice = parseDamageDice(damageRaw);
+    if (damageDice.length === 0) continue;
+
+    let damageModifier = 0;
+    if (mode === "melee") {
+      damageModifier = meleeDamageAbilityBonus(strMod, isTwoHandedWeapon(item));
+    }
+
+    const attackBonuses = iterativeAttackBonuses(attackBonus);
+    const attackDisplay = formatIterativeAttacks(attackBonus);
+    const damageBase = formatDamageWithModifier(damageDice, damageModifier);
+    const critSuffix = formatCritSuffix(item.critical);
+    const damageDisplay = `${damageBase}${critSuffix}`;
+    const typeLabel = formatDamageType(item.damageType);
+    const summary = `${item.name || "Weapon"} ${attackDisplay} ${mode} (${damageDisplay})`;
+    const critInfo = parseWeaponCritical(item.critical);
+
+    rows.push({
+      inventoryIndex: i,
+      name: item.name || "Weapon",
+      mode,
+      attackBonus,
+      attackBonuses,
+      attackDisplay,
+      damageDice,
+      damageModifier,
+      damageDisplay,
+      critical: item.critical ?? null,
+      threatMin: critInfo.threatMin,
+      critMultiplier: critInfo.multiplier,
+      damageType: typeLabel,
+      summary,
+    });
+  }
+
+  return rows;
+}

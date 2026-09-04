@@ -11,6 +11,8 @@ export type RollRequest = {
   label: string;
   dice: DicePoolItem[];
   modifier: number;
+  /** Per-die bonuses for a full iterative attack (one d20 each). */
+  iterativeModifiers?: number[];
 };
 
 export type RollResult = {
@@ -23,6 +25,8 @@ export type RollResult = {
   natural20: boolean;
   natural1: boolean;
   at: number;
+  /** Per-attack totals when rolling iterative BAB attacks together. */
+  attackTotals?: number[];
 };
 
 export type DiceSkin = {

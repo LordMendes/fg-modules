@@ -45,19 +45,27 @@ export function formatModifier(value: number): string {
 }
 
 /**
+ * Iterative attack bonuses (3.5): primary, then −5 while still positive.
+ * Examples: 0 → [0], 5 → [5], 6 → [6, 1], 11 → [11, 6, 1].
+ */
+export function iterativeAttackBonuses(bonus: number): number[] {
+  if (!Number.isFinite(bonus)) return [0];
+  let current = Math.trunc(bonus);
+  const parts: number[] = [current];
+  current -= 5;
+  while (current > 0) {
+    parts.push(current);
+    current -= 5;
+  }
+  return parts;
+}
+
+/**
  * Format iterative attack bonuses (3.5): primary, then −5 while still positive.
  * Examples: 0 → "+0", 5 → "+5", 6 → "+6/+1", 11 → "+11/+6/+1".
  */
 export function formatIterativeAttacks(bonus: number): string {
-  if (!Number.isFinite(bonus)) return "+0";
-  let current = Math.trunc(bonus);
-  const parts: string[] = [formatModifier(current)];
-  current -= 5;
-  while (current > 0) {
-    parts.push(formatModifier(current));
-    current -= 5;
-  }
-  return parts.join("/");
+  return iterativeAttackBonuses(bonus).map(formatModifier).join("/");
 }
 
 function sumParts(parts: Record<string, number>): number {

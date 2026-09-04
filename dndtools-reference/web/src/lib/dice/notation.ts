@@ -36,7 +36,29 @@ export function toEngineNotation(
   return consolidatePool(dice);
 }
 
+function formatFaceWithMod(face: number, modifier: number, total: number): string {
+  const modPart =
+    modifier === 0
+      ? ""
+      : modifier > 0
+        ? `+${modifier}`
+        : `${modifier}`;
+  return `${face}${modPart}=${total}`;
+}
+
 export function formatRollSummary(result: RollResult): string {
+  if (result.attackTotals && result.attackTotals.length > 1 && result.faces.length > 1) {
+    const bits = result.faces.map((face, i) => {
+      const total = result.attackTotals![i] ?? face;
+      const mod = total - face;
+      let bit = formatFaceWithMod(face, mod, total);
+      if (face === 20) bit += "!";
+      else if (face === 1) bit += "…";
+      return bit;
+    });
+    return `${result.label}: ${bits.join(", ")}`;
+  }
+
   const facePart =
     result.faces.length === 1
       ? String(result.faces[0])
@@ -82,6 +104,25 @@ export function resultFromEngineGroups(
   }
 
   const faceSum = faces.reduce((sum, n) => sum + n, 0);
+  const iterative = request.iterativeModifiers;
+  if (iterative && iterative.length > 0 && faces.length > 0) {
+    const attackTotals = faces.map(
+      (face, i) => face + (iterative[i] ?? iterative[iterative.length - 1] ?? 0),
+    );
+    return {
+      id: request.id,
+      label: request.label,
+      faces,
+      faceSum,
+      modifier: iterative[0] ?? 0,
+      total: attackTotals[0] ?? faceSum,
+      natural20: faces.includes(20),
+      natural1: faces.includes(1),
+      at: Date.now(),
+      attackTotals,
+    };
+  }
+
   const total = faceSum + request.modifier;
   const isSingleD20 =
     request.dice.length === 1 &&
@@ -112,6 +153,21 @@ export function d20Check(label: string, modifier: number): RollRequest {
     label,
     dice: [{ qty: 1, sides: 20 }],
     modifier,
+  };
+}
+
+/** One d20 per iterative BAB attack, each with its own bonus. */
+export function iterativeD20Checks(
+  label: string,
+  bonuses: number[],
+): RollRequest {
+  const mods = bonuses.length > 0 ? bonuses : [0];
+  return {
+    id: createRollId(),
+    label,
+    dice: [{ qty: mods.length, sides: 20 }],
+    modifier: mods[0] ?? 0,
+    iterativeModifiers: mods,
   };
 }
 

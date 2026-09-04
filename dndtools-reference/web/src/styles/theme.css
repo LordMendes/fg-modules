@@ -6381,11 +6381,13 @@ body {
 }
 
 .pc-weapon-attack-row {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
   padding: 0.55rem 0;
   border-bottom: 1px solid color-mix(in srgb, var(--border-color, #333) 70%, transparent);
+  overflow: hidden;
 }
 
 .pc-weapon-attack-row:last-child {
@@ -6393,7 +6395,226 @@ body {
   padding-bottom: 0;
 }
 
+.pc-weapon-attack-row--crit-armed {
+  border-bottom-color: color-mix(in srgb, var(--accent-gold) 45%, var(--border-color, #333));
+}
+
+.pc-weapon-attack-row--crit-flash {
+  animation: pc-weapon-crit-row-pulse 1.35s ease-out;
+}
+
+.pc-weapon-attack-row--crit-flash::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -0.15rem -0.35rem;
+  border-radius: 0.35rem;
+  background: radial-gradient(
+    ellipse at 30% 40%,
+    color-mix(in srgb, #ffb347 35%, transparent),
+    color-mix(in srgb, var(--accent-gold) 12%, transparent) 55%,
+    transparent 75%
+  );
+  animation: pc-weapon-crit-glow 1.35s ease-out;
+}
+
+@keyframes pc-weapon-crit-row-pulse {
+  0% {
+    transform: scale(1);
+  }
+  18% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pc-weapon-crit-glow {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pc-weapon-attack-row--fumble-flash {
+  animation: pc-weapon-fumble-shake 0.85s ease-out;
+}
+
+.pc-weapon-attack-row--fumble-flash::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -0.15rem -0.35rem;
+  border-radius: 0.35rem;
+  background: radial-gradient(
+    ellipse at 30% 40%,
+    color-mix(in srgb, #6b7c99 38%, transparent),
+    color-mix(in srgb, #3a4658 18%, transparent) 55%,
+    transparent 75%
+  );
+  animation: pc-weapon-fumble-glow 1.35s ease-out;
+}
+
+@keyframes pc-weapon-fumble-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  12% {
+    transform: translateX(-5px) rotate(-0.6deg);
+  }
+  24% {
+    transform: translateX(5px) rotate(0.6deg);
+  }
+  36% {
+    transform: translateX(-4px) rotate(-0.4deg);
+  }
+  48% {
+    transform: translateX(4px) rotate(0.4deg);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  72% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes pc-weapon-fumble-glow {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pc-weapon-crit-banner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 70%, #fff);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, #c45c26 55%, var(--bg-card, #1a1410)),
+    color-mix(in srgb, var(--accent-gold) 35%, var(--bg-card, #1a1410))
+  );
+  color: #fff8e7;
+  animation: pc-weapon-crit-banner-in 0.45s ease-out;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent-gold) 35%, transparent);
+}
+
+@keyframes pc-weapon-crit-banner-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.35rem) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pc-weapon-crit-banner-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pc-weapon-crit-banner-detail {
+  font-size: 0.78rem;
+  opacity: 0.92;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-weapon-fumble-banner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid color-mix(in srgb, #8a97ab 65%, #fff);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, #2a3344 70%, var(--bg-card, #1a1410)),
+    color-mix(in srgb, #5c6b82 40%, var(--bg-card, #1a1410))
+  );
+  color: #d7deea;
+  animation: pc-weapon-crit-banner-in 0.45s ease-out;
+  box-shadow: 0 0 18px color-mix(in srgb, #6b7c99 30%, transparent);
+}
+
+.pc-weapon-fumble-banner-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pc-weapon-fumble-banner-detail {
+  font-size: 0.78rem;
+  opacity: 0.92;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-weapon-crit-armed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 55%, var(--border-color));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-gold) 16%, transparent);
+  color: var(--accent-gold);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pc-weapon-crit-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-gold) 22%, transparent);
+  color: inherit;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pc-weapon-crit-clear:hover {
+  background: color-mix(in srgb, var(--accent-gold) 40%, transparent);
+}
+
 .pc-weapon-attack-header {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -6434,6 +6655,8 @@ body {
 }
 
 .pc-weapon-attack-rolls {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.55rem 0.85rem;
@@ -6487,6 +6710,24 @@ body {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-gold) 28%, transparent);
 }
 
+.pc-weapon-roll-btn--crit.dice-rollable {
+  border-color: color-mix(in srgb, #ff8a3d 65%, var(--accent-gold));
+  background: color-mix(in srgb, #ff8a3d 18%, var(--bg-card, transparent));
+  color: #ffd19a;
+  box-shadow: 0 0 12px color-mix(in srgb, #ff8a3d 28%, transparent);
+  animation: pc-weapon-crit-btn-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pc-weapon-crit-btn-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px color-mix(in srgb, #ff8a3d 22%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 16px color-mix(in srgb, #ff8a3d 42%, transparent);
+  }
+}
+
 .pc-weapon-roll-value {
   font-size: 0.95rem;
   letter-spacing: 0.01em;
@@ -6500,6 +6741,10 @@ body {
   text-transform: uppercase;
   color: color-mix(in srgb, var(--accent-gold) 70%, var(--text-muted));
   opacity: 0.9;
+}
+
+.pc-weapon-roll-btn--crit .pc-weapon-roll-hint {
+  color: #ffd19a;
 }
 
 .pc-weapon-attack-crit {
@@ -6521,6 +6766,10 @@ body {
   .pc-weapon-attack-rolls {
     grid-template-columns: 1fr;
     max-width: none;
+  }
+
+  .pc-weapon-crit-armed-badge {
+    margin-left: 0;
   }
 }
 

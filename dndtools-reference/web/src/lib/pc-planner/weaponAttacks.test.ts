@@ -3,10 +3,13 @@ import { describe, it } from "node:test";
 import { computeCombatStats } from "./combatStats";
 import { createDefaultPcPlanState } from "./defaultState";
 import {
+  applyCriticalDamage,
   computeWeaponAttackRows,
   formatCritSuffix,
+  isCriticalThreat,
   meleeDamageAbilityBonus,
   parseDamageDice,
+  parseWeaponCritical,
 } from "./weaponAttacks";
 
 describe("parseDamageDice", () => {
@@ -32,6 +35,46 @@ describe("formatCritSuffix", () => {
     assert.equal(formatCritSuffix("19-20/x2"), "/19-20");
     assert.equal(formatCritSuffix("x3"), "/×3");
     assert.equal(formatCritSuffix("18-20/x2"), "/18-20");
+  });
+});
+
+describe("parseWeaponCritical", () => {
+  it("defaults to 20/x2", () => {
+    assert.deepEqual(parseWeaponCritical(null), { threatMin: 20, multiplier: 2 });
+    assert.deepEqual(parseWeaponCritical("x2"), { threatMin: 20, multiplier: 2 });
+  });
+
+  it("parses threat ranges and multipliers", () => {
+    assert.deepEqual(parseWeaponCritical("19-20/x2"), {
+      threatMin: 19,
+      multiplier: 2,
+    });
+    assert.deepEqual(parseWeaponCritical("x3"), { threatMin: 20, multiplier: 3 });
+    assert.deepEqual(parseWeaponCritical("18-20/x2"), {
+      threatMin: 18,
+      multiplier: 2,
+    });
+  });
+});
+
+describe("isCriticalThreat", () => {
+  it("uses inclusive threat floor", () => {
+    assert.equal(isCriticalThreat(19, 19), true);
+    assert.equal(isCriticalThreat(18, 19), false);
+    assert.equal(isCriticalThreat(20, 20), true);
+  });
+});
+
+describe("applyCriticalDamage", () => {
+  it("multiplies dice qty and modifier", () => {
+    assert.deepEqual(
+      applyCriticalDamage([{ qty: 2, sides: 6 }], 6, 2),
+      { dice: [{ qty: 4, sides: 6 }], modifier: 12 },
+    );
+    assert.deepEqual(
+      applyCriticalDamage([{ qty: 1, sides: 8 }], 3, 3),
+      { dice: [{ qty: 3, sides: 8 }], modifier: 9 },
+    );
   });
 });
 
@@ -75,8 +118,11 @@ describe("computeWeaponAttackRows", () => {
     assert.equal(rows[0].mode, "melee");
     assert.equal(rows[0].attackBonus, 9); // BAB 6 + Str 3
     assert.equal(rows[0].attackDisplay, "+9/+4");
+    assert.deepEqual(rows[0].attackBonuses, [9, 4]);
     assert.equal(rows[0].damageModifier, 3);
     assert.equal(rows[0].damageDisplay, "1d8+3/19-20");
+    assert.equal(rows[0].threatMin, 19);
+    assert.equal(rows[0].critMultiplier, 2);
     assert.match(rows[0].summary, /Longsword \+9\/\+4 melee \(1d8\+3\/19-20\)/);
   });
 
