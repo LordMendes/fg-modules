@@ -191,10 +191,14 @@ describe("normalizeCombatState", () => {
 });
 
 describe("iterativeAttackBonuses", () => {
-  it("adds a second attack at -5 when the bonus stays positive", () => {
+  it("adds extra attacks from BAB thresholds, not the attack total", () => {
     assert.deepEqual(iterativeAttackBonuses(5), [5]);
     assert.deepEqual(iterativeAttackBonuses(6), [6, 1]);
     assert.deepEqual(iterativeAttackBonuses(9), [9, 4]);
     assert.deepEqual(iterativeAttackBonuses(11), [11, 6, 1]);
+    assert.deepEqual(iterativeAttackBonuses(16), [16, 11, 6, 1]);
+    assert.deepEqual(iterativeAttackBonuses(5, 7), [12]);
+    assert.deepEqual(iterativeAttackBonuses(6, 7), [13, 8]);
+    assert.deepEqual(iterativeAttackBonuses(11, 5), [16, 11, 6]);
   });
 });

@@ -219,8 +219,8 @@ export function buildPcFgXml(
 
   const acString = `${stats.ac.total}, touch ${stats.touch.total}, flat-footed ${stats.flatFooted.total}`;
   const babString = formatIterativeAttacks(stats.bab);
-  const melee = formatIterativeAttacks(stats.melee.total);
-  const ranged = formatIterativeAttacks(stats.ranged.total);
+  const melee = formatIterativeAttacks(stats.bab, stats.melee.total - stats.bab);
+  const ranged = formatIterativeAttacks(stats.bab, stats.ranged.total - stats.bab);
 
   const parts: string[] = [];
   parts.push('<?xml version="1.0" encoding="utf-8"?>');

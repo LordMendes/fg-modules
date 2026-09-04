@@ -106,12 +106,14 @@ describe("syncHitDice", () => {
 });
 
 describe("formatIterativeAttacks", () => {
-  it("builds iterative strings from BAB or attack totals", () => {
+  it("builds iterative strings from BAB, then adds non-BAB extras", () => {
     assert.equal(formatIterativeAttacks(0), "+0");
     assert.equal(formatIterativeAttacks(5), "+5");
     assert.equal(formatIterativeAttacks(6), "+6/+1");
     assert.equal(formatIterativeAttacks(11), "+11/+6/+1");
     assert.equal(formatIterativeAttacks(16), "+16/+11/+6/+1");
+    assert.equal(formatIterativeAttacks(5, 7), "+12");
+    assert.equal(formatIterativeAttacks(11, 5), "+16/+11/+6");
   });
 });
 

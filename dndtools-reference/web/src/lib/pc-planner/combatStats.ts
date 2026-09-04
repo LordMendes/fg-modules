@@ -53,27 +53,29 @@ export function formatModifier(value: number): string {
 }
 
 /**
- * Iterative attack bonuses (3.5): primary, then −5 while still positive.
- * Examples: 0 → [0], 5 → [5], 6 → [6, 1], 11 → [11, 6, 1].
+ * Iterative attack bonuses (3.5): extra attacks come from BAB
+ * (+6, +11, +16; max 4), not from the attack total. `extra` (ability,
+ * size, enhancement, misc) is added to each iterative.
+ * Examples: (5) → [5], (6) → [6, 1], (5, 7) → [12], (11, 5) → [16, 11, 6].
  */
-export function iterativeAttackBonuses(bonus: number): number[] {
-  if (!Number.isFinite(bonus)) return [0];
-  let current = Math.trunc(bonus);
-  const parts: number[] = [current];
-  current -= 5;
-  while (current > 0) {
-    parts.push(current);
-    current -= 5;
+export function iterativeAttackBonuses(bab: number, extra = 0): number[] {
+  const base = Number.isFinite(bab) ? Math.trunc(bab) : 0;
+  const add = Number.isFinite(extra) ? extra : 0;
+  const count = base <= 0 ? 1 : Math.min(4, Math.floor((base - 1) / 5) + 1);
+  const parts: number[] = [];
+  for (let i = 0; i < count; i++) {
+    parts.push(base - i * 5 + add);
   }
   return parts;
 }
 
 /**
- * Format iterative attack bonuses (3.5): primary, then −5 while still positive.
- * Examples: 0 → "+0", 5 → "+5", 6 → "+6/+1", 11 → "+11/+6/+1".
+ * Format iterative attack bonuses (3.5). Pass BAB alone, or BAB plus
+ * non-BAB extras so Strength does not create extra attacks.
+ * Examples: (5) → "+5", (6) → "+6/+1", (5, 7) → "+12", (11, 5) → "+16/+11/+6".
  */
-export function formatIterativeAttacks(bonus: number): string {
-  return iterativeAttackBonuses(bonus).map(formatModifier).join("/");
+export function formatIterativeAttacks(bab: number, extra = 0): string {
+  return iterativeAttackBonuses(bab, extra).map(formatModifier).join("/");
 }
 
 function sumParts(parts: Record<string, number>): number {

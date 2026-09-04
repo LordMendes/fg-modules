@@ -29,6 +29,7 @@ describe("buildPcFgXml", () => {
     assert.match(xml, /<character>/);
     assert.match(xml, /<name type="string">Test Hero<\/name>/);
     assert.match(xml, /<babgrp type="string">\+6\/\+1/);
+    assert.match(xml, /<atk type="string">Melee \+9\/\+4 or Ranged \+6\/\+1/);
     assert.match(xml, /<feats type="string">Dodge<\/feats>/);
     assert.match(xml, /<hd type="string">6d10<\/hd>/);
     assert.doesNotMatch(xml, /<npc>/);

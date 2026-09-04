@@ -187,15 +187,17 @@ function SideStatBlock({
 
 function AttackTotal({
   value,
+  bab,
   iterative,
   rollLabel,
 }: {
   value: number;
+  bab: number;
   iterative?: boolean;
   rollLabel?: string;
 }) {
   if (!iterative) return <CombatTotal value={value} rollLabel={rollLabel} />;
-  const text = formatIterativeAttacks(value);
+  const text = formatIterativeAttacks(bab, value - bab);
   return (
     <div className="pc-combat-total pc-combat-value pc-combat-iterative" aria-label={`Total ${text}`}>
       {rollLabel ? (
@@ -456,7 +458,12 @@ export function PcCombatPanel({
             ).map(({ label, key, misc, iterative }) => (
               <div key={label} className="pc-combat-row" style={{ ["--combat-cols" as string]: 5 }}>
                 <div className="pc-combat-row-label">{label}</div>
-                <AttackTotal value={key.total} iterative={iterative} rollLabel={label} />
+                <AttackTotal
+                  value={key.total}
+                  bab={stats.bab}
+                  iterative={iterative}
+                  rollLabel={label}
+                />
                 <CombatReadonly value={key.parts.bab} />
                 <CombatReadonly value={key.parts.stat} />
                 <CombatReadonly value={key.parts.size} />

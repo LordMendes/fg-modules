@@ -584,11 +584,13 @@ export function computeWeaponAttackRows(
 
     const standardBonuses = [attackBonus];
     const standardDisplay = formatAttackBonuses(standardBonuses);
+    const attackExtra = attackBonus - combatStats.bab;
 
     let fullAttackBonuses: number[];
     if (twfHand === "main" && twfPenalties) {
       fullAttackBonuses = iterativeAttackBonuses(
-        attackBonus + twfPenalties.primary,
+        combatStats.bab,
+        attackExtra + twfPenalties.primary,
       );
     } else if (twfHand === "off" && twfPenalties) {
       fullAttackBonuses = offHandAttackBonuses(
@@ -597,7 +599,7 @@ export function computeWeaponAttackRows(
         twfFlags,
       );
     } else {
-      fullAttackBonuses = iterativeAttackBonuses(attackBonus);
+      fullAttackBonuses = iterativeAttackBonuses(combatStats.bab, attackExtra);
     }
     const fullAttackDisplay = formatAttackBonuses(fullAttackBonuses);
     const showFullAttack = showFullAttackFor(fullAttackBonuses);

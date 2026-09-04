@@ -166,6 +166,35 @@ describe("computeWeaponAttackRows", () => {
     assert.equal(rows[0].showFullAttack, false);
   });
 
+  it("does not add iteratives from ability bonus when BAB is below 6", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 5 },
+    ];
+    state.abilities.str = 24; // +7
+    state.inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        damageM: "1d8",
+        critical: "19-20/x2",
+        handed: "one",
+        weaponHand: "main",
+        equipped: true,
+      },
+    ];
+
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(stats.bab, 5);
+    assert.equal(rows[0].attackBonus, 12);
+    assert.equal(rows[0].fullAttackDisplay, "+12");
+    assert.deepEqual(rows[0].fullAttackBonuses, [12]);
+    assert.equal(rows[0].showFullAttack, false);
+  });
+
   it("omits unequipped weapons from Actions rows", () => {
     const state = createDefaultPcPlanState();
     state.identity.classLevels = [
