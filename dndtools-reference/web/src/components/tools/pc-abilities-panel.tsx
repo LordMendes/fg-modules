@@ -4,6 +4,10 @@ import type { PcCompendiumBundle } from "@/lib/entities";
 import type { FeatEntry, PcPlanState } from "@/lib/pc-planner/types";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import type { CategoryKey } from "@/lib/categories";
+import {
+  computeFeatBudget,
+  formatFeatBudgetSummary,
+} from "@/lib/pc-planner/featBudget";
 
 const FEAT_SEARCH_CATEGORIES: CategoryKey[] = ["feats"];
 
@@ -68,16 +72,30 @@ function ClassAbilityList({
 
 function FeatList({
   feats,
+  budgetLabel,
+  overBudget,
+  budgetTitle,
   onAddFeat,
   onRemoveFeat,
 }: {
   feats: FeatEntry[];
+  budgetLabel: string;
+  overBudget: boolean;
+  budgetTitle: string;
   onAddFeat: (slug: string, name: string) => void;
   onRemoveFeat: (slug: string) => void;
 }) {
   return (
     <div className="npc-sheet-block">
-      <h3>Feats</h3>
+      <div className="pc-skills-header">
+        <h3>Feats</h3>
+        <span
+          className={`pc-skill-points-summary${overBudget ? " pc-skill-points-summary--over" : ""}`}
+          title={budgetTitle}
+        >
+          {budgetLabel}
+        </span>
+      </div>
       <EntitySearchCombobox
         categories={FEAT_SEARCH_CATEGORIES}
         placeholder="Search feats to add…"
@@ -123,11 +141,19 @@ export function PcAbilitiesPanel({
     ...(compendium?.proficiencies ?? []),
     ...(compendium?.racialProficiencies ?? []),
   ];
+  const budget = computeFeatBudget(state, compendium?.raceFeatures ?? null);
 
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-abilities-panel" role="tabpanel">
       {loading ? <p className="pc-sheet-empty">Loading abilities…</p> : null}
-      <FeatList feats={state.feats} onAddFeat={onAddFeat} onRemoveFeat={onRemoveFeat} />
+      <FeatList
+        feats={state.feats}
+        budgetLabel={formatFeatBudgetSummary(budget)}
+        overBudget={budget.spent > budget.total}
+        budgetTitle={`General ${budget.general}, human ${budget.human}, fighter ${budget.fighter}`}
+        onAddFeat={onAddFeat}
+        onRemoveFeat={onRemoveFeat}
+      />
       <ClassAbilityList abilities={compendium?.classAbilities ?? []} />
       <AbilityList
         title="Proficiencies"

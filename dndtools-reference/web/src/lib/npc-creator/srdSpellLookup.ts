@@ -1,6 +1,5 @@
 import spellLibrary from "./data/srd-spell-library.json";
 import type { SpellFollowUpAction } from "@/lib/fg-spell-actions/types";
-import { DEFAULT_SPELL_ROW } from "./defaultState";
 import type { NpcFgSpellRow } from "./types";
 
 type SpellTemplate = Omit<NpcFgSpellRow, "level" | "prepared">;
@@ -31,6 +30,33 @@ function titleCaseSpellName(name: string): string {
     .replace(/ With /g, " with ");
 }
 
+function blankSpellRow(
+  name: string,
+  slotLevel: number,
+  prepared: number,
+): NpcFgSpellRow {
+  return {
+    level: slotLevel,
+    prepared,
+    name: titleCaseSpellName(name),
+    schoolShort: "",
+    schoolFull: "",
+    levelStr: "",
+    castingTime: "",
+    components: "",
+    range: "",
+    area: "",
+    duration: "",
+    save: "",
+    sr: "",
+    short: "",
+    description: "",
+    othertags: "",
+    srNotAllowed: false,
+    savetype: "",
+  };
+}
+
 /** Resolve SRD spell metadata by name; slot level and prepared count are applied by caller. */
 export function lookupSrdSpell(
   name: string,
@@ -39,7 +65,6 @@ export function lookupSrdSpell(
 ): NpcFgSpellRow {
   const key = normalizeSpellKey(name);
   const hit = LIBRARY[key];
-  const base = DEFAULT_SPELL_ROW();
 
   if (hit) {
     const row: NpcFgSpellRow = {
@@ -69,10 +94,5 @@ export function lookupSrdSpell(
     return row;
   }
 
-  return {
-    ...base,
-    level: slotLevel,
-    prepared,
-    name: titleCaseSpellName(name),
-  };
+  return blankSpellRow(name, slotLevel, prepared);
 }

@@ -16,7 +16,7 @@ const CASTING_BY_SLUG: Record<string, ClassCastingInfo> = {
   druid: { dcAbility: "wis", progression: "prepared", fgClassName: "Druid" },
   bard: { dcAbility: "cha", progression: "spontaneous", fgClassName: "Bard" },
   ranger: { dcAbility: "wis", progression: "half", fgClassName: "Ranger" },
-  paladin: { dcAbility: "cha", progression: "half", fgClassName: "Paladin" },
+  paladin: { dcAbility: "wis", progression: "half", fgClassName: "Paladin" },
 };
 
 const CASTING_BY_NAME: Record<string, ClassCastingInfo> = Object.fromEntries(
@@ -26,12 +26,7 @@ const CASTING_BY_NAME: Record<string, ClassCastingInfo> = Object.fromEntries(
 function matchCastingBySlug(classSlug: string): ClassCastingInfo | null {
   const slugLower = classSlug.toLowerCase();
   for (const [key, info] of Object.entries(CASTING_BY_SLUG)) {
-    if (
-      slugLower === key ||
-      slugLower.startsWith(`${key}-`) ||
-      slugLower.includes(`-${key}-`) ||
-      slugLower.endsWith(`-${key}`)
-    ) {
+    if (slugLower === key || slugLower.startsWith(`${key}-`)) {
       return info;
     }
   }
@@ -43,9 +38,6 @@ function matchCastingByName(className: string): ClassCastingInfo | null {
   if (Object.prototype.hasOwnProperty.call(CASTING_BY_NAME, nameLower)) {
     return CASTING_BY_NAME[nameLower];
   }
-  for (const [key, info] of Object.entries(CASTING_BY_SLUG)) {
-    if (nameLower.includes(key)) return info;
-  }
   return null;
 }
 
@@ -53,10 +45,10 @@ export function getClassCastingInfo(classSlug: string, className?: string): Clas
   return matchCastingBySlug(classSlug) ?? (className ? matchCastingByName(className) : null);
 }
 
-/** True when spell-class rows are stored under this slug (not a variant like battle-sorcerer). */
+/** True when spell-class rows use the PHB slot table (not a UA-style variant slug). */
 export function usesDirectClassSpellList(classSlug: string, className?: string): boolean {
   const info = getClassCastingInfo(classSlug, className);
-  if (!info) return true;
+  if (!info) return false;
   const base = info.fgClassName.toLowerCase();
   const slugLower = classSlug.toLowerCase();
   return slugLower === base || slugLower.startsWith(`${base}-`);
@@ -71,10 +63,20 @@ export function spellModeFromProgression(progression: CastingProgression): Spell
   return progression === "spontaneous" ? "spontaneous" : "preparation";
 }
 
+/** Half-caster effective CL: 0 below class level 4, else classLevel − 3. */
+export function halfCasterEffectiveLevel(classLevel: number): number {
+  if (classLevel < 4) return 0;
+  return classLevel - 3;
+}
+
 export function castingModeLabel(mode: SpellMode): string {
   return mode === "spontaneous" ? "Spontaneous" : "Prepared";
 }
 
 export function isPreparedCaster(info: ClassCastingInfo): boolean {
-  return info.progression === "prepared";
+  return info.progression === "prepared" || info.progression === "half";
+}
+
+export function isHalfCaster(info: ClassCastingInfo | null | undefined): boolean {
+  return info?.progression === "half";
 }

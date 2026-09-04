@@ -4,11 +4,12 @@ import { useMemo, useState } from "react";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
 import { PcSpellListItem } from "@/components/tools/pc-spell-list-item";
-import { castingModeLabel } from "@/lib/pc-planner/classCasting";
+import { castingModeLabel, getClassCastingInfo, halfCasterEffectiveLevel, isHalfCaster } from "@/lib/pc-planner/classCasting";
 import {
   computeCombatStats,
   formatModifier,
 } from "@/lib/pc-planner/combatStats";
+import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import {
   computeSpellClass,
   preparedCountAtLevel,
@@ -39,6 +40,8 @@ function CombatSummary({
     state,
     compendium?.raceFeatures ?? null,
     compendium?.classFeatures ?? null,
+    compendium?.classAdvancement ?? null,
+    deriveFeatEffects(state.feats),
   );
 
   return (
@@ -114,6 +117,11 @@ export function PcActionsPanel({
         spellClass.label,
         spellClass.casterLevel,
         state.abilities,
+        compendium?.classSpellTables?.[spellClass.classSlug],
+        {
+          hasDomains: (state.identity.domains?.length ?? 0) > 0,
+          specialistSchool: state.identity.specialistSchool,
+        },
       )
     : null;
 
@@ -122,17 +130,18 @@ export function PcActionsPanel({
     [spellClass?.spells],
   );
 
-  const castContext = useMemo(
-    () =>
-      computed && spellClass
-        ? {
-            casterLevel: spellClass.casterLevel,
-            spellLevel: pendingSpellLevel,
-            dcModifier: computed.dcModifier,
-          }
-        : null,
-    [computed, spellClass, pendingSpellLevel],
-  );
+  const castContext = useMemo(() => {
+    if (!computed || !spellClass) return null;
+    const info = getClassCastingInfo(spellClass.classSlug, spellClass.label);
+    const casterLevel = isHalfCaster(info)
+      ? halfCasterEffectiveLevel(spellClass.casterLevel)
+      : spellClass.casterLevel;
+    return {
+      casterLevel,
+      spellLevel: pendingSpellLevel,
+      dcModifier: computed.dcModifier,
+    };
+  }, [computed, spellClass, pendingSpellLevel]);
 
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-actions-panel" role="tabpanel">
@@ -249,13 +258,14 @@ export function PcActionsPanel({
                   if (atLevel.length === 0) return null;
                   const slotLimit = computed.slots[lvl] ?? 0;
                   const preparedTotal = preparedCountAtLevel(spellClass.spells, lvl);
+                  const knownLimit = computed.known[lvl] ?? 0;
                   return (
                     <li key={lvl}>
                       <strong>
                         Level {lvl}
                         {computed.mode === "preparation"
                           ? ` (${preparedTotal}/${slotLimit} prepared)`
-                          : ` (${atLevel.length} known · ${slotLimit}/day)`}
+                          : ` (${atLevel.length}/${knownLimit || "—"} known · ${slotLimit}/day)`}
                       </strong>
                       <ul className="pc-feat-list pc-feat-list--editable pc-spell-accordion-list">
                         {atLevel.map((sp) => (

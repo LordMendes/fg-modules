@@ -42,6 +42,11 @@ import {
 } from "@/lib/pc-planner/parseClassAbilityEffects";
 import { parseRaceFeatures, type RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
 import { parseClassSkillPointBase } from "@/lib/pc-planner/skillPoints";
+import {
+  parseClassAdvancementTable,
+  type ClassAdvancementRow,
+} from "@/lib/pc-planner/parseClassAdvancement";
+import type { ClassSpellTableContext } from "@/lib/pc-planner/spellSlots";
 
 export type EntityListItem = {
   slug: string;
@@ -76,6 +81,15 @@ export type ClassSkillRef = {
   name: string;
   slug: string | null;
   ability: string | null;
+};
+
+/** Full skill catalog entry for the PC Planner skill grid. */
+export type SkillCatalogEntry = {
+  name: string;
+  slug: string | null;
+  ability: string | null;
+  trainedOnly: boolean;
+  armorCheckPenalty: boolean;
 };
 
 export type ClassSpellLevelSummary = {
@@ -279,13 +293,67 @@ export async function getClassSkillsBySlugs(classSlugs: string[]): Promise<Class
   return [...merged.values()].sort((a, b) => a.name.localeCompare(b.name));
 }
 
+export async function getAllSkillCatalogEntries(): Promise<SkillCatalogEntry[]> {
+  const rows = await prisma.skill.findMany({
+    select: {
+      name: true,
+      slug: true,
+      keyAbility: true,
+      trainedOnly: true,
+      armorCheckPenalty: true,
+    },
+    orderBy: { name: "asc" },
+  });
+
+  return rows.map((row) => ({
+    name: row.name,
+    slug: row.slug,
+    ability: row.keyAbility,
+    trainedOnly: Boolean(row.trainedOnly),
+    armorCheckPenalty: Boolean(row.armorCheckPenalty),
+  }));
+}
+
+export async function getClassSpellTablesBySlugs(
+  classSlugs: string[],
+): Promise<Record<string, ClassSpellTableContext>> {
+  const unique = [...new Set(classSlugs.filter(Boolean))];
+  if (unique.length === 0) return {};
+
+  const rows = await prisma.dndClass.findMany({
+    where: { slug: { in: unique } },
+    select: { slug: true, descriptionHtml: true, indexData: true },
+  });
+
+  const tables: Record<string, ClassSpellTableContext> = {};
+  for (const row of rows) {
+    const indexData = row.indexData as Record<string, unknown>;
+    const advancementHtml =
+      typeof indexData?.advancementHtml === "string" ? indexData.advancementHtml : null;
+    tables[row.slug] = {
+      advancementHtml,
+      descriptionHtml: row.descriptionHtml,
+    };
+  }
+  return tables;
+}
+
 export type PcCompendiumBundle = {
+  /** Union of class skills for selected classes (class vs cross-class). */
   skills: ClassSkillRef[];
+  /** Full skill catalog for the Skills tab grid. */
+  allSkills: SkillCatalogEntry[];
   /** Class slug → skill point base before Int (e.g. rogue → 8). */
   classSkillPointBases: Record<string, number>;
+  /** Class slug → hit die string (e.g. fighter → "d10"). */
+  classHitDice: Record<string, string>;
   proficiencies: string[];
   classAbilities: ClassAbilityEntry[];
   classFeatures: ClassDerivedFeatures;
+  /** Full per-level BAB/save tables keyed by class slug. */
+  classAdvancement: Record<string, ClassAdvancementRow[]>;
+  /** HTML sources for variant caster slot/known parsing. */
+  classSpellTables: Record<string, ClassSpellTableContext>;
   racialTraits: string[];
   racialProficiencies: string[];
   raceFeatures: RaceDerivedFeatures | null;
@@ -296,17 +364,31 @@ export async function getPcCompendiumBundle(input: {
   raceSlug?: string | null;
 }): Promise<PcCompendiumBundle> {
   const classSlugs = [...new Set(input.classLevels.map((cl) => cl.classSlug).filter(Boolean))];
-  const skills = await getClassSkillsBySlugs(classSlugs);
+  const [skills, allSkills] = await Promise.all([
+    getClassSkillsBySlugs(classSlugs),
+    getAllSkillCatalogEntries(),
+  ]);
 
   const proficiencies: string[] = [];
   const classAbilities: ClassAbilityEntry[] = [];
   const classDescriptions = new Map<string, string>();
   const classSkillPointBases: Record<string, number> = {};
+  const classHitDice: Record<string, string> = {};
+  const classAdvancement: Record<string, ClassAdvancementRow[]> = {};
+  const classSpellTables: Record<string, ClassSpellTableContext> = {};
 
   if (classSlugs.length > 0) {
     const classRows = await prisma.dndClass.findMany({
       where: { slug: { in: classSlugs } },
-      select: { slug: true, name: true, descriptionText: true, indexData: true, skillPoints: true },
+      select: {
+        slug: true,
+        name: true,
+        descriptionText: true,
+        descriptionHtml: true,
+        indexData: true,
+        skillPoints: true,
+        hitDie: true,
+      },
     });
 
     for (const row of classRows) {
@@ -314,6 +396,7 @@ export async function getPcCompendiumBundle(input: {
       if (!levelEntry) continue;
       const parsedBase = parseClassSkillPointBase(row.skillPoints);
       if (parsedBase != null) classSkillPointBases[row.slug] = parsedBase;
+      if (row.hitDie) classHitDice[row.slug] = row.hitDie;
       if (row.descriptionText) classDescriptions.set(row.slug, row.descriptionText);
       proficiencies.push(
         ...parseClassProficiencies(row.descriptionText).map(
@@ -321,6 +404,14 @@ export async function getPcCompendiumBundle(input: {
         ),
       );
       const indexData = row.indexData as Record<string, unknown>;
+      const advancement = parseClassAdvancementTable(indexData?.advancement);
+      if (advancement.length > 0) classAdvancement[row.slug] = advancement;
+      const advancementHtml =
+        typeof indexData?.advancementHtml === "string" ? indexData.advancementHtml : null;
+      classSpellTables[row.slug] = {
+        advancementHtml,
+        descriptionHtml: row.descriptionHtml,
+      };
       classAbilities.push(
         ...parseClassAbilities(
           indexData?.advancement,
@@ -359,12 +450,16 @@ export async function getPcCompendiumBundle(input: {
 
   return {
     skills,
+    allSkills,
     classSkillPointBases,
+    classHitDice,
     proficiencies: [...new Set(proficiencies)],
     classAbilities: classAbilities.sort(
       (a, b) => a.level - b.level || a.name.localeCompare(b.name),
     ),
     classFeatures,
+    classAdvancement,
+    classSpellTables,
     racialTraits,
     racialProficiencies,
     raceFeatures,

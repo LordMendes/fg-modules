@@ -14,6 +14,7 @@ import {
 } from "./imageTransform";
 import { mergeNpcFgState, parseNpcFgJson } from "./mergeState";
 import { getMonsterTemplateById } from "./presets/monster-templates";
+import { lookupSrdSpell } from "./srdSpellLookup";
 import { toSlug } from "./toSlug";
 
 describe("mergeNpcFgState", () => {
@@ -48,6 +49,82 @@ describe("mergeNpcFgState", () => {
     });
     assert.equal(state.media.picturePath, "images/guard.webp@Tokens");
     assert.equal(state.media.tokenPath, "tokens/guard.webp@Tokens");
+  });
+
+  it("resolves Spell Compendium spells from the expanded library", () => {
+    const state = mergeNpcFgState({
+      spellcasting: {
+        enabled: true,
+        spells: [{ level: 3, spells: ["acid breath"] }],
+      },
+    });
+    const spell = state.spellcasting.spells[0];
+    assert.equal(spell.name, "Acid Breath");
+    assert.equal(spell.schoolShort, "conjuration");
+    assert.match(spell.description, /acid damage per caster level/i);
+    assert.ok(!/magical auras/i.test(spell.description));
+  });
+
+  it("embeds mod-sourced damage actions in exported spellset XML", () => {
+    const state = mergeNpcFgState({
+      spellcasting: {
+        enabled: true,
+        mode: "preparation",
+        label: "Wizard",
+        casterLevel: 7,
+        dcAbility: "intelligence",
+        slots: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        spells: [{ level: 4, spells: ["orb of acid"] }],
+      },
+    });
+    const xml = buildNpcFgXml(state);
+    assert.match(xml, /<type type="string">damage<\/type>/);
+    assert.match(xml, /<type type="string">acid<\/type>/);
+    assert.match(xml, /<atktype type="string">rtouch<\/atktype>/);
+    assert.match(xml, /<savetype type="string">fort<\/savetype>/);
+  });
+});
+
+describe("lookupSrdSpell", () => {
+  it("returns a blank stub for unknown spell names", () => {
+    const spell = lookupSrdSpell("totally unknown spell", 4, 2);
+    assert.equal(spell.name, "Totally Unknown Spell");
+    assert.equal(spell.level, 4);
+    assert.equal(spell.prepared, 2);
+    assert.equal(spell.description, "");
+    assert.equal(spell.range, "");
+    assert.equal(spell.schoolShort, "");
+  });
+
+  it("resolves Complete Arcane Orb of Acid with mod-sourced automation", () => {
+    const spell = lookupSrdSpell("orb of acid", 4, 1);
+    assert.equal(spell.name, "Orb of Acid");
+    assert.equal(spell.savetype, "fort");
+    assert.equal(spell.atktype, "rtouch");
+    assert.ok(spell.actions?.some((a) => a.type === "damage"));
+    assert.equal(spell.action2?.type, "damage");
+    if (spell.action2?.type === "damage") {
+      assert.equal(spell.action2.dmgType, "acid");
+      assert.equal(spell.action2.dicestat, "cl");
+    }
+  });
+
+  it("resolves BoVD Cloud of the Achaierai with damage follow-up", () => {
+    const spell = lookupSrdSpell("cloud of the achaierai", 6, 1);
+    assert.equal(spell.name, "Cloud of the Achaierai");
+    assert.equal(spell.savetype, "fort");
+    assert.equal(spell.action2?.type, "damage");
+    if (spell.action2?.type === "damage") {
+      assert.equal(spell.action2.dice, "2d6");
+    }
+  });
+
+  it("resolves PH Enervation with scrape metadata but no automation", () => {
+    const spell = lookupSrdSpell("enervation", 4, 1);
+    assert.equal(spell.name, "Enervation");
+    assert.match(spell.description, /negative levels/i);
+    assert.equal(spell.schoolShort, "necromancy");
+    assert.equal(spell.action2, undefined);
   });
 });
 

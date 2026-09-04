@@ -1,0 +1,14 @@
+{
+  "book_title": "Complete Arcane",
+  "book_slug": "complete-arcane",
+  "written": {
+    "classes": 22,
+    "feats": 75,
+    "spells": 149,
+    "items": 1
+  },
+  "skipped": {},
+  "warnings": [],
+  "total_written": 247,
+  "total_skipped": 0
+}

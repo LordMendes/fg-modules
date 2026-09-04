@@ -134,6 +134,58 @@
     "spells": [],
     "skills": [],
     "items": [],
-    "races": []
+    "races": [
+      {
+        "name": "Lesser Aasimar",
+        "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+        "book_slug": "mycelial-shepherd",
+        "category": "races",
+        "index": {
+          "level_adjustment": "0",
+          "source_abbrev": "PG",
+          "edition": "Forgotten Realms (3.5)"
+        },
+        "detail": {
+          "fg": {
+            "ability_scores": { "wis": 2, "cha": 2 },
+            "identity": {
+              "size": "Medium",
+              "type": "Humanoid (planetouched)",
+              "favored_class": "Paladin",
+              "level_adjustment": "+0",
+              "starting_languages": "Common and Celestial",
+              "bonus_languages": "Draconic, Dwarven, Elven, Gnome, Halfling, and Sylvan"
+            },
+            "movement": { "land": 30 },
+            "senses": { "darkvision": "60 ft." },
+            "traits": [
+              {
+                "slug": "energyresistance",
+                "name": "Energy Resistances",
+                "text": "<h>Energy Resistances</h><p>Lesser aasimar have acid, cold, and electricity resistance 5.</p>",
+                "effect": "RESIST: 5, acid; RESIST: 5, cold; RESIST: 5, electricity"
+              },
+              {
+                "slug": "spelllikeabilities",
+                "name": "Spell-Like Abilities",
+                "text": "<h>Spell-Like Abilities</h><p><i>Light</i> (Sp): Once per day, a lesser aasimar can use <i>light</i> as a spell-like ability. Caster level equals character level.</p>"
+              },
+              {
+                "slug": "keensenses",
+                "name": "Keen Senses",
+                "text": "<h>Keen Senses</h><p>Lesser aasimar have a +2 racial bonus on Listen and Spot checks.</p>",
+                "effect": "SKILL: 2, listen; SKILL: 2, spot"
+              },
+              {
+                "slug": "planetouched",
+                "name": "Planetouched",
+                "text": "<h>Planetouched</h><p>Lesser aasimar are humanoids with the planetouched subtype, not outsiders. They are susceptible to spells and effects that specifically target humanoids or outsiders. <i>Charm person</i> works against them, and so does <i>banishment</i>. This replaces the outsider entry in the standard aasimar description.</p>"
+              }
+            ],
+            "summary_text": "<p>Lesser aasimar use standard aasimar racial traits modified by the <b>Lesser Planetouched</b> variant (<i>Player's Guide to Faerûn</i>, pp. 190–191): humanoid (planetouched) type and no level adjustment.</p><list><li>+2 Wisdom, +2 Charisma</li><li>Darkvision 60 ft.</li><li>Energy resistance 5 (acid, cold, electricity)</li><li><i>Light</i> 1/day (Sp)</li><li>+2 Listen and Spot</li><li>Favored class: Paladin</li></list>"
+          }
+        }
+      }
+    ]
   }
 }

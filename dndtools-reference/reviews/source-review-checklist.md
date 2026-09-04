@@ -6,7 +6,7 @@ Review on the site at `/sources/{abbrev}` (e.g. `/sources/BV`).
 
 **How to use:** Change `- [ ]` to `- [x]` when you finish reviewing a source.
 
-**Progress:** 3 / 130 reviewed
+**Progress:** 5 / 130 reviewed
 
 ---
 
@@ -86,7 +86,7 @@ Review on the site at `/sources/{abbrev}` (e.g. `/sources/BV`).
 | - [ ] | Epic Level Handbook | `EL` | Supplementals (3.0) | 209 |
 | - [ ] | Fiend Folio | `FF` | Supplementals (3.0) | 4 |
 | - [ ] | Ghostwalk | `Gh` | Supplementals (3.0) | 154 |
-| - [ ] | Manual of the Planes | `MP` | Supplementals (3.0) | 33 |
+| - [x] | Manual of the Planes | `MP` | Supplementals (3.0) | 33 |
 | - [ ] | Masters of the Wild | `MW` | Supplementals (3.0) | 130 |
 | - [ ] | Psionics Handbook 3.0 | `PsH3` | Supplementals (3.0) | 55 |
 | - [ ] | Song and Silence | `SS` | Supplementals (3.0) | 142 |
@@ -128,7 +128,7 @@ Review on the site at `/sources/{abbrev}` (e.g. `/sources/BV`).
 | - [ ] | Monster Manual III | `MM3` | Supplementals (3.5) | 21 |
 | - [ ] | Monster Manual IV | `MM4` | Supplementals (3.5) | 14 |
 | - [ ] | Monster Manual V | `MM5` | Supplementals (3.5) | 19 |
-| - [ ] | Planar Handbook | `PlH` | Supplementals (3.5) | 116 |
+| - [x] | Planar Handbook | `PlH` | Supplementals (3.5) | 116 |
 | - [ ] | Player's Handbook II | `PH2` | Supplementals (3.5) | 237 |
 | - [ ] | Races of Destiny | `RD` | Supplementals (3.5) | 94 |
 | - [ ] | Races of Stone | `RS` | Supplementals (3.5) | 107 |
@@ -592,7 +592,11 @@ Categories: classes=6, domains=2, feats=75, skills=1, spells=70
 
 Categories: classes=4, skills=1, spells=28
 
-- 
+- **2026-08-28:** audit — see [mp.md](mp.md)
+- **Verdict:** OK
+- All 4 prestige classes OK (Divine Agent, Gatecrasher, Planar Champion, Planeshifter); Lucid Dreaming skill and 28 spells have description content
+- Spell class links resolve; index/full counts match
+- Site: `/sources/MP`
 
 ### Masters of the Wild (`MW`)
 
@@ -848,7 +852,11 @@ Categories: feats=18, spells=1
 
 Categories: classes=9, feats=32, spells=75
 
-- 
+- **2026-08-28:** audit — see [plh.md](plh.md)
+- **Verdict:** OK
+- All 9 prestige classes OK (Ardent Dilettante through Visionary Seeker); 32 feats and 75 spells have description content
+- Spell class links resolve; index/full counts match
+- Site: `/sources/PlH`
 
 ### Player's Handbook II (`PH2`)
 

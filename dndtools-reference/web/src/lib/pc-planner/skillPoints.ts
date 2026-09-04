@@ -25,14 +25,42 @@ export function skillAbilityKey(ability: string | null | undefined): AbilityKey 
 export function computeSkillTotal(
   row: SkillRow,
   abilities: Record<AbilityKey, number>,
-): number {
+  armorCheckPenalty = 0,
+): number | null {
+  if (row.trainedOnly && !(row.ranks > 0)) return null;
   const abilityKey = skillAbilityKey(row.ability);
   const statMod = abilityKey ? abilityModifier(abilities[abilityKey]) : 0;
-  return row.ranks + statMod + (row.racialMisc ?? 0) + row.misc;
+  const acp = row.armorCheckPenalty ? armorCheckPenalty : 0;
+  return row.ranks + statMod + (row.racialMisc ?? 0) + row.misc + acp;
 }
 
 export function formatSkillModifier(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
+}
+
+export function isClassSkillRow(row: SkillRow, classSkillKeys: Set<string>): boolean {
+  return classSkillKeys.has(row.slug ?? row.name.toLowerCase());
+}
+
+/** Max ranks: class = HD+3, cross-class = floor((HD+3)/2). */
+export function maxSkillRanks(hitDice: number, isClassSkill: boolean): number {
+  const hd = Math.max(0, Math.trunc(hitDice));
+  const classMax = hd + 3;
+  return isClassSkill ? classMax : Math.floor(classMax / 2);
+}
+
+/** Skill points spent: class 1/rank, cross-class 2/rank (supports half ranks). */
+export function computeSkillRanksSpent(
+  skills: SkillRow[],
+  classSkillKeys: Set<string> = new Set(),
+): number {
+  return skills.reduce((sum, row) => {
+    const ranks = Number.isFinite(row.ranks) ? row.ranks : 0;
+    if (ranks <= 0) return sum;
+    const isClass =
+      classSkillKeys.size === 0 ? true : isClassSkillRow(row, classSkillKeys);
+    return sum + (isClass ? ranks : ranks * 2);
+  }, 0);
 }
 
 export type SkillPointBudgetLine = {
@@ -44,6 +72,17 @@ export type SkillPointBudgetLine = {
 
 export function totalCharacterLevel(classLevels: ClassLevelEntry[]): number {
   return classLevels.reduce((sum, cl) => sum + (cl.level > 0 ? cl.level : 0), 0);
+}
+
+/** First class for ×4 skill points; falls back when saved slug is stale. */
+export function effectiveFirstClassSlug(
+  classLevels: ClassLevelEntry[],
+  firstClassSlug: string | null | undefined,
+): string | null {
+  if (firstClassSlug && classLevels.some((cl) => cl.classSlug === firstClassSlug)) {
+    return firstClassSlug;
+  }
+  return classLevels[0]?.classSlug ?? null;
 }
 
 export function computeRacialSkillPointBudget(
@@ -100,9 +139,12 @@ export function computeSkillPointBudgetBreakdown(
   skillPointBaseBySlug: Record<string, number>,
   intScore: number,
   defaultBase = 2,
+  firstClassSlug: string | null = null,
 ): SkillPointBudgetLine[] {
   const lines: SkillPointBudgetLine[] = [];
-  let isFirstCharacterLevel = true;
+  const effectiveFirst =
+    firstClassSlug ?? (classLevels.length > 0 ? classLevels[0].classSlug : null);
+  let firstGainApplied = false;
 
   for (const cl of classLevels) {
     if (cl.level <= 0) continue;
@@ -112,6 +154,8 @@ export function computeSkillPointBudgetBreakdown(
     const classLines: SkillPointBudgetLine[] = [];
 
     for (let lvl = 1; lvl <= cl.level; lvl++) {
+      const isFirstCharacterLevel =
+        !firstGainApplied && effectiveFirst != null && cl.classSlug === effectiveFirst && lvl === 1;
       const points = skillPointsForCharacterLevelGain(perLevel, isFirstCharacterLevel);
       classTotal += points;
       classLines.push({
@@ -119,7 +163,7 @@ export function computeSkillPointBudgetBreakdown(
         value: points,
         indent: true,
       });
-      isFirstCharacterLevel = false;
+      if (isFirstCharacterLevel) firstGainApplied = true;
     }
 
     lines.push({
@@ -160,12 +204,14 @@ export function computeSkillPointBudget(
   intScore: number,
   defaultBase = 2,
   racialSkillPointBonus: RacialSkillPointBonus | null = null,
+  firstClassSlug: string | null = null,
 ): number {
   const classTotal = computeSkillPointBudgetBreakdown(
     classLevels,
     skillPointBaseBySlug,
     intScore,
     defaultBase,
+    firstClassSlug,
   )
     .filter((line) => !line.indent)
     .reduce((sum, line) => sum + line.value, 0);
@@ -173,20 +219,23 @@ export function computeSkillPointBudget(
   return classTotal + computeRacialSkillPointBudget(totalCharacterLevel(classLevels), racialSkillPointBonus);
 }
 
-export function computeSkillRanksSpent(skills: SkillRow[]): number {
-  return skills.reduce((sum, row) => sum + (Number.isFinite(row.ranks) ? row.ranks : 0), 0);
-}
-
 export function computeSkillPointSummary(
   state: PcPlanState,
   skillPointBaseBySlug: Record<string, number>,
   racialSkillPointBonus: RacialSkillPointBonus | null = null,
   raceName?: string,
+  classSkillKeys: Set<string> = new Set(),
 ): { spent: number; available: number; breakdown: SkillPointBudgetLine[] } {
+  const firstClassSlug = effectiveFirstClassSlug(
+    state.identity.classLevels,
+    state.identity.firstClassSlug,
+  );
   const classBreakdown = computeSkillPointBudgetBreakdown(
     state.identity.classLevels,
     skillPointBaseBySlug,
     state.abilities.int,
+    2,
+    firstClassSlug,
   );
   const racialBreakdown = computeRacialSkillPointBudgetBreakdown(
     totalCharacterLevel(state.identity.classLevels),
@@ -200,7 +249,8 @@ export function computeSkillPointSummary(
     state.abilities.int,
     2,
     racialSkillPointBonus,
+    firstClassSlug,
   );
-  const spent = computeSkillRanksSpent(state.skills);
+  const spent = computeSkillRanksSpent(state.skills, classSkillKeys);
   return { spent, available, breakdown };
 }

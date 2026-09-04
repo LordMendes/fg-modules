@@ -90,9 +90,121 @@
 					</id-00009>
 				</classfeatures>
 				<text type="formattedtext">
-					<p><i>To most druids, decay is merely the end of life. To the Mycelial Shepherd, it is the beginning of countless others.</i></p><p>Unlike other druids, members of the Mycelial Shepherd cultivate vast fungal colonies that thrive upon death and decomposition. They learn to channel symbiotic spores through their own bodies, surrounding themselves with clouds of invisible fungi that consume the living and nourish the cycle of nature.</p><p>Unlike most druids, a Mycelial Shepherd thrives in close combat. Symbiotic Entity transforms Wild Shape from a purely transformational ability into a powerful combat enhancement, while Halo of Spores steadily weakens nearby enemies. Rather than commanding large numbers of undead, practitioners rely on a handful of temporary fungal servants to overwhelm opponents and reclaim the fallen for the natural cycle.</p><p>At 5th level, a practitioner may stop there — mastering Sovereign of Spores — or commit to Sovereign Ascension, trading animal Wild Shape and social ease for plant forms, permanent aura expansion, and a body rebuilt by the colony.</p><p><b>Prerequisites:</b></p><p><b>Skills:</b> Knowledge (nature) 8 ranks</p><p><b>Feats:</b> Natural Spell</p><p><b>Special:</b> Ability to cast 3rd-level divine spells; Wild Shape class feature</p><p><b>Hit Die:</b> d8</p><p><b>Skill Points:</b> 4 + Int</p><h4>Advancement</h4><table><tr><td><b>Level</b></td><td><b>BAB</b></td><td><b>Fort</b></td><td><b>Ref</b></td><td><b>Will</b></td><td><b>Special</b></td></tr><tr><td>1</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Halo of Spores</td></tr><tr><td>2</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>Symbiotic Entity, animal companion progression</td></tr><tr><td>3</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>Fungal Infestation</td></tr><tr><td>4</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Spreading Spores</td></tr><tr><td>5</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Sovereign of Spores, Sovereign Ascension (optional), animal companion progression</td></tr></table>
+					<p><i>To most druids, decay is merely the end of life. To the Mycelial Shepherd, it is the beginning of countless others.</i></p><p>Unlike other druids, members of the Mycelial Shepherd cultivate vast fungal colonies that thrive upon death and decomposition. They learn to channel symbiotic spores through their own bodies, surrounding themselves with clouds of invisible fungi that consume the living and nourish the cycle of nature.</p><p>Unlike most druids, a Mycelial Shepherd thrives in close combat. Symbiotic Entity transforms Wild Shape from a purely transformational ability into a powerful combat enhancement, while Halo of Spores steadily weakens nearby enemies. Rather than commanding large numbers of undead, practitioners rely on a handful of temporary fungal servants to overwhelm opponents and reclaim the fallen for the natural cycle.</p><p>At 5th level, a practitioner may stop there — mastering Sovereign of Spores — or commit to Sovereign Ascension, trading animal Wild Shape and social ease for plant forms, permanent aura expansion, and a body rebuilt by the colony.</p><p><b>Prerequisites:</b></p><p><b>Skills:</b> Knowledge (nature) 8 ranks</p><p><b>Feats:</b> Natural Spell</p><p><b>Special:</b> Ability to cast 3rd-level divine spells; Wild Shape class feature</p><p><b>Hit Die:</b> d8</p><p><b>Skill Points:</b> 4 + Int</p><p><b>Advancement</b></p><table><tr><td><b>Level</b></td><td><b>BAB</b></td><td><b>Fort</b></td><td><b>Ref</b></td><td><b>Will</b></td><td><b>Special</b></td></tr><tr><td>1</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Halo of Spores</td></tr><tr><td>2</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>Symbiotic Entity, animal companion progression</td></tr><tr><td>3</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>Fungal Infestation</td></tr><tr><td>4</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Spreading Spores</td></tr><tr><td>5</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Sovereign of Spores, Sovereign Ascension (optional), animal companion progression</td></tr></table>
 				</text>
 			</id-00001>
 		</category>
 	</class>
+	<race>
+		<id-00001>
+			<name type="string">Lesser Aasimar</name>
+			<type type="string">Humanoid (planetouched)</type>
+			<leveladjustment type="string">+0</leveladjustment>
+			<racialtraits>
+				<attributes>
+					<locked type="number">1</locked>
+					<name type="string">Attribute Adjustments</name>
+					<text type="formattedtext">
+						<h>Ability Scores</h><p>+2 Wisdom, +2 Charisma</p>
+					</text>
+					<effectlist>
+						<id-00001>
+							<label type="string">Attribute Adjustments</label>
+							<apply type="string">roll</apply>
+							<target type="string">all</target>
+							<duration type="string">instant</duration>
+							<source type="string">race</source>
+							<text type="string">WIS: 2; CHA: 2</text>
+						</id-00001>
+					</effectlist>
+				</attributes>
+				<size>
+					<locked type="number">1</locked>
+					<name type="string">Medium</name>
+					<text type="formattedtext">
+						<h>Size</h><p>Lesser Aasimar are Medium creatures and have no bonuses or penalties due to their size.</p>
+					</text>
+				</size>
+				<speed>
+					<locked type="number">1</locked>
+					<name type="string">Normal Speed</name>
+					<text type="formattedtext">
+						<h>Normal Speed</h><p>Lesser Aasimar have a base speed of 30 feet.</p>
+					</text>
+				</speed>
+				<vision>
+					<locked type="number">1</locked>
+					<name type="string">Darkvision</name>
+					<text type="formattedtext">
+						<h>Darkvision</h><p>Lesser Aasimar can see in the dark up to 60 ft feet. Darkvision is black and white only, but it is otherwise like normal sight, and lesser aasimar can function just fine with no light at all.</p>
+					</text>
+				</vision>
+				<languages>
+					<locked type="number">1</locked>
+					<name type="string">Languages</name>
+					<text type="formattedtext">
+						<h>Languages</h><p>Lesser Aasimar begin play speaking Common and Celestial. Lesser Aasimar with high Intelligence scores can choose from the following: Draconic, Dwarven, Elven, Gnome, Halfling, and Sylvan.</p>
+					</text>
+				</languages>
+				<favoredclass>
+					<locked type="number">1</locked>
+					<name type="string">Favored Class: Paladin</name>
+					<text type="formattedtext">
+						<h>Favored Class: Paladin</h><p>A multiclass lesser aasimar's paladin class does not count when determining whether they take an experience point penalty.</p>
+					</text>
+				</favoredclass>
+				<energyresistance>
+					<locked type="number">1</locked>
+					<name type="string">Energy Resistances</name>
+					<text type="formattedtext">
+						<h>Energy Resistances</h><p>Lesser aasimar have acid, cold, and electricity resistance 5.</p>
+					</text>
+					<effectlist>
+						<id-00001>
+							<label type="string">Energy Resistances</label>
+							<apply type="string">roll</apply>
+							<target type="string">all</target>
+							<duration type="string">instant</duration>
+							<source type="string">race</source>
+							<text type="string">RESIST: 5, acid; RESIST: 5, cold; RESIST: 5, electricity</text>
+						</id-00001>
+					</effectlist>
+				</energyresistance>
+				<spelllikeabilities>
+					<locked type="number">1</locked>
+					<name type="string">Spell-Like Abilities</name>
+					<text type="formattedtext">
+						<h>Spell-Like Abilities</h><p><i>Light</i> (Sp): Once per day, a lesser aasimar can use <i>light</i> as a spell-like ability. Caster level equals character level.</p>
+					</text>
+				</spelllikeabilities>
+				<keensenses>
+					<locked type="number">1</locked>
+					<name type="string">Keen Senses</name>
+					<text type="formattedtext">
+						<h>Keen Senses</h><p>Lesser aasimar have a +2 racial bonus on Listen and Spot checks.</p>
+					</text>
+					<effectlist>
+						<id-00001>
+							<label type="string">Keen Senses</label>
+							<apply type="string">roll</apply>
+							<target type="string">all</target>
+							<duration type="string">instant</duration>
+							<source type="string">race</source>
+							<text type="string">SKILL: 2, listen; SKILL: 2, spot</text>
+						</id-00001>
+					</effectlist>
+				</keensenses>
+				<planetouched>
+					<locked type="number">1</locked>
+					<name type="string">Planetouched</name>
+					<text type="formattedtext">
+						<h>Planetouched</h><p>Lesser aasimar are humanoids with the planetouched subtype, not outsiders. They are susceptible to spells and effects that specifically target humanoids or outsiders. <i>Charm person</i> works against them, and so does <i>banishment</i>. This replaces the outsider entry in the standard aasimar description.</p>
+					</text>
+				</planetouched>
+			</racialtraits>
+			<text type="formattedtext">
+				<p>Lesser aasimar use standard aasimar racial traits modified by the <b>Lesser Planetouched</b> variant (<i>Player's Guide to Faerûn</i>, pp. 190–191): humanoid (planetouched) type and no level adjustment.</p><list><li>+2 Wisdom, +2 Charisma</li><li>Darkvision 60 ft.</li><li>Energy resistance 5 (acid, cold, electricity)</li><li><i>Light</i> 1/day (Sp)</li><li>+2 Listen and Spot</li><li>Favored class: Paladin</li></list>
+			</text>
+		</id-00001>
+	</race>
 </root>

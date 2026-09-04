@@ -174,12 +174,12 @@ Mixed melee / ranged:
 
 ## Spell rows (`NpcFgSpellRow`)
 
-Flat metadata + optional automation actions. Names resolve against SRD library via `srdSpellLookup.ts`.
+Flat metadata + optional automation actions. Names resolve against the spell library via `srdSpellLookup.ts`.
 
 | Field | Notes |
 |-------|-------|
 | `level`, `name`, `prepared` | Slot level 0–9; prepared count. |
-| `schoolShort`, `schoolFull`, `levelStr`, `castingTime`, `components`, `range`, `area`, `duration`, `save`, `sr`, `short`, `description`, `othertags` | Spell metadata. |
+| `schoolShort`, `schoolFull`, `levelStr`, `castingTime`, `components`, `range`, `area`, `duration`, `save`, `sr`, `short`, `description`, `othertags` | Spell metadata (filled from library when using name-only groups). |
 | `savetype` | `fort`, `reflex`, or `will` — for cast action. |
 | `srNotAllowed` | `true` when SR is No/harmless. |
 | `atktype` | `rtouch`, `mtouch`, or `ranged`. |
@@ -187,17 +187,56 @@ Flat metadata + optional automation actions. Names resolve against SRD library v
 | `action2` | Single follow-up: damage, heal, or effect. |
 | `actions` | Array of follow-up actions (overrides `action2` when both set). |
 
-### Spell list shorthand
+### Slot level is mandatory
+
+Every spell in `spellcasting.spells` **must** have an explicit slot `level` (0–9). Merge assigns FG slot blocks from this field only — **not** from `levelStr` or library metadata.
+
+- Bare string entries (e.g. `"fireball"`) are forced to **slot 0**. **Never use them.**
+- Per-spell objects without `"level"` default to **slot 0**.
+
+Use grouped shorthand (preferred):
 
 ```json
 "spells": [
-  { "level": 1, "spells": ["bless", "command"] },
-  "detect magic",
-  { "level": 1, "name": "Inflict Light Wounds", "prepared": 1 }
+  { "level": 0, "spells": ["detect magic", "read magic"] },
+  { "level": 1, "spells": ["mage armor", "magic missile"] },
+  { "level": 3, "spells": ["fireball"] }
 ]
 ```
 
-Name-only entries lookup SRD metadata + `action2` from library when available.
+Or per-spell objects with explicit level:
+
+```json
+{ "level": 1, "name": "Inflict Light Wounds", "prepared": 1 }
+```
+
+Name-only entries inside groups lookup spell metadata from the library; do not invent partial `description` / `school*` fields.
+
+### Spell automation from FG modules
+
+Cast/damage/heal/effect `actions` in the library come from Fantasy Grounds `.mod` files under `fg-builder/reviews/v3/`. To add automation for a new book, drop its `.mod` there and re-run `python scripts/build_npc_spell_library.py` from `dndtools-reference`. Mod-sourced actions win over scrape-only metadata. Books without a `.mod` (e.g. Player's Handbook until `Player's Handbook.mod` is added) get description/saves from scrape but may lack `action2` / `actions`. Prefer name-only leveled groups so library automation attaches on export.
+
+### Slot levels match class spell level
+
+- `level` = the caster's **prepared/known slot** for that spell (PHB/SRD class list level), not CR.
+- Pick spells at the correct class level for the NPC's caster class (Wizard, Cleric, etc.) at the stated caster level.
+- Emit `slots` as a length-10 array matching daily slots for that caster level (include bonus slots from high ability scores when known).
+- Cover **every** slot level the caster has (0 through max) with at least one prepared spell per level that has slots.
+
+## Archetypes, flavours, and casters
+
+When the user names an **archetype** (Mage, Cleric, …) or **flavour** (evoker, necromancer, battle-mage, fire-themed, …) **and** a caster class/level (e.g. Wizard 9), the JSON **must** include complete `spellcasting`:
+
+- `enabled: true`
+- `label`, `mode`, `casterLevel`, `dcAbility`
+- `slots: [...]` (10 entries, levels 0–9)
+- `spells: [ { "level": N, "spells": [...] }, ... ]` for every slot level with slots
+
+Flavour shapes **which** spells are chosen (fire theme → burning hands / scorching ray / fireball / wall of fire), not whether spells are omitted.
+
+Non-casters (Guard, Fighter, Commoner) keep `spellcasting.enabled: false` and omit spell lists.
+
+Do **not** rely on UI archetype presets alone — presets set kit fields but do not supply spells. Generated JSON must still include leveled spells when the request includes a caster level.
 
 ## Spell action schema
 
@@ -243,25 +282,28 @@ See `docs/09-recursos/fantasy-grounds/fg-35e-spell-action-mapping.md`.
 }
 ```
 
-## Spellcasting with actions example
+## Spellcasting example (Wizard 5)
 
 ```json
 {
   "spellcasting": {
     "enabled": true,
     "mode": "preparation",
-    "label": "Cleric",
+    "label": "Wizard",
     "casterLevel": 5,
-    "dcAbility": "wisdom",
-    "slots": [3, 4, 3, 1, 0, 0, 0, 0, 0, 0],
+    "dcAbility": "intelligence",
+    "slots": [4, 4, 3, 2, 0, 0, 0, 0, 0, 0],
     "spells": [
-      { "level": 1, "name": "Inflict Light Wounds", "prepared": 1 }
+      { "level": 0, "spells": ["detect magic", "light", "mage hand", "read magic"] },
+      { "level": 1, "spells": ["mage armor", "magic missile", "shield"] },
+      { "level": 2, "spells": ["invisibility", "scorching ray"] },
+      { "level": 3, "spells": ["fireball"] }
     ]
   }
 }
 ```
 
-Library supplies `action2` damage for Inflict Light Wounds automatically.
+Library fills spell metadata from names; omit manual `description` / `school*` unless overriding the library.
 
 ## Common mistakes
 
@@ -279,6 +321,10 @@ Library supplies `action2` damage for Inflict Light Wounds automatically.
 | `(1d8+4/19-20/x2)` | `(1d8+4/19-20)` — omit default ×2 |
 | `"Weapon +5 melee"` with no damage | `Longsword +5 melee (1d8+2/19-20)` — name weapon + parenthetical |
 | `/19-20` on claw/bite/slam by default | `(1d6+2)` — natural attacks are 20/×2 unless stat block says otherwise |
+| Bare string `"fireball"` in `spells` | `{ "level": 3, "spells": ["fireball"] }` — bare names force slot 0 |
+| `{ "name": "Fireball" }` with no `level` | Include `"level": 3` on every spell object |
+| Enabling casting without a spell list | Always emit `slots` + leveled `spells` for casters |
+| Archetype/flavour caster with no `spells` | Emit full leveled `spells` + `slots` for every slot level 0–max |
 
 ## Campaign canon
 

@@ -77,6 +77,30 @@ def load_json(path: Path) -> list:
     return data if isinstance(data, list) else []
 
 
+def load_source_abbrevs() -> dict[str, str]:
+    """Return canonical abbrev -> source name from source-names.json."""
+    path = INDEX_DIR / "source-names.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return data if isinstance(data, dict) else {}
+
+
+def resolve_source_abbrev(raw: str) -> str:
+    """Resolve CLI abbrev to canonical form (exact match, then case-insensitive)."""
+    raw = raw.strip()
+    if not raw:
+        return raw
+    abbrevs = load_source_abbrevs()
+    if raw in abbrevs:
+        return raw
+    lower = raw.lower()
+    for canonical in abbrevs:
+        if canonical.lower() == lower:
+            return canonical
+    return raw.upper()
+
+
 def source_abbrev(record: dict) -> str | None:
     idx = record.get("index") or {}
     if idx.get("source_abbrev"):
@@ -336,11 +360,12 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    report, issues = build_report(args.abbrev.upper())
+    abbrev = resolve_source_abbrev(args.abbrev)
+    report, issues = build_report(abbrev)
     print(report)
 
     if args.write is not None:
-        out = Path(args.write) if args.write else REVIEWS / f"{args.abbrev.lower()}.md"
+        out = Path(args.write) if args.write else REVIEWS / f"{abbrev.lower()}.md"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(report, encoding="utf-8")
         print(f"Wrote {out}", file=sys.stderr)

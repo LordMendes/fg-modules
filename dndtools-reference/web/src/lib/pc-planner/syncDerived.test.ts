@@ -4,6 +4,7 @@ import { createDefaultPcPlanState } from "./defaultState";
 import type { RaceDerivedFeatures } from "./parseRaceFeatures";
 import {
   applyDerivedFromRace,
+  applyRaceCombatBasicsOnRaceChange,
   effectiveAbilities,
   ensureAbilityBase,
 } from "./syncDerived";
@@ -42,16 +43,32 @@ describe("ensureAbilityBase", () => {
 });
 
 describe("applyDerivedFromRace", () => {
-  it("applies ability, skill, and combat basics without double-counting", () => {
+  it("applies ability and skill bonuses without overwriting combat", () => {
     const state = createDefaultPcPlanState();
     state.identity.raceSlug = "elf";
     state.skills = [{ name: "Listen", slug: "listen", ranks: 0, misc: 0 }];
+    state.combat.speedBase = 40;
 
     applyDerivedFromRace(state, elfRace);
 
     assert.equal(state.abilities.dex, 12);
     assert.equal(state.abilities.con, 8);
     assert.equal(state.skills[0].racialMisc, 2);
-    assert.equal(state.combat.speedBase, 30);
+    assert.equal(state.combat.speedBase, 40);
+  });
+});
+
+describe("applyRaceCombatBasicsOnRaceChange", () => {
+  it("sets racial size speed and natural armor", () => {
+    const state = createDefaultPcPlanState();
+    const dwarfRace: RaceDerivedFeatures = {
+      ...elfRace,
+      naturalArmor: 0,
+      sizeMod: 1,
+      speed: 20,
+    };
+    applyRaceCombatBasicsOnRaceChange(state, dwarfRace);
+    assert.equal(state.combat.sizeMod, 1);
+    assert.equal(state.combat.speedBase, 20);
   });
 });

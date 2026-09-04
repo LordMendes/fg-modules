@@ -20,12 +20,20 @@ import { PcPlanList } from "@/components/tools/pc-plan-list";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import {
+  buildPcFgXml,
+  downloadTextFile,
+  pcPlanExportBasename,
+} from "@/lib/pc-planner/buildFgXml";
 import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
 import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
-import { applyDerivedFromRace } from "@/lib/pc-planner/syncDerived";
+import {
+  applyDerivedFromRace,
+  applyRaceCombatBasicsOnRaceChange,
+} from "@/lib/pc-planner/syncDerived";
 import {
   compendiumSyncKey,
-  mergeClassSkillsIntoRows,
+  mergeSkillsIntoRows,
 } from "@/lib/pc-planner/syncSkills";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
@@ -51,6 +59,7 @@ export function PcPlanner() {
   const [pending, startTransition] = useTransition();
   const saveTimer = useRef<number | null>(null);
   const lastCompendiumSync = useRef("");
+  const lastRaceSlug = useRef<string | null | undefined>(undefined);
   const [compendium, setCompendium] = useState<PcCompendiumBundle | null>(null);
   const [compendiumLoading, setCompendiumLoading] = useState(false);
 
@@ -64,10 +73,15 @@ export function PcPlanner() {
       setState((prev) => {
         const next = structuredClone(prev);
         fn(next);
-        return finalizePcPlanState(next, compendium?.raceFeatures ?? null);
+        return finalizePcPlanState(
+          next,
+          compendium?.raceFeatures ?? null,
+          compendium?.classSpellTables ?? {},
+          compendium?.classHitDice ?? {},
+        );
       });
     },
-    [compendium?.raceFeatures],
+    [compendium?.raceFeatures, compendium?.classSpellTables, compendium?.classHitDice],
   );
 
   async function refreshPlans() {
@@ -104,14 +118,36 @@ export function PcPlanner() {
       setCompendium(result.bundle);
       setState((prev) => {
         const next = structuredClone(prev);
-        if (result.bundle!.skills.length > 0 || prev.identity.classLevels.length === 0) {
-          next.skills =
-            prev.identity.classLevels.length === 0
-              ? []
-              : mergeClassSkillsIntoRows(result.bundle!.skills, prev.skills);
+        if (result.bundle!.allSkills.length > 0 || result.bundle!.skills.length > 0) {
+          next.skills = mergeSkillsIntoRows(
+            result.bundle!.allSkills.length > 0
+              ? result.bundle!.allSkills
+              : result.bundle!.skills.map((ref) => ({
+                  name: ref.name,
+                  slug: ref.slug,
+                  ability: ref.ability,
+                  trainedOnly: false,
+                  armorCheckPenalty: false,
+                })),
+            prev.skills,
+          );
+        } else if (prev.identity.classLevels.length === 0) {
+          next.skills = [];
         }
+        const raceSlug = prev.identity.raceSlug ?? null;
+        const raceChanged =
+          lastRaceSlug.current !== undefined && lastRaceSlug.current !== raceSlug;
+        if (raceChanged && result.bundle!.raceFeatures) {
+          applyRaceCombatBasicsOnRaceChange(next, result.bundle!.raceFeatures);
+        }
+        lastRaceSlug.current = raceSlug;
         applyDerivedFromRace(next, result.bundle!.raceFeatures);
-        return finalizePcPlanState(next, result.bundle!.raceFeatures);
+        return finalizePcPlanState(
+          next,
+          result.bundle!.raceFeatures,
+          result.bundle!.classSpellTables,
+          result.bundle!.classHitDice,
+        );
       });
       setCompendiumLoading(false);
     });
@@ -137,6 +173,7 @@ export function PcPlanner() {
       const plan = await getPcPlan(planIdParam);
       if (plan) {
         lastCompendiumSync.current = "";
+        lastRaceSlug.current = undefined;
         setPlanId(plan.id);
         setShortcut(plan.shortcut ?? "");
         setState(plan.state);
@@ -284,7 +321,17 @@ export function PcPlanner() {
         target.label,
         target.casterLevel,
         s.abilities,
+        compendium?.classSpellTables?.[target.classSlug],
+        {
+          hasDomains: (s.identity.domains?.length ?? 0) > 0,
+          specialistSchool: s.identity.specialistSchool,
+        },
       );
+      if (computed.mode === "spontaneous") {
+        const atLevel = target.spells.filter((sp) => sp.level === level).length;
+        const knownLimit = computed.known[level] ?? 0;
+        if (knownLimit > 0 && atLevel >= knownLimit) return;
+      }
       target.spells.push({
         slug,
         name,
@@ -316,6 +363,27 @@ export function PcPlanner() {
     patch((s) => {
       s.inventory.push({ name: "", quantity: 1, weight: 0 });
     });
+  }
+
+  function handleDownloadXml() {
+    const xml = buildPcFgXml(state, {
+      raceFeatures: compendium?.raceFeatures ?? null,
+      classFeatures: compendium?.classFeatures ?? null,
+      classAdvancement: compendium?.classAdvancement ?? null,
+      classHitDice: compendium?.classHitDice ?? null,
+      classSkills: compendium?.skills ?? [],
+      classSpellTables: compendium?.classSpellTables ?? {},
+    });
+    downloadTextFile(`${pcPlanExportBasename(state)}.xml`, xml, "application/xml");
+  }
+
+  function handleDownloadJson() {
+    const json = JSON.stringify(state, null, 2);
+    downloadTextFile(
+      `${pcPlanExportBasename(state)}.json`,
+      json,
+      "application/json",
+    );
   }
 
   if (!user) {
@@ -374,6 +442,20 @@ export function PcPlanner() {
           </span>
           <button type="button" className="tool-btn tool-btn--ghost" onClick={handleNewPlan}>
             New
+          </button>
+          <button
+            type="button"
+            className="tool-btn tool-btn--ghost"
+            onClick={handleDownloadXml}
+          >
+            Download XML
+          </button>
+          <button
+            type="button"
+            className="tool-btn tool-btn--ghost"
+            onClick={handleDownloadJson}
+          >
+            Download JSON
           </button>
           <button
             type="button"

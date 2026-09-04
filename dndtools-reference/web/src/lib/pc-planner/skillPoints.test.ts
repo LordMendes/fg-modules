@@ -10,6 +10,7 @@ import {
   computeSkillTotal,
   formatSkillModifier,
   formatSkillPointBudgetLine,
+  maxSkillRanks,
   parseClassSkillPointBase,
   skillPointsForCharacterLevelGain,
   skillPointsPerClassLevel,
@@ -122,6 +123,8 @@ describe("computeSkillPointBudgetBreakdown", () => {
       ],
       { "paladin-95": 2, "sorcerer-98": 2 },
       8,
+      2,
+      "paladin-95",
     );
     assert.deepEqual(lines, [
       { label: "Paladin (1 pt/lv)", value: 5 },
@@ -165,13 +168,35 @@ describe("computeSkillPointSummary", () => {
 });
 
 describe("computeSkillRanksSpent", () => {
-  it("sums rank inputs", () => {
+  it("sums rank inputs as class skills when no class set given", () => {
     assert.equal(
       computeSkillRanksSpent([
         { name: "Hide", ranks: 3, misc: 0 },
         { name: "Move Silently", ranks: 5, misc: 0 },
       ]),
       8,
+    );
+  });
+
+  it("charges 2 points per cross-class rank", () => {
+    const classKeys = new Set(["climb"]);
+    assert.equal(
+      computeSkillRanksSpent(
+        [
+          { name: "Climb", slug: "climb", ranks: 2, misc: 0 },
+          { name: "Hide", slug: "hide", ranks: 2, misc: 0 },
+        ],
+        classKeys,
+      ),
+      6,
+    );
+  });
+
+  it("supports half ranks on cross-class skills", () => {
+    const classKeys = new Set(["climb"]);
+    assert.equal(
+      computeSkillRanksSpent([{ name: "Hide", slug: "hide", ranks: 0.5, misc: 0 }], classKeys),
+      1,
     );
   });
 });
@@ -183,6 +208,36 @@ describe("computeSkillTotal", () => {
       { str: 10, dex: 14, con: 10, int: 10, wis: 10, cha: 10 },
     );
     assert.equal(total, 11);
+  });
+
+  it("returns null for trained-only skills with zero ranks", () => {
+    const total = computeSkillTotal(
+      { name: "Disable Device", ability: "Int", ranks: 0, misc: 0, trainedOnly: true },
+      { str: 10, dex: 10, con: 10, int: 14, wis: 10, cha: 10 },
+    );
+    assert.equal(total, null);
+  });
+
+  it("applies armor check penalty when flagged", () => {
+    const total = computeSkillTotal(
+      {
+        name: "Hide",
+        ability: "Dex",
+        ranks: 2,
+        misc: 0,
+        armorCheckPenalty: true,
+      },
+      { str: 10, dex: 12, con: 10, int: 10, wis: 10, cha: 10 },
+      -4,
+    );
+    assert.equal(total, -1);
+  });
+});
+
+describe("maxSkillRanks", () => {
+  it("uses HD+3 for class and half for cross-class", () => {
+    assert.equal(maxSkillRanks(5, true), 8);
+    assert.equal(maxSkillRanks(5, false), 4);
   });
 });
 

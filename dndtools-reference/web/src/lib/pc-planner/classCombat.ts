@@ -8,14 +8,14 @@ export type ClassCombatInfo = {
   will: SaveProgression;
 };
 
-/** PHB base classes and common alternates — keyed by slug. */
+/** PHB base classes and common alternates — keyed by slug prefix. */
 const COMBAT_BY_SLUG: Record<string, ClassCombatInfo> = {
   barbarian: { bab: "full", fort: "good", ref: "poor", will: "poor" },
   bard: { bab: "threeQuarter", fort: "poor", ref: "good", will: "good" },
   cleric: { bab: "threeQuarter", fort: "good", ref: "poor", will: "good" },
   druid: { bab: "threeQuarter", fort: "good", ref: "poor", will: "good" },
   fighter: { bab: "full", fort: "good", ref: "poor", will: "poor" },
-  monk: { bab: "full", fort: "good", ref: "good", will: "good" },
+  monk: { bab: "threeQuarter", fort: "good", ref: "good", will: "good" },
   paladin: { bab: "full", fort: "good", ref: "poor", will: "good" },
   ranger: { bab: "full", fort: "good", ref: "good", will: "poor" },
   rogue: { bab: "threeQuarter", fort: "poor", ref: "good", will: "poor" },
@@ -37,8 +37,18 @@ const DEFAULT_COMBAT: ClassCombatInfo = {
   will: "poor",
 };
 
+function matchCombatBySlug(classSlug: string): ClassCombatInfo | null {
+  const slugLower = classSlug.toLowerCase();
+  for (const [key, info] of Object.entries(COMBAT_BY_SLUG)) {
+    if (slugLower === key || slugLower.startsWith(`${key}-`)) {
+      return info;
+    }
+  }
+  return null;
+}
+
 export function getClassCombatInfo(classSlug: string, className?: string): ClassCombatInfo {
-  const bySlug = COMBAT_BY_SLUG[classSlug.toLowerCase()];
+  const bySlug = matchCombatBySlug(classSlug);
   if (bySlug) return bySlug;
   if (className) {
     const byName = COMBAT_BY_NAME[className];

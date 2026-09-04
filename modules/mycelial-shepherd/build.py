@@ -22,7 +22,7 @@ def main() -> None:
     report = build_module(
         MODULE_DIR,
         MODULE_DIR,
-        categories=["classes"],
+        categories=["classes", "races"],
         author="LordCaca",
     )
     out = package_module(MODULE_DIR, FG_MODULES / MOD_NAME)

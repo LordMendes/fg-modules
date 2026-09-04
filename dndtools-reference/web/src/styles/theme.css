@@ -5443,6 +5443,12 @@ body {
   letter-spacing: 0.04em;
 }
 
+.pc-class-first-badge {
+  font-size: 0.6875rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
 .pc-class-level {
   display: flex;
   align-items: center;
@@ -5793,6 +5799,11 @@ body {
   z-index: 50;
 }
 
+.pc-sheet-toolbar .home-search.is-open,
+.pc-sheet-body .entity-search-combobox.is-open {
+  z-index: 60;
+}
+
 .fg-sheet-tabs {
   flex-wrap: wrap;
 }
@@ -5878,7 +5889,7 @@ body {
 
 .pc-combat-bab-highlight {
   display: grid;
-  grid-template-columns: auto 3rem;
+  grid-template-columns: auto auto;
   gap: 0.35rem;
   align-items: center;
   justify-content: start;
@@ -5891,6 +5902,37 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.03em;
   text-align: center;
+}
+
+.pc-combat-iterative {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pc-combat-hp-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.pc-combat-hp-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 5rem;
+}
+
+.pc-combat-hp-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.pc-combat-hp-rolls {
+  margin-top: 0.5rem;
 }
 
 .pc-combat-table {
@@ -6043,6 +6085,72 @@ body {
   text-align: center;
   color: var(--text-muted);
   font-size: 0.8125rem;
+}
+
+.pc-skill-class-mark {
+  text-align: center;
+  color: var(--accent-gold);
+  font-weight: 700;
+  width: 1.25rem;
+}
+
+.pc-skill-trained {
+  margin-left: 0.15rem;
+  color: var(--text-muted);
+}
+
+.pc-skill-acp {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-skill-row--over .pc-sheet-input--warn,
+.pc-sheet-input--warn {
+  border-color: color-mix(in srgb, #c44 55%, var(--border-color));
+  color: #c44;
+}
+
+.pc-inventory-search {
+  margin-bottom: 0.75rem;
+  max-width: 28rem;
+}
+
+.pc-inventory-kind {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.pc-inventory-equip {
+  text-align: center;
+}
+
+.pc-inventory-equipped-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.pc-domain-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.pc-domain-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  background: color-mix(in srgb, var(--surface-raised) 85%, transparent);
 }
 
 .pc-skill-total {

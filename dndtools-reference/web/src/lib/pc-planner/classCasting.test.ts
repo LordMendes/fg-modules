@@ -4,6 +4,7 @@ import {
   castingModeLabel,
   getClassCastingInfo,
   spellModeFromProgression,
+  usesDirectClassSpellList,
 } from "./classCasting";
 
 describe("getClassCastingInfo", () => {
@@ -13,24 +14,28 @@ describe("getClassCastingInfo", () => {
     assert.equal(info?.progression, "prepared");
   });
 
-  it("matches variant class names containing base caster name", () => {
-    const info = getClassCastingInfo("sorcerer-98", "Battle Sorcerer");
+  it("matches base caster slug prefix only", () => {
+    const info = getClassCastingInfo("sorcerer-98", "Sorcerer");
     assert.equal(info?.progression, "spontaneous");
     assert.equal(info?.dcAbility, "cha");
   });
 
-  it("matches variant class slugs containing base caster name", () => {
-    const info = getClassCastingInfo("battle-sorcerer-119");
-    assert.equal(info?.progression, "spontaneous");
-    assert.equal(info?.fgClassName, "Sorcerer");
+  it("does not match battle-sorcerer slug to sorcerer casting table", () => {
+    assert.equal(getClassCastingInfo("battle-sorcerer-119", "Battle Sorcerer"), null);
+    assert.equal(usesDirectClassSpellList("battle-sorcerer-119", "Battle Sorcerer"), false);
+  });
+
+  it("does not match variant names containing base caster name", () => {
+    assert.equal(getClassCastingInfo("custom-123", "Battle Sorcerer"), null);
   });
 
   it("returns null for non-casters", () => {
     assert.equal(getClassCastingInfo("fighter-93", "Fighter"), null);
   });
 
-  it("does not treat Constructor as a bard match via prototype lookup", () => {
-    assert.equal(getClassCastingInfo("constructor-995", "Constructor"), null);
+  it("paladin uses wisdom for spell DC", () => {
+    const info = getClassCastingInfo("paladin-95", "Paladin");
+    assert.equal(info?.dcAbility, "wis");
   });
 });
 

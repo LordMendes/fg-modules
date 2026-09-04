@@ -1,0 +1,13 @@
+{
+  "book_title": "Complete Mage",
+  "book_slug": "complete-mage",
+  "written": {
+    "classes": 11,
+    "feats": 65,
+    "spells": 132
+  },
+  "skipped": {},
+  "warnings": [],
+  "total_written": 208,
+  "total_skipped": 0
+}

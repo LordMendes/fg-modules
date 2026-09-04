@@ -10,6 +10,11 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       raceSlug: null,
       alignment: "Neutral",
       classLevels: [{ classSlug: "wizard", className: "Wizard", level: 1 }],
+      firstClassSlug: "wizard",
+      deity: "",
+      deitySlug: null,
+      domains: [],
+      specialistSchool: null,
     },
     abilities: {
       str: 10,
@@ -61,6 +66,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       srMisc: 0,
       attacks: "",
     },
+    hitPoints: { rolls: [] },
     inventory: [],
     notes: "",
   };

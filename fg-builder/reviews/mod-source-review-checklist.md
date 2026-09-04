@@ -4,7 +4,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 
 **How to use:** Change `- [ ]` to `- [x]` when you finish reviewing a module.
 
-**Progress:** 11 / 15 reviewed
+**Progress:** 12 / 16 reviewed
 
 ---
 
@@ -16,6 +16,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 | - [x] | Book of Vile Darkness | `modules/Book of Vile Darkness.mod` | [book-of-vile-darkness.md](reviews/v3/book-of-vile-darkness.md) |
 | - [ ] | Champions of Valor | `reviews/v1-staging/Champions of Valor.mod` | [champions-of-valor.md](reviews/v1-staging/champions-of-valor.md) |
 | - [ ] | CityScape | `reviews/v1-staging/CityScape.mod` | [cityscape.md](reviews/v1-staging/cityscape.md) |
+| - [x] | Forgotten Realms Campaign Setting | `modules/Forgotten Realms Campaign Setting.mod` | [forgotten-realms-campaign-setting.md](reviews/forgotten-realms-campaign-setting.md) |
 | - [x] | Complete Adventurer | `modules/Complete Adventurer.mod` | [complete-adventurer.md](reviews/v3/complete-adventurer.md) |
 | - [x] | Complete Arcane | `modules/Complete Arcane.mod` | [complete-arcane.md](reviews/v3/complete-arcane.md) |
 | - [x] | Complete Champion | `modules/Complete Champion.mod` | [complete-champion.md](reviews/v3/complete-champion.md) |
@@ -49,6 +50,16 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 ### CityScape
 
 - 
+
+### Forgotten Realms Campaign Setting
+
+Categories touched: classes=23, feats=51, spells=39, races=23, domains=5
+
+- **2026-08-25:** built from dndtools JSON — see [forgotten-realms-campaign-setting.md](reviews/forgotten-realms-campaign-setting.md)
+- **Verdict:** Refactored with warnings (0 errors, 95 warnings)
+- Classes: 12 FR prestige classes + 11 incomplete PHB stubs from web JSON
+- Feats: 51 records including Shadow Weave chain and regional feats
+- Races: 23 regional race entries; Domains: 5
 
 ### Complete Adventurer
 

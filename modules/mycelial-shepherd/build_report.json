@@ -2,10 +2,11 @@
   "book_title": "Lordcaca homebrew",
   "book_slug": "mycelial-shepherd",
   "written": {
-    "classes": 1
+    "classes": 1,
+    "races": 1
   },
   "skipped": {},
   "warnings": [],
-  "total_written": 1,
+  "total_written": 2,
   "total_skipped": 0
 }

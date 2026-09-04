@@ -96,7 +96,14 @@ export function applyRaceCombatBasics(
 export function applyDerivedFromRace(state: PcPlanState, race: RaceDerivedFeatures | null): void {
   syncEffectiveAbilities(state, race);
   if (race) {
-    applyRaceCombatBasics(state.combat, race);
     state.skills = applyRacialSkillBonuses(state.skills, race.skillBonuses);
   }
+}
+
+/** Apply racial size/speed/natural armor — call only when race changes, not on every compendium fetch. */
+export function applyRaceCombatBasicsOnRaceChange(
+  state: PcPlanState,
+  race: RaceDerivedFeatures,
+): void {
+  applyRaceCombatBasics(state.combat, race);
 }

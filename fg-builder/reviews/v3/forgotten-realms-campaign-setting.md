@@ -1,0 +1,285 @@
+# Forgotten Realms Campaign Setting
+- **Path:** `C:\Users\User\Documents\fg-modules\fg-builder\reviews\v3\Forgotten Realms Campaign Setting.mod`
+- **Book slug:** `forgotten-realms-campaign-setting`
+- **Load ready:** yes
+- **Errors:** 0
+- **Warnings:** 95
+- **Info:** 10
+## Record counts
+| Category | Count |
+|----------|------:|
+| class | 23 |
+| domains | 5 |
+| feat | 51 |
+| race | 23 |
+| spell | 39 |
+
+## Spell-class readiness
+
+| Metric | Count |
+|--------|------:|
+| Spell-related classfeatures | 8 |
+| Named `Spells` (FG hook) | 0 |
+| Named `Spellcasting` (variant/reference) | 0 |
+| Named `Spells per Day` (prestige hook) | 8 |
+| `score equal to` in class text | 0 |
+
+## Build warnings (embedded)
+
+- classes/Arcane Devotee: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+- classes/Archmage: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+- classes/Barbarian: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Barbarian: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Barbarian
+- classes/Cleric: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Cleric: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Cleric
+- classes/Divine Disciple: unknown class skill name(s) for FG ruleset: Scry, Wilderness Lore
+- classes/Divine Seeker: unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket
+- classes/Druid: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Druid: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Druid
+- classes/Fighter: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Fighter: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Fighter
+- classes/Guild Thief: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket
+- classes/Harper Scout: unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket
+- classes/Hathran: unknown class skill name(s) for FG ruleset: Alchemy, Animal Empathy, Intuit Direction, Scry, Wilderness Lore
+- classes/Hierophant: unknown class skill name(s) for FG ruleset: Scry
+- classes/Monk: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Monk: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Monk
+- classes/Paladin: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Paladin: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Paladin
+- classes/Ranger: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Ranger: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Ranger
+- classes/Red Wizard: unknown class skill name(s) for FG ruleset: Alchemy, Innuendo, Scry
+- classes/Rogue: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Rogue: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Rogue
+- classes/Runecaster: unknown class skill name(s) for FG ruleset: Scry
+- classes/Shadow Adept: unknown class skill name(s) for FG ruleset: Scry
+- classes/Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Sorcerer: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Sorcerer
+- classes/Wizard: missing skillranks (no skill_ranks or skill_points parsed)
+- classes/Wizard: missing classskills (FG will not auto-mark class skills at level 1)
+- classes: no classfeatures parsed for Wizard
+
+## Warnings
+
+- **[warning]** `class_unknown_skill` — Arcane Devotee: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_unknown_skill` — Archmage: unknown class skill name(s) for FG ruleset: Alchemy, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_missing_field` — Barbarian: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Barbarian: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Barbarian: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Barbarian: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Barbarian: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Cleric: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Cleric: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Cleric: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Cleric: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Cleric: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Divine Disciple: unknown class skill name(s) for FG ruleset: Scry, Wilderness Lore
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_unknown_skill` — Divine Seeker: unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_missing_field` — Druid: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Druid: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Druid: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Druid: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Druid: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Fighter: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Fighter: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Fighter: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Fighter: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Fighter: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Guild Thief: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_unknown_skill` — Harper Scout: unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_unknown_skill` — Hathran: unknown class skill name(s) for FG ruleset: Alchemy, Animal Empathy, Intuit Direction, Scry, Wilderness Lore
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_unknown_skill` — Hierophant: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_missing_field` — Monk: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Monk: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Monk: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Monk: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Monk: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Paladin: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Paladin: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Paladin: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Paladin: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Paladin: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Ranger: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Ranger: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Ranger: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Ranger: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Ranger: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Red Wizard: unknown class skill name(s) for FG ruleset: Alchemy, Innuendo, Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_missing_field` — Rogue: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Rogue: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Rogue: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Rogue: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Rogue: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_unknown_skill` — Runecaster: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_unknown_skill` — Shadow Adept: unknown class skill name(s) for FG ruleset: Scry
+  - Remediation: Verify skill exists in 3.5E ruleset or optional supplement module.
+- **[warning]** `class_missing_field` — Sorcerer: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Sorcerer: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Sorcerer: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Sorcerer: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `class_missing_field` — Wizard: Missing required field: bab
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard: Missing required field: fort
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard: Missing required field: ref
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_missing_field` — Wizard: Missing required field: will
+  - Remediation: Rebuild class with complete identity fields.
+- **[warning]** `class_no_features` — Wizard: No classfeatures defined
+  - Remediation: Add at least one class feature with level, name, and text.
+- **[warning]** `class_missing_skillranks` — Wizard: missing skillranks (no skill_ranks or skill_points parsed)
+  - Remediation: Add skillranks as type="number".
+- **[warning]** `class_missing_classskills` — Wizard: missing classskills (FG will not auto-mark class skills at level 1)
+  - Remediation: Add comma-separated classskills string.
+- **[warning]** `spell_missing_field` — Anyspell: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Anyspell, Greater: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Armor of Darkness: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Cloak of Dark Power: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fantastic Machine: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Fantastic Machine, Greater: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Gembomb: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Maelstrom: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Maw of Stone: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Moonfire: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spider Curse: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spider Shapes: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Spiderform: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+- **[warning]** `spell_missing_field` — Stone Spiders: Missing required field: level
+  - Remediation: Rebuild spell with complete reference fields.
+
+## Info
+
+- **[info]** `class_legacy_skill` — Arcane Devotee: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Archmage: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Divine Disciple: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Guild Thief: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Hathran: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Hierophant: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Red Wizard: Legacy/optional 3.5E skill: Innuendo
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Red Wizard: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Runecaster: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.
+- **[info]** `class_legacy_skill` — Shadow Adept: Legacy/optional 3.5E skill: Scry
+  - Remediation: Manually select class skills in FG if using optional rules.

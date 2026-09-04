@@ -1,20 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import type { PcCompendiumBundle } from "@/lib/entities";
+import { fetchInventoryItem } from "@/actions/data";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
+import { useSessionNonce } from "@/components/session-provider";
 import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
+import {
+  computeEquippedGear,
+  equipInventoryRow,
+  isArmorKind,
+  isShieldKind,
+} from "@/lib/pc-planner/equippedGear";
 import {
   computeSkillPointSummary,
   computeSkillTotal,
   formatSkillModifier,
   formatSkillPointBudgetLine,
+  isClassSkillRow,
+  maxSkillRanks,
+  totalCharacterLevel as skillHitDice,
 } from "@/lib/pc-planner/skillPoints";
+import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
 import { abilityRacialMod, racialModLabel } from "@/lib/pc-planner/syncDerived";
 import {
   PC_SHEET_TABS,
@@ -27,6 +40,9 @@ const ABILITY_KEYS: AbilityKey[] = ["str", "dex", "con", "int", "wis", "cha"];
 
 const RACE_SEARCH_CATEGORIES: CategoryKey[] = ["races"];
 const CLASS_SEARCH_CATEGORIES: CategoryKey[] = ["classes"];
+const INVENTORY_SEARCH_CATEGORIES: CategoryKey[] = ["equipment", "items"];
+const DEITY_SEARCH_CATEGORIES: CategoryKey[] = ["deities"];
+const DOMAIN_SEARCH_CATEGORIES: CategoryKey[] = ["domains"];
 
 function abilityMod(score: number): string {
   const m = Math.floor((score - 10) / 2);
@@ -85,6 +101,9 @@ export function PcSheet({
   updateAbility,
 }: PcSheetProps) {
   const [racePickerOpen, setRacePickerOpen] = useState(false);
+  const [, startInventoryTransition] = useTransition();
+  const nonce = useSessionNonce();
+  const router = useRouter();
 
   const classLevels = state.identity.classLevels;
   const totalLevel = totalCharacterLevel(classLevels);
@@ -93,11 +112,26 @@ export function PcSheet({
   const hasRace = Boolean(state.identity.raceSlug);
   const showRacePicker = !hasRace || racePickerOpen;
 
+  const castingNames = new Set(
+    classLevels
+      .map((cl) => getClassCastingInfo(cl.classSlug, cl.className)?.fgClassName.toLowerCase())
+      .filter((name): name is string => Boolean(name)),
+  );
+  const showDeity = castingNames.has("cleric") || castingNames.has("paladin");
+  const showDomains = castingNames.has("cleric");
+  const showSpecialist = castingNames.has("wizard");
+  const showDivineArcaneOptions = showDeity || showDomains || showSpecialist;
+
+  const classSkillKeys = classSkillKeySet(compendium?.skills ?? []);
+  const skillHd = skillHitDice(classLevels);
+  const equippedGear = computeEquippedGear(state.inventory ?? [], state.combat.speedBase);
+  const skillAcp = equippedGear.acp;
   const skillPoints = computeSkillPointSummary(
     state,
     compendium?.classSkillPointBases ?? {},
     compendium?.raceFeatures?.skillPointBonus ?? null,
     state.identity.race || undefined,
+    classSkillKeys,
   );
 
   return (
@@ -206,6 +240,7 @@ export function PcSheet({
                 <ul className="pc-class-list">
                   {classLevels.map((cl, index) => {
                     const info = getClassCastingInfo(cl.classSlug, cl.className);
+                    const isFirstClass = state.identity.firstClassSlug === cl.classSlug;
                     return (
                       <li key={`${cl.classSlug}-${index}`} className="pc-class-row">
                         <div className="pc-class-row-main">
@@ -217,6 +252,21 @@ export function PcSheet({
                           >
                             {cl.className}
                           </a>
+                          {isFirstClass ? (
+                            <span className="pc-class-first-badge">1st class (×4 skills)</span>
+                          ) : (
+                            <button
+                              type="button"
+                              className="pc-sheet-link-btn"
+                              onClick={() =>
+                                patch((s) => {
+                                  s.identity.firstClassSlug = cl.classSlug;
+                                })
+                              }
+                            >
+                              Set as 1st class
+                            </button>
+                          )}
                           {info ? (
                             <span className="pc-class-casting">
                               {info.dcAbility.toUpperCase()}
@@ -271,6 +321,9 @@ export function PcSheet({
                     if (s.identity.classLevels.some((cl) => cl.classSlug === hit.slug)) {
                       return;
                     }
+                    if (s.identity.classLevels.length === 0) {
+                      s.identity.firstClassSlug = hit.slug;
+                    }
                     s.identity.classLevels.push({
                       classSlug: hit.slug,
                       className: hit.name,
@@ -280,6 +333,114 @@ export function PcSheet({
                 }
               />
             </div>
+
+            {showDivineArcaneOptions ? (
+              <div className="npc-sheet-block">
+                <h3>Divine / Arcane Options</h3>
+                <dl className="npc-sheet-stats pc-sheet-meta">
+                  {showDeity ? (
+                    <div>
+                      <dt>Deity</dt>
+                      <dd>
+                        {state.identity.deitySlug ? (
+                          <div className="pc-sheet-race-value">
+                            <span>{state.identity.deity}</span>
+                            <button
+                              type="button"
+                              className="pc-sheet-link-btn"
+                              onClick={() =>
+                                patch((s) => {
+                                  s.identity.deity = "";
+                                  s.identity.deitySlug = null;
+                                })
+                              }
+                            >
+                              Clear
+                            </button>
+                          </div>
+                        ) : (
+                          <EntitySearchCombobox
+                            categories={DEITY_SEARCH_CATEGORIES}
+                            placeholder="Search deities…"
+                            label="Search deities"
+                            onSelect={(hit) =>
+                              patch((s) => {
+                                s.identity.deity = hit.name;
+                                s.identity.deitySlug = hit.slug;
+                              })
+                            }
+                          />
+                        )}
+                      </dd>
+                    </div>
+                  ) : null}
+                  {showDomains ? (
+                    <div>
+                      <dt>Domains</dt>
+                      <dd>
+                        <div className="pc-domain-list">
+                          {(state.identity.domains ?? []).map((domain) => (
+                            <span key={domain.slug} className="pc-domain-chip">
+                              {domain.name}
+                              <button
+                                type="button"
+                                className="pc-sheet-link-btn"
+                                onClick={() =>
+                                  patch((s) => {
+                                    s.identity.domains = (s.identity.domains ?? []).filter(
+                                      (d) => d.slug !== domain.slug,
+                                    );
+                                  })
+                                }
+                              >
+                                ×
+                              </button>
+                            </span>
+                          ))}
+                        </div>
+                        {(state.identity.domains?.length ?? 0) < 2 ? (
+                          <EntitySearchCombobox
+                            categories={DOMAIN_SEARCH_CATEGORIES}
+                            placeholder="Add domain…"
+                            label="Add domain"
+                            onSelect={(hit) =>
+                              patch((s) => {
+                                const current = s.identity.domains ?? [];
+                                if (current.some((d) => d.slug === hit.slug) || current.length >= 2) {
+                                  return;
+                                }
+                                s.identity.domains = [
+                                  ...current,
+                                  { slug: hit.slug, name: hit.name },
+                                ];
+                              })
+                            }
+                          />
+                        ) : null}
+                      </dd>
+                    </div>
+                  ) : null}
+                  {showSpecialist ? (
+                    <div>
+                      <dt>Specialist school</dt>
+                      <dd>
+                        <input
+                          type="text"
+                          className="pc-sheet-input"
+                          placeholder="e.g. Evocation"
+                          value={state.identity.specialistSchool ?? ""}
+                          onChange={(e) =>
+                            patch((s) => {
+                              s.identity.specialistSchool = e.target.value.trim() || null;
+                            })
+                          }
+                        />
+                      </dd>
+                    </div>
+                  ) : null}
+                </dl>
+              </div>
+            ) : null}
 
             <div className="npc-sheet-block">
               <h3>Ability Scores</h3>
@@ -334,6 +495,8 @@ export function PcSheet({
             patch={patch}
             raceFeatures={compendium?.raceFeatures ?? null}
             classFeatures={compendium?.classFeatures ?? null}
+            classAdvancement={compendium?.classAdvancement ?? null}
+            classHitDice={compendium?.classHitDice ?? null}
           />
         )}
 
@@ -371,60 +534,94 @@ export function PcSheet({
                 ) : null}
               </div>
               {state.skills.length === 0 ? (
-                <p className="pc-sheet-empty">Add a class on the Main tab to load skills.</p>
+                <p className="pc-sheet-empty">Skills load from the compendium when you open a character.</p>
               ) : (
                 <table className="entity-table pc-sheet-table">
                   <thead>
                     <tr>
+                      <th title="Class skill">C</th>
                       <th>Skill</th>
                       <th>Ability</th>
                       <th>Ranks</th>
                       <th>Racial</th>
                       <th>Misc</th>
+                      <th>ACP</th>
                       <th>Total</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {state.skills.map((row, i) => (
-                      <tr key={row.slug ?? row.name} className="pc-sheet-editable-row">
-                        <td>{row.name}</td>
-                        <td>{row.ability ?? "—"}</td>
-                        <td>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--narrow"
-                            value={row.ranks}
-                            onChange={(e) =>
-                              patch((s) => {
-                                s.skills[i].ranks = Number(e.target.value);
-                              })
-                            }
-                          />
-                        </td>
-                        <td className="pc-skill-racial">
-                          {(row.racialMisc ?? 0) === 0
-                            ? "—"
-                            : row.racialMisc! >= 0
-                              ? `+${row.racialMisc}`
-                              : row.racialMisc}
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--narrow"
-                            value={row.misc}
-                            onChange={(e) =>
-                              patch((s) => {
-                                s.skills[i].misc = Number(e.target.value);
-                              })
-                            }
-                          />
-                        </td>
-                        <td className="pc-skill-total">
-                          {formatSkillModifier(computeSkillTotal(row, state.abilities))}
-                        </td>
-                      </tr>
-                    ))}
+                    {state.skills.map((row, i) => {
+                      const isClass = isClassSkillRow(row, classSkillKeys);
+                      const maxRanks = maxSkillRanks(skillHd, isClass);
+                      const overMax = row.ranks > maxRanks;
+                      const acpValue = row.armorCheckPenalty ? skillAcp : 0;
+                      const total = computeSkillTotal(row, state.abilities, skillAcp);
+                      return (
+                        <tr
+                          key={row.slug ?? row.name}
+                          className={`pc-sheet-editable-row${overMax ? " pc-skill-row--over" : ""}`}
+                        >
+                          <td className="pc-skill-class-mark" title={isClass ? "Class skill" : "Cross-class"}>
+                            {isClass ? "•" : ""}
+                          </td>
+                          <td>
+                            {row.name}
+                            {row.trainedOnly ? (
+                              <span className="pc-skill-trained" title="Trained only">
+                                *
+                              </span>
+                            ) : null}
+                          </td>
+                          <td>{row.ability ?? "—"}</td>
+                          <td>
+                            <input
+                              type="number"
+                              className={`pc-sheet-input pc-sheet-input--narrow${
+                                overMax ? " pc-sheet-input--warn" : ""
+                              }`}
+                              step={isClass ? 1 : 0.5}
+                              min={0}
+                              value={row.ranks}
+                              title={overMax ? `Max ranks ${maxRanks}` : `Max ${maxRanks}`}
+                              onChange={(e) =>
+                                patch((s) => {
+                                  s.skills[i].ranks = Number(e.target.value);
+                                })
+                              }
+                            />
+                          </td>
+                          <td className="pc-skill-racial">
+                            {(row.racialMisc ?? 0) === 0
+                              ? "—"
+                              : row.racialMisc! >= 0
+                                ? `+${row.racialMisc}`
+                                : row.racialMisc}
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className="pc-sheet-input pc-sheet-input--narrow"
+                              value={row.misc}
+                              onChange={(e) =>
+                                patch((s) => {
+                                  s.skills[i].misc = Number(e.target.value);
+                                })
+                              }
+                            />
+                          </td>
+                          <td className="pc-skill-acp">
+                            {row.armorCheckPenalty
+                              ? acpValue === 0
+                                ? "—"
+                                : formatSkillModifier(acpValue)
+                              : "—"}
+                          </td>
+                          <td className="pc-skill-total">
+                            {total == null ? "—" : formatSkillModifier(total)}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               )}
@@ -446,6 +643,49 @@ export function PcSheet({
           <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
             <div className="npc-sheet-block">
               <h3>Inventory</h3>
+              <div className="pc-inventory-search">
+                <EntitySearchCombobox
+                  categories={INVENTORY_SEARCH_CATEGORIES}
+                  placeholder="Search equipment or magic items…"
+                  label="Add equipment or magic item"
+                  onSelect={(hit) => {
+                    startInventoryTransition(async () => {
+                      let result = await fetchInventoryItem({
+                        source: "equipment",
+                        slug: hit.slug,
+                        nonce,
+                      });
+                      if (!result.success || !result.item) {
+                        result = await fetchInventoryItem({
+                          source: "item",
+                          slug: hit.slug,
+                          nonce,
+                        });
+                      }
+                      if (!result.success || !result.item) {
+                        if (result.error === "Invalid session") router.refresh();
+                        patch((s) => {
+                          s.inventory.push({
+                            name: hit.name,
+                            quantity: 1,
+                            weight: 0,
+                            slug: hit.slug,
+                          });
+                        });
+                        return;
+                      }
+                      const looked = result.item;
+                      patch((s) => {
+                        s.inventory.push({
+                          ...looked.row,
+                          quantity: 1,
+                          equipped: false,
+                        });
+                      });
+                    });
+                  }}
+                />
+              </div>
               {state.inventory.length === 0 ? (
                 <p className="pc-sheet-empty">No items yet.</p>
               ) : (
@@ -455,64 +695,92 @@ export function PcSheet({
                       <th>Item</th>
                       <th>Qty</th>
                       <th>Wt</th>
+                      <th title="Equipped">Eq</th>
                       <th aria-label="Actions" />
                     </tr>
                   </thead>
                   <tbody>
-                    {state.inventory.map((row, i) => (
-                      <tr key={i} className="pc-sheet-editable-row">
-                        <td>
-                          <input
-                            type="text"
-                            className="pc-sheet-input"
-                            value={row.name}
-                            placeholder="Item"
-                            onChange={(e) =>
-                              patch((s) => {
-                                s.inventory[i].name = e.target.value;
-                              })
-                            }
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--narrow"
-                            value={row.quantity}
-                            onChange={(e) =>
-                              patch((s) => {
-                                s.inventory[i].quantity = Number(e.target.value);
-                              })
-                            }
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--narrow"
-                            value={row.weight}
-                            onChange={(e) =>
-                              patch((s) => {
-                                s.inventory[i].weight = Number(e.target.value);
-                              })
-                            }
-                          />
-                        </td>
-                        <td className="pc-sheet-row-actions">
-                          <button
-                            type="button"
-                            className="tool-btn tool-btn--ghost tool-btn--compact"
-                            onClick={() =>
-                              patch((s) => {
-                                s.inventory.splice(i, 1);
-                              })
-                            }
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {state.inventory.map((row, i) => {
+                      const canEquip = isArmorKind(row.kind) || isShieldKind(row.kind);
+                      return (
+                        <tr key={`${row.slug ?? row.name}-${i}`} className="pc-sheet-editable-row">
+                          <td>
+                            <input
+                              type="text"
+                              className="pc-sheet-input"
+                              value={row.name}
+                              placeholder="Item"
+                              onChange={(e) =>
+                                patch((s) => {
+                                  s.inventory[i].name = e.target.value;
+                                })
+                              }
+                            />
+                            {row.kind ? (
+                              <span className="pc-inventory-kind">{row.kind}</span>
+                            ) : null}
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className="pc-sheet-input pc-sheet-input--narrow"
+                              value={row.quantity}
+                              onChange={(e) =>
+                                patch((s) => {
+                                  s.inventory[i].quantity = Number(e.target.value);
+                                })
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className="pc-sheet-input pc-sheet-input--narrow"
+                              value={row.weight}
+                              onChange={(e) =>
+                                patch((s) => {
+                                  s.inventory[i].weight = Number(e.target.value);
+                                })
+                              }
+                            />
+                          </td>
+                          <td className="pc-inventory-equip">
+                            {canEquip ? (
+                              <input
+                                type="checkbox"
+                                checked={Boolean(row.equipped)}
+                                title="Equip"
+                                aria-label={`Equip ${row.name || "item"}`}
+                                onChange={(e) =>
+                                  patch((s) => {
+                                    if (e.target.checked) {
+                                      equipInventoryRow(s.inventory, i);
+                                    } else {
+                                      s.inventory[i].equipped = false;
+                                    }
+                                  })
+                                }
+                              />
+                            ) : (
+                              "—"
+                            )}
+                          </td>
+                          <td className="pc-sheet-row-actions">
+                            <button
+                              type="button"
+                              className="tool-btn tool-btn--ghost tool-btn--compact"
+                              onClick={() =>
+                                patch((s) => {
+                                  s.inventory.splice(i, 1);
+                                })
+                              }
+                            >
+                              Remove
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               )}
@@ -521,8 +789,17 @@ export function PcSheet({
                 className="tool-btn pc-sheet-add-btn"
                 onClick={onAddInventoryRow}
               >
-                Add item
+                Add custom item
               </button>
+              {equippedGear.armorName || equippedGear.shieldName ? (
+                <p className="pc-inventory-equipped-hint">
+                  Equipped
+                  {equippedGear.armorName ? `: ${equippedGear.armorName}` : ""}
+                  {equippedGear.armorName && equippedGear.shieldName ? ", " : ""}
+                  {equippedGear.shieldName ? `${equippedGear.shieldName}` : ""}
+                  {equippedGear.acp !== 0 ? ` (ACP ${equippedGear.acp})` : ""}
+                </p>
+              ) : null}
             </div>
           </div>
         )}

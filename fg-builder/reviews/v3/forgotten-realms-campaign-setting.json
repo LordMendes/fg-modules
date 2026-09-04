@@ -1,0 +1,911 @@
+{
+  "module_name": "Forgotten Realms Campaign Setting",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Forgotten Realms Campaign Setting.mod",
+  "book_slug": "forgotten-realms-campaign-setting",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 23,
+    "feat": 51,
+    "spell": 39,
+    "race": 23,
+    "domains": 5
+  },
+  "build_warnings": [
+    "classes/Arcane Devotee: unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+    "classes/Archmage: unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+    "classes/Barbarian: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Barbarian: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Barbarian",
+    "classes/Cleric: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Cleric: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Cleric",
+    "classes/Divine Disciple: unknown class skill name(s) for FG ruleset: Scry, Wilderness Lore",
+    "classes/Divine Seeker: unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket",
+    "classes/Druid: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Druid: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Druid",
+    "classes/Fighter: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Fighter: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Fighter",
+    "classes/Guild Thief: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+    "classes/Harper Scout: unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket",
+    "classes/Hathran: unknown class skill name(s) for FG ruleset: Alchemy, Animal Empathy, Intuit Direction, Scry, Wilderness Lore",
+    "classes/Hierophant: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Monk: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Monk: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Monk",
+    "classes/Paladin: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Paladin: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Paladin",
+    "classes/Ranger: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Ranger: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Ranger",
+    "classes/Red Wizard: unknown class skill name(s) for FG ruleset: Alchemy, Innuendo, Scry",
+    "classes/Rogue: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Rogue: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Rogue",
+    "classes/Runecaster: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Shadow Adept: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Sorcerer: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Sorcerer: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Sorcerer",
+    "classes/Wizard: missing skillranks (no skill_ranks or skill_points parsed)",
+    "classes/Wizard: missing classskills (FG will not auto-mark class skills at level 1)",
+    "classes: no classfeatures parsed for Wizard"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 8,
+    "named_spells": 0,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 8,
+    "score_equal_to_count": 0
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 95,
+    "info": 10
+  },
+  "issues": [
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Arcane Devotee",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Arcane Devotee",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Archmage",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Archmage",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Barbarian",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Cleric",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Divine Disciple",
+      "message": "unknown class skill name(s) for FG ruleset: Scry, Wilderness Lore",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Divine Disciple",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Divine Seeker",
+      "message": "unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Druid",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Fighter",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Guild Thief",
+      "message": "unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Guild Thief",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Harper Scout",
+      "message": "unknown class skill name(s) for FG ruleset: Intuit Direction, Pick Pocket",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Hathran",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Animal Empathy, Intuit Direction, Scry, Wilderness Lore",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Hathran",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Hierophant",
+      "message": "unknown class skill name(s) for FG ruleset: Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Hierophant",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Monk",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Paladin",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Ranger",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Red Wizard",
+      "message": "unknown class skill name(s) for FG ruleset: Alchemy, Innuendo, Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Red Wizard",
+      "message": "Legacy/optional 3.5E skill: Innuendo",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Red Wizard",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Runecaster",
+      "message": "unknown class skill name(s) for FG ruleset: Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Runecaster",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Shadow Adept",
+      "message": "unknown class skill name(s) for FG ruleset: Scry",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_legacy_skill",
+      "severity": "info",
+      "category": "class",
+      "record_name": "Shadow Adept",
+      "message": "Legacy/optional 3.5E skill: Scry",
+      "remediation": "Manually select class skills in FG if using optional rules."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Sorcerer",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "Missing required field: bab",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "Missing required field: fort",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "Missing required field: ref",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_missing_field",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "Missing required field: will",
+      "remediation": "Rebuild class with complete identity fields."
+    },
+    {
+      "code": "class_no_features",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "No classfeatures defined",
+      "remediation": "Add at least one class feature with level, name, and text."
+    },
+    {
+      "code": "class_missing_skillranks",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "missing skillranks (no skill_ranks or skill_points parsed)",
+      "remediation": "Add skillranks as type=\"number\"."
+    },
+    {
+      "code": "class_missing_classskills",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Wizard",
+      "message": "missing classskills (FG will not auto-mark class skills at level 1)",
+      "remediation": "Add comma-separated classskills string."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Anyspell",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Anyspell, Greater",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Armor of Darkness",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Cloak of Dark Power",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fantastic Machine",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Fantastic Machine, Greater",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Gembomb",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Maelstrom",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Maw of Stone",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Moonfire",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spider Curse",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spider Shapes",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Spiderform",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    },
+    {
+      "code": "spell_missing_field",
+      "severity": "warning",
+      "category": "spell",
+      "record_name": "Stone Spiders",
+      "message": "Missing required field: level",
+      "remediation": "Rebuild spell with complete reference fields."
+    }
+  ]
+}

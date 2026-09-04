@@ -1,6 +1,6 @@
 # FG Module Compatibility Review — v1
 
-Generated: 2026-08-25 19:34 UTC
+Generated: 2026-08-25 19:35 UTC
 
 Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `skills/` and `.cursor/skills/fantasy-grounds/`).
 
@@ -8,7 +8,7 @@ Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `ski
 
 | Module | .mod | Load ready | Errors | Warnings | Info | Records |
 |--------|------|:----------:|-------:|---------:|-----:|--------:|
-| [Races of Faerûn](races-of-faer-n.md) | `Races of Faerûn.mod` | yes | 0 | 3 | 0 | 141 |
+| [Forgotten Realms Campaign Setting](forgotten-realms-campaign-setting.md) | `Forgotten Realms Campaign Setting.mod` | yes | 0 | 95 | 10 | 141 |
 
 ## Rollup totals
 
@@ -16,8 +16,8 @@ Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `ski
 - **Load ready:** 1 / 1
 - **Total records:** 141
 - **Total errors:** 0
-- **Total warnings:** 3
-- **Total info:** 0
+- **Total warnings:** 95
+- **Total info:** 10
 
 ## Verdict
 

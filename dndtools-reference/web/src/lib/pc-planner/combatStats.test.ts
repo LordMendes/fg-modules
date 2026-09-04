@@ -80,8 +80,17 @@ describe("computeCombatStats", () => {
     const stats = computeCombatStats(state, raceFeatures);
 
     assert.equal(stats.reflex.parts.stat, 2);
-    assert.equal(stats.reflex.parts.misc, 2);
+    assert.equal(stats.reflex.parts.racial, 2);
+    assert.equal(stats.reflex.parts.misc, 0);
     assert.equal(stats.reflex.total, 4);
+  });
+
+  it("uses grapple size modifier distinct from attack size", () => {
+    const state = createDefaultPcPlanState();
+    state.combat.sizeMod = 1;
+    const stats = computeCombatStats(state);
+    assert.equal(stats.melee.parts.size, 1);
+    assert.equal(stats.grapple.parts.size, -4);
   });
 });
 

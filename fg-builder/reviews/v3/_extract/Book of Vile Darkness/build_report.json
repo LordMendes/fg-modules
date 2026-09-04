@@ -1,0 +1,35 @@
+{
+  "book_title": "Book of Vile Darkness",
+  "book_slug": "book-of-vile-darkness",
+  "written": {
+    "classes": 18,
+    "feats": 27,
+    "spells": 141,
+    "races": 2,
+    "domains": 7
+  },
+  "skipped": {},
+  "warnings": [
+    "classes/Cancer Mage: unknown class skill name(s) for FG ruleset: Alchemy, Intuit Direction, Pick Pocket",
+    "classes/Demonologist: unknown class skill name(s) for FG ruleset: Alchemy, Scry",
+    "classes/Diabolist: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Diabolist: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+    "classes/Disciple of Asmodeus: unknown class skill name(s) for FG ruleset: Innuendo, Scry",
+    "classes/Disciple of Asmodeus: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+    "classes/Disciple of Baalzebul: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+    "classes/Disciple of Dispater: unknown class skill name(s) for FG ruleset: Innuendo",
+    "classes/Disciple of Mammon: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket",
+    "classes/Disciple of Mephistopheles: unknown class skill name(s) for FG ruleset: Innuendo, Scry",
+    "classes/Mortal Hunter: unknown class skill name(s) for FG ruleset: Intuit Direction, Wilderness Lore",
+    "classes/Thrall of Demogorgon: unknown class skill name(s) for FG ruleset: Intuit Direction",
+    "classes/Thrall of Graz'zt: unknown class skill name(s) for FG ruleset: Innuendo, Pick Pocket, Scry",
+    "classes/Thrall of Graz'zt: Spells feature at level 6 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+    "classes/Thrall of Orcus: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Ur-priest: unknown class skill name(s) for FG ruleset: Scry",
+    "classes/Vermin Lord: unknown class skill name(s) for FG ruleset: Pick Pocket",
+    "classes/Vermin Lord: Spells feature at level 1 missing 'score equal to' ability requirement text for handleClassFeatureSpells",
+    "classes/Warrior of Darkness: unknown class skill name(s) for FG ruleset: Alchemy, Scry"
+  ],
+  "total_written": 195,
+  "total_skipped": 0
+}

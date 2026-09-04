@@ -3,8 +3,17 @@ import {
   saveAbilityModFromClassFeatures,
   type ClassDerivedFeatures,
 } from "./parseClassAbilityEffects";
+import {
+  advancementRowAtLevel,
+  type ClassAdvancementRow,
+} from "./parseClassAdvancement";
+import { computeEquippedGear } from "./equippedGear";
 import type { RaceDerivedFeatures } from "./parseRaceFeatures";
+import type { FeatDerivedFeatures } from "./parseFeatEffects";
+import { emptyFeatDerivedFeatures } from "./parseFeatEffects";
 import type { PcPlanState } from "./types";
+
+export type ClassAdvancementMap = Record<string, ClassAdvancementRow[]>;
 
 export type CombatBreakdownRow = {
   total: number;
@@ -35,13 +44,74 @@ export function formatModifier(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
 }
 
+/**
+ * Format iterative attack bonuses (3.5): primary, then −5 while still positive.
+ * Examples: 0 → "+0", 5 → "+5", 6 → "+6/+1", 11 → "+11/+6/+1".
+ */
+export function formatIterativeAttacks(bonus: number): string {
+  if (!Number.isFinite(bonus)) return "+0";
+  let current = Math.trunc(bonus);
+  const parts: string[] = [formatModifier(current)];
+  current -= 5;
+  while (current > 0) {
+    parts.push(formatModifier(current));
+    current -= 5;
+  }
+  return parts.join("/");
+}
+
 function sumParts(parts: Record<string, number>): number {
   return Object.values(parts).reduce((sum, n) => sum + n, 0);
 }
 
-export function computeBaseAttackBonus(classLevels: PcPlanState["identity"]["classLevels"]): number {
+/** 3.5 grapple size modifier differs from attack/AC size modifier. */
+export function grappleSizeModFromAttackSizeMod(attackSizeMod: number): number {
+  const table: Record<number, number> = {
+    8: -16,
+    4: -8,
+    2: -4,
+    1: -4,
+    0: 0,
+    [-1]: 4,
+    [-2]: 8,
+    [-4]: 16,
+    [-8]: 32,
+  };
+  return table[attackSizeMod] ?? 0;
+}
+
+function classBabFromAdvancement(
+  classSlug: string,
+  classLevel: number,
+  classAdvancement: ClassAdvancementMap | null | undefined,
+): number | null {
+  const table = classAdvancement?.[classSlug];
+  const row = table ? advancementRowAtLevel(table, classLevel) : null;
+  return row ? row.bab : null;
+}
+
+function classSaveFromAdvancement(
+  save: "fort" | "ref" | "will",
+  classSlug: string,
+  classLevel: number,
+  classAdvancement: ClassAdvancementMap | null | undefined,
+): number | null {
+  const table = classAdvancement?.[classSlug];
+  const row = table ? advancementRowAtLevel(table, classLevel) : null;
+  return row ? row[save] : null;
+}
+
+export function computeBaseAttackBonus(
+  classLevels: PcPlanState["identity"]["classLevels"],
+  classAdvancement: ClassAdvancementMap | null = null,
+): number {
   let total = 0;
   for (const cl of classLevels) {
+    const fromTable = classBabFromAdvancement(cl.classSlug, cl.level, classAdvancement);
+    if (fromTable != null) {
+      total += fromTable;
+      continue;
+    }
     const info = getClassCombatInfo(cl.classSlug, cl.className);
     total += babFromClassLevel(cl.level, info.bab);
   }
@@ -51,9 +121,15 @@ export function computeBaseAttackBonus(classLevels: PcPlanState["identity"]["cla
 export function computeClassSave(
   save: "fort" | "ref" | "will",
   classLevels: PcPlanState["identity"]["classLevels"],
+  classAdvancement: ClassAdvancementMap | null = null,
 ): number {
   let total = 0;
   for (const cl of classLevels) {
+    const fromTable = classSaveFromAdvancement(save, cl.classSlug, cl.level, classAdvancement);
+    if (fromTable != null) {
+      total += fromTable;
+      continue;
+    }
     const info = getClassCombatInfo(cl.classSlug, cl.className);
     total += saveFromClassLevel(cl.level, info[save]);
   }
@@ -64,6 +140,8 @@ export function computeCombatStats(
   state: PcPlanState,
   raceFeatures: RaceDerivedFeatures | null = null,
   classFeatures: ClassDerivedFeatures | null = null,
+  classAdvancement: ClassAdvancementMap | null = null,
+  featFeatures: FeatDerivedFeatures | null = null,
 ): CombatComputed {
   const { combat, abilities, identity } = state;
 
@@ -71,6 +149,15 @@ export function computeCombatStats(
   const dexMod = abilityModifier(abilities.dex);
   const conMod = abilityModifier(abilities.con);
   const wisMod = abilityModifier(abilities.wis);
+
+  const feats = featFeatures ?? emptyFeatDerivedFeatures();
+  const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
+  const armorBonus = gear.armor != null ? gear.armor : combat.armor;
+  const shieldBonus = gear.shield != null ? gear.shield : combat.shield;
+  const cappedDex =
+    gear.maxDex != null ? Math.min(dexMod, gear.maxDex) : dexMod;
+  const speedArmor =
+    gear.speedArmorDelta != null ? gear.speedArmorDelta : combat.speedArmor;
 
   const racialSave = raceFeatures?.saveBonus ?? { fort: 0, ref: 0, will: 0 };
   const classSaveBonus = classFeatures?.saveBonus ?? { fort: 0, ref: 0, will: 0 };
@@ -93,7 +180,8 @@ export function computeCombatStats(
     abilityModifier,
   );
 
-  const bab = computeBaseAttackBonus(identity.classLevels);
+  const bab = computeBaseAttackBonus(identity.classLevels, classAdvancement);
+  const grappleSize = grappleSizeModFromAttackSizeMod(combat.sizeMod);
 
   const meleeParts = {
     bab,
@@ -110,44 +198,47 @@ export function computeCombatStats(
   const grappleParts = {
     bab,
     stat: strMod,
-    size: combat.sizeMod,
+    size: grappleSize,
     misc: combat.grappleMisc,
   };
 
   const fortParts = {
-    class: computeClassSave("fort", identity.classLevels),
+    class: computeClassSave("fort", identity.classLevels, classAdvancement),
     stat: conMod,
     ability: classFortAbility,
-    misc: combat.fortMisc + racialSave.fort + classSaveBonus.fort,
+    racial: racialSave.fort,
+    misc: combat.fortMisc + classSaveBonus.fort,
   };
   const refParts = {
-    class: computeClassSave("ref", identity.classLevels),
+    class: computeClassSave("ref", identity.classLevels, classAdvancement),
     stat: dexMod,
     ability: classRefAbility,
-    misc: combat.refMisc + racialSave.ref + classSaveBonus.ref,
+    racial: racialSave.ref,
+    misc: combat.refMisc + classSaveBonus.ref,
   };
   const willParts = {
-    class: computeClassSave("will", identity.classLevels),
+    class: computeClassSave("will", identity.classLevels, classAdvancement),
     stat: wisMod,
     ability: classWillAbility,
-    misc: combat.willMisc + racialSave.will + classSaveBonus.will,
+    racial: racialSave.will,
+    misc: combat.willMisc + classSaveBonus.will,
   };
 
   const acParts = {
     base: 10,
-    armor: combat.armor,
-    shield: combat.shield,
-    stat: dexMod,
+    armor: armorBonus,
+    shield: shieldBonus,
+    stat: cappedDex,
     size: combat.sizeMod,
     natural: combat.natural,
     deflection: combat.deflection,
-    dodge: combat.dodge,
+    dodge: combat.dodge + feats.dodgeBonus,
     misc: combat.acMisc,
   };
   const flatFootedParts = {
     base: 10,
-    armor: combat.armor,
-    shield: combat.shield,
+    armor: armorBonus,
+    shield: shieldBonus,
     size: combat.sizeMod,
     natural: combat.natural,
     deflection: combat.deflection,
@@ -155,21 +246,21 @@ export function computeCombatStats(
   };
   const touchParts = {
     base: 10,
-    stat: dexMod,
+    stat: cappedDex,
     size: combat.sizeMod,
     deflection: combat.deflection,
-    dodge: combat.dodge,
+    dodge: combat.dodge + feats.dodgeBonus,
     misc: combat.acMisc,
   };
 
   const initParts = {
     stat: dexMod,
-    misc: combat.initMisc,
+    misc: combat.initMisc + feats.initBonus,
   };
 
   const speedParts = {
     base: combat.speedBase,
-    armor: combat.speedArmor,
+    armor: speedArmor,
     misc: combat.speedMisc,
   };
 

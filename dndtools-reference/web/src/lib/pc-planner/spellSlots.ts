@@ -1,13 +1,28 @@
 import { abilityModifier } from "./combatStats";
-import { getClassCastingInfo, type ClassCastingInfo } from "./classCasting";
+import {
+  getClassCastingInfo,
+  usesDirectClassSpellList,
+  type ClassCastingInfo,
+} from "./classCasting";
+import {
+  parseSpellsKnownFromHtml,
+  parseSpellsPerDayFromAdvancementHtml,
+} from "./parseClassSpellTables";
 import type { AbilityKey, SpellEntry } from "./types";
 
 export type SlotArray = number[];
+
+export type ClassSpellTableContext = {
+  advancementHtml?: string | null;
+  descriptionHtml?: string | null;
+};
 
 export type ComputedSpellClass = {
   slots: SlotArray;
   baseSlots: SlotArray;
   bonusSlots: SlotArray;
+  /** Spells known limits per level (spontaneous casters). Empty for prepared. */
+  known: SlotArray;
   maxSpellLevel: number;
   mode: "preparation" | "spontaneous";
   dcAbility: AbilityKey;
@@ -203,11 +218,105 @@ function spontaneousCasterStep(cl: number, fgClassName: string): PreparedLevelSt
   }
 }
 
+/** PHB Table 3-17 — cumulative sorcerer spells known by class level. */
+const SORCERER_KNOWN_BY_LEVEL: number[][] = [
+  [],
+  [4, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+  [5, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+  [5, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+  [6, 3, 1, 0, 0, 0, 0, 0, 0, 0],
+  [6, 4, 2, 0, 0, 0, 0, 0, 0, 0],
+  [7, 4, 2, 1, 0, 0, 0, 0, 0, 0],
+  [7, 5, 3, 2, 0, 0, 0, 0, 0, 0],
+  [8, 5, 3, 2, 1, 0, 0, 0, 0, 0],
+  [8, 5, 4, 3, 2, 0, 0, 0, 0, 0],
+  [9, 5, 4, 3, 2, 1, 0, 0, 0, 0],
+  [9, 5, 5, 4, 3, 2, 0, 0, 0, 0],
+  [9, 5, 5, 4, 3, 2, 1, 0, 0, 0],
+  [9, 5, 5, 4, 4, 3, 2, 0, 0, 0],
+  [9, 5, 5, 4, 4, 3, 2, 1, 0, 0],
+  [9, 5, 5, 4, 4, 4, 3, 2, 0, 0],
+  [9, 5, 5, 4, 4, 4, 3, 2, 1, 0],
+  [9, 5, 5, 4, 4, 4, 3, 3, 2, 0],
+  [9, 5, 5, 4, 4, 4, 3, 3, 2, 1],
+  [9, 5, 5, 4, 4, 4, 3, 3, 3, 2],
+  [9, 5, 5, 4, 4, 4, 3, 3, 3, 3],
+];
+
+/** PHB Table 3-10 — cumulative bard spells known by class level. */
+const BARD_KNOWN_BY_LEVEL: number[][] = [
+  [],
+  [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [5, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [5, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [5, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+  [5, 3, 1, 0, 0, 0, 0, 0, 0, 0],
+  [5, 3, 2, 0, 0, 0, 0, 0, 0, 0],
+  [5, 4, 2, 1, 0, 0, 0, 0, 0, 0],
+  [5, 4, 3, 2, 0, 0, 0, 0, 0, 0],
+  [5, 4, 3, 2, 1, 0, 0, 0, 0, 0],
+  [5, 4, 4, 3, 2, 0, 0, 0, 0, 0],
+  [5, 4, 4, 3, 2, 1, 0, 0, 0, 0],
+  [5, 4, 4, 4, 3, 2, 0, 0, 0, 0],
+  [5, 4, 4, 4, 3, 3, 1, 0, 0, 0],
+  [5, 4, 4, 4, 4, 3, 2, 0, 0, 0],
+  [5, 4, 4, 4, 4, 4, 2, 1, 0, 0],
+  [5, 4, 4, 4, 4, 4, 3, 2, 0, 0],
+  [5, 4, 4, 4, 4, 4, 3, 2, 1, 0],
+  [5, 4, 4, 4, 4, 4, 3, 3, 2, 0],
+  [5, 4, 4, 4, 4, 4, 3, 3, 2, 1],
+  [5, 4, 4, 4, 4, 4, 3, 3, 3, 2],
+];
+
+function maxSpellLevelFromSlots(slots: SlotArray): number {
+  let max = 0;
+  for (let i = 1; i <= 9; i++) {
+    if (slots[i] > 0) max = i;
+  }
+  return max;
+}
+
+function phbKnownForLevel(fgClassName: string, casterLevel: number): SlotArray {
+  const cl = Math.min(Math.max(casterLevel, 0), 20);
+  const isBard = fgClassName.toLowerCase() === "bard";
+  const table = isBard ? BARD_KNOWN_BY_LEVEL : SORCERER_KNOWN_BY_LEVEL;
+  return [...(table[cl] ?? emptySlots())];
+}
+
+function applyBonusSlotsToBase(baseSlots: SlotArray, abilityScore: number): SlotArray {
+  const slots = [...baseSlots];
+  const maxLevel = maxSpellLevelFromSlots(baseSlots);
+  for (let lvl = 1; lvl <= maxLevel; lvl++) {
+    const bonus = bonusSlotsForLevel(abilityScore, lvl);
+    if (bonus > 0) slots[lvl] += bonus;
+  }
+  return slots;
+}
+
+function variantBaseSlots(
+  spellTables: ClassSpellTableContext | undefined,
+  casterLevel: number,
+): SlotArray | null {
+  if (!spellTables?.advancementHtml) return null;
+  const parsed = parseSpellsPerDayFromAdvancementHtml(spellTables.advancementHtml, casterLevel);
+  return parsed ? [...parsed] : null;
+}
+
+function variantKnownSlots(
+  spellTables: ClassSpellTableContext | undefined,
+  casterLevel: number,
+): SlotArray | null {
+  const fromDesc = parseSpellsKnownFromHtml(spellTables?.descriptionHtml, casterLevel);
+  if (fromDesc) return [...fromDesc];
+  return parseSpellsKnownFromHtml(spellTables?.advancementHtml, casterLevel);
+}
+
 function casterKind(
   info: ClassCastingInfo | null,
   fgClassName: string,
-): "prepared" | "spontaneous" | null {
+): "prepared" | "spontaneous" | "half" | null {
   if (info?.progression === "spontaneous") return "spontaneous";
+  if (info?.progression === "half") return "half";
   if (info?.progression === "prepared") return "prepared";
   const normalized = fgClassName.toLowerCase();
   if (
@@ -219,7 +328,58 @@ function casterKind(
     return "prepared";
   }
   if (normalized === "sorcerer" || normalized === "bard") return "spontaneous";
+  if (normalized === "paladin" || normalized === "ranger") return "half";
   return null;
+}
+
+/**
+ * PHB paladin/ranger spells per day by class level (1st–4th only).
+ * "0" means bonus-only; null/absent means no access.
+ */
+const HALF_CASTER_BASE_BY_LEVEL: Array<Array<number | undefined>> = [
+  [],
+  [],
+  [],
+  [],
+  [undefined, 0],
+  [undefined, 0],
+  [undefined, 1],
+  [undefined, 1],
+  [undefined, 1, 0],
+  [undefined, 1, 0],
+  [undefined, 1, 1],
+  [undefined, 1, 1, 0],
+  [undefined, 1, 1, 1],
+  [undefined, 1, 1, 1],
+  [undefined, 2, 1, 1, 0],
+  [undefined, 2, 1, 1, 1],
+  [undefined, 2, 2, 1, 1],
+  [undefined, 2, 2, 2, 1],
+  [undefined, 3, 2, 2, 1],
+  [undefined, 3, 3, 3, 2],
+  [undefined, 3, 3, 3, 3],
+];
+
+function halfCasterBaseSlots(classLevel: number): { slots: SlotArray; maxSpellLevel: number } {
+  const slots = emptySlots();
+  const row = HALF_CASTER_BASE_BY_LEVEL[Math.min(Math.max(classLevel, 0), 20)] ?? [];
+  let maxSpellLevel = 0;
+  for (let lvl = 1; lvl <= 4; lvl++) {
+    const value = row[lvl];
+    if (value != null) {
+      slots[lvl] = value;
+      maxSpellLevel = lvl;
+    }
+  }
+  return { slots, maxSpellLevel };
+}
+
+function addDomainOrSpecialistSlots(baseSlots: SlotArray): SlotArray {
+  const next = [...baseSlots];
+  for (let lvl = 1; lvl <= 9; lvl++) {
+    if (baseSlots[lvl] > 0) next[lvl] += 1;
+  }
+  return next;
 }
 
 function applyPreparedLevel(
@@ -274,6 +434,17 @@ export function buildBaseSlots(
     return { slots, maxSpellLevel };
   }
 
+  if (kind === "half") {
+    const half = halfCasterBaseSlots(casterLevel);
+    for (let i = 0; i <= 9; i++) slots[i] = half.slots[i];
+    maxSpellLevel = half.maxSpellLevel;
+    for (let lvl = 1; lvl <= maxSpellLevel; lvl++) {
+      const bonus = bonusSlotsForLevel(abilityScore, lvl);
+      if (bonus > 0) slots[lvl] += bonus;
+    }
+    return { slots, maxSpellLevel };
+  }
+
   for (let cl = 1; cl <= Math.min(casterLevel, 20); cl++) {
     const newLevel =
       kind === "spontaneous"
@@ -303,15 +474,21 @@ export function splitBaseAndBonus(
     return { baseSlots, bonusSlots: emptySlots(), maxSpellLevel };
   }
 
-  for (let cl = 1; cl <= Math.min(casterLevel, 20); cl++) {
-    const { gains, newMaxSpellLevel } =
-      kind === "spontaneous"
-        ? spontaneousCasterStep(cl, fgClassName)
-        : preparedCasterStep(cl, isWizard);
-    for (const g of gains) {
-      addSlot(baseSlots, g.level, g.count ?? 1);
+  if (kind === "half") {
+    const half = halfCasterBaseSlots(casterLevel);
+    for (let i = 0; i <= 9; i++) baseSlots[i] = half.slots[i];
+    maxSpellLevel = half.maxSpellLevel;
+  } else {
+    for (let cl = 1; cl <= Math.min(casterLevel, 20); cl++) {
+      const { gains, newMaxSpellLevel } =
+        kind === "spontaneous"
+          ? spontaneousCasterStep(cl, fgClassName)
+          : preparedCasterStep(cl, isWizard);
+      for (const g of gains) {
+        addSlot(baseSlots, g.level, g.count ?? 1);
+      }
+      if (newMaxSpellLevel > maxSpellLevel) maxSpellLevel = newMaxSpellLevel;
     }
-    if (newMaxSpellLevel > maxSpellLevel) maxSpellLevel = newMaxSpellLevel;
   }
 
   const bonusSlots = emptySlots();
@@ -334,30 +511,78 @@ export function computeSpellClass(
   className: string,
   casterLevel: number,
   abilityScores: Record<AbilityKey, number>,
+  spellTables?: ClassSpellTableContext,
+  options?: {
+    hasDomains?: boolean;
+    specialistSchool?: string | null;
+  },
 ): ComputedSpellClass {
   const info = getClassCastingInfo(classSlug, className);
   const fgName = info?.fgClassName ?? className;
-  const ability = info?.dcAbility ?? "int";
-  const score = abilityScores[ability] ?? 10;
-  const mode = info?.progression === "spontaneous" ? "spontaneous" : "preparation";
+  const useDirectTable = usesDirectClassSpellList(classSlug, className);
+  const isHalf = info?.progression === "half";
 
-  const { baseSlots, bonusSlots, maxSpellLevel } = splitBaseAndBonus(
-    fgName,
-    casterLevel,
-    score,
-    classSlug,
-    className,
-  );
+  let mode: "preparation" | "spontaneous" =
+    info?.progression === "spontaneous" ? "spontaneous" : "preparation";
+  if (!useDirectTable && !isHalf && spellTables) {
+    const variantKnown = variantKnownSlots(spellTables, casterLevel);
+    if (variantKnown?.some((count) => count > 0)) {
+      mode = "spontaneous";
+    }
+  }
+
+  const ability = info?.dcAbility ?? (mode === "spontaneous" ? "cha" : "int");
+  const score = abilityScores[ability] ?? 10;
+
+  let baseSlots: SlotArray;
+  let bonusSlots: SlotArray;
+  let maxSpellLevel: number;
+  let known: SlotArray = emptySlots();
+
+  if (isHalf) {
+    const split = splitBaseAndBonus(fgName, casterLevel, score, classSlug, className);
+    baseSlots = split.baseSlots;
+    bonusSlots = split.bonusSlots;
+    maxSpellLevel = split.maxSpellLevel;
+  } else if (!useDirectTable && spellTables) {
+    const variantBase = variantBaseSlots(spellTables, casterLevel) ?? emptySlots();
+    baseSlots = variantBase;
+    const withBonus = applyBonusSlotsToBase(baseSlots, score);
+    bonusSlots = emptySlots();
+    for (let i = 0; i <= 9; i++) {
+      bonusSlots[i] = Math.max(0, withBonus[i] - baseSlots[i]);
+    }
+    maxSpellLevel = maxSpellLevelFromSlots(withBonus);
+    if (mode === "spontaneous") {
+      known = variantKnownSlots(spellTables, casterLevel) ?? emptySlots();
+    }
+  } else {
+    const split = splitBaseAndBonus(fgName, casterLevel, score, classSlug, className);
+    baseSlots = split.baseSlots;
+    bonusSlots = split.bonusSlots;
+    maxSpellLevel = split.maxSpellLevel;
+    if (mode === "spontaneous") {
+      known = phbKnownForLevel(fgName, casterLevel);
+    }
+  }
+
+  const isCleric = fgName.toLowerCase() === "cleric";
+  const isWizard = fgName.toLowerCase() === "wizard";
+  if ((isCleric && options?.hasDomains) || (isWizard && options?.specialistSchool)) {
+    baseSlots = addDomainOrSpecialistSlots(baseSlots);
+  }
 
   const slots = emptySlots();
   for (let i = 0; i <= 9; i++) {
     slots[i] = baseSlots[i] + bonusSlots[i];
   }
+  maxSpellLevel = maxSpellLevelFromSlots(slots);
 
   return {
     slots,
     baseSlots,
     bonusSlots,
+    known,
     maxSpellLevel,
     mode,
     dcAbility: ability,

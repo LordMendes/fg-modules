@@ -11,6 +11,7 @@ import {
   listEntities,
   searchAll,
 } from "@/lib/entities";
+import { lookupInventoryItem } from "@/lib/pc-planner/inventoryLookup";
 import { validateSessionNonce } from "@/lib/session";
 import { rateLimit, getClientIp } from "@/lib/ratelimit";
 import type { CategoryKey } from "@/lib/categories";
@@ -281,4 +282,37 @@ export async function fetchWizardSpellPool(
 
   const spells = await getWizardSpellPool(sourceAbbrevs);
   return { success: true, spells };
+}
+
+export type InventoryItemInput = {
+  source: "equipment" | "item";
+  slug: string;
+  nonce: string;
+};
+
+export type InventoryItemResult = {
+  success: boolean;
+  error?: string;
+  item?: Awaited<ReturnType<typeof lookupInventoryItem>>;
+};
+
+export async function fetchInventoryItem(
+  input: InventoryItemInput,
+): Promise<InventoryItemResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`inventory-item:${ip}`, 120, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  if (input.source !== "equipment" && input.source !== "item") {
+    return { success: false, error: "Invalid source" };
+  }
+
+  const item = await lookupInventoryItem(input.source, input.slug);
+  if (!item) return { success: false, error: "Entry not found" };
+  return { success: true, item };
 }

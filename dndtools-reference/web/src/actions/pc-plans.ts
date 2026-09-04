@@ -9,6 +9,7 @@ import {
   parsePcShortcutQuery,
 } from "@/lib/pc-planner/shortcutSearch";
 import { syncPcPlanState } from "@/lib/pc-planner/syncState";
+import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import type { Prisma } from "@/generated/prisma/client";
 
@@ -101,11 +102,15 @@ export async function getPcPlan(planId: string): Promise<PcPlanWithState | null>
   });
   if (!plan) return null;
 
+  const parsed = parseState(plan.state);
+  const slugs = parsed.spellClasses.map((sc) => sc.classSlug);
+  const classSpellTables = await getClassSpellTablesBySlugs(slugs);
+
   return {
     id: plan.id,
     name: plan.name,
     shortcut: plan.shortcut,
-    state: syncPcPlanState(parseState(plan.state)),
+    state: syncPcPlanState(parsed, null, classSpellTables),
     updatedAt: plan.updatedAt,
   };
 }
@@ -173,7 +178,9 @@ export async function savePcPlan(
   const owned = await getOwnedPlan(planId, user.id);
   if (!owned) return { success: false, error: "Plan not found" };
 
-  const synced = syncPcPlanState(state);
+  const slugs = state.spellClasses.map((sc) => sc.classSlug);
+  const classSpellTables = await getClassSpellTablesBySlugs(slugs);
+  const synced = syncPcPlanState(state, null, classSpellTables);
   await prisma.pcPlan.update({
     where: { id: planId },
     data: {

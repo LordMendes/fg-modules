@@ -1,5 +1,8 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   bonusSlotsForLevel,
   buildBaseSlots,
@@ -84,16 +87,85 @@ describe("computeSpellClass", () => {
     assert.equal(result.dcModifier, 3);
   });
 
-  it("computes sorcerer slots and spontaneous mode from compendium slug", () => {
+  it("paladin has no slots below level 4", () => {
+    const result = computeSpellClass(
+      "paladin-95",
+      "Paladin",
+      3,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 14, cha: 10 },
+    );
+    assert.equal(result.slots.every((n) => n === 0), true);
+  });
+
+  it("paladin 4 has bonus-only 1st-level slot with Wis 14", () => {
+    const result = computeSpellClass(
+      "paladin-95",
+      "Paladin",
+      4,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 14, cha: 10 },
+    );
+    assert.equal(result.baseSlots[1], 0);
+    assert.equal(result.bonusSlots[1], 1);
+    assert.equal(result.slots[1], 1);
+    assert.equal(result.dcAbility, "wis");
+  });
+
+  it("cleric domains add one slot per unlocked spell level", () => {
+    const without = computeSpellClass(
+      "cleric-92",
+      "Cleric",
+      1,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+    );
+    const withDomains = computeSpellClass(
+      "cleric-92",
+      "Cleric",
+      1,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+      undefined,
+      { hasDomains: true },
+    );
+    assert.equal(without.slots[1], 1);
+    assert.equal(withDomains.slots[1], 2);
+    assert.equal(withDomains.slots[0], without.slots[0]);
+  });
+
+  it("computes sorcerer slots and known limits from compendium slug", () => {
     const result = computeSpellClass(
       "sorcerer-98",
-      "Battle Sorcerer",
-      3,
+      "Sorcerer",
+      1,
       { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 14 },
     );
     assert.equal(result.mode, "spontaneous");
     assert.equal(result.dcAbility, "cha");
-    assert.equal(result.slots[0], 6);
-    assert.equal(result.slots[1], 6);
+    assert.equal(result.slots[0], 5);
+    assert.equal(result.slots[1], 4);
+    assert.equal(result.known[0], 4);
+    assert.equal(result.known[1], 2);
+  });
+
+  it("uses battle sorcerer variant slot table from advancement html", () => {
+    const classes = JSON.parse(
+      readFileSync(
+        join(dirname(fileURLToPath(import.meta.url)), "../../../../data/dndtools/classes.json"),
+        "utf8",
+      ),
+    ) as { slug: string; advancement_html?: string; description_html?: string }[];
+    const battle = classes.find((row) => row.slug === "battle-sorcerer-119");
+    const result = computeSpellClass(
+      "battle-sorcerer-119",
+      "Battle Sorcerer",
+      1,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 14 },
+      {
+        advancementHtml: battle?.advancement_html ?? null,
+        descriptionHtml: battle?.description_html ?? null,
+      },
+    );
+    assert.equal(result.slots[0], 4);
+    assert.equal(result.slots[1], 3);
+    assert.equal(result.known[0], 3);
+    assert.equal(result.known[1], 1);
   });
 });

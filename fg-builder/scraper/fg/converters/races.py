@@ -7,6 +7,7 @@ from typing import Any
 
 from ..html_utils import prepare_formatted_html, wrap_paragraph
 from ..loader import BuildReport
+from ..race_fg import append_racial_traits
 from ..xml_builder import (
     IdAllocator,
     make_category,
@@ -31,44 +32,60 @@ def convert_races(
 
     for rec in records:
         detail = rec.get("detail") or {}
+        fg = detail.get("fg") or {}
         rec_id = ids.next_id("race", book_title if use_category else "")
         node = ET.SubElement(container, rec_id)
 
-        typed_string(node, "name", rec.get("name"))
+        race_name = rec.get("name") or "Race"
+        typed_string(node, "name", race_name)
 
-        traits = detail.get("traits") or []
-        raw_sections = detail.get("raw_sections") or []
-        if traits or raw_sections:
-            traits_el = ET.SubElement(node, "racialtraits")
-            trait_sources = traits if traits else raw_sections
-            for trait in trait_sources:
-                tid = ids.next_id("race_trait", rec.get("name", ""))
-                tnode = ET.SubElement(traits_el, tid)
-                heading = trait.get("heading") or trait.get("name") or "Trait"
-                typed_string(tnode, "name", heading)
-                html = trait.get("html") or trait.get("text", "")
-                if html and "<" not in html:
-                    html = wrap_paragraph(html)
-                typed_formattedtext(tnode, "text", html)
+        identity = fg.get("identity") or {}
+        if identity.get("type"):
+            typed_string(node, "type", identity["type"])
+        if identity.get("level_adjustment") not in (None, ""):
+            typed_string(node, "leveladjustment", identity["level_adjustment"])
 
-        # Main description with metadata preamble
-        preamble_parts: list[str] = []
-        for label, key in (
-            ("Ability Adjustments", "ability_adjustments"),
-            ("Size", "size"),
-            ("Speed", "speed"),
-        ):
-            val = detail.get(key, "")
-            if val:
-                preamble_parts.append(f"<p><b>{label}:</b> {val}</p>")
-
-        main_html = detail.get("description_html", "")
-        combined = "".join(preamble_parts) + (main_html or "")
-        if combined:
-            text_el = typed_formattedtext(node, "text", combined)
-            set_formatted_inner(text_el, prepare_formatted_html(combined))
+        if fg:
+            append_racial_traits(node, fg, race_name, ids)
+            summary = fg.get("summary_text") or detail.get("description_html") or ""
+            if summary:
+                text_el = typed_formattedtext(node, "text", summary)
+                set_formatted_inner(text_el, prepare_formatted_html(summary))
+            else:
+                typed_formattedtext(node, "text", "")
         else:
-            typed_formattedtext(node, "text", "")
+            traits = detail.get("traits") or []
+            raw_sections = detail.get("raw_sections") or []
+            if traits or raw_sections:
+                traits_el = ET.SubElement(node, "racialtraits")
+                trait_sources = traits if traits else raw_sections
+                for trait in trait_sources:
+                    tid = ids.next_id("race_trait", rec.get("name", ""))
+                    tnode = ET.SubElement(traits_el, tid)
+                    heading = trait.get("heading") or trait.get("name") or "Trait"
+                    typed_string(tnode, "name", heading)
+                    html = trait.get("html") or trait.get("text", "")
+                    if html and "<" not in html:
+                        html = wrap_paragraph(html)
+                    typed_formattedtext(tnode, "text", html)
+
+            preamble_parts: list[str] = []
+            for label, key in (
+                ("Ability Adjustments", "ability_adjustments"),
+                ("Size", "size"),
+                ("Speed", "speed"),
+            ):
+                val = detail.get(key, "")
+                if val:
+                    preamble_parts.append(f"<p><b>{label}:</b> {val}</p>")
+
+            main_html = detail.get("description_html", "")
+            combined = "".join(preamble_parts) + (main_html or "")
+            if combined:
+                text_el = typed_formattedtext(node, "text", combined)
+                set_formatted_inner(text_el, prepare_formatted_html(combined))
+            else:
+                typed_formattedtext(node, "text", "")
 
         report.add_written("races")
 
