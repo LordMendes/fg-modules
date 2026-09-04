@@ -18,6 +18,7 @@ const elfRace: RaceDerivedFeatures = {
   naturalArmor: 0,
   sizeMod: 0,
   speed: 30,
+  speedUnhinderedByEncumbrance: false,
 };
 
 describe("effectiveAbilities", () => {

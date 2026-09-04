@@ -12,6 +12,8 @@ import { FgSheetTabs } from "@/components/fg-sheet-tabs";
 import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
+import { computeEncumbrance } from "@/lib/pc-planner/encumbrance";
+import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import {
   computeSkillPointSummary,
   computeSkillTotal,
@@ -115,7 +117,13 @@ export function PcSheet({
   const classSkillKeys = classSkillKeySet(compendium?.skills ?? []);
   const skillHd = skillHitDice(classLevels);
   const equippedGear = computeEquippedGear(state.inventory ?? [], state.combat.speedBase);
-  const skillAcp = equippedGear.acp;
+  const encumbrance = computeEncumbrance(state, {
+    raceFeatures,
+    featFeatures: deriveFeatEffects(state.feats),
+    classFeatures: compendium?.classFeatures ?? null,
+    equippedGear,
+  });
+  const skillAcp = encumbrance.totalAcp;
   const skillPoints = computeSkillPointSummary(
     state,
     compendium?.classSkillPointBases ?? {},
@@ -638,6 +646,8 @@ export function PcSheet({
             state={state}
             patch={patch}
             onAddInventoryRow={onAddInventoryRow}
+            raceFeatures={raceFeatures}
+            classFeatures={compendium?.classFeatures ?? null}
           />
         )}
 

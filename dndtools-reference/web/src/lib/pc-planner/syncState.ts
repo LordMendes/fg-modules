@@ -12,6 +12,7 @@ import { parseSpellsPerDayFromAdvancementHtml } from "./parseClassSpellTables";
 import { normalizeCombatState } from "./combatStats";
 import { normalizeHitPointsState, syncHitDice } from "./hitPoints";
 import { normalizeAbilityBase, syncEffectiveAbilities } from "./syncDerived";
+import { ensureTreasure } from "./treasure";
 import type { PcPlanState, SpellClassState } from "./types";
 
 function hasClericDomains(state: PcPlanState): boolean {
@@ -156,6 +157,7 @@ export function syncPcPlanState(
     abilityBase: state.abilityBase ?? normalizeAbilityBase(state),
     combat: normalizeCombatState(state.combat),
     hitPoints: normalizeHitPointsState(state.hitPoints),
+    treasure: ensureTreasure(state.treasure),
     spellClasses: nextSpellClasses,
   };
   syncHitDice(withHitPoints, classHitDice);

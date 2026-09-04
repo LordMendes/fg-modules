@@ -80,3 +80,15 @@ describe("syncPcPlanState half casters", () => {
     assert.equal(synced.spellClasses[0].mode, "preparation");
   });
 });
+
+describe("syncPcPlanState treasure", () => {
+  it("seeds default coins on older saves", () => {
+    const state = createDefaultPcPlanState();
+    state.treasure = undefined as unknown as typeof state.treasure;
+    const synced = syncPcPlanState(state);
+    assert.deepEqual(
+      synced.treasure.map((row) => row.builtin),
+      ["pp", "gp", "sp", "cp"],
+    );
+  });
+});

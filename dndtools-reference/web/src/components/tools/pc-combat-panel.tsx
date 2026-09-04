@@ -207,6 +207,44 @@ export function PcCombatPanel({
   const conMod = abilityModifier(conScore);
   const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
   const featEffects = deriveFeatEffects(state.feats);
+  const speedDrivenByGear =
+    gear.armorCategory !== "none" ||
+    stats.speed.parts.armor !== combat.speedArmor ||
+    (stats.speed.parts.class ?? 0) !== 0 ||
+    (stats.speed.parts.feat ?? 0) !== 0;
+  const speedExtraFields: {
+    label: string;
+    value: number;
+    editable: CombatNumberKey | null;
+    signed?: boolean;
+  }[] = [];
+  if ((stats.speed.parts.class ?? 0) !== 0) {
+    speedExtraFields.push({
+      label: "Class",
+      value: stats.speed.parts.class,
+      editable: null,
+      signed: false,
+    });
+  }
+  if ((stats.speed.parts.feat ?? 0) !== 0) {
+    speedExtraFields.push({
+      label: "Feat",
+      value: stats.speed.parts.feat,
+      editable: null,
+      signed: false,
+    });
+  }
+  const speedFields = [
+    { label: "Base", value: combat.speedBase, editable: "speedBase" as CombatNumberKey, signed: false },
+    {
+      label: "Armor",
+      value: stats.speed.parts.armor,
+      editable: (speedDrivenByGear ? null : "speedArmor") as CombatNumberKey | null,
+      signed: false,
+    },
+    ...speedExtraFields,
+    { label: "Misc", value: combat.speedMisc, editable: "speedMisc" as CombatNumberKey, signed: false },
+  ];
   const weapons = computeWeaponAttackRows(state, stats);
   const classNameBySlug = new Map(
     state.identity.classLevels.map((cl) => [cl.classSlug, cl.className]),
@@ -428,19 +466,10 @@ export function PcCombatPanel({
           />
           <SideStatBlock
             title="Speed"
-            columns={["Total", "Base", "Armor", "Misc"]}
+            columns={["Total", ...speedFields.map((field) => field.label)]}
             total={stats.speed.total}
             signedTotal={false}
-            fields={[
-              { label: "Base", value: combat.speedBase, editable: "speedBase", signed: false },
-              {
-                label: "Armor",
-                value: stats.speed.parts.armor,
-                editable: gear.speedArmorDelta != null ? null : "speedArmor",
-                signed: false,
-              },
-              { label: "Misc", value: combat.speedMisc, editable: "speedMisc", signed: false },
-            ]}
+            fields={speedFields}
             patch={patch}
           />
           <SideStatBlock

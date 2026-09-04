@@ -1,15 +1,27 @@
 import type { DicePoolItem, DieSides, RollRequest, RollResult } from "./types";
 
-/** Collapse pool items with the same sides into qty groups. */
+/** Collapse pool items with the same sides and tint into qty groups. */
 export function consolidatePool(dice: DicePoolItem[]): DicePoolItem[] {
-  const bySides = new Map<DieSides, number>();
+  const byKey = new Map<string, DicePoolItem>();
   for (const item of dice) {
     if (item.qty <= 0) continue;
-    bySides.set(item.sides, (bySides.get(item.sides) ?? 0) + item.qty);
+    const colorKey = item.themeColor?.toLowerCase() ?? "";
+    const key = `${item.sides}:${colorKey}`;
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.qty += item.qty;
+    } else {
+      byKey.set(key, {
+        sides: item.sides,
+        qty: item.qty,
+        ...(item.themeColor ? { themeColor: item.themeColor } : {}),
+      });
+    }
   }
-  return [...bySides.entries()]
-    .sort((a, b) => a[0] - b[0])
-    .map(([sides, qty]) => ({ sides, qty }));
+  return [...byKey.values()].sort((a, b) => {
+    if (a.sides !== b.sides) return a.sides - b.sides;
+    return (a.themeColor ?? "").localeCompare(b.themeColor ?? "");
+  });
 }
 
 /** Display notation, e.g. `2d6+1d20+3`. */
@@ -29,11 +41,16 @@ export function buildNotation(dice: DicePoolItem[], modifier = 0): string {
  * Notation dice-box actually understands.
  * A joined string like `1d8+1d20` is parsed as `1d8` with modifier +1, so mixed
  * pools must be an array of `{qty, sides}` groups. Modifier stays on RollRequest.
+ * themeColor is passed through so energy damage can tint separately.
  */
 export function toEngineNotation(
   dice: DicePoolItem[],
-): { qty: number; sides: DieSides }[] {
-  return consolidatePool(dice);
+): { qty: number; sides: DieSides; themeColor?: string }[] {
+  return consolidatePool(dice).map((item) =>
+    item.themeColor
+      ? { qty: item.qty, sides: item.sides, themeColor: item.themeColor }
+      : { qty: item.qty, sides: item.sides },
+  );
 }
 
 function formatFaceWithMod(face: number, modifier: number, total: number): string {

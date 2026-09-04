@@ -23,6 +23,7 @@ import { PcPlanList } from "@/components/tools/pc-plan-list";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
 import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
 import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import {
@@ -337,7 +338,7 @@ function PcPlannerBody() {
 
   function addInventoryRow() {
     patch((s) => {
-      s.inventory.push({ name: "", quantity: 1, weight: 0 });
+      s.inventory.push(createBlankInventoryRow());
     });
   }
 

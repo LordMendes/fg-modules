@@ -31,6 +31,8 @@ export type RaceDerivedFeatures = {
   naturalArmor: number;
   sizeMod: number;
   speed: number;
+  /** Dwarf-style: speed not reduced by medium/heavy armor or load. */
+  speedUnhinderedByEncumbrance: boolean;
 };
 
 function parseSignedInt(raw: string): number {
@@ -157,6 +159,11 @@ export function parseNaturalArmor(text: string): number {
   return match ? Number.parseInt(match[1], 10) : 0;
 }
 
+/** Dwarf / duergar / etc.: speed not reduced by medium/heavy armor or load. */
+export function parseSpeedUnhinderedByEncumbrance(text: string): boolean {
+  return /move at this speed even when wearing medium or heavy armor/i.test(text);
+}
+
 export function parseRaceFeatures(input: {
   descriptionText?: string | null;
   size?: string | null;
@@ -174,6 +181,7 @@ export function parseRaceFeatures(input: {
     parseSpeedFromField(input.speed) ??
     parseSpeedFromText(text) ??
     30;
+  const speedUnhinderedByEncumbrance = parseSpeedUnhinderedByEncumbrance(text);
 
   return {
     traits,
@@ -184,5 +192,6 @@ export function parseRaceFeatures(input: {
     naturalArmor,
     sizeMod,
     speed,
+    speedUnhinderedByEncumbrance,
   };
 }

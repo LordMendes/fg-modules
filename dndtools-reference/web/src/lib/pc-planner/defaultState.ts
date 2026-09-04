@@ -1,4 +1,5 @@
 import { getClassCastingInfo } from "./classCasting";
+import { createDefaultTreasure } from "./treasure";
 import type { PcPlanState } from "./types";
 
 export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
@@ -68,6 +69,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
     },
     hitPoints: { rolls: [] },
     inventory: [],
+    treasure: createDefaultTreasure(),
     notes: "",
   };
 }

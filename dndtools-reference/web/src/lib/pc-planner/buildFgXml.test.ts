@@ -44,4 +44,13 @@ describe("buildPcFgXml", () => {
     assert.match(xml, /Magic Missile/);
     assert.match(xml, /<availablelevel1 type="number">/);
   });
+
+  it("appends non-zero treasure to gear", () => {
+    const state = createDefaultPcPlanState("Merchant");
+    state.inventory = [{ name: "Backpack", quantity: 1, weight: 2 }];
+    state.treasure[1].amount = 50;
+    state.treasure.push({ id: "gems", name: "Gems", amount: 2 });
+    const xml = buildPcFgXml(state);
+    assert.match(xml, /Backpack; 50 GP, 2 Gems/);
+  });
 });

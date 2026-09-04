@@ -1,4 +1,9 @@
 import { parseEquipmentStats } from "@/lib/equipment-display";
+import {
+  inferArmorCategory,
+  type ArmorLoadCategory,
+} from "./encumbrance";
+import { effectiveArmorBonus, effectiveArmorCheckPenalty } from "./inventoryItem";
 import type { InventoryRow } from "./types";
 
 export type EquippedGear = {
@@ -10,6 +15,8 @@ export type EquippedGear = {
   speedArmorDelta: number | null;
   armorName: string | null;
   shieldName: string | null;
+  /** Equipped body armor category (shields ignored). */
+  armorCategory: ArmorLoadCategory;
 };
 
 function parseSignedNumber(raw: string | null | undefined): number | null {
@@ -60,6 +67,7 @@ export function emptyEquippedGear(): EquippedGear {
     speedArmorDelta: null,
     armorName: null,
     shieldName: null,
+    armorCategory: "none",
   };
 }
 
@@ -86,20 +94,21 @@ export function computeEquippedGear(
   for (const row of inventory) {
     if (!row.equipped) continue;
     if (isArmorKind(row.kind)) {
-      result.armor = row.armorBonus ?? 0;
+      result.armor = effectiveArmorBonus(row);
       result.armorName = row.name || null;
+      result.armorCategory = inferArmorCategory(row);
       if (row.maxDex != null && Number.isFinite(row.maxDex)) {
         result.maxDex = row.maxDex;
       }
-      armorAcp = row.acp ?? 0;
+      armorAcp = effectiveArmorCheckPenalty(row);
       const armored = armoredSpeedForBase(speedBase, row.speed30, row.speed20);
       if (armored != null) {
         result.speedArmorDelta = armored - speedBase;
       }
     } else if (isShieldKind(row.kind)) {
-      result.shield = row.armorBonus ?? 0;
+      result.shield = effectiveArmorBonus(row);
       result.shieldName = row.name || null;
-      shieldAcp = row.acp ?? 0;
+      shieldAcp = effectiveArmorCheckPenalty(row);
     }
   }
 
@@ -127,9 +136,11 @@ export function gearStatsFromEquipmentIndex(input: {
   kind?: string | null;
   weight?: string | null;
   indexData?: unknown;
+  category?: string | null;
 }): Pick<
   InventoryRow,
   | "kind"
+  | "category"
   | "weight"
   | "armorBonus"
   | "maxDex"
@@ -147,6 +158,9 @@ export function gearStatsFromEquipmentIndex(input: {
   const kind =
     input.kind ??
     (typeof index.kind === "string" ? index.kind : null);
+  const category =
+    input.category ??
+    (typeof index.category === "string" ? index.category : null);
   const stats = parseEquipmentStats(
     typeof index.stats === "string" ? index.stats : null,
   );
@@ -177,6 +191,7 @@ export function gearStatsFromEquipmentIndex(input: {
 
   return {
     kind,
+    category,
     weight: parseWeightPounds(input.weight),
     armorBonus: acBonus,
     maxDex,

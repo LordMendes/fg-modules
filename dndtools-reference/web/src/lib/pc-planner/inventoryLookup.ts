@@ -16,11 +16,19 @@ export async function lookupInventoryItem(
   if (source === "equipment") {
     const row = await prisma.equipment.findUnique({
       where: { slug },
-      select: { slug: true, name: true, kind: true, weight: true, indexData: true },
+      select: {
+        slug: true,
+        name: true,
+        kind: true,
+        category: true,
+        weight: true,
+        indexData: true,
+      },
     });
     if (!row) return null;
     const stats = gearStatsFromEquipmentIndex({
       kind: row.kind,
+      category: row.category,
       weight: row.weight,
       indexData: row.indexData,
     });
@@ -34,6 +42,7 @@ export async function lookupInventoryItem(
         slug: row.slug,
         source: "equipment",
         kind: stats.kind,
+        category: stats.category,
         armorBonus: stats.armorBonus,
         maxDex: stats.maxDex,
         acp: stats.acp,

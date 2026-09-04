@@ -4,6 +4,8 @@ export type DieSides = 4 | 6 | 8 | 10 | 12 | 20 | 100;
 export type DicePoolItem = {
   qty: number;
   sides: DieSides;
+  /** Optional tint for dice-box color themes (per group). */
+  themeColor?: string;
 };
 
 export type RollRequest = {

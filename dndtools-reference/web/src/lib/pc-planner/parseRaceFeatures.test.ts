@@ -48,5 +48,17 @@ describe("parseRaceFeatures", () => {
     assert.equal(features.abilityMods.dex, 2);
     assert.equal(features.abilityMods.con, -2);
     assert.ok(features.skillBonuses.listen >= 2 || features.skillBonuses.search >= 2);
+    assert.equal(features.speedUnhinderedByEncumbrance, false);
+  });
+
+  it("detects dwarf-style speed unhindered by armor or load", () => {
+    const features = parseRaceFeatures({
+      size: "Medium",
+      speed: "20 ft.",
+      descriptionText:
+        "Dwarf base land speed is 20 feet. However, dwarves can move at this speed even when wearing medium or heavy armor or when carrying a medium or heavy load.",
+    });
+    assert.equal(features.speed, 20);
+    assert.equal(features.speedUnhinderedByEncumbrance, true);
   });
 });

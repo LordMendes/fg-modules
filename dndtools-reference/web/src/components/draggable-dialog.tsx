@@ -13,6 +13,13 @@ type DraggableDialogProps = {
   className?: string;
   panelClassName?: string;
   ariaLabelledBy?: string;
+  /** When false, no backdrop or focus trap so several windows can stay open. */
+  modal?: boolean;
+  zIndex?: number;
+  onActivate?: () => void;
+  /** Offsets the initial position so stacked windows do not overlap. */
+  cascadeIndex?: number;
+  closeOnEscape?: boolean;
 };
 
 export function DraggableDialog({
@@ -23,6 +30,11 @@ export function DraggableDialog({
   className,
   panelClassName,
   ariaLabelledBy,
+  modal = true,
+  zIndex,
+  onActivate,
+  cascadeIndex = 0,
+  closeOnEscape,
 }: DraggableDialogProps) {
   const titleId = useId();
   const labelledBy = ariaLabelledBy ?? titleId;
@@ -36,6 +48,7 @@ export function DraggableDialog({
   } | null>(null);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+  const handleEscape = closeOnEscape ?? modal;
 
   useEffect(() => {
     if (!open) {
@@ -49,18 +62,19 @@ export function DraggableDialog({
     if (!panel) return;
 
     const rect = panel.getBoundingClientRect();
+    const offset = cascadeIndex * 28;
     setPos({
-      x: Math.max(16, (window.innerWidth - rect.width) / 2),
-      y: Math.max(16, (window.innerHeight - rect.height) / 2),
+      x: Math.max(16, (window.innerWidth - rect.width) / 2 + offset),
+      y: Math.max(16, (window.innerHeight - rect.height) / 2 + offset),
     });
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && handleEscape) {
         onClose();
         return;
       }
 
-      if (event.key !== "Tab" || !panel) return;
+      if (!modal || event.key !== "Tab" || !panel) return;
 
       const focusable = Array.from(
         panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
@@ -88,15 +102,16 @@ export function DraggableDialog({
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      previouslyFocused.current?.focus();
+      if (modal) previouslyFocused.current?.focus();
     };
-  }, [open, onClose]);
+  }, [open, onClose, modal, cascadeIndex, handleEscape]);
 
   function handleHeaderPointerDown(event: React.PointerEvent<HTMLElement>) {
     if ((event.target as HTMLElement).closest("button:not(.draggable-dialog-handle)")) {
       return;
     }
     if (!pos) return;
+    onActivate?.();
 
     dragRef.current = {
       pointerId: event.pointerId,
@@ -127,21 +142,30 @@ export function DraggableDialog({
 
   if (!open) return null;
 
+  const rootStyle = zIndex != null ? { zIndex } : undefined;
+
   return (
-    <div className={["draggable-dialog-root", className].filter(Boolean).join(" ")} role="presentation">
-      <button
-        type="button"
-        className="draggable-dialog-backdrop"
-        aria-label="Close dialog"
-        onClick={onClose}
-      />
+    <div
+      className={["draggable-dialog-root", className].filter(Boolean).join(" ")}
+      role="presentation"
+      style={rootStyle}
+    >
+      {modal ? (
+        <button
+          type="button"
+          className="draggable-dialog-backdrop"
+          aria-label="Close dialog"
+          onClick={onClose}
+        />
+      ) : null}
       <div
         ref={panelRef}
         className={["draggable-dialog-panel", panelClassName].filter(Boolean).join(" ")}
         role="dialog"
-        aria-modal="true"
+        aria-modal={modal}
         aria-labelledby={labelledBy}
         tabIndex={-1}
+        onPointerDown={() => onActivate?.()}
         style={
           pos
             ? {

@@ -4,8 +4,10 @@ import { computeCombatStats } from "./combatStats";
 import { createDefaultPcPlanState } from "./defaultState";
 import {
   applyCriticalDamage,
+  applyKeenThreat,
   computeWeaponAttackRows,
   formatCritSuffix,
+  formatWeaponDamageText,
   isCriticalThreat,
   meleeDamageAbilityBonus,
   parseDamageDice,
@@ -254,5 +256,116 @@ describe("computeWeaponAttackRows", () => {
     ];
     const stats = computeCombatStats(state);
     assert.equal(computeWeaponAttackRows(state, stats).length, 0);
+  });
+
+  it("adds enhancement to attack and damage on a flaming greatsword", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 16;
+    state.inventory = [
+      {
+        name: "+1 flaming greatsword",
+        quantity: 1,
+        weight: 8,
+        kind: "weapon",
+        damageM: "2d6",
+        damageS: "1d10",
+        critical: "19-20/x2",
+        damageType: "S",
+        handed: "two",
+        masterwork: true,
+        enhancementBonus: 1,
+        weaponAbilities: [{ abilityId: "flaming" }],
+        damageLines: [
+          {
+            id: "primary",
+            dice: "2d6",
+            type: "S",
+            diceS: "1d10",
+            multiplyOnCrit: true,
+          },
+          {
+            id: "fire",
+            dice: "1d6",
+            type: "fire",
+            multiplyOnCrit: false,
+            fromAbilityId: "flaming",
+          },
+        ],
+      },
+    ];
+
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows[0].attackBonus, 5); // BAB 1 + Str 3 + magic 1
+    assert.equal(rows[0].damageModifier, 5); // 1.5 Str 4 + enhancement 1
+    assert.equal(rows[0].extraDamageDisplay, "1d6 fire");
+    assert.match(rows[0].damageDisplay, /2d6\+5 plus 1d6 fire\/19-20/);
+    assert.deepEqual(rows[0].extraDamageDice, [
+      { qty: 1, sides: 6, themeColor: "#E85D04" },
+    ]);
+    assert.equal(rows[0].damageDice[0]?.themeColor, "#A8B4C0");
+    assert.equal(rows[0].damageParts[1]?.color, "#E85D04");
+  });
+
+  it("does not multiply extra fire dice on a critical", () => {
+    const scaled = applyCriticalDamage([{ qty: 2, sides: 6 }], 5, 2);
+    const text = formatWeaponDamageText(
+      `${scaled.dice[0].qty}d${scaled.dice[0].sides}+${scaled.modifier}`,
+      "1d6 fire",
+    );
+    assert.equal(text, "4d6+10 plus 1d6 fire");
+  });
+
+  it("masterwork-only adds +1 attack and no damage bonus", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 12;
+    state.inventory = [
+      {
+        name: "Masterwork longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        damageM: "1d8",
+        critical: "19-20/x2",
+        handed: "one",
+        masterwork: true,
+      },
+    ];
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows[0].attackBonus, 3); // BAB 1 + Str 1 + mw 1
+    assert.equal(rows[0].damageModifier, 1);
+    assert.equal(rows[0].damageDisplay, "1d8+1/19-20");
+  });
+
+  it("Keen doubles the threat range", () => {
+    assert.equal(applyKeenThreat(19), 17);
+    assert.equal(applyKeenThreat(18), 15);
+    assert.equal(applyKeenThreat(20), 19);
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.inventory = [
+      {
+        name: "Keen longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        damageM: "1d8",
+        critical: "19-20/x2",
+        handed: "one",
+        weaponAbilities: [{ abilityId: "keen" }],
+      },
+    ];
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows[0].threatMin, 17);
   });
 });

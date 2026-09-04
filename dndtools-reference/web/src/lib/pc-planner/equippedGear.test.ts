@@ -108,6 +108,50 @@ describe("computeEquippedGear", () => {
     assert.equal(gear.maxDex, 1);
     assert.equal(gear.acp, -8);
     assert.equal(gear.speedArmorDelta, -10);
+    assert.equal(gear.armorCategory, "heavy");
+  });
+
+  it("adds enhancement to armor AC and improves masterwork ACP", () => {
+    const gear = computeEquippedGear(
+      [
+        {
+          name: "+1 banded mail",
+          quantity: 1,
+          weight: 35,
+          kind: "armor",
+          equipped: true,
+          armorBonus: 6,
+          maxDex: 1,
+          acp: -6,
+          speed30: 20,
+          enhancementBonus: 1,
+          masterwork: true,
+        },
+      ],
+      30,
+    );
+    assert.equal(gear.armor, 7);
+    assert.equal(gear.acp, -5);
+  });
+
+  it("masterwork-only armor improves ACP without changing AC", () => {
+    const gear = computeEquippedGear(
+      [
+        {
+          name: "Masterwork banded mail",
+          quantity: 1,
+          weight: 35,
+          kind: "armor",
+          equipped: true,
+          armorBonus: 6,
+          acp: -6,
+          masterwork: true,
+        },
+      ],
+      30,
+    );
+    assert.equal(gear.armor, 6);
+    assert.equal(gear.acp, -5);
   });
 });
 

@@ -1,4 +1,5 @@
 import type { DicePoolItem, DieSides } from "@/lib/dice/types";
+import { weaponDamageColor } from "@/lib/dice/damageTypeColors";
 import {
   abilityModifier,
   formatIterativeAttacks,
@@ -8,11 +9,26 @@ import {
 } from "./combatStats";
 import { isWeaponKind } from "./equippedGear";
 import { formatDamageType } from "@/lib/equipment-display";
-import type { FeatEntry, InventoryRow, PcPlanState } from "./types";
+import {
+  applyKeenThreat,
+  inventoryAttackBonus,
+  inventoryDamageBonus,
+  inventoryDamageLines,
+  inventoryHasKeen,
+} from "./inventoryItem";
+
+export { applyKeenThreat };
+import type { FeatEntry, InventoryDamageLine, InventoryRow, PcPlanState } from "./types";
 
 const ROLLABLE_SIDES = new Set<number>([4, 6, 8, 10, 12, 20, 100]);
 
 export type WeaponAttackMode = "melee" | "ranged";
+
+export type WeaponDamagePart = {
+  text: string;
+  damageType: string | null;
+  color: string;
+};
 
 export type WeaponAttackRow = {
   /** Index into state.inventory */
@@ -22,9 +38,20 @@ export type WeaponAttackRow = {
   attackBonus: number;
   attackBonuses: number[];
   attackDisplay: string;
+  /** Primary weapon dice; multiplied on a critical. */
   damageDice: DicePoolItem[];
+  /** Extra energy / ability dice; not multiplied on a critical. */
+  extraDamageDice: DicePoolItem[];
+  /** Burst extras that apply only on a confirmed critical. */
+  critOnlyDice: DicePoolItem[];
   damageModifier: number;
   damageDisplay: string;
+  extraDamageDisplay: string;
+  critExtraDisplay: string;
+  /** Colored segments for the damage button / label. */
+  damageParts: WeaponDamagePart[];
+  /** Burst extras shown only when a critical is armed. */
+  critDamageParts: WeaponDamagePart[];
   critical: string | null;
   threatMin: number;
   critMultiplier: number;
@@ -38,7 +65,10 @@ function asDieSides(sides: number): DieSides | null {
 }
 
 /** Parse "1d8", "2d6", "d10" into a dice pool. Returns empty if unparseable. */
-export function parseDamageDice(raw: string | null | undefined): DicePoolItem[] {
+export function parseDamageDice(
+  raw: string | null | undefined,
+  themeColor?: string | null,
+): DicePoolItem[] {
   if (!raw) return [];
   const match = String(raw)
     .trim()
@@ -49,7 +79,13 @@ export function parseDamageDice(raw: string | null | undefined): DicePoolItem[] 
   const sides = Number.parseInt(match[2], 10);
   const dieSides = asDieSides(sides);
   if (!dieSides || !Number.isFinite(qty) || qty <= 0) return [];
-  return [{ qty, sides: dieSides }];
+  return [
+    {
+      qty,
+      sides: dieSides,
+      ...(themeColor ? { themeColor } : {}),
+    },
+  ];
 }
 
 export function formatDamageDice(dice: DicePoolItem[]): string {
@@ -166,7 +202,11 @@ export function applyCriticalDamage(
 ): { dice: DicePoolItem[]; modifier: number } {
   const mult = Math.max(1, Math.trunc(multiplier));
   return {
-    dice: dice.map((d) => ({ qty: d.qty * mult, sides: d.sides })),
+    dice: dice.map((d) => ({
+      qty: d.qty * mult,
+      sides: d.sides,
+      ...(d.themeColor ? { themeColor: d.themeColor } : {}),
+    })),
     modifier: modifier * mult,
   };
 }
@@ -195,12 +235,23 @@ export function isTwoHandedWeapon(row: InventoryRow): boolean {
   return (row.handed ?? "").toLowerCase() === "two";
 }
 
+function lineHasDice(line: InventoryDamageLine, sizeMod: number): boolean {
+  const raw =
+    sizeMod > 0 ? line.diceS || line.dice : line.dice || line.diceS || "";
+  return parseDamageDice(raw).length > 0;
+}
+
 export function weaponHasDamage(row: InventoryRow): boolean {
+  const lines = inventoryDamageLines(row);
+  if (lines.some((line) => lineHasDice(line, 0) || lineHasDice(line, 1))) {
+    return true;
+  }
   return Boolean(row.damageM || row.damageS);
 }
 
 export function needsWeaponStatBackfill(row: InventoryRow): boolean {
   return (
+    !row.customized &&
     isWeaponKind(row.kind) &&
     !weaponHasDamage(row) &&
     row.source === "equipment" &&
@@ -208,15 +259,83 @@ export function needsWeaponStatBackfill(row: InventoryRow): boolean {
   );
 }
 
+function primaryDamageRaw(row: InventoryRow, sizeMod: number): string | null {
+  const lines = inventoryDamageLines(row);
+  const primary = lines.find((line) => !line.critOnly && !line.fromAbilityId) ??
+    lines.find((line) => !line.critOnly);
+  if (primary) {
+    if (sizeMod > 0) return primary.diceS || primary.dice || null;
+    return primary.dice || primary.diceS || null;
+  }
+  if (sizeMod > 0) {
+    return row.damageS ?? row.damageM ?? null;
+  }
+  return row.damageM ?? row.damageS ?? null;
+}
+
 /** Small or smaller creatures use damage_s (size attack mod > 0). */
 export function damageDiceForSize(
   row: InventoryRow,
   sizeMod: number,
 ): string | null {
-  if (sizeMod > 0) {
-    return row.damageS ?? row.damageM ?? null;
+  return primaryDamageRaw(row, sizeMod);
+}
+
+function formatExtraPart(line: InventoryDamageLine, sizeMod: number): string {
+  const raw =
+    sizeMod > 0 ? line.diceS || line.dice : line.dice || line.diceS || "";
+  if (!raw) return "";
+  const type = formatDamageType(line.type);
+  return type ? `${raw} ${type.toLowerCase()}` : raw;
+}
+
+function lineDiceRaw(line: InventoryDamageLine, sizeMod: number): string {
+  return sizeMod > 0 ? line.diceS || line.dice : line.dice || line.diceS || "";
+}
+
+function damagePartFromLine(
+  line: InventoryDamageLine,
+  sizeMod: number,
+  modifier = 0,
+): WeaponDamagePart | null {
+  const raw = lineDiceRaw(line, sizeMod);
+  if (!raw) return null;
+  const typeLabel = formatDamageType(line.type);
+  const diceText =
+    modifier !== 0 ? formatDamageWithModifier(parseDamageDice(raw), modifier) : raw;
+  const text = typeLabel ? `${diceText} ${typeLabel.toLowerCase()}` : diceText;
+  return {
+    text,
+    damageType: typeLabel ?? line.type ?? null,
+    color: weaponDamageColor(line.type),
+  };
+}
+
+export function formatWeaponDamageText(
+  primary: string,
+  extraDisplay: string,
+  critExtraDisplay = "",
+  includeCritExtra = false,
+): string {
+  const extras = [extraDisplay, includeCritExtra ? critExtraDisplay : ""]
+    .filter((part) => part.trim())
+    .join(" plus ");
+  return extras ? `${primary} plus ${extras}` : primary;
+}
+
+export function buildWeaponDamageParts(
+  primary: WeaponDamagePart | null,
+  extras: WeaponDamagePart[],
+  critExtras: WeaponDamagePart[],
+  includeCritExtra: boolean,
+): WeaponDamagePart[] {
+  const parts: WeaponDamagePart[] = [];
+  if (primary) parts.push(primary);
+  for (const part of extras) parts.push(part);
+  if (includeCritExtra) {
+    for (const part of critExtras) parts.push(part);
   }
-  return row.damageM ?? row.damageS ?? null;
+  return parts;
 }
 
 /**
@@ -251,29 +370,75 @@ export function computeWeaponAttackRows(
     const light = isLightWeapon(item);
     const useDexToHit = mode === "ranged" || (finesse && light && mode === "melee");
 
+    const magicAttack = inventoryAttackBonus(item);
     const attackBonus =
       combatStats.bab +
       (useDexToHit ? dexMod : strMod) +
       sizeMod +
+      magicAttack +
       (mode === "ranged" ? state.combat.rangedMisc : state.combat.meleeMisc);
 
+    const lines = inventoryDamageLines(item);
+    const primaryLine =
+      lines.find((line) => !line.critOnly && !line.fromAbilityId) ??
+      lines.find((line) => !line.critOnly);
     const damageRaw = damageDiceForSize(item, sizeMod);
-    const damageDice = parseDamageDice(damageRaw);
+    const primaryType = primaryLine?.type ?? item.damageType ?? null;
+    const primaryColor = weaponDamageColor(primaryType);
+    const damageDice = parseDamageDice(damageRaw, primaryColor);
     if (damageDice.length === 0) continue;
 
-    let damageModifier = 0;
+    const extraLines = lines.filter(
+      (line) => line !== primaryLine && !line.critOnly,
+    );
+    const critOnlyLines = lines.filter((line) => line.critOnly);
+    const extraDamageDice = extraLines.flatMap((line) =>
+      parseDamageDice(
+        lineDiceRaw(line, sizeMod),
+        weaponDamageColor(line.type),
+      ),
+    );
+    const critOnlyDice = critOnlyLines.flatMap((line) =>
+      parseDamageDice(line.dice, weaponDamageColor(line.type)),
+    );
+    const extraDamageDisplay = extraLines
+      .map((line) => formatExtraPart(line, sizeMod))
+      .filter(Boolean)
+      .join(" plus ");
+    const critExtraDisplay = critOnlyLines
+      .map((line) => formatExtraPart(line, 0))
+      .filter(Boolean)
+      .join(" plus ");
+
+    let damageModifier = inventoryDamageBonus(item);
     if (mode === "melee") {
-      damageModifier = meleeDamageAbilityBonus(strMod, isTwoHandedWeapon(item));
+      damageModifier += meleeDamageAbilityBonus(strMod, isTwoHandedWeapon(item));
     }
 
     const attackBonuses = iterativeAttackBonuses(attackBonus);
     const attackDisplay = formatIterativeAttacks(attackBonus);
-    const damageBase = formatDamageWithModifier(damageDice, damageModifier);
+    const primaryDiceText = formatDamageWithModifier(damageDice, damageModifier);
+    const damageBase = formatWeaponDamageText(primaryDiceText, extraDamageDisplay);
     const critSuffix = formatCritSuffix(item.critical);
     const damageDisplay = `${damageBase}${critSuffix}`;
-    const typeLabel = formatDamageType(item.damageType);
+    const typeLabel = formatDamageType(primaryType) ?? (extraDamageDisplay || null);
     const summary = `${item.name || "Weapon"} ${attackDisplay} ${mode} (${damageDisplay})`;
     const critInfo = parseWeaponCritical(item.critical);
+    const threatMin = inventoryHasKeen(item)
+      ? applyKeenThreat(critInfo.threatMin)
+      : critInfo.threatMin;
+
+    const primaryPart: WeaponDamagePart = {
+      text: `${primaryDiceText}${critSuffix}`,
+      damageType: typeLabel,
+      color: primaryColor,
+    };
+    const extraParts = extraLines
+      .map((line) => damagePartFromLine(line, sizeMod))
+      .filter((part): part is WeaponDamagePart => part != null);
+    const critExtraParts = critOnlyLines
+      .map((line) => damagePartFromLine(line, 0))
+      .filter((part): part is WeaponDamagePart => part != null);
 
     rows.push({
       inventoryIndex: i,
@@ -283,10 +448,16 @@ export function computeWeaponAttackRows(
       attackBonuses,
       attackDisplay,
       damageDice,
+      extraDamageDice,
+      critOnlyDice,
       damageModifier,
       damageDisplay,
+      extraDamageDisplay,
+      critExtraDisplay,
+      damageParts: buildWeaponDamageParts(primaryPart, extraParts, [], false),
+      critDamageParts: critExtraParts,
       critical: item.critical ?? null,
-      threatMin: critInfo.threatMin,
+      threatMin,
       critMultiplier: critInfo.multiplier,
       damageType: typeLabel,
       summary,

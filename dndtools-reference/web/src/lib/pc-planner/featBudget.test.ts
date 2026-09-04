@@ -44,6 +44,7 @@ describe("feat budget", () => {
       naturalArmor: 0,
       sizeMod: 0,
       speed: 30,
+      speedUnhinderedByEncumbrance: false,
     });
     // general 1 + human 1 + fighter 2 = 4
     assert.equal(budget.total, 4);

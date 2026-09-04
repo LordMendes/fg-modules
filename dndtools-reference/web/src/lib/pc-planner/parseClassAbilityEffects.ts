@@ -5,6 +5,8 @@ export type ClassDerivedFeatures = {
   saveBonus: { fort: number; ref: number; will: number };
   /** Ability modifiers added to saves from class features (e.g. Divine Grace → Cha). */
   saveAbilityBonus: { fort: AbilityKey[]; ref: AbilityKey[]; will: AbilityKey[] };
+  /** Conditional +10 land speed (barbarian Fast Movement, etc.). */
+  fastMovementBonus: number;
 };
 
 const SAVE_KEYS = ["fort", "ref", "will"] as const;
@@ -29,6 +31,7 @@ export function emptyClassDerivedFeatures(): ClassDerivedFeatures {
   return {
     saveBonus: { fort: 0, ref: 0, will: 0 },
     saveAbilityBonus: { fort: [], ref: [], will: [] },
+    fastMovementBonus: 0,
   };
 }
 
@@ -68,6 +71,7 @@ export function mergeClassDerivedFeatures(
       will: base.saveBonus.will + (add.saveBonus?.will ?? 0),
     },
     saveAbilityBonus: mergeSaveAbilityBonus(base.saveAbilityBonus, add.saveAbilityBonus ?? {}),
+    fastMovementBonus: Math.max(base.fastMovementBonus, add.fastMovementBonus ?? 0),
   };
 }
 
@@ -84,6 +88,10 @@ const ABILITY_EFFECT_RULES: AbilityEffectRule[] = [
   {
     match: (name) => name === "divine grace" || name.startsWith("divine grace "),
     apply: () => ({ saveAbilityBonus: allSavesAbilityBonus("cha") }),
+  },
+  {
+    match: (name) => name === "fast movement" || name.startsWith("fast movement "),
+    apply: () => ({ fastMovementBonus: 10 }),
   },
 ];
 

@@ -8,6 +8,7 @@ import {
   type ClassAdvancementRow,
 } from "./parseClassAdvancement";
 import { computeEquippedGear } from "./equippedGear";
+import { computeEncumbrance } from "./encumbrance";
 import type { RaceDerivedFeatures } from "./parseRaceFeatures";
 import type { FeatDerivedFeatures } from "./parseFeatEffects";
 import { emptyFeatDerivedFeatures } from "./parseFeatEffects";
@@ -160,12 +161,21 @@ export function computeCombatStats(
 
   const feats = featFeatures ?? emptyFeatDerivedFeatures();
   const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
+  const encumbrance = computeEncumbrance(state, {
+    raceFeatures,
+    featFeatures: feats,
+    classFeatures,
+    equippedGear: gear,
+  });
   const armorBonus = gear.armor != null ? gear.armor : combat.armor;
   const shieldBonus = gear.shield != null ? gear.shield : combat.shield;
   const cappedDex =
-    gear.maxDex != null ? Math.min(dexMod, gear.maxDex) : dexMod;
-  const speedArmor =
-    gear.speedArmorDelta != null ? gear.speedArmorDelta : combat.speedArmor;
+    encumbrance.maxDex != null ? Math.min(dexMod, encumbrance.maxDex) : dexMod;
+  const speedArmor = encumbrance.speedUnhindered
+    ? 0
+    : encumbrance.speedDelta !== 0
+      ? encumbrance.speedDelta
+      : combat.speedArmor;
 
   const racialSave = raceFeatures?.saveBonus ?? { fort: 0, ref: 0, will: 0 };
   const classSaveBonus = classFeatures?.saveBonus ?? { fort: 0, ref: 0, will: 0 };
@@ -269,6 +279,8 @@ export function computeCombatStats(
   const speedParts = {
     base: combat.speedBase,
     armor: speedArmor,
+    class: encumbrance.fastMovementBonus,
+    feat: encumbrance.fleetSpeedBonus,
     misc: combat.speedMisc,
   };
 

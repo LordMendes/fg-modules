@@ -3,12 +3,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDice } from "@/components/dice/dice-provider";
 import { createRollId, iterativeD20Checks } from "@/lib/dice/notation";
+import { damageTypeTone } from "@/lib/dice/damageTypeColors";
 import {
   applyCriticalDamage,
   formatCritSuffix,
   formatDamageWithModifier,
+  formatWeaponDamageText,
   isCriticalThreat,
   type WeaponAttackRow,
+  type WeaponDamagePart,
 } from "@/lib/pc-planner/weaponAttacks";
 
 export type PcWeaponAttacksListProps = {
@@ -39,6 +42,62 @@ function critRangeLabel(weapon: WeaponAttackRow): string | null {
     return weapon.critMultiplier > 2 ? `×${weapon.critMultiplier}` : null;
   }
   return suffix.replace(/^\//, "");
+}
+
+function damagePartsForDisplay(
+  weapon: WeaponAttackRow,
+  pending: PendingCrit | undefined,
+): WeaponDamagePart[] {
+  const scaled = pending
+    ? applyCriticalDamage(
+        weapon.damageDice,
+        weapon.damageModifier,
+        pending.multiplier,
+      )
+    : null;
+  const primaryText = `${formatDamageWithModifier(
+    scaled?.dice ?? weapon.damageDice,
+    scaled?.modifier ?? weapon.damageModifier,
+  )}${formatCritSuffix(weapon.critical)}`;
+  const base = weapon.damageParts ?? [];
+  const primaryColor = base[0]?.color ?? weapon.damageDice[0]?.themeColor ?? "#C9A227";
+  const extras = base.slice(1);
+  const parts: WeaponDamagePart[] = [
+    {
+      text: primaryText,
+      damageType: weapon.damageType,
+      color: primaryColor,
+    },
+    ...extras,
+  ];
+  if (pending) {
+    parts.push(...(weapon.critDamageParts ?? []));
+  }
+  return parts;
+}
+
+function DamagePartsValue({ parts }: { parts: WeaponDamagePart[] }) {
+  if (parts.length === 0) return null;
+  return (
+    <span className="pc-weapon-damage-parts">
+      {parts.map((part, index) => (
+        <span key={`${part.text}-${index}`}>
+          {index > 0 ? (
+            <span className="pc-weapon-damage-plus" aria-hidden="true">
+              {" "}
+              plus{" "}
+            </span>
+          ) : null}
+          <span
+            className={`pc-weapon-damage-part pc-weapon-damage-part--${damageTypeTone(part.damageType)}`}
+            style={{ color: part.color }}
+          >
+            {part.text}
+          </span>
+        </span>
+      ))}
+    </span>
+  );
 }
 
 export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
@@ -131,6 +190,10 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
           dice: weapon.damageDice,
           modifier: weapon.damageModifier,
         };
+    const extraDice = [
+      ...(weapon.extraDamageDice ?? []),
+      ...(pending ? (weapon.critOnlyDice ?? []) : []),
+    ];
     const label = pending
       ? `${weapon.name} critical damage (×${pending.multiplier})`
       : `${weapon.name} damage`;
@@ -138,7 +201,7 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
       {
         id: createRollId(),
         label,
-        dice: scaled.dice,
+        dice: [...scaled.dice, ...extraDice],
         modifier: scaled.modifier,
       },
       () => {
@@ -162,16 +225,13 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
         const flashes = flashing[weapon.inventoryIndex];
         const critFlash = flashes?.crit;
         const fumbleFlash = flashes?.fumble;
-        const scaled = pending
-          ? applyCriticalDamage(
-              weapon.damageDice,
-              weapon.damageModifier,
-              pending.multiplier,
-            )
-          : null;
-        const damageText = formatDamageWithModifier(
-          scaled?.dice ?? weapon.damageDice,
-          scaled?.modifier ?? weapon.damageModifier,
+        const damageParts = damagePartsForDisplay(weapon, pending);
+        const damageText = formatWeaponDamageText(
+          damageParts[0]?.text ?? weapon.damageDisplay,
+          damageParts
+            .slice(1)
+            .map((part) => part.text)
+            .join(" plus "),
         );
         const attackCount = weapon.attackBonuses.length;
         const dieHint = `${attackCount}d20`;
@@ -217,7 +277,14 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
                     <span className="pc-weapon-attack-meta-sep" aria-hidden="true">
                       ·
                     </span>
-                    <span className="pc-weapon-attack-type">{weapon.damageType}</span>
+                    <span
+                      className={`pc-weapon-attack-type pc-weapon-damage-part--${damageTypeTone(weapon.damageType)}`}
+                      style={{
+                        color: weapon.damageParts[0]?.color ?? undefined,
+                      }}
+                    >
+                      {weapon.damageType}
+                    </span>
                   </>
                 ) : null}
               </span>
@@ -287,7 +354,9 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
                         : `Roll ${weapon.name} damage`
                     }
                   >
-                    <span className="pc-weapon-roll-value">{damageText}</span>
+                    <span className="pc-weapon-roll-value">
+                      <DamagePartsValue parts={damageParts} />
+                    </span>
                     <span className="pc-weapon-roll-hint" aria-hidden="true">
                       {pending ? `×${pending.multiplier}` : "roll"}
                     </span>

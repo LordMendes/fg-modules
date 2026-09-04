@@ -176,7 +176,7 @@ function formatClassString(state: PcPlanState): string {
 }
 
 function formatInventoryString(state: PcPlanState): string {
-  return state.inventory
+  const gear = state.inventory
     .filter((row) => row.name.trim())
     .map((row) => {
       const qty = row.quantity !== 1 ? `×${row.quantity}` : "";
@@ -184,6 +184,12 @@ function formatInventoryString(state: PcPlanState): string {
       return `${row.name}${qty}${eq}`;
     })
     .join("; ");
+  const coins = (state.treasure ?? [])
+    .filter((row) => row.name.trim() && Number.isFinite(row.amount) && row.amount !== 0)
+    .map((row) => `${row.amount} ${row.name.trim()}`)
+    .join(", ");
+  if (gear && coins) return `${gear}; ${coins}`;
+  return gear || coins;
 }
 
 /** Build CoreRPG character XML from PC Planner state. */

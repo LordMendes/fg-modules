@@ -1,3 +1,8 @@
+import type {
+  SelectedArmorAbility,
+  SelectedWeaponAbility,
+} from "@/lib/magic-item/types";
+
 export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
 export type ClassLevelEntry = {
@@ -49,7 +54,31 @@ export type SkillRow = {
   armorCheckPenalty?: boolean;
 };
 
+export type InventorySpellEffect = {
+  slug: string;
+  name: string;
+  notes?: string;
+};
+
+export type InventoryDamageLine = {
+  id: string;
+  dice: string;
+  type: string;
+  /** Small-size dice for the primary weapon line. */
+  diceS?: string | null;
+  /** Default true on the first line, false on extra energy dice. */
+  multiplyOnCrit?: boolean;
+  /** Burst extras that apply only on a confirmed critical. */
+  critOnly?: boolean;
+  /** Auto line created from a Magic Item Builder ability. */
+  fromAbilityId?: string;
+};
+
 export type InventoryRow = {
+  /** Stable sheet-only instance id. */
+  id?: string;
+  /** True after the player customizes this copy. */
+  customized?: boolean;
   name: string;
   quantity: number;
   weight: number;
@@ -57,6 +86,14 @@ export type InventoryRow = {
   source?: "equipment" | "item" | null;
   equipped?: boolean;
   kind?: string | null;
+  /** Armor category: light | medium | heavy (from equipment). */
+  category?: string | null;
+  masterwork?: boolean;
+  enhancementBonus?: number;
+  weaponAbilities?: SelectedWeaponAbility[];
+  armorAbilities?: SelectedArmorAbility[];
+  damageLines?: InventoryDamageLine[];
+  spellEffects?: InventorySpellEffect[];
   /** Cached armor/shield stats from the equipment record. */
   armorBonus?: number | null;
   maxDex?: number | null;
@@ -78,6 +115,16 @@ export type HitDieRoll = {
   classSlug: string;
   classLevel: number;
   rolled: number;
+};
+
+export type TreasureBuiltin = "pp" | "gp" | "sp" | "cp";
+
+export type TreasureRow = {
+  id: string;
+  name: string;
+  amount: number;
+  /** Seeded coin; always restored if missing from an older save. */
+  builtin?: TreasureBuiltin;
 };
 
 export type HitPointsState = {
@@ -135,6 +182,7 @@ export type PcPlanState = {
   combat: CombatState;
   hitPoints: HitPointsState;
   inventory: InventoryRow[];
+  treasure: TreasureRow[];
   notes: string;
 };
 

@@ -76,6 +76,7 @@ describe("computeCombatStats", () => {
       naturalArmor: 0,
       sizeMod: 0,
       speed: 30,
+      speedUnhinderedByEncumbrance: false,
     };
 
     const stats = computeCombatStats(state, raceFeatures);
@@ -84,6 +85,42 @@ describe("computeCombatStats", () => {
     assert.equal(stats.reflex.parts.racial, 2);
     assert.equal(stats.reflex.parts.misc, 0);
     assert.equal(stats.reflex.total, 4);
+  });
+
+  it("keeps dwarf speed when wearing heavy armor", () => {
+    const state = createDefaultPcPlanState();
+    state.abilities.dex = 16;
+    state.combat.speedBase = 20;
+    state.inventory = [
+      {
+        name: "Full Plate",
+        quantity: 1,
+        weight: 50,
+        kind: "armor",
+        category: "heavy",
+        equipped: true,
+        armorBonus: 8,
+        maxDex: 1,
+        acp: -6,
+        speed30: 20,
+        speed20: 15,
+      },
+    ];
+    const raceFeatures: RaceDerivedFeatures = {
+      traits: [],
+      abilityMods: {},
+      skillBonuses: {},
+      skillPointBonus: null,
+      saveBonus: { fort: 0, ref: 0, will: 0 },
+      naturalArmor: 0,
+      sizeMod: 0,
+      speed: 20,
+      speedUnhinderedByEncumbrance: true,
+    };
+    const stats = computeCombatStats(state, raceFeatures);
+    assert.equal(stats.speed.parts.armor, 0);
+    assert.equal(stats.speed.total, 20);
+    assert.equal(stats.ac.parts.stat, 1);
   });
 
   it("uses grapple size modifier distinct from attack size", () => {

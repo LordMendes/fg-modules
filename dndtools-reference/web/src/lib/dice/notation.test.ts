@@ -58,6 +58,19 @@ describe("dice notation", () => {
     );
   });
 
+  it("keeps differently tinted dice separate for the engine", () => {
+    assert.deepEqual(
+      toEngineNotation([
+        { qty: 2, sides: 6, themeColor: "#A8B4C0" },
+        { qty: 1, sides: 6, themeColor: "#E85D04" },
+      ]),
+      [
+        { qty: 2, sides: 6, themeColor: "#A8B4C0" },
+        { qty: 1, sides: 6, themeColor: "#E85D04" },
+      ],
+    );
+  });
+
   it("returns empty notation for empty pool without modifier", () => {
     assert.equal(buildNotation([], 0), "");
   });

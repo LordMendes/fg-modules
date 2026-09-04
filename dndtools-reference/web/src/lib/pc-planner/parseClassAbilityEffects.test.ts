@@ -61,6 +61,18 @@ describe("deriveClassFeatures", () => {
     const features = deriveClassFeatures(abilities, descriptions);
     assert.deepEqual(features.saveAbilityBonus.fort, ["cha"]);
   });
+
+  it("applies Fast Movement from the class ability registry", () => {
+    const features = deriveClassFeatures([
+      {
+        className: "Barbarian",
+        classSlug: "barbarian",
+        level: 1,
+        name: "Fast movement",
+      },
+    ]);
+    assert.equal(features.fastMovementBonus, 10);
+  });
 });
 
 describe("computeCombatStats with class features", () => {

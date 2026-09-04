@@ -6173,6 +6173,110 @@ body {
   margin-bottom: 0.75rem;
 }
 
+.pc-encumbrance {
+  margin: 0.35rem 0 0.85rem;
+}
+
+.pc-encumbrance-track {
+  position: relative;
+  height: 1.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: color-mix(in srgb, var(--bg-primary) 70%, transparent);
+  overflow: hidden;
+}
+
+.pc-encumbrance-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.pc-encumbrance--light .pc-encumbrance-fill {
+  background: color-mix(in srgb, #3d9b6a 70%, var(--bg-card));
+}
+
+.pc-encumbrance--medium .pc-encumbrance-fill {
+  background: color-mix(in srgb, var(--accent-gold) 75%, var(--bg-card));
+}
+
+.pc-encumbrance--heavy .pc-encumbrance-fill,
+.pc-encumbrance--overloaded .pc-encumbrance-fill {
+  background: color-mix(in srgb, var(--accent-burgundy) 75%, var(--bg-card));
+}
+
+.pc-encumbrance-segments {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pc-encumbrance-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-muted) 85%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+}
+
+.pc-encumbrance-segment:last-child {
+  border-right: none;
+}
+
+.pc-encumbrance-segment.is-active {
+  color: var(--text-primary);
+  text-shadow: 0 0 0.35rem color-mix(in srgb, var(--bg-primary) 55%, transparent);
+}
+
+.pc-encumbrance--light .pc-encumbrance-segment.is-active {
+  color: color-mix(in srgb, #1f6b45 35%, var(--text-primary));
+}
+
+.pc-encumbrance--medium .pc-encumbrance-segment.is-active {
+  color: var(--accent-gold-text);
+}
+
+.pc-encumbrance--heavy .pc-encumbrance-segment.is-active,
+.pc-encumbrance--overloaded .pc-encumbrance-segment.is-active {
+  color: color-mix(in srgb, var(--accent-burgundy) 40%, var(--text-primary));
+}
+
+.pc-encumbrance-ticks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pc-encumbrance-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--border-ornament) 55%, var(--border-color));
+  transform: translateX(-50%);
+}
+
+.pc-encumbrance-caption {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-encumbrance--overloaded .pc-encumbrance-caption {
+  color: var(--accent-burgundy);
+  font-weight: 600;
+}
+
 .pc-inventory-search {
   flex: 1 1 14rem;
   min-width: 0;
@@ -6330,6 +6434,24 @@ body {
 .pc-inventory-kind-chip--magic {
   color: var(--accent-gold-text);
   border-color: color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
+}
+
+.pc-inventory-kind-chip--custom {
+  color: var(--accent-gold-text);
+  border-color: color-mix(in srgb, var(--accent-gold) 45%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-gold) 12%, transparent);
+}
+
+.pc-inventory-edit {
+  width: 1.85rem;
+  height: 1.85rem;
+  padding: 0;
+  color: var(--text-muted);
+}
+
+.pc-inventory-edit:hover {
+  color: var(--accent-gold-text);
+  border-color: color-mix(in srgb, var(--accent-gold) 50%, var(--border-color));
 }
 
 .pc-inventory-stats {
@@ -6512,6 +6634,58 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+.pc-treasure-block {
+  margin-top: 0.25rem;
+}
+
+.pc-treasure-block .pc-skills-header {
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.pc-treasure-block .pc-inventory-add-custom {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.pc-treasure-coins {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.pc-treasure-coin {
+  min-width: 0;
+}
+
+.pc-treasure-amount {
+  width: 100%;
+}
+
+.pc-treasure-extras {
+  list-style: none;
+  margin: 0.55rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pc-treasure-extra {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pc-treasure-name {
+  flex: 1 1 8rem;
+  min-width: 0;
+}
+
 @media (max-width: 36rem) {
   .pc-inventory-row-controls {
     width: 100%;
@@ -6522,6 +6696,10 @@ body {
   .pc-inventory-add-custom {
     width: 100%;
     justify-content: center;
+  }
+
+  .pc-treasure-coins {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -7013,10 +7191,47 @@ body {
 }
 
 .pc-weapon-attack-type {
-  color: var(--text-muted);
   text-transform: none;
   letter-spacing: 0.02em;
   font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.pc-weapon-damage-parts {
+  display: inline;
+}
+
+.pc-weapon-damage-plus {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.pc-weapon-damage-part {
+  font-weight: 700;
+}
+
+.pc-weapon-damage-part--fire {
+  text-shadow: 0 0 10px color-mix(in srgb, #E85D04 35%, transparent);
+}
+
+.pc-weapon-damage-part--cold {
+  text-shadow: 0 0 10px color-mix(in srgb, #4CC9F0 35%, transparent);
+}
+
+.pc-weapon-damage-part--electricity {
+  text-shadow: 0 0 10px color-mix(in srgb, #FFD60A 40%, transparent);
+}
+
+.pc-weapon-damage-part--acid {
+  text-shadow: 0 0 10px color-mix(in srgb, #80B918 30%, transparent);
+}
+
+.pc-weapon-damage-part--sonic {
+  text-shadow: 0 0 10px color-mix(in srgb, #C77DFF 35%, transparent);
+}
+
+.pc-weapon-damage-part--force {
+  text-shadow: 0 0 10px color-mix(in srgb, #9B5DE5 35%, transparent);
 }
 
 .pc-weapon-attack-rolls {
@@ -7445,6 +7660,155 @@ body {
 .draggable-dialog-body {
   overflow: auto;
   padding: 1rem;
+}
+
+.pc-item-editor-dialog {
+  width: min(640px, calc(100vw - 2rem));
+  max-height: min(88vh, 920px);
+}
+
+.pc-item-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.pc-item-editor-section h3 {
+  margin: 0 0 0.55rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pc-item-editor-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.pc-item-editor-section-head h3 {
+  margin: 0;
+}
+
+.pc-item-editor-add {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.75rem;
+}
+
+.pc-item-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.55rem 0.65rem;
+}
+
+.pc-item-editor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.pc-item-editor-field--wide {
+  grid-column: 1 / -1;
+}
+
+.pc-item-editor-field span {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pc-item-editor-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  align-self: end;
+  padding-bottom: 0.2rem;
+}
+
+.pc-item-editor-check--block {
+  align-self: center;
+  padding-bottom: 0;
+}
+
+.pc-item-editor-damage-list,
+.pc-item-editor-spells {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.pc-item-editor-damage-row,
+.pc-item-editor-spell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.4rem;
+  padding: 0.45rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 0.25rem);
+}
+
+.pc-item-editor-remove {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+}
+
+.pc-item-editor-suggest,
+.pc-item-editor-price {
+  margin: 0.55rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.pc-item-editor-suggest-btn {
+  margin-left: 0.35rem;
+  border: 0;
+  background: none;
+  color: var(--accent-gold-text);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.pc-item-editor-warning {
+  color: #c44;
+}
+
+.pc-item-editor-abilities {
+  margin-top: 0.75rem;
+}
+
+.pc-item-editor-ability-filters {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.pc-item-editor-ability-list {
+  max-height: 16rem;
+}
+
+.pc-item-editor-spell-name {
+  min-width: 6rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.pc-item-editor-spell .pc-sheet-input {
+  flex: 1 1 8rem;
 }
 
 /* PC spell picker dialog */
