@@ -5,6 +5,7 @@ import { computeEquippedGear } from "./equippedGear";
 import {
   carryingCapacity,
   computeEncumbrance,
+  describeLoadEffects,
   encumberedSpeed,
   inferArmorCategory,
   loadCategory,
@@ -258,5 +259,63 @@ describe("computeEncumbrance", () => {
       equippedGear: computeEquippedGear(state.inventory, 30),
     });
     assert.equal(blocked.fleetSpeedBonus, 0);
+  });
+});
+
+describe("describeLoadEffects", () => {
+  const limits = carryingCapacity(10, 0);
+
+  it("lists light load as uncapped with full speed", () => {
+    const tip = describeLoadEffects("light", limits, { speedBase: 30 });
+    assert.equal(tip.title, "Light load");
+    assert.equal(tip.range, "0 to 33 lb");
+    assert.equal(tip.speed, "30 ft");
+    assert.equal(tip.maxDex, "no cap");
+    assert.equal(tip.skillAcp, "none");
+    assert.equal(tip.run, "×4");
+    assert.deepEqual(tip.extra, []);
+  });
+
+  it("lists medium load penalties and reduced speed", () => {
+    const tip = describeLoadEffects("medium", limits, { speedBase: 30 });
+    assert.equal(tip.title, "Medium load");
+    assert.equal(tip.range, "Over 33 lb to 66 lb");
+    assert.equal(tip.speed, "20 ft");
+    assert.equal(tip.maxDex, "+3");
+    assert.equal(tip.skillAcp, "-3");
+    assert.equal(tip.run, "×4");
+  });
+
+  it("lists heavy load penalties, ×3 run, and suppressed speed bonuses", () => {
+    const tip = describeLoadEffects("heavy", limits, { speedBase: 30 });
+    assert.equal(tip.maxDex, "+1");
+    assert.equal(tip.skillAcp, "-6");
+    assert.equal(tip.run, "×3");
+    assert.equal(tip.speed, "20 ft");
+    assert.ok(tip.extra.includes("Fast Movement and Fleet of Foot do not apply"));
+  });
+
+  it("keeps dwarf speed in medium and heavy descriptions", () => {
+    const medium = describeLoadEffects("medium", limits, {
+      speedBase: 20,
+      speedUnhindered: true,
+    });
+    const heavy = describeLoadEffects("heavy", limits, {
+      speedBase: 20,
+      speedUnhindered: true,
+    });
+    assert.equal(medium.speed, "20 ft (unhindered)");
+    assert.equal(heavy.speed, "20 ft (unhindered)");
+  });
+
+  it("describes overloaded as a 5 ft stagger", () => {
+    const tip = describeLoadEffects("overloaded", limits, {
+      speedBase: 20,
+      speedUnhindered: true,
+    });
+    assert.equal(tip.title, "Overloaded");
+    assert.equal(tip.range, "Over 100 lb");
+    assert.equal(tip.speed, "5 ft (full-round action)");
+    assert.equal(tip.run, "cannot run or charge");
   });
 });

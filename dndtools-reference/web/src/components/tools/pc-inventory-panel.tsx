@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Backpack, Package, Pencil, Plus, Shield, Shirt, Sparkles, Sword, Trash2 } from "lucide-react";
 import { fetchInventoryItem } from "@/actions/data";
@@ -22,8 +22,10 @@ import {
 } from "@/lib/pc-planner/equippedGear";
 import {
   computeEncumbrance,
+  describeLoadEffects,
   type LoadCategory,
   type ArmorLoadCategory,
+  type LoadEffectTooltip,
 } from "@/lib/pc-planner/encumbrance";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
@@ -98,6 +100,35 @@ function formatLoadLabel(category: LoadCategory | ArmorLoadCategory): string {
   if (category === "none") return "Light";
   if (category === "overloaded") return "Overloaded";
   return category.charAt(0).toUpperCase() + category.slice(1);
+}
+
+const LOAD_ZONES = ["light", "medium", "heavy"] as const;
+
+function EncumbranceZoneTooltip({
+  effect,
+  tooltipId,
+}: {
+  effect: LoadEffectTooltip;
+  tooltipId: string;
+}) {
+  return (
+    <span className="pc-encumbrance-tooltip" role="tooltip" id={tooltipId}>
+      <span className="pc-encumbrance-tooltip-title">{effect.title}</span>
+      <span className="pc-encumbrance-tooltip-range">{effect.range}</span>
+      <span className="pc-encumbrance-tooltip-line">Speed: {effect.speed}</span>
+      <span className="pc-encumbrance-tooltip-line">Max Dex: {effect.maxDex}</span>
+      <span className="pc-encumbrance-tooltip-line">Skill ACP: {effect.skillAcp}</span>
+      <span className="pc-encumbrance-tooltip-line">Run: {effect.run}</span>
+      {effect.extra.map((line) => (
+        <span
+          key={line}
+          className="pc-encumbrance-tooltip-line pc-encumbrance-tooltip-line--extra"
+        >
+          {line}
+        </span>
+      ))}
+    </span>
+  );
 }
 
 function encumbranceCaption(input: {
@@ -189,6 +220,7 @@ export function PcInventoryPanel({
   const [confirmReady, setConfirmReady] = useState(false);
   const [openEditorIds, setOpenEditorIds] = useState<string[]>([]);
   const [editorZOrder, setEditorZOrder] = useState<string[]>([]);
+  const encumbranceTooltipBaseId = useId();
 
   /** Backfill weapon damage/crit for older inventory rows that only have kind. */
   useEffect(() => {
@@ -306,12 +338,16 @@ export function PcInventoryPanel({
   const builtinTreasure = treasure.filter((row) => row.builtin);
   const extraTreasure = treasure.filter((row) => !row.builtin);
   const equippedGear = computeEquippedGear(inventory, state.combat.speedBase);
+  const featFeatures = deriveFeatEffects(state.feats);
   const encumbrance = computeEncumbrance(state, {
     raceFeatures,
-    featFeatures: deriveFeatEffects(state.feats),
+    featFeatures,
     classFeatures,
     equippedGear,
   });
+  const speedUnhinderedByTrait =
+    Boolean(raceFeatures?.speedUnhinderedByEncumbrance) ||
+    Boolean(featFeatures.speedUnhinderedByEncumbrance);
   const fillTone = loadTone(
     encumbrance.overloaded ? "overloaded" : encumbrance.highlightCategory,
   );
@@ -391,37 +427,61 @@ export function PcInventoryPanel({
           </span>
         </div>
 
-        <div
-          className={`pc-encumbrance pc-encumbrance--${fillTone}`}
-          role="meter"
-          aria-label="Encumbrance"
-          aria-valuemin={0}
-          aria-valuemax={encumbrance.limits.heavy}
-          aria-valuenow={Math.min(encumbrance.carriedWeight, encumbrance.limits.heavy)}
-          aria-valuetext={caption}
-        >
-          <div className="pc-encumbrance-track">
-            <div
-              className="pc-encumbrance-fill"
-              style={{ width: `${Math.min(100, Math.max(0, fillPercent))}%` }}
-            />
-            <div className="pc-encumbrance-segments" aria-hidden>
-              {(["light", "medium", "heavy"] as const).map((zone) => {
-                const active = loadTone(encumbrance.highlightCategory) === zone
-                  || (zone === "heavy" && encumbrance.overloaded);
+        <div className={`pc-encumbrance pc-encumbrance--${fillTone}`}>
+          <div
+            className="pc-encumbrance-bar"
+            role="meter"
+            aria-label="Encumbrance"
+            aria-valuemin={0}
+            aria-valuemax={encumbrance.limits.heavy}
+            aria-valuenow={Math.min(encumbrance.carriedWeight, encumbrance.limits.heavy)}
+            aria-valuetext={caption}
+          >
+            <div className="pc-encumbrance-track">
+              <div
+                className="pc-encumbrance-fill"
+                style={{ width: `${Math.min(100, Math.max(0, fillPercent))}%` }}
+              />
+              <div className="pc-encumbrance-segments" aria-hidden>
+                {LOAD_ZONES.map((zone) => {
+                  const active = loadTone(encumbrance.highlightCategory) === zone
+                    || (zone === "heavy" && encumbrance.overloaded);
+                  return (
+                    <span
+                      key={zone}
+                      className={`pc-encumbrance-segment${active ? " is-active" : ""}`}
+                    >
+                      {zone.charAt(0).toUpperCase() + zone.slice(1)}
+                    </span>
+                  );
+                })}
+              </div>
+              <div className="pc-encumbrance-ticks" aria-hidden>
+                <span className="pc-encumbrance-tick" style={{ left: "33.333%" }} />
+                <span className="pc-encumbrance-tick" style={{ left: "66.666%" }} />
+              </div>
+            </div>
+            <div className="pc-encumbrance-hotspots">
+              {LOAD_ZONES.map((zone) => {
+                const tooltipZone =
+                  zone === "heavy" && encumbrance.overloaded ? "overloaded" : zone;
+                const effect = describeLoadEffects(tooltipZone, encumbrance.limits, {
+                  speedBase: state.combat.speedBase,
+                  speedUnhindered: speedUnhinderedByTrait,
+                });
+                const tooltipId = `${encumbranceTooltipBaseId}-${zone}`;
                 return (
                   <span
                     key={zone}
-                    className={`pc-encumbrance-segment${active ? " is-active" : ""}`}
+                    className="pc-encumbrance-hotspot"
+                    tabIndex={0}
+                    aria-label={`${effect.title}. ${effect.range}`}
+                    aria-describedby={tooltipId}
                   >
-                    {zone.charAt(0).toUpperCase() + zone.slice(1)}
+                    <EncumbranceZoneTooltip effect={effect} tooltipId={tooltipId} />
                   </span>
                 );
               })}
-            </div>
-            <div className="pc-encumbrance-ticks" aria-hidden>
-              <span className="pc-encumbrance-tick" style={{ left: "33.333%" }} />
-              <span className="pc-encumbrance-tick" style={{ left: "66.666%" }} />
             </div>
           </div>
           <p className="pc-encumbrance-caption">{caption}</p>

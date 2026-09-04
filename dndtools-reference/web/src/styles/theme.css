@@ -6420,7 +6420,17 @@ body {
 }
 
 .pc-encumbrance {
+  position: relative;
   margin: 0.35rem 0 0.85rem;
+}
+
+.pc-encumbrance:hover,
+.pc-encumbrance:focus-within {
+  z-index: 55;
+}
+
+.pc-encumbrance-bar {
+  position: relative;
 }
 
 .pc-encumbrance-track {
@@ -6521,6 +6531,90 @@ body {
 .pc-encumbrance--overloaded .pc-encumbrance-caption {
   color: var(--accent-burgundy);
   font-weight: 600;
+}
+
+.pc-encumbrance-hotspots {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  z-index: 3;
+}
+
+.pc-encumbrance-hotspot {
+  position: relative;
+  cursor: help;
+}
+
+.pc-encumbrance-hotspot:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: -2px;
+}
+
+.pc-encumbrance-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 0.4rem);
+  min-width: 11.5rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--bg-primary) 25%, transparent);
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.pc-encumbrance-hotspot:nth-child(1) .pc-encumbrance-tooltip {
+  left: 0;
+}
+
+.pc-encumbrance-hotspot:nth-child(2) .pc-encumbrance-tooltip {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pc-encumbrance-hotspot:nth-child(3) .pc-encumbrance-tooltip {
+  right: 0;
+  left: auto;
+}
+
+.pc-encumbrance-hotspot:hover .pc-encumbrance-tooltip,
+.pc-encumbrance-hotspot:focus-visible .pc-encumbrance-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.pc-encumbrance-tooltip-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.pc-encumbrance-tooltip-range {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-encumbrance-tooltip-line {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-encumbrance-tooltip-line--extra {
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+  white-space: normal;
+  max-width: 14rem;
 }
 
 .pc-inventory-search {

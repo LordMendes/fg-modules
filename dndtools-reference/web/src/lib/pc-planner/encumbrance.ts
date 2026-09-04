@@ -189,16 +189,98 @@ export function inferArmorCategory(row: {
   return "heavy";
 }
 
-function loadMaxDexForCategory(category: LoadCategory): number | null {
+export function loadMaxDexForCategory(category: LoadCategory): number | null {
   if (category === "medium") return 3;
   if (category === "heavy" || category === "overloaded") return 1;
   return null;
 }
 
-function loadAcpForCategory(category: LoadCategory): number {
+export function loadAcpForCategory(category: LoadCategory): number {
   if (category === "medium") return -3;
   if (category === "heavy" || category === "overloaded") return -6;
   return 0;
+}
+
+export type LoadEffectZone = "light" | "medium" | "heavy" | "overloaded";
+
+export type LoadEffectTooltip = {
+  title: string;
+  range: string;
+  speed: string;
+  maxDex: string;
+  skillAcp: string;
+  run: string;
+  extra: string[];
+};
+
+function formatLoadPounds(value: number): string {
+  if (!Number.isFinite(value) || value === 0) return "0 lb";
+  const rounded = Math.round(value * 10) / 10;
+  const text = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+  return `${text} lb`;
+}
+
+function formatReducedSpeed(
+  speedBase: number,
+  speedUnhindered: boolean,
+): string {
+  if (speedUnhindered) return `${speedBase} ft (unhindered)`;
+  return `${encumberedSpeed(speedBase)} ft`;
+}
+
+/** PHB Table 9-2 effects for a load zone, with this character's speed. */
+export function describeLoadEffects(
+  zone: LoadEffectZone,
+  limits: CarryingLimits,
+  options: { speedBase: number; speedUnhindered?: boolean },
+): LoadEffectTooltip {
+  const speedBase = Number.isFinite(options.speedBase) ? options.speedBase : 0;
+  const speedUnhindered = Boolean(options.speedUnhindered);
+  const suppressed =
+    "Fast Movement and Fleet of Foot do not apply";
+
+  switch (zone) {
+    case "light":
+      return {
+        title: "Light load",
+        range: `0 to ${formatLoadPounds(limits.light)}`,
+        speed: `${speedBase} ft`,
+        maxDex: "no cap",
+        skillAcp: "none",
+        run: "×4",
+        extra: [],
+      };
+    case "medium":
+      return {
+        title: "Medium load",
+        range: `Over ${formatLoadPounds(limits.light)} to ${formatLoadPounds(limits.medium)}`,
+        speed: formatReducedSpeed(speedBase, speedUnhindered),
+        maxDex: "+3",
+        skillAcp: "-3",
+        run: "×4",
+        extra: [],
+      };
+    case "heavy":
+      return {
+        title: "Heavy load",
+        range: `Over ${formatLoadPounds(limits.medium)} to ${formatLoadPounds(limits.heavy)}`,
+        speed: formatReducedSpeed(speedBase, speedUnhindered),
+        maxDex: "+1",
+        skillAcp: "-6",
+        run: "×3",
+        extra: [suppressed],
+      };
+    case "overloaded":
+      return {
+        title: "Overloaded",
+        range: `Over ${formatLoadPounds(limits.heavy)}`,
+        speed: "5 ft (full-round action)",
+        maxDex: "+1",
+        skillAcp: "-6",
+        run: "cannot run or charge",
+        extra: [suppressed],
+      };
+  }
 }
 
 function worseCategory(
