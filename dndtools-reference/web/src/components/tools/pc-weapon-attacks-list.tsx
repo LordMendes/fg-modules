@@ -172,7 +172,7 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
       [weapon.inventoryIndex]: mode,
     }));
 
-    roll(iterativeD20Checks(label, bonuses), (result) => {
+    roll(iterativeD20Checks(label, bonuses, "attack"), (result) => {
       const threatening = result.faces.filter((face) =>
         isCriticalThreat(face, weapon.threatMin),
       );
@@ -231,6 +231,7 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
         label,
         dice: [...scaled.dice, ...extraDice],
         modifier: scaled.modifier,
+        kind: "damage",
       },
       () => {
         if (pending) clearPending(weapon.inventoryIndex);

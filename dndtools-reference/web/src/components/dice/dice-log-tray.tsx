@@ -1,9 +1,10 @@
 "use client";
 
-import { ScrollText } from "lucide-react";
+import { EyeOff, ScrollText } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useDice } from "@/components/dice/dice-provider";
-import { formatRollSummary } from "@/lib/dice/notation";
+import { formatRollFormula, formatRollSummary } from "@/lib/dice/notation";
+import { ROLL_KIND_LABELS } from "@/lib/dice/types";
 import {
   clampTrayPos,
   useFloatingTrayPos,
@@ -144,9 +145,34 @@ export function DiceLogTray() {
 
           {history.length > 0 ? (
             <ul className="dice-tray-history dice-log-tray-history">
-              {history.map((entry) => (
-                <li key={`${entry.id}-${entry.at}`}>{formatRollSummary(entry)}</li>
-              ))}
+              {history.map((entry) => {
+                const who =
+                  entry.actor?.characterName?.trim() ||
+                  entry.actor?.username ||
+                  null;
+                const kind = entry.kind ? ROLL_KIND_LABELS[entry.kind] : null;
+                return (
+                  <li key={`${entry.id}-${entry.at}`} className="dice-log-entry">
+                    <span className="dice-log-entry-meta">
+                      {who ? (
+                        <span className="dice-log-who">{who}</span>
+                      ) : null}
+                      {kind ? (
+                        <span className="dice-log-kind">{kind}</span>
+                      ) : null}
+                      {entry.hidden ? (
+                        <EyeOff
+                          className="dice-log-hidden-icon"
+                          aria-label="Hidden roll"
+                        />
+                      ) : null}
+                    </span>
+                    <span className="dice-log-entry-summary">
+                      {formatRollFormula(entry)}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
         </div>

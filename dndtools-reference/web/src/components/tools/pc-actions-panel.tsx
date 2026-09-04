@@ -61,7 +61,7 @@ function CombatSummary({
         <div>
           <dt>Init</dt>
           <dd>
-            <RollableStat label="Initiative" modifier={stats.initiative.total} />
+            <RollableStat label="Initiative" modifier={stats.initiative.total} kind="initiative" />
           </dd>
         </div>
         <div>
@@ -77,31 +77,31 @@ function CombatSummary({
         <div>
           <dt>Melee</dt>
           <dd>
-            <RollableStat label="Melee" modifier={stats.melee.total} />
+            <RollableStat label="Melee" modifier={stats.melee.total} kind="attack" />
           </dd>
         </div>
         <div>
           <dt>Ranged</dt>
           <dd>
-            <RollableStat label="Ranged" modifier={stats.ranged.total} />
+            <RollableStat label="Ranged" modifier={stats.ranged.total} kind="attack" />
           </dd>
         </div>
         <div>
           <dt>Fort</dt>
           <dd>
-            <RollableStat label="Fortitude" modifier={stats.fortitude.total} />
+            <RollableStat label="Fortitude" modifier={stats.fortitude.total} kind="save" />
           </dd>
         </div>
         <div>
           <dt>Ref</dt>
           <dd>
-            <RollableStat label="Reflex" modifier={stats.reflex.total} />
+            <RollableStat label="Reflex" modifier={stats.reflex.total} kind="save" />
           </dd>
         </div>
         <div>
           <dt>Will</dt>
           <dd>
-            <RollableStat label="Will" modifier={stats.will.total} />
+            <RollableStat label="Will" modifier={stats.will.total} kind="save" />
           </dd>
         </div>
         <div>

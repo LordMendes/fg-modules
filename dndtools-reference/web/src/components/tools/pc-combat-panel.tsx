@@ -68,18 +68,25 @@ function CombatTotal({
   value,
   signed = true,
   rollLabel,
+  rollKind,
   itemSources,
 }: {
   value: number;
   signed?: boolean;
   rollLabel?: string;
+  rollKind?: import("@/lib/dice/types").RollKind;
   itemSources?: BonusSource[];
 }) {
   const text = signed ? formatModifier(value) : String(value);
   return (
     <div className="pc-combat-total pc-combat-value" aria-label={`Total ${text}`}>
       {rollLabel ? (
-        <RollableStat label={rollLabel} modifier={value} signed={signed} />
+        <RollableStat
+          label={rollLabel}
+          modifier={value}
+          signed={signed}
+          kind={rollKind ?? "other"}
+        />
       ) : (
         text
       )}
@@ -143,6 +150,7 @@ function SideStatBlock({
   total,
   signedTotal = true,
   rollLabel,
+  rollKind,
   fields,
   patch,
 }: {
@@ -151,6 +159,7 @@ function SideStatBlock({
   total: number;
   signedTotal?: boolean;
   rollLabel?: string;
+  rollKind?: import("@/lib/dice/types").RollKind;
   fields: { label: string; value: number; editable: CombatNumberKey | null; signed?: boolean }[];
   patch: PcCombatPanelProps["patch"];
 }) {
@@ -163,7 +172,12 @@ function SideStatBlock({
       >
         <CombatTableHeader columns={columns} labeled={false} />
         <div className="pc-combat-row pc-combat-row--no-label">
-          <CombatTotal value={total} signed={signedTotal} rollLabel={rollLabel} />
+          <CombatTotal
+            value={total}
+            signed={signedTotal}
+            rollLabel={rollLabel}
+            rollKind={rollKind}
+          />
           {fields.map(({ label, value, editable, signed = true }) =>
             editable ? (
               <CombatNumberInput
@@ -190,18 +204,20 @@ function AttackTotal({
   bab,
   iterative,
   rollLabel,
+  rollKind = "attack",
 }: {
   value: number;
   bab: number;
   iterative?: boolean;
   rollLabel?: string;
+  rollKind?: import("@/lib/dice/types").RollKind;
 }) {
-  if (!iterative) return <CombatTotal value={value} rollLabel={rollLabel} />;
+  if (!iterative) return <CombatTotal value={value} rollLabel={rollLabel} rollKind={rollKind} />;
   const text = formatIterativeAttacks(bab, value - bab);
   return (
     <div className="pc-combat-total pc-combat-value pc-combat-iterative" aria-label={`Total ${text}`}>
       {rollLabel ? (
-        <RollableStat label={rollLabel} modifier={value}>
+        <RollableStat label={rollLabel} modifier={value} kind={rollKind}>
           {text}
         </RollableStat>
       ) : (
@@ -286,6 +302,7 @@ export function PcCombatPanel({
         label: `${label} HD`,
         dice: [{ qty: 1, sides: dieSides }],
         modifier: 0,
+        kind: "hitDie",
       },
       (result) => {
         const face = result.faces[0] ?? result.faceSum;
@@ -486,6 +503,7 @@ export function PcCombatPanel({
             columns={["Total", "Stat", "Misc"]}
             total={stats.initiative.total}
             rollLabel="Initiative"
+            rollKind="initiative"
             fields={[
               { label: "Stat", value: stats.initiative.parts.stat, editable: null },
               {
@@ -545,7 +563,12 @@ export function PcCombatPanel({
             ).map(({ label, row, misc, itemSources }) => (
               <div key={label} className="pc-combat-row" style={{ ["--combat-cols" as string]: 6 }}>
                 <div className="pc-combat-row-label">{label}</div>
-                <CombatTotal value={row.total} rollLabel={label} itemSources={itemSources} />
+                <CombatTotal
+                  value={row.total}
+                  rollLabel={label}
+                  rollKind="save"
+                  itemSources={itemSources}
+                />
                 <CombatReadonly value={row.parts.class} />
                 <CombatReadonly value={row.parts.stat} />
                 <CombatReadonly value={row.parts.ability ?? 0} />

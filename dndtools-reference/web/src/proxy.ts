@@ -38,6 +38,16 @@ export function proxy(request: NextRequest) {
     }
   }
 
+  if (pathname === "/tools/campaign" || pathname.startsWith("/tools/campaign/")) {
+    const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+    if (!authToken) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/login";
+      loginUrl.searchParams.set("next", pathname + request.nextUrl.search);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   const { session, token, isNew } = ensureSession(request);
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(SESSION_NONCE_HEADER, session.nonce);

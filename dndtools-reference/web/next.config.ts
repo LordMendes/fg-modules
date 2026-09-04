@@ -14,11 +14,12 @@ const plausibleOrigin = "http://analytics.lcmendes.com";
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  // wasm-unsafe-eval: Ammo.js (dice-box physics). unsafe-eval kept in dev for Next HMR.
+  // unsafe-eval kept in dev for Next HMR.
   `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' ${plausibleOrigin}${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data:",
   "font-src 'self' data:",
+  "media-src 'self'",
   `connect-src 'self' ${plausibleOrigin}`,
   "worker-src 'self' blob:",
   "object-src 'none'",
@@ -34,7 +35,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
   poweredByHeader: false,
-  transpilePackages: ["@3d-dice/dice-box"],
+  transpilePackages: ["@3d-dice/dice-box-threejs"],
   turbopack: {
     root: monorepoRoot,
   },

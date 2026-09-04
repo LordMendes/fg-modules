@@ -130,7 +130,9 @@ export function PcSpellListItem({
       {open ? (
         <div className="pc-spell-accordion-body">
           {loading ? <p className="pc-spell-picker-status">Loading cast details…</p> : null}
-          {!loading ? <SpellCastDetailsView details={details} /> : null}
+          {!loading ? (
+            <SpellCastDetailsView details={details} spellName={spell.name} />
+          ) : null}
         </div>
       ) : null}
     </li>

@@ -518,31 +518,110 @@ model ImportRun {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  username     String        @unique
-  name         String?
-  passwordHash String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  sessions     UserSession[]
-  lists        SavedList[]
-  pcPlans      PcPlan[]
+  id                String           @id @default(cuid())
+  email             String           @unique
+  username          String           @unique
+  name              String?
+  passwordHash      String
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  sessions          UserSession[]
+  lists             SavedList[]
+  pcPlans           PcPlan[]
+  campaignsAsDm     Campaign[]       @relation("CampaignDm")
+  campaignMembers   CampaignMember[]
+  campaignPcs       CampaignPc[]
+  campaignRolls     CampaignRoll[]
 }
 
 model PcPlan {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name      String
-  shortcut  String?
-  state     Json     @default("{}")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String       @id @default(cuid())
+  userId     String
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  shortcut   String?
+  state      Json         @default("{}")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  campaignPcs CampaignPc[]
 
   @@unique([userId, name])
   @@index([userId])
   @@index([userId, shortcut])
+}
+
+model Campaign {
+  id        String           @id @default(cuid())
+  name      String
+  joinCode  String           @unique
+  dmUserId  String
+  dm        User             @relation("CampaignDm", fields: [dmUserId], references: [id], onDelete: Cascade)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  members   CampaignMember[]
+  pcs       CampaignPc[]
+  rolls     CampaignRoll[]
+
+  @@index([dmUserId])
+}
+
+model CampaignMember {
+  id         String   @id @default(cuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// "dm" | "player"
+  role       String
+  /// "pending" | "active"
+  status     String   @default("active")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([campaignId, userId])
+  @@index([userId])
+  @@index([campaignId])
+}
+
+model CampaignPc {
+  id         String   @id @default(cuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  pcPlanId   String
+  pcPlan     PcPlan   @relation(fields: [pcPlanId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([campaignId, pcPlanId])
+  @@index([campaignId])
+  @@index([userId])
+  @@index([pcPlanId])
+}
+
+model CampaignRoll {
+  id            String   @id @default(cuid())
+  campaignId    String
+  campaign      Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username      String
+  characterName String?
+  kind          String
+  label         String
+  hidden        Boolean  @default(false)
+  dice          Json
+  modifier      Int      @default(0)
+  iterativeModifiers Json?
+  faces         Json
+  faceSum       Int
+  total         Int
+  natural20     Boolean  @default(false)
+  natural1      Boolean  @default(false)
+  attackTotals  Json?
+  createdAt     DateTime @default(now())
+
+  @@index([campaignId, createdAt])
 }
 
 model UserSession {

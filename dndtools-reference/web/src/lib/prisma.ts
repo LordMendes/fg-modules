@@ -19,7 +19,14 @@ function createPrismaClient(): PrismaClient {
 }
 
 /** Delegates that must exist after schema changes (dev hot reload can cache stale clients). */
-const REQUIRED_DELEGATES = ["savedList", "pcPlan"] as const;
+const REQUIRED_DELEGATES = [
+  "savedList",
+  "pcPlan",
+  "campaign",
+  "campaignMember",
+  "campaignPc",
+  "campaignRoll",
+] as const;
 
 function isPrismaClientReady(client: PrismaClient): boolean {
   return REQUIRED_DELEGATES.every((key) => key in client);

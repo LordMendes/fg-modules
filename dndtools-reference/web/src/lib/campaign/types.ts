@@ -1,0 +1,113 @@
+import type { DicePoolItem, RollKind, RollResult } from "@/lib/dice/types";
+
+export type CampaignMemberRole = "dm" | "player";
+export type CampaignMemberStatus = "pending" | "active";
+
+export type CampaignSummary = {
+  id: string;
+  name: string;
+  joinCode: string;
+  role: CampaignMemberRole;
+  status: CampaignMemberStatus;
+  memberCount: number;
+  pcCount: number;
+  updatedAt: string;
+};
+
+export type CampaignMemberView = {
+  id: string;
+  userId: string;
+  username: string;
+  role: CampaignMemberRole;
+  status: CampaignMemberStatus;
+};
+
+export type CampaignPcView = {
+  id: string;
+  pcPlanId: string;
+  userId: string;
+  username: string;
+  name: string;
+  classSummary: string;
+  updatedAt: string;
+};
+
+export type CampaignTableState = {
+  id: string;
+  name: string;
+  joinCode: string;
+  dmUserId: string;
+  myRole: CampaignMemberRole;
+  myStatus: CampaignMemberStatus;
+  members: CampaignMemberView[];
+  pcs: CampaignPcView[];
+  rolls: CampaignRollView[];
+};
+
+export type CampaignRollActor = {
+  userId: string;
+  username: string;
+  characterName: string | null;
+};
+
+export type CampaignRollView = {
+  id: string;
+  actor: CampaignRollActor;
+  kind: RollKind;
+  label: string;
+  hidden: boolean;
+  dice: DicePoolItem[];
+  modifier: number;
+  iterativeModifiers?: number[];
+  faces: number[] | null;
+  faceSum: number | null;
+  total: number | null;
+  natural20: boolean;
+  natural1: boolean;
+  attackTotals?: number[] | null;
+  at: number;
+  /** True when this viewer may see the numeric result. */
+  revealResult: boolean;
+};
+
+export type CampaignRollEvent = {
+  type: "roll";
+  roll: CampaignRollView;
+};
+
+export type CampaignLiveEvent =
+  | CampaignRollEvent
+  | { type: "ping" }
+  | { type: "roster"; members: CampaignMemberView[]; pcs: CampaignPcView[] };
+
+export type StartCampaignRollInput = {
+  campaignId: string;
+  label: string;
+  kind: RollKind;
+  hidden: boolean;
+  characterName?: string | null;
+  dice: DicePoolItem[];
+  modifier: number;
+  iterativeModifiers?: number[];
+};
+
+export function rollViewToResult(roll: CampaignRollView): RollResult | null {
+  if (!roll.revealResult || roll.faces == null || roll.total == null || roll.faceSum == null) {
+    return null;
+  }
+  return {
+    id: roll.id,
+    label: roll.label,
+    kind: roll.kind,
+    hidden: roll.hidden,
+    actor: roll.actor,
+    faces: roll.faces,
+    faceSum: roll.faceSum,
+    modifier: roll.modifier,
+    total: roll.total,
+    natural20: roll.natural20,
+    natural1: roll.natural1,
+    at: roll.at,
+    ...(roll.attackTotals ? { attackTotals: roll.attackTotals } : {}),
+  };
+}

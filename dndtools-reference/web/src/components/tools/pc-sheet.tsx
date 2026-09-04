@@ -122,6 +122,8 @@ export type PcSheetProps = {
   onUpdateSpellPrepared: (slug: string, prepared: number) => void;
   onAddInventoryRow: () => void;
   updateAbility: (key: AbilityKey, value: number) => void;
+  /** When true, sheet fields are display-only (DM viewing another player's PC). Rolls still work. */
+  readOnly?: boolean;
 };
 
 function clampClassLevel(level: number): number {
@@ -143,7 +145,7 @@ function formatClassLine(classLevels: PcPlanState["identity"]["classLevels"]): s
 
 export function PcSheet({
   state,
-  patch,
+  patch: patchProp,
   sheetTab,
   onTabChange,
   shortcut,
@@ -161,7 +163,15 @@ export function PcSheet({
   onUpdateSpellPrepared,
   onAddInventoryRow,
   updateAbility,
+  readOnly = false,
 }: PcSheetProps) {
+  const patch = useCallback(
+    (fn: (draft: PcPlanState) => void) => {
+      if (readOnly) return;
+      patchProp(fn);
+    },
+    [patchProp, readOnly],
+  );
   const nonce = useSessionNonce();
   const [racePickerOpen, setRacePickerOpen] = useState(false);
   const [skillPreview, setSkillPreview] = useState<EntityPreview | null>(null);
@@ -278,7 +288,11 @@ export function PcSheet({
   }
 
   return (
-    <div className="pc-sheet-body" aria-label="Character sheet">
+    <div
+      className={`pc-sheet-body${readOnly ? " pc-sheet-body--readonly" : ""}`}
+      aria-label="Character sheet"
+      aria-readonly={readOnly || undefined}
+    >
       <FgSheetTabs
         tabs={PC_SHEET_TABS}
         value={sheetTab}
@@ -955,7 +969,7 @@ export function PcSheet({
                               "—"
                             ) : (
                               <span className="pc-skill-total-wrap">
-                                <RollableStat label={row.name} modifier={total} />
+                                <RollableStat label={row.name} modifier={total} kind="skill" />
                                 <BonusSourcesHint
                                   amount={itemSkill.total}
                                   sources={itemSkill.sources}

@@ -65,6 +65,16 @@ export const TOOLS = [
     badge: "Beta",
   },
   {
+    key: "campaign",
+    label: "Campaign",
+    icon: "🎲",
+    href: "/tools/campaign",
+    description:
+      "Create a campaign table, invite players, attach characters, and share 3D dice rolls (including DM-only hidden rolls).",
+    source: "Table tools",
+    badge: "Beta",
+  },
+  {
     key: "random-spellbook",
     label: "Random Spellbook",
     icon: "📖",

@@ -160,7 +160,7 @@ export function PcItemSpellListItem({
             <p className="pc-item-spell-notes">{action.notes.trim()}</p>
           ) : null}
           {loading ? <p className="pc-spell-picker-status">Loading cast details…</p> : null}
-          {!loading ? <SpellCastDetailsView details={details} /> : null}
+          {!loading ? <SpellCastDetailsView details={details} spellName={action.name} /> : null}
         </div>
       ) : null}
     </li>

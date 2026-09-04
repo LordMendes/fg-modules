@@ -10,6 +10,10 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { startCampaignRoll } from "@/actions/campaigns";
+import { markSeenRollId } from "@/lib/campaign/seenRollIds";
+import type { CampaignLiveEvent, CampaignRollView } from "@/lib/campaign/types";
+import { rollViewToResult } from "@/lib/campaign/types";
 import {
   addDieToPool,
   createRollId,
@@ -21,6 +25,8 @@ import { DEFAULT_SKIN_ID, getDiceSkin } from "@/lib/dice/skins";
 import type {
   DicePoolItem,
   DieSides,
+  RollActor,
+  RollKind,
   RollRequest,
   RollResult,
 } from "@/lib/dice/types";
@@ -28,7 +34,15 @@ import type {
 const TRAY_EXPANDED_KEY = "pc-planner-dice-tray-expanded";
 const SKIN_ID_KEY = "pc-planner-dice-skin-id";
 const THEME_COLOR_KEY = "pc-planner-dice-theme-color";
-const HISTORY_LIMIT = 12;
+const HISTORY_LIMIT_SOLO = 24;
+const HISTORY_LIMIT_CAMPAIGN = 50;
+
+export type CampaignDiceConfig = {
+  campaignId: string;
+  actor: RollActor;
+  isDm: boolean;
+  initialHistory?: RollResult[];
+};
 
 type DiceContextValue = {
   trayExpanded: boolean;
@@ -43,7 +57,7 @@ type DiceContextValue = {
   rollPool: () => void;
   /** Throw a single die (used by drag-to-throw). */
   rollDie: (sides: DieSides) => void;
-  rollCheck: (label: string, modifier: number) => void;
+  rollCheck: (label: string, modifier: number, kind?: RollKind) => void;
   roll: (request: RollRequest, onComplete?: (result: RollResult) => void) => void;
   clearDice: () => void;
   rolling: boolean;
@@ -64,11 +78,47 @@ type DiceContextValue = {
   /** Clear request after canvas consumes it (or on failure). */
   acknowledgeRollStart: () => void;
   clearSignal: number;
+  /** Ctrl/Cmd held: next roll is hidden (campaign). */
+  secretModifierHeld: boolean;
+  /** Actor defaults for campaign rolls. */
+  defaultActor: RollActor | null;
+  isCampaign: boolean;
+  /** Overlay should render dice as unreadable silhouette. */
+  silhouetteActive: boolean;
+  setCharacterName: (name: string | null) => void;
 };
 
 const DiceContext = createContext<DiceContextValue | null>(null);
 
-export function DiceProvider({ children }: { children: ReactNode }) {
+export { DiceContext };
+
+function campaignRollToRequest(roll: CampaignRollView): RollRequest {
+  return {
+    id: roll.id,
+    label: roll.label,
+    dice: roll.dice,
+    modifier: roll.modifier,
+    ...(roll.iterativeModifiers ? { iterativeModifiers: roll.iterativeModifiers } : {}),
+    kind: roll.kind,
+    hidden: roll.hidden,
+    actor: roll.actor,
+    ...(roll.faces ? { faces: roll.faces } : {}),
+    silhouetteOnly: roll.hidden && !roll.revealResult,
+  };
+}
+
+function campaignRollToHistoryEntry(roll: CampaignRollView): RollResult | null {
+  if (roll.hidden && !roll.revealResult) return null;
+  return rollViewToResult(roll);
+}
+
+export function DiceProvider({
+  children,
+  campaign,
+}: {
+  children: ReactNode;
+  campaign?: CampaignDiceConfig | null;
+}) {
   const [trayExpanded, setTrayExpandedState] = useState(false);
   const [pool, setPool] = useState<DicePoolItem[]>([]);
   const [modifier, setModifier] = useState(0);
@@ -76,14 +126,34 @@ export function DiceProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [activeRequest, setActiveRequest] = useState<RollRequest | null>(null);
   const [lastResult, setLastResult] = useState<RollResult | null>(null);
-  const [history, setHistory] = useState<RollResult[]>([]);
+  const [history, setHistory] = useState<RollResult[]>(
+    () => campaign?.initialHistory ?? [],
+  );
   const [skinId, setSkinIdState] = useState(DEFAULT_SKIN_ID);
   const [themeColor, setThemeColorState] = useState(
     () => getDiceSkin(DEFAULT_SKIN_ID).themeColor,
   );
   const [clearSignal, setClearSignal] = useState(0);
+  const [secretModifierHeld, setSecretModifierHeld] = useState(false);
+  const [silhouetteActive, setSilhouetteActive] = useState(false);
+  const [characterName, setCharacterNameState] = useState<string | null>(
+    campaign?.actor.characterName ?? null,
+  );
   const hydrated = useRef(false);
   const onCompleteRef = useRef<((result: RollResult) => void) | null>(null);
+  const pendingCanonicalRef = useRef<RollResult | null>(null);
+  const seenRollIds = useRef(new Set<string>());
+  const campaignId = campaign?.campaignId ?? null;
+  const isCampaign = Boolean(campaignId);
+  const historyLimit = isCampaign ? HISTORY_LIMIT_CAMPAIGN : HISTORY_LIMIT_SOLO;
+
+  const defaultActor = useMemo<RollActor | null>(() => {
+    if (!campaign) return null;
+    return {
+      ...campaign.actor,
+      characterName: characterName ?? campaign.actor.characterName,
+    };
+  }, [campaign, characterName]);
 
   useEffect(() => {
     if (hydrated.current) return;
@@ -94,13 +164,108 @@ export function DiceProvider({ children }: { children: ReactNode }) {
       const skin = getDiceSkin(storedSkin);
       setSkinIdState(skin.id);
       const storedColor = localStorage.getItem(THEME_COLOR_KEY);
-      setThemeColorState(storedColor && /^#[0-9A-Fa-f]{6}$/.test(storedColor)
-        ? storedColor
-        : skin.themeColor);
+      setThemeColorState(
+        storedColor && /^#[0-9A-Fa-f]{6}$/.test(storedColor)
+          ? storedColor
+          : skin.themeColor,
+      );
     } catch {
       // ignore storage errors
     }
   }, []);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Control" || e.key === "Meta") setSecretModifierHeld(true);
+    }
+    function onKeyUp(e: KeyboardEvent) {
+      if (e.key === "Control" || e.key === "Meta") {
+        setSecretModifierHeld(e.ctrlKey || e.metaKey);
+      }
+    }
+    function onBlur() {
+      setSecretModifierHeld(false);
+    }
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    window.addEventListener("blur", onBlur);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+      window.removeEventListener("blur", onBlur);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isCampaign) return;
+    document.documentElement.classList.toggle(
+      "dice-secret-cursor",
+      secretModifierHeld,
+    );
+    return () => {
+      document.documentElement.classList.remove("dice-secret-cursor");
+    };
+  }, [isCampaign, secretModifierHeld]);
+
+  const ingestCampaignRoll = useCallback(
+    (view: CampaignRollView) => {
+      if (!markSeenRollId(seenRollIds.current, view.id)) return;
+
+      const historyEntry = campaignRollToHistoryEntry(view);
+      const request = campaignRollToRequest(view);
+      const canonical =
+        historyEntry ??
+        (request.silhouetteOnly
+          ? {
+              id: view.id,
+              label: view.label,
+              faces: [] as number[],
+              faceSum: 0,
+              modifier: view.modifier,
+              total: 0,
+              natural20: false,
+              natural1: false,
+              at: view.at,
+              kind: view.kind,
+              hidden: view.hidden,
+              actor: view.actor,
+              silhouetteOnly: true,
+            }
+          : null);
+
+      if (historyEntry) {
+        setLastResult(historyEntry);
+        setHistory((prev) => {
+          if (prev.some((r) => r.id === historyEntry.id)) return prev;
+          return [historyEntry, ...prev].slice(0, historyLimit);
+        });
+      }
+
+      pendingCanonicalRef.current = canonical;
+      setSilhouetteActive(Boolean(request.silhouetteOnly));
+      setRolling(true);
+      setActiveRequest(request);
+    },
+    [historyLimit],
+  );
+
+  // Campaign SSE: every client (including roller) ingests once by roll.id.
+  useEffect(() => {
+    if (!campaignId) return;
+    const es = new EventSource(`/tools/campaign/${campaignId}/live`);
+    es.onmessage = (msg) => {
+      try {
+        const event = JSON.parse(msg.data) as CampaignLiveEvent;
+        if (event.type !== "roll") return;
+        ingestCampaignRoll(event.roll);
+      } catch {
+        // ignore malformed
+      }
+    };
+    return () => {
+      es.close();
+    };
+  }, [campaignId, ingestCampaignRoll]);
 
   const setTrayExpanded = useCallback((open: boolean) => {
     setTrayExpandedState(open);
@@ -144,6 +309,10 @@ export function DiceProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const setCharacterName = useCallback((name: string | null) => {
+    setCharacterNameState(name);
+  }, []);
+
   const addDie = useCallback((sides: DieSides) => {
     setPool((prev) => addDieToPool(prev, sides));
   }, []);
@@ -157,15 +326,76 @@ export function DiceProvider({ children }: { children: ReactNode }) {
     setModifier(0);
   }, []);
 
-  const roll = useCallback(
+  const rollLocal = useCallback(
     (request: RollRequest, onComplete?: (result: RollResult) => void) => {
       if (!ready || rolling) return;
       if (request.dice.every((d) => d.qty <= 0)) return;
+      pendingCanonicalRef.current = null;
       onCompleteRef.current = onComplete ?? null;
+      setSilhouetteActive(false);
       setRolling(true);
       setActiveRequest(request);
     },
     [ready, rolling],
+  );
+
+  const roll = useCallback(
+    (request: RollRequest, onComplete?: (result: RollResult) => void) => {
+      if (!ready || rolling) return;
+      if (request.dice.every((d) => d.qty <= 0)) return;
+
+      const hidden =
+        request.hidden ?? (isCampaign && secretModifierHeld ? true : false);
+      const actor = request.actor ?? defaultActor ?? undefined;
+      const enriched: RollRequest = {
+        ...request,
+        hidden,
+        ...(actor ? { actor } : {}),
+      };
+
+      if (!campaignId) {
+        rollLocal(enriched, onComplete);
+        return;
+      }
+
+      // Campaign: server RNG first; every client animates the shared roll once.
+      // Set onComplete before await so SSE-first ingest still fires sheet callbacks.
+      onCompleteRef.current = onComplete ?? null;
+      setRolling(true);
+      void (async () => {
+        try {
+          const result = await startCampaignRoll({
+            campaignId,
+            label: enriched.label,
+            kind: enriched.kind ?? "other",
+            hidden: Boolean(enriched.hidden),
+            characterName: actor?.characterName ?? null,
+            dice: enriched.dice,
+            modifier: enriched.modifier,
+            iterativeModifiers: enriched.iterativeModifiers,
+          });
+          if (!result.success || !result.roll) {
+            onCompleteRef.current = null;
+            setRolling(false);
+            return;
+          }
+          ingestCampaignRoll(result.roll);
+        } catch {
+          onCompleteRef.current = null;
+          setRolling(false);
+        }
+      })();
+    },
+    [
+      ready,
+      rolling,
+      isCampaign,
+      secretModifierHeld,
+      defaultActor,
+      campaignId,
+      rollLocal,
+      ingestCampaignRoll,
+    ],
   );
 
   const rollPool = useCallback(() => {
@@ -175,6 +405,7 @@ export function DiceProvider({ children }: { children: ReactNode }) {
       label: "Tray",
       dice: pool,
       modifier,
+      kind: "tray",
     });
   }, [pool, modifier, roll]);
 
@@ -185,14 +416,15 @@ export function DiceProvider({ children }: { children: ReactNode }) {
         label: `d${sides}`,
         dice: [{ qty: 1, sides }],
         modifier,
+        kind: "tray",
       });
     },
     [modifier, roll],
   );
 
   const rollCheck = useCallback(
-    (label: string, mod: number) => {
-      roll(d20Check(label, mod));
+    (label: string, mod: number, kind: RollKind = "other") => {
+      roll(d20Check(label, mod, kind));
     },
     [roll],
   );
@@ -201,24 +433,49 @@ export function DiceProvider({ children }: { children: ReactNode }) {
     setActiveRequest(null);
   }, []);
 
-  const completeRoll = useCallback((result: RollResult) => {
-    const apply = onCompleteRef.current;
-    onCompleteRef.current = null;
-    setLastResult(result);
-    setHistory((prev) => [result, ...prev].slice(0, HISTORY_LIMIT));
-    setRolling(false);
-    setActiveRequest(null);
-    apply?.(result);
-  }, []);
+  const completeRoll = useCallback(
+    (result: RollResult) => {
+      const apply = onCompleteRef.current;
+      onCompleteRef.current = null;
+      const canonical = pendingCanonicalRef.current;
+      pendingCanonicalRef.current = null;
+      setSilhouetteActive(false);
+
+      if (isCampaign) {
+        // Log already written at ingest from server faces; do not log engine faces.
+        setRolling(false);
+        setActiveRequest(null);
+        apply?.(canonical ?? result);
+        return;
+      }
+
+      if (!result.silhouetteOnly) {
+        setLastResult(result);
+        setHistory((prev) => {
+          if (prev.some((r) => r.id === result.id)) return prev;
+          return [result, ...prev].slice(0, historyLimit);
+        });
+      }
+
+      setRolling(false);
+      setActiveRequest(null);
+      apply?.(result);
+    },
+    [isCampaign, historyLimit],
+  );
 
   const failRoll = useCallback(() => {
     onCompleteRef.current = null;
+    pendingCanonicalRef.current = null;
+    setSilhouetteActive(false);
     setRolling(false);
     setActiveRequest(null);
   }, []);
 
   const clearDice = useCallback(() => {
     onCompleteRef.current = null;
+    pendingCanonicalRef.current = null;
+    setSilhouetteActive(false);
     setClearSignal((n) => n + 1);
     setRolling(false);
     setActiveRequest(null);
@@ -258,6 +515,11 @@ export function DiceProvider({ children }: { children: ReactNode }) {
       failRoll,
       acknowledgeRollStart,
       clearSignal,
+      secretModifierHeld,
+      defaultActor,
+      isCampaign,
+      silhouetteActive,
+      setCharacterName,
     }),
     [
       trayExpanded,
@@ -287,6 +549,11 @@ export function DiceProvider({ children }: { children: ReactNode }) {
       failRoll,
       acknowledgeRollStart,
       clearSignal,
+      secretModifierHeld,
+      defaultActor,
+      isCampaign,
+      silhouetteActive,
+      setCharacterName,
     ],
   );
 
