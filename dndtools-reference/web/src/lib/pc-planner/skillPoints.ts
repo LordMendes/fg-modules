@@ -1,5 +1,6 @@
 import { abilityModifier } from "./combatStats";
 import type { RacialSkillPointBonus } from "./parseRaceFeatures";
+import { specialtyFamilyKey } from "./skillSpecialty";
 import type { AbilityKey, ClassLevelEntry, PcPlanState, SkillRow } from "./types";
 
 const SKILL_ABILITY_KEYS: Record<string, AbilityKey> = {
@@ -40,7 +41,10 @@ export function formatSkillModifier(value: number): string {
 }
 
 export function isClassSkillRow(row: SkillRow, classSkillKeys: Set<string>): boolean {
-  return classSkillKeys.has(row.slug ?? row.name.toLowerCase());
+  const key = row.slug ?? row.name.toLowerCase();
+  if (classSkillKeys.has(key)) return true;
+  const family = specialtyFamilyKey(row.name, row.slug);
+  return family != null && classSkillKeys.has(family);
 }
 
 /** Max ranks: class = HD+3, cross-class = floor((HD+3)/2). */
@@ -50,7 +54,7 @@ export function maxSkillRanks(hitDice: number, isClassSkill: boolean): number {
   return isClassSkill ? classMax : Math.floor(classMax / 2);
 }
 
-/** Skill points spent: class 1/rank, cross-class 2/rank (supports half ranks). */
+/** Skill points spent: class 1/rank, cross-class 2/rank. */
 export function computeSkillRanksSpent(
   skills: SkillRow[],
   classSkillKeys: Set<string> = new Set(),

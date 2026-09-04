@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { EntityPreview } from "@/lib/entities";
-import { sanitizeHtml } from "@/lib/sanitize";
+import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
@@ -138,7 +138,12 @@ export function EntityPreviewModal({
             {entity.descriptionHtml && (
               <section
                 className="prose-content"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(entity.descriptionHtml) }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    entity.category === "skills"
+                      ? formatProseHtml(entity.descriptionHtml)
+                      : sanitizeHtml(entity.descriptionHtml),
+                }}
               />
             )}
 

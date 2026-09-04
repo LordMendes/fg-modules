@@ -31,6 +31,7 @@ import {
   applyRaceCombatBasicsOnRaceChange,
 } from "@/lib/pc-planner/syncDerived";
 import {
+  classSkillKeySet,
   compendiumSyncKey,
   mergeSkillsIntoRows,
 } from "@/lib/pc-planner/syncSkills";
@@ -137,6 +138,7 @@ function PcPlannerBody() {
                   armorCheckPenalty: false,
                 })),
             prev.skills,
+            classSkillKeySet(result.bundle!.skills),
           );
         } else if (prev.identity.classLevels.length === 0) {
           next.skills = [];

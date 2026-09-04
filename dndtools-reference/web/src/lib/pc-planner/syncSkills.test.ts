@@ -80,6 +80,77 @@ describe("mergeSkillsIntoRows", () => {
     assert.equal(rows[1].trainedOnly, true);
     assert.equal(rows[1].ranks, 0);
   });
+
+  it("coerces half ranks to whole ranks", () => {
+    const rows = mergeSkillsIntoRows(
+      [{ name: "Hide", slug: "hide", ability: "Dex", trainedOnly: false, armorCheckPenalty: true }],
+      [{ name: "Hide", slug: "hide", ranks: 2.5, misc: 0 }],
+    );
+    assert.equal(rows[0].ranks, 2);
+  });
+
+  it("hides generic Craft/Knowledge/Profession/Perform rows", () => {
+    const rows = mergeSkillsIntoRows(
+      [
+        { name: "Climb", slug: "climb", ability: "Str", trainedOnly: false, armorCheckPenalty: true },
+        { name: "Craft", slug: "craft", ability: "Int", trainedOnly: false, armorCheckPenalty: false },
+        { name: "Knowledge", slug: "knowledge", ability: "Int", trainedOnly: true, armorCheckPenalty: false },
+        { name: "Profession", slug: "profession", ability: "Wis", trainedOnly: true, armorCheckPenalty: false },
+        { name: "Perform", slug: "perform", ability: "Cha", trainedOnly: false, armorCheckPenalty: false },
+      ],
+      [],
+    );
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].slug, "climb");
+  });
+
+  it("keeps class-listed Knowledge variants and drops the rest", () => {
+    const classKeys = classSkillKeySet([
+      { name: "Knowledge (arcana)", slug: "knowledge-arcana", ability: "Int" },
+    ]);
+    const rows = mergeSkillsIntoRows(
+      [
+        {
+          name: "Knowledge (arcana)",
+          slug: "knowledge-arcana",
+          ability: "Int",
+          trainedOnly: true,
+          armorCheckPenalty: false,
+        },
+        {
+          name: "Knowledge (local)",
+          slug: "knowledge-local",
+          ability: "Int",
+          trainedOnly: true,
+          armorCheckPenalty: false,
+        },
+      ],
+      [],
+      classKeys,
+    );
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].slug, "knowledge-arcana");
+  });
+
+  it("keeps player-added specialty variants that are not class skills", () => {
+    const rows = mergeSkillsIntoRows(
+      [{ name: "Climb", slug: "climb", ability: "Str", trainedOnly: false, armorCheckPenalty: true }],
+      [{ name: "Craft (weaponsmithing)", slug: "craft-weaponsmithing", ranks: 3, misc: 0 }],
+    );
+    assert.equal(rows.length, 2);
+    assert.equal(rows.find((row) => row.slug === "craft-weaponsmithing")?.ranks, 3);
+  });
+
+  it("drops saved generic family rows even if they had ranks", () => {
+    const rows = mergeSkillsIntoRows(
+      [
+        { name: "Climb", slug: "climb", ability: "Str", trainedOnly: false, armorCheckPenalty: true },
+        { name: "Craft", slug: "craft", ability: "Int", trainedOnly: false, armorCheckPenalty: false },
+      ],
+      [{ name: "Craft", slug: "craft", ranks: 4, misc: 0 }],
+    );
+    assert.equal(rows.some((row) => row.slug === "craft"), false);
+  });
 });
 
 describe("classSkillKeySet", () => {

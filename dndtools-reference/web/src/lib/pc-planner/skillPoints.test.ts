@@ -10,6 +10,7 @@ import {
   computeSkillTotal,
   formatSkillModifier,
   formatSkillPointBudgetLine,
+  isClassSkillRow,
   maxSkillRanks,
   parseClassSkillPointBase,
   skillPointsForCharacterLevelGain,
@@ -192,11 +193,11 @@ describe("computeSkillRanksSpent", () => {
     );
   });
 
-  it("supports half ranks on cross-class skills", () => {
+  it("does not use half ranks", () => {
     const classKeys = new Set(["climb"]);
     assert.equal(
-      computeSkillRanksSpent([{ name: "Hide", slug: "hide", ranks: 0.5, misc: 0 }], classKeys),
-      1,
+      computeSkillRanksSpent([{ name: "Hide", slug: "hide", ranks: 1, misc: 0 }], classKeys),
+      2,
     );
   });
 });
@@ -248,6 +249,43 @@ describe("maxSkillRanks", () => {
   it("uses HD+3 for class and half for cross-class", () => {
     assert.equal(maxSkillRanks(5, true), 8);
     assert.equal(maxSkillRanks(5, false), 4);
+  });
+});
+
+describe("isClassSkillRow", () => {
+  it("matches exact slug", () => {
+    const keys = new Set(["climb"]);
+    assert.equal(isClassSkillRow({ name: "Climb", slug: "climb", ranks: 0, misc: 0 }, keys), true);
+    assert.equal(isClassSkillRow({ name: "Hide", slug: "hide", ranks: 0, misc: 0 }, keys), false);
+  });
+
+  it("treats Craft variants as class skills when Craft is listed", () => {
+    const keys = new Set(["craft", "climb"]);
+    assert.equal(
+      isClassSkillRow(
+        { name: "Craft (weaponsmithing)", slug: "craft-weaponsmithing", ranks: 0, misc: 0 },
+        keys,
+      ),
+      true,
+    );
+  });
+
+  it("does not treat Knowledge variants as class skills unless listed", () => {
+    const keys = new Set(["craft", "knowledge-arcana"]);
+    assert.equal(
+      isClassSkillRow(
+        { name: "Knowledge (arcana)", slug: "knowledge-arcana", ranks: 0, misc: 0 },
+        keys,
+      ),
+      true,
+    );
+    assert.equal(
+      isClassSkillRow(
+        { name: "Knowledge (local)", slug: "knowledge-local", ranks: 0, misc: 0 },
+        keys,
+      ),
+      false,
+    );
   });
 });
 

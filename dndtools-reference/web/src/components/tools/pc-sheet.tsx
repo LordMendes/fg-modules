@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import type { PcCompendiumBundle } from "@/lib/entities";
+import { useCallback, useId, useMemo, useState } from "react";
+import { fetchEntityPreview } from "@/actions/data";
+import type { EntityPreview, PcCompendiumBundle } from "@/lib/entities";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
 import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
 import { RollableStat } from "@/components/dice/rollable-stat";
+import { EntityPreviewModal } from "@/components/entity-preview-modal";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
+import { useSessionNonce } from "@/components/session-provider";
 import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
@@ -28,8 +31,18 @@ import {
   maxSkillRanks,
   totalCharacterLevel as skillHitDice,
 } from "@/lib/pc-planner/skillPoints";
+import {
+  canRemoveSpecialtyRow,
+  coerceSkillRanks,
+  createSpecialtySkillRow,
+  SPECIALTY_FAMILIES,
+  SPECIALTY_FAMILY_LABELS,
+  specialtyPreviewSlug,
+  specialtyVariantOptions,
+  type SpecialtyFamily,
+} from "@/lib/pc-planner/skillSpecialty";
 import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
-import { abilityRacialMod, racialModLabel } from "@/lib/pc-planner/syncDerived";
+import { abilityRacialMod, applyRacialSkillBonuses, racialModLabel } from "@/lib/pc-planner/syncDerived";
 import {
   PC_SHEET_TABS,
   type AbilityKey,
@@ -143,7 +156,49 @@ export function PcSheet({
   onAddInventoryRow,
   updateAbility,
 }: PcSheetProps) {
+  const nonce = useSessionNonce();
   const [racePickerOpen, setRacePickerOpen] = useState(false);
+  const [skillPreview, setSkillPreview] = useState<EntityPreview | null>(null);
+  const [skillPreviewLoading, setSkillPreviewLoading] = useState(false);
+  const [skillPreviewError, setSkillPreviewError] = useState<string | null>(null);
+  const [addSkillOpen, setAddSkillOpen] = useState(false);
+  const [addSkillFamily, setAddSkillFamily] = useState<SpecialtyFamily>("craft");
+  const [addSkillVariant, setAddSkillVariant] = useState("");
+  const addSkillListId = useId();
+
+  const openSkillPreview = useCallback(
+    async (slug: string | null | undefined) => {
+      setSkillPreview(null);
+      setSkillPreviewError(null);
+      setSkillPreviewLoading(true);
+
+      if (!slug) {
+        setSkillPreviewLoading(false);
+        setSkillPreviewError("Could not load entry");
+        return;
+      }
+
+      const result = await fetchEntityPreview({
+        category: "skills",
+        slug,
+        nonce,
+      });
+
+      setSkillPreviewLoading(false);
+      if (!result.success || !result.entity) {
+        setSkillPreviewError(result.error ?? "Could not load entry");
+        return;
+      }
+      setSkillPreview(result.entity);
+    },
+    [nonce],
+  );
+
+  const closeSkillPreview = useCallback(() => {
+    setSkillPreview(null);
+    setSkillPreviewError(null);
+    setSkillPreviewLoading(false);
+  }, []);
 
   const classLevels = state.identity.classLevels;
   const totalLevel = totalCharacterLevel(classLevels);
@@ -186,6 +241,35 @@ export function PcSheet({
     state.identity.race || undefined,
     classSkillKeys,
   );
+  const skillCatalog = compendium?.allSkills ?? [];
+  const addSkillOptions = useMemo(
+    () => specialtyVariantOptions(addSkillFamily, skillCatalog),
+    [addSkillFamily, skillCatalog],
+  );
+
+  function addSpecialtySkill() {
+    const created = createSpecialtySkillRow(
+      addSkillFamily,
+      addSkillVariant,
+      skillCatalog,
+      state.skills,
+    );
+    if (!created) return;
+    const row = raceFeatures
+      ? applyRacialSkillBonuses([created], raceFeatures.skillBonuses)[0]
+      : created;
+    patch((s) => {
+      s.skills.push(row);
+    });
+    setAddSkillVariant("");
+    setAddSkillOpen(false);
+  }
+
+  function removeSkillAt(index: number) {
+    patch((s) => {
+      s.skills.splice(index, 1);
+    });
+  }
 
   return (
     <div className="pc-sheet-body" aria-label="Character sheet">
@@ -609,38 +693,114 @@ export function PcSheet({
             <div className="npc-sheet-block">
               <div className="pc-skills-header">
                 <h3>Skills</h3>
-                {state.skills.length > 0 ? (
-                  <span
-                    className={`pc-skill-points-summary${
-                      skillPoints.spent > skillPoints.available ? " pc-skill-points-summary--over" : ""
-                    }`}
-                  >
-                    <span className="pc-skill-points-wrap" tabIndex={0}>
-                      {skillPoints.spent} / {skillPoints.available}
-                      {skillPoints.breakdown.length > 0 ? (
-                        <span className="pc-skill-tooltip" role="tooltip">
-                          {skillPoints.breakdown.map((line, index) => (
-                            <span
-                              key={`${line.label}-${index}`}
-                              className={
-                                line.indent
-                                  ? "pc-skill-tooltip-line pc-skill-tooltip-line--indent"
-                                  : "pc-skill-tooltip-line"
-                              }
-                            >
-                              {formatSkillPointBudgetLine(line)}
-                            </span>
-                          ))}
-                        </span>
-                      ) : null}
+                <div className="pc-skills-header-actions">
+                  {skillCatalog.length > 0 || state.skills.length > 0 ? (
+                    <button
+                      type="button"
+                      className="tool-btn-secondary pc-skill-add-toggle"
+                      aria-expanded={addSkillOpen}
+                      onClick={() => setAddSkillOpen((open) => !open)}
+                    >
+                      Add skill
+                    </button>
+                  ) : null}
+                  {state.skills.length > 0 ? (
+                    <span
+                      className={`pc-skill-points-summary${
+                        skillPoints.spent > skillPoints.available ? " pc-skill-points-summary--over" : ""
+                      }`}
+                    >
+                      <span className="pc-skill-points-wrap" tabIndex={0}>
+                        {skillPoints.spent} / {skillPoints.available}
+                        {skillPoints.breakdown.length > 0 ? (
+                          <span className="pc-skill-tooltip" role="tooltip">
+                            {skillPoints.breakdown.map((line, index) => (
+                              <span
+                                key={`${line.label}-${index}`}
+                                className={
+                                  line.indent
+                                    ? "pc-skill-tooltip-line pc-skill-tooltip-line--indent"
+                                    : "pc-skill-tooltip-line"
+                                }
+                              >
+                                {formatSkillPointBudgetLine(line)}
+                              </span>
+                            ))}
+                          </span>
+                        ) : null}
+                      </span>
                     </span>
-                  </span>
-                ) : null}
+                  ) : null}
+                </div>
               </div>
+              {addSkillOpen ? (
+                <form
+                  className="pc-skill-add-form"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    addSpecialtySkill();
+                  }}
+                >
+                  <label className="pc-skill-add-field">
+                    <span className="npc-sheet-sub">Skill</span>
+                    <select
+                      className="pc-sheet-input pc-sheet-select"
+                      value={addSkillFamily}
+                      onChange={(event) => {
+                        setAddSkillFamily(event.target.value as SpecialtyFamily);
+                        setAddSkillVariant("");
+                      }}
+                    >
+                      {SPECIALTY_FAMILIES.map((family) => (
+                        <option key={family} value={family}>
+                          {SPECIALTY_FAMILY_LABELS[family]}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="pc-skill-add-field pc-skill-add-field--variant">
+                    <span className="npc-sheet-sub">Variant</span>
+                    <input
+                      className="pc-sheet-input"
+                      list={addSkillListId}
+                      value={addSkillVariant}
+                      placeholder="weaponsmithing"
+                      onChange={(event) => setAddSkillVariant(event.target.value)}
+                    />
+                    <datalist id={addSkillListId}>
+                      {addSkillOptions.map((option) => (
+                        <option key={option} value={option} />
+                      ))}
+                    </datalist>
+                  </label>
+                  <button
+                    type="submit"
+                    className="tool-btn-primary"
+                    disabled={!addSkillVariant.trim()}
+                  >
+                    Add
+                  </button>
+                </form>
+              ) : null}
               {state.skills.length === 0 ? (
                 <p className="pc-sheet-empty">Skills load from the compendium when you open a character.</p>
               ) : (
-                <table className="entity-table pc-sheet-table">
+                <>
+                  <p className="pc-skill-legend">
+                    <span className="pc-skill-legend-item">
+                      <span className="pc-skill-trained" aria-hidden="true">
+                        *
+                      </span>{" "}
+                      Trained only
+                    </span>
+                    <span className="pc-skill-legend-item">
+                      <span className="pc-skill-acp-mark" aria-hidden="true">
+                        †
+                      </span>{" "}
+                      Armor check penalty
+                    </span>
+                  </p>
+                  <table className="entity-table pc-sheet-table">
                   <thead>
                     <tr>
                       <th title="Class skill">C</th>
@@ -666,6 +826,7 @@ export function PcSheet({
                         skillAcp,
                         itemSkill.total,
                       );
+                      const canRemove = canRemoveSpecialtyRow(row, classSkillKeys);
                       return (
                         <tr
                           key={row.slug ?? row.name}
@@ -675,11 +836,32 @@ export function PcSheet({
                             {isClass ? "•" : ""}
                           </td>
                           <td>
-                            {row.name}
+                            <button
+                              type="button"
+                              className="pc-skill-name-btn"
+                              onClick={() => void openSkillPreview(specialtyPreviewSlug(row, skillCatalog))}
+                            >
+                              {row.name}
+                            </button>
                             {row.trainedOnly ? (
                               <span className="pc-skill-trained" title="Trained only">
                                 *
                               </span>
+                            ) : null}
+                            {row.armorCheckPenalty ? (
+                              <span className="pc-skill-acp-mark" title="Armor check penalty">
+                                †
+                              </span>
+                            ) : null}
+                            {canRemove ? (
+                              <button
+                                type="button"
+                                className="pc-skill-remove"
+                                aria-label={`Remove ${row.name}`}
+                                onClick={() => removeSkillAt(i)}
+                              >
+                                ×
+                              </button>
                             ) : null}
                           </td>
                           <td>{row.ability ?? "—"}</td>
@@ -689,13 +871,13 @@ export function PcSheet({
                               className={`pc-sheet-input pc-sheet-input--narrow${
                                 overMax ? " pc-sheet-input--warn" : ""
                               }`}
-                              step={isClass ? 1 : 0.5}
+                              step={1}
                               min={0}
                               value={row.ranks}
                               title={overMax ? `Max ranks ${maxRanks}` : `Max ${maxRanks}`}
                               onChange={(e) =>
                                 patch((s) => {
-                                  s.skills[i].ranks = Number(e.target.value);
+                                  s.skills[i].ranks = coerceSkillRanks(Number(e.target.value));
                                 })
                               }
                             />
@@ -745,6 +927,7 @@ export function PcSheet({
                     })}
                   </tbody>
                 </table>
+                </>
               )}
             </div>
           </div>
@@ -802,6 +985,15 @@ export function PcSheet({
           />
         )}
       </div>
+
+      {(skillPreviewLoading || skillPreview || skillPreviewError) && (
+        <EntityPreviewModal
+          entity={skillPreview}
+          loading={skillPreviewLoading}
+          error={skillPreviewError}
+          onClose={closeSkillPreview}
+        />
+      )}
     </div>
   );
 }

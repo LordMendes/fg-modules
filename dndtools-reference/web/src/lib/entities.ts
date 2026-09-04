@@ -1528,14 +1528,30 @@ export async function getEntityDetail(
     case "skills": {
       const r = await prisma.skill.findUnique({ where: { slug }, include: { source: src } });
       if (!r) return null;
+      const ability = r.keyAbility?.trim() || null;
+      const trained = r.trainedOnly === true;
+      const acp = r.armorCheckPenalty === true;
+      const statParts = [
+        ability,
+        trained ? "Trained Only" : null,
+        acp ? "Armor Check Penalty" : null,
+      ].filter((part): part is string => Boolean(part));
       return {
-        slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
-        descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
+        slug: r.slug,
+        name: r.name,
+        sourceUrl: r.sourceUrl,
+        descriptionHtml: r.descriptionHtml,
+        descriptionText: r.descriptionText,
         source: { ...r.source, page: null },
+        statLine: statParts.length > 0 ? statParts.join("; ") : null,
         fields: {
-          "Key Ability": r.keyAbility,
-          "Trained Only": r.trainedOnly?.toString() ?? null,
-          "Armor Check Penalty": r.armorCheckPenalty?.toString() ?? null,
+          "Key Ability": ability,
+          "Trained Only":
+            r.trainedOnly == null ? null : formatBooleanFilterLabel(r.trainedOnly),
+          "Armor Check Penalty":
+            r.armorCheckPenalty == null
+              ? null
+              : formatBooleanFilterLabel(r.armorCheckPenalty),
         },
         related: [],
       };
