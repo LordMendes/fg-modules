@@ -6,10 +6,33 @@ import {
 } from "./itemBonuses";
 import type { AbilityKey, InventoryRow, PcPlanState, SkillRow } from "./types";
 
+const ABILITY_KEYS: AbilityKey[] = ["str", "dex", "con", "int", "wis", "cha"];
+
+export function emptyAbilityDamage(): Record<AbilityKey, number> {
+  return { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+}
+
+export function clampAbilityDamage(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(99, Math.round(value)));
+}
+
+export function normalizeAbilityDamage(raw: unknown): Record<AbilityKey, number> {
+  const out = emptyAbilityDamage();
+  if (!raw || typeof raw !== "object") return out;
+  const rec = raw as Record<string, unknown>;
+  for (const key of ABILITY_KEYS) {
+    const n = rec[key];
+    if (typeof n === "number") out[key] = clampAbilityDamage(n);
+  }
+  return out;
+}
+
 export function effectiveAbilities(
   base: Record<AbilityKey, number>,
   race: RaceDerivedFeatures | null,
   itemBonuses: EquippedBonuses | null = null,
+  damage: Record<AbilityKey, number> | null = null,
 ): Record<AbilityKey, number> {
   const out = { ...base };
   if (race) {
@@ -22,6 +45,12 @@ export function effectiveAbilities(
   if (itemBonuses) {
     for (const key of Object.keys(out) as AbilityKey[]) {
       out[key] = (out[key] ?? 10) + abilityItemBonusTotal(itemBonuses, key);
+    }
+  }
+  if (damage) {
+    for (const key of Object.keys(out) as AbilityKey[]) {
+      const dmg = clampAbilityDamage(damage[key] ?? 0);
+      out[key] = Math.max(0, (out[key] ?? 10) - dmg);
     }
   }
   return out;
@@ -38,8 +67,14 @@ export function syncEffectiveAbilities(
   inventory: InventoryRow[] | null | undefined = state.inventory,
 ): void {
   ensureAbilityBase(state, race);
+  state.abilityDamage = normalizeAbilityDamage(state.abilityDamage);
   const itemBonuses = computeEquippedBonuses(inventory ?? state.inventory);
-  state.abilities = effectiveAbilities(state.abilityBase, race, itemBonuses);
+  state.abilities = effectiveAbilities(
+    state.abilityBase,
+    race,
+    itemBonuses,
+    state.abilityDamage,
+  );
 }
 
 /** One-time migration: recover base scores from legacy saves that baked racial mods into abilities. */

@@ -33,6 +33,14 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       wis: 10,
       cha: 10,
     },
+    abilityDamage: {
+      str: 0,
+      dex: 0,
+      con: 0,
+      int: 0,
+      wis: 0,
+      cha: 0,
+    },
     feats: [],
     spellClasses: [
       {

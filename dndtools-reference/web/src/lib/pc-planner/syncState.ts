@@ -11,7 +11,11 @@ import {
 import { parseSpellsPerDayFromAdvancementHtml } from "./parseClassSpellTables";
 import { normalizeCombatState } from "./combatStats";
 import { normalizeHitPointsState, syncHitDice } from "./hitPoints";
-import { normalizeAbilityBase, syncEffectiveAbilities } from "./syncDerived";
+import {
+  normalizeAbilityBase,
+  normalizeAbilityDamage,
+  syncEffectiveAbilities,
+} from "./syncDerived";
 import { ensureTreasure } from "./treasure";
 import type { PcPlanState, SpellClassState } from "./types";
 
@@ -155,6 +159,7 @@ export function syncPcPlanState(
   const withHitPoints: PcPlanState = {
     ...state,
     abilityBase: state.abilityBase ?? normalizeAbilityBase(state),
+    abilityDamage: normalizeAbilityDamage(state.abilityDamage),
     combat: normalizeCombatState(state.combat),
     hitPoints: normalizeHitPointsState(state.hitPoints),
     treasure: ensureTreasure(state.treasure),

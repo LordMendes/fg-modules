@@ -240,6 +240,8 @@ export type PcPlanState = {
   abilities: Record<AbilityKey, number>;
   /** Scores before racial adjustments — edited on Main tab. */
   abilityBase: Record<AbilityKey, number>;
+  /** Temporary ability damage (poison, etc.). Subtracted from the current score. */
+  abilityDamage: Record<AbilityKey, number>;
   feats: FeatEntry[];
   spellClasses: SpellClassState[];
   skills: SkillRow[];

@@ -7,6 +7,7 @@ import {
   applyRaceCombatBasicsOnRaceChange,
   effectiveAbilities,
   ensureAbilityBase,
+  syncEffectiveAbilities,
 } from "./syncDerived";
 import { computeEquippedBonuses } from "./itemBonuses";
 
@@ -47,6 +48,52 @@ describe("effectiveAbilities", () => {
     ]);
     const effective = effectiveAbilities(base, null, itemBonuses);
     assert.equal(effective.str, 22);
+  });
+
+  it("subtracts ability damage after racial and item bonuses", () => {
+    const base = { str: 16, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+    const itemBonuses = computeEquippedBonuses([
+      {
+        name: "Gauntlets of Ogre Power",
+        quantity: 1,
+        weight: 4,
+        kind: "item",
+        source: "item",
+        equipped: true,
+        statBonuses: [
+          { kind: "ability", ability: "str", amount: 2, bonusType: "enhancement" },
+        ],
+      },
+    ]);
+    const damage = { str: 4, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    const effective = effectiveAbilities(base, null, itemBonuses, damage);
+    assert.equal(effective.str, 14);
+  });
+
+  it("does not reduce a damaged score below 0", () => {
+    const base = { str: 8, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+    const damage = { str: 20, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    const effective = effectiveAbilities(base, null, null, damage);
+    assert.equal(effective.str, 0);
+  });
+});
+
+describe("syncEffectiveAbilities", () => {
+  it("bakes ability damage into the live scores used by modifiers", () => {
+    const state = createDefaultPcPlanState();
+    state.abilityBase.str = 16;
+    state.abilityDamage.str = 4;
+    syncEffectiveAbilities(state, null);
+    assert.equal(state.abilities.str, 12);
+  });
+
+  it("fills missing ability damage on older saves", () => {
+    const state = createDefaultPcPlanState();
+    state.abilityBase.dex = 14;
+    state.abilityDamage = undefined as unknown as typeof state.abilityDamage;
+    syncEffectiveAbilities(state, elfRace);
+    assert.equal(state.abilityDamage.dex, 0);
+    assert.equal(state.abilities.dex, 16);
   });
 });
 

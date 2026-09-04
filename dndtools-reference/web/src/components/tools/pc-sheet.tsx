@@ -42,7 +42,13 @@ import {
   type SpecialtyFamily,
 } from "@/lib/pc-planner/skillSpecialty";
 import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
-import { abilityRacialMod, applyRacialSkillBonuses, racialModLabel } from "@/lib/pc-planner/syncDerived";
+import {
+  abilityRacialMod,
+  applyRacialSkillBonuses,
+  clampAbilityDamage,
+  emptyAbilityDamage,
+  racialModLabel,
+} from "@/lib/pc-planner/syncDerived";
 import {
   PC_SHEET_TABS,
   type AbilityKey,
@@ -595,7 +601,10 @@ export function PcSheet({
                   const racial = abilityRacialMod(key, raceFeatures);
                   const itemStacked = equippedItemBonuses.abilities[key];
                   const itemTotal = itemStacked?.total ?? 0;
-                  const effective = state.abilities[key];
+                  const damage = state.abilityDamage?.[key] ?? 0;
+                  const undamaged = abilityBase[key] + racial + itemTotal;
+                  const current = state.abilities[key];
+                  const damaged = damage > 0;
                   return (
                     <div key={key} className="pc-ability-cell">
                       <span className="pc-ability-label">{key.toUpperCase()}</span>
@@ -628,7 +637,7 @@ export function PcSheet({
                               className="pc-sheet-input pc-sheet-input--ability"
                               min={1}
                               max={99}
-                              value={effective}
+                              value={undamaged}
                               aria-label={`${key.toUpperCase()} score`}
                               onChange={(e) => {
                                 const desired = clampAbilityScore(Number(e.target.value));
@@ -645,9 +654,42 @@ export function PcSheet({
                         <span className="pc-ability-sep" aria-hidden="true">
                           |
                         </span>
-                        <div className="pc-ability-col pc-ability-col--mod">
+                        <div
+                          className={
+                            damaged
+                              ? "pc-ability-col pc-ability-col--dmg pc-ability-col--dmg-active"
+                              : "pc-ability-col pc-ability-col--dmg"
+                          }
+                        >
+                          <span className="pc-ability-col-label">Dmg</span>
+                          <input
+                            type="number"
+                            className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
+                            min={0}
+                            max={99}
+                            value={damage}
+                            aria-label={`${key.toUpperCase()} ability damage`}
+                            onChange={(e) => {
+                              const next = clampAbilityDamage(Number(e.target.value));
+                              patch((s) => {
+                                if (!s.abilityDamage) s.abilityDamage = emptyAbilityDamage();
+                                s.abilityDamage[key] = next;
+                              });
+                            }}
+                          />
+                        </div>
+                        <span className="pc-ability-sep" aria-hidden="true">
+                          |
+                        </span>
+                        <div
+                          className={
+                            damaged
+                              ? "pc-ability-col pc-ability-col--mod pc-ability-col--mod-damaged"
+                              : "pc-ability-col pc-ability-col--mod"
+                          }
+                        >
                           <span className="pc-ability-col-label">Modifier</span>
-                          <span className="pc-sheet-mod">{abilityMod(effective)}</span>
+                          <span className="pc-sheet-mod">{abilityMod(current)}</span>
                         </div>
                       </div>
                       {hasRace && racialModLabel(racial) ? (
