@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { gearStatsFromEquipmentIndex, parseWeightPounds } from "./equippedGear";
+import { inferItemBonuses } from "./itemBonuses";
 import type { InventoryRow } from "./types";
 
 export type InventoryItemLookup = {
@@ -60,11 +61,27 @@ export async function lookupInventoryItem(
 
   const item = await prisma.item.findUnique({
     where: { slug },
-    select: { slug: true, name: true, indexData: true },
+    select: {
+      slug: true,
+      name: true,
+      indexData: true,
+      itemType: true,
+    },
   });
   if (!item) return null;
   const index = (item.indexData ?? {}) as Record<string, unknown>;
-  const weightRaw = typeof index.weight === "string" ? index.weight : null;
+  const weightRaw =
+    typeof index.weight === "string"
+      ? index.weight
+      : typeof index.Weight === "string"
+        ? index.Weight
+        : null;
+  const itemType =
+    item.itemType ??
+    (typeof index.type === "string" ? index.type : null) ??
+    (typeof index.itemType === "string" ? index.itemType : null);
+  const bonuses = inferItemBonuses(item.name);
+
   return {
     slug: item.slug,
     name: item.name,
@@ -74,7 +91,9 @@ export async function lookupInventoryItem(
       weight: parseWeightPounds(weightRaw),
       slug: item.slug,
       source: "item",
-      kind: typeof index.kind === "string" ? index.kind : null,
+      kind: "item",
+      itemType,
+      ...(bonuses.length > 0 ? { statBonuses: bonuses } : {}),
     },
   };
 }

@@ -4369,7 +4369,76 @@ body {
   white-space: nowrap;
 }
 
-.npc-sheet-abilities span:not(.pc-ability-col-label):not(.pc-ability-sep):not(.pc-sheet-mod):not(.pc-sheet-racial-mod) {
+.pc-ability-item-bonus {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  white-space: nowrap;
+  cursor: help;
+}
+
+.pc-bonus-sources-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pc-bonus-sources-wrap .pc-skill-tooltip {
+  display: none;
+  z-index: 20;
+}
+
+.pc-bonus-sources-wrap:hover .pc-skill-tooltip,
+.pc-bonus-sources-wrap:focus-visible .pc-skill-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pc-bonus-sources-tooltip {
+  white-space: normal;
+  min-width: 10rem;
+  max-width: 16rem;
+}
+
+.pc-skill-total-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pc-combat-total {
+  position: relative;
+}
+
+.pc-combat-item-hint .pc-ability-item-bonus {
+  margin-left: 0.2rem;
+  font-size: 0.625rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pc-item-editor-bonus-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pc-item-editor-bonus-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)) auto;
+  gap: 0.4rem;
+  align-items: end;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--bg-card) 80%, var(--bg-primary));
+}
+
+.npc-sheet-abilities span:not(.pc-ability-col-label):not(.pc-ability-sep):not(.pc-sheet-mod):not(.pc-sheet-racial-mod):not(.pc-ability-item-bonus):not(.pc-skill-tooltip):not(.pc-skill-tooltip-line):not(.pc-ability-effective) {
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.04em;

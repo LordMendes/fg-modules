@@ -872,15 +872,34 @@ async function pass2Entities(
             sourceUrl: r.source_url ?? null,
             scrapedAt: parseDate(r.scraped_at),
             sourceId: getSourceId(r, sourceMap, abbrevNameMap),
-            indexData: (r.index ?? {}) as object,
             descriptionHtml: (r.description_html as string) ?? null,
             descriptionText: (r.description_text as string) ?? null,
             itemType: (r.type as string) ?? index?.type ?? null,
             price: (r.price as string) ?? index?.price ?? null,
             casterLevel: (r.caster_level as string) ?? null,
             aura: (r.aura as string) ?? null,
+            indexData: {
+              ...((r.index ?? {}) as object),
+              ...((r.weight as string | undefined)
+                ? { weight: r.weight as string }
+                : {}),
+            },
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object },
+          update: {
+            name: r.name,
+            itemType: (r.type as string) ?? index?.type ?? null,
+            price: (r.price as string) ?? index?.price ?? null,
+            casterLevel: (r.caster_level as string) ?? null,
+            aura: (r.aura as string) ?? null,
+            descriptionHtml: (r.description_html as string) ?? null,
+            descriptionText: (r.description_text as string) ?? null,
+            indexData: {
+              ...((r.index ?? {}) as object),
+              ...((r.weight as string | undefined)
+                ? { weight: r.weight as string }
+                : {}),
+            },
+          },
         });
       }
     });

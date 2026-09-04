@@ -26,12 +26,13 @@ export function computeSkillTotal(
   row: SkillRow,
   abilities: Record<AbilityKey, number>,
   armorCheckPenalty = 0,
+  itemBonus = 0,
 ): number | null {
   if (row.trainedOnly && !(row.ranks > 0)) return null;
   const abilityKey = skillAbilityKey(row.ability);
   const statMod = abilityKey ? abilityModifier(abilities[abilityKey]) : 0;
   const acp = row.armorCheckPenalty ? armorCheckPenalty : 0;
-  return row.ranks + statMod + (row.racialMisc ?? 0) + row.misc + acp;
+  return row.ranks + statMod + (row.racialMisc ?? 0) + row.misc + acp + itemBonus;
 }
 
 export function formatSkillModifier(value: number): string {

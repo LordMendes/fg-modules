@@ -21,6 +21,8 @@ export type EquippedGear = {
   mainWeaponName: string | null;
   /** Off-hand weapon name (not a shield). */
   offWeaponName: string | null;
+  /** Equipped wondrous / magic worn items (non armor/shield/weapon). */
+  wornItemNames: string[];
 };
 
 export type WeaponHand = "main" | "off";
@@ -124,6 +126,7 @@ export function emptyEquippedGear(): EquippedGear {
     armorCategory: "none",
     mainWeaponName: null,
     offWeaponName: null,
+    wornItemNames: [],
   };
 }
 
@@ -171,6 +174,8 @@ export function computeEquippedGear(
       result.shield = effectiveArmorBonus(row);
       result.shieldName = row.name || null;
       shieldAcp = effectiveArmorCheckPenalty(row);
+    } else if (!isWeaponKind(row.kind)) {
+      if (row.name.trim()) result.wornItemNames.push(row.name.trim());
     }
   }
 

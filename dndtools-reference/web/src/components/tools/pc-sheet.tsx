@@ -13,6 +13,11 @@ import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
 import { computeEncumbrance } from "@/lib/pc-planner/encumbrance";
+import {
+  computeEquippedBonuses,
+  formatBonusSources,
+  skillItemBonus,
+} from "@/lib/pc-planner/itemBonuses";
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import {
   computeSkillPointSummary,
@@ -31,6 +36,7 @@ import {
   type PcPlanState,
   type PcSheetTab,
 } from "@/lib/pc-planner/types";
+import type { BonusSource } from "@/lib/pc-planner/itemBonuses";
 
 const ABILITY_KEYS: AbilityKey[] = ["str", "dex", "con", "int", "wis", "cha"];
 
@@ -42,6 +48,39 @@ const DOMAIN_SEARCH_CATEGORIES: CategoryKey[] = ["domains"];
 function abilityMod(score: number): string {
   const m = Math.floor((score - 10) / 2);
   return m >= 0 ? `+${m}` : `${m}`;
+}
+
+function BonusSourcesHint({
+  amount,
+  sources,
+  ariaLabel,
+}: {
+  amount: number;
+  sources: BonusSource[];
+  ariaLabel: string;
+}) {
+  if (amount === 0 || sources.length === 0) return null;
+  const signed = amount >= 0 ? `+${amount}` : `${amount}`;
+  const lines = formatBonusSources(sources);
+  return (
+    <span className="pc-bonus-sources-wrap" tabIndex={0}>
+      <span className="pc-ability-item-bonus" aria-label={ariaLabel}>
+        ({amount})
+      </span>
+      <span className="pc-skill-tooltip pc-bonus-sources-tooltip" role="tooltip">
+        {lines.map((line, index) => (
+          <span key={`${line}-${index}`} className="pc-skill-tooltip-line">
+            {line}
+          </span>
+        ))}
+        {sources.length > 1 ? (
+          <span className="pc-skill-tooltip-line pc-skill-tooltip-line--indent">
+            Total {signed}
+          </span>
+        ) : null}
+      </span>
+    </span>
+  );
 }
 
 export type PcSheetProps = {
@@ -139,6 +178,7 @@ export function PcSheet({
     equippedGear,
   });
   const skillAcp = encumbrance.totalAcp;
+  const equippedItemBonuses = computeEquippedBonuses(state.inventory);
   const skillPoints = computeSkillPointSummary(
     state,
     compendium?.classSkillPointBases ?? {},
@@ -469,6 +509,9 @@ export function PcSheet({
               <div className="npc-sheet-abilities">
                 {ABILITY_KEYS.map((key) => {
                   const racial = abilityRacialMod(key, raceFeatures);
+                  const itemStacked = equippedItemBonuses.abilities[key];
+                  const itemTotal = itemStacked?.total ?? 0;
+                  const effective = state.abilities[key];
                   return (
                     <div key={key} className="pc-ability-cell">
                       <span className="pc-ability-label">{key.toUpperCase()}</span>
@@ -501,15 +544,18 @@ export function PcSheet({
                               className="pc-sheet-input pc-sheet-input--ability"
                               min={1}
                               max={99}
-                              value={abilityBase[key]}
+                              value={effective}
                               aria-label={`${key.toUpperCase()} score`}
-                              onChange={(e) => updateAbility(key, clampAbilityScore(Number(e.target.value)))}
+                              onChange={(e) => {
+                                const desired = clampAbilityScore(Number(e.target.value));
+                                updateAbility(key, desired - racial - itemTotal);
+                              }}
                             />
-                            {hasRace && abilityBase[key] !== state.abilities[key] ? (
-                              <span className="pc-ability-effective" aria-label={`Effective ${key.toUpperCase()} with racial`}>
-                                ({state.abilities[key]})
-                              </span>
-                            ) : null}
+                            <BonusSourcesHint
+                              amount={itemTotal}
+                              sources={itemStacked?.sources ?? []}
+                              ariaLabel={`${key.toUpperCase()} item bonus ${itemTotal}`}
+                            />
                           </div>
                         </div>
                         <span className="pc-ability-sep" aria-hidden="true">
@@ -517,7 +563,7 @@ export function PcSheet({
                         </span>
                         <div className="pc-ability-col pc-ability-col--mod">
                           <span className="pc-ability-col-label">Modifier</span>
-                          <span className="pc-sheet-mod">{abilityMod(state.abilities[key])}</span>
+                          <span className="pc-sheet-mod">{abilityMod(effective)}</span>
                         </div>
                       </div>
                       {hasRace && racialModLabel(racial) ? (
@@ -613,7 +659,13 @@ export function PcSheet({
                       const maxRanks = maxSkillRanks(skillHd, isClass);
                       const overMax = row.ranks > maxRanks;
                       const acpValue = row.armorCheckPenalty ? skillAcp : 0;
-                      const total = computeSkillTotal(row, state.abilities, skillAcp);
+                      const itemSkill = skillItemBonus(equippedItemBonuses, row);
+                      const total = computeSkillTotal(
+                        row,
+                        state.abilities,
+                        skillAcp,
+                        itemSkill.total,
+                      );
                       return (
                         <tr
                           key={row.slug ?? row.name}
@@ -678,7 +730,14 @@ export function PcSheet({
                             {total == null ? (
                               "—"
                             ) : (
-                              <RollableStat label={row.name} modifier={total} />
+                              <span className="pc-skill-total-wrap">
+                                <RollableStat label={row.name} modifier={total} />
+                                <BonusSourcesHint
+                                  amount={itemSkill.total}
+                                  sources={itemSkill.sources}
+                                  ariaLabel={`${row.name} item bonus ${itemSkill.total}`}
+                                />
+                              </span>
                             )}
                           </td>
                         </tr>

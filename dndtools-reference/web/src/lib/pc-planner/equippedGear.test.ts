@@ -391,4 +391,21 @@ describe("computeCombatStats with equipped gear", () => {
     assert.equal(stats.speed.parts.armor, -10);
     assert.equal(stats.speed.total, 20);
   });
+
+  it("lists equipped wondrous items in wornItemNames", () => {
+    const gear = computeEquippedGear(
+      [
+        {
+          name: "Gauntlets of Ogre Power",
+          quantity: 1,
+          weight: 4,
+          kind: "item",
+          source: "item",
+          equipped: true,
+        },
+      ],
+      30,
+    );
+    assert.deepEqual(gear.wornItemNames, ["Gauntlets of Ogre Power"]);
+  });
 });

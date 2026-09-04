@@ -232,6 +232,16 @@ describe("computeSkillTotal", () => {
     );
     assert.equal(total, -1);
   });
+
+  it("adds equipped item skill bonuses", () => {
+    const total = computeSkillTotal(
+      { name: "Hide", ability: "Dex", ranks: 5, misc: 0 },
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+      0,
+      5,
+    );
+    assert.equal(total, 10);
+  });
 });
 
 describe("maxSkillRanks", () => {

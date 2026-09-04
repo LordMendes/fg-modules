@@ -8,6 +8,7 @@ import {
   effectiveAbilities,
   ensureAbilityBase,
 } from "./syncDerived";
+import { computeEquippedBonuses } from "./itemBonuses";
 
 const elfRace: RaceDerivedFeatures = {
   traits: [],
@@ -27,6 +28,25 @@ describe("effectiveAbilities", () => {
     const effective = effectiveAbilities(base, elfRace);
     assert.equal(effective.dex, 12);
     assert.equal(effective.con, 8);
+  });
+
+  it("adds equipped item ability bonuses on top of racial", () => {
+    const base = { str: 20, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+    const itemBonuses = computeEquippedBonuses([
+      {
+        name: "Gauntlets of Ogre Power",
+        quantity: 1,
+        weight: 4,
+        kind: "item",
+        source: "item",
+        equipped: true,
+        statBonuses: [
+          { kind: "ability", ability: "str", amount: 2, bonusType: "enhancement" },
+        ],
+      },
+    ]);
+    const effective = effectiveAbilities(base, null, itemBonuses);
+    assert.equal(effective.str, 22);
   });
 });
 

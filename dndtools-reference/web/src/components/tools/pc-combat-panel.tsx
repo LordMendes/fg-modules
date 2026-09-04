@@ -19,6 +19,10 @@ import {
   parseHitDieSides,
   resolveHitDie,
 } from "@/lib/pc-planner/hitPoints";
+import {
+  formatBonusSources,
+  type BonusSource,
+} from "@/lib/pc-planner/itemBonuses";
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
@@ -41,14 +45,35 @@ function asDieSides(sides: number): DieSides | null {
   return ROLLABLE_HIT_DIE_SIDES.has(sides) ? (sides as DieSides) : null;
 }
 
+function CombatItemHint({ sources }: { sources: BonusSource[] }) {
+  if (sources.length === 0) return null;
+  const lines = formatBonusSources(sources);
+  return (
+    <span className="pc-bonus-sources-wrap pc-combat-item-hint" tabIndex={0}>
+      <span className="pc-ability-item-bonus" aria-hidden>
+        ({sources.reduce((sum, s) => sum + s.amount, 0)})
+      </span>
+      <span className="pc-skill-tooltip pc-bonus-sources-tooltip" role="tooltip">
+        {lines.map((line, index) => (
+          <span key={`${line}-${index}`} className="pc-skill-tooltip-line">
+            {line}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
+
 function CombatTotal({
   value,
   signed = true,
   rollLabel,
+  itemSources,
 }: {
   value: number;
   signed?: boolean;
   rollLabel?: string;
+  itemSources?: BonusSource[];
 }) {
   const text = signed ? formatModifier(value) : String(value);
   return (
@@ -58,6 +83,9 @@ function CombatTotal({
       ) : (
         text
       )}
+      {itemSources && itemSources.length > 0 ? (
+        <CombatItemHint sources={itemSources} />
+      ) : null}
     </div>
   );
 }
@@ -488,14 +516,29 @@ export function PcCombatPanel({
             <CombatTableHeader columns={["Total", "Class", "Stat", "Abil", "Racial", "Misc"]} />
             {(
               [
-                { label: "Fortitude", row: stats.fortitude, misc: "fortMisc" as const },
-                { label: "Reflex", row: stats.reflex, misc: "refMisc" as const },
-                { label: "Will", row: stats.will, misc: "willMisc" as const },
+                {
+                  label: "Fortitude",
+                  row: stats.fortitude,
+                  misc: "fortMisc" as const,
+                  itemSources: stats.itemBonuses.combat.fort.sources,
+                },
+                {
+                  label: "Reflex",
+                  row: stats.reflex,
+                  misc: "refMisc" as const,
+                  itemSources: stats.itemBonuses.combat.ref.sources,
+                },
+                {
+                  label: "Will",
+                  row: stats.will,
+                  misc: "willMisc" as const,
+                  itemSources: stats.itemBonuses.combat.will.sources,
+                },
               ] as const
-            ).map(({ label, row, misc }) => (
+            ).map(({ label, row, misc, itemSources }) => (
               <div key={label} className="pc-combat-row" style={{ ["--combat-cols" as string]: 6 }}>
                 <div className="pc-combat-row-label">{label}</div>
-                <CombatTotal value={row.total} rollLabel={label} />
+                <CombatTotal value={row.total} rollLabel={label} itemSources={itemSources} />
                 <CombatReadonly value={row.parts.class} />
                 <CombatReadonly value={row.parts.stat} />
                 <CombatReadonly value={row.parts.ability ?? 0} />
@@ -527,10 +570,19 @@ export function PcCombatPanel({
               ]
             ).map(({ label, key, na }) => {
               const computed = stats[key];
+              const itemNatural = stats.itemBonuses.combat.naturalArmor.total;
+              const itemDeflection = stats.itemBonuses.combat.deflection.total;
+              const itemArmor = stats.itemBonuses.combat.armor.total;
+              const acItemSources = [
+                ...stats.itemBonuses.combat.naturalArmor.sources,
+                ...stats.itemBonuses.combat.deflection.sources,
+                ...stats.itemBonuses.combat.armor.sources,
+                ...stats.itemBonuses.combat.dodge.sources,
+              ];
               const acParts = [
                 {
                   part: "armor",
-                  field: gear.armor != null ? null : ("armor" as const),
+                  field: gear.armor != null || itemArmor > 0 ? null : ("armor" as const),
                   value: computed.parts.armor ?? 0,
                 },
                 {
@@ -540,11 +592,23 @@ export function PcCombatPanel({
                 },
                 { part: "stat", field: null, value: computed.parts.stat ?? 0 },
                 { part: "size", field: "sizeMod" as const, value: combat.sizeMod },
-                { part: "natural", field: "natural" as const, value: combat.natural },
-                { part: "deflection", field: "deflection" as const, value: combat.deflection },
+                {
+                  part: "natural",
+                  field: "natural" as const,
+                  value: computed.parts.natural ?? 0,
+                  itemOffset: itemNatural,
+                },
+                {
+                  part: "deflection",
+                  field: "deflection" as const,
+                  value: computed.parts.deflection ?? 0,
+                  itemOffset: itemDeflection,
+                },
                 {
                   part: "dodge",
-                  field: featEffects.dodgeBonus ? null : ("dodge" as const),
+                  field: featEffects.dodgeBonus || stats.itemBonuses.combat.dodge.total
+                    ? null
+                    : ("dodge" as const),
                   value: computed.parts.dodge ?? 0,
                 },
               ] as const;
@@ -552,24 +616,45 @@ export function PcCombatPanel({
               return (
                 <div key={key} className="pc-combat-row" style={{ ["--combat-cols" as string]: 9 }}>
                   <div className="pc-combat-row-label">{label}</div>
-                  <CombatTotal value={computed.total} signed={false} />
-                  {acParts.map(({ part, field, value }) =>
-                    na.includes(part) ? (
-                      <CombatNa key={part} />
-                    ) : field ? (
-                      <CombatNumberInput
-                        key={part}
-                        value={value}
-                        onChange={(raw) =>
-                          patch((s) => {
-                            s.combat[field] = raw === "" ? 0 : Number(raw);
-                          })
-                        }
-                      />
-                    ) : (
-                      <CombatReadonly key={part} value={value} />
-                    ),
-                  )}
+                  <CombatTotal
+                    value={computed.total}
+                    signed={false}
+                    itemSources={key === "ac" ? acItemSources : undefined}
+                  />
+                  {acParts.map((entry) => {
+                    const { part, field, value } = entry;
+                    const itemOffset =
+                      "itemOffset" in entry ? (entry.itemOffset as number) : 0;
+                    if (na.includes(part)) return <CombatNa key={part} />;
+                    if (field && itemOffset === 0) {
+                      return (
+                        <CombatNumberInput
+                          key={part}
+                          value={value}
+                          onChange={(raw) =>
+                            patch((s) => {
+                              s.combat[field] = raw === "" ? 0 : Number(raw);
+                            })
+                          }
+                        />
+                      );
+                    }
+                    if (field && itemOffset !== 0) {
+                      return (
+                        <CombatNumberInput
+                          key={part}
+                          value={value}
+                          onChange={(raw) =>
+                            patch((s) => {
+                              const desired = raw === "" ? 0 : Number(raw);
+                              s.combat[field] = desired - itemOffset;
+                            })
+                          }
+                        />
+                      );
+                    }
+                    return <CombatReadonly key={part} value={value} />;
+                  })}
                   <CombatNumberInput
                     value={combat.acMisc}
                     onChange={(raw) =>

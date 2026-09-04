@@ -9,6 +9,11 @@ import {
 } from "./parseClassAdvancement";
 import { computeEquippedGear } from "./equippedGear";
 import { computeEncumbrance } from "./encumbrance";
+import {
+  computeEquippedBonuses,
+  stackArmorBonus,
+  type EquippedBonuses,
+} from "./itemBonuses";
 import type { RaceDerivedFeatures } from "./parseRaceFeatures";
 import type { FeatDerivedFeatures } from "./parseFeatEffects";
 import { emptyFeatDerivedFeatures } from "./parseFeatEffects";
@@ -35,6 +40,8 @@ export type CombatComputed = {
   initiative: CombatBreakdownRow;
   speed: CombatBreakdownRow;
   spellResistance: CombatBreakdownRow;
+  /** Equipped item bonus overlay (for tooltips). */
+  itemBonuses: EquippedBonuses;
 };
 
 export function abilityModifier(score: number): number {
@@ -161,13 +168,16 @@ export function computeCombatStats(
 
   const feats = featFeatures ?? emptyFeatDerivedFeatures();
   const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
+  const itemBonuses = computeEquippedBonuses(state.inventory);
   const encumbrance = computeEncumbrance(state, {
     raceFeatures,
     featFeatures: feats,
     classFeatures,
     equippedGear: gear,
   });
-  const armorBonus = gear.armor != null ? gear.armor : combat.armor;
+  const gearOrManualArmor = gear.armor != null ? gear.armor : combat.armor;
+  const itemArmor = itemBonuses.combat.armor.total;
+  const armorBonus = stackArmorBonus(gearOrManualArmor, itemArmor);
   const shieldBonus = gear.shield != null ? gear.shield : combat.shield;
   const cappedDex =
     encumbrance.maxDex != null ? Math.min(dexMod, encumbrance.maxDex) : dexMod;
@@ -200,18 +210,27 @@ export function computeCombatStats(
 
   const bab = computeBaseAttackBonus(identity.classLevels, classAdvancement);
   const grappleSize = grappleSizeModFromAttackSizeMod(combat.sizeMod);
+  const itemNatural = itemBonuses.combat.naturalArmor.total;
+  const itemDeflection = itemBonuses.combat.deflection.total;
+  const itemDodge = itemBonuses.combat.dodge.total;
+  const itemFort = itemBonuses.combat.fort.total;
+  const itemRef = itemBonuses.combat.ref.total;
+  const itemWill = itemBonuses.combat.will.total;
+  const itemMelee = itemBonuses.combat.melee.total;
+  const itemRanged = itemBonuses.combat.ranged.total;
+  const itemInit = itemBonuses.combat.initiative.total;
 
   const meleeParts = {
     bab,
     stat: strMod,
     size: combat.sizeMod,
-    misc: combat.meleeMisc,
+    misc: combat.meleeMisc + itemMelee,
   };
   const rangedParts = {
     bab,
     stat: dexMod,
     size: combat.sizeMod,
-    misc: combat.rangedMisc,
+    misc: combat.rangedMisc + itemRanged,
   };
   const grappleParts = {
     bab,
@@ -225,21 +244,21 @@ export function computeCombatStats(
     stat: conMod,
     ability: classFortAbility,
     racial: racialSave.fort,
-    misc: combat.fortMisc + classSaveBonus.fort,
+    misc: combat.fortMisc + classSaveBonus.fort + itemFort,
   };
   const refParts = {
     class: computeClassSave("ref", identity.classLevels, classAdvancement),
     stat: dexMod,
     ability: classRefAbility,
     racial: racialSave.ref,
-    misc: combat.refMisc + classSaveBonus.ref,
+    misc: combat.refMisc + classSaveBonus.ref + itemRef,
   };
   const willParts = {
     class: computeClassSave("will", identity.classLevels, classAdvancement),
     stat: wisMod,
     ability: classWillAbility,
     racial: racialSave.will,
-    misc: combat.willMisc + classSaveBonus.will,
+    misc: combat.willMisc + classSaveBonus.will + itemWill,
   };
 
   const acParts = {
@@ -248,9 +267,9 @@ export function computeCombatStats(
     shield: shieldBonus,
     stat: cappedDex,
     size: combat.sizeMod,
-    natural: combat.natural,
-    deflection: combat.deflection,
-    dodge: combat.dodge + feats.dodgeBonus,
+    natural: combat.natural + itemNatural,
+    deflection: combat.deflection + itemDeflection,
+    dodge: combat.dodge + feats.dodgeBonus + itemDodge,
     misc: combat.acMisc,
   };
   const flatFootedParts = {
@@ -258,22 +277,22 @@ export function computeCombatStats(
     armor: armorBonus,
     shield: shieldBonus,
     size: combat.sizeMod,
-    natural: combat.natural,
-    deflection: combat.deflection,
+    natural: combat.natural + itemNatural,
+    deflection: combat.deflection + itemDeflection,
     misc: combat.acMisc,
   };
   const touchParts = {
     base: 10,
     stat: cappedDex,
     size: combat.sizeMod,
-    deflection: combat.deflection,
-    dodge: combat.dodge + feats.dodgeBonus,
+    deflection: combat.deflection + itemDeflection,
+    dodge: combat.dodge + feats.dodgeBonus + itemDodge,
     misc: combat.acMisc,
   };
 
   const initParts = {
     stat: dexMod,
-    misc: combat.initMisc + feats.initBonus,
+    misc: combat.initMisc + feats.initBonus + itemInit,
   };
 
   const speedParts = {
@@ -303,6 +322,7 @@ export function computeCombatStats(
     initiative: { total: sumParts(initParts), parts: initParts },
     speed: { total: sumParts(speedParts), parts: speedParts },
     spellResistance: { total: sumParts(srParts), parts: srParts },
+    itemBonuses,
   };
 }
 

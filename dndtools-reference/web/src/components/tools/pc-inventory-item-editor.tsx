@@ -30,15 +30,78 @@ import {
   syncLegacyDamageFields,
 } from "@/lib/pc-planner/inventoryItem";
 import { isArmorKind, isShieldKind, isWeaponKind } from "@/lib/pc-planner/equippedGear";
-import type { InventoryDamageLine, InventoryRow } from "@/lib/pc-planner/types";
+import { canEquipAsWornItem } from "@/lib/pc-planner/itemBonuses";
+import type {
+  AbilityKey,
+  CombatBonusStat,
+  InventoryDamageLine,
+  InventoryRow,
+  ItemBonusType,
+  ItemStatBonus,
+} from "@/lib/pc-planner/types";
 
 const ITEM_KINDS = ["weapon", "armor", "shield", "goods", "item"] as const;
+type ItemKindOption = (typeof ITEM_KINDS)[number];
+
 const HANDED_OPTIONS = [
   { value: "light", label: "Light" },
   { value: "one", label: "One-handed" },
   { value: "two", label: "Two-handed" },
   { value: "ranged", label: "Ranged" },
 ] as const;
+
+const ABILITY_OPTIONS: { value: AbilityKey; label: string }[] = [
+  { value: "str", label: "Strength" },
+  { value: "dex", label: "Dexterity" },
+  { value: "con", label: "Constitution" },
+  { value: "int", label: "Intelligence" },
+  { value: "wis", label: "Wisdom" },
+  { value: "cha", label: "Charisma" },
+];
+
+const BONUS_TYPE_OPTIONS: { value: ItemBonusType; label: string }[] = [
+  { value: "enhancement", label: "Enhancement" },
+  { value: "resistance", label: "Resistance" },
+  { value: "competence", label: "Competence" },
+  { value: "deflection", label: "Deflection" },
+  { value: "natural", label: "Natural" },
+  { value: "armor", label: "Armor" },
+  { value: "luck", label: "Luck" },
+  { value: "insight", label: "Insight" },
+  { value: "morale", label: "Morale" },
+  { value: "untyped", label: "Untyped" },
+];
+
+const COMBAT_STAT_OPTIONS: { value: CombatBonusStat; label: string }[] = [
+  { value: "naturalArmor", label: "Natural armor" },
+  { value: "deflection", label: "Deflection AC" },
+  { value: "armor", label: "Armor bonus" },
+  { value: "dodge", label: "Dodge AC" },
+  { value: "fort", label: "Fortitude" },
+  { value: "ref", label: "Reflex" },
+  { value: "will", label: "Will" },
+  { value: "saves", label: "All saves" },
+  { value: "melee", label: "Melee attack" },
+  { value: "ranged", label: "Ranged attack" },
+  { value: "initiative", label: "Initiative" },
+];
+
+function coerceItemKind(kind: string | null | undefined): ItemKindOption {
+  const lower = (kind ?? "").toLowerCase();
+  if ((ITEM_KINDS as readonly string[]).includes(lower)) {
+    return lower as ItemKindOption;
+  }
+  return "item";
+}
+
+function defaultStatBonus(): ItemStatBonus {
+  return {
+    kind: "ability",
+    ability: "str",
+    amount: 2,
+    bonusType: "enhancement",
+  };
+}
 
 export type PcInventoryItemEditorProps = {
   row: InventoryRow;
@@ -77,16 +140,20 @@ export function PcInventoryItemEditor({
 }: PcInventoryItemEditorProps) {
   const [abilitySearch, setAbilitySearch] = useState("");
   const [abilitySource, setAbilitySource] = useState<SourceAbbrev | "all">("all");
-  const isWeapon = isWeaponKind(row.kind);
-  const isArmor = isArmorKind(row.kind) || isShieldKind(row.kind);
+  const kindValue = coerceItemKind(row.kind);
+  const isWeapon = isWeaponKind(kindValue);
+  const isArmor = isArmorKind(kindValue) || isShieldKind(kindValue);
+  const showMagicBuilder = isWeapon || isArmor;
+  const canWear = canEquipAsWornItem({ ...row, kind: kindValue });
   const enhancement = row.enhancementBonus ?? 0;
   const masterworkLocked = enhancement > 0;
   const damageLines = inventoryDamageLines(row);
-  const price = priceInventoryItem(row);
-  const suggestedName = suggestedMagicItemName(row);
+  const price = showMagicBuilder ? priceInventoryItem(row) : null;
+  const suggestedName = showMagicBuilder ? suggestedMagicItemName(row) : null;
   const showSuggestedName =
     suggestedName &&
     suggestedName.trim().toLowerCase() !== row.name.trim().toLowerCase();
+  const statBonuses = row.statBonuses ?? [];
 
   const scopedWeaponAbilities = useMemo(() => {
     if (!isWeapon) return [];
@@ -193,7 +260,7 @@ export function PcInventoryItemEditor({
               <span>Kind</span>
               <select
                 className="pc-sheet-input"
-                value={row.kind ?? "item"}
+                value={kindValue}
                 onChange={(event) =>
                   patchRow((current) => {
                     current.kind = event.target.value;
@@ -207,6 +274,32 @@ export function PcInventoryItemEditor({
                 ))}
               </select>
             </label>
+            {row.itemType?.trim() ? (
+              <label className="pc-item-editor-field">
+                <span>Catalog type</span>
+                <input
+                  type="text"
+                  className="pc-sheet-input"
+                  value={row.itemType}
+                  readOnly
+                  aria-label="Catalog item type"
+                />
+              </label>
+            ) : null}
+            {canWear ? (
+              <label className="pc-item-editor-check pc-item-editor-check--block">
+                <input
+                  type="checkbox"
+                  checked={Boolean(row.equipped)}
+                  onChange={(event) =>
+                    patchRow((current) => {
+                      current.equipped = event.target.checked;
+                    })
+                  }
+                />
+                <span>Equipped / worn</span>
+              </label>
+            ) : null}
             <label className="pc-item-editor-field">
               <span>Qty</span>
               <input
@@ -517,6 +610,209 @@ export function PcInventoryItemEditor({
         ) : null}
 
         <section className="pc-item-editor-section">
+          <div className="pc-item-editor-section-head">
+            <h3>Bonuses</h3>
+            <button
+              type="button"
+              className="tool-btn-secondary pc-item-editor-add"
+              onClick={() =>
+                patchRow((current) => {
+                  current.statBonuses = [...(current.statBonuses ?? []), defaultStatBonus()];
+                })
+              }
+            >
+              <Plus size={14} aria-hidden />
+              Add bonus
+            </button>
+          </div>
+          {statBonuses.length === 0 ? (
+            <p className="pc-sheet-empty">
+              No score, skill, or combat bonuses. Add one for wondrous items like Gauntlets of
+              Ogre Power.
+            </p>
+          ) : (
+            <ul className="pc-item-editor-bonus-list">
+              {statBonuses.map((bonus, index) => (
+                <li key={`${bonus.kind}-${index}`} className="pc-item-editor-bonus-row">
+                  <label className="pc-item-editor-field">
+                    <span>Target</span>
+                    <select
+                      className="pc-sheet-input"
+                      value={bonus.kind}
+                      onChange={(event) => {
+                        const nextKind = event.target.value as ItemStatBonus["kind"];
+                        patchRow((current) => {
+                          const list = [...(current.statBonuses ?? [])];
+                          if (nextKind === "ability") {
+                            list[index] = {
+                              kind: "ability",
+                              ability: "str",
+                              amount: bonus.amount,
+                              bonusType: bonus.bonusType === "competence" ? "enhancement" : bonus.bonusType,
+                            };
+                          } else if (nextKind === "skill") {
+                            list[index] = {
+                              kind: "skill",
+                              skill: "hide",
+                              amount: bonus.amount,
+                              bonusType: "competence",
+                            };
+                          } else {
+                            list[index] = {
+                              kind: "combat",
+                              stat: "naturalArmor",
+                              amount: bonus.amount,
+                              bonusType: "natural",
+                            };
+                          }
+                          current.statBonuses = list;
+                        });
+                      }}
+                    >
+                      <option value="ability">Ability</option>
+                      <option value="skill">Skill</option>
+                      <option value="combat">Combat</option>
+                    </select>
+                  </label>
+                  {bonus.kind === "ability" ? (
+                    <label className="pc-item-editor-field">
+                      <span>Ability</span>
+                      <select
+                        className="pc-sheet-input"
+                        value={bonus.ability}
+                        onChange={(event) =>
+                          patchRow((current) => {
+                            const list = [...(current.statBonuses ?? [])];
+                            const entry = list[index];
+                            if (entry?.kind === "ability") {
+                              entry.ability = event.target.value as AbilityKey;
+                            }
+                            current.statBonuses = list;
+                          })
+                        }
+                      >
+                        {ABILITY_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  ) : null}
+                  {bonus.kind === "skill" ? (
+                    <label className="pc-item-editor-field">
+                      <span>Skill</span>
+                      <input
+                        type="text"
+                        className="pc-sheet-input"
+                        value={bonus.skill}
+                        placeholder="hide"
+                        onChange={(event) =>
+                          patchRow((current) => {
+                            const list = [...(current.statBonuses ?? [])];
+                            const entry = list[index];
+                            if (entry?.kind === "skill") {
+                              entry.skill = event.target.value;
+                            }
+                            current.statBonuses = list;
+                          })
+                        }
+                      />
+                    </label>
+                  ) : null}
+                  {bonus.kind === "combat" ? (
+                    <label className="pc-item-editor-field">
+                      <span>Stat</span>
+                      <select
+                        className="pc-sheet-input"
+                        value={bonus.stat}
+                        onChange={(event) =>
+                          patchRow((current) => {
+                            const list = [...(current.statBonuses ?? [])];
+                            const entry = list[index];
+                            if (entry?.kind === "combat") {
+                              entry.stat = event.target.value as CombatBonusStat;
+                            }
+                            current.statBonuses = list;
+                          })
+                        }
+                      >
+                        {COMBAT_STAT_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  ) : null}
+                  <label className="pc-item-editor-field">
+                    <span>Amount</span>
+                    <input
+                      type="number"
+                      className="pc-sheet-input"
+                      value={bonus.amount}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          const list = [...(current.statBonuses ?? [])];
+                          if (list[index]) {
+                            list[index] = {
+                              ...list[index],
+                              amount: Number(event.target.value),
+                            };
+                          }
+                          current.statBonuses = list;
+                        })
+                      }
+                    />
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Bonus type</span>
+                    <select
+                      className="pc-sheet-input"
+                      value={bonus.bonusType}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          const list = [...(current.statBonuses ?? [])];
+                          if (list[index]) {
+                            list[index] = {
+                              ...list[index],
+                              bonusType: event.target.value as ItemBonusType,
+                            };
+                          }
+                          current.statBonuses = list;
+                        })
+                      }
+                    >
+                      {BONUS_TYPE_OPTIONS.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button
+                    type="button"
+                    className="tool-btn-icon pc-item-editor-remove"
+                    title="Remove bonus"
+                    aria-label="Remove bonus"
+                    onClick={() =>
+                      patchRow((current) => {
+                        current.statBonuses = (current.statBonuses ?? []).filter(
+                          (_entry, entryIndex) => entryIndex !== index,
+                        );
+                      })
+                    }
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {showMagicBuilder ? (
+        <section className="pc-item-editor-section">
           <h3>Magic</h3>
           <div className="pc-item-editor-grid">
             <label className="pc-item-editor-check pc-item-editor-check--block">
@@ -684,6 +980,7 @@ export function PcInventoryItemEditor({
             </div>
           ) : null}
         </section>
+        ) : null}
 
         <section className="pc-item-editor-section">
           <h3>Spell effects</h3>

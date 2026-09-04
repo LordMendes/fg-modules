@@ -1,16 +1,28 @@
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
-import type { AbilityKey, PcPlanState, SkillRow } from "./types";
+import {
+  abilityItemBonusTotal,
+  computeEquippedBonuses,
+  type EquippedBonuses,
+} from "./itemBonuses";
+import type { AbilityKey, InventoryRow, PcPlanState, SkillRow } from "./types";
 
 export function effectiveAbilities(
   base: Record<AbilityKey, number>,
   race: RaceDerivedFeatures | null,
+  itemBonuses: EquippedBonuses | null = null,
 ): Record<AbilityKey, number> {
   const out = { ...base };
-  if (!race) return out;
-  for (const [key, mod] of Object.entries(race.abilityMods)) {
-    if (typeof mod !== "number") continue;
-    const abilityKey = key as AbilityKey;
-    out[abilityKey] = (out[abilityKey] ?? 10) + mod;
+  if (race) {
+    for (const [key, mod] of Object.entries(race.abilityMods)) {
+      if (typeof mod !== "number") continue;
+      const abilityKey = key as AbilityKey;
+      out[abilityKey] = (out[abilityKey] ?? 10) + mod;
+    }
+  }
+  if (itemBonuses) {
+    for (const key of Object.keys(out) as AbilityKey[]) {
+      out[key] = (out[key] ?? 10) + abilityItemBonusTotal(itemBonuses, key);
+    }
   }
   return out;
 }
@@ -23,9 +35,11 @@ export function normalizeAbilityBase(state: PcPlanState): Record<AbilityKey, num
 export function syncEffectiveAbilities(
   state: PcPlanState,
   race: RaceDerivedFeatures | null,
+  inventory: InventoryRow[] | null | undefined = state.inventory,
 ): void {
   ensureAbilityBase(state, race);
-  state.abilities = effectiveAbilities(state.abilityBase, race);
+  const itemBonuses = computeEquippedBonuses(inventory ?? state.inventory);
+  state.abilities = effectiveAbilities(state.abilityBase, race, itemBonuses);
 }
 
 /** One-time migration: recover base scores from legacy saves that baked racial mods into abilities. */

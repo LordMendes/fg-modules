@@ -74,6 +74,53 @@ export type InventoryDamageLine = {
   fromAbilityId?: string;
 };
 
+/** Bonus types on equipped items (informational; all sources add). */
+export type ItemBonusType =
+  | "enhancement"
+  | "resistance"
+  | "competence"
+  | "deflection"
+  | "natural"
+  | "armor"
+  | "luck"
+  | "insight"
+  | "morale"
+  | "untyped";
+
+export type CombatBonusStat =
+  | "naturalArmor"
+  | "deflection"
+  | "armor"
+  | "dodge"
+  | "fort"
+  | "ref"
+  | "will"
+  | "saves"
+  | "melee"
+  | "ranged"
+  | "initiative";
+
+export type ItemStatBonus =
+  | {
+      kind: "ability";
+      ability: AbilityKey;
+      amount: number;
+      bonusType: ItemBonusType;
+    }
+  | {
+      kind: "skill";
+      /** Skill slug or lowercase name. */
+      skill: string;
+      amount: number;
+      bonusType: ItemBonusType;
+    }
+  | {
+      kind: "combat";
+      stat: CombatBonusStat;
+      amount: number;
+      bonusType: ItemBonusType;
+    };
+
 export type InventoryRow = {
   /** Stable sheet-only instance id. */
   id?: string;
@@ -91,6 +138,8 @@ export type InventoryRow = {
    */
   weaponHand?: "main" | "off" | null;
   kind?: string | null;
+  /** Display type from the Item catalog (e.g. "Wondrous Item"). */
+  itemType?: string | null;
   /** Armor category: light | medium | heavy (from equipment). */
   category?: string | null;
   masterwork?: boolean;
@@ -99,6 +148,8 @@ export type InventoryRow = {
   armorAbilities?: SelectedArmorAbility[];
   damageLines?: InventoryDamageLine[];
   spellEffects?: InventorySpellEffect[];
+  /** Structured bonuses applied when this row is equipped/worn. */
+  statBonuses?: ItemStatBonus[];
   /** Cached armor/shield stats from the equipment record. */
   armorBonus?: number | null;
   maxDex?: number | null;

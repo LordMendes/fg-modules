@@ -20,6 +20,7 @@ import {
   weaponAllowsOffHand,
   weaponOccupiesBothHands,
 } from "@/lib/pc-planner/equippedGear";
+import { canEquipAsWornItem, inferItemBonuses } from "@/lib/pc-planner/itemBonuses";
 import {
   computeEncumbrance,
   describeLoadEffects,
@@ -75,8 +76,12 @@ function kindTone(row: InventoryRow): KindTone {
 }
 
 function kindLabel(row: InventoryRow): string {
-  if (row.kind?.trim()) return row.kind.trim();
+  if (row.itemType?.trim()) return row.itemType.trim();
+  if (row.kind?.trim() && row.kind.trim().toLowerCase() !== "item") {
+    return row.kind.trim();
+  }
   if (row.source === "item") return "magic";
+  if (row.kind?.trim()) return row.kind.trim();
   return "item";
 }
 
@@ -198,6 +203,12 @@ function inventoryRowMeta(row: InventoryRow): string | null {
   if (abilities.length > 0) parts.push(abilities.join(", "));
   const spells = (row.spellEffects ?? []).map((effect) => effect.name);
   if (spells.length > 0) parts.push(spells.join(", "));
+  for (const bonus of row.statBonuses ?? []) {
+    const signed = bonus.amount >= 0 ? `+${bonus.amount}` : `${bonus.amount}`;
+    if (bonus.kind === "ability") parts.push(`${signed} ${bonus.ability.toUpperCase()}`);
+    else if (bonus.kind === "skill") parts.push(`${signed} ${bonus.skill}`);
+    else parts.push(`${signed} ${bonus.stat}`);
+  }
   return parts.length > 0 ? parts.join(" · ") : null;
 }
 
@@ -385,6 +396,10 @@ export function PcInventoryPanel({
       if (!row) return;
       if (!row.id) row.id = id;
       prepareRowForEdit(row);
+      if (!(row.statBonuses?.length) && (row.source === "item" || canEquipAsWornItem(row))) {
+        const inferred = inferItemBonuses(row.name);
+        if (inferred.length > 0) row.statBonuses = inferred;
+      }
     });
     setOpenEditorIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
     activateEditor(id);
@@ -552,6 +567,7 @@ export function PcInventoryPanel({
             {inventory.map((row, i) => {
               const isWeapon = isWeaponKind(row.kind);
               const canEquipArmor = isArmorKind(row.kind) || isShieldKind(row.kind);
+              const canEquipWorn = canEquipAsWornItem(row);
               const equipped = Boolean(row.equipped);
               const weaponHand = row.weaponHand ?? null;
               const allowsOff = isWeapon && weaponAllowsOffHand(row);
@@ -730,6 +746,30 @@ export function PcInventoryPanel({
                           {equipped ? "Equipped" : "Equip"}
                         </button>
                       ) : null}
+                      {canEquipWorn ? (
+                        <button
+                          type="button"
+                          className="pc-inventory-equip-btn"
+                          aria-pressed={equipped}
+                          title={equipped ? "Unequip" : "Equip"}
+                          onClick={() =>
+                            patch((s) => {
+                              const target = s.inventory[i];
+                              if (!equipped) {
+                                if (!(target.statBonuses?.length)) {
+                                  const inferred = inferItemBonuses(target.name);
+                                  if (inferred.length > 0) target.statBonuses = inferred;
+                                }
+                                target.equipped = true;
+                              } else {
+                                target.equipped = false;
+                              }
+                            })
+                          }
+                        >
+                          {equipped ? "Equipped" : "Equip"}
+                        </button>
+                      ) : null}
                     </div>
                     {pendingRemove === i ? (
                       <div
@@ -790,7 +830,8 @@ export function PcInventoryPanel({
         {equippedGear.armorName ||
         equippedGear.shieldName ||
         equippedGear.mainWeaponName ||
-        equippedGear.offWeaponName ? (
+        equippedGear.offWeaponName ||
+        equippedGear.wornItemNames.length > 0 ? (
           <div className="pc-inventory-loadout">
             <span className="pc-inventory-loadout-label">Wearing</span>
             {equippedGear.armorName ? (
@@ -809,6 +850,11 @@ export function PcInventoryPanel({
                 {equippedGear.offWeaponName} (off-hand)
               </span>
             ) : null}
+            {equippedGear.wornItemNames.map((name) => (
+              <span key={name} className="pc-inventory-loadout-chip">
+                {name}
+              </span>
+            ))}
             {equippedGear.acp !== 0 ? (
               <span className="pc-inventory-loadout-acp">ACP {equippedGear.acp}</span>
             ) : null}

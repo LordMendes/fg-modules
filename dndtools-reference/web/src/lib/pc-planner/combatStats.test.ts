@@ -130,6 +130,50 @@ describe("computeCombatStats", () => {
     assert.equal(stats.melee.parts.size, 1);
     assert.equal(stats.grapple.parts.size, -4);
   });
+
+  it("applies equipped wondrous item bonuses to AC and saves", () => {
+    const state = createDefaultPcPlanState();
+    state.inventory = [
+      {
+        name: "Amulet of Natural Armor +2",
+        quantity: 1,
+        weight: 0,
+        kind: "item",
+        source: "item",
+        equipped: true,
+        statBonuses: [
+          { kind: "combat", stat: "naturalArmor", amount: 2, bonusType: "natural" },
+        ],
+      },
+      {
+        name: "Cloak of Resistance +1",
+        quantity: 1,
+        weight: 1,
+        kind: "item",
+        source: "item",
+        equipped: true,
+        statBonuses: [
+          { kind: "combat", stat: "saves", amount: 1, bonusType: "resistance" },
+        ],
+      },
+      {
+        name: "Ring of Protection +1",
+        quantity: 1,
+        weight: 0,
+        kind: "item",
+        source: "item",
+        equipped: true,
+        statBonuses: [
+          { kind: "combat", stat: "deflection", amount: 1, bonusType: "deflection" },
+        ],
+      },
+    ];
+    const stats = computeCombatStats(state);
+    assert.equal(stats.ac.parts.natural, 2);
+    assert.equal(stats.ac.parts.deflection, 1);
+    assert.equal(stats.fortitude.parts.misc, 1);
+    assert.equal(stats.itemBonuses.combat.naturalArmor.total, 2);
+  });
 });
 
 describe("normalizeCombatState", () => {
