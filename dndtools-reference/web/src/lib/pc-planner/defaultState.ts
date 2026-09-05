@@ -16,6 +16,8 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       deitySlug: null,
       domains: [],
       specialistSchool: null,
+      profileImageKey: null,
+      tokenImageKey: null,
     },
     abilities: {
       str: 10,

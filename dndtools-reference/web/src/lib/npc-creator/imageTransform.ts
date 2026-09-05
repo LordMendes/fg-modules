@@ -66,6 +66,44 @@ export async function renderTransformedImage(
   return canvas.toDataURL("image/jpeg", quality);
 }
 
+export async function renderTransformedImageBlob(
+  sourceUrl: string,
+  transform: ImageTransform,
+  outW: number,
+  outH: number,
+  quality = 0.88,
+): Promise<Blob> {
+  const img = await loadHtmlImage(sourceUrl);
+  const canvas = document.createElement("canvas");
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas not available");
+
+  ctx.fillStyle = "#1a1a1a";
+  ctx.fillRect(0, 0, outW, outH);
+
+  const { x, y, w, h } = imageDrawRect(
+    img.naturalWidth,
+    img.naturalHeight,
+    outW,
+    outH,
+    transform,
+  );
+  ctx.drawImage(img, x, y, w, h);
+
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("Failed to encode image"));
+      },
+      "image/jpeg",
+      quality,
+    );
+  });
+}
+
 export function loadHtmlImage(url: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();

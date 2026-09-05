@@ -4,6 +4,9 @@ import type { NextConfig } from "next";
 const monorepoRoot = path.join(__dirname, "..");
 const isDev = process.env.NODE_ENV === "development";
 const plausibleOrigin = "http://analytics.lcmendes.com";
+const r2PublicOrigin =
+  process.env.NEXT_PUBLIC_R2_PUBLIC_BASE_URL?.replace(/\/$/, "") ||
+  "https://pub-f74b850de3e6476e8302459341d9917e.r2.dev";
 
 /**
  * Security headers for Lighthouse Best Practices (CSP, clickjacking, COOP, HSTS).
@@ -17,7 +20,7 @@ const contentSecurityPolicy = [
   // unsafe-eval kept in dev for Next HMR.
   `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' ${plausibleOrigin}${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' blob: data:",
+  `img-src 'self' blob: data: ${r2PublicOrigin}`,
   "font-src 'self' data:",
   "media-src 'self'",
   `connect-src 'self' ${plausibleOrigin}`,
@@ -36,6 +39,11 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: monorepoRoot,
   poweredByHeader: false,
   transpilePackages: ["@3d-dice/dice-box-threejs"],
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "8mb",
+    },
+  },
   turbopack: {
     root: monorepoRoot,
   },

@@ -11,6 +11,11 @@ import {
 import { syncPcPlanState } from "@/lib/pc-planner/syncState";
 import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
+import {
+  copyPcImageObject,
+  deletePcPlanImages,
+  pcImageObjectKey,
+} from "@/lib/storage/r2";
 import type { Prisma } from "@/generated/prisma/client";
 
 export type PcPlanSummary = {
@@ -181,6 +186,17 @@ export async function savePcPlan(
   const slugs = state.spellClasses.map((sc) => sc.classSlug);
   const classSpellTables = await getClassSpellTablesBySlugs(slugs);
   const synced = syncPcPlanState(state, null, classSpellTables);
+  // Re-read keys just before write so a concurrent upload is not wiped by autosave.
+  const latest = await getOwnedPlan(planId, user.id);
+  const ownedState = parseState(latest?.state ?? owned.state);
+  synced.identity.profileImageKey =
+    ownedState.identity.profileImageKey ||
+    state.identity.profileImageKey ||
+    null;
+  synced.identity.tokenImageKey =
+    ownedState.identity.tokenImageKey ||
+    state.identity.tokenImageKey ||
+    null;
   await prisma.pcPlan.update({
     where: { id: planId },
     data: {
@@ -233,6 +249,11 @@ export async function deletePcPlan(planId: string): Promise<PcPlanActionResult> 
   if (!owned) return { success: false, error: "Plan not found" };
 
   await prisma.pcPlan.delete({ where: { id: planId } });
+  try {
+    await deletePcPlanImages(user.id, planId);
+  } catch {
+    // Best-effort cleanup; plan row is already gone.
+  }
   return { success: true };
 }
 
@@ -301,6 +322,12 @@ export async function duplicatePcPlan(
   }
 
   const state = parseState(owned.state);
+  const sourceProfileKey = state.identity.profileImageKey ?? null;
+  const sourceTokenKey = state.identity.tokenImageKey ?? null;
+  // Clear keys until copies succeed; do not share object keys across plans.
+  state.identity.profileImageKey = null;
+  state.identity.tokenImageKey = null;
+
   const plan = await prisma.pcPlan.create({
     data: {
       userId: user.id,
@@ -308,6 +335,32 @@ export async function duplicatePcPlan(
       state: state as unknown as Prisma.InputJsonValue,
     },
   });
+
+  if (sourceProfileKey) {
+    const dest = pcImageObjectKey(user.id, plan.id, "profile");
+    try {
+      await copyPcImageObject(sourceProfileKey, dest);
+      state.identity.profileImageKey = dest;
+    } catch {
+      // Leave null if copy fails.
+    }
+  }
+  if (sourceTokenKey) {
+    const dest = pcImageObjectKey(user.id, plan.id, "token");
+    try {
+      await copyPcImageObject(sourceTokenKey, dest);
+      state.identity.tokenImageKey = dest;
+    } catch {
+      // Leave null if copy fails.
+    }
+  }
+
+  if (state.identity.profileImageKey || state.identity.tokenImageKey) {
+    await prisma.pcPlan.update({
+      where: { id: plan.id },
+      data: { state: state as unknown as Prisma.InputJsonValue },
+    });
+  }
 
   return {
     success: true,

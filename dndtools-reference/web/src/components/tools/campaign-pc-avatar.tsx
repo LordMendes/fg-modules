@@ -1,22 +1,31 @@
 "use client";
 
-/** Circular placeholder portrait from a character name. */
+/** Circular portrait from token image URL, or initials from a character name. */
 export function CampaignPcAvatar({
   name,
+  src = null,
   size = "md",
   className = "",
 }: {
   name: string;
+  src?: string | null;
   size?: "sm" | "md" | "lg";
   className?: string;
 }) {
   const initials = initialsFromName(name);
   return (
     <span
-      className={`campaign-pc-avatar campaign-pc-avatar--${size}${className ? ` ${className}` : ""}`}
+      className={`campaign-pc-avatar campaign-pc-avatar--${size}${
+        src ? " campaign-pc-avatar--photo" : ""
+      }${className ? ` ${className}` : ""}`}
       aria-hidden="true"
     >
-      {initials}
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} alt="" className="campaign-pc-avatar-img" />
+      ) : (
+        initials
+      )}
     </span>
   );
 }

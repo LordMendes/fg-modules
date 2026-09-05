@@ -29,6 +29,8 @@ export type CampaignPcView = {
   username: string;
   name: string;
   classSummary: string;
+  /** Public URL for the PC token image, if set. */
+  tokenImageUrl: string | null;
   updatedAt: string;
 };
 

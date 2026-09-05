@@ -22,6 +22,7 @@ import { syncPcPlanState } from "@/lib/pc-planner/syncState";
 import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import type { DicePoolItem, RollKind } from "@/lib/dice/types";
+import { tryPublicUrlForKey } from "@/lib/storage/r2";
 import type { Prisma } from "@/generated/prisma/client";
 
 export type CampaignActionResult = {
@@ -129,6 +130,10 @@ function mapPc(row: {
     username: row.user.username,
     name: row.pcPlan.name,
     classSummary,
+    tokenImageUrl: tryPublicUrlForKey(
+      state.identity.tokenImageKey,
+      row.pcPlan.updatedAt,
+    ),
     updatedAt: row.pcPlan.updatedAt.toISOString(),
   };
 }

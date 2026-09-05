@@ -35,6 +35,7 @@ import { useSessionNonce } from "@/components/session-provider";
 import { CampaignPcAvatar } from "@/components/tools/campaign-pc-avatar";
 import { CampaignPcWindow } from "@/components/tools/campaign-pc-window";
 import { PcSheet } from "@/components/tools/pc-sheet";
+import { pcImagePublicUrl } from "@/lib/storage/pc-image-url";
 import {
   campaignSheetPopoutChannelName,
   campaignSheetWindowName,
@@ -583,6 +584,7 @@ function CampaignTableBody({
             })
           }
           updateAbility={updateAbility}
+          planId={plan.id}
           readOnly={!plan.canEdit}
         />
       </>
@@ -593,6 +595,11 @@ function CampaignTableBody({
     state?.identity.name ||
     table.pcs.find((p) => p.pcPlanId === selectedPcPlanId)?.name ||
     "Character";
+
+  const tokenImageUrl =
+    pcImagePublicUrl(state?.identity.tokenImageKey) ||
+    table.pcs.find((p) => p.pcPlanId === selectedPcPlanId)?.tokenImageUrl ||
+    null;
 
   return (
     <>
@@ -892,7 +899,15 @@ function CampaignTableBody({
                       }
                       onClick={() => selectPc(pc.pcPlanId, pc.userId)}
                     >
-                      <CampaignPcAvatar name={pc.name} size="sm" />
+                      <CampaignPcAvatar
+                        name={pc.name}
+                        src={
+                          (state && plan?.id === pc.pcPlanId
+                            ? pcImagePublicUrl(state.identity.tokenImageKey)
+                            : null) || pc.tokenImageUrl
+                        }
+                        size="sm"
+                      />
                       <span className="campaign-party-chip-name">{pc.name}</span>
                     </button>
                   </li>
@@ -905,6 +920,7 @@ function CampaignTableBody({
         {selectedPcPlanId ? (
           <CampaignPcWindow
             characterName={characterName}
+            tokenImageUrl={tokenImageUrl}
             statusLabel={isSelectedPoppedOut ? "Open in other window" : statusLabel}
             minimized={sheetMinimized || isSelectedPoppedOut}
             onMinimizedChange={setSheetMinimized}

@@ -435,6 +435,7 @@ function PcPlannerBody() {
             onUpdateSpellPrepared={updateSpellPrepared}
             onAddInventoryRow={addInventoryRow}
             updateAbility={updateAbility}
+            planId={planId}
           />
         </div>
       </div>

@@ -236,6 +236,10 @@ export type PcPlanState = {
     domains?: DomainEntry[];
     /** Wizard specialist school name, if any. */
     specialistSchool?: string | null;
+    /** R2 object key for square profile image. */
+    profileImageKey?: string | null;
+    /** R2 object key for square token image. */
+    tokenImageKey?: string | null;
   };
   abilities: Record<AbilityKey, number>;
   /** Scores before racial adjustments — edited on Main tab. */

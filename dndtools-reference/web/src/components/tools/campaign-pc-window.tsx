@@ -27,6 +27,7 @@ type WindowSize = { width: number; height: number };
 
 type CampaignPcWindowProps = {
   characterName: string;
+  tokenImageUrl?: string | null;
   statusLabel: string;
   minimized: boolean;
   onMinimizedChange: (minimized: boolean) => void;
@@ -57,6 +58,7 @@ function clampSize(width: number, height: number): WindowSize {
 
 export function CampaignPcWindow({
   characterName,
+  tokenImageUrl = null,
   statusLabel,
   minimized,
   onMinimizedChange,
@@ -288,7 +290,7 @@ export function CampaignPcWindow({
             }
           }}
         >
-          <CampaignPcAvatar name={characterName} size="lg" />
+          <CampaignPcAvatar name={characterName} src={tokenImageUrl} size="lg" />
           <span className="campaign-pc-token-name">{characterName || "Unnamed"}</span>
           {poppedOut ? (
             <span className="campaign-pc-token-hint">Other window</span>

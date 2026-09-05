@@ -169,6 +169,11 @@ Set in `web/.env` (see `web/.env.example`):
 | `SESSION_SECRET` | Random 32-byte secret for session signing |
 | `SITE_URL` | Public site URL (sitemap, robots) |
 | `NEXT_PUBLIC_SITE_URL` | Legacy alias for `SITE_URL` |
+| `R2_ENDPOINT` | Cloudflare R2 S3 API endpoint |
+| `R2_BUCKET` | R2 bucket name (e.g. `dnd-helper`) |
+| `R2_ACCESS_KEY_ID` | R2 API token access key |
+| `R2_SECRET_ACCESS_KEY` | R2 API token secret |
+| `NEXT_PUBLIC_R2_PUBLIC_BASE_URL` | Public r2.dev or custom domain base URL |
 
 ### Coolify (production)
 
@@ -181,6 +186,11 @@ Set these as **runtime** environment variables in Coolify:
 | `DATABASE_URL` | From your linked PostgreSQL service |
 | `SESSION_SECRET` | `openssl rand -base64 32` |
 | `SITE_URL` | Your public URL, e.g. `https://dnd.example.com` |
+| `R2_ENDPOINT` | Cloudflare R2 S3 API endpoint |
+| `R2_BUCKET` | R2 bucket name |
+| `R2_ACCESS_KEY_ID` | R2 API token access key |
+| `R2_SECRET_ACCESS_KEY` | R2 API token secret |
+| `NEXT_PUBLIC_R2_PUBLIC_BASE_URL` | Public r2.dev or custom domain base URL |
 
 `prisma generate` during the Docker build uses a harmless placeholder URL when no database is available — the real `DATABASE_URL` is only read at container startup.
 
@@ -189,7 +199,7 @@ Set these as **runtime** environment variables in Coolify:
 1. Create a new application in Coolify pointing to **`dndtools-reference/`**.
 2. Set Dockerfile to `web/Dockerfile` with build context `dndtools-reference/` (or repo root if the whole repo is checked out).
 3. Add a PostgreSQL 16+ database service and link it — set `DATABASE_URL` on the app from that service.
-4. Set the remaining runtime env vars (`SESSION_SECRET`, `SITE_URL`).
+4. Set the remaining runtime env vars (`SESSION_SECRET`, `SITE_URL`, and R2 vars for PC images).
 5. Deploy — migrations run automatically on startup.
 6. Import data once via Coolify's **Execute Command** (or `docker exec`):
    ```

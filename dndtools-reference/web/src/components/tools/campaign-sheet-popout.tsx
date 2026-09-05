@@ -457,6 +457,7 @@ function CampaignSheetPopoutBody({
                   })
                 }
                 updateAbility={updateAbility}
+                planId={plan.id}
                 readOnly={!plan.canEdit}
               />
             </>

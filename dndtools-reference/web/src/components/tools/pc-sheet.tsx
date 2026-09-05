@@ -6,6 +6,7 @@ import type { EntityPreview, PcCompendiumBundle } from "@/lib/entities";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
+import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
@@ -122,6 +123,8 @@ export type PcSheetProps = {
   onUpdateSpellPrepared: (slug: string, prepared: number) => void;
   onAddInventoryRow: () => void;
   updateAbility: (key: AbilityKey, value: number) => void;
+  /** When set, enables profile/token image upload for this plan. */
+  planId?: string | null;
   /** When true, sheet fields are display-only (DM viewing another player's PC). Rolls still work. */
   readOnly?: boolean;
 };
@@ -163,6 +166,7 @@ export function PcSheet({
   onUpdateSpellPrepared,
   onAddInventoryRow,
   updateAbility,
+  planId = null,
   readOnly = false,
 }: PcSheetProps) {
   const patch = useCallback(
@@ -304,6 +308,33 @@ export function PcSheet({
         {sheetTab === "main" && (
           <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
             <div className="npc-sheet-header pc-main-header">
+              {planId ? (
+                <div className="pc-main-images" aria-label="Character images">
+                  <PcImageSlot
+                    planId={planId}
+                    kind="profile"
+                    imageKey={state.identity.profileImageKey}
+                    readOnly={readOnly}
+                    onKeyChange={(key) =>
+                      patchProp((s) => {
+                        s.identity.profileImageKey = key;
+                      })
+                    }
+                  />
+                  <PcImageSlot
+                    planId={planId}
+                    kind="token"
+                    imageKey={state.identity.tokenImageKey}
+                    readOnly={readOnly}
+                    onKeyChange={(key) =>
+                      patchProp((s) => {
+                        s.identity.tokenImageKey = key;
+                      })
+                    }
+                  />
+                </div>
+              ) : null}
+              <div className="pc-main-header-text">
               <input
                 type="text"
                 className="pc-sheet-input pc-sheet-input--title npc-sheet-name"
@@ -327,6 +358,7 @@ export function PcSheet({
                   ) : null}
                 </p>
               ) : null}
+              </div>
               <dl className="pc-main-meta">
                 <div className="pc-main-meta-race">
                   <dt>Race</dt>
