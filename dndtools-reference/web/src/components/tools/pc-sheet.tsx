@@ -364,18 +364,30 @@ export function PcSheet({
                   <dt>Race</dt>
                   <dd>
                     {showRacePicker ? (
-                      <EntitySearchCombobox
-                        categories={RACE_SEARCH_CATEGORIES}
-                        placeholder="Search races…"
-                        label="Search races"
-                        onSelect={(hit) => {
-                          patch((s) => {
-                            s.identity.race = hit.name;
-                            s.identity.raceSlug = hit.slug;
-                          });
-                          setRacePickerOpen(false);
-                        }}
-                      />
+                      <div className="pc-sheet-race-picker">
+                        <EntitySearchCombobox
+                          categories={RACE_SEARCH_CATEGORIES}
+                          placeholder="Search races…"
+                          label="Search races"
+                          className="pc-meta-search"
+                          onSelect={(hit) => {
+                            patch((s) => {
+                              s.identity.race = hit.name;
+                              s.identity.raceSlug = hit.slug;
+                            });
+                            setRacePickerOpen(false);
+                          }}
+                        />
+                        {hasRace ? (
+                          <button
+                            type="button"
+                            className="pc-sheet-link-btn pc-sheet-link-btn--cancel"
+                            onClick={() => setRacePickerOpen(false)}
+                          >
+                            Cancel
+                          </button>
+                        ) : null}
+                      </div>
                     ) : (
                       <div className="pc-sheet-race-value">
                         <span className="pc-main-race-name">{state.identity.race}</span>
@@ -388,15 +400,6 @@ export function PcSheet({
                         </button>
                       </div>
                     )}
-                    {showRacePicker && hasRace ? (
-                      <button
-                        type="button"
-                        className="pc-sheet-link-btn pc-sheet-link-btn--cancel"
-                        onClick={() => setRacePickerOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                    ) : null}
                   </dd>
                 </div>
                 <div className="pc-main-meta-align">
