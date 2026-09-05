@@ -26,7 +26,7 @@ import {
   campaignSheetPopoutChannelName,
   type CampaignSheetPopoutMessage,
 } from "@/lib/campaign/immersive";
-import type { CampaignTableState } from "@/lib/campaign/types";
+import type { CampaignLiveEvent, CampaignTableState } from "@/lib/campaign/types";
 import { rollViewToResult } from "@/lib/campaign/types";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
@@ -180,6 +180,7 @@ function CampaignSheetPopoutBody({
   pending: boolean;
   startTransition: (fn: () => void) => void;
 }) {
+  const user = useAuthUser()!;
   const nonce = useSessionNonce();
   const [plan, setPlan] = useState<CampaignPcPlanResult | null>(null);
   const [state, setState] = useState<PcPlanState | null>(null);
@@ -192,11 +193,15 @@ function CampaignSheetPopoutBody({
   const [compendium, setCompendium] = useState<PcCompendiumBundle | null>(null);
   const [compendiumLoading, setCompendiumLoading] = useState(false);
   const saveTimer = useRef<number | null>(null);
+  const dirtyRef = useRef(false);
   const lastCompendiumSync = useRef("");
   const lastRaceSlug = useRef<string | null | undefined>(undefined);
+  const lastPcUpdatedAt = useRef<string | null>(null);
 
-  useEffect(() => {
+  const reloadPlan = useCallback(() => {
+    dirtyRef.current = false;
     setHydrated(false);
+    setSaveStatus("idle");
     startTransition(async () => {
       const loaded = await getCampaignPcPlan(campaignId, pcPlanId);
       if (!loaded) {
@@ -208,6 +213,7 @@ function CampaignSheetPopoutBody({
       }
       lastCompendiumSync.current = "";
       lastRaceSlug.current = undefined;
+      dirtyRef.current = false;
       setPlan(loaded);
       setShortcut(loaded.shortcut ?? "");
       setState(loaded.state);
@@ -216,9 +222,32 @@ function CampaignSheetPopoutBody({
     });
   }, [campaignId, pcPlanId, startTransition]);
 
+  useEffect(() => {
+    reloadPlan();
+  }, [reloadPlan]);
+
+  useEffect(() => {
+    const es = new EventSource(`/tools/campaign/${campaignId}/live`);
+    es.onmessage = (msg) => {
+      try {
+        const event = JSON.parse(msg.data) as CampaignLiveEvent;
+        if (event.type !== "pcUpdated") return;
+        if (event.pcPlanId !== pcPlanId) return;
+        if (event.actorUserId === user.id) return;
+        if (lastPcUpdatedAt.current === event.updatedAt) return;
+        lastPcUpdatedAt.current = event.updatedAt;
+        reloadPlan();
+      } catch {
+        // ignore
+      }
+    };
+    return () => es.close();
+  }, [campaignId, pcPlanId, user.id, reloadPlan]);
+
   const patch = useCallback(
     (fn: (draft: PcPlanState) => void) => {
       if (!plan?.canEdit) return;
+      dirtyRef.current = true;
       setState((prev) => {
         if (!prev) return prev;
         const draft = structuredClone(prev);
@@ -241,11 +270,14 @@ function CampaignSheetPopoutBody({
 
   useEffect(() => {
     if (!hydrated || !plan?.canEdit || !state || !plan) return;
+    if (!dirtyRef.current) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
+      if (!dirtyRef.current) return;
       setSaveStatus("saving");
       startTransition(async () => {
         const result = await savePcPlan(plan.id, state);
+        if (result.success) dirtyRef.current = false;
         setSaveStatus(result.success ? "saved" : "error");
       });
     }, 600);

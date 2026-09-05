@@ -18,6 +18,7 @@ export type RollKind =
   | "spell"
   | "hitDie"
   | "tray"
+  | "ability"
   | "other";
 
 export type RollActor = {
@@ -85,5 +86,6 @@ export const ROLL_KIND_LABELS: Record<RollKind, string> = {
   spell: "Spell",
   hitDie: "HD",
   tray: "Tray",
+  ability: "Ability",
   other: "Roll",
 };

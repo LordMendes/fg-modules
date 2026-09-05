@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Users } from "lucide-react";
+import { ScrollText, Users } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -16,6 +16,7 @@ import {
   attachPcToCampaign,
   createPcInCampaign,
   deleteCampaign,
+  getCampaignActivity,
   getCampaignPcPlan,
   getCampaignTable,
   inviteByUsername,
@@ -32,6 +33,7 @@ import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider, useDice } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { useSessionNonce } from "@/components/session-provider";
+import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
 import { CampaignPcAvatar } from "@/components/tools/campaign-pc-avatar";
 import { CampaignPcWindow } from "@/components/tools/campaign-pc-window";
 import { PcSheet } from "@/components/tools/pc-sheet";
@@ -41,7 +43,11 @@ import {
   campaignSheetWindowName,
   type CampaignSheetPopoutMessage,
 } from "@/lib/campaign/immersive";
-import type { CampaignLiveEvent, CampaignTableState } from "@/lib/campaign/types";
+import type {
+  CampaignActivityView,
+  CampaignLiveEvent,
+  CampaignTableState,
+} from "@/lib/campaign/types";
 import { rollViewToResult } from "@/lib/campaign/types";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
@@ -60,7 +66,7 @@ import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
-type MenuId = "roster" | null;
+type MenuId = "roster" | "logs" | null;
 
 function CampaignCharacterNameSync({ name }: { name: string }) {
   const { setCharacterName } = useDice();
@@ -76,6 +82,14 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const [onlineUserIds, setOnlineUserIds] = useState<string[]>([]);
+  const [liveActivity, setLiveActivity] = useState<CampaignActivityView | null>(
+    null,
+  );
+  const [pcUpdatedEvent, setPcUpdatedEvent] = useState<{
+    pcPlanId: string;
+    actorUserId: string;
+    updatedAt: string;
+  } | null>(null);
 
   const refresh = useCallback(() => {
     startTransition(async () => {
@@ -100,7 +114,7 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
     refresh();
   }, [user, refresh]);
 
-  // Live roster + presence via SSE
+  // Live roster + presence + activity via SSE
   useEffect(() => {
     if (!user || !table || table.myStatus !== "active") return;
     const es = new EventSource(`/tools/campaign/${campaignId}/live`);
@@ -113,6 +127,14 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
           );
         } else if (event.type === "presence") {
           setOnlineUserIds(event.onlineUserIds);
+        } else if (event.type === "activity") {
+          setLiveActivity(event.activity);
+        } else if (event.type === "pcUpdated") {
+          setPcUpdatedEvent({
+            pcPlanId: event.pcPlanId,
+            actorUserId: event.actorUserId,
+            updatedAt: event.updatedAt,
+          });
         }
       } catch {
         // ignore
@@ -172,6 +194,8 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
         startTransition={startTransition}
         refresh={refresh}
         onlineUserIds={onlineUserIds}
+        liveActivity={liveActivity}
+        pcUpdatedEvent={pcUpdatedEvent}
       />
     </DiceProvider>
   );
@@ -185,6 +209,8 @@ function CampaignTableBody({
   startTransition,
   refresh,
   onlineUserIds,
+  liveActivity,
+  pcUpdatedEvent,
 }: {
   table: CampaignTableState;
   error: string | null;
@@ -193,6 +219,12 @@ function CampaignTableBody({
   startTransition: (fn: () => void) => void;
   refresh: () => void;
   onlineUserIds: string[];
+  liveActivity: CampaignActivityView | null;
+  pcUpdatedEvent: {
+    pcPlanId: string;
+    actorUserId: string;
+    updatedAt: string;
+  } | null;
 }) {
   const user = useAuthUser()!;
   const router = useRouter();
@@ -218,10 +250,16 @@ function CampaignTableBody({
   const [activeMenu, setActiveMenu] = useState<MenuId>(null);
   const [sheetMinimized, setSheetMinimized] = useState(false);
   const [poppedOutPcPlanId, setPoppedOutPcPlanId] = useState<string | null>(null);
+  const [createOwnerUserId, setCreateOwnerUserId] = useState(user.id);
+  const [activities, setActivities] = useState<CampaignActivityView[]>([]);
+  const [activitiesLoading, setActivitiesLoading] = useState(false);
   const popoutWindowRef = useRef<Window | null>(null);
   const saveTimer = useRef<number | null>(null);
+  const dirtyRef = useRef(false);
   const lastCompendiumSync = useRef("");
   const lastRaceSlug = useRef<string | null | undefined>(undefined);
+  const lastActivityId = useRef<string | null>(null);
+  const lastPcUpdatedAt = useRef<string | null>(null);
 
   const visiblePcs = useMemo(() => {
     if (isDm) return table.pcs;
@@ -242,12 +280,15 @@ function CampaignTableBody({
   const loadPlan = useCallback(
     (pcPlanId: string | null) => {
       if (!pcPlanId) {
+        dirtyRef.current = false;
         setPlan(null);
         setState(null);
         setHydrated(true);
         return;
       }
+      dirtyRef.current = false;
       setHydrated(false);
+      setSaveStatus("idle");
       startTransition(async () => {
         const loaded = await getCampaignPcPlan(table.id, pcPlanId);
         if (!loaded) {
@@ -259,6 +300,7 @@ function CampaignTableBody({
         }
         lastCompendiumSync.current = "";
         lastRaceSlug.current = undefined;
+        dirtyRef.current = false;
         setPlan(loaded);
         setShortcut(loaded.shortcut ?? "");
         setState(loaded.state);
@@ -273,9 +315,39 @@ function CampaignTableBody({
     loadPlan(selectedPcPlanId);
   }, [selectedPcPlanId, loadPlan]);
 
+  useEffect(() => {
+    if (!liveActivity) return;
+    if (lastActivityId.current === liveActivity.id) return;
+    lastActivityId.current = liveActivity.id;
+    setActivities((prev) => {
+      if (prev.some((a) => a.id === liveActivity.id)) return prev;
+      return [liveActivity, ...prev].slice(0, 200);
+    });
+  }, [liveActivity]);
+
+  useEffect(() => {
+    if (!pcUpdatedEvent) return;
+    if (lastPcUpdatedAt.current === pcUpdatedEvent.updatedAt) return;
+    lastPcUpdatedAt.current = pcUpdatedEvent.updatedAt;
+    if (pcUpdatedEvent.actorUserId === user.id) return;
+    if (pcUpdatedEvent.pcPlanId !== selectedPcPlanId) return;
+    loadPlan(selectedPcPlanId);
+  }, [pcUpdatedEvent, user.id, selectedPcPlanId, loadPlan]);
+
+  useEffect(() => {
+    if (activeMenu !== "logs") return;
+    setActivitiesLoading(true);
+    startTransition(async () => {
+      const rows = await getCampaignActivity(table.id);
+      setActivities(rows);
+      setActivitiesLoading(false);
+    });
+  }, [activeMenu, table.id, startTransition]);
+
   const patch = useCallback(
     (fn: (draft: PcPlanState) => void) => {
       if (!plan?.canEdit) return;
+      dirtyRef.current = true;
       setState((prev) => {
         if (!prev) return prev;
         const draft = structuredClone(prev);
@@ -296,15 +368,18 @@ function CampaignTableBody({
     ],
   );
 
-  // Auto-save for owners (paused while this PC is in a pop-out window)
+  // Auto-save only after a real user edit (not on open / compendium sync / remote reload)
   useEffect(() => {
     if (poppedOutPcPlanId && poppedOutPcPlanId === selectedPcPlanId) return;
     if (!hydrated || !plan?.canEdit || !state || !plan) return;
+    if (!dirtyRef.current) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
+      if (!dirtyRef.current) return;
       setSaveStatus("saving");
       startTransition(async () => {
         const result = await savePcPlan(plan.id, state);
+        if (result.success) dirtyRef.current = false;
         setSaveStatus(result.success ? "saved" : "error");
       });
     }, 600);
@@ -617,7 +692,25 @@ function CampaignTableBody({
           >
             <Users size={20} aria-hidden />
           </button>
+          <button
+            type="button"
+            className={`campaign-rail-btn${activeMenu === "logs" ? " campaign-rail-btn--active" : ""}`}
+            aria-pressed={activeMenu === "logs"}
+            aria-label="Campaign logs"
+            title="Campaign logs"
+            onClick={() => setActiveMenu((m) => (m === "logs" ? null : "logs"))}
+          >
+            <ScrollText size={20} aria-hidden />
+          </button>
         </nav>
+
+        {activeMenu === "logs" ? (
+          <CampaignLogsDrawer
+            activities={activities}
+            loading={activitiesLoading}
+            onClose={() => setActiveMenu(null)}
+          />
+        ) : null}
 
         {activeMenu === "roster" ? (
           <>
@@ -795,13 +888,36 @@ function CampaignTableBody({
                   </ul>
 
                   <div className="campaign-pc-actions">
+                    {isDm ? (
+                      <label className="campaign-owner-select">
+                        <span>Owner</span>
+                        <select
+                          value={createOwnerUserId}
+                          onChange={(e) => setCreateOwnerUserId(e.target.value)}
+                          disabled={pending}
+                        >
+                          {table.members
+                            .filter((m) => m.status === "active")
+                            .map((m) => (
+                              <option key={m.userId} value={m.userId}>
+                                {m.username}
+                                {m.role === "dm" ? " (DM)" : ""}
+                              </option>
+                            ))}
+                        </select>
+                      </label>
+                    ) : null}
                     <button
                       type="button"
                       className="tool-btn"
                       disabled={pending}
                       onClick={() =>
                         startTransition(async () => {
-                          const r = await createPcInCampaign(table.id);
+                          const r = await createPcInCampaign(
+                            table.id,
+                            undefined,
+                            isDm ? createOwnerUserId : undefined,
+                          );
                           if (!r.success || !r.planId) {
                             setError(r.error ?? "Could not create PC");
                             return;

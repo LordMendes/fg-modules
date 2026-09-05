@@ -2,11 +2,17 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireCurrentUser, type AuthUser } from "@/lib/auth/session";
+import {
+  canViewerSeeActivity,
+  mapActivityRow,
+  recordAndPublishActivity,
+} from "@/lib/campaign/activityLog";
 import { generateJoinCode, isValidJoinCode, normalizeJoinCode } from "@/lib/campaign/joinCode";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
 import { computeRollTotals, rollFaces } from "@/lib/campaign/rollFaces";
 import { toCampaignRollView } from "@/lib/campaign/rollVisibility";
 import type {
+  CampaignActivityView,
   CampaignMemberRole,
   CampaignMemberStatus,
   CampaignMemberView,
@@ -301,6 +307,14 @@ export async function joinCampaignByCode(
         where: { id: existing.id },
         data: { status: "active" },
       });
+      await recordAndPublishActivity({
+        campaignId: campaign.id,
+        actorUserId: user.id,
+        actorUsername: user.username,
+        kind: "member_join",
+        summary: `${user.username} joined the campaign`,
+        subjectUserId: user.id,
+      });
     }
     return { success: true, campaignId: campaign.id };
   }
@@ -316,6 +330,15 @@ export async function joinCampaignByCode(
       role: "player",
       status: "active",
     },
+  });
+
+  await recordAndPublishActivity({
+    campaignId: campaign.id,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "member_join",
+    summary: `${user.username} joined the campaign`,
+    subjectUserId: user.id,
   });
 
   const table = await buildTableState(campaign.id, user);
@@ -363,6 +386,15 @@ export async function inviteByUsername(
     },
   });
 
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "member_invite",
+    summary: `${user.username} invited ${target.username}`,
+    subjectUserId: target.id,
+  });
+
   return { success: true };
 }
 
@@ -380,6 +412,15 @@ export async function acceptCampaignInvite(
   await prisma.campaignMember.update({
     where: { id: member.id },
     data: { status: "active" },
+  });
+
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "member_join",
+    summary: `${user.username} accepted the invite`,
+    subjectUserId: user.id,
   });
 
   const table = await buildTableState(campaignId, user);
@@ -417,6 +458,15 @@ export async function leaveCampaign(campaignId: string): Promise<CampaignActionR
     where: { campaignId, userId: user.id },
   });
   await prisma.campaignMember.delete({ where: { id: member.id } });
+
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "member_leave",
+    summary: `${user.username} left the campaign`,
+    subjectUserId: user.id,
+  });
 
   const campaign = await prisma.campaign.findUnique({
     where: { id: campaignId },
@@ -461,10 +511,24 @@ export async function kickMember(
     return { success: false, error: "Member not found" };
   }
 
+  const targetUser = await prisma.user.findUnique({
+    where: { id: targetUserId },
+    select: { username: true },
+  });
+
   await prisma.campaignPc.deleteMany({
     where: { campaignId, userId: targetUserId },
   });
   await prisma.campaignMember.delete({ where: { id: target.id } });
+
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "member_kick",
+    summary: `${user.username} kicked ${targetUser?.username ?? "a player"}`,
+    subjectUserId: targetUserId,
+  });
 
   const campaign = await prisma.campaign.findUnique({
     where: { id: campaignId },
@@ -536,6 +600,17 @@ export async function attachPcToCampaign(
     },
   });
 
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "pc_attach",
+    summary: `${user.username} attached ${row.pcPlan.name}`,
+    pcPlanId,
+    pcName: row.pcPlan.name,
+    subjectUserId: user.id,
+  });
+
   const table = await buildTableState(campaignId, user);
   if (table) publishRoster(campaignId, table.members, table.pcs);
 
@@ -545,29 +620,49 @@ export async function attachPcToCampaign(
 export async function createPcInCampaign(
   campaignId: string,
   name?: string,
+  ownerUserId?: string,
 ): Promise<CampaignActionResult & { pc?: CampaignPcView; planId?: string }> {
   const user = await requireCurrentUser();
   const member = await requireActiveMember(campaignId, user.id);
   if (!member) return { success: false, error: "Not a campaign member" };
 
+  const isDm = member.role === "dm";
+  let ownerId = user.id;
+  let ownerUsername = user.username;
+
+  if (isDm && ownerUserId && ownerUserId !== user.id) {
+    const ownerMember = await prisma.campaignMember.findUnique({
+      where: { campaignId_userId: { campaignId, userId: ownerUserId } },
+      include: { user: { select: { id: true, username: true } } },
+    });
+    if (!ownerMember || ownerMember.status !== "active") {
+      return { success: false, error: "Owner must be an active campaign member" };
+    }
+    ownerId = ownerMember.user.id;
+    ownerUsername = ownerMember.user.username;
+  } else if (isDm && ownerUserId === user.id) {
+    ownerId = user.id;
+    ownerUsername = user.username;
+  }
+
   const trimmed =
     name?.trim() ||
-    `${user.username}-${Date.now().toString(36).slice(-4)}`;
+    `${ownerUsername}-${Date.now().toString(36).slice(-4)}`;
   if (trimmed.length > 64) {
     return { success: false, error: "Name must be 64 characters or fewer" };
   }
 
   const existing = await prisma.pcPlan.findUnique({
-    where: { userId_name: { userId: user.id, name: trimmed } },
+    where: { userId_name: { userId: ownerId, name: trimmed } },
   });
   if (existing) {
-    return { success: false, error: "You already have a plan with this name" };
+    return { success: false, error: "Owner already has a plan with this name" };
   }
 
   const state = createDefaultPcPlanState(trimmed);
   const plan = await prisma.pcPlan.create({
     data: {
-      userId: user.id,
+      userId: ownerId,
       name: trimmed,
       state: state as unknown as Prisma.InputJsonValue,
     },
@@ -577,12 +672,27 @@ export async function createPcInCampaign(
     data: {
       campaignId,
       pcPlanId: plan.id,
-      userId: user.id,
+      userId: ownerId,
     },
     include: {
       user: { select: { username: true } },
       pcPlan: { select: { name: true, state: true, updatedAt: true } },
     },
+  });
+
+  const ownerNote =
+    ownerId === user.id
+      ? ""
+      : ` for ${ownerUsername}`;
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "pc_create",
+    summary: `${user.username} created ${trimmed}${ownerNote}`,
+    pcPlanId: plan.id,
+    pcName: trimmed,
+    subjectUserId: ownerId,
   });
 
   const table = await buildTableState(campaignId, user);
@@ -601,6 +711,7 @@ export async function unlinkPcFromCampaign(
 
   const row = await prisma.campaignPc.findFirst({
     where: { id: campaignPcId, campaignId },
+    include: { pcPlan: { select: { name: true } } },
   });
   if (!row) return { success: false, error: "Character link not found" };
 
@@ -610,6 +721,17 @@ export async function unlinkPcFromCampaign(
   }
 
   await prisma.campaignPc.delete({ where: { id: row.id } });
+
+  await recordAndPublishActivity({
+    campaignId,
+    actorUserId: user.id,
+    actorUsername: user.username,
+    kind: "pc_unlink",
+    summary: `${user.username} unlinked ${row.pcPlan.name}`,
+    pcPlanId: row.pcPlanId,
+    pcName: row.pcPlan.name,
+    subjectUserId: row.userId,
+  });
 
   const table = await buildTableState(campaignId, user);
   if (table) publishRoster(campaignId, table.members, table.pcs);
@@ -656,8 +778,37 @@ export async function getCampaignPcPlan(
     state: syncPcPlanState(parsed, null, classSpellTables),
     updatedAt: link.pcPlan.updatedAt,
     ownerUserId: link.userId,
-    canEdit: isOwner,
+    canEdit: isOwner || isDm,
   };
+}
+
+export async function getCampaignActivity(
+  campaignId: string,
+  limit = 100,
+): Promise<CampaignActivityView[]> {
+  const user = await requireCurrentUser();
+  const member = await requireActiveMember(campaignId, user.id);
+  if (!member) return [];
+
+  const isDm = member.role === "dm";
+  const take = Math.min(Math.max(limit, 1), 200);
+  const rows = await prisma.campaignActivity.findMany({
+    where: { campaignId },
+    orderBy: { createdAt: "desc" },
+    take: isDm ? take : take * 3,
+  });
+
+  const views = rows
+    .map(mapActivityRow)
+    .filter((row) =>
+      canViewerSeeActivity(
+        { userId: user.id, isDm },
+        { actorUserId: row.actorUserId, subjectUserId: row.subjectUserId },
+      ),
+    )
+    .slice(0, take);
+
+  return views;
 }
 
 const ALLOWED_KINDS: RollKind[] = [
@@ -671,6 +822,7 @@ const ALLOWED_KINDS: RollKind[] = [
   "hitDie",
   "tray",
   "other",
+  "ability",
 ];
 
 function sanitizeDice(dice: DicePoolItem[]): DicePoolItem[] | null {

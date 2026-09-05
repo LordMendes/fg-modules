@@ -50,6 +50,7 @@ import {
   emptyAbilityDamage,
   racialModLabel,
 } from "@/lib/pc-planner/syncDerived";
+import { abilityModifier } from "@/lib/pc-planner/combatStats";
 import {
   PC_SHEET_TABS,
   type AbilityKey,
@@ -64,11 +65,6 @@ const RACE_SEARCH_CATEGORIES: CategoryKey[] = ["races"];
 const CLASS_SEARCH_CATEGORIES: CategoryKey[] = ["classes"];
 const DEITY_SEARCH_CATEGORIES: CategoryKey[] = ["deities"];
 const DOMAIN_SEARCH_CATEGORIES: CategoryKey[] = ["domains"];
-
-function abilityMod(score: number): string {
-  const m = Math.floor((score - 10) / 2);
-  return m >= 0 ? `+${m}` : `${m}`;
-}
 
 function BonusSourcesHint({
   amount,
@@ -738,7 +734,12 @@ export function PcSheet({
                           }
                         >
                           <span className="pc-ability-col-label">Modifier</span>
-                          <span className="pc-sheet-mod">{abilityMod(current)}</span>
+                          <RollableStat
+                            className="pc-sheet-mod"
+                            label={`${key.toUpperCase()} check`}
+                            modifier={abilityModifier(current)}
+                            kind="ability"
+                          />
                         </div>
                       </div>
                       {hasRace && racialModLabel(racial) ? (

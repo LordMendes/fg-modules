@@ -518,20 +518,21 @@ model ImportRun {
 }
 
 model User {
-  id                String           @id @default(cuid())
-  email             String           @unique
-  username          String           @unique
+  id                String             @id @default(cuid())
+  email             String             @unique
+  username          String             @unique
   name              String?
   passwordHash      String
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   sessions          UserSession[]
   lists             SavedList[]
   pcPlans           PcPlan[]
-  campaignsAsDm     Campaign[]       @relation("CampaignDm")
+  campaignsAsDm     Campaign[]         @relation("CampaignDm")
   campaignMembers   CampaignMember[]
   campaignPcs       CampaignPc[]
   campaignRolls     CampaignRoll[]
+  campaignActivities CampaignActivity[]
 }
 
 model PcPlan {
@@ -551,16 +552,17 @@ model PcPlan {
 }
 
 model Campaign {
-  id        String           @id @default(cuid())
-  name      String
-  joinCode  String           @unique
-  dmUserId  String
-  dm        User             @relation("CampaignDm", fields: [dmUserId], references: [id], onDelete: Cascade)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  members   CampaignMember[]
-  pcs       CampaignPc[]
-  rolls     CampaignRoll[]
+  id         String             @id @default(cuid())
+  name       String
+  joinCode   String             @unique
+  dmUserId   String
+  dm         User               @relation("CampaignDm", fields: [dmUserId], references: [id], onDelete: Cascade)
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  members    CampaignMember[]
+  pcs        CampaignPc[]
+  rolls      CampaignRoll[]
+  activities CampaignActivity[]
 
   @@index([dmUserId])
 }
@@ -622,6 +624,28 @@ model CampaignRoll {
   createdAt     DateTime @default(now())
 
   @@index([campaignId, createdAt])
+}
+
+/// Campaign change log (PC edits, roster events). Not dice rolls.
+model CampaignActivity {
+  id            String   @id @default(cuid())
+  campaignId    String
+  campaign      Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  actorUserId   String
+  actor         User     @relation(fields: [actorUserId], references: [id], onDelete: Cascade)
+  actorUsername String
+  /// pc_update | pc_create | pc_attach | pc_unlink | pc_rename | member_join | member_leave | member_kick | member_invite
+  kind          String
+  summary       String
+  details       Json     @default("[]")
+  pcPlanId      String?
+  pcName        String?
+  /// PC owner or membership target (for player visibility filtering).
+  subjectUserId String?
+  createdAt     DateTime @default(now())
+
+  @@index([campaignId, createdAt])
+  @@index([campaignId, subjectUserId])
 }
 
 model UserSession {

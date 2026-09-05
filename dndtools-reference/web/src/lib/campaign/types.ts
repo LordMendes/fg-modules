@@ -72,6 +72,36 @@ export type CampaignRollView = {
   revealResult: boolean;
 };
 
+export type CampaignActivityKind =
+  | "pc_update"
+  | "pc_create"
+  | "pc_attach"
+  | "pc_unlink"
+  | "pc_rename"
+  | "member_join"
+  | "member_leave"
+  | "member_kick"
+  | "member_invite";
+
+export type CampaignActivityDetail = {
+  path: string;
+  from: string | null;
+  to: string | null;
+};
+
+export type CampaignActivityView = {
+  id: string;
+  kind: CampaignActivityKind;
+  summary: string;
+  details: CampaignActivityDetail[];
+  actorUserId: string;
+  actorUsername: string;
+  pcPlanId: string | null;
+  pcName: string | null;
+  subjectUserId: string | null;
+  createdAt: string;
+};
+
 export type CampaignRollEvent = {
   type: "roll";
   roll: CampaignRollView;
@@ -81,7 +111,9 @@ export type CampaignLiveEvent =
   | CampaignRollEvent
   | { type: "ping" }
   | { type: "roster"; members: CampaignMemberView[]; pcs: CampaignPcView[] }
-  | { type: "presence"; onlineUserIds: string[] };
+  | { type: "presence"; onlineUserIds: string[] }
+  | { type: "pcUpdated"; pcPlanId: string; actorUserId: string; updatedAt: string }
+  | { type: "activity"; activity: CampaignActivityView };
 
 export type StartCampaignRollInput = {
   campaignId: string;

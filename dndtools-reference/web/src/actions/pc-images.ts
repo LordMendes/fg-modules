@@ -2,9 +2,14 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireCurrentUser } from "@/lib/auth/session";
+import {
+  publishPcUpdated,
+  recordAndPublishActivity,
+} from "@/lib/campaign/activityLog";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
 import type { CampaignMemberView, CampaignPcView } from "@/lib/campaign/types";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import { getWritablePlan } from "@/lib/pc-planner/planAccess";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import {
   PC_IMAGE_MAX_BYTES,
@@ -139,10 +144,8 @@ export async function uploadPcImage(
     return { success: false, error: "Invalid image kind" };
   }
 
-  const owned = await prisma.pcPlan.findFirst({
-    where: { id: planId, userId: user.id },
-  });
-  if (!owned) return { success: false, error: "Plan not found" };
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return { success: false, error: "Plan not found" };
 
   const file = formData.get("file");
   if (!(file instanceof File)) {
@@ -168,14 +171,16 @@ export async function uploadPcImage(
     };
   }
 
-  const key = pcImageObjectKey(user.id, planId, kind);
+  // Always key under the plan owner so DM uploads do not orphan files.
+  const key = pcImageObjectKey(writable.userId, planId, kind);
   try {
     await putPcImageObject(key, processed.buffer);
   } catch {
     return { success: false, error: "Failed to upload image" };
   }
 
-  const state = parseState(owned.state);
+  const previousState = parseState(writable.state);
+  const state = parseState(writable.state);
   const field = identityKeyField(kind);
   state.identity[field] = key;
 
@@ -188,6 +193,31 @@ export async function uploadPcImage(
 
   if (kind === "token") {
     await republishCampaignsForPlan(planId);
+  }
+
+  const links = await prisma.campaignPc.findMany({
+    where: { pcPlanId: planId },
+    select: { campaignId: true, userId: true },
+  });
+  for (const link of links) {
+    publishPcUpdated(link.campaignId, planId, user.id, updated.updatedAt);
+    await recordAndPublishActivity({
+      campaignId: link.campaignId,
+      actorUserId: user.id,
+      actorUsername: user.username,
+      kind: "pc_update",
+      summary: `${user.username} updated ${writable.name} (${kind} image)`,
+      details: [
+        {
+          path: `${kind} image`,
+          from: previousState.identity[field] ? "set" : "none",
+          to: "set",
+        },
+      ],
+      pcPlanId: planId,
+      pcName: writable.name,
+      subjectUserId: link.userId,
+    });
   }
 
   return {
@@ -206,14 +236,13 @@ export async function removePcImage(
     return { success: false, error: "Invalid image kind" };
   }
 
-  const owned = await prisma.pcPlan.findFirst({
-    where: { id: planId, userId: user.id },
-  });
-  if (!owned) return { success: false, error: "Plan not found" };
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return { success: false, error: "Plan not found" };
 
-  const state = parseState(owned.state);
+  const state = parseState(writable.state);
   const field = identityKeyField(kind);
-  const existingKey = state.identity[field] ?? pcImageObjectKey(user.id, planId, kind);
+  const existingKey =
+    state.identity[field] ?? pcImageObjectKey(writable.userId, planId, kind);
 
   try {
     await deletePcImageObject(existingKey);
@@ -222,7 +251,7 @@ export async function removePcImage(
   }
 
   state.identity[field] = null;
-  await prisma.pcPlan.update({
+  const updated = await prisma.pcPlan.update({
     where: { id: planId },
     data: {
       state: state as unknown as Prisma.InputJsonValue,
@@ -231,6 +260,31 @@ export async function removePcImage(
 
   if (kind === "token") {
     await republishCampaignsForPlan(planId);
+  }
+
+  const links = await prisma.campaignPc.findMany({
+    where: { pcPlanId: planId },
+    select: { campaignId: true, userId: true },
+  });
+  for (const link of links) {
+    publishPcUpdated(link.campaignId, planId, user.id, updated.updatedAt);
+    await recordAndPublishActivity({
+      campaignId: link.campaignId,
+      actorUserId: user.id,
+      actorUsername: user.username,
+      kind: "pc_update",
+      summary: `${user.username} removed ${writable.name} ${kind} image`,
+      details: [
+        {
+          path: `${kind} image`,
+          from: "set",
+          to: "none",
+        },
+      ],
+      pcPlanId: planId,
+      pcName: writable.name,
+      subjectUserId: link.userId,
+    });
   }
 
   return { success: true };

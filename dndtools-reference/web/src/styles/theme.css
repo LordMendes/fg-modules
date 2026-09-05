@@ -4404,6 +4404,24 @@ body {
   font-weight: 700;
 }
 
+.pc-ability-col--mod .dice-rollable.pc-sheet-mod {
+  width: 100%;
+  min-height: 1.75rem;
+  padding: 0.125rem 0.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: transparent;
+  color: inherit;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pc-ability-col--mod .dice-rollable.pc-sheet-mod:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--accent-gold) 45%, transparent);
+  background: color-mix(in srgb, var(--accent-gold) 10%, transparent);
+}
+
 .pc-ability-col--dmg .pc-ability-col-label {
   color: color-mix(in srgb, var(--accent-red, #c0392b) 70%, var(--text-muted));
 }
@@ -4413,7 +4431,8 @@ body {
   font-weight: 700;
 }
 
-.pc-ability-col--mod-damaged .pc-sheet-mod {
+.pc-ability-col--mod-damaged .pc-sheet-mod,
+.pc-ability-col--mod-damaged .dice-rollable.pc-sheet-mod {
   color: var(--accent-red, #c0392b);
 }
 
@@ -9784,6 +9803,105 @@ html.dice-secret-cursor * {
   background: color-mix(in srgb, var(--accent-gold) 16%, var(--bg-card));
 }
 
+.campaign-owner-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.campaign-owner-select select {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: var(--bg-input, var(--bg-card));
+  color: var(--text-primary, inherit);
+}
+
+.campaign-log-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.campaign-log-item {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color) 55%, transparent);
+}
+
+.campaign-log-item-main {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.campaign-log-time {
+  flex: 0 0 4.5rem;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.campaign-log-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.campaign-log-pc {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.campaign-log-summary {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.campaign-log-toggle {
+  align-self: flex-start;
+  margin-top: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.campaign-log-details {
+  list-style: none;
+  margin: 0.4rem 0 0 5.15rem;
+  padding: 0.4rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--bg-muted, #000) 8%, transparent);
+  font-size: 0.75rem;
+}
+
+.campaign-log-details li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.campaign-log-details strong {
+  font-weight: 600;
+}
+
 .campaign-drawer-backdrop {
   position: fixed;
   inset: 0 0 0 3.25rem;
@@ -10245,6 +10363,11 @@ html.dice-secret-cursor * {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  align-items: flex-end;
+}
+
+.campaign-pc-actions .campaign-owner-select {
+  flex: 1 1 100%;
 }
 
 .campaign-import {

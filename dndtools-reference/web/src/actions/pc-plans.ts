@@ -2,7 +2,16 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireCurrentUser } from "@/lib/auth/session";
+import {
+  diffPcPlanState,
+  summarizePcUpdate,
+} from "@/lib/campaign/activityDiff";
+import {
+  publishPcUpdated,
+  recordAndPublishActivity,
+} from "@/lib/campaign/activityLog";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import { getWritablePlan } from "@/lib/pc-planner/planAccess";
 import { computeSpellClass, formatSlotSummary } from "@/lib/pc-planner/spellSlots";
 import {
   matchesClassLevelFilter,
@@ -58,6 +67,70 @@ async function getOwnedPlan(planId: string, userId: string) {
   return prisma.pcPlan.findFirst({
     where: { id: planId, userId },
   });
+}
+
+async function notifyCampaignLinksAfterWrite(
+  planId: string,
+  actor: { id: string; username: string },
+  opts: {
+    previousState?: PcPlanState;
+    nextState?: PcPlanState;
+    rename?: { from: string; to: string; shortcutChanged?: boolean };
+    updatedAt: Date;
+  },
+) {
+  const links = await prisma.campaignPc.findMany({
+    where: { pcPlanId: planId },
+    select: {
+      campaignId: true,
+      userId: true,
+      pcPlan: { select: { name: true } },
+    },
+  });
+  if (links.length === 0) return;
+
+  for (const link of links) {
+    if (opts.rename) {
+      publishPcUpdated(link.campaignId, planId, actor.id, opts.updatedAt);
+      await recordAndPublishActivity({
+        campaignId: link.campaignId,
+        actorUserId: actor.id,
+        actorUsername: actor.username,
+        kind: "pc_rename",
+        summary: `${actor.username} renamed ${opts.rename.from} to ${opts.rename.to}`,
+        details: [
+          {
+            path: "name",
+            from: opts.rename.from,
+            to: opts.rename.to,
+          },
+        ],
+        pcPlanId: planId,
+        pcName: opts.rename.to,
+        subjectUserId: link.userId,
+      });
+      continue;
+    }
+
+    if (opts.previousState && opts.nextState) {
+      const changes = diffPcPlanState(opts.previousState, opts.nextState);
+      if (changes.length === 0) continue;
+      // Only notify peers when something actually changed (avoids save ping-pong).
+      publishPcUpdated(link.campaignId, planId, actor.id, opts.updatedAt);
+      const pcName = opts.nextState.identity.name.trim() || link.pcPlan.name;
+      await recordAndPublishActivity({
+        campaignId: link.campaignId,
+        actorUserId: actor.id,
+        actorUsername: actor.username,
+        kind: "pc_update",
+        summary: summarizePcUpdate(pcName, actor.username, changes),
+        details: changes,
+        pcPlanId: planId,
+        pcName,
+        subjectUserId: link.userId,
+      });
+    }
+  }
 }
 
 function summarizePlan(state: PcPlanState): { classSummary: string; slotSummary: string } {
@@ -180,15 +253,17 @@ export async function savePcPlan(
   state: PcPlanState,
 ): Promise<PcPlanActionResult> {
   const user = await requireCurrentUser();
-  const owned = await getOwnedPlan(planId, user.id);
-  if (!owned) return { success: false, error: "Plan not found" };
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return { success: false, error: "Plan not found" };
+
+  const previousState = parseState(writable.state);
 
   const slugs = state.spellClasses.map((sc) => sc.classSlug);
   const classSpellTables = await getClassSpellTablesBySlugs(slugs);
   const synced = syncPcPlanState(state, null, classSpellTables);
   // Re-read keys just before write so a concurrent upload is not wiped by autosave.
-  const latest = await getOwnedPlan(planId, user.id);
-  const ownedState = parseState(latest?.state ?? owned.state);
+  const latest = await getWritablePlan(planId, user.id);
+  const ownedState = parseState(latest?.state ?? writable.state);
   synced.identity.profileImageKey =
     ownedState.identity.profileImageKey ||
     state.identity.profileImageKey ||
@@ -197,13 +272,31 @@ export async function savePcPlan(
     ownedState.identity.tokenImageKey ||
     state.identity.tokenImageKey ||
     null;
-  await prisma.pcPlan.update({
+
+  const nextName = synced.identity.name.trim() || writable.name;
+  const changes = diffPcPlanState(previousState, synced);
+  const nameChanged = nextName !== writable.name;
+  if (changes.length === 0 && !nameChanged) {
+    return { success: true };
+  }
+
+  const updated = await prisma.pcPlan.update({
     where: { id: planId },
     data: {
       state: synced as unknown as Prisma.InputJsonValue,
-      name: synced.identity.name.trim() || owned.name,
+      name: nextName,
     },
   });
+
+  try {
+    await notifyCampaignLinksAfterWrite(planId, user, {
+      previousState,
+      nextState: synced,
+      updatedAt: updated.updatedAt,
+    });
+  } catch (err) {
+    console.error("Campaign activity log failed after savePcPlan", err);
+  }
 
   return { success: true };
 }
@@ -217,28 +310,54 @@ export async function renamePcPlan(
   const nameError = validatePlanName(name);
   if (nameError) return { success: false, error: nameError };
 
-  const owned = await getOwnedPlan(planId, user.id);
-  if (!owned) return { success: false, error: "Plan not found" };
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return { success: false, error: "Plan not found" };
 
   const trimmed = name.trim();
   const duplicate = await prisma.pcPlan.findFirst({
-    where: { userId: user.id, name: trimmed, NOT: { id: planId } },
+    where: {
+      userId: writable.userId,
+      name: trimmed,
+      NOT: { id: planId },
+    },
   });
   if (duplicate) {
-    return { success: false, error: "You already have a plan with this name" };
+    return { success: false, error: "A plan with this name already exists for the owner" };
   }
 
   const shortcutValue =
     shortcut === undefined
-      ? owned.shortcut
+      ? writable.shortcut
       : shortcut?.trim()
         ? shortcut.trim().slice(0, 32)
         : null;
 
-  await prisma.pcPlan.update({
+  const previousName = writable.name;
+  const updated = await prisma.pcPlan.update({
     where: { id: planId },
     data: { name: trimmed, shortcut: shortcutValue },
   });
+
+  // Keep identity.name in sync when renaming from the campaign chrome.
+  const state = parseState(writable.state);
+  if (state.identity.name !== trimmed) {
+    state.identity.name = trimmed;
+    await prisma.pcPlan.update({
+      where: { id: planId },
+      data: { state: state as unknown as Prisma.InputJsonValue },
+    });
+  }
+
+  if (previousName !== trimmed || shortcut !== undefined) {
+    try {
+      await notifyCampaignLinksAfterWrite(planId, user, {
+        rename: { from: previousName, to: trimmed },
+        updatedAt: updated.updatedAt,
+      });
+    } catch (err) {
+      console.error("Campaign activity log failed after renamePcPlan", err);
+    }
+  }
 
   return { success: true };
 }

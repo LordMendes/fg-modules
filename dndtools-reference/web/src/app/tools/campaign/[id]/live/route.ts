@@ -9,6 +9,7 @@ type RouteContext = {
   params: Promise<{ id: string }>;
 };
 
+/** SSE hub for campaign roster, presence, rolls, activity, and pcUpdated. */
 export async function GET(_request: Request, context: RouteContext) {
   const { id: campaignId } = await context.params;
   const user = await getCurrentUser();
