@@ -112,6 +112,18 @@ export function useFloatingTrayPos({
     setPos(clampTrayPos(next.x, next.y, rect.width, rect.height));
   }
 
+  /** Resolve a drag origin even before localStorage hydration finishes. */
+  function ensurePos(): TrayPos | null {
+    if (pos) return pos;
+    const el = rootRef.current;
+    if (!el) return null;
+    const rect = el.getBoundingClientRect();
+    const next = defaultPos(rect.width || 180, rect.height || 48);
+    const clamped = clampTrayPos(next.x, next.y, rect.width || 180, rect.height || 48);
+    setPos(clamped);
+    return clamped;
+  }
+
   function beginMoveDrag(event: ReactPointerEvent, current: TrayPos) {
     if (event.button !== 0) return;
     movedRef.current = false;
@@ -153,7 +165,9 @@ export function useFloatingTrayPos({
   return {
     rootRef,
     pos,
+    setPos,
     movedRef,
+    ensurePos,
     beginMoveDrag,
     onMovePointerMove,
     onMovePointerUp,

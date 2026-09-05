@@ -20,6 +20,34 @@ function channels(): Map<string, CampaignChannel> {
   return globalForHub.__campaignLiveHub;
 }
 
+function uniqueOnlineUserIds(channel: CampaignChannel): string[] {
+  const ids = new Set<string>();
+  for (const sub of channel.subscribers) {
+    ids.add(sub.userId);
+  }
+  return Array.from(ids);
+}
+
+function broadcastPresence(campaignId: string, channel: CampaignChannel) {
+  const event: CampaignLiveEvent = {
+    type: "presence",
+    onlineUserIds: uniqueOnlineUserIds(channel),
+  };
+  for (const sub of channel.subscribers) {
+    try {
+      sub.send(event);
+    } catch {
+      // drop broken subscriber on next GC via unsubscribe
+    }
+  }
+}
+
+export function getCampaignOnlineUserIds(campaignId: string): string[] {
+  const channel = channels().get(campaignId);
+  if (!channel) return [];
+  return uniqueOnlineUserIds(channel);
+}
+
 export function subscribeCampaignLive(
   campaignId: string,
   userId: string,
@@ -31,13 +59,31 @@ export function subscribeCampaignLive(
     channel = { subscribers: new Set() };
     map.set(campaignId, channel);
   }
+
+  const wasOnline = uniqueOnlineUserIds(channel).includes(userId);
   const sub: Subscriber = { userId, send };
   channel.subscribers.add(sub);
 
+  // Always tell the new connection who is online.
+  try {
+    send({ type: "presence", onlineUserIds: uniqueOnlineUserIds(channel) });
+  } catch {
+    // ignore
+  }
+
+  if (!wasOnline) {
+    broadcastPresence(campaignId, channel);
+  }
+
   return () => {
     channel!.subscribers.delete(sub);
+    const stillOnline = uniqueOnlineUserIds(channel!).includes(userId);
     if (channel!.subscribers.size === 0) {
       map.delete(campaignId);
+      return;
+    }
+    if (!stillOnline) {
+      broadcastPresence(campaignId, channel!);
     }
   };
 }

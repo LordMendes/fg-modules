@@ -78,7 +78,8 @@ export type CampaignRollEvent = {
 export type CampaignLiveEvent =
   | CampaignRollEvent
   | { type: "ping" }
-  | { type: "roster"; members: CampaignMemberView[]; pcs: CampaignPcView[] };
+  | { type: "roster"; members: CampaignMemberView[]; pcs: CampaignPcView[] }
+  | { type: "presence"; onlineUserIds: string[] };
 
 export type StartCampaignRollInput = {
   campaignId: string;

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Users } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -31,8 +32,15 @@ import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider, useDice } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { useSessionNonce } from "@/components/session-provider";
+import { CampaignPcAvatar } from "@/components/tools/campaign-pc-avatar";
+import { CampaignPcWindow } from "@/components/tools/campaign-pc-window";
 import { PcSheet } from "@/components/tools/pc-sheet";
-import type { CampaignTableState } from "@/lib/campaign/types";
+import {
+  campaignSheetPopoutChannelName,
+  campaignSheetWindowName,
+  type CampaignSheetPopoutMessage,
+} from "@/lib/campaign/immersive";
+import type { CampaignLiveEvent, CampaignTableState } from "@/lib/campaign/types";
 import { rollViewToResult } from "@/lib/campaign/types";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
@@ -51,6 +59,8 @@ import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
+type MenuId = "roster" | null;
+
 function CampaignCharacterNameSync({ name }: { name: string }) {
   const { setCharacterName } = useDice();
   useEffect(() => {
@@ -64,6 +74,7 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
   const [table, setTable] = useState<CampaignTableState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [onlineUserIds, setOnlineUserIds] = useState<string[]>([]);
 
   const refresh = useCallback(() => {
     startTransition(async () => {
@@ -88,23 +99,19 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
     refresh();
   }, [user, refresh]);
 
-  // Live roster updates via SSE
+  // Live roster + presence via SSE
   useEffect(() => {
     if (!user || !table || table.myStatus !== "active") return;
     const es = new EventSource(`/tools/campaign/${campaignId}/live`);
     es.onmessage = (msg) => {
       try {
-        const event = JSON.parse(msg.data) as {
-          type: string;
-          members?: CampaignTableState["members"];
-          pcs?: CampaignTableState["pcs"];
-        };
+        const event = JSON.parse(msg.data) as CampaignLiveEvent;
         if (event.type === "roster" && event.members && event.pcs) {
           setTable((prev) =>
-            prev
-              ? { ...prev, members: event.members!, pcs: event.pcs! }
-              : prev,
+            prev ? { ...prev, members: event.members, pcs: event.pcs } : prev,
           );
+        } else if (event.type === "presence") {
+          setOnlineUserIds(event.onlineUserIds);
         }
       } catch {
         // ignore
@@ -158,12 +165,12 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
     >
       <CampaignTableBody
         table={table}
-        setTable={setTable}
         error={error}
         setError={setError}
         pending={pending}
         startTransition={startTransition}
         refresh={refresh}
+        onlineUserIds={onlineUserIds}
       />
     </DiceProvider>
   );
@@ -171,20 +178,20 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
 
 function CampaignTableBody({
   table,
-  setTable,
   error,
   setError,
   pending,
   startTransition,
   refresh,
+  onlineUserIds,
 }: {
   table: CampaignTableState;
-  setTable: (t: CampaignTableState | null) => void;
   error: string | null;
   setError: (e: string | null) => void;
   pending: boolean;
   startTransition: (fn: () => void) => void;
   refresh: () => void;
+  onlineUserIds: string[];
 }) {
   const user = useAuthUser()!;
   const router = useRouter();
@@ -207,6 +214,10 @@ function CampaignTableBody({
   const [inviteUsername, setInviteUsername] = useState("");
   const [showImport, setShowImport] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<MenuId>(null);
+  const [sheetMinimized, setSheetMinimized] = useState(false);
+  const [poppedOutPcPlanId, setPoppedOutPcPlanId] = useState<string | null>(null);
+  const popoutWindowRef = useRef<Window | null>(null);
   const saveTimer = useRef<number | null>(null);
   const lastCompendiumSync = useRef("");
   const lastRaceSlug = useRef<string | null | undefined>(undefined);
@@ -215,6 +226,11 @@ function CampaignTableBody({
     if (isDm) return table.pcs;
     return table.pcs.filter((p) => p.userId === user.id);
   }, [isDm, table.pcs, user.id]);
+
+  const onlinePcs = useMemo(() => {
+    const online = new Set(onlineUserIds);
+    return table.pcs.filter((p) => online.has(p.userId));
+  }, [table.pcs, onlineUserIds]);
 
   useEffect(() => {
     if (selectedPcPlanId && !visiblePcs.some((p) => p.pcPlanId === selectedPcPlanId)) {
@@ -246,6 +262,7 @@ function CampaignTableBody({
         setShortcut(loaded.shortcut ?? "");
         setState(loaded.state);
         setHydrated(true);
+        setSheetMinimized(false);
       });
     },
     [table.id, setError, startTransition],
@@ -278,8 +295,9 @@ function CampaignTableBody({
     ],
   );
 
-  // Auto-save for owners
+  // Auto-save for owners (paused while this PC is in a pop-out window)
   useEffect(() => {
+    if (poppedOutPcPlanId && poppedOutPcPlanId === selectedPcPlanId) return;
     if (!hydrated || !plan?.canEdit || !state || !plan) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
@@ -292,13 +310,39 @@ function CampaignTableBody({
     return () => {
       if (saveTimer.current) clearTimeout(saveTimer.current);
     };
-  }, [state, hydrated, plan, startTransition]);
+  }, [state, hydrated, plan, startTransition, poppedOutPcPlanId, selectedPcPlanId]);
+
+  useEffect(() => {
+    if (typeof BroadcastChannel === "undefined") return;
+    const channel = new BroadcastChannel(campaignSheetPopoutChannelName(table.id));
+    channel.onmessage = (event: MessageEvent<CampaignSheetPopoutMessage>) => {
+      const msg = event.data;
+      if (!msg || typeof msg !== "object") return;
+      if (msg.type === "opened") {
+        setPoppedOutPcPlanId(msg.pcPlanId);
+        if (msg.pcPlanId === selectedPcPlanId) {
+          setSheetMinimized(true);
+        }
+      } else if (msg.type === "closed") {
+        setPoppedOutPcPlanId((prev) => (prev === msg.pcPlanId ? null : prev));
+        if (popoutWindowRef.current && popoutWindowRef.current.closed) {
+          popoutWindowRef.current = null;
+        }
+        if (msg.pcPlanId === selectedPcPlanId) {
+          loadPlan(msg.pcPlanId);
+          setSheetMinimized(false);
+        }
+      }
+    };
+    return () => channel.close();
+  }, [table.id, selectedPcPlanId, loadPlan]);
 
   const compendiumKeyValue = state
     ? compendiumSyncKey(state.identity.classLevels, state.identity.raceSlug)
     : "";
 
   useEffect(() => {
+    if (poppedOutPcPlanId && poppedOutPcPlanId === selectedPcPlanId) return;
     if (!hydrated || !state || !nonce) return;
     if (!plan?.canEdit && compendium) return;
 
@@ -358,7 +402,7 @@ function CampaignTableBody({
       });
       setCompendiumLoading(false);
     });
-  }, [hydrated, state, plan?.canEdit, nonce, compendiumKeyValue, startTransition, compendium]);
+  }, [hydrated, state, plan?.canEdit, nonce, compendiumKeyValue, startTransition, compendium, poppedOutPcPlanId, selectedPcPlanId]);
 
   function updateAbility(key: AbilityKey, value: number) {
     const next = Number.isFinite(value) ? Math.max(1, Math.min(99, Math.round(value))) : 10;
@@ -368,14 +412,85 @@ function CampaignTableBody({
     });
   }
 
+  function focusPopOut(pcPlanId: string) {
+    const existing = popoutWindowRef.current;
+    if (existing && !existing.closed) {
+      existing.focus();
+      return;
+    }
+    if (typeof BroadcastChannel !== "undefined") {
+      const channel = new BroadcastChannel(campaignSheetPopoutChannelName(table.id));
+      const msg: CampaignSheetPopoutMessage = { type: "focus", pcPlanId };
+      channel.postMessage(msg);
+      channel.close();
+    }
+    try {
+      const named = window.open("", campaignSheetWindowName(pcPlanId));
+      if (named && !named.closed) {
+        popoutWindowRef.current = named;
+        named.focus();
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  function openPopOut(pcPlanId: string) {
+    const url = `/tools/campaign/${table.id}/sheet/${pcPlanId}`;
+    const features = "popup=yes,width=900,height=900,menubar=no,toolbar=no,location=no,status=no";
+    const win = window.open(url, campaignSheetWindowName(pcPlanId), features);
+    if (!win) {
+      setError("Pop-up blocked. Allow pop-ups for this site to open the sheet in a new window.");
+      return;
+    }
+    popoutWindowRef.current = win;
+    win.focus();
+    setPoppedOutPcPlanId(pcPlanId);
+    setSheetMinimized(true);
+    setSelectedPcPlanId(pcPlanId);
+  }
+
+  function selectPc(pcPlanId: string, ownerUserId: string) {
+    if (!isDm && ownerUserId !== user.id) return;
+    if (poppedOutPcPlanId === pcPlanId) {
+      setSelectedPcPlanId(pcPlanId);
+      setActiveMenu(null);
+      focusPopOut(pcPlanId);
+      return;
+    }
+    setSelectedPcPlanId(pcPlanId);
+    setSheetMinimized(false);
+    setActiveMenu(null);
+  }
+
+  const isSelectedPoppedOut =
+    Boolean(selectedPcPlanId) && poppedOutPcPlanId === selectedPcPlanId;
+
   const joinUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}/tools/campaign?join=${table.joinCode}`
       : `/tools/campaign?join=${table.joinCode}`;
 
-  let sheetBody: ReactNode = null;
-  if (!selectedPcPlanId) {
-    sheetBody = (
+  const statusLabel = plan
+    ? [
+        plan.canEdit ? "Editing" : "Viewing (read-only)",
+        saveStatus === "saving"
+          ? "Saving…"
+          : saveStatus === "saved"
+            ? "Saved"
+            : saveStatus === "error"
+              ? "Save error"
+              : "",
+      ]
+        .filter(Boolean)
+        .join(" · ")
+    : "";
+
+  let sheetInner: ReactNode = null;
+  if (isSelectedPoppedOut) {
+    sheetInner = null;
+  } else if (!selectedPcPlanId) {
+    sheetInner = (
       <p className="pc-sheet-empty">
         {isDm
           ? "No characters attached yet. Players can create or import PCs from the roster."
@@ -383,23 +498,11 @@ function CampaignTableBody({
       </p>
     );
   } else if (!hydrated || !state || !plan) {
-    sheetBody = <p className="pc-planner-loading">Loading character…</p>;
+    sheetInner = <p className="pc-planner-loading">Loading character…</p>;
   } else {
-    sheetBody = (
+    sheetInner = (
       <>
         <CampaignCharacterNameSync name={state.identity.name} />
-        <div className="campaign-sheet-status">
-          <span>
-            {plan.canEdit ? "Editing" : "Viewing (read-only)"} ·{" "}
-            {saveStatus === "saving"
-              ? "Saving…"
-              : saveStatus === "saved"
-                ? "Saved"
-                : saveStatus === "error"
-                  ? "Save error"
-                  : ""}
-          </span>
-        </div>
         <PcSheet
           state={state}
           patch={patch}
@@ -486,257 +589,338 @@ function CampaignTableBody({
     );
   }
 
+  const characterName =
+    state?.identity.name ||
+    table.pcs.find((p) => p.pcPlanId === selectedPcPlanId)?.name ||
+    "Character";
+
   return (
     <>
-      <div className="campaign-table">
-        {error ? <p className="tool-error">{error}</p> : null}
+      <div className="campaign-stage">
+        {error ? <p className="tool-error campaign-stage-error">{error}</p> : null}
 
-        <header className="campaign-table-header">
-          <div>
-            <h2 className="campaign-table-title">{table.name}</h2>
-            <p className="campaign-table-sub">
-              You are {isDm ? "the DM" : "a player"} · Hold Ctrl (Cmd on Mac) while rolling to
-              hide the result from other players
-            </p>
-          </div>
-          <div className="campaign-table-header-actions">
-            <Link href="/tools/campaign" className="tool-btn tool-btn--ghost">
-              All campaigns
-            </Link>
-            {isDm ? (
-              <button
-                type="button"
-                className="tool-btn tool-btn--danger"
-                disabled={pending}
-                onClick={() => {
-                  if (!confirm("Delete this campaign for everyone?")) return;
-                  startTransition(async () => {
-                    const r = await deleteCampaign(table.id);
-                    if (r.success) router.push("/tools/campaign");
-                    else setError(r.error ?? "Could not delete");
-                  });
-                }}
-              >
-                Delete
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="tool-btn tool-btn--ghost"
-                disabled={pending}
-                onClick={() => {
-                  if (!confirm("Leave this campaign?")) return;
-                  startTransition(async () => {
-                    const r = await leaveCampaign(table.id);
-                    if (r.success) router.push("/tools/campaign");
-                    else setError(r.error ?? "Could not leave");
-                  });
-                }}
-              >
-                Leave
-              </button>
-            )}
-          </div>
-        </header>
+        <nav className="campaign-rail" aria-label="Campaign menu">
+          <button
+            type="button"
+            className={`campaign-rail-btn${activeMenu === "roster" ? " campaign-rail-btn--active" : ""}`}
+            aria-pressed={activeMenu === "roster"}
+            aria-label="Invite and characters"
+            title="Invite and characters"
+            onClick={() => setActiveMenu((m) => (m === "roster" ? null : "roster"))}
+          >
+            <Users size={20} aria-hidden />
+          </button>
+        </nav>
 
-        <div className="campaign-table-layout">
-          <aside className="campaign-roster">
-            {isDm ? (
-              <section className="campaign-roster-section">
-                <h3>Invite</h3>
-                <p className="campaign-roster-hint">
-                  Code: <strong>{table.joinCode}</strong>
-                </p>
-                <button
-                  type="button"
-                  className="tool-btn tool-btn--ghost"
-                  onClick={() => {
-                    void navigator.clipboard.writeText(joinUrl).then(() => {
-                      setCopied(true);
-                      window.setTimeout(() => setCopied(false), 1500);
-                    });
-                  }}
-                >
-                  {copied ? "Copied!" : "Copy join link"}
-                </button>
-                <div className="campaign-home-row">
-                  <input
-                    type="text"
-                    className="pc-sheet-input"
-                    placeholder="Username"
-                    value={inviteUsername}
-                    onChange={(e) => setInviteUsername(e.target.value)}
-                    disabled={pending}
-                  />
-                  <button
-                    type="button"
-                    className="tool-btn"
-                    disabled={pending || !inviteUsername.trim()}
-                    onClick={() =>
-                      startTransition(async () => {
-                        const r = await inviteByUsername(table.id, inviteUsername);
-                        if (!r.success) setError(r.error ?? "Invite failed");
-                        else {
-                          setInviteUsername("");
-                          refresh();
-                        }
-                      })
-                    }
-                  >
-                    Invite
-                  </button>
+        {activeMenu === "roster" ? (
+          <>
+            <button
+              type="button"
+              className="campaign-drawer-backdrop"
+              aria-label="Close menu"
+              onClick={() => setActiveMenu(null)}
+            />
+            <aside className="campaign-drawer" aria-label="Invite and characters">
+              <header className="campaign-drawer-header">
+                <div>
+                  <h2 className="campaign-drawer-title">{table.name}</h2>
+                  <p className="campaign-drawer-sub">
+                    You are {isDm ? "the DM" : "a player"} · Hold Ctrl (Cmd on Mac) while rolling
+                    to hide the result from other players
+                  </p>
                 </div>
-              </section>
-            ) : null}
-
-            <section className="campaign-roster-section">
-              <h3>Members</h3>
-              <ul className="campaign-roster-list">
-                {table.members.map((m) => (
-                  <li key={m.id}>
-                    <span>
-                      {m.username}
-                      {m.role === "dm" ? " (DM)" : ""}
-                      {m.status === "pending" ? " · pending" : ""}
-                    </span>
-                    {isDm && m.role !== "dm" && m.status === "active" ? (
-                      <button
-                        type="button"
-                        className="tool-btn tool-btn--ghost"
-                        disabled={pending}
-                        onClick={() =>
-                          startTransition(async () => {
-                            const r = await kickMember(table.id, m.userId);
-                            if (!r.success) setError(r.error ?? "Kick failed");
-                            else refresh();
-                          })
-                        }
-                      >
-                        Kick
-                      </button>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="campaign-roster-section">
-              <h3>Characters</h3>
-              <ul className="campaign-roster-list">
-                {visiblePcs.map((pc) => (
-                  <li key={pc.id}>
+                <div className="campaign-drawer-actions">
+                  <Link href="/tools/campaign" className="tool-btn tool-btn--ghost">
+                    All campaigns
+                  </Link>
+                  {isDm ? (
                     <button
                       type="button"
-                      className={`campaign-pc-select${
-                        selectedPcPlanId === pc.pcPlanId ? " campaign-pc-select--active" : ""
-                      }`}
-                      onClick={() => setSelectedPcPlanId(pc.pcPlanId)}
+                      className="tool-btn tool-btn--danger"
+                      disabled={pending}
+                      onClick={() => {
+                        if (!confirm("Delete this campaign for everyone?")) return;
+                        startTransition(async () => {
+                          const r = await deleteCampaign(table.id);
+                          if (r.success) router.push("/tools/campaign");
+                          else setError(r.error ?? "Could not delete");
+                        });
+                      }}
                     >
-                      <strong>{pc.name}</strong>
-                      <span>
-                        {pc.classSummary} · {pc.username}
-                      </span>
+                      Delete
                     </button>
-                    {(isDm || pc.userId === user.id) && (
+                  ) : (
+                    <button
+                      type="button"
+                      className="tool-btn tool-btn--ghost"
+                      disabled={pending}
+                      onClick={() => {
+                        if (!confirm("Leave this campaign?")) return;
+                        startTransition(async () => {
+                          const r = await leaveCampaign(table.id);
+                          if (r.success) router.push("/tools/campaign");
+                          else setError(r.error ?? "Could not leave");
+                        });
+                      }}
+                    >
+                      Leave
+                    </button>
+                  )}
+                </div>
+              </header>
+
+              <div className="campaign-roster">
+                {isDm ? (
+                  <section className="campaign-roster-section">
+                    <h3>Invite</h3>
+                    <p className="campaign-roster-hint">
+                      Code: <strong>{table.joinCode}</strong>
+                    </p>
+                    <button
+                      type="button"
+                      className="tool-btn tool-btn--ghost"
+                      onClick={() => {
+                        void navigator.clipboard.writeText(joinUrl).then(() => {
+                          setCopied(true);
+                          window.setTimeout(() => setCopied(false), 1500);
+                        });
+                      }}
+                    >
+                      {copied ? "Copied!" : "Copy join link"}
+                    </button>
+                    <div className="campaign-home-row">
+                      <input
+                        type="text"
+                        className="pc-sheet-input"
+                        placeholder="Username"
+                        value={inviteUsername}
+                        onChange={(e) => setInviteUsername(e.target.value)}
+                        disabled={pending}
+                      />
                       <button
                         type="button"
-                        className="tool-btn tool-btn--ghost"
-                        disabled={pending}
+                        className="tool-btn"
+                        disabled={pending || !inviteUsername.trim()}
                         onClick={() =>
                           startTransition(async () => {
-                            const r = await unlinkPcFromCampaign(table.id, pc.id);
-                            if (!r.success) setError(r.error ?? "Unlink failed");
-                            else refresh();
+                            const r = await inviteByUsername(table.id, inviteUsername);
+                            if (!r.success) setError(r.error ?? "Invite failed");
+                            else {
+                              setInviteUsername("");
+                              refresh();
+                            }
                           })
                         }
                       >
-                        Unlink
+                        Invite
                       </button>
-                    )}
-                  </li>
-                ))}
-              </ul>
+                    </div>
+                  </section>
+                ) : null}
 
-              <div className="campaign-pc-actions">
-                <button
-                  type="button"
-                  className="tool-btn"
-                  disabled={pending}
-                  onClick={() =>
-                    startTransition(async () => {
-                      const r = await createPcInCampaign(table.id);
-                      if (!r.success || !r.planId) {
-                        setError(r.error ?? "Could not create PC");
-                        return;
-                      }
-                      refresh();
-                      setSelectedPcPlanId(r.planId);
-                    })
-                  }
-                >
-                  Create PC
-                </button>
-                <button
-                  type="button"
-                  className="tool-btn tool-btn--ghost"
-                  disabled={pending}
-                  onClick={() =>
-                    startTransition(async () => {
-                      const plans = await getUserPcPlans();
-                      setMyPlans(plans);
-                      setShowImport(true);
-                    })
-                  }
-                >
-                  Import PC
-                </button>
-              </div>
-
-              {showImport ? (
-                <div className="campaign-import">
-                  <p>Attach an existing character from PC Planner:</p>
+                <section className="campaign-roster-section">
+                  <h3>Members</h3>
                   <ul className="campaign-roster-list">
-                    {myPlans.map((p) => (
-                      <li key={p.id}>
+                    {table.members.map((m) => (
+                      <li key={m.id}>
                         <span>
-                          {p.name} · {p.classSummary}
+                          {m.username}
+                          {m.role === "dm" ? " (DM)" : ""}
+                          {m.status === "pending" ? " · pending" : ""}
+                          {onlineUserIds.includes(m.userId) ? " · online" : ""}
                         </span>
-                        <button
-                          type="button"
-                          className="tool-btn"
-                          disabled={pending}
-                          onClick={() =>
-                            startTransition(async () => {
-                              const r = await attachPcToCampaign(table.id, p.id);
-                              if (!r.success) {
-                                setError(r.error ?? "Could not attach");
-                                return;
-                              }
-                              setShowImport(false);
-                              refresh();
-                              setSelectedPcPlanId(p.id);
-                            })
-                          }
-                        >
-                          Attach
-                        </button>
+                        {isDm && m.role !== "dm" && m.status === "active" ? (
+                          <button
+                            type="button"
+                            className="tool-btn tool-btn--ghost"
+                            disabled={pending}
+                            onClick={() =>
+                              startTransition(async () => {
+                                const r = await kickMember(table.id, m.userId);
+                                if (!r.success) setError(r.error ?? "Kick failed");
+                                else refresh();
+                              })
+                            }
+                          >
+                            Kick
+                          </button>
+                        ) : null}
                       </li>
                     ))}
                   </ul>
-                  <button
-                    type="button"
-                    className="tool-btn tool-btn--ghost"
-                    onClick={() => setShowImport(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : null}
-            </section>
-          </aside>
+                </section>
 
-          <div className="campaign-sheet-pane">{sheetBody}</div>
+                <section className="campaign-roster-section">
+                  <h3>Characters</h3>
+                  <ul className="campaign-roster-list">
+                    {visiblePcs.map((pc) => (
+                      <li key={pc.id}>
+                        <button
+                          type="button"
+                          className={`campaign-pc-select${
+                            selectedPcPlanId === pc.pcPlanId ? " campaign-pc-select--active" : ""
+                          }`}
+                          onClick={() => selectPc(pc.pcPlanId, pc.userId)}
+                        >
+                          <strong>{pc.name}</strong>
+                          <span>
+                            {pc.classSummary} · {pc.username}
+                          </span>
+                        </button>
+                        {(isDm || pc.userId === user.id) && (
+                          <button
+                            type="button"
+                            className="tool-btn tool-btn--ghost"
+                            disabled={pending}
+                            onClick={() =>
+                              startTransition(async () => {
+                                const r = await unlinkPcFromCampaign(table.id, pc.id);
+                                if (!r.success) setError(r.error ?? "Unlink failed");
+                                else refresh();
+                              })
+                            }
+                          >
+                            Unlink
+                          </button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="campaign-pc-actions">
+                    <button
+                      type="button"
+                      className="tool-btn"
+                      disabled={pending}
+                      onClick={() =>
+                        startTransition(async () => {
+                          const r = await createPcInCampaign(table.id);
+                          if (!r.success || !r.planId) {
+                            setError(r.error ?? "Could not create PC");
+                            return;
+                          }
+                          refresh();
+                          setSelectedPcPlanId(r.planId);
+                          setSheetMinimized(false);
+                        })
+                      }
+                    >
+                      Create PC
+                    </button>
+                    <button
+                      type="button"
+                      className="tool-btn tool-btn--ghost"
+                      disabled={pending}
+                      onClick={() =>
+                        startTransition(async () => {
+                          const plans = await getUserPcPlans();
+                          setMyPlans(plans);
+                          setShowImport(true);
+                        })
+                      }
+                    >
+                      Import PC
+                    </button>
+                  </div>
+
+                  {showImport ? (
+                    <div className="campaign-import">
+                      <p>Attach an existing character from PC Planner:</p>
+                      <ul className="campaign-roster-list">
+                        {myPlans.map((p) => (
+                          <li key={p.id}>
+                            <span>
+                              {p.name} · {p.classSummary}
+                            </span>
+                            <button
+                              type="button"
+                              className="tool-btn"
+                              disabled={pending}
+                              onClick={() =>
+                                startTransition(async () => {
+                                  const r = await attachPcToCampaign(table.id, p.id);
+                                  if (!r.success) {
+                                    setError(r.error ?? "Could not attach");
+                                    return;
+                                  }
+                                  setShowImport(false);
+                                  refresh();
+                                  setSelectedPcPlanId(p.id);
+                                  setSheetMinimized(false);
+                                })
+                              }
+                            >
+                              Attach
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                      <button
+                        type="button"
+                        className="tool-btn tool-btn--ghost"
+                        onClick={() => setShowImport(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : null}
+                </section>
+              </div>
+            </aside>
+          </>
+        ) : null}
+
+        <div className="campaign-party-strip" aria-label="Online characters">
+          {onlinePcs.length === 0 ? (
+            <p className="campaign-party-empty">No characters online</p>
+          ) : (
+            <ul className="campaign-party-list">
+              {onlinePcs.map((pc) => {
+                const canOpen = isDm || pc.userId === user.id;
+                return (
+                  <li key={pc.id}>
+                    <button
+                      type="button"
+                      className={`campaign-party-chip${
+                        selectedPcPlanId === pc.pcPlanId ? " campaign-party-chip--active" : ""
+                      }${canOpen ? "" : " campaign-party-chip--locked"}`}
+                      disabled={!canOpen}
+                      title={
+                        canOpen
+                          ? `Open ${pc.name}`
+                          : `${pc.name} (${pc.username})`
+                      }
+                      onClick={() => selectPc(pc.pcPlanId, pc.userId)}
+                    >
+                      <CampaignPcAvatar name={pc.name} size="sm" />
+                      <span className="campaign-party-chip-name">{pc.name}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
+
+        {selectedPcPlanId ? (
+          <CampaignPcWindow
+            characterName={characterName}
+            statusLabel={isSelectedPoppedOut ? "Open in other window" : statusLabel}
+            minimized={sheetMinimized || isSelectedPoppedOut}
+            onMinimizedChange={setSheetMinimized}
+            poppedOut={isSelectedPoppedOut}
+            onPopOut={
+              selectedPcPlanId ? () => openPopOut(selectedPcPlanId) : undefined
+            }
+            onFocusPopOut={
+              selectedPcPlanId ? () => focusPopOut(selectedPcPlanId) : undefined
+            }
+          >
+            {sheetInner}
+          </CampaignPcWindow>
+        ) : (
+          <div className="campaign-stage-empty">{sheetInner}</div>
+        )}
       </div>
 
       <DiceCanvas />

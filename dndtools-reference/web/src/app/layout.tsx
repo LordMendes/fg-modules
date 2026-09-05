@@ -3,9 +3,8 @@ import { headers } from "next/headers";
 import Script from "next/script";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { EncounterProvider } from "@/components/encounter/encounter-provider";
-import { EncounterDockHost } from "@/components/encounter/encounter-dock";
+import { AppShell } from "@/components/app-shell";
 import { Providers } from "@/components/providers";
-import { SiteHeader } from "@/components/site-header";
 import { SessionProvider } from "@/components/session-provider";
 import { AuthProvider } from "@/components/auth-provider";
 import { JsonLd } from "@/components/json-ld";
@@ -104,12 +103,7 @@ export default async function RootLayout({
           <SessionProvider nonce={nonce}>
             <AuthProvider user={user}>
               <EncounterProvider>
-                <SiteHeader user={user} />
-                <main id="main-content" className="main-content min-w-0 w-full">{children}</main>
-                <EncounterDockHost />
-                <footer className="site-footer">
-                  D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
-                </footer>
+                <AppShell user={user}>{children}</AppShell>
               </EncounterProvider>
             </AuthProvider>
           </SessionProvider>
