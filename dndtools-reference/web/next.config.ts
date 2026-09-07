@@ -37,6 +37,10 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
+  serverExternalPackages: ["sharp"],
+  outputFileTracingIncludes: {
+    "/*": ["./node_modules/sharp/**/*", "./node_modules/@img/**/*"],
+  },
   poweredByHeader: false,
   transpilePackages: ["@3d-dice/dice-box-threejs"],
   experimental: {

@@ -18,7 +18,8 @@
   "pnpm": {
     "supportedArchitectures": {
       "os": ["current", "win32", "linux"],
-      "cpu": ["current", "x64"]
+      "cpu": ["current", "x64"],
+      "libc": ["current", "glibc", "musl"]
     },
     "onlyBuiltDependencies": [
       "@prisma/engines",

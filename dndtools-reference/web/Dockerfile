@@ -25,6 +25,7 @@ COPY data/dndtools /data/dndtools
 
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @fg-modules/web exec prisma generate
+RUN pnpm --filter @fg-modules/web rebuild sharp
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
 RUN pnpm --filter @fg-modules/web import:bundle
@@ -51,9 +52,12 @@ COPY --from=builder /app/web/prisma.config.docker.mjs ./web/prisma.config.mjs
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
 
-# Prisma CLI + config deps (migrate deploy reads prisma.config.mjs)
+# Prisma CLI + config deps (migrate deploy reads prisma.config.mjs).
+# pnpm standalone tracing often omits sharp's musl .node binary; install it here.
 WORKDIR /app/web
 RUN npm install prisma@7.8.0 --ignore-scripts --no-package-lock \
+  && rm -rf node_modules/sharp node_modules/@img \
+  && npm install --os=linux --libc=musl --cpu=x64 sharp@0.35.4 --no-package-lock \
   && chown -R nextjs:nodejs node_modules
 WORKDIR /app
 
