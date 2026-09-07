@@ -26,6 +26,15 @@ COPY data/dndtools /data/dndtools
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @fg-modules/web exec prisma generate
 RUN pnpm --filter @fg-modules/web rebuild sharp
+# NFT/turbopack standalone copies often omit Sharp's .node and libvips .so.
+# Stash the complete pnpm packages so the runner can overlay them.
+RUN mkdir -p /sharp-native \
+  && find /app/node_modules/.pnpm -maxdepth 1 \( \
+       -name 'sharp@*' \
+       -o -name '@img+sharp-linux*' \
+       -o -name '@img+sharp-libvips-linux*' \
+     \) -exec cp -a {} /sharp-native/ \; \
+  && find /sharp-native -name '*.node' | grep -q .
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
 RUN pnpm --filter @fg-modules/web import:bundle
@@ -53,13 +62,28 @@ COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
 
 # Prisma CLI + config deps (migrate deploy reads prisma.config.mjs).
-# pnpm standalone tracing often omits sharp's musl .node binary; install it here.
 WORKDIR /app/web
-RUN npm install prisma@7.8.0 --ignore-scripts --no-package-lock \
-  && rm -rf node_modules/sharp node_modules/@img \
-  && npm install --os=linux --libc=musl --cpu=x64 sharp@0.35.4 --no-package-lock \
-  && chown -R nextjs:nodejs node_modules
+RUN npm install prisma@7.8.0 --ignore-scripts --no-package-lock
 WORKDIR /app
+
+# Overlay complete Sharp packages into every traced .pnpm tree. Installing Sharp
+# with npm under /app/web/node_modules does not help: turbopack still loads the
+# pnpm store copy, which is missing the musl .node / libvips .so files.
+COPY --from=builder /sharp-native /tmp/sharp-native
+RUN overlay_sharp() { \
+      target="$1"; \
+      mkdir -p "$target"; \
+      for src in /tmp/sharp-native/*; do \
+        [ -e "$src" ] || continue; \
+        rm -rf "$target/$(basename "$src")"; \
+        cp -a "$src" "$target/"; \
+      done; \
+    } \
+  && overlay_sharp /app/node_modules/.pnpm \
+  && overlay_sharp /app/web/node_modules/.pnpm \
+  && find /app/node_modules /app/web/node_modules -name 'sharp-linuxmusl-*.node' | grep -q . \
+  && chown -R nextjs:nodejs /app/node_modules /app/web/node_modules \
+  && rm -rf /tmp/sharp-native
 
 RUN chmod +x /docker-entrypoint.sh
 

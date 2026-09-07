@@ -38,8 +38,19 @@ const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
   serverExternalPackages: ["sharp"],
+  // pnpm keeps Sharp's .node addon and libvips .so under node_modules/.pnpm.
+  // Next 16 turbopack tracing follows JS requires, so those native files must
+  // be included explicitly or image routes fail at runtime with linuxmusl-x64.
   outputFileTracingIncludes: {
-    "/*": ["./node_modules/sharp/**/*", "./node_modules/@img/**/*"],
+    "/*": [
+      "./node_modules/sharp/**/*",
+      "./node_modules/@img/**/*",
+      "../node_modules/sharp/**/*",
+      "../node_modules/@img/**/*",
+      "../node_modules/.pnpm/sharp@*/**/*",
+      "../node_modules/.pnpm/@img+sharp-linux*/**/*",
+      "../node_modules/.pnpm/@img+sharp-libvips-linux*/**/*",
+    ],
   },
   poweredByHeader: false,
   transpilePackages: ["@3d-dice/dice-box-threejs"],
