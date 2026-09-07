@@ -4,15 +4,12 @@ import {
   addDrawing,
   addFogRegion,
   addOccluder,
-  broadcastMapTokenMove,
-  clearDrawings,
   commitMapTokenMove,
+  clearDrawings,
   deleteDrawing,
   removeFogRegion,
   removeMapToken,
   resetFog,
-  sendMapPing,
-  sendMapViewportGoTo,
   setFogEnabled,
   setLightingEnabled,
   setLosEnabled,
@@ -25,6 +22,12 @@ import {
   updateDrawing,
   upsertMapLight,
 } from "@/actions/maps";
+import type { ClientLiveMessage } from "@/lib/campaign/types";
+import {
+  type Camera,
+  fitCameraToImage,
+  zoomAtScreenPoint,
+} from "@/lib/map/camera";
 import { snapSizeFeet } from "@/lib/map/distance";
 import type { GridConfig } from "@/lib/map/grid";
 import {
@@ -50,23 +53,21 @@ import {
   useRef,
   useState,
 } from "react";
-import { MapDrawLayer } from "./map-draw-layer";
-import { MapFogLayer } from "./map-fog-layer";
-import { MapGridOverlay } from "./map-grid-overlay";
-import { MapMeasure } from "./map-measure";
-import { MapPingLayer, type MapPing } from "./map-ping-layer";
 import { MapToken } from "./map-token";
 import { MapToolbar } from "./map-toolbar";
-import { MapVisionLayer } from "./map-vision-layer";
+import { MapViewportOverlay } from "./map-viewport-overlay";
 
 const MIN_SCALE = 0.15;
 const MAX_SCALE = 4;
 const MOVE_THROTTLE_MS = 60;
 const DAYLIGHT_DEBOUNCE_MS = 150;
+const COMMIT_BACKUP_MS = 1500;
 
 const MemoMapToken = memo(MapToken);
 
-type ViewportState = { x: number; y: number; scale: number };
+export type MapPing = { id: string; x: number; y: number; color: string };
+
+type ViewportState = Camera;
 
 type UndoEntry =
   | { type: "drawingCreate"; drawingId: string }
@@ -95,6 +96,8 @@ type CampaignMapBoardProps = {
   extraPings?: MapPing[];
   aoePointers?: MapAoePointerView[];
   viewportGoTo?: { x: number; y: number } | null;
+  /** WebSocket send for high-frequency live messages. */
+  sendLive?: (msg: ClientLiveMessage) => void;
 };
 
 function viewportKey(campaignId: string) {
@@ -138,6 +141,7 @@ export function CampaignMapBoard({
   extraPings = [],
   aoePointers: _aoePointers = [],
   viewportGoTo,
+  sendLive,
 }: CampaignMapBoardProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -185,6 +189,49 @@ export function CampaignMapBoard({
   >({});
   const [localDaylight, setLocalDaylight] = useState(map.daylight);
   const localDaylightRef = useRef(map.daylight);
+  const [displayImageUrl, setDisplayImageUrl] = useState(map.imageUrl);
+
+  // Downsample huge map bitmaps for display (coords still use imageWidth/Height).
+  useEffect(() => {
+    let cancelled = false;
+    const MAX_EDGE = 4096;
+    void (async () => {
+      try {
+        const img = new Image();
+        img.decoding = "async";
+        img.src = map.imageUrl;
+        await img.decode();
+        if (cancelled) return;
+        const edge = Math.max(img.naturalWidth, img.naturalHeight);
+        if (edge <= MAX_EDGE || !img.naturalWidth) {
+          setDisplayImageUrl(map.imageUrl);
+          return;
+        }
+        const scale = MAX_EDGE / edge;
+        const w = Math.max(1, Math.round(img.naturalWidth * scale));
+        const h = Math.max(1, Math.round(img.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          setDisplayImageUrl(map.imageUrl);
+          return;
+        }
+        ctx.drawImage(img, 0, 0, w, h);
+        setDisplayImageUrl(canvas.toDataURL("image/webp", 0.82));
+      } catch {
+        if (!cancelled) setDisplayImageUrl(map.imageUrl);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [map.imageUrl]);
+  const [paintNonce, setPaintNonce] = useState(0);
+  const bumpPaint = useCallback(() => {
+    setPaintNonce((n) => n + 1);
+  }, []);
   const undoStackRef = useRef<UndoEntry[]>([]);
   const dragRef = useRef<{
     tokenId: string;
@@ -196,6 +243,7 @@ export function CampaignMapBoard({
     y: number;
     seq: number;
     lastBroadcast: number;
+    backupTimer: ReturnType<typeof setTimeout> | null;
   } | null>(null);
   const shapeDragRef = useRef<{
     drawingId: string;
@@ -285,21 +333,6 @@ export function CampaignMapBoard({
     );
   }, [displayTokens, isDm, selectedTokenId, viewerUserId]);
 
-  const tokenLights = useMemo(
-    () =>
-      displayTokens.map((t) => ({
-        x: t.x,
-        y: t.y,
-        width: t.width,
-        height: t.height,
-        emitsLight: t.emitsLight,
-        lightBright: t.lightBright,
-        lightDim: t.lightDim,
-        visionRange: t.visionRange,
-      })),
-    [displayTokens],
-  );
-
   const displayDrawings = useMemo(() => {
     return map.drawings.map((d) => {
       const g = localDrawingGeom[d.id];
@@ -347,16 +380,13 @@ export function CampaignMapBoard({
   const fitView = useCallback(() => {
     const el = viewportRef.current;
     if (!el) return;
-    const pad = 32;
-    const vw = el.clientWidth - pad * 2;
-    const vh = el.clientHeight - pad * 2;
-    const scale = Math.min(
-      MAX_SCALE,
-      Math.max(MIN_SCALE, Math.min(vw / map.imageWidth, vh / map.imageHeight)),
+    const next = fitCameraToImage(
+      el.clientWidth,
+      el.clientHeight,
+      map.imageWidth,
+      map.imageHeight,
     );
-    const x = (el.clientWidth - map.imageWidth * scale) / 2;
-    const y = (el.clientHeight - map.imageHeight * scale) / 2;
-    commitViewport({ x, y, scale });
+    commitViewport(next);
   }, [commitViewport, map.imageWidth, map.imageHeight]);
 
   useEffect(() => {
@@ -592,9 +622,9 @@ export function CampaignMapBoard({
 
     if (tool === "ping") {
       if (e.shiftKey && isDm) {
-        void sendMapViewportGoTo(campaignId, pt.x, pt.y);
+        if (sendLive) sendLive({ type: "mapViewportGoTo", x: pt.x, y: pt.y });
       } else {
-        void sendMapPing(campaignId, pt.x, pt.y);
+        if (sendLive) sendLive({ type: "mapPing", x: pt.x, y: pt.y });
         addPing(pt.x, pt.y, userColor(viewerUserId));
       }
       return;
@@ -898,18 +928,19 @@ export function CampaignMapBoard({
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
     const live = viewportLiveRef.current;
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    const newScale = Math.min(
+    const factor = e.deltaY > 0 ? 0.9 : 1.1;
+    const next = zoomAtScreenPoint(
+      live,
+      mx,
+      my,
+      factor,
+      MIN_SCALE,
       MAX_SCALE,
-      Math.max(MIN_SCALE, live.scale * delta),
     );
-    const wx = (mx - live.x) / live.scale;
-    const wy = (my - live.y) / live.scale;
-    commitViewport({
-      scale: newScale,
-      x: mx - wx * newScale,
-      y: my - wy * newScale,
-    });
+    applyWorldTransform(next);
+    // Debounce React commit for zoom.
+    commitViewport(next);
+    bumpPaint();
   };
 
   const handleTokenPointerDown = (
@@ -935,6 +966,7 @@ export function CampaignMapBoard({
       y: token.y,
       seq: token.seq + 1,
       lastBroadcast: 0,
+      backupTimer: null,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
@@ -963,14 +995,41 @@ export function CampaignMapBoard({
     const now = Date.now();
     if (now - d.lastBroadcast >= MOVE_THROTTLE_MS) {
       d.lastBroadcast = now;
-      void broadcastMapTokenMove(
-        campaignId,
-        d.tokenId,
-        nx,
-        ny,
-        token.rotation,
-        d.seq,
-      );
+      const msg: ClientLiveMessage = {
+        type: "tokenMove",
+        tokenId: d.tokenId,
+        x: nx,
+        y: ny,
+        rotation: token.rotation,
+        seq: d.seq,
+      };
+      if (sendLive) sendLive(msg);
+    }
+    if (!d.backupTimer) {
+      d.backupTimer = setTimeout(() => {
+        if (!dragRef.current || dragRef.current.tokenId !== d.tokenId) return;
+        const cur = dragRef.current;
+        cur.backupTimer = null;
+        const commitMsg: ClientLiveMessage = {
+          type: "tokenMoveCommit",
+          tokenId: cur.tokenId,
+          x: cur.x,
+          y: cur.y,
+          rotation: token.rotation,
+          seq: cur.seq,
+        };
+        if (sendLive) sendLive(commitMsg);
+        else {
+          void commitMapTokenMove(
+            campaignId,
+            cur.tokenId,
+            cur.x,
+            cur.y,
+            token.rotation,
+            cur.seq,
+          );
+        }
+      }, COMMIT_BACKUP_MS);
     }
   };
 
@@ -980,14 +1039,29 @@ export function CampaignMapBoard({
   ) => {
     if (!dragRef.current || dragRef.current.tokenId !== token.id) return;
     const d = dragRef.current;
-    void commitMapTokenMove(
-      campaignId,
-      d.tokenId,
-      d.x,
-      d.y,
-      token.rotation,
-      d.seq,
-    );
+    if (d.backupTimer) {
+      clearTimeout(d.backupTimer);
+      d.backupTimer = null;
+    }
+    const commitMsg: ClientLiveMessage = {
+      type: "tokenMoveCommit",
+      tokenId: d.tokenId,
+      x: d.x,
+      y: d.y,
+      rotation: token.rotation,
+      seq: d.seq,
+    };
+    if (sendLive) sendLive(commitMsg);
+    else {
+      void commitMapTokenMove(
+        campaignId,
+        d.tokenId,
+        d.x,
+        d.y,
+        token.rotation,
+        d.seq,
+      );
+    }
     dragRef.current = null;
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -1011,7 +1085,10 @@ export function CampaignMapBoard({
       }
       return changed ? next : prev;
     });
-  }, [map.tokens]);
+    // Depend on token identity/seq, not the array reference (live store
+    // may allocate a new tokens array each structural update).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
   const handleTokenClick = (e: React.MouseEvent, token: MapTokenView) => {
     if (tool !== "select") return;
@@ -1079,6 +1156,28 @@ export function CampaignMapBoard({
 
   const measureColor = userColor(viewerUserId);
   const activeMeasure = measureDraft.length >= 2 ? measureDraft : measurePoints;
+  const mapForOverlay = useMemo(
+    () => ({
+      ...map,
+      daylight: localDaylight,
+      drawings: displayDrawings,
+      tokens: displayTokens,
+    }),
+    [map, localDaylight, displayDrawings, displayTokens],
+  );
+
+  // Expire local pings.
+  useEffect(() => {
+    if (localPings.length === 0) return;
+    const timers = localPings.map((p) =>
+      window.setTimeout(() => {
+        setLocalPings((prev) => prev.filter((x) => x.id !== p.id));
+      }, 2000),
+    );
+    return () => {
+      for (const t of timers) window.clearTimeout(t);
+    };
+  }, [localPings]);
 
   return (
     <div className="campaign-map-board">
@@ -1087,11 +1186,46 @@ export function CampaignMapBoard({
         className="campaign-map-viewport"
         onWheel={handleWheel}
         onPointerDown={handleBoardPointerDown}
-        onPointerMove={handleBoardPointerMove}
+        onPointerMove={(e) => {
+          handleBoardPointerMove(e);
+          if (panRef.current) bumpPaint();
+        }}
         onPointerUp={handleBoardPointerUp}
         onPointerLeave={handleBoardPointerUp}
         onContextMenu={(e) => e.preventDefault()}
       >
+        <MapViewportOverlay
+          camera={viewport}
+          map={mapForOverlay}
+          grid={grid}
+          isDm={isDm}
+          viewerUserId={viewerUserId}
+          viewerTokens={viewerTokens}
+          tokens={displayTokens}
+          gridVisible={gridVisible}
+          pings={allPings}
+          measurePoints={activeMeasure}
+          measureColor={measureColor}
+          draftStroke={
+            drawDraft.length >= 2
+              ? { color: userColor(viewerUserId), points: drawDraft }
+              : null
+          }
+          draftShape={
+            aoeDraft
+              ? {
+                  kind: aoeDraft.kind,
+                  origin: aoeDraft.origin,
+                  current: aoeDraft.current,
+                  color: measureColor,
+                }
+              : null
+          }
+          polygonDraft={polygonDraft}
+          polylineDraft={polylineDraft}
+          paintNonce={paintNonce}
+        />
+
         <div
           ref={worldRef}
           className="campaign-map-world"
@@ -1102,167 +1236,60 @@ export function CampaignMapBoard({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="campaign-map-image"
-            src={map.imageUrl}
+            src={displayImageUrl}
             alt={map.name}
             width={map.imageWidth}
             height={map.imageHeight}
             draggable={false}
           />
 
-          <MapGridOverlay
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
-            gridSizePx={map.gridSizePx}
-            gridOffsetX={map.gridOffsetX}
-            gridOffsetY={map.gridOffsetY}
-            visible={gridVisible}
-          />
-
-          <MapFogLayer
-            fogEnabled={map.fogEnabled}
-            fogRegions={map.fogRegions}
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
-            isDm={isDm}
-            grid={grid}
-          />
-
-          <MapVisionLayer
-            isDm={isDm}
-            losEnabled={map.losEnabled}
-            lightingEnabled={map.lightingEnabled}
-            daylight={localDaylight}
-            scaleFeet={map.scaleFeet}
-            occluders={map.occluders}
-            lights={map.lights}
-            tokenLights={tokenLights}
-            viewerTokens={viewerTokens}
-            grid={grid}
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
-          />
-
-          <MapDrawLayer
-            drawings={displayDrawings}
-            grid={grid}
-            scaleFeet={map.scaleFeet}
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
-            selectedDrawingId={selectedDrawingId}
-            draftStroke={
-              drawDraft.length >= 2
-                ? { color: userColor(viewerUserId), points: drawDraft }
-                : null
-            }
-            draftShape={
-              aoeDraft
-                ? {
-                    kind: aoeDraft.kind,
-                    origin: aoeDraft.origin,
-                    current: aoeDraft.current,
-                    color: measureColor,
-                  }
-                : null
-            }
-            canEditDrawing={(d) => tool === "select" && canEditDrawing(d)}
-            onSelectDrawing={(id) => {
-              if (tool !== "select") return;
-              setSelectedDrawingId(id);
-              if (id) setSelectedTokenId(null);
-            }}
-            onShapePointerDown={handleShapePointerDown}
-          />
-
+          {/* Door handles only (interactive); walls drawn on viewport canvas. */}
           <svg
             className="map-occluder-layer map-occluder-layer--interactive"
             width={map.imageWidth}
             height={map.imageHeight}
           >
-            {map.occluders.map((o) => (
-              <g key={o.id}>
-                <polyline
-                  points={o.points
-                    .map((p) => {
-                      const px = gridToPixels(p.x, p.y, grid);
-                      return `${px.x},${px.y}`;
-                    })
-                    .join(" ")}
-                  fill="none"
-                  stroke={o.kind === "door" ? "#c9a227" : "#888"}
-                  strokeWidth={2}
-                  strokeDasharray={o.state === "open" ? "6 4" : undefined}
-                  pointerEvents="none"
+            {map.occluders.map((o) =>
+              (o.kind === "door" || o.kind === "window") &&
+              o.points.length >= 2 ? (
+                <circle
+                  key={o.id}
+                  className="map-door-handle"
+                  cx={
+                    (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).x +
+                      gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).x) /
+                    2
+                  }
+                  cy={
+                    (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).y +
+                      gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).y) /
+                    2
+                  }
+                  r={8}
+                  fill={o.state === "open" ? "#66cc66" : "#c9a227"}
+                  stroke="#111"
+                  strokeWidth={1}
+                  style={{ cursor: "pointer", pointerEvents: "auto" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (o.state === "locked" && !isDm) return;
+                    const next = o.state === "open" ? "closed" : "open";
+                    void setDoorState(campaignId, map.id, o.id, next);
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isDm) return;
+                    void setDoorState(
+                      campaignId,
+                      map.id,
+                      o.id,
+                      o.state === "locked" ? "closed" : "locked",
+                    );
+                  }}
                 />
-                {(o.kind === "door" || o.kind === "window") &&
-                o.points.length >= 2 ? (
-                  <circle
-                    className="map-door-handle"
-                    cx={
-                      (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).x +
-                        gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).x) /
-                      2
-                    }
-                    cy={
-                      (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).y +
-                        gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).y) /
-                      2
-                    }
-                    r={8}
-                    fill={o.state === "open" ? "#66cc66" : "#c9a227"}
-                    stroke="#111"
-                    strokeWidth={1}
-                    style={{ cursor: "pointer", pointerEvents: "auto" }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (o.state === "locked" && !isDm) return;
-                      const next = o.state === "open" ? "closed" : "open";
-                      void setDoorState(campaignId, map.id, o.id, next);
-                    }}
-                    onContextMenu={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      if (!isDm) return;
-                      void setDoorState(
-                        campaignId,
-                        map.id,
-                        o.id,
-                        o.state === "locked" ? "closed" : "locked",
-                      );
-                    }}
-                  />
-                ) : null}
-              </g>
-            ))}
-            {polylineDraft.length >= 2 ? (
-              <polyline
-                points={polylineDraft
-                  .map((p) => {
-                    const px = gridToPixels(p.x, p.y, grid);
-                    return `${px.x},${px.y}`;
-                  })
-                  .join(" ")}
-                fill="none"
-                stroke="#c9a227"
-                strokeWidth={2}
-                opacity={0.7}
-                pointerEvents="none"
-              />
-            ) : null}
-            {polygonDraft.length >= 2 ? (
-              <polyline
-                points={polygonDraft
-                  .map((p) => {
-                    const px = gridToPixels(p.x, p.y, grid);
-                    return `${px.x},${px.y}`;
-                  })
-                  .join(" ")}
-                fill="none"
-                stroke="#66aaff"
-                strokeWidth={2}
-                opacity={0.7}
-                pointerEvents="none"
-              />
-            ) : null}
+              ) : null,
+            )}
             {calibrateStartPx ? (
               <circle
                 cx={calibrateStartPx.x}
@@ -1312,26 +1339,6 @@ export function CampaignMapBoard({
               ))}
             </div>
           ) : null}
-
-          {activeMeasure.length >= 2 ? (
-            <MapMeasure
-              points={activeMeasure}
-              diagonalRule={map.diagonalRule}
-              scaleFeet={map.scaleFeet}
-              color={measureColor}
-              grid={grid}
-              imageWidth={map.imageWidth}
-              imageHeight={map.imageHeight}
-            />
-          ) : null}
-
-          <MapPingLayer
-            pings={allPings}
-            grid={grid}
-            onExpire={(id) =>
-              setLocalPings((prev) => prev.filter((p) => p.id !== id))
-            }
-          />
         </div>
       </div>
 

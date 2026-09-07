@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
+    "dev": "tsx server.ts",
+    "build": "prisma generate && next build && pnpm run bundle:server",
+    "bundle:server": "esbuild server.ts --bundle --platform=node --format=esm --outfile=server.mjs --packages=external --alias:@=./src",
+    "start": "tsx server.ts",
+    "start:prod": "node server.mjs",
     "lint": "eslint",
     "postinstall": "prisma generate && node scripts/copy-dice-box-assets.mjs",
     "copy:dice-assets": "node scripts/copy-dice-box-assets.mjs",
@@ -14,7 +16,7 @@
     "db:generate": "prisma generate",
     "import:dndtools": "tsx prisma/import-dndtools.ts",
     "import:bundle": "esbuild prisma/import-dndtools.ts --bundle --platform=node --format=esm --outfile=import-dndtools.mjs --external:pg --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
-    "test": "tsx --test src/lib/seo.test.ts src/lib/nav.test.ts src/lib/equipment-display.test.ts src/lib/stronghold/calculate.test.ts src/lib/magic-item/pricing.test.ts src/lib/leadership/calculate.test.ts src/lib/turn-undead/resolve.test.ts src/lib/npc-creator/npc-creator.test.ts src/lib/fg-spell-actions/buildActionXml.test.ts src/lib/encounter/calculateEl.test.ts src/lib/encounter/parseHitDice.test.ts src/lib/entity-filters.test.ts src/lib/spell-utils.test.ts src/lib/auth/validation.test.ts src/lib/auth/password.test.ts src/lib/pc-planner/spellSlots.test.ts src/lib/pc-planner/syncSkills.test.ts src/lib/pc-planner/skillSpecialty.test.ts src/lib/pc-planner/combatStats.test.ts src/lib/pc-planner/parseRaceFeatures.test.ts src/lib/pc-planner/syncDerived.test.ts src/lib/pc-planner/parseClassAbilityEffects.test.ts src/lib/pc-planner/skillPoints.test.ts src/lib/pc-planner/syncState.test.ts src/lib/pc-planner/classCasting.test.ts src/lib/pc-planner/parseClassAdvancement.test.ts src/lib/pc-planner/hitPoints.test.ts src/lib/pc-planner/equippedGear.test.ts src/lib/pc-planner/encumbrance.test.ts src/lib/pc-planner/weaponAttacks.test.ts src/lib/pc-planner/inventoryItem.test.ts src/lib/pc-planner/itemBonuses.test.ts src/lib/pc-planner/treasure.test.ts src/lib/pc-planner/featBudget.test.ts src/lib/pc-planner/buildFgXml.test.ts src/lib/stores/goods.test.ts src/lib/random-spellbook/generate.test.ts src/lib/random-spellbook/url-state.test.ts src/lib/dice/notation.test.ts src/lib/dice/damageTypeColors.test.ts src/lib/dice/parseDiceNotation.test.ts src/lib/campaign/joinCode.test.ts src/lib/storage/process-pc-image.test.ts src/lib/storage/map-image.test.ts src/lib/map/grid.test.ts src/lib/map/permissions.test.ts src/lib/map/fog.test.ts src/lib/map/los.test.ts src/lib/map/distance.test.ts src/lib/map/uvtt.test.ts"
+    "test": "tsx --test src/lib/seo.test.ts src/lib/nav.test.ts src/lib/equipment-display.test.ts src/lib/stronghold/calculate.test.ts src/lib/magic-item/pricing.test.ts src/lib/leadership/calculate.test.ts src/lib/turn-undead/resolve.test.ts src/lib/npc-creator/npc-creator.test.ts src/lib/fg-spell-actions/buildActionXml.test.ts src/lib/encounter/calculateEl.test.ts src/lib/encounter/parseHitDice.test.ts src/lib/entity-filters.test.ts src/lib/spell-utils.test.ts src/lib/auth/validation.test.ts src/lib/auth/password.test.ts src/lib/pc-planner/spellSlots.test.ts src/lib/pc-planner/syncSkills.test.ts src/lib/pc-planner/skillSpecialty.test.ts src/lib/pc-planner/combatStats.test.ts src/lib/pc-planner/parseRaceFeatures.test.ts src/lib/pc-planner/syncDerived.test.ts src/lib/pc-planner/parseClassAbilityEffects.test.ts src/lib/pc-planner/skillPoints.test.ts src/lib/pc-planner/syncState.test.ts src/lib/pc-planner/classCasting.test.ts src/lib/pc-planner/parseClassAdvancement.test.ts src/lib/pc-planner/hitPoints.test.ts src/lib/pc-planner/equippedGear.test.ts src/lib/pc-planner/encumbrance.test.ts src/lib/pc-planner/weaponAttacks.test.ts src/lib/pc-planner/inventoryItem.test.ts src/lib/pc-planner/itemBonuses.test.ts src/lib/pc-planner/treasure.test.ts src/lib/pc-planner/featBudget.test.ts src/lib/pc-planner/buildFgXml.test.ts src/lib/stores/goods.test.ts src/lib/random-spellbook/generate.test.ts src/lib/random-spellbook/url-state.test.ts src/lib/dice/notation.test.ts src/lib/dice/damageTypeColors.test.ts src/lib/dice/parseDiceNotation.test.ts src/lib/campaign/joinCode.test.ts src/lib/campaign/liveRateLimit.test.ts src/lib/campaign/liveFilter.test.ts src/lib/campaign/liveStore.test.ts src/lib/map/camera.test.ts src/lib/storage/process-pc-image.test.ts src/lib/storage/map-image.test.ts src/lib/map/grid.test.ts src/lib/map/permissions.test.ts src/lib/map/fog.test.ts src/lib/map/los.test.ts src/lib/map/distance.test.ts src/lib/map/uvtt.test.ts"
   },
   "dependencies": {
     "@3d-dice/dice-box-threejs": "^0.0.12",
@@ -25,6 +27,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.5.0",
+    "ioredis": "^6.0.0",
     "isomorphic-dompurify": "^2.25.0",
     "lucide-react": "^0.511.0",
     "next": "16.2.10",
@@ -33,7 +36,8 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sharp": "^0.35.4",
-    "tailwind-merge": "^3.3.0"
+    "tailwind-merge": "^3.3.0",
+    "ws": "^8.21.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -42,6 +46,7 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
     "esbuild": "^0.25.5",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",

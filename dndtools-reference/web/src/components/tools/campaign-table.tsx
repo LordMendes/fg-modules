@@ -19,8 +19,9 @@ import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
 import { CampaignMapBoard } from "@/components/map/campaign-map-board";
+import type { MapPing } from "@/components/map/campaign-map-board";
 import { MapScenesDrawer } from "@/components/map/map-scenes-drawer";
-import type { MapPing } from "@/components/map/map-ping-layer";
+import { CampaignLiveProvider, useCampaignLive } from "@/components/tools/campaign-live-provider";
 import { CampaignPcAvatar } from "@/components/tools/campaign-pc-avatar";
 import { CampaignSheetInstance } from "@/components/tools/campaign-sheet-instance";
 import {
@@ -28,9 +29,15 @@ import {
   campaignSheetWindowName,
   type CampaignSheetPopoutMessage,
 } from "@/lib/campaign/immersive";
+import {
+  useLiveActivity,
+  useLiveMap,
+  useLivePcUpdated,
+  useLivePresence,
+  useLiveStoreVersion,
+} from "@/lib/campaign/liveClient";
 import type {
   CampaignActivityView,
-  CampaignLiveEvent,
   CampaignTableState,
 } from "@/lib/campaign/types";
 import type { CampaignMapView, MapAoePointerView } from "@/lib/map/types";
@@ -52,158 +59,6 @@ type MenuId = "roster" | "logs" | "maps" | null;
 const RAIL_EXPANDED_KEY = "campaign-table-rail-expanded";
 
 const SHEET_Z_BASE = 80;
-
-function applyMapEventToTable(
-  table: CampaignTableState,
-  event: CampaignLiveEvent,
-): CampaignTableState {
-  if (event.type === "mapSnapshot") {
-    return { ...table, liveMap: event.map };
-  }
-  if (event.type === "mapList") {
-    return { ...table, maps: event.maps };
-  }
-  if (!table.liveMap) return table;
-  const map = table.liveMap;
-
-  if (event.type === "mapTokenMove") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        tokens: map.tokens.map((t) =>
-          t.id === event.tokenId && event.seq >= t.seq
-            ? {
-                ...t,
-                x: event.x,
-                y: event.y,
-                rotation: event.rotation,
-                seq: event.seq,
-              }
-            : t,
-        ),
-      },
-    };
-  }
-  if (event.type === "mapTokenUpsert") {
-    const idx = map.tokens.findIndex((t) => t.id === event.token.id);
-    const tokens =
-      idx >= 0
-        ? map.tokens.map((t, i) => (i === idx ? event.token : t))
-        : [...map.tokens, event.token];
-    return { ...table, liveMap: { ...map, tokens } };
-  }
-  if (event.type === "mapTokenRemove") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        tokens: map.tokens.filter((t) => t.id !== event.tokenId),
-      },
-    };
-  }
-  if (event.type === "mapGrid") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        gridSizePx: event.gridSizePx,
-        gridOffsetX: event.gridOffsetX,
-        gridOffsetY: event.gridOffsetY,
-        scaleFeet: event.scaleFeet,
-        diagonalRule: event.diagonalRule,
-      },
-    };
-  }
-  if (event.type === "mapFogUpsert") {
-    const idx = map.fogRegions.findIndex((r) => r.id === event.region.id);
-    const fogRegions =
-      idx >= 0
-        ? map.fogRegions.map((r, i) => (i === idx ? event.region : r))
-        : [...map.fogRegions, event.region];
-    return { ...table, liveMap: { ...map, fogRegions } };
-  }
-  if (event.type === "mapFogRemove") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        fogRegions: map.fogRegions.filter((r) => r.id !== event.regionId),
-      },
-    };
-  }
-  if (event.type === "mapFogReset") {
-    return { ...table, liveMap: { ...map, fogRegions: [] } };
-  }
-  if (event.type === "mapDrawingUpsert") {
-    const idx = map.drawings.findIndex((d) => d.id === event.drawing.id);
-    const drawings =
-      idx >= 0
-        ? map.drawings.map((d, i) => (i === idx ? event.drawing : d))
-        : [...map.drawings, event.drawing];
-    return { ...table, liveMap: { ...map, drawings } };
-  }
-  if (event.type === "mapDrawingRemove") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        drawings: map.drawings.filter((d) => d.id !== event.drawingId),
-      },
-    };
-  }
-  if (event.type === "mapDrawingClear") {
-    return { ...table, liveMap: { ...map, drawings: [] } };
-  }
-  if (event.type === "mapOccluderUpsert") {
-    const idx = map.occluders.findIndex((o) => o.id === event.occluder.id);
-    const occluders =
-      idx >= 0
-        ? map.occluders.map((o, i) => (i === idx ? event.occluder : o))
-        : [...map.occluders, event.occluder];
-    return { ...table, liveMap: { ...map, occluders } };
-  }
-  if (event.type === "mapOccluderRemove") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        occluders: map.occluders.filter((o) => o.id !== event.occluderId),
-      },
-    };
-  }
-  if (event.type === "mapLightUpsert") {
-    const idx = map.lights.findIndex((l) => l.id === event.light.id);
-    const lights =
-      idx >= 0
-        ? map.lights.map((l, i) => (i === idx ? event.light : l))
-        : [...map.lights, event.light];
-    return { ...table, liveMap: { ...map, lights } };
-  }
-  if (event.type === "mapLightRemove") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        lights: map.lights.filter((l) => l.id !== event.lightId),
-      },
-    };
-  }
-  if (event.type === "mapFlags") {
-    return {
-      ...table,
-      liveMap: {
-        ...map,
-        fogEnabled: event.fogEnabled,
-        losEnabled: event.losEnabled,
-        lightingEnabled: event.lightingEnabled,
-        daylight: event.daylight,
-        explorerEnabled: event.explorerEnabled,
-      },
-    };
-  }
-  return table;
-}
 
 function CampaignRail({
   campaignName,
@@ -318,22 +173,6 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
   const [table, setTable] = useState<CampaignTableState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
-  const [onlineUserIds, setOnlineUserIds] = useState<string[]>([]);
-  const [liveActivity, setLiveActivity] = useState<CampaignActivityView | null>(
-    null,
-  );
-  const [pcUpdatedEvent, setPcUpdatedEvent] = useState<{
-    pcPlanId: string;
-    actorUserId: string;
-    updatedAt: string;
-  } | null>(null);
-  const [mapPings, setMapPings] = useState<MapPing[]>([]);
-  const [aoePointers, setAoePointers] = useState<MapAoePointerView[]>([]);
-  const [viewportGoTo, setViewportGoTo] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
-  const sseHadOpenRef = useRef(false);
 
   const refresh = useCallback(() => {
     startTransition(async () => {
@@ -353,89 +192,18 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
     });
   }, [campaignId]);
 
+  const onLiveMapChange = useCallback((map: CampaignMapView | null) => {
+    setTable((prev) => {
+      if (!prev) return prev;
+      if (prev.liveMap === map) return prev;
+      return { ...prev, liveMap: map };
+    });
+  }, []);
+
   useEffect(() => {
     if (!user) return;
     refresh();
   }, [user, refresh]);
-
-  // Live roster + presence + activity via SSE
-  useEffect(() => {
-    if (!user || !table || table.myStatus !== "active") return;
-    const es = new EventSource(`/tools/campaign/${campaignId}/live`);
-    es.onopen = () => {
-      if (sseHadOpenRef.current) {
-        refresh();
-      }
-      sseHadOpenRef.current = true;
-    };
-    es.onmessage = (msg) => {
-      try {
-        const event = JSON.parse(msg.data) as CampaignLiveEvent;
-        if (event.type === "roster" && event.members && event.pcs) {
-          setTable((prev) =>
-            prev ? { ...prev, members: event.members, pcs: event.pcs } : prev,
-          );
-        } else if (event.type === "presence") {
-          setOnlineUserIds(event.onlineUserIds);
-        } else if (event.type === "activity") {
-          setLiveActivity(event.activity);
-        } else if (event.type === "pcUpdated") {
-          setPcUpdatedEvent({
-            pcPlanId: event.pcPlanId,
-            actorUserId: event.actorUserId,
-            updatedAt: event.updatedAt,
-          });
-        } else if (
-          event.type === "mapSnapshot" ||
-          event.type === "mapList" ||
-          event.type === "mapTokenMove" ||
-          event.type === "mapTokenUpsert" ||
-          event.type === "mapTokenRemove" ||
-          event.type === "mapGrid" ||
-          event.type === "mapFogUpsert" ||
-          event.type === "mapFogRemove" ||
-          event.type === "mapFogReset" ||
-          event.type === "mapDrawingUpsert" ||
-          event.type === "mapDrawingRemove" ||
-          event.type === "mapDrawingClear" ||
-          event.type === "mapOccluderUpsert" ||
-          event.type === "mapOccluderRemove" ||
-          event.type === "mapLightUpsert" ||
-          event.type === "mapLightRemove" ||
-          event.type === "mapFlags"
-        ) {
-          setTable((prev) =>
-            prev ? applyMapEventToTable(prev, event) : prev,
-          );
-        } else if (event.type === "mapPing") {
-          setMapPings((prev) => [
-            ...prev,
-            {
-              id: `${event.userId}-${Date.now()}-${Math.random()}`,
-              x: event.x,
-              y: event.y,
-              color: event.color,
-            },
-          ]);
-        } else if (event.type === "mapViewportGoTo") {
-          setViewportGoTo({ x: event.x, y: event.y });
-        } else if (event.type === "mapAoeUpsert") {
-          setAoePointers((prev) => {
-            const idx = prev.findIndex((p) => p.id === event.pointer.id);
-            if (idx >= 0) {
-              return prev.map((p, i) => (i === idx ? event.pointer : p));
-            }
-            return [...prev, event.pointer];
-          });
-        } else if (event.type === "mapAoeClear") {
-          setAoePointers([]);
-        }
-      } catch {
-        // ignore
-      }
-    };
-    return () => es.close();
-  }, [user, campaignId, table?.myStatus, refresh]);
 
   if (!user) {
     return (
@@ -467,37 +235,38 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
     .map((r) => rollViewToResult(r))
     .filter((r): r is NonNullable<typeof r> => r != null);
 
+  const liveEnabled = table.myStatus === "active";
+
   return (
-    <DiceProvider
-      campaign={{
-        campaignId,
-        actor: {
-          userId: user.id,
-          username: user.username,
-          characterName: null,
-        },
-        isDm: table.myRole === "dm",
-        initialHistory,
-      }}
+    <CampaignLiveProvider
+      campaignId={campaignId}
+      table={table}
+      viewerUserId={user.id}
+      enabled={liveEnabled}
     >
-      <CampaignTableBody
-        table={table}
-        error={error}
-        setError={setError}
-        pending={pending}
-        startTransition={startTransition}
-        refresh={refresh}
-        onlineUserIds={onlineUserIds}
-        liveActivity={liveActivity}
-        pcUpdatedEvent={pcUpdatedEvent}
-        mapPings={mapPings}
-        aoePointers={aoePointers}
-        viewportGoTo={viewportGoTo}
-        onLiveMapChange={(map) =>
-          setTable((prev) => (prev ? { ...prev, liveMap: map } : prev))
-        }
-      />
-    </DiceProvider>
+      <DiceProvider
+        campaign={{
+          campaignId,
+          actor: {
+            userId: user.id,
+            username: user.username,
+            characterName: null,
+          },
+          isDm: table.myRole === "dm",
+          initialHistory,
+        }}
+      >
+        <CampaignTableBody
+          table={table}
+          error={error}
+          setError={setError}
+          pending={pending}
+          startTransition={startTransition}
+          refresh={refresh}
+          onLiveMapChange={onLiveMapChange}
+        />
+      </DiceProvider>
+    </CampaignLiveProvider>
   );
 }
 
@@ -508,12 +277,6 @@ function CampaignTableBody({
   pending,
   startTransition,
   refresh,
-  onlineUserIds,
-  liveActivity,
-  pcUpdatedEvent,
-  mapPings,
-  aoePointers,
-  viewportGoTo,
   onLiveMapChange,
 }: {
   table: CampaignTableState;
@@ -522,21 +285,27 @@ function CampaignTableBody({
   pending: boolean;
   startTransition: (fn: () => void) => void;
   refresh: () => void;
-  onlineUserIds: string[];
-  liveActivity: CampaignActivityView | null;
-  pcUpdatedEvent: {
-    pcPlanId: string;
-    actorUserId: string;
-    updatedAt: string;
-  } | null;
-  mapPings: MapPing[];
-  aoePointers: MapAoePointerView[];
-  viewportGoTo: { x: number; y: number } | null;
   onLiveMapChange: (map: CampaignMapView | null) => void;
 }) {
   const user = useAuthUser()!;
   const router = useRouter();
   const isDm = table.myRole === "dm";
+  const { store, send: sendLive } = useCampaignLive();
+  useLiveStoreVersion(store);
+  const onlineUserIds = useLivePresence(store);
+  const liveActivityList = useLiveActivity(store);
+  const pcUpdatedEvent = useLivePcUpdated(store);
+  const liveMapFromStore = useLiveMap(store);
+  // Store is source of truth after connect; HTTP snapshot is the fallback.
+  const liveMap = liveMapFromStore ?? table.liveMap;
+  const rosterPcs =
+    store.getState().pcs.length > 0 ? store.getState().pcs : table.pcs;
+  const mapPings: MapPing[] = store.getState().mapPings;
+  const aoePointers: MapAoePointerView[] = store.getState().aoePointers;
+  const viewportGoToRaw = store.getState().viewportGoTo;
+  const viewportGoTo = viewportGoToRaw
+    ? { x: viewportGoToRaw.x, y: viewportGoToRaw.y }
+    : null;
 
   const initialPcId =
     table.pcs.find((p) => p.userId === user.id)?.pcPlanId ?? table.pcs[0]?.pcPlanId ?? null;
@@ -556,34 +325,30 @@ function CampaignTableBody({
   const [showImport, setShowImport] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuId>(null);
-  const [liveMap, setLiveMap] = useState(table.liveMap);
   const [createOwnerUserId, setCreateOwnerUserId] = useState(user.id);
   const [activities, setActivities] = useState<CampaignActivityView[]>([]);
   const [activitiesLoading, setActivitiesLoading] = useState(false);
   const popoutWindowsRef = useRef<Map<string, Window>>(new Map());
   const lastActivityId = useRef<string | null>(null);
 
-  useEffect(() => {
-    setLiveMap(table.liveMap);
-  }, [table.liveMap]);
-
   const handleMapChange = useCallback(
     (map: CampaignMapView | null) => {
-      setLiveMap(map);
+      // Keep parent HTTP snapshot in sync for refresh/drawer, but do not
+      // feed store-derived objects back every render (that loops).
       onLiveMapChange(map);
     },
     [onLiveMapChange],
   );
 
   const visiblePcs = useMemo(() => {
-    if (isDm) return table.pcs;
-    return table.pcs.filter((p) => p.userId === user.id);
-  }, [isDm, table.pcs, user.id]);
+    if (isDm) return rosterPcs;
+    return rosterPcs.filter((p) => p.userId === user.id);
+  }, [isDm, rosterPcs, user.id]);
 
   const onlinePcs = useMemo(() => {
     const online = new Set(onlineUserIds);
-    return table.pcs.filter((p) => online.has(p.userId));
-  }, [table.pcs, onlineUserIds]);
+    return rosterPcs.filter((p) => online.has(p.userId));
+  }, [rosterPcs, onlineUserIds]);
 
   const raisePc = useCallback((pcPlanId: string) => {
     focusSeqRef.current += 1;
@@ -629,14 +394,15 @@ function CampaignTableBody({
   }, [visiblePcs]);
 
   useEffect(() => {
-    if (!liveActivity) return;
-    if (lastActivityId.current === liveActivity.id) return;
-    lastActivityId.current = liveActivity.id;
+    if (liveActivityList.length === 0) return;
+    const latest = liveActivityList[0]!;
+    if (lastActivityId.current === latest.id) return;
+    lastActivityId.current = latest.id;
     setActivities((prev) => {
-      if (prev.some((a) => a.id === liveActivity.id)) return prev;
-      return [liveActivity, ...prev].slice(0, 200);
+      if (prev.some((a) => a.id === latest.id)) return prev;
+      return [latest, ...prev].slice(0, 200);
     });
-  }, [liveActivity]);
+  }, [liveActivityList]);
 
   useEffect(() => {
     if (activeMenu !== "logs") return;
@@ -1105,13 +871,14 @@ function CampaignTableBody({
             viewerUserId={user.id}
             onMapChange={handleMapChange}
             onOpenPcSheet={(pcPlanId) => {
-              const pc = table.pcs.find((p) => p.pcPlanId === pcPlanId);
+              const pc = rosterPcs.find((p) => p.pcPlanId === pcPlanId);
               if (!pc) return;
               selectPc(pcPlanId, pc.userId);
             }}
             extraPings={mapPings}
             aoePointers={aoePointers}
             viewportGoTo={viewportGoTo}
+            sendLive={sendLive}
           />
         ) : null}
 

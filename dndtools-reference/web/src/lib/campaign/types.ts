@@ -120,6 +120,28 @@ export type CampaignRollEvent = {
   roll: CampaignRollView;
 };
 
+/** Messages the browser sends on the campaign WebSocket. */
+export type ClientLiveMessage =
+  | {
+      type: "tokenMove";
+      tokenId: string;
+      x: number;
+      y: number;
+      rotation: number;
+      seq: number;
+    }
+  | {
+      type: "tokenMoveCommit";
+      tokenId: string;
+      x: number;
+      y: number;
+      rotation: number;
+      seq: number;
+    }
+  | { type: "mapPing"; x: number; y: number }
+  | { type: "mapViewportGoTo"; x: number; y: number }
+  | { type: "ping" };
+
 export type CampaignLiveEvent =
   | CampaignRollEvent
   | { type: "ping" }

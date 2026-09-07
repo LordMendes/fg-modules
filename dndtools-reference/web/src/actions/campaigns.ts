@@ -954,22 +954,9 @@ export async function startCampaignRoll(
   }
 
   const fullView = toCampaignRollView(row, { userId: user.id, isDm: true });
-  const dmUserId = member.campaign.dmUserId;
 
-  publishCampaignLive(
-    input.campaignId,
-    { type: "roll", roll: fullView },
-    {
-      filterForUser: (viewerId, event) => {
-        if (event.type !== "roll") return event;
-        const view = toCampaignRollView(row, {
-          userId: viewerId,
-          isDm: viewerId === dmUserId,
-        });
-        return { type: "roll", roll: view };
-      },
-    },
-  );
+  // Publish DM-complete roll; replicas strip via filterLiveEventForViewer.
+  publishCampaignLive(input.campaignId, { type: "roll", roll: fullView });
 
   return {
     success: true,

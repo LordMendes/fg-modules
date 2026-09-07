@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { canViewerSeeActivity } from "@/lib/campaign/activityVisibility";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
 import type {
   CampaignActivityDetail,
@@ -7,19 +8,9 @@ import type {
 } from "@/lib/campaign/types";
 import type { Prisma } from "@/generated/prisma/client";
 
-const ACTIVITY_HISTORY_LIMIT = 500;
+export { canViewerSeeActivity };
 
-export function canViewerSeeActivity(
-  viewer: { userId: string; isDm: boolean },
-  activity: { actorUserId: string; subjectUserId: string | null },
-): boolean {
-  if (viewer.isDm) return true;
-  if (activity.actorUserId === viewer.userId) return true;
-  if (activity.subjectUserId && activity.subjectUserId === viewer.userId) {
-    return true;
-  }
-  return false;
-}
+const ACTIVITY_HISTORY_LIMIT = 500;
 
 export function mapActivityRow(row: {
   id: string;
@@ -66,24 +57,10 @@ async function trimActivity(campaignId: string) {
 function publishActivityLive(
   campaignId: string,
   activity: CampaignActivityView,
-  dmUserIds: Set<string>,
+  _dmUserIds: Set<string>,
 ) {
-  publishCampaignLive(
-    campaignId,
-    { type: "activity", activity },
-    {
-      filterForUser: (viewerId, event) => {
-        if (event.type !== "activity") return event;
-        const isDm = dmUserIds.has(viewerId);
-        if (
-          canViewerSeeActivity({ userId: viewerId, isDm }, event.activity)
-        ) {
-          return event;
-        }
-        return null;
-      },
-    },
-  );
+  // Delivery-side filterLiveEventForViewer drops activity players cannot see.
+  publishCampaignLive(campaignId, { type: "activity", activity });
 }
 
 export type RecordActivityInput = {

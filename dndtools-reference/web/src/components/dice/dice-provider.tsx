@@ -8,11 +8,13 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { startCampaignRoll } from "@/actions/campaigns";
+import { useCampaignLiveOptional } from "@/components/tools/campaign-live-provider";
 import { markSeenRollId } from "@/lib/campaign/seenRollIds";
-import type { CampaignLiveEvent, CampaignRollView } from "@/lib/campaign/types";
+import type { CampaignRollView } from "@/lib/campaign/types";
 import { rollViewToResult } from "@/lib/campaign/types";
 import {
   addDieToPool,
@@ -249,23 +251,27 @@ export function DiceProvider({
     [historyLimit],
   );
 
-  // Campaign SSE: every client (including roller) ingests once by roll.id.
+  // Campaign rolls arrive on the shared WebSocket (CampaignLiveProvider).
+  const live = useCampaignLiveOptional();
+  const rollStore = live?.store ?? null;
+  const rollVersion = useSyncExternalStore(
+    (onStoreChange) => {
+      if (!rollStore) return () => {};
+      return rollStore.subscribe(onStoreChange);
+    },
+    () => (rollStore ? rollStore.getRollVersion() : 0),
+    () => 0,
+  );
+  const seenRollRef = useRef<string | null>(null);
   useEffect(() => {
-    if (!campaignId) return;
-    const es = new EventSource(`/tools/campaign/${campaignId}/live`);
-    es.onmessage = (msg) => {
-      try {
-        const event = JSON.parse(msg.data) as CampaignLiveEvent;
-        if (event.type !== "roll") return;
-        ingestCampaignRoll(event.roll);
-      } catch {
-        // ignore malformed
-      }
-    };
-    return () => {
-      es.close();
-    };
-  }, [campaignId, ingestCampaignRoll]);
+    if (!rollStore) return;
+    const rolls = rollStore.getState().rolls;
+    if (rolls.length === 0) return;
+    const latest = rolls[0]!;
+    if (seenRollRef.current === latest.id) return;
+    seenRollRef.current = latest.id;
+    ingestCampaignRoll(latest);
+  }, [rollStore, rollVersion, ingestCampaignRoll]);
 
   const setTrayExpanded = useCallback((open: boolean) => {
     setTrayExpandedState(open);

@@ -2,7 +2,10 @@
 
 import { randomUUID } from "node:crypto";
 import { requireCurrentUser } from "@/lib/auth/session";
-import { publishCampaignLive } from "@/lib/campaign/liveHub";
+import {
+  publishCampaignLive,
+  seedCampaignRoomMeta,
+} from "@/lib/campaign/liveHub";
 import { asDiagonalRule } from "@/lib/map/grid";
 import { simplifyPolygon } from "@/lib/map/fog";
 import { canWalkTo, tokenCenter } from "@/lib/map/los";
@@ -17,9 +20,6 @@ import {
   toCampaignMapView,
 } from "@/lib/map/mapView";
 import {
-  filterMapViewForViewer,
-  filterOccluderForViewer,
-  isTokenVisibleToViewer,
   userColor,
   type MapViewer,
 } from "@/lib/map/permissions";
@@ -236,68 +236,26 @@ function publishFilteredMapSnapshot(
   dmUserId: string,
   map: CampaignMapView | null,
 ): void {
-  publishCampaignLive(
-    campaignId,
-    { type: "mapSnapshot", map },
-    {
-      filterForUser: (userId, event) => {
-        if (event.type !== "mapSnapshot") return event;
-        if (!map) return { type: "mapSnapshot", map: null };
-        const viewer: MapViewer = { userId, isDm: userId === dmUserId };
-        return {
-          type: "mapSnapshot",
-          map: filterMapViewForViewer(map, viewer),
-        };
-      },
-    },
-  );
+  // Full map on the bus; replicas filter per viewer via filterLiveEventForViewer.
+  void seedCampaignRoomMeta(campaignId, dmUserId, map);
+  publishCampaignLive(campaignId, { type: "mapSnapshot", map });
 }
 
 function publishMapList(
   campaignId: string,
-  dmUserId: string,
+  _dmUserId: string,
   maps: CampaignMapListItem[],
 ): void {
-  publishCampaignLive(
-    campaignId,
-    { type: "mapList", maps },
-    {
-      filterForUser: (userId, event) => {
-        if (event.type !== "mapList") return event;
-        if (userId === dmUserId) return event;
-        return null;
-      },
-    },
-  );
+  publishCampaignLive(campaignId, { type: "mapList", maps });
 }
 
 function publishFilteredTokenUpsert(
   campaignId: string,
-  dmUserId: string,
+  _dmUserId: string,
   token: MapTokenView,
-  mapContext: { fogEnabled: boolean; fogRegions: CampaignMapView["fogRegions"] },
+  _mapContext: { fogEnabled: boolean; fogRegions: CampaignMapView["fogRegions"] },
 ): void {
-  publishCampaignLive(
-    campaignId,
-    { type: "mapTokenUpsert", token },
-    {
-      filterForUser: (userId, event) => {
-        if (event.type !== "mapTokenUpsert") return event;
-        const viewer: MapViewer = { userId, isDm: userId === dmUserId };
-        if (
-          isTokenVisibleToViewer(
-            token,
-            viewer,
-            mapContext.fogEnabled,
-            mapContext.fogRegions,
-          )
-        ) {
-          return event;
-        }
-        return { type: "mapTokenRemove", tokenId: token.id };
-      },
-    },
-  );
+  publishCampaignLive(campaignId, { type: "mapTokenUpsert", token });
 }
 
 function publishMapFlags(
@@ -315,23 +273,10 @@ function publishMapFlags(
 
 function publishFilteredOccluderUpsert(
   campaignId: string,
-  dmUserId: string,
+  _dmUserId: string,
   occluder: MapOccluderView,
 ): void {
-  publishCampaignLive(
-    campaignId,
-    { type: "mapOccluderUpsert", occluder },
-    {
-      filterForUser: (userId, event) => {
-        if (event.type !== "mapOccluderUpsert") return event;
-        const viewer: MapViewer = { userId, isDm: userId === dmUserId };
-        return {
-          type: "mapOccluderUpsert",
-          occluder: filterOccluderForViewer(occluder, viewer),
-        };
-      },
-    },
-  );
+  publishCampaignLive(campaignId, { type: "mapOccluderUpsert", occluder });
 }
 
 async function syncMaskTokensForMap(
@@ -861,44 +806,6 @@ export async function removeMapToken(
   await prisma.campaignMapToken.delete({ where: { id: tokenId } });
 
   publishCampaignLive(campaignId, { type: "mapTokenRemove", tokenId });
-
-  return { success: true };
-}
-
-export async function broadcastMapTokenMove(
-  campaignId: string,
-  tokenId: string,
-  x: number,
-  y: number,
-  rotation: number,
-  seq: number,
-): Promise<MapActionResult> {
-  const user = await requireCurrentUser();
-  const member = await requireActiveMember(campaignId, user.id);
-  if (!member) return { success: false, error: "Not a campaign member" };
-
-  const token = await prisma.campaignMapToken.findUnique({
-    where: { id: tokenId },
-    include: { map: { select: { campaignId: true } } },
-  });
-  if (!token || token.map.campaignId !== campaignId) {
-    return { success: false, error: "Token not found" };
-  }
-
-  const isDm = member.role === "dm";
-  if (!canUserMoveToken(token, user.id, isDm)) {
-    return { success: false, error: "Cannot move this token" };
-  }
-
-  publishCampaignLive(campaignId, {
-    type: "mapTokenMove",
-    tokenId,
-    x,
-    y,
-    rotation,
-    seq,
-    committed: false,
-  });
 
   return { success: true };
 }

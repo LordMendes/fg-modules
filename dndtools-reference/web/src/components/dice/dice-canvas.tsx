@@ -185,6 +185,23 @@ export function DiceCanvas() {
     }, FADE_HOLD_MS);
   }
 
+  // Pause Three.js work when no roll is active (after fade).
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+    const idle = !activeRequest && !rollingRef.current && !silhouetteActive;
+    const canvas = box.renderer?.domElement;
+    if (canvas) {
+      canvas.style.visibility = idle ? "hidden" : "visible";
+    }
+    const renderer = box.renderer as
+      | { setAnimationLoop?: (cb: null | (() => void)) => void }
+      | undefined;
+    if (idle) {
+      renderer?.setAnimationLoop?.(null);
+    }
+  }, [activeRequest, silhouetteActive]);
+
   // Initialize engine once
   useEffect(() => {
     let cancelled = false;

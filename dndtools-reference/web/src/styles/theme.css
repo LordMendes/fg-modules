@@ -10549,12 +10549,27 @@ html.dice-secret-cursor * {
   touch-action: none;
 }
 
+.map-viewport-overlay-host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.map-viewport-overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 .campaign-map-world {
   position: absolute;
   top: 0;
   left: 0;
   transform-origin: 0 0;
-  pointer-events: auto;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .campaign-map-image {
@@ -10696,6 +10711,7 @@ html.dice-secret-cursor * {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 3;
 }
 
 .map-token-layer--gm {

@@ -38,6 +38,8 @@ RUN mkdir -p /sharp-native \
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
 RUN pnpm --filter @fg-modules/web import:bundle
+# Custom HTTP+WS server (esbuild). Runs with packages external.
+RUN pnpm --filter @fg-modules/web run bundle:server
 
 # --- Production ---
 FROM base AS runner
@@ -54,6 +56,7 @@ COPY --from=builder /data/dndtools /data/dndtools
 COPY --from=builder /app/web/prisma ./web/prisma
 COPY --from=builder /app/web/public ./web/public
 COPY --from=builder /app/web/import-dndtools.mjs ./web/import-dndtools.mjs
+COPY --from=builder /app/web/server.mjs ./web/server.mjs
 COPY --from=builder /app/web/docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=builder /app/web/prisma.config.docker.mjs ./web/prisma.config.mjs
 
@@ -63,7 +66,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/stat
 
 # Prisma CLI + config deps (migrate deploy reads prisma.config.mjs).
 WORKDIR /app/web
-RUN npm install prisma@7.8.0 --ignore-scripts --no-package-lock
+RUN npm install prisma@7.8.0 ioredis@5 ws@8 --ignore-scripts --no-package-lock
 WORKDIR /app
 
 # Overlay complete Sharp packages into every traced .pnpm tree. Installing Sharp

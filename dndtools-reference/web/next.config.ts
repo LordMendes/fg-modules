@@ -23,7 +23,7 @@ const contentSecurityPolicy = [
   `img-src 'self' blob: data: ${r2PublicOrigin}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${plausibleOrigin}`,
+  `connect-src 'self' ${plausibleOrigin} ws: wss:`,
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
