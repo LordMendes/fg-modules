@@ -1,43 +1,28 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ScrollText, Users } from "lucide-react";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-  type ReactNode,
-} from "react";
 import {
   attachPcToCampaign,
   createPcInCampaign,
   deleteCampaign,
   getCampaignActivity,
-  getCampaignPcPlan,
   getCampaignTable,
   inviteByUsername,
   kickMember,
   leaveCampaign,
   unlinkPcFromCampaign,
-  type CampaignPcPlanResult,
 } from "@/actions/campaigns";
-import { getUserPcPlans, renamePcPlan, savePcPlan, type PcPlanSummary } from "@/actions/pc-plans";
-import { fetchPcCompendium } from "@/actions/data";
+import { getUserPcPlans, type PcPlanSummary } from "@/actions/pc-plans";
 import { useAuthUser } from "@/components/auth-provider";
 import { DiceCanvas } from "@/components/dice/dice-canvas";
 import { DiceLogTray } from "@/components/dice/dice-log-tray";
-import { DiceProvider, useDice } from "@/components/dice/dice-provider";
+import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
-import { useSessionNonce } from "@/components/session-provider";
 import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
+import { CampaignMapBoard } from "@/components/map/campaign-map-board";
+import { MapScenesDrawer } from "@/components/map/map-scenes-drawer";
+import type { MapPing } from "@/components/map/map-ping-layer";
 import { CampaignPcAvatar } from "@/components/tools/campaign-pc-avatar";
-import { CampaignPcWindow } from "@/components/tools/campaign-pc-window";
-import { PcSheet } from "@/components/tools/pc-sheet";
-import { pcImagePublicUrl } from "@/lib/storage/pc-image-url";
+import { CampaignSheetInstance } from "@/components/tools/campaign-sheet-instance";
 import {
   campaignSheetPopoutChannelName,
   campaignSheetWindowName,
@@ -48,32 +33,284 @@ import type {
   CampaignLiveEvent,
   CampaignTableState,
 } from "@/lib/campaign/types";
+import type { CampaignMapView, MapAoePointerView } from "@/lib/map/types";
 import { rollViewToResult } from "@/lib/campaign/types";
-import type { PcCompendiumBundle } from "@/lib/entities";
-import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
-import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
-import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import {
-  applyDerivedFromRace,
-  applyRaceCombatBasicsOnRaceChange,
-} from "@/lib/pc-planner/syncDerived";
-import {
-  classSkillKeySet,
-  compendiumSyncKey,
-  mergeSkillsIntoRows,
-} from "@/lib/pc-planner/syncSkills";
-import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ChevronsLeft, ChevronsRight, MapPinned, ScrollText, Users } from "lucide-react";
 
-type SaveStatus = "idle" | "saving" | "saved" | "error";
+type MenuId = "roster" | "logs" | "maps" | null;
 
-type MenuId = "roster" | "logs" | null;
+const RAIL_EXPANDED_KEY = "campaign-table-rail-expanded";
 
-function CampaignCharacterNameSync({ name }: { name: string }) {
-  const { setCharacterName } = useDice();
+const SHEET_Z_BASE = 80;
+
+function applyMapEventToTable(
+  table: CampaignTableState,
+  event: CampaignLiveEvent,
+): CampaignTableState {
+  if (event.type === "mapSnapshot") {
+    return { ...table, liveMap: event.map };
+  }
+  if (event.type === "mapList") {
+    return { ...table, maps: event.maps };
+  }
+  if (!table.liveMap) return table;
+  const map = table.liveMap;
+
+  if (event.type === "mapTokenMove") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        tokens: map.tokens.map((t) =>
+          t.id === event.tokenId && event.seq >= t.seq
+            ? {
+                ...t,
+                x: event.x,
+                y: event.y,
+                rotation: event.rotation,
+                seq: event.seq,
+              }
+            : t,
+        ),
+      },
+    };
+  }
+  if (event.type === "mapTokenUpsert") {
+    const idx = map.tokens.findIndex((t) => t.id === event.token.id);
+    const tokens =
+      idx >= 0
+        ? map.tokens.map((t, i) => (i === idx ? event.token : t))
+        : [...map.tokens, event.token];
+    return { ...table, liveMap: { ...map, tokens } };
+  }
+  if (event.type === "mapTokenRemove") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        tokens: map.tokens.filter((t) => t.id !== event.tokenId),
+      },
+    };
+  }
+  if (event.type === "mapGrid") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        gridSizePx: event.gridSizePx,
+        gridOffsetX: event.gridOffsetX,
+        gridOffsetY: event.gridOffsetY,
+        scaleFeet: event.scaleFeet,
+        diagonalRule: event.diagonalRule,
+      },
+    };
+  }
+  if (event.type === "mapFogUpsert") {
+    const idx = map.fogRegions.findIndex((r) => r.id === event.region.id);
+    const fogRegions =
+      idx >= 0
+        ? map.fogRegions.map((r, i) => (i === idx ? event.region : r))
+        : [...map.fogRegions, event.region];
+    return { ...table, liveMap: { ...map, fogRegions } };
+  }
+  if (event.type === "mapFogRemove") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        fogRegions: map.fogRegions.filter((r) => r.id !== event.regionId),
+      },
+    };
+  }
+  if (event.type === "mapFogReset") {
+    return { ...table, liveMap: { ...map, fogRegions: [] } };
+  }
+  if (event.type === "mapDrawingUpsert") {
+    const idx = map.drawings.findIndex((d) => d.id === event.drawing.id);
+    const drawings =
+      idx >= 0
+        ? map.drawings.map((d, i) => (i === idx ? event.drawing : d))
+        : [...map.drawings, event.drawing];
+    return { ...table, liveMap: { ...map, drawings } };
+  }
+  if (event.type === "mapDrawingRemove") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        drawings: map.drawings.filter((d) => d.id !== event.drawingId),
+      },
+    };
+  }
+  if (event.type === "mapDrawingClear") {
+    return { ...table, liveMap: { ...map, drawings: [] } };
+  }
+  if (event.type === "mapOccluderUpsert") {
+    const idx = map.occluders.findIndex((o) => o.id === event.occluder.id);
+    const occluders =
+      idx >= 0
+        ? map.occluders.map((o, i) => (i === idx ? event.occluder : o))
+        : [...map.occluders, event.occluder];
+    return { ...table, liveMap: { ...map, occluders } };
+  }
+  if (event.type === "mapOccluderRemove") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        occluders: map.occluders.filter((o) => o.id !== event.occluderId),
+      },
+    };
+  }
+  if (event.type === "mapLightUpsert") {
+    const idx = map.lights.findIndex((l) => l.id === event.light.id);
+    const lights =
+      idx >= 0
+        ? map.lights.map((l, i) => (i === idx ? event.light : l))
+        : [...map.lights, event.light];
+    return { ...table, liveMap: { ...map, lights } };
+  }
+  if (event.type === "mapLightRemove") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        lights: map.lights.filter((l) => l.id !== event.lightId),
+      },
+    };
+  }
+  if (event.type === "mapFlags") {
+    return {
+      ...table,
+      liveMap: {
+        ...map,
+        fogEnabled: event.fogEnabled,
+        losEnabled: event.losEnabled,
+        lightingEnabled: event.lightingEnabled,
+        daylight: event.daylight,
+        explorerEnabled: event.explorerEnabled,
+      },
+    };
+  }
+  return table;
+}
+
+function CampaignRail({
+  campaignName,
+  isDm,
+  activeMenu,
+  onSelectMenu,
+}: {
+  campaignName: string;
+  isDm: boolean;
+  activeMenu: MenuId;
+  onSelectMenu: (id: MenuId) => void;
+}) {
+  const [railExpanded, setRailExpanded] = useState(false);
+
   useEffect(() => {
-    setCharacterName(name);
-  }, [name, setCharacterName]);
-  return null;
+    try {
+      setRailExpanded(sessionStorage.getItem(RAIL_EXPANDED_KEY) === "1");
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  function toggleRail() {
+    setRailExpanded((prev) => {
+      const next = !prev;
+      try {
+        sessionStorage.setItem(RAIL_EXPANDED_KEY, next ? "1" : "0");
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  }
+
+  return (
+    <nav
+      className={`campaign-rail${railExpanded ? " campaign-rail--expanded" : ""}`}
+      aria-label="Campaign menu"
+    >
+      {railExpanded ? (
+        <div className="campaign-rail-brand">
+          <div className="campaign-rail-brand-text">
+            <span className="campaign-rail-brand-name">{campaignName}</span>
+            <span className="campaign-rail-brand-role">
+              {isDm ? "Dungeon Master" : "Player"}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="campaign-rail-btn campaign-rail-toggle"
+            aria-expanded={true}
+            aria-label="Collapse menu"
+            title="Collapse menu"
+            onClick={toggleRail}
+          >
+            <ChevronsLeft size={18} aria-hidden />
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          className="campaign-rail-btn campaign-rail-toggle"
+          aria-expanded={false}
+          aria-label="Expand menu"
+          title="Expand menu"
+          onClick={toggleRail}
+        >
+          <ChevronsRight size={20} aria-hidden />
+        </button>
+      )}
+      <button
+        type="button"
+        className={`campaign-rail-btn${activeMenu === "roster" ? " campaign-rail-btn--active" : ""}`}
+        aria-pressed={activeMenu === "roster"}
+        aria-label={railExpanded ? undefined : "Invite and characters"}
+        title="Invite and characters"
+        onClick={() => onSelectMenu(activeMenu === "roster" ? null : "roster")}
+      >
+        <Users size={20} aria-hidden />
+        <span className="campaign-rail-btn-label">Characters</span>
+      </button>
+      <button
+        type="button"
+        className={`campaign-rail-btn${activeMenu === "logs" ? " campaign-rail-btn--active" : ""}`}
+        aria-pressed={activeMenu === "logs"}
+        aria-label={railExpanded ? undefined : "Campaign logs"}
+        title="Campaign logs"
+        onClick={() => onSelectMenu(activeMenu === "logs" ? null : "logs")}
+      >
+        <ScrollText size={20} aria-hidden />
+        <span className="campaign-rail-btn-label">Logs</span>
+      </button>
+      {isDm ? (
+        <button
+          type="button"
+          className={`campaign-rail-btn${activeMenu === "maps" ? " campaign-rail-btn--active" : ""}`}
+          aria-pressed={activeMenu === "maps"}
+          aria-label={railExpanded ? undefined : "Map scenes"}
+          title="Map scenes"
+          onClick={() => onSelectMenu(activeMenu === "maps" ? null : "maps")}
+        >
+          <MapPinned size={20} aria-hidden />
+          <span className="campaign-rail-btn-label">Maps</span>
+        </button>
+      ) : null}
+    </nav>
+  );
 }
 
 export function CampaignTable({ campaignId }: { campaignId: string }) {
@@ -90,6 +327,13 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
     actorUserId: string;
     updatedAt: string;
   } | null>(null);
+  const [mapPings, setMapPings] = useState<MapPing[]>([]);
+  const [aoePointers, setAoePointers] = useState<MapAoePointerView[]>([]);
+  const [viewportGoTo, setViewportGoTo] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  const sseHadOpenRef = useRef(false);
 
   const refresh = useCallback(() => {
     startTransition(async () => {
@@ -118,6 +362,12 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
   useEffect(() => {
     if (!user || !table || table.myStatus !== "active") return;
     const es = new EventSource(`/tools/campaign/${campaignId}/live`);
+    es.onopen = () => {
+      if (sseHadOpenRef.current) {
+        refresh();
+      }
+      sseHadOpenRef.current = true;
+    };
     es.onmessage = (msg) => {
       try {
         const event = JSON.parse(msg.data) as CampaignLiveEvent;
@@ -135,13 +385,57 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
             actorUserId: event.actorUserId,
             updatedAt: event.updatedAt,
           });
+        } else if (
+          event.type === "mapSnapshot" ||
+          event.type === "mapList" ||
+          event.type === "mapTokenMove" ||
+          event.type === "mapTokenUpsert" ||
+          event.type === "mapTokenRemove" ||
+          event.type === "mapGrid" ||
+          event.type === "mapFogUpsert" ||
+          event.type === "mapFogRemove" ||
+          event.type === "mapFogReset" ||
+          event.type === "mapDrawingUpsert" ||
+          event.type === "mapDrawingRemove" ||
+          event.type === "mapDrawingClear" ||
+          event.type === "mapOccluderUpsert" ||
+          event.type === "mapOccluderRemove" ||
+          event.type === "mapLightUpsert" ||
+          event.type === "mapLightRemove" ||
+          event.type === "mapFlags"
+        ) {
+          setTable((prev) =>
+            prev ? applyMapEventToTable(prev, event) : prev,
+          );
+        } else if (event.type === "mapPing") {
+          setMapPings((prev) => [
+            ...prev,
+            {
+              id: `${event.userId}-${Date.now()}-${Math.random()}`,
+              x: event.x,
+              y: event.y,
+              color: event.color,
+            },
+          ]);
+        } else if (event.type === "mapViewportGoTo") {
+          setViewportGoTo({ x: event.x, y: event.y });
+        } else if (event.type === "mapAoeUpsert") {
+          setAoePointers((prev) => {
+            const idx = prev.findIndex((p) => p.id === event.pointer.id);
+            if (idx >= 0) {
+              return prev.map((p, i) => (i === idx ? event.pointer : p));
+            }
+            return [...prev, event.pointer];
+          });
+        } else if (event.type === "mapAoeClear") {
+          setAoePointers([]);
         }
       } catch {
         // ignore
       }
     };
     return () => es.close();
-  }, [user, campaignId, table?.myStatus]);
+  }, [user, campaignId, table?.myStatus, refresh]);
 
   if (!user) {
     return (
@@ -196,6 +490,12 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
         onlineUserIds={onlineUserIds}
         liveActivity={liveActivity}
         pcUpdatedEvent={pcUpdatedEvent}
+        mapPings={mapPings}
+        aoePointers={aoePointers}
+        viewportGoTo={viewportGoTo}
+        onLiveMapChange={(map) =>
+          setTable((prev) => (prev ? { ...prev, liveMap: map } : prev))
+        }
       />
     </DiceProvider>
   );
@@ -211,6 +511,10 @@ function CampaignTableBody({
   onlineUserIds,
   liveActivity,
   pcUpdatedEvent,
+  mapPings,
+  aoePointers,
+  viewportGoTo,
+  onLiveMapChange,
 }: {
   table: CampaignTableState;
   error: string | null;
@@ -225,41 +529,51 @@ function CampaignTableBody({
     actorUserId: string;
     updatedAt: string;
   } | null;
+  mapPings: MapPing[];
+  aoePointers: MapAoePointerView[];
+  viewportGoTo: { x: number; y: number } | null;
+  onLiveMapChange: (map: CampaignMapView | null) => void;
 }) {
   const user = useAuthUser()!;
   const router = useRouter();
-  const nonce = useSessionNonce();
   const isDm = table.myRole === "dm";
 
-  const [selectedPcPlanId, setSelectedPcPlanId] = useState<string | null>(
-    () => table.pcs.find((p) => p.userId === user.id)?.pcPlanId ?? table.pcs[0]?.pcPlanId ?? null,
+  const initialPcId =
+    table.pcs.find((p) => p.userId === user.id)?.pcPlanId ?? table.pcs[0]?.pcPlanId ?? null;
+
+  const [openPcPlanIds, setOpenPcPlanIds] = useState<string[]>(() =>
+    initialPcId ? [initialPcId] : [],
   );
-  const [plan, setPlan] = useState<CampaignPcPlanResult | null>(null);
-  const [state, setState] = useState<PcPlanState | null>(null);
-  const [shortcut, setShortcut] = useState("");
-  const [sheetTab, setSheetTab] = useState<PcSheetTab>("main");
-  const [activeSpellClassIndex, setActiveSpellClassIndex] = useState(0);
-  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
-  const [hydrated, setHydrated] = useState(false);
-  const [compendium, setCompendium] = useState<PcCompendiumBundle | null>(null);
-  const [compendiumLoading, setCompendiumLoading] = useState(false);
+  const [focusedPcPlanId, setFocusedPcPlanId] = useState<string | null>(initialPcId);
+  const [focusOrder, setFocusOrder] = useState<Record<string, number>>(() =>
+    initialPcId ? { [initialPcId]: 1 } : {},
+  );
+  const focusSeqRef = useRef(1);
+  const [poppedOutPcPlanIds, setPoppedOutPcPlanIds] = useState<string[]>([]);
+  const [restoreTicks, setRestoreTicks] = useState<Record<string, number>>({});
   const [myPlans, setMyPlans] = useState<PcPlanSummary[]>([]);
   const [inviteUsername, setInviteUsername] = useState("");
   const [showImport, setShowImport] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuId>(null);
-  const [sheetMinimized, setSheetMinimized] = useState(false);
-  const [poppedOutPcPlanId, setPoppedOutPcPlanId] = useState<string | null>(null);
+  const [liveMap, setLiveMap] = useState(table.liveMap);
   const [createOwnerUserId, setCreateOwnerUserId] = useState(user.id);
   const [activities, setActivities] = useState<CampaignActivityView[]>([]);
   const [activitiesLoading, setActivitiesLoading] = useState(false);
-  const popoutWindowRef = useRef<Window | null>(null);
-  const saveTimer = useRef<number | null>(null);
-  const dirtyRef = useRef(false);
-  const lastCompendiumSync = useRef("");
-  const lastRaceSlug = useRef<string | null | undefined>(undefined);
+  const popoutWindowsRef = useRef<Map<string, Window>>(new Map());
   const lastActivityId = useRef<string | null>(null);
-  const lastPcUpdatedAt = useRef<string | null>(null);
+
+  useEffect(() => {
+    setLiveMap(table.liveMap);
+  }, [table.liveMap]);
+
+  const handleMapChange = useCallback(
+    (map: CampaignMapView | null) => {
+      setLiveMap(map);
+      onLiveMapChange(map);
+    },
+    [onLiveMapChange],
+  );
 
   const visiblePcs = useMemo(() => {
     if (isDm) return table.pcs;
@@ -271,49 +585,48 @@ function CampaignTableBody({
     return table.pcs.filter((p) => online.has(p.userId));
   }, [table.pcs, onlineUserIds]);
 
-  useEffect(() => {
-    if (selectedPcPlanId && !visiblePcs.some((p) => p.pcPlanId === selectedPcPlanId)) {
-      setSelectedPcPlanId(visiblePcs[0]?.pcPlanId ?? null);
-    }
-  }, [visiblePcs, selectedPcPlanId]);
+  const raisePc = useCallback((pcPlanId: string) => {
+    focusSeqRef.current += 1;
+    setFocusOrder((prev) => ({ ...prev, [pcPlanId]: focusSeqRef.current }));
+    setFocusedPcPlanId(pcPlanId);
+  }, []);
 
-  const loadPlan = useCallback(
-    (pcPlanId: string | null) => {
-      if (!pcPlanId) {
-        dirtyRef.current = false;
-        setPlan(null);
-        setState(null);
-        setHydrated(true);
-        return;
+  const openPc = useCallback(
+    (pcPlanId: string, opts?: { restore?: boolean }) => {
+      setOpenPcPlanIds((prev) =>
+        prev.includes(pcPlanId) ? prev : [...prev, pcPlanId],
+      );
+      raisePc(pcPlanId);
+      if (opts?.restore) {
+        setRestoreTicks((prev) => ({
+          ...prev,
+          [pcPlanId]: (prev[pcPlanId] ?? 0) + 1,
+        }));
       }
-      dirtyRef.current = false;
-      setHydrated(false);
-      setSaveStatus("idle");
-      startTransition(async () => {
-        const loaded = await getCampaignPcPlan(table.id, pcPlanId);
-        if (!loaded) {
-          setError("Character not available");
-          setPlan(null);
-          setState(null);
-          setHydrated(true);
-          return;
-        }
-        lastCompendiumSync.current = "";
-        lastRaceSlug.current = undefined;
-        dirtyRef.current = false;
-        setPlan(loaded);
-        setShortcut(loaded.shortcut ?? "");
-        setState(loaded.state);
-        setHydrated(true);
-        setSheetMinimized(false);
-      });
     },
-    [table.id, setError, startTransition],
+    [raisePc],
   );
 
+  const closePc = useCallback((pcPlanId: string) => {
+    setOpenPcPlanIds((prev) => {
+      const next = prev.filter((id) => id !== pcPlanId);
+      setFocusedPcPlanId((focused) => {
+        if (focused !== pcPlanId) return focused;
+        return next[next.length - 1] ?? null;
+      });
+      return next;
+    });
+    setPoppedOutPcPlanIds((prev) => prev.filter((id) => id !== pcPlanId));
+    popoutWindowsRef.current.delete(pcPlanId);
+  }, []);
+
   useEffect(() => {
-    loadPlan(selectedPcPlanId);
-  }, [selectedPcPlanId, loadPlan]);
+    setOpenPcPlanIds((prev) => {
+      const next = prev.filter((id) => visiblePcs.some((p) => p.pcPlanId === id));
+      if (next.length === prev.length) return prev;
+      return next;
+    });
+  }, [visiblePcs]);
 
   useEffect(() => {
     if (!liveActivity) return;
@@ -326,67 +639,18 @@ function CampaignTableBody({
   }, [liveActivity]);
 
   useEffect(() => {
-    if (!pcUpdatedEvent) return;
-    if (lastPcUpdatedAt.current === pcUpdatedEvent.updatedAt) return;
-    lastPcUpdatedAt.current = pcUpdatedEvent.updatedAt;
-    if (pcUpdatedEvent.actorUserId === user.id) return;
-    if (pcUpdatedEvent.pcPlanId !== selectedPcPlanId) return;
-    loadPlan(selectedPcPlanId);
-  }, [pcUpdatedEvent, user.id, selectedPcPlanId, loadPlan]);
-
-  useEffect(() => {
     if (activeMenu !== "logs") return;
+    let cancelled = false;
     setActivitiesLoading(true);
-    startTransition(async () => {
-      const rows = await getCampaignActivity(table.id);
+    void getCampaignActivity(table.id).then((rows) => {
+      if (cancelled) return;
       setActivities(rows);
       setActivitiesLoading(false);
     });
-  }, [activeMenu, table.id, startTransition]);
-
-  const patch = useCallback(
-    (fn: (draft: PcPlanState) => void) => {
-      if (!plan?.canEdit) return;
-      dirtyRef.current = true;
-      setState((prev) => {
-        if (!prev) return prev;
-        const draft = structuredClone(prev);
-        fn(draft);
-        return finalizePcPlanState(
-          draft,
-          compendium?.raceFeatures ?? null,
-          compendium?.classSpellTables ?? {},
-          compendium?.classHitDice ?? {},
-        );
-      });
-    },
-    [
-      plan?.canEdit,
-      compendium?.raceFeatures,
-      compendium?.classSpellTables,
-      compendium?.classHitDice,
-    ],
-  );
-
-  // Auto-save only after a real user edit (not on open / compendium sync / remote reload)
-  useEffect(() => {
-    if (poppedOutPcPlanId && poppedOutPcPlanId === selectedPcPlanId) return;
-    if (!hydrated || !plan?.canEdit || !state || !plan) return;
-    if (!dirtyRef.current) return;
-    if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = window.setTimeout(() => {
-      if (!dirtyRef.current) return;
-      setSaveStatus("saving");
-      startTransition(async () => {
-        const result = await savePcPlan(plan.id, state);
-        if (result.success) dirtyRef.current = false;
-        setSaveStatus(result.success ? "saved" : "error");
-      });
-    }, 600);
     return () => {
-      if (saveTimer.current) clearTimeout(saveTimer.current);
+      cancelled = true;
     };
-  }, [state, hydrated, plan, startTransition, poppedOutPcPlanId, selectedPcPlanId]);
+  }, [activeMenu, table.id]);
 
   useEffect(() => {
     if (typeof BroadcastChannel === "undefined") return;
@@ -395,101 +659,30 @@ function CampaignTableBody({
       const msg = event.data;
       if (!msg || typeof msg !== "object") return;
       if (msg.type === "opened") {
-        setPoppedOutPcPlanId(msg.pcPlanId);
-        if (msg.pcPlanId === selectedPcPlanId) {
-          setSheetMinimized(true);
-        }
+        setPoppedOutPcPlanIds((prev) =>
+          prev.includes(msg.pcPlanId) ? prev : [...prev, msg.pcPlanId],
+        );
+        setOpenPcPlanIds((prev) =>
+          prev.includes(msg.pcPlanId) ? prev : [...prev, msg.pcPlanId],
+        );
       } else if (msg.type === "closed") {
-        setPoppedOutPcPlanId((prev) => (prev === msg.pcPlanId ? null : prev));
-        if (popoutWindowRef.current && popoutWindowRef.current.closed) {
-          popoutWindowRef.current = null;
-        }
-        if (msg.pcPlanId === selectedPcPlanId) {
-          loadPlan(msg.pcPlanId);
-          setSheetMinimized(false);
-        }
+        setPoppedOutPcPlanIds((prev) => prev.filter((id) => id !== msg.pcPlanId));
+        popoutWindowsRef.current.delete(msg.pcPlanId);
+        setOpenPcPlanIds((prev) => {
+          if (!prev.includes(msg.pcPlanId)) return prev;
+          setRestoreTicks((ticks) => ({
+            ...ticks,
+            [msg.pcPlanId]: (ticks[msg.pcPlanId] ?? 0) + 1,
+          }));
+          return prev;
+        });
       }
     };
     return () => channel.close();
-  }, [table.id, selectedPcPlanId, loadPlan]);
+  }, [table.id]);
 
-  const compendiumKeyValue = state
-    ? compendiumSyncKey(state.identity.classLevels, state.identity.raceSlug)
-    : "";
-
-  useEffect(() => {
-    if (poppedOutPcPlanId && poppedOutPcPlanId === selectedPcPlanId) return;
-    if (!hydrated || !state || !nonce) return;
-    if (!plan?.canEdit && compendium) return;
-
-    const syncKey = `${compendiumKeyValue}:${nonce}:${plan?.canEdit ? "edit" : "view"}`;
-    if (syncKey === lastCompendiumSync.current) return;
-    lastCompendiumSync.current = syncKey;
-    setCompendiumLoading(true);
-    startTransition(async () => {
-      const result = await fetchPcCompendium({
-        classLevels: state.identity.classLevels,
-        raceSlug: state.identity.raceSlug,
-        nonce,
-      });
-      if (!result.success || !result.bundle) {
-        setCompendiumLoading(false);
-        return;
-      }
-      setCompendium(result.bundle);
-      if (!plan?.canEdit) {
-        setCompendiumLoading(false);
-        return;
-      }
-      setState((prev) => {
-        if (!prev) return prev;
-        const next = structuredClone(prev);
-        if (result.bundle!.allSkills.length > 0 || result.bundle!.skills.length > 0) {
-          next.skills = mergeSkillsIntoRows(
-            result.bundle!.allSkills.length > 0
-              ? result.bundle!.allSkills
-              : result.bundle!.skills.map((ref) => ({
-                  name: ref.name,
-                  slug: ref.slug,
-                  ability: ref.ability,
-                  trainedOnly: false,
-                  armorCheckPenalty: false,
-                })),
-            prev.skills,
-            classSkillKeySet(result.bundle!.skills),
-          );
-        } else if (prev.identity.classLevels.length === 0) {
-          next.skills = [];
-        }
-        const raceSlug = prev.identity.raceSlug ?? null;
-        const raceChanged =
-          lastRaceSlug.current !== undefined && lastRaceSlug.current !== raceSlug;
-        if (raceChanged && result.bundle!.raceFeatures) {
-          applyRaceCombatBasicsOnRaceChange(next, result.bundle!.raceFeatures);
-        }
-        lastRaceSlug.current = raceSlug;
-        applyDerivedFromRace(next, result.bundle!.raceFeatures);
-        return finalizePcPlanState(
-          next,
-          result.bundle!.raceFeatures,
-          result.bundle!.classSpellTables,
-          result.bundle!.classHitDice,
-        );
-      });
-      setCompendiumLoading(false);
-    });
-  }, [hydrated, state, plan?.canEdit, nonce, compendiumKeyValue, startTransition, compendium, poppedOutPcPlanId, selectedPcPlanId]);
-
-  function updateAbility(key: AbilityKey, value: number) {
-    const next = Number.isFinite(value) ? Math.max(1, Math.min(99, Math.round(value))) : 10;
-    patch((s) => {
-      if (!s.abilityBase) s.abilityBase = { ...s.abilities };
-      s.abilityBase[key] = next;
-    });
-  }
-
-  function focusPopOut(pcPlanId: string) {
-    const existing = popoutWindowRef.current;
+  const focusPopOut = useCallback((pcPlanId: string) => {
+    const existing = popoutWindowsRef.current.get(pcPlanId);
     if (existing && !existing.closed) {
       existing.focus();
       return;
@@ -503,212 +696,77 @@ function CampaignTableBody({
     try {
       const named = window.open("", campaignSheetWindowName(pcPlanId));
       if (named && !named.closed) {
-        popoutWindowRef.current = named;
+        popoutWindowsRef.current.set(pcPlanId, named);
         named.focus();
       }
     } catch {
       // ignore
     }
-  }
+  }, [table.id]);
 
-  function openPopOut(pcPlanId: string) {
+  const openPopOut = useCallback((pcPlanId: string) => {
     const url = `/tools/campaign/${table.id}/sheet/${pcPlanId}`;
-    const features = "popup=yes,width=900,height=900,menubar=no,toolbar=no,location=no,status=no";
+    const features =
+      "popup=yes,width=900,height=900,menubar=no,toolbar=no,location=no,status=no";
     const win = window.open(url, campaignSheetWindowName(pcPlanId), features);
     if (!win) {
-      setError("Pop-up blocked. Allow pop-ups for this site to open the sheet in a new window.");
+      setError(
+        "Pop-up blocked. Allow pop-ups for this site to open the sheet in a new window.",
+      );
       return;
     }
-    popoutWindowRef.current = win;
+    popoutWindowsRef.current.set(pcPlanId, win);
     win.focus();
-    setPoppedOutPcPlanId(pcPlanId);
-    setSheetMinimized(true);
-    setSelectedPcPlanId(pcPlanId);
-  }
+    setPoppedOutPcPlanIds((prev) =>
+      prev.includes(pcPlanId) ? prev : [...prev, pcPlanId],
+    );
+    openPc(pcPlanId);
+  }, [table.id, setError, openPc]);
 
   function selectPc(pcPlanId: string, ownerUserId: string) {
     if (!isDm && ownerUserId !== user.id) return;
-    if (poppedOutPcPlanId === pcPlanId) {
-      setSelectedPcPlanId(pcPlanId);
-      setActiveMenu(null);
+    setActiveMenu(null);
+    if (poppedOutPcPlanIds.includes(pcPlanId)) {
+      openPc(pcPlanId);
       focusPopOut(pcPlanId);
       return;
     }
-    setSelectedPcPlanId(pcPlanId);
-    setSheetMinimized(false);
-    setActiveMenu(null);
+    openPc(pcPlanId, { restore: true });
   }
-
-  const isSelectedPoppedOut =
-    Boolean(selectedPcPlanId) && poppedOutPcPlanId === selectedPcPlanId;
 
   const joinUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}/tools/campaign?join=${table.joinCode}`
       : `/tools/campaign?join=${table.joinCode}`;
 
-  const statusLabel = plan
-    ? [
-        plan.canEdit ? "Editing" : "Viewing (read-only)",
-        saveStatus === "saving"
-          ? "Saving…"
-          : saveStatus === "saved"
-            ? "Saved"
-            : saveStatus === "error"
-              ? "Save error"
-              : "",
-      ]
-        .filter(Boolean)
-        .join(" · ")
-    : "";
-
-  let sheetInner: ReactNode = null;
-  if (isSelectedPoppedOut) {
-    sheetInner = null;
-  } else if (!selectedPcPlanId) {
-    sheetInner = (
-      <p className="pc-sheet-empty">
-        {isDm
-          ? "No characters attached yet. Players can create or import PCs from the roster."
-          : "Attach or create a character to roll from the sheet."}
-      </p>
-    );
-  } else if (!hydrated || !state || !plan) {
-    sheetInner = <p className="pc-planner-loading">Loading character…</p>;
-  } else {
-    sheetInner = (
-      <>
-        <CampaignCharacterNameSync name={state.identity.name} />
-        <PcSheet
-          state={state}
-          patch={patch}
-          sheetTab={sheetTab}
-          onTabChange={setSheetTab}
-          shortcut={shortcut}
-          onShortcutChange={setShortcut}
-          onNameBlur={() => {
-            if (!plan.canEdit || !state) return;
-            void renamePcPlan(plan.id, state.identity.name, shortcut);
-          }}
-          onShortcutBlur={() => {
-            if (!plan.canEdit || !state) return;
-            void renamePcPlan(plan.id, state.identity.name, shortcut);
-          }}
-          activeSpellClassIndex={activeSpellClassIndex}
-          onSpellClassIndexChange={setActiveSpellClassIndex}
-          compendium={compendium}
-          compendiumLoading={compendiumLoading}
-          onAddFeat={(slug, name) =>
-            patch((s) => {
-              if (s.feats.some((f) => f.slug === slug)) return;
-              s.feats.push({ slug, name });
-            })
-          }
-          onRemoveFeat={(slug) =>
-            patch((s) => {
-              s.feats = s.feats.filter((f) => f.slug !== slug);
-            })
-          }
-          onAddSpell={(slug, name, level) =>
-            patch((s) => {
-              const target = s.spellClasses[activeSpellClassIndex];
-              if (!target || target.spells.some((sp) => sp.slug === slug)) return;
-              const computed = computeSpellClass(
-                target.classSlug,
-                target.label,
-                target.casterLevel,
-                s.abilities,
-                compendium?.classSpellTables?.[target.classSlug],
-                {
-                  hasDomains: (s.identity.domains?.length ?? 0) > 0,
-                  specialistSchool: s.identity.specialistSchool,
-                },
-              );
-              if (computed.mode === "spontaneous") {
-                const atLevel = target.spells.filter((sp) => sp.level === level).length;
-                const knownLimit = computed.known[level] ?? 0;
-                if (knownLimit > 0 && atLevel >= knownLimit) return;
-              }
-              target.spells.push({
-                slug,
-                name,
-                level,
-                prepared: computed.mode === "preparation" ? 1 : undefined,
-              });
-            })
-          }
-          onRemoveSpell={(slug) =>
-            patch((s) => {
-              const target = s.spellClasses[activeSpellClassIndex];
-              if (!target) return;
-              target.spells = target.spells.filter((sp) => sp.slug !== slug);
-            })
-          }
-          onUpdateSpellPrepared={(slug, prepared) =>
-            patch((s) => {
-              const target = s.spellClasses[activeSpellClassIndex];
-              if (!target) return;
-              const spell = target.spells.find((sp) => sp.slug === slug);
-              if (!spell) return;
-              spell.prepared = Math.max(0, prepared);
-            })
-          }
-          onAddInventoryRow={() =>
-            patch((s) => {
-              s.inventory.push(createBlankInventoryRow());
-            })
-          }
-          updateAbility={updateAbility}
-          planId={plan.id}
-          readOnly={!plan.canEdit}
-        />
-      </>
-    );
-  }
-
-  const characterName =
-    state?.identity.name ||
-    table.pcs.find((p) => p.pcPlanId === selectedPcPlanId)?.name ||
-    "Character";
-
-  const tokenImageUrl =
-    pcImagePublicUrl(state?.identity.tokenImageKey) ||
-    table.pcs.find((p) => p.pcPlanId === selectedPcPlanId)?.tokenImageUrl ||
-    null;
-
   return (
     <>
       <div className="campaign-stage">
         {error ? <p className="tool-error campaign-stage-error">{error}</p> : null}
 
-        <nav className="campaign-rail" aria-label="Campaign menu">
-          <button
-            type="button"
-            className={`campaign-rail-btn${activeMenu === "roster" ? " campaign-rail-btn--active" : ""}`}
-            aria-pressed={activeMenu === "roster"}
-            aria-label="Invite and characters"
-            title="Invite and characters"
-            onClick={() => setActiveMenu((m) => (m === "roster" ? null : "roster"))}
-          >
-            <Users size={20} aria-hidden />
-          </button>
-          <button
-            type="button"
-            className={`campaign-rail-btn${activeMenu === "logs" ? " campaign-rail-btn--active" : ""}`}
-            aria-pressed={activeMenu === "logs"}
-            aria-label="Campaign logs"
-            title="Campaign logs"
-            onClick={() => setActiveMenu((m) => (m === "logs" ? null : "logs"))}
-          >
-            <ScrollText size={20} aria-hidden />
-          </button>
-        </nav>
+        <CampaignRail
+          campaignName={table.name}
+          isDm={isDm}
+          activeMenu={activeMenu}
+          onSelectMenu={setActiveMenu}
+        />
 
         {activeMenu === "logs" ? (
           <CampaignLogsDrawer
             activities={activities}
             loading={activitiesLoading}
             onClose={() => setActiveMenu(null)}
+          />
+        ) : null}
+
+        {activeMenu === "maps" && isDm ? (
+          <MapScenesDrawer
+            maps={table.maps}
+            liveMapId={liveMap?.id ?? null}
+            campaignId={table.id}
+            currentMap={liveMap}
+            onClose={() => setActiveMenu(null)}
+            onChanged={refresh}
           />
         ) : null}
 
@@ -858,7 +916,13 @@ function CampaignTableBody({
                         <button
                           type="button"
                           className={`campaign-pc-select${
-                            selectedPcPlanId === pc.pcPlanId ? " campaign-pc-select--active" : ""
+                            openPcPlanIds.includes(pc.pcPlanId)
+                              ? " campaign-pc-select--active"
+                              : ""
+                          }${
+                            focusedPcPlanId === pc.pcPlanId
+                              ? " campaign-pc-select--focused"
+                              : ""
                           }`}
                           onClick={() => selectPc(pc.pcPlanId, pc.userId)}
                         >
@@ -923,8 +987,7 @@ function CampaignTableBody({
                             return;
                           }
                           refresh();
-                          setSelectedPcPlanId(r.planId);
-                          setSheetMinimized(false);
+                          openPc(r.planId, { restore: true });
                         })
                       }
                     >
@@ -968,8 +1031,7 @@ function CampaignTableBody({
                                   }
                                   setShowImport(false);
                                   refresh();
-                                  setSelectedPcPlanId(p.id);
-                                  setSheetMinimized(false);
+                                  openPc(p.id, { restore: true });
                                 })
                               }
                             >
@@ -1005,7 +1067,13 @@ function CampaignTableBody({
                     <button
                       type="button"
                       className={`campaign-party-chip${
-                        selectedPcPlanId === pc.pcPlanId ? " campaign-party-chip--active" : ""
+                        openPcPlanIds.includes(pc.pcPlanId)
+                          ? " campaign-party-chip--active"
+                          : ""
+                      }${
+                        focusedPcPlanId === pc.pcPlanId
+                          ? " campaign-party-chip--focused"
+                          : ""
                       }${canOpen ? "" : " campaign-party-chip--locked"}`}
                       disabled={!canOpen}
                       title={
@@ -1017,11 +1085,7 @@ function CampaignTableBody({
                     >
                       <CampaignPcAvatar
                         name={pc.name}
-                        src={
-                          (state && plan?.id === pc.pcPlanId
-                            ? pcImagePublicUrl(state.identity.tokenImageKey)
-                            : null) || pc.tokenImageUrl
-                        }
+                        src={pc.tokenImageUrl}
                         size="sm"
                       />
                       <span className="campaign-party-chip-name">{pc.name}</span>
@@ -1033,26 +1097,60 @@ function CampaignTableBody({
           )}
         </div>
 
-        {selectedPcPlanId ? (
-          <CampaignPcWindow
-            characterName={characterName}
-            tokenImageUrl={tokenImageUrl}
-            statusLabel={isSelectedPoppedOut ? "Open in other window" : statusLabel}
-            minimized={sheetMinimized || isSelectedPoppedOut}
-            onMinimizedChange={setSheetMinimized}
-            poppedOut={isSelectedPoppedOut}
-            onPopOut={
-              selectedPcPlanId ? () => openPopOut(selectedPcPlanId) : undefined
-            }
-            onFocusPopOut={
-              selectedPcPlanId ? () => focusPopOut(selectedPcPlanId) : undefined
-            }
-          >
-            {sheetInner}
-          </CampaignPcWindow>
-        ) : (
-          <div className="campaign-stage-empty">{sheetInner}</div>
-        )}
+        {liveMap ? (
+          <CampaignMapBoard
+            campaignId={table.id}
+            map={liveMap}
+            isDm={isDm}
+            viewerUserId={user.id}
+            onMapChange={handleMapChange}
+            onOpenPcSheet={(pcPlanId) => {
+              const pc = table.pcs.find((p) => p.pcPlanId === pcPlanId);
+              if (!pc) return;
+              selectPc(pcPlanId, pc.userId);
+            }}
+            extraPings={mapPings}
+            aoePointers={aoePointers}
+            viewportGoTo={viewportGoTo}
+          />
+        ) : null}
+
+        {openPcPlanIds.length === 0 && !liveMap ? (
+          <div className="campaign-stage-empty">
+            <p className="pc-sheet-empty">
+              {isDm
+                ? "Upload a map from the Maps rail, then set it live."
+                : "Waiting for the DM to share a map."}
+            </p>
+          </div>
+        ) : null}
+
+        {openPcPlanIds.length > 0
+          ? openPcPlanIds.map((pcPlanId, index) => {
+            const pc = table.pcs.find((p) => p.pcPlanId === pcPlanId);
+            return (
+              <CampaignSheetInstance
+                key={pcPlanId}
+                campaignId={table.id}
+                pcPlanId={pcPlanId}
+                fallbackName={pc?.name ?? "Character"}
+                fallbackTokenImageUrl={pc?.tokenImageUrl ?? null}
+                viewerUserId={user.id}
+                cascadeIndex={index}
+                zIndex={SHEET_Z_BASE + (focusOrder[pcPlanId] ?? index)}
+                focused={focusedPcPlanId === pcPlanId}
+                poppedOut={poppedOutPcPlanIds.includes(pcPlanId)}
+                restoreRequest={restoreTicks[pcPlanId] ?? 0}
+                pcUpdatedEvent={pcUpdatedEvent}
+                onFocus={raisePc}
+                onClose={closePc}
+                onPopOut={openPopOut}
+                onFocusPopOut={focusPopOut}
+                onError={setError}
+              />
+            );
+          })
+          : null}
       </div>
 
       <DiceCanvas />

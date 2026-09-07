@@ -1,4 +1,15 @@
 import type { DicePoolItem, RollKind, RollResult } from "@/lib/dice/types";
+import type {
+  CampaignMapListItem,
+  CampaignMapView,
+  MapAoePointerView,
+  MapDiagonalRule,
+  MapDrawingView,
+  MapFogRegionView,
+  MapLightView,
+  MapOccluderView,
+  MapTokenView,
+} from "@/lib/map/types";
 
 export type CampaignMemberRole = "dm" | "player";
 export type CampaignMemberStatus = "pending" | "active";
@@ -44,6 +55,8 @@ export type CampaignTableState = {
   members: CampaignMemberView[];
   pcs: CampaignPcView[];
   rolls: CampaignRollView[];
+  liveMap: CampaignMapView | null;
+  maps: CampaignMapListItem[];
 };
 
 export type CampaignRollActor = {
@@ -113,7 +126,50 @@ export type CampaignLiveEvent =
   | { type: "roster"; members: CampaignMemberView[]; pcs: CampaignPcView[] }
   | { type: "presence"; onlineUserIds: string[] }
   | { type: "pcUpdated"; pcPlanId: string; actorUserId: string; updatedAt: string }
-  | { type: "activity"; activity: CampaignActivityView };
+  | { type: "activity"; activity: CampaignActivityView }
+  | { type: "mapSnapshot"; map: CampaignMapView | null }
+  | { type: "mapList"; maps: CampaignMapListItem[] }
+  | {
+      type: "mapTokenMove";
+      tokenId: string;
+      x: number;
+      y: number;
+      rotation: number;
+      seq: number;
+      committed: boolean;
+    }
+  | { type: "mapTokenUpsert"; token: MapTokenView }
+  | { type: "mapTokenRemove"; tokenId: string }
+  | { type: "mapPing"; x: number; y: number; color: string; userId: string }
+  | { type: "mapViewportGoTo"; x: number; y: number }
+  | { type: "mapFogUpsert"; region: MapFogRegionView }
+  | { type: "mapFogRemove"; regionId: string }
+  | { type: "mapFogReset" }
+  | { type: "mapDrawingUpsert"; drawing: MapDrawingView }
+  | { type: "mapDrawingRemove"; drawingId: string }
+  | { type: "mapDrawingClear" }
+  | { type: "mapOccluderUpsert"; occluder: MapOccluderView }
+  | { type: "mapOccluderRemove"; occluderId: string }
+  | { type: "mapLightUpsert"; light: MapLightView }
+  | { type: "mapLightRemove"; lightId: string }
+  | {
+      type: "mapGrid";
+      gridSizePx: number;
+      gridOffsetX: number;
+      gridOffsetY: number;
+      scaleFeet: number;
+      diagonalRule: MapDiagonalRule;
+    }
+  | { type: "mapAoeUpsert"; pointer: MapAoePointerView }
+  | { type: "mapAoeClear" }
+  | {
+      type: "mapFlags";
+      fogEnabled: boolean;
+      losEnabled: boolean;
+      lightingEnabled: boolean;
+      daylight: number;
+      explorerEnabled: boolean;
+    };
 
 export type StartCampaignRollInput = {
   campaignId: string;

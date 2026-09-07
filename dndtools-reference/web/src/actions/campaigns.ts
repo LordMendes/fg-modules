@@ -28,6 +28,7 @@ import { syncPcPlanState } from "@/lib/pc-planner/syncState";
 import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import type { DicePoolItem, RollKind } from "@/lib/dice/types";
+import { loadLiveMapForCampaign } from "@/lib/map/mapView";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 import type { Prisma } from "@/generated/prisma/client";
 
@@ -193,6 +194,14 @@ async function buildTableState(
     ? await loadRollsForViewer(campaignId, { userId: user.id, isDm })
     : [];
 
+  const mapState =
+    me.status === "active"
+      ? await loadLiveMapForCampaign(campaignId, campaign.liveMapId, {
+          userId: user.id,
+          isDm,
+        })
+      : { liveMap: null, maps: [] as { id: string; name: string }[] };
+
   return {
     id: campaign.id,
     name: campaign.name,
@@ -203,6 +212,8 @@ async function buildTableState(
     members: campaign.members.map(mapMember),
     pcs: campaign.pcs.map(mapPc),
     rolls,
+    liveMap: mapState.liveMap,
+    maps: mapState.maps,
   };
 }
 
@@ -721,6 +732,30 @@ export async function unlinkPcFromCampaign(
   }
 
   await prisma.campaignPc.delete({ where: { id: row.id } });
+
+  const mapIds = (
+    await prisma.campaignMap.findMany({
+      where: { campaignId },
+      select: { id: true },
+    })
+  ).map((m) => m.id);
+  if (mapIds.length > 0) {
+    const tokens = await prisma.campaignMapToken.findMany({
+      where: { mapId: { in: mapIds }, pcPlanId: row.pcPlanId },
+      select: { id: true },
+    });
+    if (tokens.length > 0) {
+      await prisma.campaignMapToken.deleteMany({
+        where: { id: { in: tokens.map((t) => t.id) } },
+      });
+      for (const t of tokens) {
+        publishCampaignLive(campaignId, {
+          type: "mapTokenRemove",
+          tokenId: t.id,
+        });
+      }
+    }
+  }
 
   await recordAndPublishActivity({
     campaignId,

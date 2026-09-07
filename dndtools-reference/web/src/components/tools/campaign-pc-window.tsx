@@ -9,32 +9,37 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
-import { ExternalLink, Maximize2, Minus } from "lucide-react";
+import { ExternalLink, Maximize2, Minus, X } from "lucide-react";
 import { CampaignPcAvatar } from "@/components/tools/campaign-pc-avatar";
 import {
   clampTrayPos,
   useFloatingTrayPos,
 } from "@/components/dice/use-floating-tray-pos";
 
-const WINDOW_POS_KEY = "campaign-pc-window-pos";
-const WINDOW_SIZE_KEY = "campaign-pc-window-size";
-const TOKEN_POS_KEY = "campaign-pc-token-pos";
-
 const MIN_WIDTH = 320;
 const MIN_HEIGHT = 256;
+const CASCADE_STEP = 28;
+const BASE_Z_INDEX = 80;
 
 type WindowSize = { width: number; height: number };
 
 type CampaignPcWindowProps = {
+  pcPlanId: string;
   characterName: string;
   tokenImageUrl?: string | null;
   statusLabel: string;
   minimized: boolean;
   onMinimizedChange: (minimized: boolean) => void;
+  /** Cascade offset index so new windows are not stacked exactly on top. */
+  cascadeIndex?: number;
+  /** Stacking order among open sheets. */
+  zIndex?: number;
   /** When true, token click focuses the pop-out instead of restoring. */
   poppedOut?: boolean;
   onPopOut?: () => void;
   onFocusPopOut?: () => void;
+  onClose?: () => void;
+  onFocus?: () => void;
   children: ReactNode;
 };
 
@@ -57,16 +62,25 @@ function clampSize(width: number, height: number): WindowSize {
 }
 
 export function CampaignPcWindow({
+  pcPlanId,
   characterName,
   tokenImageUrl = null,
   statusLabel,
   minimized,
   onMinimizedChange,
+  cascadeIndex = 0,
+  zIndex = BASE_Z_INDEX,
   poppedOut = false,
   onPopOut,
   onFocusPopOut,
+  onClose,
+  onFocus,
   children,
 }: CampaignPcWindowProps) {
+  const windowPosKey = `campaign-pc-window-pos-${pcPlanId}`;
+  const windowSizeKey = `campaign-pc-window-size-${pcPlanId}`;
+  const tokenPosKey = `campaign-pc-token-pos-${pcPlanId}`;
+
   const [size, setSize] = useState<WindowSize | null>(null);
   const resizeDragRef = useRef<{
     pointerId: number;
@@ -79,35 +93,40 @@ export function CampaignPcWindow({
   const defaultWindowPos = useCallback(
     (width: number, height: number) =>
       clampTrayPos(
-        Math.max(72, (window.innerWidth - width) / 2),
-        Math.max(72, (window.innerHeight - height) / 3),
+        Math.max(72, (window.innerWidth - width) / 2 + cascadeIndex * CASCADE_STEP),
+        Math.max(72, (window.innerHeight - height) / 3 + cascadeIndex * CASCADE_STEP),
         width,
         height,
       ),
-    [],
+    [cascadeIndex],
   );
 
   const defaultTokenPos = useCallback(
     (width: number, height: number) =>
-      clampTrayPos(88, Math.max(72, window.innerHeight - height - 120), width, height),
-    [],
+      clampTrayPos(
+        88 + cascadeIndex * CASCADE_STEP,
+        Math.max(72, window.innerHeight - height - 120 - cascadeIndex * 12),
+        width,
+        height,
+      ),
+    [cascadeIndex],
   );
 
   const windowPos = useFloatingTrayPos({
-    storageKey: WINDOW_POS_KEY,
+    storageKey: windowPosKey,
     defaultPos: defaultWindowPos,
     layoutKey: `${minimized ? "min" : "exp"}:${size?.width ?? 0}x${size?.height ?? 0}`,
   });
 
   const tokenPos = useFloatingTrayPos({
-    storageKey: TOKEN_POS_KEY,
+    storageKey: tokenPosKey,
     defaultPos: defaultTokenPos,
     layoutKey: minimized || poppedOut ? "token" : "hidden",
   });
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(WINDOW_SIZE_KEY);
+      const raw = localStorage.getItem(windowSizeKey);
       if (raw) {
         const parsed = JSON.parse(raw) as WindowSize;
         if (typeof parsed.width === "number" && typeof parsed.height === "number") {
@@ -119,16 +138,16 @@ export function CampaignPcWindow({
       // ignore
     }
     setSize(defaultSize());
-  }, []);
+  }, [windowSizeKey]);
 
   useEffect(() => {
     if (!size) return;
     try {
-      localStorage.setItem(WINDOW_SIZE_KEY, JSON.stringify(size));
+      localStorage.setItem(windowSizeKey, JSON.stringify(size));
     } catch {
       // ignore
     }
-  }, [size]);
+  }, [size, windowSizeKey]);
 
   useEffect(() => {
     function onResize() {
@@ -138,13 +157,19 @@ export function CampaignPcWindow({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  function raise() {
+    onFocus?.();
+  }
+
   function onTitlePointerDown(event: ReactPointerEvent) {
+    raise();
     const current = windowPos.ensurePos();
     if (!current) return;
     windowPos.beginMoveDrag(event, current);
   }
 
   function onTokenPointerDown(event: ReactPointerEvent) {
+    raise();
     const current = tokenPos.ensurePos();
     if (!current) return;
     tokenPos.beginMoveDrag(event, current);
@@ -165,6 +190,7 @@ export function CampaignPcWindow({
     if (event.button !== 0 || !size) return;
     event.preventDefault();
     event.stopPropagation();
+    raise();
     resizeDragRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
@@ -207,6 +233,12 @@ export function CampaignPcWindow({
   const windowStyle: CSSProperties = {
     ...(windowPos.style ?? {}),
     ...(size ? { width: size.width, height: size.height, maxHeight: "none" } : {}),
+    zIndex,
+  };
+
+  const tokenStyle: CSSProperties = {
+    ...(tokenPos.style ?? {}),
+    zIndex,
   };
 
   return (
@@ -219,6 +251,7 @@ export function CampaignPcWindow({
         aria-label={`${characterName || "Character"} sheet`}
         aria-hidden={hideWindow || undefined}
         inert={hideWindow ? true : undefined}
+        onPointerDownCapture={raise}
       >
         <header
           className="campaign-pc-window-titlebar"
@@ -248,11 +281,24 @@ export function CampaignPcWindow({
               type="button"
               className="campaign-pc-window-minimize"
               aria-label="Minimize character sheet"
+              title="Minimize"
               onClick={() => onMinimizedChange(true)}
               onPointerDown={(e) => e.stopPropagation()}
             >
               <Minus size={16} aria-hidden />
             </button>
+            {onClose ? (
+              <button
+                type="button"
+                className="campaign-pc-window-minimize"
+                aria-label="Close character sheet"
+                title="Close"
+                onClick={() => onClose()}
+                onPointerDown={(e) => e.stopPropagation()}
+              >
+                <X size={16} aria-hidden />
+              </button>
+            ) : null}
           </div>
         </header>
         <div className="campaign-pc-window-body">{children}</div>
@@ -270,7 +316,7 @@ export function CampaignPcWindow({
         <div
           ref={tokenPos.rootRef}
           className={`campaign-pc-token${poppedOut ? " campaign-pc-token--popped" : ""}`}
-          style={tokenPos.style}
+          style={tokenStyle}
           onPointerDown={onTokenPointerDown}
           onPointerMove={tokenPos.onMovePointerMove}
           onPointerUp={onTokenPointerUp}
@@ -285,6 +331,7 @@ export function CampaignPcWindow({
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
+              raise();
               if (poppedOut) onFocusPopOut?.();
               else onMinimizedChange(false);
             }
@@ -301,6 +348,7 @@ export function CampaignPcWindow({
               aria-label="Expand character sheet"
               onClick={(e) => {
                 e.stopPropagation();
+                raise();
                 onMinimizedChange(false);
               }}
               onPointerDown={(e) => e.stopPropagation()}

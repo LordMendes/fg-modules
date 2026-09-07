@@ -6,9 +6,21 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import type { PcImageKind } from "@/lib/storage/pc-image-kind";
-import { pcImagePublicUrl } from "@/lib/storage/pc-image-url";
+import {
+  isCampaignMapImageKey,
+  isCampaignMapTokenImageKey,
+  isMediaObjectKey,
+  isPcImageObjectKey,
+  mediaPublicUrl,
+} from "@/lib/storage/pc-image-url";
 
 export type { PcImageKind };
+export {
+  isCampaignMapImageKey,
+  isCampaignMapTokenImageKey,
+  isMediaObjectKey,
+  isPcImageObjectKey,
+};
 
 const CACHE_CONTROL = "public, max-age=31536000";
 
@@ -47,8 +59,26 @@ export function pcImageObjectKey(
   return `pc/${userId}/${planId}/${kind}.webp`;
 }
 
-export function publicUrlForKey(key: string, cacheBust?: string | number | Date): string {
-  const url = pcImagePublicUrl(key, cacheBust);
+export function campaignMapImageKey(
+  campaignId: string,
+  mapId: string,
+): string {
+  return `campaign/${campaignId}/maps/${mapId}/image.webp`;
+}
+
+export function campaignMapTokenImageKey(
+  campaignId: string,
+  mapId: string,
+  tokenId: string,
+): string {
+  return `campaign/${campaignId}/maps/${mapId}/tokens/${tokenId}.webp`;
+}
+
+export function publicUrlForKey(
+  key: string,
+  cacheBust?: string | number | Date,
+): string {
+  const url = mediaPublicUrl(key, cacheBust);
   if (!url) {
     throw new Error("Invalid image key");
   }
@@ -59,19 +89,13 @@ export function tryPublicUrlForKey(
   key: string | null | undefined,
   cacheBust?: string | number | Date,
 ): string | null {
-  return pcImagePublicUrl(key, cacheBust);
-}
-
-const PC_IMAGE_KEY = /^pc\/[a-z0-9]+\/[a-z0-9]+\/(profile|token)\.webp$/i;
-
-export function isPcImageObjectKey(key: string): boolean {
-  return PC_IMAGE_KEY.test(key);
+  return mediaPublicUrl(key, cacheBust);
 }
 
 export async function getPcImageObject(
   key: string,
 ): Promise<{ body: Uint8Array; contentType: string } | null> {
-  if (!isPcImageObjectKey(key)) return null;
+  if (!isMediaObjectKey(key)) return null;
   try {
     const out = await getR2Client().send(
       new GetObjectCommand({
@@ -94,6 +118,9 @@ export async function putPcImageObject(
   key: string,
   body: Buffer,
 ): Promise<void> {
+  if (!isMediaObjectKey(key)) {
+    throw new Error("Invalid image key");
+  }
   await getR2Client().send(
     new PutObjectCommand({
       Bucket: getBucket(),
@@ -106,6 +133,7 @@ export async function putPcImageObject(
 }
 
 export async function deletePcImageObject(key: string): Promise<void> {
+  if (!isMediaObjectKey(key)) return;
   await getR2Client().send(
     new DeleteObjectCommand({
       Bucket: getBucket(),
@@ -118,6 +146,9 @@ export async function copyPcImageObject(
   sourceKey: string,
   destKey: string,
 ): Promise<void> {
+  if (!isMediaObjectKey(sourceKey) || !isMediaObjectKey(destKey)) {
+    throw new Error("Invalid image key");
+  }
   const bucket = getBucket();
   await getR2Client().send(
     new CopyObjectCommand({

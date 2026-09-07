@@ -41,7 +41,7 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@3d-dice/dice-box-threejs"],
   experimental: {
     serverActions: {
-      bodySizeLimit: "8mb",
+      bodySizeLimit: "16mb",
     },
   },
   turbopack: {
