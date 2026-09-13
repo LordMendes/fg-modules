@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import {
   applyEventToFilterContext,
   filterContextFromMap,
@@ -37,10 +38,23 @@ type CampaignLocal = {
   filterCtx: LiveFilterContext | null;
 };
 
+type WireEnvelope = {
+  originId: string;
+  event: CampaignLiveEvent;
+};
+
 const globalForHub = globalThis as typeof globalThis & {
   __campaignLiveLocal?: Map<string, CampaignLocal>;
   __campaignRedisSubReady?: boolean;
+  __campaignHubOriginId?: string;
 };
+
+function hubOriginId(): string {
+  if (!globalForHub.__campaignHubOriginId) {
+    globalForHub.__campaignHubOriginId = randomUUID();
+  }
+  return globalForHub.__campaignHubOriginId;
+}
 
 function locals(): Map<string, CampaignLocal> {
   if (!globalForHub.__campaignLiveLocal) {
@@ -111,12 +125,23 @@ function ensureRedisSubscription() {
     const rest = channel.slice(prefix.length);
     if (rest.includes(":")) return;
     const campaignId = rest;
-    let event: CampaignLiveEvent;
+    let envelope: WireEnvelope | CampaignLiveEvent;
     try {
-      event = JSON.parse(message) as CampaignLiveEvent;
+      envelope = JSON.parse(message) as WireEnvelope | CampaignLiveEvent;
     } catch {
       return;
     }
+    // Skip echo of our own publish (already delivered locally).
+    if (
+      envelope &&
+      typeof envelope === "object" &&
+      "originId" in envelope &&
+      "event" in envelope
+    ) {
+      if (envelope.originId === hubOriginId()) return;
+      envelope = envelope.event;
+    }
+    const event = envelope as CampaignLiveEvent;
     const local = locals().get(campaignId);
     if (!local || local.subscribers.size === 0) return;
     void (async () => {
@@ -140,8 +165,9 @@ export type PublishOptions = {
 };
 
 /**
- * Publish a campaign live event to Redis. All replicas (including this one)
- * deliver to local WebSocket subscribers with data-driven filtering.
+ * Deliver to in-process sockets first, then Redis for other replicas.
+ * Works when Redis is down (local-only), and uses originId to avoid
+ * double-delivery when Redis echoes back to this process.
  */
 export function publishCampaignLive(
   campaignId: string,
@@ -149,15 +175,50 @@ export function publishCampaignLive(
   _options?: PublishOptions,
 ): void {
   ensureRedisSubscription();
-  const payload = JSON.stringify(event);
+
+  const channel = locals().get(campaignId);
+  if (channel) {
+    void (async () => {
+      const ctx = await ensureFilterCtx(campaignId, channel);
+      deliverLocal(campaignId, event, ctx);
+    })().catch(() => {});
+  }
+
+  const wire: WireEnvelope = { originId: hubOriginId(), event };
   void getRedis()
-    .publish(campaignChannel(campaignId), payload)
+    .publish(campaignChannel(campaignId), JSON.stringify(wire))
     .catch((err) => {
       console.error("[liveHub] publish failed", campaignId, err);
     });
 
   // Keep Redis room meta in sync for filter context.
   void syncRoomMetaFromEvent(campaignId, event).catch(() => {});
+}
+
+/** Test helper: parse a Redis wire payload into the live event (or null). */
+export function unwrapLiveWirePayload(
+  message: string,
+  localOriginId?: string,
+): CampaignLiveEvent | null {
+  try {
+    const parsed = JSON.parse(message) as WireEnvelope | CampaignLiveEvent;
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      "originId" in parsed &&
+      "event" in parsed
+    ) {
+      if (localOriginId && parsed.originId === localOriginId) return null;
+      return parsed.event;
+    }
+    return parsed as CampaignLiveEvent;
+  } catch {
+    return null;
+  }
+}
+
+export function getHubOriginIdForTests(): string {
+  return hubOriginId();
 }
 
 async function syncRoomMetaFromEvent(

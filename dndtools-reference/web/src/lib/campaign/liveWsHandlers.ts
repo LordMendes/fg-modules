@@ -1,4 +1,5 @@
 import {
+  acceptCommandRate,
   acceptTokenMoveRate,
   createRateLimitState,
   type RateLimitState,
@@ -13,7 +14,28 @@ import type {
   ClientLiveMessage,
 } from "@/lib/campaign/types";
 import type { CampaignSocketAuth } from "@/lib/campaign/liveAuth";
-import { canWalkTo, tokenCenter } from "@/lib/map/los";
+import {
+  commitTokenMove,
+  mutateAddDrawing,
+  mutateAddFogRegion,
+  mutateAddOccluder,
+  mutateClearDrawings,
+  mutateDeleteDrawing,
+  mutateMapPing,
+  mutateRemoveFogRegion,
+  mutateRemoveLight,
+  mutateRemoveOccluder,
+  mutateRemoveToken,
+  mutateResetFog,
+  mutateSetDoorState,
+  mutateSetMapFlags,
+  mutateTokenProps,
+  mutateUpdateDrawing,
+  mutateUpdateGrid,
+  mutateUpsertLight,
+  mutateViewportGoTo,
+  type MapActor,
+} from "@/lib/map/mapMutations";
 import {
   loadLiveMapForCampaign,
   toCampaignMapView,
@@ -23,12 +45,14 @@ import {
 import { userColor } from "@/lib/map/permissions";
 import { prisma } from "@/lib/prisma";
 
-export const MAX_WS_MESSAGE_BYTES = 8 * 1024;
+export const MAX_WS_MESSAGE_BYTES = 64 * 1024;
 
 type HandlerCtx = {
   auth: CampaignSocketAuth;
   /** Per-token rate limit state. */
   moveRates: Map<string, RateLimitState>;
+  /** Coarse per-connection rate for discrete commands. */
+  commandRate: RateLimitState;
   send: (event: CampaignLiveEvent) => void;
 };
 
@@ -46,12 +70,31 @@ function parseClientMessage(raw: string): ClientLiveMessage | null {
   return msg;
 }
 
+function actorFromAuth(auth: CampaignSocketAuth): MapActor {
+  return {
+    userId: auth.userId,
+    role: auth.role,
+    campaignId: auth.campaignId,
+    dmUserId: auth.dmUserId,
+  };
+}
+
 function canMoveToken(
   token: { ownerUserId: string | null },
   auth: CampaignSocketAuth,
 ): boolean {
   if (auth.role === "dm") return true;
   return token.ownerUserId === auth.userId;
+}
+
+async function resolveLiveMapId(
+  auth: CampaignSocketAuth,
+): Promise<string | null> {
+  const campaign = await prisma.campaign.findUnique({
+    where: { id: auth.campaignId },
+    select: { liveMapId: true },
+  });
+  return campaign?.liveMapId ?? null;
 }
 
 async function handleTokenMove(
@@ -80,6 +123,18 @@ async function handleTokenMove(
       ctx.moveRates.set(msg.tokenId, rate);
     }
     if (!acceptTokenMoveRate(rate)) return;
+  }
+
+  if (committed) {
+    await commitTokenMove(
+      actorFromAuth(auth),
+      msg.tokenId,
+      msg.x,
+      msg.y,
+      msg.rotation,
+      msg.seq,
+    );
+    return;
   }
 
   const tokens = await roomGetTokens(auth.campaignId);
@@ -114,110 +169,29 @@ async function handleTokenMove(
 
   if (msg.seq < meta.seq) return;
 
-  if (!committed) {
-    await roomUpsertToken(auth.campaignId, {
-      ...meta,
-      x: msg.x,
-      y: msg.y,
-      seq: msg.seq,
-    });
-    publishCampaignLive(auth.campaignId, {
-      type: "mapTokenMove",
-      tokenId: msg.tokenId,
-      x: msg.x,
-      y: msg.y,
-      rotation: msg.rotation,
-      seq: msg.seq,
-      committed: false,
-    });
-    return;
-  }
-
-  // Persist commit.
-  const token = await prisma.campaignMapToken.findUnique({
-    where: { id: msg.tokenId },
-    include: {
-      map: {
-        select: {
-          campaignId: true,
-          losEnabled: true,
-          id: true,
-        },
-      },
-    },
-  });
-  if (!token || token.map.campaignId !== auth.campaignId) return;
-  if (!canMoveToken(token, auth)) return;
-
-  if (token.map.losEnabled) {
-    const occluderRows = await prisma.campaignMapOccluder.findMany({
-      where: { mapId: token.mapId },
-    });
-    const occluders = occluderRows.map((o) => ({
-      id: o.id,
-      kind: o.kind as
-        | "wall"
-        | "door"
-        | "window"
-        | "terrain"
-        | "secret"
-        | "illusion"
-        | "pit",
-      points: (Array.isArray(o.points) ? o.points : []) as {
-        x: number;
-        y: number;
-      }[],
-      state: (o.state as "open" | "closed" | "locked") ?? "closed",
-    }));
-    const from = tokenCenter(token);
-    const to = tokenCenter({
-      x: msg.x,
-      y: msg.y,
-      width: token.width,
-      height: token.height,
-    });
-    if (!canWalkTo(from, to, occluders)) {
-      const snapSeq = Math.max(msg.seq, token.seq + 1);
-      publishCampaignLive(auth.campaignId, {
-        type: "mapTokenMove",
-        tokenId: msg.tokenId,
-        x: token.x,
-        y: token.y,
-        rotation: token.rotation,
-        seq: snapSeq,
-        committed: true,
-      });
-      return;
-    }
-  }
-
-  const nextSeq = Math.max(msg.seq, token.seq + 1);
-  await prisma.campaignMapToken.update({
-    where: { id: msg.tokenId },
-    data: {
-      x: msg.x,
-      y: msg.y,
-      rotation: msg.rotation,
-      seq: nextSeq,
-    },
-  });
-
   await roomUpsertToken(auth.campaignId, {
     ...meta,
     x: msg.x,
     y: msg.y,
-    seq: nextSeq,
+    seq: msg.seq,
   });
-
   publishCampaignLive(auth.campaignId, {
     type: "mapTokenMove",
     tokenId: msg.tokenId,
     x: msg.x,
     y: msg.y,
     rotation: msg.rotation,
-    seq: nextSeq,
-    committed: true,
+    seq: msg.seq,
+    committed: false,
   });
+}
+
+async function handleDiscrete(
+  ctx: HandlerCtx,
+  run: () => Promise<unknown>,
+): Promise<void> {
+  if (!acceptCommandRate(ctx.commandRate)) return;
+  await run();
 }
 
 export async function handleClientLiveMessage(
@@ -226,6 +200,8 @@ export async function handleClientLiveMessage(
 ): Promise<void> {
   const msg = parseClientMessage(raw);
   if (!msg) return;
+
+  const actor = actorFromAuth(ctx.auth);
 
   switch (msg.type) {
     case "ping":
@@ -239,23 +215,179 @@ export async function handleClientLiveMessage(
       return;
     case "mapPing": {
       if (typeof msg.x !== "number" || typeof msg.y !== "number") return;
-      publishCampaignLive(ctx.auth.campaignId, {
-        type: "mapPing",
-        x: msg.x,
-        y: msg.y,
-        color: userColor(ctx.auth.userId),
-        userId: ctx.auth.userId,
-      });
+      await handleDiscrete(ctx, () => mutateMapPing(actor, msg.x, msg.y));
       return;
     }
     case "mapViewportGoTo": {
-      if (ctx.auth.role !== "dm") return;
       if (typeof msg.x !== "number" || typeof msg.y !== "number") return;
-      publishCampaignLive(ctx.auth.campaignId, {
-        type: "mapViewportGoTo",
-        x: msg.x,
-        y: msg.y,
+      await handleDiscrete(ctx, () =>
+        mutateViewportGoTo(actor, msg.x, msg.y),
+      );
+      return;
+    }
+    case "mapDrawingUpsert": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, async () => {
+        if (msg.drawingId) {
+          // Prefer update when client already has an id; fall through to add (upsert).
+          await mutateAddDrawing(actor, mapId, {
+            drawingId: msg.drawingId,
+            kind: msg.kind,
+            stroke: msg.stroke,
+            geom: msg.geom,
+          });
+        } else {
+          await mutateAddDrawing(actor, mapId, {
+            kind: msg.kind,
+            stroke: msg.stroke,
+            geom: msg.geom,
+          });
+        }
       });
+      return;
+    }
+    case "mapDrawingRemove": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || typeof msg.drawingId !== "string") return;
+      await handleDiscrete(ctx, () =>
+        mutateDeleteDrawing(actor, mapId, msg.drawingId),
+      );
+      return;
+    }
+    case "mapDrawingClear": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () => mutateClearDrawings(actor, mapId));
+      return;
+    }
+    case "mapFogUpsert": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () =>
+        mutateAddFogRegion(
+          actor,
+          mapId,
+          msg.kind,
+          msg.points,
+          msg.regionId,
+        ),
+      );
+      return;
+    }
+    case "mapFogRemove": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || typeof msg.regionId !== "string") return;
+      await handleDiscrete(ctx, () =>
+        mutateRemoveFogRegion(actor, mapId, msg.regionId),
+      );
+      return;
+    }
+    case "mapFogReset": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () => mutateResetFog(actor, mapId));
+      return;
+    }
+    case "mapOccluderUpsert": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () =>
+        mutateAddOccluder(actor, mapId, msg.kind, msg.points, msg.state),
+      );
+      return;
+    }
+    case "mapOccluderRemove": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || typeof msg.occluderId !== "string") return;
+      await handleDiscrete(ctx, () =>
+        mutateRemoveOccluder(actor, mapId, msg.occluderId),
+      );
+      return;
+    }
+    case "mapDoorState": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () =>
+        mutateSetDoorState(actor, mapId, msg.occluderId, msg.state),
+      );
+      return;
+    }
+    case "mapLightUpsert": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || !msg.light) return;
+      await handleDiscrete(ctx, () =>
+        mutateUpsertLight(actor, mapId, {
+          id: msg.light.id,
+          x: msg.light.x,
+          y: msg.light.y,
+          brightFeet: msg.light.brightFeet,
+          dimFeet: msg.light.dimFeet,
+          color: msg.light.color,
+          enabled: msg.light.enabled,
+          mode: msg.light.mode ?? "light",
+        }),
+      );
+      return;
+    }
+    case "mapLightRemove": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || typeof msg.lightId !== "string") return;
+      await handleDiscrete(ctx, () =>
+        mutateRemoveLight(actor, mapId, msg.lightId),
+      );
+      return;
+    }
+    case "mapFlags": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () =>
+        mutateSetMapFlags(actor, mapId, {
+          fogEnabled: msg.fogEnabled,
+          losEnabled: msg.losEnabled,
+          lightingEnabled: msg.lightingEnabled,
+          daylight: msg.daylight,
+          explorerEnabled: msg.explorerEnabled,
+        }),
+      );
+      return;
+    }
+    case "mapGrid": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId) return;
+      await handleDiscrete(ctx, () =>
+        mutateUpdateGrid(
+          actor,
+          mapId,
+          msg.gridSizePx,
+          msg.gridOffsetX,
+          msg.gridOffsetY,
+          msg.scaleFeet,
+          msg.diagonalRule,
+        ),
+      );
+      return;
+    }
+    case "mapTokenUpsert": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || typeof msg.tokenId !== "string") return;
+      await handleDiscrete(ctx, () =>
+        mutateTokenProps(actor, mapId, msg.tokenId, {
+          layer: msg.layer,
+          visibility: msg.visibility,
+          emitsLight: msg.emitsLight,
+          lightBright: msg.lightBright,
+          lightDim: msg.lightDim,
+        }),
+      );
+      return;
+    }
+    case "mapTokenRemove": {
+      const mapId = await resolveLiveMapId(ctx.auth);
+      if (!mapId || typeof msg.tokenId !== "string") return;
+      await handleDiscrete(ctx, () =>
+        mutateRemoveToken(actor, mapId, msg.tokenId),
+      );
       return;
     }
     default:
@@ -308,5 +440,15 @@ export function createHandlerCtx(
   auth: CampaignSocketAuth,
   send: (event: CampaignLiveEvent) => void,
 ): HandlerCtx {
-  return { auth, moveRates: new Map(), send };
+  return {
+    auth,
+    moveRates: new Map(),
+    commandRate: createRateLimitState(),
+    send,
+  };
+}
+
+/** @deprecated Kept for tests that assert color assignment. */
+export function _testUserColor(userId: string) {
+  return userColor(userId);
 }

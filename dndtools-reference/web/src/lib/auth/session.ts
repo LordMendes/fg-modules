@@ -1,24 +1,15 @@
 import { cookies } from "next/headers";
 import { createHash, randomBytes } from "crypto";
 import { prisma } from "@/lib/prisma";
+import {
+  AUTH_COOKIE_NAME,
+  AUTH_COOKIE_OPTIONS,
+  type AuthUser,
+} from "@/lib/auth/constants";
 
-export const AUTH_COOKIE_NAME = "dnd_auth";
+export { AUTH_COOKIE_NAME, AUTH_COOKIE_OPTIONS, type AuthUser };
 
 const DEFAULT_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
-
-export const AUTH_COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax" as const,
-  path: "/",
-};
-
-export type AuthUser = {
-  id: string;
-  email: string;
-  username: string;
-  name: string | null;
-};
 
 function getMaxAgeSeconds(): number {
   const raw = process.env.AUTH_SESSION_MAX_AGE;

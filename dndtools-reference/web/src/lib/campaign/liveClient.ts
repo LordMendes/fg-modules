@@ -13,14 +13,40 @@ import type {
 } from "@/lib/campaign/types";
 import type { CampaignMapView, MapTokenView } from "@/lib/map/types";
 
+const SEND_QUEUE_CAP = 50;
+
 function wsUrl(campaignId: string): string {
   const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-  return `${proto}//${window.location.host}/ws/campaign/${campaignId}`;
+  const path = `/ws/campaign/${campaignId}`;
+
+  // Same origin so the auth cookie is sent. In local dev, Next rewrites
+  // /ws/campaign/:id to the standalone process on WS_PORT.
+  // localhost vs 127.0.0.1 are different cookie jars, so never cross them.
+  const explicit = process.env.NEXT_PUBLIC_WS_URL?.trim();
+  if (explicit) {
+    try {
+      const u = new URL(explicit);
+      const pageHost = window.location.hostname;
+      const loopback =
+        (u.hostname === "127.0.0.1" || u.hostname === "localhost") &&
+        (pageHost === "127.0.0.1" || pageHost === "localhost");
+      if (loopback) {
+        return `${proto}//${window.location.host}${path}`;
+      }
+      return `${u.protocol}//${u.host}${path}`;
+    } catch {
+      return `${explicit.replace(/\/$/, "")}${path}`;
+    }
+  }
+
+  return `${proto}//${window.location.host}${path}`;
 }
+
+export type LiveSend = (msg: ClientLiveMessage) => boolean;
 
 type LiveContextValue = {
   store: CampaignLiveStore;
-  send: (msg: ClientLiveMessage) => void;
+  send: LiveSend;
   connected: boolean;
 };
 
@@ -42,6 +68,12 @@ function getOrCreateStore(
   return store;
 }
 
+function noteSelfIfMove(store: CampaignLiveStore, msg: ClientLiveMessage) {
+  if (msg.type === "tokenMove" || msg.type === "tokenMoveCommit") {
+    store.noteSelfMove(msg.tokenId, msg.seq);
+  }
+}
+
 /**
  * One WebSocket per campaign window. Shares the store across table + dice.
  */
@@ -59,6 +91,7 @@ export function useCampaignLiveConnection(
   );
 
   const wsRef = useRef<WebSocket | null>(null);
+  const queueRef = useRef<ClientLiveMessage[]>([]);
   const [connected, setConnected] = useState(false);
   const tableRef = useRef(table);
   tableRef.current = table;
@@ -72,7 +105,21 @@ export function useCampaignLiveConnection(
 
     let closed = false;
     let retryTimer: ReturnType<typeof setTimeout> | null = null;
+    let startTimer: ReturnType<typeof setTimeout> | null = null;
     let attempt = 0;
+
+    const flushQueue = (ws: WebSocket) => {
+      const q = queueRef.current;
+      queueRef.current = [];
+      for (const msg of q) {
+        try {
+          noteSelfIfMove(store, msg);
+          ws.send(JSON.stringify(msg));
+        } catch {
+          // drop
+        }
+      }
+    };
 
     const connect = () => {
       if (closed) return;
@@ -83,6 +130,7 @@ export function useCampaignLiveConnection(
         attempt = 0;
         setConnected(true);
         store.setConnected(true);
+        flushQueue(ws);
       };
 
       ws.onmessage = (ev) => {
@@ -95,38 +143,52 @@ export function useCampaignLiveConnection(
       };
 
       ws.onclose = () => {
+        if (wsRef.current === ws) wsRef.current = null;
         setConnected(false);
         store.setConnected(false);
-        wsRef.current = null;
         if (closed) return;
         const delay = Math.min(10_000, 500 * 2 ** attempt);
         attempt += 1;
         retryTimer = setTimeout(connect, delay);
       };
-
-      ws.onerror = () => {
-        ws.close();
-      };
     };
 
-    connect();
+    // Delay the first open so React Strict Mode's mount/unmount/remount
+    // does not abort a CONNECTING socket.
+    startTimer = setTimeout(connect, 50);
 
     return () => {
       closed = true;
+      if (startTimer) clearTimeout(startTimer);
       if (retryTimer) clearTimeout(retryTimer);
-      wsRef.current?.close();
+      const ws = wsRef.current;
       wsRef.current = null;
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.close();
+      }
+      queueRef.current = [];
       store.setConnected(false);
+      setConnected(false);
     };
   }, [campaignId, enabled, store]);
 
-  const send = useCallback((msg: ClientLiveMessage) => {
+  const send = useCallback((msg: ClientLiveMessage): boolean => {
     const ws = wsRef.current;
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    if (msg.type === "tokenMove" || msg.type === "tokenMoveCommit") {
-      store.noteSelfMove(msg.tokenId, msg.seq);
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      noteSelfIfMove(store, msg);
+      ws.send(JSON.stringify(msg));
+      return true;
     }
-    ws.send(JSON.stringify(msg));
+    // Queue discrete commands (not high-frequency ticks) for reconnect flush.
+    if (msg.type !== "tokenMove") {
+      const q = queueRef.current;
+      if (q.length >= SEND_QUEUE_CAP) q.shift();
+      q.push(msg);
+      if (msg.type === "tokenMoveCommit") {
+        noteSelfIfMove(store, msg);
+      }
+    }
+    return false;
   }, [store]);
 
   return { store, send, connected };

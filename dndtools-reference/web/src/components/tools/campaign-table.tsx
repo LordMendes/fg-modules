@@ -290,7 +290,7 @@ function CampaignTableBody({
   const user = useAuthUser()!;
   const router = useRouter();
   const isDm = table.myRole === "dm";
-  const { store, send: sendLive } = useCampaignLive();
+  const { store, send: sendLive, connected } = useCampaignLive();
   useLiveStoreVersion(store);
   const onlineUserIds = useLivePresence(store);
   const liveActivityList = useLiveActivity(store);
@@ -879,6 +879,7 @@ function CampaignTableBody({
             aoePointers={aoePointers}
             viewportGoTo={viewportGoTo}
             sendLive={sendLive}
+            connected={connected}
           />
         ) : null}
 

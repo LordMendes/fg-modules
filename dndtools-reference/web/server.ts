@@ -1,16 +1,19 @@
 /**
  * Custom Next.js HTTP server with campaign WebSocket upgrade.
  *
- * Dev:  pnpm --filter @fg-modules/web dev  (tsx server.ts)
- * Prod: node server.mjs (esbuild bundle) or tsx server.ts
+ * Dev:  node --import tsx/esm server.ts
+ * Prod: node server.mjs (esbuild bundle)
  *
  * Requires REDIS_URL (defaults to redis://127.0.0.1:6379 locally).
  * Production fails fast if REDIS_URL is unset.
+ *
+ * Next is loaded via createRequire AFTER campaign modules so Next's
+ * require-hook does not break `@/` resolution under tsx.
  */
 
 import { createServer } from "http";
 import { parse } from "url";
-import next from "next";
+import { createRequire } from "module";
 import { config as loadEnv } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -26,6 +29,7 @@ const port = parseInt(process.env.PORT || "3000", 10);
 const dir = __dirname;
 
 async function main() {
+  // Import campaign WS modules before Next patches require().
   const { requireRedisUrlInProduction } = await import(
     "./src/lib/campaign/liveRedis"
   );
@@ -34,6 +38,10 @@ async function main() {
   const { createCampaignWebSocket, isCampaignWsPath } = await import(
     "./src/lib/campaign/liveWsServer"
   );
+
+  const require = createRequire(import.meta.url);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const next = require("next") as typeof import("next");
 
   const app = next({ dev, hostname, port, dir });
   const handle = app.getRequestHandler();

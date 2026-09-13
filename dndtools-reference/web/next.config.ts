@@ -62,6 +62,16 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: monorepoRoot,
   },
+  async rewrites() {
+    if (!isDev) return [];
+    const wsPort = process.env.WS_PORT || "3001";
+    return [
+      {
+        source: "/ws/campaign/:campaignId",
+        destination: `http://127.0.0.1:${wsPort}/ws/campaign/:campaignId`,
+      },
+    ];
+  },
   async headers() {
     return [
       {

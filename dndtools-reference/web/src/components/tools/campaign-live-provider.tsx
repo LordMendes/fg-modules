@@ -7,13 +7,14 @@ import {
 } from "react";
 import {
   useCampaignLiveConnection,
+  type LiveSend,
 } from "@/lib/campaign/liveClient";
 import type { CampaignLiveStore } from "@/lib/campaign/liveStore";
-import type { CampaignTableState, ClientLiveMessage } from "@/lib/campaign/types";
+import type { CampaignTableState } from "@/lib/campaign/types";
 
 type CampaignLiveContextValue = {
   store: CampaignLiveStore;
-  send: (msg: ClientLiveMessage) => void;
+  send: LiveSend;
   connected: boolean;
 };
 

@@ -1,28 +1,6 @@
 "use client";
 
-import {
-  addDrawing,
-  addFogRegion,
-  addOccluder,
-  commitMapTokenMove,
-  clearDrawings,
-  deleteDrawing,
-  removeFogRegion,
-  removeMapToken,
-  resetFog,
-  setFogEnabled,
-  setLightingEnabled,
-  setLosEnabled,
-  setDaylight,
-  setTokenEmitsLight,
-  setTokenLayer,
-  setTokenVisibility,
-  setDoorState,
-  updateCampaignMapGrid,
-  updateDrawing,
-  upsertMapLight,
-} from "@/actions/maps";
-import type { ClientLiveMessage } from "@/lib/campaign/types";
+import type { LiveSend } from "@/lib/campaign/liveClient";
 import {
   type Camera,
   fitCameraToImage,
@@ -61,7 +39,6 @@ const MIN_SCALE = 0.15;
 const MAX_SCALE = 4;
 const MOVE_THROTTLE_MS = 60;
 const DAYLIGHT_DEBOUNCE_MS = 150;
-const COMMIT_BACKUP_MS = 1500;
 
 const MemoMapToken = memo(MapToken);
 
@@ -96,8 +73,8 @@ type CampaignMapBoardProps = {
   extraPings?: MapPing[];
   aoePointers?: MapAoePointerView[];
   viewportGoTo?: { x: number; y: number } | null;
-  /** WebSocket send for high-frequency live messages. */
-  sendLive?: (msg: ClientLiveMessage) => void;
+  sendLive: LiveSend;
+  connected: boolean;
 };
 
 function viewportKey(campaignId: string) {
@@ -131,6 +108,16 @@ function randomId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+function simplifyStroke(points: MapPoint[], maxPoints = 200): MapPoint[] {
+  if (points.length <= maxPoints) return points;
+  const out: MapPoint[] = [];
+  const step = (points.length - 1) / (maxPoints - 1);
+  for (let i = 0; i < maxPoints; i++) {
+    out.push(points[Math.round(i * step)]!);
+  }
+  return out;
+}
+
 export function CampaignMapBoard({
   campaignId,
   map,
@@ -142,6 +129,7 @@ export function CampaignMapBoard({
   aoePointers: _aoePointers = [],
   viewportGoTo,
   sendLive,
+  connected,
 }: CampaignMapBoardProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -243,7 +231,6 @@ export function CampaignMapBoard({
     y: number;
     seq: number;
     lastBroadcast: number;
-    backupTimer: ReturnType<typeof setTimeout> | null;
   } | null>(null);
   const shapeDragRef = useRef<{
     drawingId: string;
@@ -480,7 +467,7 @@ export function CampaignMapBoard({
         const entry = undoStackRef.current.pop();
         if (!entry) return;
         if (entry.type === "drawingCreate") {
-          void deleteDrawing(campaignId, map.id, entry.drawingId);
+          sendLive({ type: "mapDrawingRemove", drawingId: entry.drawingId });
           if (selectedDrawingId === entry.drawingId) {
             setSelectedDrawingId(null);
           }
@@ -489,11 +476,13 @@ export function CampaignMapBoard({
             ...prev,
             [entry.drawingId]: entry.prevGeom,
           }));
-          void updateDrawing(campaignId, map.id, entry.drawingId, {
+          sendLive({
+            type: "mapDrawingUpsert",
+            drawingId: entry.drawingId,
             geom: entry.prevGeom,
           });
         } else if (entry.type === "fogCreate") {
-          void removeFogRegion(campaignId, map.id, entry.regionId);
+          sendLive({ type: "mapFogRemove", regionId: entry.regionId });
         }
         return;
       }
@@ -503,7 +492,7 @@ export function CampaignMapBoard({
           const d = map.drawings.find((x) => x.id === selectedDrawingId);
           if (d && canEditDrawing(d)) {
             e.preventDefault();
-            void deleteDrawing(campaignId, map.id, selectedDrawingId);
+            sendLive({ type: "mapDrawingRemove", drawingId: selectedDrawingId });
             setSelectedDrawingId(null);
           }
         }
@@ -544,14 +533,14 @@ export function CampaignMapBoard({
       ny = snapped.y;
       const seq = token.seq + 1;
       updateTokenLocal(token.id, nx, ny, seq);
-      void commitMapTokenMove(
-        campaignId,
-        token.id,
-        nx,
-        ny,
-        token.rotation,
+      sendLive({
+        type: "tokenMoveCommit",
+        tokenId: token.id,
+        x: nx,
+        y: ny,
+        rotation: token.rotation,
         seq,
-      );
+      });
     }
     function onKeyUp(e: KeyboardEvent) {
       if (e.code === "Space") setSpacePan(false);
@@ -574,6 +563,7 @@ export function CampaignMapBoard({
     snap,
     canEditDrawing,
     updateTokenLocal,
+    sendLive,
   ]);
 
   const handleDaylightChange = useCallback(
@@ -583,10 +573,10 @@ export function CampaignMapBoard({
       if (daylightTimerRef.current) clearTimeout(daylightTimerRef.current);
       daylightTimerRef.current = setTimeout(() => {
         daylightTimerRef.current = null;
-        void setDaylight(campaignId, map.id, value);
+        sendLive({ type: "mapFlags", daylight: value });
       }, DAYLIGHT_DEBOUNCE_MS);
     },
-    [campaignId, map.id],
+    [sendLive],
   );
 
   useEffect(() => {
@@ -622,9 +612,9 @@ export function CampaignMapBoard({
 
     if (tool === "ping") {
       if (e.shiftKey && isDm) {
-        if (sendLive) sendLive({ type: "mapViewportGoTo", x: pt.x, y: pt.y });
+        sendLive({ type: "mapViewportGoTo", x: pt.x, y: pt.y });
       } else {
-        if (sendLive) sendLive({ type: "mapPing", x: pt.x, y: pt.y });
+        sendLive({ type: "mapPing", x: pt.x, y: pt.y });
         addPing(pt.x, pt.y, userColor(viewerUserId));
       }
       return;
@@ -646,15 +636,14 @@ export function CampaignMapBoard({
           Math.abs(px.y - calibrateStartPx.y),
         );
         if (size > 0) {
-          void updateCampaignMapGrid(
-            campaignId,
-            map.id,
-            size,
-            calibrateStartPx.x,
-            calibrateStartPx.y,
-            map.scaleFeet,
-            map.diagonalRule,
-          );
+          sendLive({
+            type: "mapGrid",
+            gridSizePx: size,
+            gridOffsetX: calibrateStartPx.x,
+            gridOffsetY: calibrateStartPx.y,
+            scaleFeet: map.scaleFeet,
+            diagonalRule: map.diagonalRule,
+          });
         }
         setCalibrateStartPx(null);
       }
@@ -680,14 +669,17 @@ export function CampaignMapBoard({
     }
 
     if (tool === "light" && isDm) {
-      void upsertMapLight(campaignId, map.id, {
-        x: pt.x,
-        y: pt.y,
-        brightFeet: 20,
-        dimFeet: 20,
-        color: "#ffcc66",
-        enabled: true,
-        mode: "light",
+      sendLive({
+        type: "mapLightUpsert",
+        light: {
+          x: pt.x,
+          y: pt.y,
+          brightFeet: 20,
+          dimFeet: 20,
+          color: "#ffcc66",
+          enabled: true,
+          mode: "light",
+        },
       });
       return;
     }
@@ -816,7 +808,11 @@ export function CampaignMapBoard({
         drawingId: d.drawingId,
         prevGeom: d.origGeom,
       });
-      void updateDrawing(campaignId, map.id, d.drawingId, { geom });
+      sendLive({
+        type: "mapDrawingUpsert",
+        drawingId: d.drawingId,
+        geom,
+      });
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
       } catch {
@@ -842,11 +838,9 @@ export function CampaignMapBoard({
       setPolygonDraft([]);
       if (pts.length >= 3) {
         const kind = tool === "fogHide" ? "hide" : "reveal";
-        void addFogRegion(campaignId, map.id, kind, pts).then((res) => {
-          if (res.success && res.region) {
-            pushUndo({ type: "fogCreate", regionId: res.region.id });
-          }
-        });
+        const regionId = randomId().slice(0, 24);
+        pushUndo({ type: "fogCreate", regionId });
+        sendLive({ type: "mapFogUpsert", regionId, kind, points: pts });
       }
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -857,13 +851,13 @@ export function CampaignMapBoard({
     }
 
     if (drawDraft.length >= 2) {
-      void addDrawing(campaignId, map.id, {
+      const drawingId = randomId().slice(0, 24);
+      pushUndo({ type: "drawingCreate", drawingId });
+      sendLive({
+        type: "mapDrawingUpsert",
+        drawingId,
         kind: "stroke",
-        stroke: drawDraft,
-      }).then((res) => {
-        if (res.success && res.drawing) {
-          pushUndo({ type: "drawingCreate", drawingId: res.drawing.id });
-        }
+        stroke: simplifyStroke(drawDraft),
       });
       setDrawDraft([]);
       try {
@@ -892,7 +886,12 @@ export function CampaignMapBoard({
         aoeDraft.kind === "cone"
           ? (Math.atan2(dy, dx) * 180) / Math.PI
           : 0;
-      void addDrawing(campaignId, map.id, {
+      const drawingId = randomId().slice(0, 24);
+      pushUndo({ type: "drawingCreate", drawingId });
+      setSelectedDrawingId(drawingId);
+      sendLive({
+        type: "mapDrawingUpsert",
+        drawingId,
         kind: aoeDraft.kind,
         geom: {
           x: aoeDraft.origin.x,
@@ -900,11 +899,6 @@ export function CampaignMapBoard({
           sizeFeet,
           rotation,
         },
-      }).then((res) => {
-        if (res.success && res.drawing) {
-          pushUndo({ type: "drawingCreate", drawingId: res.drawing.id });
-          setSelectedDrawingId(res.drawing.id);
-        }
       });
       setAoeDraft(null);
       try {
@@ -966,7 +960,6 @@ export function CampaignMapBoard({
       y: token.y,
       seq: token.seq + 1,
       lastBroadcast: 0,
-      backupTimer: null,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
@@ -995,41 +988,14 @@ export function CampaignMapBoard({
     const now = Date.now();
     if (now - d.lastBroadcast >= MOVE_THROTTLE_MS) {
       d.lastBroadcast = now;
-      const msg: ClientLiveMessage = {
+      sendLive({
         type: "tokenMove",
         tokenId: d.tokenId,
         x: nx,
         y: ny,
         rotation: token.rotation,
         seq: d.seq,
-      };
-      if (sendLive) sendLive(msg);
-    }
-    if (!d.backupTimer) {
-      d.backupTimer = setTimeout(() => {
-        if (!dragRef.current || dragRef.current.tokenId !== d.tokenId) return;
-        const cur = dragRef.current;
-        cur.backupTimer = null;
-        const commitMsg: ClientLiveMessage = {
-          type: "tokenMoveCommit",
-          tokenId: cur.tokenId,
-          x: cur.x,
-          y: cur.y,
-          rotation: token.rotation,
-          seq: cur.seq,
-        };
-        if (sendLive) sendLive(commitMsg);
-        else {
-          void commitMapTokenMove(
-            campaignId,
-            cur.tokenId,
-            cur.x,
-            cur.y,
-            token.rotation,
-            cur.seq,
-          );
-        }
-      }, COMMIT_BACKUP_MS);
+      });
     }
   };
 
@@ -1039,29 +1005,14 @@ export function CampaignMapBoard({
   ) => {
     if (!dragRef.current || dragRef.current.tokenId !== token.id) return;
     const d = dragRef.current;
-    if (d.backupTimer) {
-      clearTimeout(d.backupTimer);
-      d.backupTimer = null;
-    }
-    const commitMsg: ClientLiveMessage = {
+    sendLive({
       type: "tokenMoveCommit",
       tokenId: d.tokenId,
       x: d.x,
       y: d.y,
       rotation: token.rotation,
       seq: d.seq,
-    };
-    if (sendLive) sendLive(commitMsg);
-    else {
-      void commitMapTokenMove(
-        campaignId,
-        d.tokenId,
-        d.x,
-        d.y,
-        token.rotation,
-        d.seq,
-      );
-    }
+    });
     dragRef.current = null;
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -1150,7 +1101,11 @@ export function CampaignMapBoard({
       return;
     }
     const kind = tool === "door" ? "door" : "wall";
-    void addOccluder(campaignId, map.id, kind, polylineDraft);
+    sendLive({
+      type: "mapOccluderUpsert",
+      kind,
+      points: polylineDraft,
+    });
     setPolylineDraft([]);
   };
 
@@ -1181,6 +1136,11 @@ export function CampaignMapBoard({
 
   return (
     <div className="campaign-map-board">
+      {!connected ? (
+        <div className="campaign-map-reconnect" role="status">
+          Reconnecting to live map…
+        </div>
+      ) : null}
       <div
         ref={viewportRef}
         className="campaign-map-viewport"
@@ -1274,18 +1234,21 @@ export function CampaignMapBoard({
                     e.stopPropagation();
                     if (o.state === "locked" && !isDm) return;
                     const next = o.state === "open" ? "closed" : "open";
-                    void setDoorState(campaignId, map.id, o.id, next);
+                    sendLive({
+                      type: "mapDoorState",
+                      occluderId: o.id,
+                      state: next,
+                    });
                   }}
                   onContextMenu={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     if (!isDm) return;
-                    void setDoorState(
-                      campaignId,
-                      map.id,
-                      o.id,
-                      o.state === "locked" ? "closed" : "locked",
-                    );
+                    sendLive({
+                      type: "mapDoorState",
+                      occluderId: o.id,
+                      state: o.state === "locked" ? "closed" : "locked",
+                    });
                   }}
                 />
               ) : null,
@@ -1372,18 +1335,21 @@ export function CampaignMapBoard({
         losEnabled={map.losEnabled}
         lightingEnabled={map.lightingEnabled}
         onFogToggle={() =>
-          void setFogEnabled(campaignId, map.id, !map.fogEnabled)
+          sendLive({ type: "mapFlags", fogEnabled: !map.fogEnabled })
         }
         onLosToggle={() =>
-          void setLosEnabled(campaignId, map.id, !map.losEnabled)
+          sendLive({ type: "mapFlags", losEnabled: !map.losEnabled })
         }
         onLightingToggle={() =>
-          void setLightingEnabled(campaignId, map.id, !map.lightingEnabled)
+          sendLive({
+            type: "mapFlags",
+            lightingEnabled: !map.lightingEnabled,
+          })
         }
         daylight={localDaylight}
         onDaylightChange={handleDaylightChange}
-        onClearDrawings={() => void clearDrawings(campaignId, map.id)}
-        onResetFog={() => void resetFog(campaignId, map.id)}
+        onClearDrawings={() => sendLive({ type: "mapDrawingClear" })}
+        onResetFog={() => sendLive({ type: "mapFogReset" })}
       />
 
       {tokenMenu ? (
@@ -1396,7 +1362,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenLayer(campaignId, map.id, tokenMenu.tokenId, "gm");
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                layer: "gm",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1406,7 +1376,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenLayer(campaignId, map.id, tokenMenu.tokenId, "token");
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                layer: "token",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1416,12 +1390,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenVisibility(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                "always",
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                visibility: "always",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1431,12 +1404,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenVisibility(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                "mask",
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                visibility: "mask",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1446,12 +1418,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenVisibility(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                "hidden",
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                visibility: "hidden",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1461,14 +1432,13 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenEmitsLight(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                true,
-                20,
-                20,
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                emitsLight: true,
+                lightBright: 20,
+                lightDim: 20,
+              });
               setTokenMenu(null);
             }}
           >
@@ -1478,14 +1448,13 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenEmitsLight(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                false,
-                0,
-                0,
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                emitsLight: false,
+                lightBright: 0,
+                lightDim: 0,
+              });
               setTokenMenu(null);
             }}
           >
@@ -1495,7 +1464,10 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void removeMapToken(campaignId, map.id, tokenMenu.tokenId);
+              sendLive({
+                type: "mapTokenRemove",
+                tokenId: tokenMenu.tokenId,
+              });
               setTokenMenu(null);
             }}
           >

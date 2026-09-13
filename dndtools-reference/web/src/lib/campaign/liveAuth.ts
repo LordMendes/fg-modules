@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { AUTH_COOKIE_NAME, type AuthUser } from "@/lib/auth/session";
+import { AUTH_COOKIE_NAME, type AuthUser } from "@/lib/auth/constants";
 import { prisma } from "@/lib/prisma";
 
 function hashToken(token: string): string {
@@ -69,8 +69,17 @@ export async function authorizeCampaignSocket(
   cookieHeader: string | undefined,
   campaignId: string,
 ): Promise<CampaignSocketAuth | null> {
+  const cookies = parseCookieHeader(cookieHeader);
+  const hasAuthCookie = Boolean(cookies[AUTH_COOKIE_NAME]);
   const user = await getUserFromCookieHeader(cookieHeader);
-  if (!user) return null;
+  if (!user) {
+    console.warn(
+      "[ws] unauthorized",
+      campaignId,
+      hasAuthCookie ? "bad-session" : cookieHeader ? "no-auth-cookie" : "no-cookie",
+    );
+    return null;
+  }
 
   const member = await prisma.campaignMember.findUnique({
     where: { campaignId_userId: { campaignId, userId: user.id } },
@@ -78,7 +87,10 @@ export async function authorizeCampaignSocket(
       campaign: { select: { dmUserId: true } },
     },
   });
-  if (!member || member.status !== "active") return null;
+  if (!member || member.status !== "active") {
+    console.warn("[ws] unauthorized", campaignId, "not-member", user.id);
+    return null;
+  }
 
   return {
     userId: user.id,

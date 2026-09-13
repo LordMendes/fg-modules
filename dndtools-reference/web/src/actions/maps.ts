@@ -573,41 +573,21 @@ export async function updateCampaignMapGrid(
     return { success: false, error: "Only the DM can calibrate the grid" };
   }
 
-  const map = await requireMapInCampaign(campaignId, mapId);
-  if (!map) return { success: false, error: "Map not found" };
-
-  if (!(gridSizePx > 0) || !(scaleFeet > 0)) {
-    return { success: false, error: "Invalid grid settings" };
-  }
-
-  const rule = asDiagonalRule(diagonalRule);
-
-  await prisma.campaignMap.update({
-    where: { id: mapId },
-    data: {
-      gridSizePx,
-      gridOffsetX,
-      gridOffsetY,
-      scaleFeet,
-      diagonalRule: rule,
+  const { mutateUpdateGrid } = await import("@/lib/map/mapMutations");
+  return mutateUpdateGrid(
+    {
+      userId: user.id,
+      role: "dm",
+      campaignId,
+      dmUserId: member.campaign.dmUserId,
     },
-  });
-
-  publishCampaignLive(campaignId, {
-    type: "mapGrid",
+    mapId,
     gridSizePx,
     gridOffsetX,
     gridOffsetY,
     scaleFeet,
-    diagonalRule: rule,
-  });
-
-  if (map.campaign.liveMapId === mapId) {
-    const raw = await loadRawMapView(mapId);
-    publishFilteredMapSnapshot(campaignId, member.campaign.dmUserId, raw);
-  }
-
-  return { success: true };
+    diagonalRule,
+  );
 }
 
 export async function placePcToken(
@@ -810,6 +790,7 @@ export async function removeMapToken(
   return { success: true };
 }
 
+/** @deprecated Prefer WebSocket tokenMoveCommit. Kept for rare non-board callers. */
 export async function commitMapTokenMove(
   campaignId: string,
   tokenId: string,
@@ -822,72 +803,20 @@ export async function commitMapTokenMove(
   const member = await requireActiveMember(campaignId, user.id);
   if (!member) return { success: false, error: "Not a campaign member" };
 
-  const token = await prisma.campaignMapToken.findUnique({
-    where: { id: tokenId },
-    include: {
-      map: {
-        select: {
-          campaignId: true,
-          losEnabled: true,
-          fogEnabled: true,
-        },
-      },
+  const { commitTokenMove } = await import("@/lib/map/mapMutations");
+  return commitTokenMove(
+    {
+      userId: user.id,
+      role: member.role === "dm" ? "dm" : "player",
+      campaignId,
+      dmUserId: member.campaign.dmUserId,
     },
-  });
-  if (!token || token.map.campaignId !== campaignId) {
-    return { success: false, error: "Token not found" };
-  }
-
-  const isDm = member.role === "dm";
-  if (!canUserMoveToken(token, user.id, isDm)) {
-    return { success: false, error: "Cannot move this token" };
-  }
-
-  if (token.map.losEnabled) {
-    const occluderRows = await prisma.campaignMapOccluder.findMany({
-      where: { mapId: token.mapId },
-    });
-    const occluders = occluderRows.map(mapOccluderRow);
-    const from = tokenCenter(token);
-    const to = tokenCenter({ x, y, width: token.width, height: token.height });
-    if (!canWalkTo(from, to, occluders)) {
-      const snapSeq = Math.max(seq, token.seq + 1);
-      publishCampaignLive(campaignId, {
-        type: "mapTokenMove",
-        tokenId,
-        x: token.x,
-        y: token.y,
-        rotation: token.rotation,
-        seq: snapSeq,
-        committed: true,
-      });
-      return {
-        success: false,
-        error: "Blocked by a wall",
-        blocked: true,
-      };
-    }
-  }
-
-  const nextSeq = Math.max(seq, token.seq + 1);
-  await prisma.campaignMapToken.update({
-    where: { id: tokenId },
-    data: { x, y, rotation, seq: nextSeq },
-  });
-
-  publishCampaignLive(campaignId, {
-    type: "mapTokenMove",
     tokenId,
     x,
     y,
     rotation,
-    seq: nextSeq,
-    committed: true,
-  });
-
-  await syncMaskTokensForMap(campaignId, token.mapId, member.campaign.dmUserId);
-
-  return { success: true };
+    seq,
+  );
 }
 
 export async function sendMapPing(

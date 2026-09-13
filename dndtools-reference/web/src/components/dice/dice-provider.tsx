@@ -265,9 +265,14 @@ export function DiceProvider({
   const seenRollRef = useRef<string | null>(null);
   useEffect(() => {
     if (!rollStore) return;
-    const rolls = rollStore.getState().rolls;
-    if (rolls.length === 0) return;
-    const latest = rolls[0]!;
+    const latest = rollStore.getState().rolls[0];
+    if (!latest) return;
+    // rollVersion 0 is the HTTP history snapshot. Replaying it sets
+    // rolling=true before the 3D engine is ready and deadlocks the tray.
+    if (rollVersion === 0) {
+      seenRollRef.current = latest.id;
+      return;
+    }
     if (seenRollRef.current === latest.id) return;
     seenRollRef.current = latest.id;
     ingestCampaignRoll(latest);

@@ -1,7 +1,7 @@
+import { WebSocketServer, type WebSocket } from "ws";
 import { randomUUID } from "crypto";
 import type { Server as HttpServer, IncomingMessage } from "http";
 import type { Duplex } from "stream";
-import { WebSocketServer, WebSocket } from "ws";
 import { authorizeCampaignSocket } from "@/lib/campaign/liveAuth";
 import {
   publishCampaignLive,
@@ -40,7 +40,6 @@ async function broadcastPresence(campaignId: string) {
 }
 
 export type CampaignWsAttachment = {
-  /** Handle an upgrade already identified as /ws/campaign/:id. */
   handleUpgrade: (
     req: IncomingMessage,
     socket: Duplex,
@@ -49,11 +48,6 @@ export type CampaignWsAttachment = {
   close: () => void;
 };
 
-/**
- * Create the campaign WebSocket server (noServer).
- * Wire `handleUpgrade` from a single HTTP `upgrade` listener in server.ts
- * so Next HMR and campaign WS do not race.
- */
 export function createCampaignWebSocket(): CampaignWsAttachment {
   const wss = new WebSocketServer({ noServer: true });
 
@@ -145,7 +139,8 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
       wss.handleUpgrade(req, socket, head, (ws) => {
         wss.emit("connection", ws, req, auth);
       });
-    })().catch(() => {
+    })().catch((err) => {
+      console.error("[ws] upgrade failed", campaignId, err);
       try {
         socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n");
       } catch {

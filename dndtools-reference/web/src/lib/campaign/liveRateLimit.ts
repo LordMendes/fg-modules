@@ -45,3 +45,19 @@ export function acceptTokenMoveRate(
     TOKEN_MOVE_WINDOW_MS,
   );
 }
+
+/** Coarse limit for discrete map tool commands (~20/s per connection). */
+export const COMMAND_MAX_PER_SEC = 20;
+export const COMMAND_WINDOW_MS = 1000;
+
+export function acceptCommandRate(
+  state: RateLimitState,
+  nowMs: number = Date.now(),
+): boolean {
+  return acceptRateLimited(
+    state,
+    nowMs,
+    COMMAND_MAX_PER_SEC,
+    COMMAND_WINDOW_MS,
+  );
+}
