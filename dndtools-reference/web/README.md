@@ -91,7 +91,7 @@ Open [http://localhost:3000](http://localhost:3000).
 If Postgres is already running and data is imported:
 
 ```bash
-docker compose up -d postgres   # if not already up
+docker compose up -d postgres redis   # if not already up
 pnpm dev
 ```
 
@@ -166,6 +166,7 @@ Set in `web/.env` (see `web/.env.example`):
 | Variable | Description |
 |----------|-------------|
 | `DATABASE_URL` | PostgreSQL connection string |
+| `REDIS_URL` | Redis for campaign live WebSocket fan-out (required in production) |
 | `SESSION_SECRET` | Random 32-byte secret for session signing |
 | `SITE_URL` | Public site URL (sitemap, robots) |
 | `NEXT_PUBLIC_SITE_URL` | Legacy alias for `SITE_URL` |
@@ -184,6 +185,7 @@ Set these as **runtime** environment variables in Coolify:
 | Variable | Description |
 |----------|-------------|
 | `DATABASE_URL` | From your linked PostgreSQL service |
+| `REDIS_URL` | From your linked Redis service (campaign live sync) |
 | `SESSION_SECRET` | `openssl rand -base64 32` |
 | `SITE_URL` | Your public URL, e.g. `https://dnd.example.com` |
 | `R2_ENDPOINT` | Cloudflare R2 S3 API endpoint |
@@ -199,9 +201,11 @@ Set these as **runtime** environment variables in Coolify:
 1. Create a new application in Coolify pointing to **`dndtools-reference/`**.
 2. Set Dockerfile to `web/Dockerfile` with build context `dndtools-reference/` (or repo root if the whole repo is checked out).
 3. Add a PostgreSQL 16+ database service and link it — set `DATABASE_URL` on the app from that service.
-4. Set the remaining runtime env vars (`SESSION_SECRET`, `SITE_URL`, and R2 vars for PC images).
-5. Deploy — migrations run automatically on startup.
-6. Import data once via Coolify's **Execute Command** (or `docker exec`):
+4. Add a Redis 7+ service and set `REDIS_URL` (required for campaign live WebSockets).
+5. Ensure the reverse proxy allows WebSocket upgrades for `/ws/campaign/*` (Coolify/Traefik usually does by default).
+6. Set the remaining runtime env vars (`SESSION_SECRET`, `SITE_URL`, and R2 vars for PC images).
+7. Deploy — migrations run automatically on startup.
+8. Import data once via Coolify's **Execute Command** (or `docker exec`):
    ```
    /docker-entrypoint.sh import
    ```

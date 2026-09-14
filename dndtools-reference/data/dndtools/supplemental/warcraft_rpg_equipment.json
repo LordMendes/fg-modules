@@ -8,7 +8,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 92,
+      "page": 132,
       "url": null
     },
     "index": {
@@ -16,15 +16,15 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "special material",
-      "cost": "—",
-      "weight": "—"
+      "cost": "-",
+      "weight": "-"
     },
     "kind": "good",
     "category": "special material",
-    "cost": "—",
-    "weight": "—",
-    "description_html": "<p>Used by dwarves for firearms and explosives. Normal, refined (+1 damage), and loaded (+1 equivalent magical weapon, waterproof) varieties exist.</p>",
-    "description_text": "Used by dwarves for firearms and explosives. Normal, refined (+1 damage), and loaded (+1 equivalent magical weapon, waterproof) varieties exist."
+    "cost": "-",
+    "weight": "-",
+    "description_html": "<p>Favored material of Ironforge dwarves (p. 130). 1 oz. per firearm shot. Wet powder is ruined. Malfunction Rating 1: explosion in a 5-ft. radius for 2d6 fire (Ref DC 18; Ironforge dwarves +4). Refined (+1 damage, 50 gp/lb) and imbued (water-resistant; ammo as +1 magic, 650 gp/lb) varieties exist. Keg 250 gp / powder horn 35 gp.</p>",
+    "description_text": "Favored material of Ironforge dwarves (p. 130). 1 oz. per firearm shot. Wet powder is ruined. Malfunction Rating 1: explosion in a 5-ft. radius for 2d6 fire (Ref DC 18; Ironforge dwarves +4). Refined (+1 damage, 50 gp/lb) and imbued (water-resistant; ammo as +1 magic, 650 gp/lb) varieties exist. Keg 250 gp / powder horn 35 gp."
   },
   {
     "slug": "dragonhide-wrpg",
@@ -35,7 +35,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 92,
+      "page": 131,
       "url": null
     },
     "index": {
@@ -43,26 +43,26 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "special material",
-      "cost": "—",
-      "weight": "—"
+      "cost": "-",
+      "weight": "-"
     },
     "kind": "good",
     "category": "special material",
-    "cost": "—",
-    "weight": "—",
-    "description_html": "<p>Favored by high elves. Dragonhide leather armor has 0% arcane spell failure.</p>",
-    "description_text": "Favored by high elves. Dragonhide leather armor has 0% arcane spell failure."
+    "cost": "-",
+    "weight": "-",
+    "description_html": "<p>Favored material of high elves. Counts as masterwork for enchanting. Hide, leather, and studded leather only; 0% arcane spell failure. Cost ×20. Hardness 10; 30 hp/inch.</p>",
+    "description_text": "Favored material of high elves. Counts as masterwork for enchanting. Hide, leather, and studded leather only; 0% arcane spell failure. Cost ×20. Hardness 10; 30 hp/inch."
   },
   {
     "slug": "blackwood-wrpg",
-    "name": "Blackwood",
+    "name": "Darkwood",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 93,
+      "page": 130,
       "url": null
     },
     "index": {
@@ -70,15 +70,15 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "special material",
-      "cost": "—",
-      "weight": "—"
+      "cost": "-",
+      "weight": "-"
     },
     "kind": "good",
     "category": "special material",
-    "cost": "—",
-    "weight": "—",
-    "description_html": "<p>Night elf epic wood. Follows standard epic wood material rules.</p>",
-    "description_text": "Night elf epic wood. Follows standard epic wood material rules."
+    "cost": "-",
+    "weight": "-",
+    "description_html": "<p>Night elves' favored material (listed as darkwood in Table 3–2). Uses the standard darkwood rules from the core books for lighter wooden items and weapons.</p>",
+    "description_text": "Night elves' favored material (listed as darkwood in Table 3–2). Uses the standard darkwood rules from the core books for lighter wooden items and weapons."
   },
   {
     "slug": "thorium-wrpg",
@@ -89,7 +89,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 93,
+      "page": 131,
       "url": null
     },
     "index": {
@@ -97,15 +97,15 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "special material",
-      "cost": "—",
-      "weight": "—"
+      "cost": "-",
+      "weight": "-"
     },
     "kind": "good",
     "category": "special material",
-    "cost": "—",
-    "weight": "—",
-    "description_html": "<p>+½ Strength damage on weapons. Thorium armor grants DR 5/+1 but is very heavy.</p>",
-    "description_text": "+½ Strength damage on weapons. Thorium armor grants DR 5/+1 but is very heavy."
+    "cost": "-",
+    "weight": "-",
+    "description_html": "Favored with arcanite by orcs. Weapons require <a href=\"/feats/exotic-weapon-thorium-wrpg\">Exotic Weapon Proficiency (thorium weapons)</a> and deal extra damage equal to half the wielder's Strength bonus. Armor: DR 5/+1, one category heavier, max Dex −2, ACP and ASF doubled; cost +20,000 gp; weight ×2.",
+    "description_text": "Favored with arcanite by orcs. Weapons require Exotic Weapon Proficiency (thorium weapons) and deal extra damage equal to half the wielder's Strength bonus. Armor: DR 5/+1, one category heavier, max Dex −2, ACP and ASF doubled; cost +20,000 gp; weight ×2."
   },
   {
     "slug": "arcanite-wrpg",
@@ -116,7 +116,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 94,
+      "page": 130,
       "url": null
     },
     "index": {
@@ -124,26 +124,26 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "special material",
-      "cost": "—",
-      "weight": "—"
+      "cost": "-",
+      "weight": "-"
     },
     "kind": "good",
     "category": "special material",
-    "cost": "—",
-    "weight": "—",
-    "description_html": "<p>+1 attack and damage on weapons; improved critical range. Arcanite armor reduces critical hit effects.</p>",
-    "description_text": "+1 attack and damage on weapons; improved critical range. Arcanite armor reduces critical hit effects."
+    "cost": "-",
+    "weight": "-",
+    "description_html": "<p>Grayish flexible metal. Weapons: +1 enhancement to attack and damage and +1 critical threat range (after Improved Critical); cost +9,000 gp; masterwork. Armor: miss chance vs. confirmed criticals (100 gp per %, min 10%, max 50%). Hardness 15; 30 hp/inch.</p>",
+    "description_text": "Grayish flexible metal. Weapons: +1 enhancement to attack and damage and +1 critical threat range (after Improved Critical); cost +9,000 gp; masterwork. Armor: miss chance vs. confirmed criticals (100 gp per %, min 10%, max 50%). Hardness 15; 30 hp/inch."
   },
   {
     "slug": "war-blade-wrpg",
-    "name": "War Blade",
+    "name": "Warblade",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 95,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -151,31 +151,31 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "martial",
-      "stats": "1d8 · 19–20/x2",
-      "cost": "15 gp",
-      "weight": "4 lb."
+      "stats": "1d8 · ×2",
+      "cost": "20 gp",
+      "weight": "3 lb."
     },
     "kind": "weapon",
     "category": "martial",
-    "cost": "15 gp",
-    "weight": "4 lb.",
+    "cost": "20 gp",
+    "weight": "3 lb.",
     "damage_m": "1d8",
-    "damage_s": null,
-    "critical": "19–20/x2",
+    "damage_s": "1d6",
+    "critical": "×2",
     "range_increment": "-",
     "damage_type": "S",
     "handed": "1H"
   },
   {
     "slug": "orc-attack-claws-wrpg",
-    "name": "Orc Attack Claws",
+    "name": "Orcish Claws of Attack",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 95,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -183,31 +183,31 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d6 · x2",
-      "cost": "5 gp",
+      "stats": "1d6 · 19–20/×2",
+      "cost": "25 gp",
       "weight": "2 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "5 gp",
+    "cost": "25 gp",
     "weight": "2 lb.",
     "damage_m": "1d6",
-    "damage_s": null,
-    "critical": "x2",
+    "damage_s": "1d4",
+    "critical": "19–20/×2",
     "range_increment": "-",
-    "damage_type": "S/P",
+    "damage_type": "S",
     "handed": "1H"
   },
   {
     "slug": "moon-glaive-wrpg",
-    "name": "Moon Glaive",
+    "name": "Moonglaive",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 96,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -215,31 +215,31 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d10 · x3",
-      "cost": "50 gp",
-      "weight": "8 lb."
+      "stats": "1d6 · ×3",
+      "cost": "20 gp",
+      "weight": "1 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "50 gp",
-    "weight": "8 lb.",
-    "damage_m": "1d10",
-    "damage_s": null,
-    "critical": "x3",
-    "range_increment": "-",
+    "cost": "20 gp",
+    "weight": "1 lb.",
+    "damage_m": "1d6",
+    "damage_s": "1d4",
+    "critical": "×3",
+    "range_increment": "10 ft.",
     "damage_type": "S",
-    "handed": "2H"
+    "handed": "1H"
   },
   {
     "slug": "dwarven-throwing-hammer-wrpg",
-    "name": "Dwarven Throwing Hammer",
+    "name": "Dwarven Tossing Hammer",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 96,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -247,31 +247,31 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d8 · x2",
-      "cost": "25 gp",
-      "weight": "5 lb."
+      "stats": "1d6 · ×3",
+      "cost": "15 gp",
+      "weight": "7 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "25 gp",
-    "weight": "5 lb.",
-    "damage_m": "1d8",
-    "damage_s": null,
-    "critical": "x2",
-    "range_increment": "20 ft.",
+    "cost": "15 gp",
+    "weight": "7 lb.",
+    "damage_m": "1d6",
+    "damage_s": "1d4",
+    "critical": "×3",
+    "range_increment": "10 ft.",
     "damage_type": "B",
     "handed": "1H"
   },
   {
     "slug": "tauren-polearm-wrpg",
-    "name": "Tauren Polearm",
+    "name": "Tauren Halberd",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 97,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -279,19 +279,19 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d12 · x3",
-      "cost": "30 gp",
-      "weight": "15 lb."
+      "stats": "2d6 · ×3",
+      "cost": "50 gp",
+      "weight": "25 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "30 gp",
-    "weight": "15 lb.",
-    "damage_m": "1d12",
-    "damage_s": null,
-    "critical": "x3",
+    "cost": "50 gp",
+    "weight": "25 lb.",
+    "damage_m": "2d6",
+    "damage_s": "1d8",
+    "critical": "×3",
     "range_increment": "-",
-    "damage_type": "P/S",
+    "damage_type": "P and S",
     "handed": "2H"
   },
   {
@@ -303,7 +303,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 97,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -311,31 +311,31 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "2d6 · x2",
+      "stats": "2d8 · ×2",
       "cost": "20 gp",
-      "weight": "20 lb."
+      "weight": "50 lb."
     },
     "kind": "weapon",
     "category": "exotic",
     "cost": "20 gp",
-    "weight": "20 lb.",
-    "damage_m": "2d6",
-    "damage_s": null,
-    "critical": "x2",
+    "weight": "50 lb.",
+    "damage_m": "2d8",
+    "damage_s": "1d10",
+    "critical": "×2",
     "range_increment": "-",
     "damage_type": "B",
     "handed": "2H"
   },
   {
     "slug": "flintlock-musket-wrpg",
-    "name": "Flintlock Musket",
+    "name": "Flintlock Pistol",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 98,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -343,20 +343,20 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d12 · x3",
-      "cost": "500 gp",
-      "weight": "10 lb."
+      "stats": "3d6 · ×3",
+      "cost": "400 gp",
+      "weight": "5 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "500 gp",
-    "weight": "10 lb.",
-    "damage_m": "1d12",
-    "damage_s": null,
-    "critical": "x3",
-    "range_increment": "80 ft.",
+    "cost": "400 gp",
+    "weight": "5 lb.",
+    "damage_m": "3d6",
+    "damage_s": "2d6",
+    "critical": "×3",
+    "range_increment": "5 ft.",
     "damage_type": "P",
-    "handed": "2H"
+    "handed": "1H"
   },
   {
     "slug": "blunderbuss-wrpg",
@@ -367,7 +367,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 98,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -375,18 +375,18 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d8 · x2",
-      "cost": "750 gp",
-      "weight": "12 lb."
+      "stats": "Special · ×3",
+      "cost": "250 gp",
+      "weight": "10 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "750 gp",
-    "weight": "12 lb.",
-    "damage_m": "1d8",
-    "damage_s": null,
-    "critical": "x2",
-    "range_increment": "15 ft.",
+    "cost": "250 gp",
+    "weight": "10 lb.",
+    "damage_m": "Special",
+    "damage_s": "Special",
+    "critical": "×3",
+    "range_increment": "10 ft.",
     "damage_type": "P",
     "handed": "2H"
   },
@@ -399,7 +399,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 99,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -407,18 +407,18 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "1d10 · x3",
-      "cost": "1,000 gp",
-      "weight": "8 lb."
+      "stats": "3d6 · ×3",
+      "cost": "800 gp",
+      "weight": "20 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "1,000 gp",
-    "weight": "8 lb.",
-    "damage_m": "1d10",
-    "damage_s": null,
-    "critical": "x3",
-    "range_increment": "90 ft.",
+    "cost": "800 gp",
+    "weight": "20 lb.",
+    "damage_m": "3d6",
+    "damage_s": "2d6",
+    "critical": "×3",
+    "range_increment": "300 ft.",
     "damage_type": "P",
     "handed": "2H"
   },
@@ -431,7 +431,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 99,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -439,19 +439,19 @@
       "edition": "Warcraft (3.5)",
       "kind": "weapon",
       "category": "exotic",
-      "stats": "— · —",
-      "cost": "5,000 gp",
-      "weight": "200 lb."
+      "stats": "Special · ×2",
+      "cost": "75 gp",
+      "weight": "20 lb."
     },
     "kind": "weapon",
     "category": "exotic",
-    "cost": "5,000 gp",
-    "weight": "200 lb.",
-    "damage_m": "—",
-    "damage_s": null,
-    "critical": "—",
-    "range_increment": "300 ft.",
-    "damage_type": "—",
+    "cost": "75 gp",
+    "weight": "20 lb.",
+    "damage_m": "Special",
+    "damage_s": "Special",
+    "critical": "×2",
+    "range_increment": "40 ft.",
+    "damage_type": "P",
     "handed": "2H"
   },
   {
@@ -463,88 +463,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 100,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "kind": "good",
-      "category": "adventuring gear",
-      "cost": "50 gp",
-      "weight": "20 lb."
-    },
-    "kind": "good",
-    "category": "adventuring gear",
-    "cost": "50 gp",
-    "weight": "20 lb.",
-    "description_html": "<p>Explosive shell for mortar. Area damage on impact.</p>",
-    "description_text": "Explosive shell for mortar. Area damage on impact."
-  },
-  {
-    "slug": "catapult-bomb-wrpg",
-    "name": "Catapult Bomb",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 100,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "kind": "good",
-      "category": "adventuring gear",
-      "cost": "100 gp",
-      "weight": "50 lb."
-    },
-    "kind": "good",
-    "category": "adventuring gear",
-    "cost": "100 gp",
-    "weight": "50 lb.",
-    "description_html": "<p>Explosive ammunition for catapults.</p>",
-    "description_text": "Explosive ammunition for catapults."
-  },
-  {
-    "slug": "buried-bomb-wrpg",
-    "name": "Buried Bomb",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 100,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "kind": "good",
-      "category": "adventuring gear",
-      "cost": "75 gp",
-      "weight": "10 lb."
-    },
-    "kind": "good",
-    "category": "adventuring gear",
-    "cost": "75 gp",
-    "weight": "10 lb.",
-    "description_html": "<p>Buried explosive triggered by pressure.</p>",
-    "description_text": "Buried explosive triggered by pressure."
-  },
-  {
-    "slug": "grenade-wrpg",
-    "name": "Grenade",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 101,
+      "page": 135,
       "url": null
     },
     "index": {
@@ -559,19 +478,100 @@
     "category": "adventuring gear",
     "cost": "25 gp",
     "weight": "1 lb.",
-    "description_html": "<p>Hand-thrown explosive.</p>",
-    "description_text": "Hand-thrown explosive."
+    "description_html": "<p>Explosive mortar ammunition: MR 1, 3d6 fire, 5-ft. blast. Casing hardness 0, 2 hp.</p>",
+    "description_text": "Explosive mortar ammunition: MR 1, 3d6 fire, 5-ft. blast. Casing hardness 0, 2 hp."
   },
   {
-    "slug": "goblin-knife-wrpg",
-    "name": "Goblin Knife",
+    "slug": "catapult-bomb-wrpg",
+    "name": "Catapult Bomb",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 102,
+      "page": 135,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "kind": "good",
+      "category": "adventuring gear",
+      "cost": "150 gp",
+      "weight": "20 lb."
+    },
+    "kind": "good",
+    "category": "adventuring gear",
+    "cost": "150 gp",
+    "weight": "20 lb.",
+    "description_html": "<p>Bomb for catapults: MR 1, 8d6 fire, 20-ft. blast. No weapon proficiency required.</p>",
+    "description_text": "Bomb for catapults: MR 1, 8d6 fire, 20-ft. blast. No weapon proficiency required."
+  },
+  {
+    "slug": "buried-bomb-wrpg",
+    "name": "Emplaced Bomb",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 135,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "kind": "good",
+      "category": "adventuring gear",
+      "cost": "80 gp",
+      "weight": "10 lb."
+    },
+    "kind": "good",
+    "category": "adventuring gear",
+    "cost": "80 gp",
+    "weight": "10 lb.",
+    "description_html": "<p>Buried/emplaced bomb: MR 1, 4d6 fire, 10-ft. blast. DC 12 Use Technological Device to prime.</p>",
+    "description_text": "Buried/emplaced bomb: MR 1, 4d6 fire, 10-ft. blast. DC 12 Use Technological Device to prime."
+  },
+  {
+    "slug": "grenade-wrpg",
+    "name": "Grenade Bomb",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 135,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "kind": "good",
+      "category": "adventuring gear",
+      "cost": "40 gp",
+      "weight": "1 lb."
+    },
+    "kind": "good",
+    "category": "adventuring gear",
+    "cost": "40 gp",
+    "weight": "1 lb.",
+    "description_html": "<p>Thrown bomb: MR 1, 2d6 fire, 5-ft. blast, range increment 10 ft. Hit target may Ref DC 20 to catch/deflect.</p>",
+    "description_text": "Thrown bomb: MR 1, 2d6 fire, 5-ft. blast, range increment 10 ft. Hit target may Ref DC 20 to catch/deflect."
+  },
+  {
+    "slug": "goblin-knife-wrpg",
+    "name": "Goblin Army Knife",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 136,
       "url": null
     },
     "index": {
@@ -580,52 +580,25 @@
       "kind": "good",
       "category": "adventuring gear",
       "cost": "50 gp",
-      "weight": "1 lb."
+      "weight": "4 lb."
     },
     "kind": "good",
     "category": "adventuring gear",
     "cost": "50 gp",
-    "weight": "1 lb.",
-    "description_html": "<p>Multi-tool combining knife, lockpick, and small tools.</p>",
-    "description_text": "Multi-tool combining knife, lockpick, and small tools."
+    "weight": "4 lb.",
+    "description_html": "<p>Multi-tool (trench tool, saw, hammer, firestarter, sewing kit, 25 ft. spidersilk, fishing rod, 1-person tent). 3 rounds to switch function. Hardness 1, hp 5.</p>",
+    "description_text": "Multi-tool (trench tool, saw, hammer, firestarter, sewing kit, 25 ft. spidersilk, fishing rod, 1-person tent). 3 rounds to switch function. Hardness 1, hp 5."
   },
   {
     "slug": "gyro-umbrella-wrpg",
-    "name": "Gyro Umbrella",
+    "name": "Gyroparasol",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 102,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "kind": "good",
-      "category": "adventuring gear",
-      "cost": "200 gp",
-      "weight": "3 lb."
-    },
-    "kind": "good",
-    "category": "adventuring gear",
-    "cost": "200 gp",
-    "weight": "3 lb.",
-    "description_html": "<p>Slows fall as feather fall when deployed.</p>",
-    "description_text": "Slows fall as feather fall when deployed."
-  },
-  {
-    "slug": "goblin-mine-shoes-wrpg",
-    "name": "Goblin Mine Shoes",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 103,
+      "page": 136,
       "url": null
     },
     "index": {
@@ -640,19 +613,19 @@
     "category": "adventuring gear",
     "cost": "150 gp",
     "weight": "2 lb.",
-    "description_html": "<p>Grant +4 on saves vs. mine and trap triggers.</p>",
-    "description_text": "Grant +4 on saves vs. mine and trap triggers."
+    "description_html": "<p>Move action to open; slows falls of up to 600 lb. and prevents the first 3d6 falling damage (DC 10 Use Technological Device to hold). MR 1. Hardness 3, hp 15.</p>",
+    "description_text": "Move action to open; slows falls of up to 600 lb. and prevents the first 3d6 falling damage (DC 10 Use Technological Device to hold). MR 1. Hardness 3, hp 15."
   },
   {
-    "slug": "grappling-launcher-wrpg",
-    "name": "Grappling Launcher",
+    "slug": "goblin-mine-shoes-wrpg",
+    "name": "Goblin Mine Shoes",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 103,
+      "page": 137,
       "url": null
     },
     "index": {
@@ -660,26 +633,26 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "adventuring gear",
-      "cost": "300 gp",
-      "weight": "5 lb."
+      "cost": "400 gp",
+      "weight": "10 lb."
     },
     "kind": "good",
     "category": "adventuring gear",
-    "cost": "300 gp",
-    "weight": "5 lb.",
-    "description_html": "<p>Ranged grappling hook launcher.</p>",
-    "description_text": "Ranged grappling hook launcher."
+    "cost": "400 gp",
+    "weight": "10 lb.",
+    "description_html": "<p>Spread weight vs. pressure plates and pit traps; cannot run while worn. MR 1: lock when a trap triggers (no Ref save). Hardness 2, hp 10.</p>",
+    "description_text": "Spread weight vs. pressure plates and pit traps; cannot run while worn. MR 1: lock when a trap triggers (no Ref save). Hardness 2, hp 10."
   },
   {
-    "slug": "spider-silk-rope-wrpg",
-    "name": "Spider Silk Rope",
+    "slug": "grappling-launcher-wrpg",
+    "name": "Pulley Gun",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 104,
+      "page": 138,
       "url": null
     },
     "index": {
@@ -687,15 +660,42 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "adventuring gear",
-      "cost": "100 gp",
+      "cost": "225 gp",
+      "weight": "8 lb."
+    },
+    "kind": "good",
+    "category": "adventuring gear",
+    "cost": "225 gp",
+    "weight": "8 lb.",
+    "description_html": "<p>Steam spike up to 50 ft. into hardness ≤8, then pulley and spidersilk (100 ft., 800 lb.; upgrade 1,600 lb.). As a weapon: exotic ranged, 50-ft. increment, 3d6 P. Reset 4 minutes. DC 20 Use Technological Device.</p>",
+    "description_text": "Steam spike up to 50 ft. into hardness ≤8, then pulley and spidersilk (100 ft., 800 lb.; upgrade 1,600 lb.). As a weapon: exotic ranged, 50-ft. increment, 3d6 P. Reset 4 minutes. DC 20 Use Technological Device."
+  },
+  {
+    "slug": "spider-silk-rope-wrpg",
+    "name": "Spidersilk Rope",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 138,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "kind": "good",
+      "category": "adventuring gear",
+      "cost": "25 gp",
       "weight": "3 lb."
     },
     "kind": "good",
     "category": "adventuring gear",
-    "cost": "100 gp",
+    "cost": "25 gp",
     "weight": "3 lb.",
-    "description_html": "<p>50 ft. rope with +2 bonus on Use Rope checks.</p>",
-    "description_text": "50 ft. rope with +2 bonus on Use Rope checks."
+    "description_html": "<p>50 ft. spidersilk rope: +4 circumstance on Use Rope; 5 hp; burst Str DC 25.</p>",
+    "description_text": "50 ft. spidersilk rope: +4 circumstance on Use Rope; 5 hp; burst Str DC 25."
   },
   {
     "slug": "steam-hammer-wrpg",
@@ -706,7 +706,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 104,
+      "page": 138,
       "url": null
     },
     "index": {
@@ -714,15 +714,15 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "adventuring gear",
-      "cost": "2,000 gp",
-      "weight": "30 lb."
+      "cost": "500 gp",
+      "weight": "35 lb."
     },
     "kind": "good",
     "category": "adventuring gear",
-    "cost": "2,000 gp",
-    "weight": "30 lb.",
-    "description_html": "<p>Portable siege hammer powered by steam.</p>",
-    "description_text": "Portable siege hammer powered by steam."
+    "cost": "500 gp",
+    "weight": "35 lb.",
+    "description_html": "<p>Portable steam hammer: +15 Strength (replaces user's) to break doors/objects as a full-round action; rebuild steam 1 minute. As a weapon: exotic melee 5d6 B. Deafens user and those within 100 ft. for 1d10 rounds.</p>",
+    "description_text": "Portable steam hammer: +15 Strength (replaces user's) to break doors/objects as a full-round action; rebuild steam 1 minute. As a weapon: exotic melee 5d6 B. Deafens user and those within 100 ft. for 1d10 rounds."
   },
   {
     "slug": "phlogiston-elixir-wrpg",
@@ -733,7 +733,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 105,
+      "page": 138,
       "url": null
     },
     "index": {
@@ -741,14 +741,14 @@
       "edition": "Warcraft (3.5)",
       "kind": "good",
       "category": "adventuring gear",
-      "cost": "500 gp",
-      "weight": "—"
+      "cost": "25 gp",
+      "weight": "-"
     },
     "kind": "good",
     "category": "adventuring gear",
-    "cost": "500 gp",
-    "weight": "—",
-    "description_html": "<p>Trade one ability score bonus for another penalty for 1 hour.</p>",
-    "description_text": "Trade one ability score bonus for another penalty for 1 hour."
+    "cost": "25 gp",
+    "weight": "-",
+    "description_html": "<p>Choose one ability score to raise and one to lower by 1d4+1 (enhancement/penalty) for 1 day. Craft (alchemy) DC 12. MR/breakdown: ingested poison Fort DC 13 (1 Con / 1d4 Con).</p>",
+    "description_text": "Choose one ability score to raise and one to lower by 1d4+1 (enhancement/penalty) for 1 day. Craft (alchemy) DC 12. MR/breakdown: ingested poison Fort DC 13 (1 Con / 1d4 Con)."
   }
 ]

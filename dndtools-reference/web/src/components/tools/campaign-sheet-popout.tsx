@@ -21,12 +21,14 @@ import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider, useDice } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { useSessionNonce } from "@/components/session-provider";
+import { CampaignLiveProvider, useCampaignLive } from "@/components/tools/campaign-live-provider";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import {
   campaignSheetPopoutChannelName,
   type CampaignSheetPopoutMessage,
 } from "@/lib/campaign/immersive";
-import type { CampaignLiveEvent, CampaignTableState } from "@/lib/campaign/types";
+import { useLivePcUpdated } from "@/lib/campaign/liveClient";
+import type { CampaignTableState } from "@/lib/campaign/types";
 import { rollViewToResult } from "@/lib/campaign/types";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
@@ -147,25 +149,32 @@ export function CampaignSheetPopout({
     .filter((r): r is NonNullable<typeof r> => r != null);
 
   return (
-    <DiceProvider
-      campaign={{
-        campaignId,
-        actor: {
-          userId: user.id,
-          username: user.username,
-          characterName: null,
-        },
-        isDm: table.myRole === "dm",
-        initialHistory,
-      }}
+    <CampaignLiveProvider
+      campaignId={campaignId}
+      table={table}
+      viewerUserId={user.id}
+      enabled
     >
-      <CampaignSheetPopoutBody
-        campaignId={campaignId}
-        pcPlanId={pcPlanId}
-        pending={pending}
-        startTransition={startTransition}
-      />
-    </DiceProvider>
+      <DiceProvider
+        campaign={{
+          campaignId,
+          actor: {
+            userId: user.id,
+            username: user.username,
+            characterName: null,
+          },
+          isDm: table.myRole === "dm",
+          initialHistory,
+        }}
+      >
+        <CampaignSheetPopoutBody
+          campaignId={campaignId}
+          pcPlanId={pcPlanId}
+          pending={pending}
+          startTransition={startTransition}
+        />
+      </DiceProvider>
+    </CampaignLiveProvider>
   );
 }
 
@@ -226,23 +235,16 @@ function CampaignSheetPopoutBody({
     reloadPlan();
   }, [reloadPlan]);
 
+  const { store } = useCampaignLive();
+  const pcUpdated = useLivePcUpdated(store);
   useEffect(() => {
-    const es = new EventSource(`/tools/campaign/${campaignId}/live`);
-    es.onmessage = (msg) => {
-      try {
-        const event = JSON.parse(msg.data) as CampaignLiveEvent;
-        if (event.type !== "pcUpdated") return;
-        if (event.pcPlanId !== pcPlanId) return;
-        if (event.actorUserId === user.id) return;
-        if (lastPcUpdatedAt.current === event.updatedAt) return;
-        lastPcUpdatedAt.current = event.updatedAt;
-        reloadPlan();
-      } catch {
-        // ignore
-      }
-    };
-    return () => es.close();
-  }, [campaignId, pcPlanId, user.id, reloadPlan]);
+    if (!pcUpdated) return;
+    if (pcUpdated.pcPlanId !== pcPlanId) return;
+    if (pcUpdated.actorUserId === user.id) return;
+    if (lastPcUpdatedAt.current === pcUpdated.updatedAt) return;
+    lastPcUpdatedAt.current = pcUpdated.updatedAt;
+    reloadPlan();
+  }, [pcUpdated, pcPlanId, user.id, reloadPlan]);
 
   const patch = useCallback(
     (fn: (draft: PcPlanState) => void) => {

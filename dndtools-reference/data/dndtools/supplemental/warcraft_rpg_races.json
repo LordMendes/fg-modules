@@ -8,7 +8,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 12,
+      "page": 38,
       "url": null
     },
     "index": {
@@ -17,13 +17,13 @@
       "level_adjustment": ""
     },
     "size": "Medium",
-    "type": "Humanoid",
+    "type": "Humanoid (human)",
     "speed": "Land 30 ft.",
     "level_adjustment": null,
     "languages_html": "Common",
     "languages_text": "Common",
-    "description_html": "<p>Humans of the Alliance dominate much of Azeroth. They use the standard human racial traits from the Player's Handbook: +2 to any one ability score, Medium size, 30 ft. base speed, 1 extra feat at 1st level, 4 extra skill points at 1st level and 1 extra skill point per level thereafter, and any favored class. Bonus languages include regional tongues and any non-secret language.</p>",
-    "description_text": "Humans of the Alliance dominate much of Azeroth. They use the standard human racial traits from the Player's Handbook: +2 to any one ability score, Medium size, 30 ft. base speed, 1 extra feat at 1st level, 4 extra skill points at 1st level and 1 extra skill point per level thereafter, and any favored class. Bonus languages include regional tongues and any non-secret language."
+    "description_html": "<ul><li>Medium; base land speed 30 ft.</li><li>1 extra feat at 1st level.</li><li>4 extra skill points at 1st level and 1 extra skill point per level thereafter.</li><li>+2 racial bonus on saves vs. fear.</li><li>+2 racial bonus on <a href=\"/skills/diplomacy\">Diplomacy</a>, <a href=\"/skills/gather-information\">Gather Information</a>, and Knowledge (nobility and royalty); these are class skills for all humans.</li><li>+1 racial bonus on attack rolls against orcs.</li><li>Automatic Language: Common. Bonus: any unrestricted.</li><li>Favored Class: Any.</li></ul>",
+    "description_text": "Medium; base land speed 30 ft. 1 extra feat at 1st level. 4 extra skill points at 1st level and 1 extra skill point per level thereafter. +2 racial bonus on saves vs. fear. +2 racial bonus on Diplomacy, Gather Information, and Knowledge (nobility and royalty); these are class skills for all humans. +1 racial bonus on attack rolls against orcs. Automatic Language: Common. Bonus: any unrestricted. Favored Class: Any."
   },
   {
     "slug": "ironforge-dwarf-wrpg",
@@ -34,7 +34,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 14,
+      "page": 40,
       "url": null
     },
     "index": {
@@ -48,8 +48,8 @@
     "level_adjustment": null,
     "languages_html": "Common, Dwarven",
     "languages_text": "Common, Dwarven",
-    "description_html": "<p>Ironforge dwarves use PHB dwarf traits with these changes: +2 Constitution, −2 Charisma; darkvision 60 ft.; stonecunning; +2 racial bonus on Appraise and Craft checks related to stone or metal; +2 on saves vs. poison and spells; +1 attack vs. orcs and goblinoids; +4 dodge bonus vs. giants; +2 racial bonus on Listen checks; stability (+4 vs. bull rush/trip); +2 racial bonus on Craft (technological device) checks; proficiency with gunpowder weapons (blunderbuss, flintlock musket, long rifle treated as martial); Favored Class: Fighter. Racial trait — Stone Sense (Ex): +2 bonus on Search checks to notice unusual stonework and on Survival checks underground.</p>",
-    "description_text": "Ironforge dwarves use PHB dwarf traits with these changes: +2 Constitution, −2 Charisma; darkvision 60 ft.; stonecunning; +2 racial bonus on Appraise and Craft checks related to stone or metal; +2 on saves vs. poison and spells; +1 attack vs. orcs and goblinoids; +4 dodge bonus vs. giants; +2 racial bonus on Listen checks; stability (+4 vs. bull rush/trip); +2 racial bonus on Craft (technological device) checks; proficiency with gunpowder weapons (blunderbuss, flintlock musket, long rifle treated as martial); Favored Class: Fighter. Racial trait — Stone Sense (Ex): +2 bonus on Search checks to notice unusual stonework and on Survival checks underground."
+    "description_html": "<ul><li>+2 Constitution, −2 Charisma.</li><li>Medium; base land speed 20 ft.; darkvision 60 ft.</li><li>+4 stability vs. bull rush or trip when standing on the ground.</li><li>Stonecunning: +2 to notice unusual stonework; automatic Search within 10 ft.; can find stonework traps as a rogue; sense depth underground.</li><li>Stone Flesh (Su): 1/day as a free action, +2 natural armor for (Con modifier + character level) rounds; bonus increases by +1 at 6th level and every 6 levels thereafter.</li><li>Weapon familiarity: treat blunderbuss, long rifle, flintlock pistol, dwarven urgrosh, and dwarven waraxe as martial weapons.</li><li>+2 racial bonus on saves vs. poison; +1 attack vs. giants.</li><li>+2 racial bonus on <a href=\"/skills/appraise\">Appraise</a> and <a href=\"/skills/craft\">Craft</a> checks related to stone or metal, and on Craft checks related to gunsmithing (class skills for all Ironforge dwarves).</li><li>Automatic Languages: Common, Dwarven. Bonus: Gnome, Goblin, Orc, Thalassian.</li><li>Favored Class: <a href=\"/classes/fighter-wrpg\">Fighter</a>.</li></ul>",
+    "description_text": "+2 Constitution, −2 Charisma. Medium; base land speed 20 ft.; darkvision 60 ft. +4 stability vs. bull rush or trip when standing on the ground. Stonecunning: +2 to notice unusual stonework; automatic Search within 10 ft.; can find stonework traps as a rogue; sense depth underground. Stone Flesh (Su): 1/day as a free action, +2 natural armor for (Con modifier + character level) rounds; bonus increases by +1 at 6th level and every 6 levels thereafter. Weapon familiarity: treat blunderbuss, long rifle, flintlock pistol, dwarven urgrosh, and dwarven waraxe as martial weapons. +2 racial bonus on saves vs. poison; +1 attack vs. giants. +2 racial bonus on Appraise and Craft checks related to stone or metal, and on Craft checks related to gunsmithing (class skills for all Ironforge dwarves). Automatic Languages: Common, Dwarven. Bonus: Gnome, Goblin, Orc, Thalassian. Favored Class: Fighter."
   },
   {
     "slug": "high-elf-wrpg",
@@ -60,7 +60,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 16,
+      "page": 42,
       "url": null
     },
     "index": {
@@ -72,10 +72,10 @@
     "type": "Humanoid (elf)",
     "speed": "Land 30 ft.",
     "level_adjustment": "+1",
-    "languages_html": "Common, Elven",
-    "languages_text": "Common, Elven",
-    "description_html": "<p>High elves of the Alliance retain arcane tradition. +2 Dexterity, −2 Constitution; Medium; 30 ft.; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Listen, Search, Spot; automatic weapon proficiencies (longsword, rapier, longbow, shortbow); +2 racial bonus on Spellcraft and Knowledge (arcana); arcane cantrips (choose 0-level arcane spell, usable 1/day, caster level 1); +1 caster level with arcane spells; Magic Addiction (must cast arcane spells daily or suffer −1 penalty to ability checks, saves, and attack rolls, cumulative); Favored Class: Sorcerer or Wizard. Level Adjustment +1.</p>",
-    "description_text": "High elves of the Alliance retain arcane tradition. +2 Dexterity, −2 Constitution; Medium; 30 ft.; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Listen, Search, Spot; automatic weapon proficiencies (longsword, rapier, longbow, shortbow); +2 racial bonus on Spellcraft and Knowledge (arcana); arcane cantrips (choose 0-level arcane spell, usable 1/day, caster level 1); +1 caster level with arcane spells; Magic Addiction (must cast arcane spells daily or suffer −1 penalty to ability checks, saves, and attack rolls, cumulative); Favored Class: Sorcerer or Wizard. Level Adjustment +1."
+    "languages_html": "Common, Thalassian",
+    "languages_text": "Common, Thalassian",
+    "description_html": "<ul><li>+2 Dexterity, +2 Intelligence, −2 Constitution.</li><li>Medium; base land speed 30 ft.; low-light vision.</li><li>+2 racial bonus on saves vs. mind-affecting spells or effects.</li><li>Arcane Ability: with Int 10+, cast four 0-level sorcerer/wizard cantrips/day as a 1st-level sorcerer (any combination; subject to ASF).</li><li>+1 effective caster level with all arcane spellcasting classes (affects spell effects, not spells known/slots).</li><li>Empowered Magic: 1/day apply Empower Spell to a spell without raising the slot (declare before casting).</li><li>Magic Addiction: each morning must spend preparation-time resisting addiction or take −1 caster level and −2 on saves vs. spells; unnecessary within 50 ft. of a moon well (lingers Wis modifier days after leaving).</li><li>−2 circumstance penalty on Charisma-based checks vs. night elves and tauren.</li><li>Martial Weapon Proficiency: longbow, composite longbow, and either short sword or rapier.</li><li>+2 racial bonus on <a href=\"/skills/concentration\">Concentration</a>, Knowledge (arcana), and <a href=\"/skills/spellcraft\">Spellcraft</a> (class skills for all high elves).</li><li>Automatic Languages: Common, Thalassian. Bonus: Darnassian, Dwarven, Goblin, Kalimdoran, Orc.</li><li>Favored Class: <a href=\"/classes/sorcerer-wrpg\">Sorcerer</a> or <a href=\"/classes/wizard-wrpg\">Wizard</a> (choose at creation). Level Adjustment +1.</li></ul>",
+    "description_text": "+2 Dexterity, +2 Intelligence, −2 Constitution. Medium; base land speed 30 ft.; low-light vision. +2 racial bonus on saves vs. mind-affecting spells or effects. Arcane Ability: with Int 10+, cast four 0-level sorcerer/wizard cantrips/day as a 1st-level sorcerer (any combination; subject to ASF). +1 effective caster level with all arcane spellcasting classes (affects spell effects, not spells known/slots). Empowered Magic: 1/day apply Empower Spell to a spell without raising the slot (declare before casting). Magic Addiction: each morning must spend preparation-time resisting addiction or take −1 caster level and −2 on saves vs. spells; unnecessary within 50 ft. of a moon well (lingers Wis modifier days after leaving). −2 circumstance penalty on Charisma-based checks vs. night elves and tauren. Martial Weapon Proficiency: longbow, composite longbow, and either short sword or rapier. +2 racial bonus on Concentration, Knowledge (arcana), and Spellcraft (class skills for all high elves). Automatic Languages: Common, Thalassian. Bonus: Darnassian, Dwarven, Goblin, Kalimdoran, Orc. Favored Class: Sorcerer or Wizard (choose at creation). Level Adjustment +1."
   },
   {
     "slug": "night-elf-wrpg",
@@ -86,7 +86,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 18,
+      "page": 44,
       "url": null
     },
     "index": {
@@ -100,8 +100,8 @@
     "level_adjustment": "+1",
     "languages_html": "Common, Darnassian",
     "languages_text": "Common, Darnassian",
-    "description_html": "<p>Night elves shun arcane magic. +2 Dexterity, −2 Intelligence; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Hide, Listen, Search, Spot; weapon proficiencies (longsword, scimitar, longbow, shortbow); +2 Move Silently; Shadowmeld (Ex): +4 Hide in shadowy areas; Weapon Focus (longbow) at 1st level; no arcane spellcasting — a night elf who takes levels in an arcane class becomes a high elf racially; Favored Class: Scout. Level Adjustment +1.</p>",
-    "description_text": "Night elves shun arcane magic. +2 Dexterity, −2 Intelligence; immunity to magic sleep; +2 vs. enchantments; low-light vision; +2 Hide, Listen, Search, Spot; weapon proficiencies (longsword, scimitar, longbow, shortbow); +2 Move Silently; Shadowmeld (Ex): +4 Hide in shadowy areas; Weapon Focus (longbow) at 1st level; no arcane spellcasting — a night elf who takes levels in an arcane class becomes a high elf racially; Favored Class: Scout. Level Adjustment +1."
+    "description_html": "<ul><li>+2 Wisdom, −2 Intelligence.</li><li>Medium; base land speed 30 ft.</li><li>Superior low-light vision (3× human distance in poor light).</li><li>Cold resistance 1 and fire resistance 1.</li><li>Shadowmeld (Ex): +10 circumstance bonus on Hide when motionless in night or low-light conditions.</li><li>Spell resistance 5 + character level.</li><li>Weapon familiarity: treat moonglaive as a martial weapon.</li><li>+2 racial bonus on Knowledge (nature) and <a href=\"/skills/survival\">Survival</a> (class skills for all night elves).</li><li>Automatic Languages: Common, Darnassian. Bonus: Goblin, Low Common, Orc, Thalassian.</li><li>Favored Class: <a href=\"/classes/scout-wrpg\">Scout</a>.</li><li>Arcane prohibition: gaining a level in an arcane spellcasting class irreversibly transforms the character into a <a href=\"/races/high-elf-wrpg\">high elf</a> over one week (lose night elf traits). Level Adjustment +1.</li></ul>",
+    "description_text": "+2 Wisdom, −2 Intelligence. Medium; base land speed 30 ft. Superior low-light vision (3× human distance in poor light). Cold resistance 1 and fire resistance 1. Shadowmeld (Ex): +10 circumstance bonus on Hide when motionless in night or low-light conditions. Spell resistance 5 + character level. Weapon familiarity: treat moonglaive as a martial weapon. +2 racial bonus on Knowledge (nature) and Survival (class skills for all night elves). Automatic Languages: Common, Darnassian. Bonus: Goblin, Low Common, Orc, Thalassian. Favored Class: Scout. Arcane prohibition: gaining a level in an arcane spellcasting class irreversibly transforms the character into a high elf over one week (lose night elf traits). Level Adjustment +1."
   },
   {
     "slug": "goblin-wrpg",
@@ -112,7 +112,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 20,
+      "page": 46,
       "url": null
     },
     "index": {
@@ -122,12 +122,12 @@
     },
     "size": "Small",
     "type": "Humanoid (goblinoid)",
-    "speed": "Land 30 ft.",
+    "speed": "Land 20 ft.",
     "level_adjustment": null,
     "languages_html": "Common, Goblin",
     "languages_text": "Common, Goblin",
-    "description_html": "<p>Small goblins excel at technology and craft. −2 Strength, +2 Dexterity, −2 Charisma; Small size (+1 AC, +1 attack, −4 Grapple, +4 Hide); 30 ft.; darkvision 60 ft.; +4 Move Silently; +2 Craft (technological device) and Use Technological Device; +2 Appraise (technological items); Favored Class: Tinker.</p>",
-    "description_text": "Small goblins excel at technology and craft. −2 Strength, +2 Dexterity, −2 Charisma; Small size (+1 AC, +1 attack, −4 Grapple, +4 Hide); 30 ft.; darkvision 60 ft.; +4 Move Silently; +2 Craft (technological device) and Use Technological Device; +2 Appraise (technological items); Favored Class: Tinker."
+    "description_html": "<ul><li>+2 Dexterity, −2 Strength.</li><li>Small: +1 AC, +1 attack, +4 Hide; use smaller weapons; carry 3/4 of Medium limits.</li><li>Base land speed 20 ft.; low-light vision.</li><li>+2 racial bonus on <a href=\"/skills/appraise\">Appraise</a>, Craft (alchemy), <a href=\"/skills/diplomacy\">Diplomacy</a>, and <a href=\"/skills/listen\">Listen</a> (class skills for all goblins).</li><li>+4 racial bonus on Craft (mechanical devices).</li><li>Weapon familiarity: treat blunderbuss, flintlock pistol, and long rifle as martial weapons.</li><li>Automatic Languages: Common, Goblin. Bonus: any unrestricted.</li><li>Favored Class: <a href=\"/classes/tinker-wrpg\">Tinker</a>.</li></ul>",
+    "description_text": "+2 Dexterity, −2 Strength. Small: +1 AC, +1 attack, +4 Hide; use smaller weapons; carry 3/4 of Medium limits. Base land speed 20 ft.; low-light vision. +2 racial bonus on Appraise, Craft (alchemy), Diplomacy, and Listen (class skills for all goblins). +4 racial bonus on Craft (mechanical devices). Weapon familiarity: treat blunderbuss, flintlock pistol, and long rifle as martial weapons. Automatic Languages: Common, Goblin. Bonus: any unrestricted. Favored Class: Tinker."
   },
   {
     "slug": "half-elf-wrpg",
@@ -138,7 +138,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 22,
+      "page": 48,
       "url": null
     },
     "index": {
@@ -150,10 +150,10 @@
     "type": "Humanoid (elf)",
     "speed": "Land 30 ft.",
     "level_adjustment": null,
-    "languages_html": "Common, Elven",
-    "languages_text": "Common, Elven",
-    "description_html": "<p>Half-elves bridge human and elven cultures. +2 to any one ability score; immunity to magic sleep; +2 vs. enchantments; low-light vision; +1 Listen, Search, Spot; any favored class. Standard PHB half-elf traits adapted for the Alliance.</p>",
-    "description_text": "Half-elves bridge human and elven cultures. +2 to any one ability score; immunity to magic sleep; +2 vs. enchantments; low-light vision; +1 Listen, Search, Spot; any favored class. Standard PHB half-elf traits adapted for the Alliance."
+    "languages_html": "Common, Thalassian",
+    "languages_text": "Common, Thalassian",
+    "description_html": "<ul><li>Medium; base land speed 30 ft.; low-light vision.</li><li>Elven Blood: counted as a high elf for effects and prerequisites (no high-elf arcane ability or addiction).</li><li>+1 racial bonus on saves vs. spells and spell-like effects.</li><li>+2 racial bonus on <a href=\"/skills/gather-information\">Gather Information</a> and <a href=\"/skills/sense-motive\">Sense Motive</a> (class skills for all half-elves).</li><li>Automatic Languages: Common, Thalassian. Bonus: any unrestricted.</li><li>Favored Class: Any.</li><li>Optional half-night elf: treated as night elf for special abilities; automatic language Darnassian instead of Thalassian.</li></ul>",
+    "description_text": "Medium; base land speed 30 ft.; low-light vision. Elven Blood: counted as a high elf for effects and prerequisites (no high-elf arcane ability or addiction). +1 racial bonus on saves vs. spells and spell-like effects. +2 racial bonus on Gather Information and Sense Motive (class skills for all half-elves). Automatic Languages: Common, Thalassian. Bonus: any unrestricted. Favored Class: Any. Optional half-night elf: treated as night elf for special abilities; automatic language Darnassian instead of Thalassian."
   },
   {
     "slug": "half-orc-wrpg",
@@ -164,7 +164,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 24,
+      "page": 49,
       "url": null
     },
     "index": {
@@ -178,8 +178,8 @@
     "level_adjustment": null,
     "languages_html": "Common, Orc",
     "languages_text": "Common, Orc",
-    "description_html": "<p>+2 Strength, −2 Intelligence, −2 Charisma; darkvision 60 ft.; treated as orc for all racial effects, prerequisites, and favored enemies; Favored Class: Barbarian. Standard PHB half-orc traits.</p>",
-    "description_text": "+2 Strength, −2 Intelligence, −2 Charisma; darkvision 60 ft.; treated as orc for all racial effects, prerequisites, and favored enemies; Favored Class: Barbarian. Standard PHB half-orc traits."
+    "description_html": "<ul><li>+2 Constitution, −2 Wisdom.</li><li>Medium; base land speed 30 ft.; low-light vision.</li><li>Orc Blood: counted as an orc for effects and prerequisites.</li><li>+1 racial bonus on saves vs. fear.</li><li>+2 racial bonus on <a href=\"/skills/intimidate\">Intimidate</a> and <a href=\"/skills/sense-motive\">Sense Motive</a> (class skills for all half-orcs).</li><li>Automatic Languages: Common, Orc. Bonus: any unrestricted.</li><li>Favored Class: <a href=\"/classes/barbarian-wrpg\">Barbarian</a>.</li></ul>",
+    "description_text": "+2 Constitution, −2 Wisdom. Medium; base land speed 30 ft.; low-light vision. Orc Blood: counted as an orc for effects and prerequisites. +1 racial bonus on saves vs. fear. +2 racial bonus on Intimidate and Sense Motive (class skills for all half-orcs). Automatic Languages: Common, Orc. Bonus: any unrestricted. Favored Class: Barbarian."
   },
   {
     "slug": "orc-wrpg",
@@ -190,7 +190,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 26,
+      "page": 50,
       "url": null
     },
     "index": {
@@ -204,8 +204,8 @@
     "level_adjustment": null,
     "languages_html": "Common, Orc",
     "languages_text": "Common, Orc",
-    "description_html": "<p>Horde orcs are fierce warriors. +4 Strength, −2 Intelligence, −2 Wisdom, −2 Charisma; Medium; 30 ft.; darkvision 60 ft.; Battle Fury (Ex): once per day when reduced below half hit points, gain +2 Strength and +1 morale bonus on saves vs. fear for 1 minute; proficiency with orc attack claws; Favored Class: Fighter.</p>",
-    "description_text": "Horde orcs are fierce warriors. +4 Strength, −2 Intelligence, −2 Wisdom, −2 Charisma; Medium; 30 ft.; darkvision 60 ft.; Battle Fury (Ex): once per day when reduced below half hit points, gain +2 Strength and +1 morale bonus on saves vs. fear for 1 minute; proficiency with orc attack claws; Favored Class: Fighter."
+    "description_html": "<ul><li>+2 Constitution, −2 Intelligence.</li><li>Medium; base land speed 30 ft.; low-light vision.</li><li>Battle Rage (Ex): rage 1/day as a barbarian (PHB); if the character already has rage, this grants one extra rage/day; still limited to once per encounter.</li><li>Weapon familiarity: treat orcish claws of attack as martial weapons; Martial Weapon Proficiency (battleaxe).</li><li>+2 racial bonus on Handle Animal checks involving wolves and on Intimidate (class skills for all orcs).</li><li>+1 racial bonus on attack rolls against humans.</li><li>Automatic Languages: Common, Orc. Bonus: Goblin, Low Common, Taur-ahe.</li><li>Favored Class: <a href=\"/classes/fighter-wrpg\">Fighter</a>.</li></ul>",
+    "description_text": "+2 Constitution, −2 Intelligence. Medium; base land speed 30 ft.; low-light vision. Battle Rage (Ex): rage 1/day as a barbarian (PHB); if the character already has rage, this grants one extra rage/day; still limited to once per encounter. Weapon familiarity: treat orcish claws of attack as martial weapons; Martial Weapon Proficiency (battleaxe). +2 racial bonus on Handle Animal checks involving wolves and on Intimidate (class skills for all orcs). +1 racial bonus on attack rolls against humans. Automatic Languages: Common, Orc. Bonus: Goblin, Low Common, Taur-ahe. Favored Class: Fighter."
   },
   {
     "slug": "tauren-wrpg",
@@ -216,7 +216,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 28,
+      "page": 52,
       "url": null
     },
     "index": {
@@ -226,11 +226,11 @@
     },
     "size": "Large",
     "type": "Humanoid (tauren)",
-    "speed": "Land 40 ft.",
+    "speed": "Land 30 ft.",
     "level_adjustment": "+1",
     "languages_html": "Common, Taur-ahe",
     "languages_text": "Common, Taur-ahe",
-    "description_html": "<p>Large tauren warriors of the Horde. +2 Strength, +2 Constitution, −2 Dexterity; Large (−1 AC, −1 attack, +4 Grapple, −4 Hide); 40 ft.; +2 natural armor; Powerful Charge (Ex): deal 2d6 + 1½ Str gore on charge; +2 Handle Animal and Survival; weapon proficiencies (tauren polearm, tauren totem); Favored Class: Fighter. Level Adjustment +1.</p>",
-    "description_text": "Large tauren warriors of the Horde. +2 Strength, +2 Constitution, −2 Dexterity; Large (−1 AC, −1 attack, +4 Grapple, −4 Hide); 40 ft.; +2 natural armor; Powerful Charge (Ex): deal 2d6 + 1½ Str gore on charge; +2 Handle Animal and Survival; weapon proficiencies (tauren polearm, tauren totem); Favored Class: Fighter. Level Adjustment +1."
+    "description_html": "<ul><li>+4 Strength, +2 Constitution, −2 Dexterity.</li><li>Large (tall): −1 AC, −1 attack, −4 Hide; 10-ft. space and reach; double Medium carrying capacity.</li><li>Base land speed 30 ft.</li><li>Tauren Charge: on a charge, gore for 1d8 + 1½ Str; may ready horns vs. a charge for the same damage.</li><li>Weapon familiarity: treat tauren halberd and tauren totem as martial weapons; Martial Weapon Proficiency (longspear, shortspear).</li><li>+2 racial bonus on <a href=\"/skills/handle-animal\">Handle Animal</a> and <a href=\"/skills/survival\">Survival</a> (class skills for all tauren).</li><li>+1 racial bonus on attack rolls with longspears and shortspears.</li><li>Automatic Languages: Common, Taur-ahe. Bonus: Goblin, Low Common, Orc.</li><li>Favored Class: <a href=\"/classes/fighter-wrpg\">Fighter</a>. Level Adjustment +1.</li></ul>",
+    "description_text": "+4 Strength, +2 Constitution, −2 Dexterity. Large (tall): −1 AC, −1 attack, −4 Hide; 10-ft. space and reach; double Medium carrying capacity. Base land speed 30 ft. Tauren Charge: on a charge, gore for 1d8 + 1½ Str; may ready horns vs. a charge for the same damage. Weapon familiarity: treat tauren halberd and tauren totem as martial weapons; Martial Weapon Proficiency (longspear, shortspear). +2 racial bonus on Handle Animal and Survival (class skills for all tauren). +1 racial bonus on attack rolls with longspears and shortspears. Automatic Languages: Common, Taur-ahe. Bonus: Goblin, Low Common, Orc. Favored Class: Fighter. Level Adjustment +1."
   }
 ]

@@ -71,6 +71,6 @@ export const config = {
      * - favicon, robots, sitemap chunks (/sitemap/N.xml)
      * - common static image extensions
      */
-    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap/|ws/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

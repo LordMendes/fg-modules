@@ -1,30 +1,11 @@
 "use client";
 
+import type { LiveSend } from "@/lib/campaign/liveClient";
 import {
-  addDrawing,
-  addFogRegion,
-  addOccluder,
-  broadcastMapTokenMove,
-  clearDrawings,
-  commitMapTokenMove,
-  deleteDrawing,
-  removeFogRegion,
-  removeMapToken,
-  resetFog,
-  sendMapPing,
-  sendMapViewportGoTo,
-  setFogEnabled,
-  setLightingEnabled,
-  setLosEnabled,
-  setDaylight,
-  setTokenEmitsLight,
-  setTokenLayer,
-  setTokenVisibility,
-  setDoorState,
-  updateCampaignMapGrid,
-  updateDrawing,
-  upsertMapLight,
-} from "@/actions/maps";
+  type Camera,
+  fitCameraToImage,
+  zoomAtScreenPoint,
+} from "@/lib/map/camera";
 import { snapSizeFeet } from "@/lib/map/distance";
 import type { GridConfig } from "@/lib/map/grid";
 import {
@@ -51,13 +32,9 @@ import {
   useState,
 } from "react";
 import { MapDrawLayer } from "./map-draw-layer";
-import { MapFogLayer } from "./map-fog-layer";
-import { MapGridOverlay } from "./map-grid-overlay";
-import { MapMeasure } from "./map-measure";
-import { MapPingLayer, type MapPing } from "./map-ping-layer";
 import { MapToken } from "./map-token";
 import { MapToolbar } from "./map-toolbar";
-import { MapVisionLayer } from "./map-vision-layer";
+import { MapViewportOverlay } from "./map-viewport-overlay";
 
 const MIN_SCALE = 0.15;
 const MAX_SCALE = 4;
@@ -66,7 +43,9 @@ const DAYLIGHT_DEBOUNCE_MS = 150;
 
 const MemoMapToken = memo(MapToken);
 
-type ViewportState = { x: number; y: number; scale: number };
+export type MapPing = { id: string; x: number; y: number; color: string };
+
+type ViewportState = Camera;
 
 type UndoEntry =
   | { type: "drawingCreate"; drawingId: string }
@@ -95,6 +74,8 @@ type CampaignMapBoardProps = {
   extraPings?: MapPing[];
   aoePointers?: MapAoePointerView[];
   viewportGoTo?: { x: number; y: number } | null;
+  sendLive: LiveSend;
+  connected: boolean;
 };
 
 function viewportKey(campaignId: string) {
@@ -128,6 +109,16 @@ function randomId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+function simplifyStroke(points: MapPoint[], maxPoints = 200): MapPoint[] {
+  if (points.length <= maxPoints) return points;
+  const out: MapPoint[] = [];
+  const step = (points.length - 1) / (maxPoints - 1);
+  for (let i = 0; i < maxPoints; i++) {
+    out.push(points[Math.round(i * step)]!);
+  }
+  return out;
+}
+
 export function CampaignMapBoard({
   campaignId,
   map,
@@ -138,6 +129,8 @@ export function CampaignMapBoard({
   extraPings = [],
   aoePointers: _aoePointers = [],
   viewportGoTo,
+  sendLive,
+  connected,
 }: CampaignMapBoardProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -185,6 +178,49 @@ export function CampaignMapBoard({
   >({});
   const [localDaylight, setLocalDaylight] = useState(map.daylight);
   const localDaylightRef = useRef(map.daylight);
+  const [displayImageUrl, setDisplayImageUrl] = useState(map.imageUrl);
+
+  // Downsample huge map bitmaps for display (coords still use imageWidth/Height).
+  useEffect(() => {
+    let cancelled = false;
+    const MAX_EDGE = 4096;
+    void (async () => {
+      try {
+        const img = new Image();
+        img.decoding = "async";
+        img.src = map.imageUrl;
+        await img.decode();
+        if (cancelled) return;
+        const edge = Math.max(img.naturalWidth, img.naturalHeight);
+        if (edge <= MAX_EDGE || !img.naturalWidth) {
+          setDisplayImageUrl(map.imageUrl);
+          return;
+        }
+        const scale = MAX_EDGE / edge;
+        const w = Math.max(1, Math.round(img.naturalWidth * scale));
+        const h = Math.max(1, Math.round(img.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          setDisplayImageUrl(map.imageUrl);
+          return;
+        }
+        ctx.drawImage(img, 0, 0, w, h);
+        setDisplayImageUrl(canvas.toDataURL("image/webp", 0.82));
+      } catch {
+        if (!cancelled) setDisplayImageUrl(map.imageUrl);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [map.imageUrl]);
+  const [paintNonce, setPaintNonce] = useState(0);
+  const bumpPaint = useCallback(() => {
+    setPaintNonce((n) => n + 1);
+  }, []);
   const undoStackRef = useRef<UndoEntry[]>([]);
   const dragRef = useRef<{
     tokenId: string;
@@ -285,21 +321,6 @@ export function CampaignMapBoard({
     );
   }, [displayTokens, isDm, selectedTokenId, viewerUserId]);
 
-  const tokenLights = useMemo(
-    () =>
-      displayTokens.map((t) => ({
-        x: t.x,
-        y: t.y,
-        width: t.width,
-        height: t.height,
-        emitsLight: t.emitsLight,
-        lightBright: t.lightBright,
-        lightDim: t.lightDim,
-        visionRange: t.visionRange,
-      })),
-    [displayTokens],
-  );
-
   const displayDrawings = useMemo(() => {
     return map.drawings.map((d) => {
       const g = localDrawingGeom[d.id];
@@ -347,16 +368,13 @@ export function CampaignMapBoard({
   const fitView = useCallback(() => {
     const el = viewportRef.current;
     if (!el) return;
-    const pad = 32;
-    const vw = el.clientWidth - pad * 2;
-    const vh = el.clientHeight - pad * 2;
-    const scale = Math.min(
-      MAX_SCALE,
-      Math.max(MIN_SCALE, Math.min(vw / map.imageWidth, vh / map.imageHeight)),
+    const next = fitCameraToImage(
+      el.clientWidth,
+      el.clientHeight,
+      map.imageWidth,
+      map.imageHeight,
     );
-    const x = (el.clientWidth - map.imageWidth * scale) / 2;
-    const y = (el.clientHeight - map.imageHeight * scale) / 2;
-    commitViewport({ x, y, scale });
+    commitViewport(next);
   }, [commitViewport, map.imageWidth, map.imageHeight]);
 
   useEffect(() => {
@@ -450,7 +468,7 @@ export function CampaignMapBoard({
         const entry = undoStackRef.current.pop();
         if (!entry) return;
         if (entry.type === "drawingCreate") {
-          void deleteDrawing(campaignId, map.id, entry.drawingId);
+          sendLive({ type: "mapDrawingRemove", drawingId: entry.drawingId });
           if (selectedDrawingId === entry.drawingId) {
             setSelectedDrawingId(null);
           }
@@ -459,11 +477,13 @@ export function CampaignMapBoard({
             ...prev,
             [entry.drawingId]: entry.prevGeom,
           }));
-          void updateDrawing(campaignId, map.id, entry.drawingId, {
+          sendLive({
+            type: "mapDrawingUpsert",
+            drawingId: entry.drawingId,
             geom: entry.prevGeom,
           });
         } else if (entry.type === "fogCreate") {
-          void removeFogRegion(campaignId, map.id, entry.regionId);
+          sendLive({ type: "mapFogRemove", regionId: entry.regionId });
         }
         return;
       }
@@ -473,7 +493,7 @@ export function CampaignMapBoard({
           const d = map.drawings.find((x) => x.id === selectedDrawingId);
           if (d && canEditDrawing(d)) {
             e.preventDefault();
-            void deleteDrawing(campaignId, map.id, selectedDrawingId);
+            sendLive({ type: "mapDrawingRemove", drawingId: selectedDrawingId });
             setSelectedDrawingId(null);
           }
         }
@@ -514,14 +534,14 @@ export function CampaignMapBoard({
       ny = snapped.y;
       const seq = token.seq + 1;
       updateTokenLocal(token.id, nx, ny, seq);
-      void commitMapTokenMove(
-        campaignId,
-        token.id,
-        nx,
-        ny,
-        token.rotation,
+      sendLive({
+        type: "tokenMoveCommit",
+        tokenId: token.id,
+        x: nx,
+        y: ny,
+        rotation: token.rotation,
         seq,
-      );
+      });
     }
     function onKeyUp(e: KeyboardEvent) {
       if (e.code === "Space") setSpacePan(false);
@@ -544,6 +564,7 @@ export function CampaignMapBoard({
     snap,
     canEditDrawing,
     updateTokenLocal,
+    sendLive,
   ]);
 
   const handleDaylightChange = useCallback(
@@ -553,10 +574,10 @@ export function CampaignMapBoard({
       if (daylightTimerRef.current) clearTimeout(daylightTimerRef.current);
       daylightTimerRef.current = setTimeout(() => {
         daylightTimerRef.current = null;
-        void setDaylight(campaignId, map.id, value);
+        sendLive({ type: "mapFlags", daylight: value });
       }, DAYLIGHT_DEBOUNCE_MS);
     },
-    [campaignId, map.id],
+    [sendLive],
   );
 
   useEffect(() => {
@@ -592,9 +613,9 @@ export function CampaignMapBoard({
 
     if (tool === "ping") {
       if (e.shiftKey && isDm) {
-        void sendMapViewportGoTo(campaignId, pt.x, pt.y);
+        sendLive({ type: "mapViewportGoTo", x: pt.x, y: pt.y });
       } else {
-        void sendMapPing(campaignId, pt.x, pt.y);
+        sendLive({ type: "mapPing", x: pt.x, y: pt.y });
         addPing(pt.x, pt.y, userColor(viewerUserId));
       }
       return;
@@ -616,15 +637,14 @@ export function CampaignMapBoard({
           Math.abs(px.y - calibrateStartPx.y),
         );
         if (size > 0) {
-          void updateCampaignMapGrid(
-            campaignId,
-            map.id,
-            size,
-            calibrateStartPx.x,
-            calibrateStartPx.y,
-            map.scaleFeet,
-            map.diagonalRule,
-          );
+          sendLive({
+            type: "mapGrid",
+            gridSizePx: size,
+            gridOffsetX: calibrateStartPx.x,
+            gridOffsetY: calibrateStartPx.y,
+            scaleFeet: map.scaleFeet,
+            diagonalRule: map.diagonalRule,
+          });
         }
         setCalibrateStartPx(null);
       }
@@ -650,14 +670,17 @@ export function CampaignMapBoard({
     }
 
     if (tool === "light" && isDm) {
-      void upsertMapLight(campaignId, map.id, {
-        x: pt.x,
-        y: pt.y,
-        brightFeet: 20,
-        dimFeet: 20,
-        color: "#ffcc66",
-        enabled: true,
-        mode: "light",
+      sendLive({
+        type: "mapLightUpsert",
+        light: {
+          x: pt.x,
+          y: pt.y,
+          brightFeet: 20,
+          dimFeet: 20,
+          color: "#ffcc66",
+          enabled: true,
+          mode: "light",
+        },
       });
       return;
     }
@@ -786,7 +809,11 @@ export function CampaignMapBoard({
         drawingId: d.drawingId,
         prevGeom: d.origGeom,
       });
-      void updateDrawing(campaignId, map.id, d.drawingId, { geom });
+      sendLive({
+        type: "mapDrawingUpsert",
+        drawingId: d.drawingId,
+        geom,
+      });
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
       } catch {
@@ -812,11 +839,9 @@ export function CampaignMapBoard({
       setPolygonDraft([]);
       if (pts.length >= 3) {
         const kind = tool === "fogHide" ? "hide" : "reveal";
-        void addFogRegion(campaignId, map.id, kind, pts).then((res) => {
-          if (res.success && res.region) {
-            pushUndo({ type: "fogCreate", regionId: res.region.id });
-          }
-        });
+        const regionId = randomId().slice(0, 24);
+        pushUndo({ type: "fogCreate", regionId });
+        sendLive({ type: "mapFogUpsert", regionId, kind, points: pts });
       }
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -827,13 +852,13 @@ export function CampaignMapBoard({
     }
 
     if (drawDraft.length >= 2) {
-      void addDrawing(campaignId, map.id, {
+      const drawingId = randomId().slice(0, 24);
+      pushUndo({ type: "drawingCreate", drawingId });
+      sendLive({
+        type: "mapDrawingUpsert",
+        drawingId,
         kind: "stroke",
-        stroke: drawDraft,
-      }).then((res) => {
-        if (res.success && res.drawing) {
-          pushUndo({ type: "drawingCreate", drawingId: res.drawing.id });
-        }
+        stroke: simplifyStroke(drawDraft),
       });
       setDrawDraft([]);
       try {
@@ -862,7 +887,12 @@ export function CampaignMapBoard({
         aoeDraft.kind === "cone"
           ? (Math.atan2(dy, dx) * 180) / Math.PI
           : 0;
-      void addDrawing(campaignId, map.id, {
+      const drawingId = randomId().slice(0, 24);
+      pushUndo({ type: "drawingCreate", drawingId });
+      setSelectedDrawingId(drawingId);
+      sendLive({
+        type: "mapDrawingUpsert",
+        drawingId,
         kind: aoeDraft.kind,
         geom: {
           x: aoeDraft.origin.x,
@@ -870,11 +900,6 @@ export function CampaignMapBoard({
           sizeFeet,
           rotation,
         },
-      }).then((res) => {
-        if (res.success && res.drawing) {
-          pushUndo({ type: "drawingCreate", drawingId: res.drawing.id });
-          setSelectedDrawingId(res.drawing.id);
-        }
       });
       setAoeDraft(null);
       try {
@@ -898,18 +923,19 @@ export function CampaignMapBoard({
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
     const live = viewportLiveRef.current;
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    const newScale = Math.min(
+    const factor = e.deltaY > 0 ? 0.9 : 1.1;
+    const next = zoomAtScreenPoint(
+      live,
+      mx,
+      my,
+      factor,
+      MIN_SCALE,
       MAX_SCALE,
-      Math.max(MIN_SCALE, live.scale * delta),
     );
-    const wx = (mx - live.x) / live.scale;
-    const wy = (my - live.y) / live.scale;
-    commitViewport({
-      scale: newScale,
-      x: mx - wx * newScale,
-      y: my - wy * newScale,
-    });
+    applyWorldTransform(next);
+    // Debounce React commit for zoom.
+    commitViewport(next);
+    bumpPaint();
   };
 
   const handleTokenPointerDown = (
@@ -963,14 +989,14 @@ export function CampaignMapBoard({
     const now = Date.now();
     if (now - d.lastBroadcast >= MOVE_THROTTLE_MS) {
       d.lastBroadcast = now;
-      void broadcastMapTokenMove(
-        campaignId,
-        d.tokenId,
-        nx,
-        ny,
-        token.rotation,
-        d.seq,
-      );
+      sendLive({
+        type: "tokenMove",
+        tokenId: d.tokenId,
+        x: nx,
+        y: ny,
+        rotation: token.rotation,
+        seq: d.seq,
+      });
     }
   };
 
@@ -980,14 +1006,14 @@ export function CampaignMapBoard({
   ) => {
     if (!dragRef.current || dragRef.current.tokenId !== token.id) return;
     const d = dragRef.current;
-    void commitMapTokenMove(
-      campaignId,
-      d.tokenId,
-      d.x,
-      d.y,
-      token.rotation,
-      d.seq,
-    );
+    sendLive({
+      type: "tokenMoveCommit",
+      tokenId: d.tokenId,
+      x: d.x,
+      y: d.y,
+      rotation: token.rotation,
+      seq: d.seq,
+    });
     dragRef.current = null;
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -1011,7 +1037,10 @@ export function CampaignMapBoard({
       }
       return changed ? next : prev;
     });
-  }, [map.tokens]);
+    // Depend on token identity/seq, not the array reference (live store
+    // may allocate a new tokens array each structural update).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
   const handleTokenClick = (e: React.MouseEvent, token: MapTokenView) => {
     if (tool !== "select") return;
@@ -1073,25 +1102,76 @@ export function CampaignMapBoard({
       return;
     }
     const kind = tool === "door" ? "door" : "wall";
-    void addOccluder(campaignId, map.id, kind, polylineDraft);
+    sendLive({
+      type: "mapOccluderUpsert",
+      kind,
+      points: polylineDraft,
+    });
     setPolylineDraft([]);
   };
 
   const measureColor = userColor(viewerUserId);
   const activeMeasure = measureDraft.length >= 2 ? measureDraft : measurePoints;
+  const mapForOverlay = useMemo(
+    () => ({
+      ...map,
+      daylight: localDaylight,
+      drawings: displayDrawings,
+      tokens: displayTokens,
+    }),
+    [map, localDaylight, displayDrawings, displayTokens],
+  );
+
+  // Expire local pings.
+  useEffect(() => {
+    if (localPings.length === 0) return;
+    const timers = localPings.map((p) =>
+      window.setTimeout(() => {
+        setLocalPings((prev) => prev.filter((x) => x.id !== p.id));
+      }, 2000),
+    );
+    return () => {
+      for (const t of timers) window.clearTimeout(t);
+    };
+  }, [localPings]);
 
   return (
     <div className="campaign-map-board">
+      {!connected ? (
+        <div className="campaign-map-reconnect" role="status">
+          Reconnecting to live map…
+        </div>
+      ) : null}
       <div
         ref={viewportRef}
         className="campaign-map-viewport"
         onWheel={handleWheel}
         onPointerDown={handleBoardPointerDown}
-        onPointerMove={handleBoardPointerMove}
+        onPointerMove={(e) => {
+          handleBoardPointerMove(e);
+          if (panRef.current) bumpPaint();
+        }}
         onPointerUp={handleBoardPointerUp}
         onPointerLeave={handleBoardPointerUp}
         onContextMenu={(e) => e.preventDefault()}
       >
+        <MapViewportOverlay
+          camera={viewport}
+          map={mapForOverlay}
+          grid={grid}
+          isDm={isDm}
+          viewerUserId={viewerUserId}
+          viewerTokens={viewerTokens}
+          tokens={displayTokens}
+          gridVisible={gridVisible}
+          pings={allPings}
+          measurePoints={activeMeasure}
+          measureColor={measureColor}
+          polygonDraft={polygonDraft}
+          polylineDraft={polylineDraft}
+          paintNonce={paintNonce}
+        />
+
         <div
           ref={worldRef}
           className="campaign-map-world"
@@ -1102,44 +1182,11 @@ export function CampaignMapBoard({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="campaign-map-image"
-            src={map.imageUrl}
+            src={displayImageUrl}
             alt={map.name}
             width={map.imageWidth}
             height={map.imageHeight}
             draggable={false}
-          />
-
-          <MapGridOverlay
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
-            gridSizePx={map.gridSizePx}
-            gridOffsetX={map.gridOffsetX}
-            gridOffsetY={map.gridOffsetY}
-            visible={gridVisible}
-          />
-
-          <MapFogLayer
-            fogEnabled={map.fogEnabled}
-            fogRegions={map.fogRegions}
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
-            isDm={isDm}
-            grid={grid}
-          />
-
-          <MapVisionLayer
-            isDm={isDm}
-            losEnabled={map.losEnabled}
-            lightingEnabled={map.lightingEnabled}
-            daylight={localDaylight}
-            scaleFeet={map.scaleFeet}
-            occluders={map.occluders}
-            lights={map.lights}
-            tokenLights={tokenLights}
-            viewerTokens={viewerTokens}
-            grid={grid}
-            imageWidth={map.imageWidth}
-            imageHeight={map.imageHeight}
           />
 
           <MapDrawLayer
@@ -1164,105 +1211,64 @@ export function CampaignMapBoard({
                   }
                 : null
             }
-            canEditDrawing={(d) => tool === "select" && canEditDrawing(d)}
+            canEditDrawing={canEditDrawing}
             onSelectDrawing={(id) => {
-              if (tool !== "select") return;
               setSelectedDrawingId(id);
-              if (id) setSelectedTokenId(null);
+              setSelectedTokenId(null);
             }}
             onShapePointerDown={handleShapePointerDown}
           />
 
+          {/* Door handles only (interactive); walls drawn on viewport canvas. */}
           <svg
             className="map-occluder-layer map-occluder-layer--interactive"
             width={map.imageWidth}
             height={map.imageHeight}
           >
-            {map.occluders.map((o) => (
-              <g key={o.id}>
-                <polyline
-                  points={o.points
-                    .map((p) => {
-                      const px = gridToPixels(p.x, p.y, grid);
-                      return `${px.x},${px.y}`;
-                    })
-                    .join(" ")}
-                  fill="none"
-                  stroke={o.kind === "door" ? "#c9a227" : "#888"}
-                  strokeWidth={2}
-                  strokeDasharray={o.state === "open" ? "6 4" : undefined}
-                  pointerEvents="none"
+            {map.occluders.map((o) =>
+              (o.kind === "door" || o.kind === "window") &&
+              o.points.length >= 2 ? (
+                <circle
+                  key={o.id}
+                  className="map-door-handle"
+                  cx={
+                    (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).x +
+                      gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).x) /
+                    2
+                  }
+                  cy={
+                    (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).y +
+                      gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).y) /
+                    2
+                  }
+                  r={8}
+                  fill={o.state === "open" ? "#66cc66" : "#c9a227"}
+                  stroke="#111"
+                  strokeWidth={1}
+                  style={{ cursor: "pointer", pointerEvents: "auto" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (o.state === "locked" && !isDm) return;
+                    const next = o.state === "open" ? "closed" : "open";
+                    sendLive({
+                      type: "mapDoorState",
+                      occluderId: o.id,
+                      state: next,
+                    });
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isDm) return;
+                    sendLive({
+                      type: "mapDoorState",
+                      occluderId: o.id,
+                      state: o.state === "locked" ? "closed" : "locked",
+                    });
+                  }}
                 />
-                {(o.kind === "door" || o.kind === "window") &&
-                o.points.length >= 2 ? (
-                  <circle
-                    className="map-door-handle"
-                    cx={
-                      (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).x +
-                        gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).x) /
-                      2
-                    }
-                    cy={
-                      (gridToPixels(o.points[0]!.x, o.points[0]!.y, grid).y +
-                        gridToPixels(o.points[1]!.x, o.points[1]!.y, grid).y) /
-                      2
-                    }
-                    r={8}
-                    fill={o.state === "open" ? "#66cc66" : "#c9a227"}
-                    stroke="#111"
-                    strokeWidth={1}
-                    style={{ cursor: "pointer", pointerEvents: "auto" }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (o.state === "locked" && !isDm) return;
-                      const next = o.state === "open" ? "closed" : "open";
-                      void setDoorState(campaignId, map.id, o.id, next);
-                    }}
-                    onContextMenu={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      if (!isDm) return;
-                      void setDoorState(
-                        campaignId,
-                        map.id,
-                        o.id,
-                        o.state === "locked" ? "closed" : "locked",
-                      );
-                    }}
-                  />
-                ) : null}
-              </g>
-            ))}
-            {polylineDraft.length >= 2 ? (
-              <polyline
-                points={polylineDraft
-                  .map((p) => {
-                    const px = gridToPixels(p.x, p.y, grid);
-                    return `${px.x},${px.y}`;
-                  })
-                  .join(" ")}
-                fill="none"
-                stroke="#c9a227"
-                strokeWidth={2}
-                opacity={0.7}
-                pointerEvents="none"
-              />
-            ) : null}
-            {polygonDraft.length >= 2 ? (
-              <polyline
-                points={polygonDraft
-                  .map((p) => {
-                    const px = gridToPixels(p.x, p.y, grid);
-                    return `${px.x},${px.y}`;
-                  })
-                  .join(" ")}
-                fill="none"
-                stroke="#66aaff"
-                strokeWidth={2}
-                opacity={0.7}
-                pointerEvents="none"
-              />
-            ) : null}
+              ) : null,
+            )}
             {calibrateStartPx ? (
               <circle
                 cx={calibrateStartPx.x}
@@ -1312,26 +1318,6 @@ export function CampaignMapBoard({
               ))}
             </div>
           ) : null}
-
-          {activeMeasure.length >= 2 ? (
-            <MapMeasure
-              points={activeMeasure}
-              diagonalRule={map.diagonalRule}
-              scaleFeet={map.scaleFeet}
-              color={measureColor}
-              grid={grid}
-              imageWidth={map.imageWidth}
-              imageHeight={map.imageHeight}
-            />
-          ) : null}
-
-          <MapPingLayer
-            pings={allPings}
-            grid={grid}
-            onExpire={(id) =>
-              setLocalPings((prev) => prev.filter((p) => p.id !== id))
-            }
-          />
         </div>
       </div>
 
@@ -1365,18 +1351,21 @@ export function CampaignMapBoard({
         losEnabled={map.losEnabled}
         lightingEnabled={map.lightingEnabled}
         onFogToggle={() =>
-          void setFogEnabled(campaignId, map.id, !map.fogEnabled)
+          sendLive({ type: "mapFlags", fogEnabled: !map.fogEnabled })
         }
         onLosToggle={() =>
-          void setLosEnabled(campaignId, map.id, !map.losEnabled)
+          sendLive({ type: "mapFlags", losEnabled: !map.losEnabled })
         }
         onLightingToggle={() =>
-          void setLightingEnabled(campaignId, map.id, !map.lightingEnabled)
+          sendLive({
+            type: "mapFlags",
+            lightingEnabled: !map.lightingEnabled,
+          })
         }
         daylight={localDaylight}
         onDaylightChange={handleDaylightChange}
-        onClearDrawings={() => void clearDrawings(campaignId, map.id)}
-        onResetFog={() => void resetFog(campaignId, map.id)}
+        onClearDrawings={() => sendLive({ type: "mapDrawingClear" })}
+        onResetFog={() => sendLive({ type: "mapFogReset" })}
       />
 
       {tokenMenu ? (
@@ -1389,7 +1378,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenLayer(campaignId, map.id, tokenMenu.tokenId, "gm");
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                layer: "gm",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1399,7 +1392,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenLayer(campaignId, map.id, tokenMenu.tokenId, "token");
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                layer: "token",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1409,12 +1406,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenVisibility(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                "always",
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                visibility: "always",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1424,12 +1420,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenVisibility(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                "mask",
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                visibility: "mask",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1439,12 +1434,11 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenVisibility(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                "hidden",
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                visibility: "hidden",
+              });
               setTokenMenu(null);
             }}
           >
@@ -1454,14 +1448,13 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenEmitsLight(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                true,
-                20,
-                20,
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                emitsLight: true,
+                lightBright: 20,
+                lightDim: 20,
+              });
               setTokenMenu(null);
             }}
           >
@@ -1471,14 +1464,13 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void setTokenEmitsLight(
-                campaignId,
-                map.id,
-                tokenMenu.tokenId,
-                false,
-                0,
-                0,
-              );
+              sendLive({
+                type: "mapTokenUpsert",
+                tokenId: tokenMenu.tokenId,
+                emitsLight: false,
+                lightBright: 0,
+                lightDim: 0,
+              });
               setTokenMenu(null);
             }}
           >
@@ -1488,7 +1480,10 @@ export function CampaignMapBoard({
             type="button"
             role="menuitem"
             onClick={() => {
-              void removeMapToken(campaignId, map.id, tokenMenu.tokenId);
+              sendLive({
+                type: "mapTokenRemove",
+                tokenId: tokenMenu.tokenId,
+              });
               setTokenMenu(null);
             }}
           >

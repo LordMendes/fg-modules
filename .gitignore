@@ -3,4 +3,10 @@
 node_modules/
 3.5E/
 
+# WRPG book-data scratch (PDF page renders, one-off check scripts)
+.tmp-wrpg/
+
+# Local book scan (not source of truth; keep out of the repo)
+warcraft-the-roleplaying-game-compressed.pdf
+
 # Project-specific ignores live in fg-builder/.gitignore and dndtools-reference/.gitignore

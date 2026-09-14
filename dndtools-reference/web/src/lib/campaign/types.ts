@@ -120,6 +120,94 @@ export type CampaignRollEvent = {
   roll: CampaignRollView;
 };
 
+/** Messages the browser sends on the campaign WebSocket. */
+export type ClientLiveMessage =
+  | {
+      type: "tokenMove";
+      tokenId: string;
+      x: number;
+      y: number;
+      rotation: number;
+      seq: number;
+    }
+  | {
+      type: "tokenMoveCommit";
+      tokenId: string;
+      x: number;
+      y: number;
+      rotation: number;
+      seq: number;
+    }
+  | { type: "mapPing"; x: number; y: number }
+  | { type: "mapViewportGoTo"; x: number; y: number }
+  | { type: "ping" }
+  | {
+      type: "mapDrawingUpsert";
+      drawingId?: string;
+      kind?: "stroke" | "circle" | "square" | "cone";
+      stroke?: { x: number; y: number }[];
+      geom?: { x: number; y: number; sizeFeet: number; rotation: number };
+    }
+  | { type: "mapDrawingRemove"; drawingId: string }
+  | { type: "mapDrawingClear" }
+  | {
+      type: "mapFogUpsert";
+      regionId?: string;
+      kind: "reveal" | "hide";
+      points: { x: number; y: number }[];
+    }
+  | { type: "mapFogRemove"; regionId: string }
+  | { type: "mapFogReset" }
+  | {
+      type: "mapOccluderUpsert";
+      occluderId?: string;
+      kind: string;
+      points: { x: number; y: number }[];
+      state?: string;
+    }
+  | { type: "mapOccluderRemove"; occluderId: string }
+  | { type: "mapDoorState"; occluderId: string; state: string }
+  | {
+      type: "mapLightUpsert";
+      light: {
+        id?: string;
+        x: number;
+        y: number;
+        brightFeet: number;
+        dimFeet: number;
+        color: string;
+        enabled: boolean;
+        mode?: string;
+      };
+    }
+  | { type: "mapLightRemove"; lightId: string }
+  | {
+      type: "mapFlags";
+      fogEnabled?: boolean;
+      losEnabled?: boolean;
+      lightingEnabled?: boolean;
+      daylight?: number;
+      explorerEnabled?: boolean;
+    }
+  | {
+      type: "mapGrid";
+      gridSizePx: number;
+      gridOffsetX: number;
+      gridOffsetY: number;
+      scaleFeet: number;
+      diagonalRule: MapDiagonalRule;
+    }
+  | {
+      type: "mapTokenUpsert";
+      tokenId: string;
+      layer?: string;
+      visibility?: string;
+      emitsLight?: boolean;
+      lightBright?: number;
+      lightDim?: number;
+    }
+  | { type: "mapTokenRemove"; tokenId: string };
+
 export type CampaignLiveEvent =
   | CampaignRollEvent
   | { type: "ping" }

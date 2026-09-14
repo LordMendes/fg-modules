@@ -34,3 +34,9 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# bundled custom servers (built by scripts/dev.mjs / bundle:server)
+/ws-standalone.cjs
+/ws-standalone.mjs
+/server.mjs
+/server.cjs

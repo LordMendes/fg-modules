@@ -23,7 +23,7 @@ const contentSecurityPolicy = [
   `img-src 'self' blob: data: ${r2PublicOrigin}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${plausibleOrigin}`,
+  `connect-src 'self' ${plausibleOrigin} ws: wss:`,
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
@@ -61,6 +61,16 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     root: monorepoRoot,
+  },
+  async rewrites() {
+    if (!isDev) return [];
+    const wsPort = process.env.WS_PORT || "3001";
+    return [
+      {
+        source: "/ws/campaign/:campaignId",
+        destination: `http://127.0.0.1:${wsPort}/ws/campaign/:campaignId`,
+      },
+    ];
   },
   async headers() {
     return [

@@ -152,10 +152,21 @@ export function DiceCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<DiceBoxThreejs | null>(null);
   const pendingRef = useRef<RollRequest | null>(null);
+  const queuedRequestRef = useRef<RollRequest | null>(null);
   const rollingRef = useRef(false);
   const fadeTimersRef = useRef<{ hold?: number; clear?: number }>({});
   const seenIdsRef = useRef(new Set<string>());
   const themeColorRef = useRef(themeColor);
+  const callbacksRef = useRef({
+    acknowledgeRollStart,
+    completeRoll,
+    failRoll,
+  });
+  callbacksRef.current = {
+    acknowledgeRollStart,
+    completeRoll,
+    failRoll,
+  };
 
   function cancelFade() {
     const timers = fadeTimersRef.current;
@@ -184,6 +195,101 @@ export function DiceCanvas() {
       }, FADE_DURATION_MS);
     }, FADE_HOLD_MS);
   }
+
+  function startThrow(request: RollRequest) {
+    const box = boxRef.current;
+    const {
+      acknowledgeRollStart: ack,
+      completeRoll: done,
+      failRoll: fail,
+    } = callbacksRef.current;
+    if (!box || rollingRef.current) {
+      queuedRequestRef.current = request;
+      return;
+    }
+
+    if (seenIdsRef.current.has(request.id)) {
+      ack();
+      return;
+    }
+    seenIdsRef.current.add(request.id);
+    if (seenIdsRef.current.size > 80) {
+      const first = seenIdsRef.current.values().next().value;
+      if (first) seenIdsRef.current.delete(first);
+    }
+
+    ack();
+
+    const notation = toThreejsNotation(
+      request.dice,
+      request.modifier,
+      request.faces,
+    );
+    if (!notation) {
+      rollingRef.current = false;
+      return;
+    }
+
+    pendingRef.current = request;
+    rollingRef.current = true;
+    cancelFade();
+
+    let finished = false;
+    const finishOnce = (payload: ThreejsResult | undefined) => {
+      if (finished) return;
+      if (pendingRef.current?.id !== request.id) return;
+      finished = true;
+      pendingRef.current = null;
+      rollingRef.current = false;
+      done(resultFromThreejsRoll(request, payload));
+      scheduleFadeOut();
+    };
+
+    void (async () => {
+      try {
+        hideDesk(box);
+        try {
+          box.clearDice();
+        } catch {
+          // ignore
+        }
+        const fallback = themeColorRef.current;
+        const dieColors = expandDieColors(request.dice, fallback);
+        const results = await rollWithPerDieColors(
+          box,
+          notation,
+          dieColors,
+          fallback,
+        );
+        finishOnce(results);
+      } catch (err) {
+        console.error("[DiceCanvas] roll failed", err);
+        if (!finished && pendingRef.current?.id === request.id) {
+          finished = true;
+          pendingRef.current = null;
+          rollingRef.current = false;
+          fail();
+        }
+      }
+    })();
+  }
+
+  // Pause Three.js work when no roll is active (after fade).
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+    const idle = !activeRequest && !rollingRef.current && !silhouetteActive;
+    const canvas = box.renderer?.domElement;
+    if (canvas) {
+      canvas.style.visibility = idle ? "hidden" : "visible";
+    }
+    const renderer = box.renderer as
+      | { setAnimationLoop?: (cb: null | (() => void)) => void }
+      | undefined;
+    if (idle) {
+      renderer?.setAnimationLoop?.(null);
+    }
+  }, [activeRequest, silhouetteActive]);
 
   // Initialize engine once
   useEffect(() => {
@@ -237,6 +343,11 @@ export function DiceCanvas() {
         (box as DiceBoxThreejs & { __onResize?: () => void }).__onResize = onResize;
         boxRef.current = box;
         setEngineReady(true);
+        const queued = queuedRequestRef.current;
+        if (queued) {
+          queuedRequestRef.current = null;
+          startThrow(queued);
+        }
       } catch (err) {
         console.error("[DiceCanvas] failed to init dice-box-threejs", err);
         setEngineReady(false);
@@ -298,77 +409,8 @@ export function DiceCanvas() {
 
   useEffect(() => {
     if (!activeRequest) return;
-    const box = boxRef.current;
-    if (!box || rollingRef.current) {
-      return;
-    }
-
-    if (seenIdsRef.current.has(activeRequest.id)) {
-      acknowledgeRollStart();
-      return;
-    }
-    seenIdsRef.current.add(activeRequest.id);
-    if (seenIdsRef.current.size > 80) {
-      const first = seenIdsRef.current.values().next().value;
-      if (first) seenIdsRef.current.delete(first);
-    }
-
-    const request = activeRequest;
-    acknowledgeRollStart();
-
-    const notation = toThreejsNotation(
-      request.dice,
-      request.modifier,
-      request.faces,
-    );
-    if (!notation) {
-      rollingRef.current = false;
-      return;
-    }
-
-    pendingRef.current = request;
-    rollingRef.current = true;
-    cancelFade();
-
-    let finished = false;
-    const finishOnce = (payload: ThreejsResult | undefined) => {
-      if (finished) return;
-      if (pendingRef.current?.id !== request.id) return;
-      finished = true;
-      pendingRef.current = null;
-      rollingRef.current = false;
-      completeRoll(resultFromThreejsRoll(request, payload));
-      scheduleFadeOut();
-    };
-
-    void (async () => {
-      try {
-        hideDesk(box);
-        try {
-          box.clearDice();
-        } catch {
-          // ignore
-        }
-        const fallback = themeColorRef.current;
-        const dieColors = expandDieColors(request.dice, fallback);
-        const results = await rollWithPerDieColors(
-          box,
-          notation,
-          dieColors,
-          fallback,
-        );
-        finishOnce(results);
-      } catch (err) {
-        console.error("[DiceCanvas] roll failed", err);
-        if (!finished && pendingRef.current?.id === request.id) {
-          finished = true;
-          pendingRef.current = null;
-          rollingRef.current = false;
-          failRoll();
-        }
-      }
-    })();
-  }, [activeRequest, acknowledgeRollStart, completeRoll, failRoll]);
+    startThrow(activeRequest);
+  }, [activeRequest]);
 
   return (
     <div
