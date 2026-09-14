@@ -329,7 +329,51 @@ function CampaignTableBody({
   const [activities, setActivities] = useState<CampaignActivityView[]>([]);
   const [activitiesLoading, setActivitiesLoading] = useState(false);
   const popoutWindowsRef = useRef<Map<string, Window>>(new Map());
+  const popoutClosePollRef = useRef<Map<string, number>>(new Map());
   const lastActivityId = useRef<string | null>(null);
+
+  const clearPopoutClosePoll = useCallback((pcPlanId: string) => {
+    const timer = popoutClosePollRef.current.get(pcPlanId);
+    if (timer != null) {
+      window.clearInterval(timer);
+      popoutClosePollRef.current.delete(pcPlanId);
+    }
+  }, []);
+
+  const handlePopoutClosed = useCallback((pcPlanId: string) => {
+    clearPopoutClosePoll(pcPlanId);
+    popoutWindowsRef.current.delete(pcPlanId);
+    setPoppedOutPcPlanIds((prev) => prev.filter((id) => id !== pcPlanId));
+    setOpenPcPlanIds((prev) => {
+      if (!prev.includes(pcPlanId)) return prev;
+      setRestoreTicks((ticks) => ({
+        ...ticks,
+        [pcPlanId]: (ticks[pcPlanId] ?? 0) + 1,
+      }));
+      return prev;
+    });
+  }, [clearPopoutClosePoll]);
+
+  const watchPopoutClosed = useCallback(
+    (pcPlanId: string, win: Window) => {
+      clearPopoutClosePoll(pcPlanId);
+      const timer = window.setInterval(() => {
+        if (!win.closed) return;
+        handlePopoutClosed(pcPlanId);
+      }, 500);
+      popoutClosePollRef.current.set(pcPlanId, timer);
+    },
+    [clearPopoutClosePoll, handlePopoutClosed],
+  );
+
+  useEffect(() => {
+    return () => {
+      for (const timer of popoutClosePollRef.current.values()) {
+        window.clearInterval(timer);
+      }
+      popoutClosePollRef.current.clear();
+    };
+  }, []);
 
   const handleMapChange = useCallback(
     (map: CampaignMapView | null) => {
@@ -382,8 +426,9 @@ function CampaignTableBody({
       return next;
     });
     setPoppedOutPcPlanIds((prev) => prev.filter((id) => id !== pcPlanId));
+    clearPopoutClosePoll(pcPlanId);
     popoutWindowsRef.current.delete(pcPlanId);
-  }, []);
+  }, [clearPopoutClosePoll]);
 
   useEffect(() => {
     setOpenPcPlanIds((prev) => {
@@ -432,43 +477,11 @@ function CampaignTableBody({
           prev.includes(msg.pcPlanId) ? prev : [...prev, msg.pcPlanId],
         );
       } else if (msg.type === "closed") {
-        setPoppedOutPcPlanIds((prev) => prev.filter((id) => id !== msg.pcPlanId));
-        popoutWindowsRef.current.delete(msg.pcPlanId);
-        setOpenPcPlanIds((prev) => {
-          if (!prev.includes(msg.pcPlanId)) return prev;
-          setRestoreTicks((ticks) => ({
-            ...ticks,
-            [msg.pcPlanId]: (ticks[msg.pcPlanId] ?? 0) + 1,
-          }));
-          return prev;
-        });
+        handlePopoutClosed(msg.pcPlanId);
       }
     };
     return () => channel.close();
-  }, [table.id]);
-
-  const focusPopOut = useCallback((pcPlanId: string) => {
-    const existing = popoutWindowsRef.current.get(pcPlanId);
-    if (existing && !existing.closed) {
-      existing.focus();
-      return;
-    }
-    if (typeof BroadcastChannel !== "undefined") {
-      const channel = new BroadcastChannel(campaignSheetPopoutChannelName(table.id));
-      const msg: CampaignSheetPopoutMessage = { type: "focus", pcPlanId };
-      channel.postMessage(msg);
-      channel.close();
-    }
-    try {
-      const named = window.open("", campaignSheetWindowName(pcPlanId));
-      if (named && !named.closed) {
-        popoutWindowsRef.current.set(pcPlanId, named);
-        named.focus();
-      }
-    } catch {
-      // ignore
-    }
-  }, [table.id]);
+  }, [table.id, handlePopoutClosed]);
 
   const openPopOut = useCallback((pcPlanId: string) => {
     const url = `/tools/campaign/${table.id}/sheet/${pcPlanId}`;
@@ -482,12 +495,32 @@ function CampaignTableBody({
       return;
     }
     popoutWindowsRef.current.set(pcPlanId, win);
+    watchPopoutClosed(pcPlanId, win);
     win.focus();
     setPoppedOutPcPlanIds((prev) =>
       prev.includes(pcPlanId) ? prev : [...prev, pcPlanId],
     );
     openPc(pcPlanId);
-  }, [table.id, setError, openPc]);
+  }, [table.id, setError, openPc, watchPopoutClosed]);
+
+  const focusPopOut = useCallback(
+    (pcPlanId: string) => {
+      const existing = popoutWindowsRef.current.get(pcPlanId);
+      if (existing && !existing.closed) {
+        existing.focus();
+        return;
+      }
+      if (typeof BroadcastChannel !== "undefined") {
+        const channel = new BroadcastChannel(campaignSheetPopoutChannelName(table.id));
+        const msg: CampaignSheetPopoutMessage = { type: "focus", pcPlanId };
+        channel.postMessage(msg);
+        channel.close();
+      }
+      // Reopen with URL + popup features (empty-name open creates a blank tab).
+      openPopOut(pcPlanId);
+    },
+    [table.id, openPopOut],
+  );
 
   function selectPc(pcPlanId: string, ownerUserId: string) {
     if (!isDm && ownerUserId !== user.id) return;
