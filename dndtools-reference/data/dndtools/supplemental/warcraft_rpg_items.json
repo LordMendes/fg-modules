@@ -8,74 +8,74 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 106,
+      "page": 144,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Magic Item",
-      "price": "3,000 gp"
+      "type": "Wondrous Item",
+      "price": "850 gp"
     },
-    "price": "3,000 gp",
-    "caster_level": "9",
-    "aura": "StrongAbjuration",
-    "activation": "—",
-    "weight": "5 lb.",
-    "description_html": "<p>Invisible glyph of warding combined with an explosive. 8d6 fire damage in a 15-ft. radius when triggered.</p>",
-    "description_text": "Invisible glyph of warding combined with an explosive. 8d6 fire damage in a 15-ft. radius when triggered."
+    "price": "850 gp",
+    "caster_level": "5th",
+    "aura": "Faint abjuration",
+    "activation": "-",
+    "weight": "2 lb.",
+    "description_html": "<p>Invisible emplaced bomb tied to a glyph of warding: 8d6 fire in a 15-ft. radius (Ref DC 15 half). Search/Disable Device DC 20. CR 5.</p>",
+    "description_text": "Invisible emplaced bomb tied to a glyph of warding: 8d6 fire in a 15-ft. radius (Ref DC 15 half). Search/Disable Device DC 20. CR 5."
   },
   {
     "slug": "stormhammer-wrpg",
-    "name": "Stormhammer",
+    "name": "Storm Hammer",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 107,
+      "page": 144,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Magic Item",
-      "price": "+1 warhammer"
+      "type": "Magic Weapon",
+      "price": "8,500 gp"
     },
-    "price": "+1 warhammer",
-    "caster_level": "7",
-    "aura": "ModerateEvocation",
-    "activation": "—",
-    "weight": "5 lb.",
-    "description_html": "<p>+1 warhammer that deals an extra 1d6 electricity damage on a hit. Shocks any non-dwarf who wields it for 1d6 electricity.</p>",
-    "description_text": "+1 warhammer that deals an extra 1d6 electricity damage on a hit. Shocks any non-dwarf who wields it for 1d6 electricity."
+    "price": "8,500 gp",
+    "caster_level": "8th",
+    "aura": "Moderate evocation",
+    "activation": "-",
+    "weight": "8 lb.",
+    "description_html": "+1 shock warhammer dealing +1d6 electricity on a hit. A non-owner who wields it takes 1d6 electricity damage each round (Ref DC 20 to drop). Distinct from the <a href=\"/spells/stormhammer-spell-wrpg\">storm hammer</a> spell.",
+    "description_text": "+1 shock warhammer dealing +1d6 electricity on a hit. A non-owner who wields it takes 1d6 electricity damage each round (Ref DC 20 to drop). Distinct from the storm hammer spell."
   },
   {
     "slug": "vampiric-rune-blade-wrpg",
-    "name": "Vampiric Rune Blade",
+    "name": "Vampiric Runeblade",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 108,
+      "page": 144,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Magic Item",
-      "price": "+1 longsword"
+      "type": "Magic Weapon",
+      "price": "200,000 gp"
     },
-    "price": "+1 longsword",
-    "caster_level": "12",
-    "aura": "StrongNecromancy",
-    "activation": "—",
+    "price": "200,000 gp",
+    "caster_level": "7th",
+    "aura": "Moderate necromancy",
+    "activation": "-",
     "weight": "4 lb.",
-    "description_html": "<p>+1 longsword dealing +2d6 negative energy damage and draining hit points to the wielder. Intelligent evil blade.</p>",
-    "description_text": "+1 longsword dealing +2d6 negative energy damage and draining hit points to the wielder. Intelligent evil blade."
+    "description_html": "<p>+1 longsword dealing +2d6 negative energy vs. living creatures; wielder gains temporary hit points equal to the bonus damage (max = current hp + 10) for 1 hour. Intelligent CE blade (Int 10, Wis 12, Cha 16, Ego 9) with charm person 1/day (DC 16).</p>",
+    "description_text": "+1 longsword dealing +2d6 negative energy vs. living creatures; wielder gains temporary hit points equal to the bonus damage (max = current hp + 10) for 1 hour. Intelligent CE blade (Int 10, Wis 12, Cha 16, Ego 9) with charm person 1/day (DC 16)."
   },
   {
     "slug": "potion-of-invulnerability-wrpg",
@@ -86,22 +86,22 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 109,
+      "page": 145,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Potion",
-      "price": "1,500 gp"
+      "price": "2,000 gp"
     },
-    "price": "1,500 gp",
-    "caster_level": "15",
-    "aura": "StrongAbjuration",
+    "price": "2,000 gp",
+    "caster_level": "5th",
+    "aura": "Faint abjuration",
     "activation": "Standard (drink)",
-    "weight": "—",
-    "description_html": "<p>Grants DR 20/adamantine for 10 rounds. You take 1d4 damage each round while the effect lasts.</p>",
-    "description_text": "Grants DR 20/adamantine for 10 rounds. You take 1d4 damage each round while the effect lasts."
+    "weight": "-",
+    "description_html": "<p>Grants DR 20/adamantine for 10 rounds. The drinker takes 1d4 damage each round (unreducible).</p>",
+    "description_text": "Grants DR 20/adamantine for 10 rounds. The drinker takes 1d4 damage each round (unreducible)."
   },
   {
     "slug": "potion-of-mana-wrpg",
@@ -112,22 +112,22 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 110,
+      "page": 145,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Potion",
-      "price": "300 gp"
+      "price": "900 gp"
     },
-    "price": "300 gp",
-    "caster_level": "5",
-    "aura": "ModerateTransmutation",
+    "price": "900 gp",
+    "caster_level": "4th",
+    "aura": "Faint transmutation",
     "activation": "Standard (drink)",
-    "weight": "—",
-    "description_html": "<p>Recover the last 1st-, 2nd-, or 3rd-level spell you cast within the previous 2 rounds.</p>",
-    "description_text": "Recover the last 1st-, 2nd-, or 3rd-level spell you cast within the previous 2 rounds."
+    "weight": "-",
+    "description_html": "<p>Recover the last 1st-, 2nd-, or 3rd-level spell cast if drunk within 2 rounds.</p>",
+    "description_text": "Recover the last 1st-, 2nd-, or 3rd-level spell cast if drunk within 2 rounds."
   },
   {
     "slug": "potion-of-greater-mana-wrpg",
@@ -138,22 +138,22 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 110,
+      "page": 145,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Potion",
-      "price": "900 gp"
+      "price": "9,000 gp"
     },
-    "price": "900 gp",
-    "caster_level": "11",
-    "aura": "StrongTransmutation",
+    "price": "9,000 gp",
+    "caster_level": "7th",
+    "aura": "Moderate transmutation",
     "activation": "Standard (drink)",
-    "weight": "—",
-    "description_html": "<p>Recover the last spell of any level you cast within the previous 2 rounds. Headache deals damage equal to the spell's level.</p>",
-    "description_text": "Recover the last spell of any level you cast within the previous 2 rounds. Headache deals damage equal to the spell's level."
+    "weight": "-",
+    "description_html": "<p>Recover the last spell of any level cast if drunk within 2 rounds; take damage equal to the spell's level.</p>",
+    "description_text": "Recover the last spell of any level cast if drunk within 2 rounds; take damage equal to the spell's level."
   },
   {
     "slug": "cloak-of-flames-wrpg",
@@ -164,7 +164,7 @@
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 111,
+      "page": 145,
       "url": null
     },
     "index": {
@@ -174,37 +174,37 @@
       "price": "90,000 gp"
     },
     "price": "90,000 gp",
-    "caster_level": "15",
-    "aura": "StrongEvocation",
-    "activation": "Standard (command)",
-    "weight": "1 lb.",
-    "description_html": "<p>Deals 2d6 fire damage per round to all enemies within 5 ft. while worn.</p>",
-    "description_text": "Deals 2d6 fire damage per round to all enemies within 5 ft. while worn."
+    "caster_level": "5th",
+    "aura": "Faint evocation",
+    "activation": "Free (command)",
+    "weight": "4 lb.",
+    "description_html": "<p>Holocaust cloak: 2d6 fire/round to creatures within 5 ft. (Will DC 20 to push the aura to 10 ft.); no harm to wearer or designated allies (Ref DC 17 half). Free action on/off; 10 rounds/day.</p>",
+    "description_text": "Holocaust cloak: 2d6 fire/round to creatures within 5 ft. (Will DC 20 to push the aura to 10 ft.); no harm to wearer or designated allies (Ref DC 17 half). Free action on/off; 10 rounds/day."
   },
   {
     "slug": "gloves-of-swiftness-wrpg",
-    "name": "Gloves of Swiftness",
+    "name": "Gloves of Celerity",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 112,
+      "page": 145,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Wondrous Item",
-      "price": "4,000 gp"
+      "price": "2,000 gp"
     },
-    "price": "4,000 gp",
-    "caster_level": "7",
-    "aura": "ModerateTransmutation",
-    "activation": "—",
-    "weight": "—",
-    "description_html": "<p>+2 bonus on initiative checks and Reflex saves.</p>",
-    "description_text": "+2 bonus on initiative checks and Reflex saves."
+    "price": "2,000 gp",
+    "caster_level": "5th",
+    "aura": "Faint transmutation",
+    "activation": "-",
+    "weight": "-",
+    "description_html": "<p>+2 luck bonus on initiative checks and Reflex saves.</p>",
+    "description_text": "+2 luck bonus on initiative checks and Reflex saves."
   }
 ]
