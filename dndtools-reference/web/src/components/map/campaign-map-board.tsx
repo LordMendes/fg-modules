@@ -31,6 +31,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { MapDrawLayer } from "./map-draw-layer";
 import { MapToken } from "./map-token";
 import { MapToolbar } from "./map-toolbar";
 import { MapViewportOverlay } from "./map-viewport-overlay";
@@ -1166,21 +1167,6 @@ export function CampaignMapBoard({
           pings={allPings}
           measurePoints={activeMeasure}
           measureColor={measureColor}
-          draftStroke={
-            drawDraft.length >= 2
-              ? { color: userColor(viewerUserId), points: drawDraft }
-              : null
-          }
-          draftShape={
-            aoeDraft
-              ? {
-                  kind: aoeDraft.kind,
-                  origin: aoeDraft.origin,
-                  current: aoeDraft.current,
-                  color: measureColor,
-                }
-              : null
-          }
           polygonDraft={polygonDraft}
           polylineDraft={polylineDraft}
           paintNonce={paintNonce}
@@ -1201,6 +1187,36 @@ export function CampaignMapBoard({
             width={map.imageWidth}
             height={map.imageHeight}
             draggable={false}
+          />
+
+          <MapDrawLayer
+            drawings={displayDrawings}
+            grid={grid}
+            scaleFeet={map.scaleFeet}
+            imageWidth={map.imageWidth}
+            imageHeight={map.imageHeight}
+            selectedDrawingId={selectedDrawingId}
+            draftStroke={
+              drawDraft.length >= 2
+                ? { color: userColor(viewerUserId), points: drawDraft }
+                : null
+            }
+            draftShape={
+              aoeDraft
+                ? {
+                    kind: aoeDraft.kind,
+                    origin: aoeDraft.origin,
+                    current: aoeDraft.current,
+                    color: measureColor,
+                  }
+                : null
+            }
+            canEditDrawing={canEditDrawing}
+            onSelectDrawing={(id) => {
+              setSelectedDrawingId(id);
+              setSelectedTokenId(null);
+            }}
+            onShapePointerDown={handleShapePointerDown}
           />
 
           {/* Door handles only (interactive); walls drawn on viewport canvas. */}

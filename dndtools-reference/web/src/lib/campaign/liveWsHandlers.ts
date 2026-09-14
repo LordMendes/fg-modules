@@ -116,6 +116,9 @@ async function handleTokenMove(
     return;
   }
 
+  // Uncommitted ticks use the per-token move limiter. Commits are gated by
+  // commandRate in handleClientLiveMessage so a drag burst cannot starve the
+  // pointer-up persist.
   if (!committed) {
     let rate = ctx.moveRates.get(msg.tokenId);
     if (!rate) {
@@ -211,7 +214,7 @@ export async function handleClientLiveMessage(
       await handleTokenMove(ctx, msg, false);
       return;
     case "tokenMoveCommit":
-      await handleTokenMove(ctx, msg, true);
+      await handleDiscrete(ctx, () => handleTokenMove(ctx, msg, true));
       return;
     case "mapPing": {
       if (typeof msg.x !== "number" || typeof msg.y !== "number") return;

@@ -3,7 +3,6 @@
 import { memo, useEffect, useRef } from "react";
 import type { Camera } from "@/lib/map/camera";
 import { overlayCanvasSize } from "@/lib/map/camera";
-import { formatFeetLabel } from "@/lib/map/distance";
 import type { GridConfig } from "@/lib/map/grid";
 import { gridToPixels } from "@/lib/map/grid";
 import {
@@ -14,7 +13,6 @@ import {
 } from "@/lib/map/los";
 import type {
   CampaignMapView,
-  MapDrawingView,
   MapPoint,
   MapTokenView,
 } from "@/lib/map/types";
@@ -33,13 +31,6 @@ type MapViewportOverlayProps = {
   pings: OverlayPing[];
   measurePoints: MapPoint[];
   measureColor: string;
-  draftStroke: { color: string; points: MapPoint[] } | null;
-  draftShape: {
-    kind: "circle" | "square" | "cone";
-    origin: MapPoint;
-    current: MapPoint;
-    color: string;
-  } | null;
   polygonDraft: MapPoint[];
   polylineDraft: MapPoint[];
   /** Bump to force redraw (token drag via refs may skip React). */
@@ -258,62 +249,6 @@ function paintVision(
   ctx.restore();
 }
 
-function paintDrawings(
-  ctx: CanvasRenderingContext2D,
-  camera: Camera,
-  map: CampaignMapView,
-  grid: GridConfig,
-  drawings: MapDrawingView[],
-) {
-  for (const d of drawings) {
-    ctx.save();
-    ctx.strokeStyle = d.color;
-    ctx.fillStyle = d.color;
-    ctx.lineWidth = 2;
-    if (d.kind === "stroke" && d.stroke.length >= 2) {
-      ctx.beginPath();
-      const first = gridPt(camera, grid, d.stroke[0]!);
-      ctx.moveTo(first.x, first.y);
-      for (let i = 1; i < d.stroke.length; i++) {
-        const p = gridPt(camera, grid, d.stroke[i]!);
-        ctx.lineTo(p.x, p.y);
-      }
-      ctx.stroke();
-    } else if (d.geom) {
-      const c = gridPt(camera, grid, { x: d.geom.x, y: d.geom.y });
-      const sizePx =
-        (d.geom.sizeFeet / map.scaleFeet) * grid.gridSizePx * camera.scale;
-      ctx.translate(c.x, c.y);
-      ctx.rotate((d.geom.rotation * Math.PI) / 180);
-      ctx.globalAlpha = 0.35;
-      if (d.kind === "circle") {
-        ctx.beginPath();
-        ctx.arc(0, 0, sizePx, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.stroke();
-      } else if (d.kind === "square") {
-        ctx.fillRect(-sizePx, -sizePx, sizePx * 2, sizePx * 2);
-        ctx.globalAlpha = 1;
-        ctx.strokeRect(-sizePx, -sizePx, sizePx * 2, sizePx * 2);
-      } else if (d.kind === "cone") {
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.arc(0, 0, sizePx, -Math.PI / 4, Math.PI / 4);
-        ctx.closePath();
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.stroke();
-      }
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = d.color;
-      ctx.font = "bold 13px sans-serif";
-      ctx.fillText(formatFeetLabel(d.geom.sizeFeet), 8, -8);
-    }
-    ctx.restore();
-  }
-}
-
 function paintOccluders(
   ctx: CanvasRenderingContext2D,
   camera: Camera,
@@ -413,8 +348,6 @@ function MapViewportOverlayInner(props: MapViewportOverlayProps) {
     pings,
     measurePoints,
     measureColor,
-    draftStroke,
-    draftShape,
     polygonDraft,
     polylineDraft,
     paintNonce,
@@ -443,19 +376,7 @@ function MapViewportOverlayInner(props: MapViewportOverlayProps) {
     if (gridVisible) paintGrid(ctx, camera, map, grid);
     paintFog(ctx, camera, map, grid, isDm);
     paintVision(ctx, camera, map, grid, isDm, viewerTokens, tokens);
-    paintDrawings(ctx, camera, map, grid, map.drawings);
-    if (draftStroke && draftStroke.points.length >= 2) {
-      paintDrawings(ctx, camera, map, grid, [
-        {
-          id: "draft",
-          authorUserId: "",
-          color: draftStroke.color,
-          kind: "stroke",
-          stroke: draftStroke.points,
-          geom: null,
-        },
-      ]);
-    }
+    // Drawings and drafts are rendered by interactive MapDrawLayer (world space).
     paintOccluders(ctx, camera, grid, map, polylineDraft);
     if (polygonDraft.length >= 2) {
       ctx.save();
@@ -474,7 +395,6 @@ function MapViewportOverlayInner(props: MapViewportOverlayProps) {
     }
     paintMeasure(ctx, camera, grid, measurePoints, measureColor);
     paintPings(ctx, camera, grid, pings);
-    void draftShape;
   }, [
     camera,
     map,
@@ -486,8 +406,6 @@ function MapViewportOverlayInner(props: MapViewportOverlayProps) {
     pings,
     measurePoints,
     measureColor,
-    draftStroke,
-    draftShape,
     polygonDraft,
     polylineDraft,
     paintNonce,
