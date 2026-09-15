@@ -10,6 +10,7 @@ import { writeFileSync, mkdirSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { buildWarcraftClasses } from "./warcraft-rpg-classes-data.mjs";
+import { buildWarcraftFeats } from "./warcraft-rpg-feats-data.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = join(__dirname, "../data/dndtools/supplemental");
@@ -305,58 +306,7 @@ const classes = buildWarcraftClasses({ base, html, text, a, sk, ul });
 
 // ─── Feats (pp. 106–115) ─────────────────────────────────────────────────────
 
-function feat(slug, name, type, description, benefit, prereq = null, page = null) {
-  const b = base(slug, name, page);
-  const descHtml = html(description);
-  const benHtml = html(benefit);
-  const preHtml = prereq ? html(prereq) : null;
-  return {
-    ...b,
-    type,
-    index: { ...b.index, type, description_snippet: description.slice(0, 120) },
-    description_html: descHtml,
-    description_text: text(descHtml),
-    benefit_html: benHtml,
-    benefit_text: text(benHtml),
-    prerequisite_html: preHtml,
-    prerequisite_text: preHtml ? text(preHtml) : null,
-  };
-}
-
-const feats = [
-  feat("mounted-elite-sharpshooter-wrpg", "Mounted Sharpshooter", "General", "You fire firearms accurately from the saddle.", "You take no penalty on ranged attacks with firearms while mounted (normally −4). You still need Ride checks to control the mount.", `Dex 13, ${a("/skills/ride", "Ride")} skill, ${a("/feats/expert-rider-wrpg", "Expert Rider")}`, 112),
-  feat("expert-rider-wrpg", "Expert Rider", "General", "You are an accomplished rider.", `All ${a("/skills/ride", "Ride")} task DCs are reduced by 2. You may take 10 on Ride checks for mounted combat maneuvers even when threatened or distracted.`, `Dex 13, ${a("/skills/ride", "Ride")} skill`, 111),
-  feat("bareback-riding-wrpg", "Ride Bareback", "General", "You ride without saddle or bridle.", `You take no −5 ${a("/skills/ride", "Ride")} penalty for riding without a saddle or bridle.`, `${a("/skills/ride", "Ride")} skill`, 113),
-  feat("butt-strike-wrpg", "Pistol Whip", "General", "You use a firearm as a melee weapon without breaking it.", "Treat a firearm as a melee weapon without breaking it: Small as a light hammer, Medium as a club, Large as a warhammer.", null, 112),
-  feat("defender-wrpg", "Defend", "General", "You share your shield's protection.", "While using a shield, allies within 5 ft. without a shield gain your shield's AC bonus. Allies within 5 ft. who also have shields gain +2 circumstance AC (does not stack with itself).", "Shield Proficiency, base attack bonus +2", 109),
-  feat("war-tongue-wrpg", "Battle Language", "General", "You coordinate allies with battle signals.", `Aid another for an ally who also has this feat within 100 ft. and line of sight as a move action. DC 15 ${a("/skills/bluff", "Bluff")}: +2 circumstance to the ally's next attack or AC vs. the next attack.`, `${a("/skills/bluff", "Bluff")} 3 ranks`, 107),
-  feat("rapid-reload-wrpg", "Lightning Reload", "General", "You reload firearms faster.", "A firearm reload that is a standard action becomes a move action; reloads longer than 1 round take half time.", "Dex 13, Exotic Weapon Proficiency (firearms)", 111),
-  feat("storm-arrow-wrpg", "Storm Bolt", "General", "You hurl a stunning bludgeon.", `Before a full attack with a ranged bludgeoning weapon, declare Storm Bolt. A hit deals nonlethal damage; Fortitude save (DC 10 + damage rolled) or stunned 1 round. Once/round; ≤ once/level/day.`, `Str 13, Bash, Power Attack, base attack bonus +4`, 114),
-  feat("point-blank-shot-no-aoo-wrpg", "Close Shot", "General", "You fire in melee without provoking.", "You can fire a ranged weapon without provoking attacks of opportunity.", "Dex 13, Dodge, Point Blank Shot, Precise Shot, base attack bonus +4", 108),
-  feat("skilled-shot-wrpg", "Trick Shot", "General", "You ricochet ranged attacks.", "Bounce a ranged attack off one surface (moonglaive: up to two). Cover is measured from the final approach; range penalties use full path distance.", "Dex 13", 114),
-  feat("exotic-weapon-thorium-wrpg", "Exotic Weapon Proficiency (Thorium Weapons)", "General", "You are trained with thorium weapons.", "You are proficient with a chosen thorium weapon and add half your Strength bonus to its damage (one-handed 1½× Str, two-handed 2× Str).", "Proficiency with the non-thorium version of the weapon", 110),
-  feat("dedicated-leadership-wrpg", "Devoted Leadership", "General", "Your followers fight harder near you.", "Followers within (5 ft. × Cha bonus) gain +2 morale bonus to AC and +1 morale bonus on all saves for up to your character level rounds/day (max 20).", "Cha 13, Wis 13, Leadership", 110),
-  feat("enduring-leadership-wrpg", "Enduring Leadership", "General", "Your followers surge into battle.", "Once/day before an encounter, as a free action, followers gain +4 morale bonus on Initiative and +10 ft. speed for that combat. If you or they rage, those who rage are not fatigued afterward.", "Endurance, Leadership", 110),
-  feat("precise-leadership-wrpg", "Precision Leadership", "General", "Your followers concentrate fire.", "On a ranged attack, each follower gains +1 attack per 5 followers attacking the same target at once (same weapon kind, within 10 ft. × Cha bonus of you, target within 100 ft.). Damage from all hits is totaled before DR.", "Leadership, Point Blank Shot", 112),
-  feat("totem-follower-wrpg", "Follower of the Totem", "General", "You draw strength from ancestral totems.", "Once/day as a free action, gain a +2 sacred bonus to any one ability score for 1d6+1 rounds. Tauren with this feat are treated as having Exotic Weapon Proficiency (tauren totem).", "Wis 13, orc or tauren", 111),
-  feat("drums-of-courage-wrpg", "Drums of Courage", "General", "War drums inspire your tribe.", "DC 20 Perform (percussion): tribe warriors who hear the drums gain +1 morale bonus on attack, damage, and Will saves while the drums play and for 5 rounds after.", "Perform (percussion instruments) 5 ranks", 110),
-  feat("block-magic-wrpg", "Block Spell", "Metamagic", "You counter spells with raw magic energy.", `When targeted by a spell, make a ${a("/skills/spellcraft", "Spellcraft")} check (DC 15 + spell level) to identify and counter it by spending a spell slot at least 1 level higher.`, `Iron Will, ${a("/feats/control-magic-energy-wrpg", "Magic Energy Control")}, caster level 5th`, 107),
-  feat("control-magic-energy-wrpg", "Magic Energy Control", "Metamagic", "You prepare spells with greater efficiency.", "Daily spell preparation takes half the normal time. A high elf with this feat no longer suffers magic-addiction effects during preparation (prepares in normal time, not half).", "Iron Will", 111),
-  feat("duplicate-spell-wrpg", "Mirror Spell", "Metamagic", "You cast a spell twice at once.", "When casting an arcane spell, treat it as cast twice (both resolve simultaneously). Spend an additional spell slot of the same level or higher.", `Iron Will, ${a("/feats/control-magic-energy-wrpg", "Magic Energy Control")}, caster level 3rd`, 112),
-  feat("deflect-magic-wrpg", "Deflect Spell", "Metamagic", "You redirect a countered spell.", `After successfully countering a spell, deflect it to any target as if you had cast it.`, `${a("/feats/block-magic-wrpg", "Block Spell")}, Iron Will, ${a("/feats/control-magic-energy-wrpg", "Magic Energy Control")}, ${a("/feats/duplicate-spell-wrpg", "Mirror Spell")}, ${a("/feats/reflect-magic-wrpg", "Reflect Spell")}, caster level 9th`, 109),
-  feat("reflect-magic-wrpg", "Reflect Spell", "Metamagic", "You bounce a spell back at its caster.", `After successfully countering a spell that targeted you, reflect it back at the caster.`, `${a("/feats/block-magic-wrpg", "Block Spell")}, Iron Will, ${a("/feats/control-magic-energy-wrpg", "Magic Energy Control")}, ${a("/feats/duplicate-spell-wrpg", "Mirror Spell")}, caster level 7th`, 113),
-  feat("create-siege-engines-wrpg", "Build Siege Weapons", "Technology", "You craft and sabotage siege engines.", `+2 ${a("/skills/craft", "Craft")} (technological device) for catapults, cannons, mortars, and other siege weapons; +2 technological limit. You may sabotage Large or larger tech devices.`, null, 108),
-  feat("create-firearms-wrpg", "Build Firearms", "Technology", "You craft firearms.", `+2 ${a("/skills/craft", "Craft")} (technological device) when crafting firearms; +2 technological limit for firearms. Once/week, with a firearm you built, declare an automatic critical threat (still confirm).`, null, 107),
-  feat("create-small-devices-wrpg", "Build Small Devices", "Technology", "You craft Tiny and smaller devices.", `+2 ${a("/skills/craft", "Craft")} (technological device) for Tiny/Diminutive/Fine devices; +2 technological limit. You may build concealed devices (Spot and Use Technological Device DC 10 + your Craft modifier).`, "Dex 13", 108),
-  feat("create-vehicles-wrpg", "Build Vehicles", "Technology", "You craft and operate vehicles.", `+2 ${a("/skills/craft", "Craft")} (technological device) and ${a("/skills/use-technological-device", "Use Technological Device")} for vehicles; +2 technological limit. Once/day, double a vehicle's speed for 1d6 minutes.`, null, 108),
-  feat("emergency-repair-wrpg", "Emergency Repair", "Technology", "You force a broken device to work briefly.", `Full-round action, DC 20 ${a("/skills/craft", "Craft")} (mechanical object): a malfunctioning or broken tech device works for 1 hour, then stops until normally repaired. Natural 20 = permanent repair.`, `Wis 13, ${a("/feats/delay-malfunction-wrpg", "Delay Malfunction")}`, 110),
-  feat("delay-malfunction-wrpg", "Delay Malfunction", "Technology", "You keep a failing device running a few rounds.", `On malfunction, DC 15 ${a("/skills/craft", "Craft")} (technological device): the device works normally for 1d3 rounds. Natural 20 averts the malfunction entirely.`, null, 109),
-  feat("use-land-vehicles-wrpg", "Vehicle Proficiency (Land)", "Technology", "You operate land vehicles.", `You can operate land vehicles with ${a("/skills/use-technological-device", "Use Technological Device")} without the −4 nonproficiency penalty.`, null, 114),
-  feat("use-water-vehicles-wrpg", "Vehicle Proficiency (Water)", "Technology", "You operate water vehicles.", `You can operate water vehicles with ${a("/skills/use-technological-device", "Use Technological Device")} without the −4 nonproficiency penalty.`, null, 114),
-  feat("use-air-vehicles-wrpg", "Vehicle Proficiency (Air)", "Technology", "You operate air vehicles.", `You can operate air vehicles with ${a("/skills/use-technological-device", "Use Technological Device")} without the −4 nonproficiency penalty.`, null, 114),
-  feat("vascular-materials-wrpg", "Scavenge Materials", "Technology", "You build with scavenged parts.", `Build using raw materials worth 1/10 the item's market price; ${a("/skills/craft", "Craft")} DC +10.`, "Craft 8 ranks", 113),
-  feat("pulverize-wrpg", "Pulverize", "Tauren", "You slam a totem to knock foes down.", `Full attack with a tauren totem: strike the ground (roll damage for DC only); creatures within 20 ft. Reflex save (DC 10 + damage) or fall prone. Once/round; ≤ (1 + Wis bonus)/day.`, `Wis 13, Exotic Weapon Proficiency (tauren totem), ${a("/feats/totem-follower-wrpg", "Follower of the Totem")}`, 112),
-];
+const feats = buildWarcraftFeats({ base, html, text, a });
 
 // ─── Equipment (pp. 130–139) ─────────────────────────────────────────────────
 

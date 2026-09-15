@@ -169,7 +169,7 @@ export function buildWarcraftClasses({ base, html, text, a, sk }) {
       description: sections([
         "<p>Uses the Player's Handbook fighter with the following Warcraft changes. Affiliation: any.</p>",
         feat("Class Skills", \`\${a("/skills/knowledge-military-tactics", "Knowledge (military tactics)")} is a class skill.\`),
-        feat("Bonus Feats", \`The fighter bonus feat list expands to include WRPG feats such as \${a("/feats/butt-strike-wrpg", "Pistol Whip")}, \${a("/feats/defender-wrpg", "Defend")}, \${a("/feats/expert-rider-wrpg", "Expert Rider")}, \${a("/feats/rapid-reload-wrpg", "Lightning Reload")}, \${a("/feats/mounted-elite-sharpshooter-wrpg", "Mounted Sharpshooter")}, plus Bash and Sunder Armor from the WRPG feat chapter.\`),
+        feat("Bonus Feats", \`The fighter bonus feat list expands to include WRPG feats such as \${a("/feats/butt-strike-wrpg", "Pistol Whip")}, \${a("/feats/defender-wrpg", "Defend")}, \${a("/feats/expert-rider-wrpg", "Expert Rider")}, \${a("/feats/rapid-reload-wrpg", "Lightning Reload")}, \${a("/feats/mounted-elite-sharpshooter-wrpg", "Mounted Sharpshooter")}, \${a("/feats/bash-wrpg", "Bash")}, and \${a("/feats/sunder-armor-wrpg", "Sunder Armor")}.\`),
       ]),
       advancementHtml: "<p>Uses the Player's Handbook fighter advancement table.</p>",
     }),
