@@ -27,7 +27,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @fg-modules/web exec prisma generate
 RUN pnpm --filter @fg-modules/web rebuild sharp
 # NFT standalone omits Sharp natives, Prisma CLI, and custom-server externals.
-# Stash complete pnpm packages so the runner can overlay them (no npm install).
+# Stash those pnpm packages, then follow their store symlinks (prisma CLI
+# needs `effect`, `c12`, ... which are not in the seed list).
 RUN mkdir -p /native-pkgs \
   && find /app/node_modules/.pnpm -maxdepth 1 \( \
        -name 'sharp@*' \
@@ -53,6 +54,26 @@ RUN mkdir -p /native-pkgs \
        -o -name 'ws@*' \
        -o -name 'pg@*' \
      \) -exec cp -a {} /native-pkgs/ \; \
+  && prev=0 \
+  && curr=$(find /native-pkgs -maxdepth 1 -mindepth 1 | wc -l) \
+  && while [ "$curr" -gt "$prev" ]; do \
+       prev=$curr; \
+       find /native-pkgs -type l | while IFS= read -r link; do \
+         resolved=$(readlink -f "$link" || true); \
+         [ -n "$resolved" ] || continue; \
+         case "$resolved" in \
+           /app/node_modules/.pnpm/*) \
+             store=${resolved#/app/node_modules/.pnpm/}; \
+             store=${store%%/*}; \
+             if [ -n "$store" ] && [ -d "/app/node_modules/.pnpm/$store" ] && [ ! -e "/native-pkgs/$store" ]; then \
+               cp -a "/app/node_modules/.pnpm/$store" /native-pkgs/; \
+             fi; \
+             ;; \
+         esac; \
+       done; \
+       curr=$(find /native-pkgs -maxdepth 1 -mindepth 1 | wc -l); \
+     done \
+  && find /native-pkgs -maxdepth 1 -name 'effect@*' | grep -q . \
   && find /native-pkgs -name '*.node' | grep -q .
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
