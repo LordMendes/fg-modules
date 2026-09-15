@@ -4,13 +4,13 @@
  * Next.js standalone tracing omits:
  * - Sharp native binaries (.node / libvips)
  * - Prisma CLI (a devDependency used for `migrate deploy` on startup)
- * - Custom-server externals (ioredis, ws, pg, @aws-sdk/client-s3)
+ * - Custom-server / import-bundle externals (esbuild --packages=external)
  *
  * A shell `find` over a copied store misses symlink targets (effect, c12, etc.),
  * so this script walks the source .pnpm dirs and copies the full closure.
  *
- * Do not maintain a hand-picked skip list for Prisma: Prisma 7 loads studio-core,
- * @prisma/dev, mysql2, and more at CLI startup even for `migrate deploy`.
+ * Run AFTER `bundle:server` and `import:bundle` so server.mjs / import-dndtools.mjs
+ * exist and their npm externals are discovered automatically.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -23,30 +23,119 @@ const STORES = (
   .split(":")
   .filter((dir) => fs.existsSync(dir));
 
-// Roots whose full dependency closure must exist in the runner image.
-const SEED = [
-  /^sharp@/,
-  /^@img\+/,
-  /^prisma@/,
-  /^@prisma\+client@/,
-  /^@prisma\+adapter-pg@/,
-  /^@aws-sdk\+client-s3@/,
-  /^ioredis@/,
-  /^ws@/,
-  /^pg@/,
-];
+const BUNDLE_FILES = (
+  process.env.BUNDLE_FILES ||
+  "/app/web/server.mjs:/app/web/import-dndtools.mjs"
+)
+  .split(":")
+  .filter((file) => fs.existsSync(file));
+
+// Fixed roots not always present in esbuild bundles (native binaries, Prisma CLI).
+const FIXED_SEED = [/^sharp@/, /^@img\+/, /^prisma@/];
+
+// Standalone already ships these; do not copy their full pnpm closure into /native-pkgs.
+const SKIP_CLOSURE_SEED = new Set(["next"]);
 
 // Type packages are never required at runtime.
 const SKIP = [/^@types\+/, /^typescript@/];
 
+const NODE_BUILTINS = new Set([
+  "assert",
+  "buffer",
+  "child_process",
+  "cluster",
+  "crypto",
+  "dgram",
+  "diagnostics_channel",
+  "dns",
+  "events",
+  "fs",
+  "http",
+  "http2",
+  "https",
+  "module",
+  "net",
+  "os",
+  "path",
+  "perf_hooks",
+  "process",
+  "querystring",
+  "readline",
+  "stream",
+  "string_decoder",
+  "timers",
+  "tls",
+  "tty",
+  "url",
+  "util",
+  "worker_threads",
+  "zlib",
+]);
+
 const MAX_CLOSURE = Number(process.env.NATIVE_PKGS_MAX || 350);
 
-function isSeed(name) {
-  return SEED.some((re) => re.test(name));
+const FROM_RE = /\bfrom\s+["']([^"']+)["']/g;
+const DYNAMIC_IMPORT_RE = /\bimport\s*\(\s*["']([^"']+)["']\s*\)/g;
+const SIDE_EFFECT_IMPORT_RE = /\bimport\s+["']([^"']+)["']/g;
+const REQUIRE_RE = /\brequire\s*\(\s*["']([^"']+)["']\s*\)/g;
+
+function isFixedSeed(name) {
+  return FIXED_SEED.some((re) => re.test(name));
 }
 
 function isSkip(name) {
   return SKIP.some((re) => re.test(name));
+}
+
+function packageRoot(specifier) {
+  if (specifier.startsWith("node:")) {
+    return specifier.slice(5).split("/")[0];
+  }
+  if (specifier.startsWith("@")) {
+    const parts = specifier.split("/");
+    return parts.length >= 2 ? `${parts[0]}/${parts[1]}` : specifier;
+  }
+  return specifier.split("/")[0];
+}
+
+function isExternalSpecifier(specifier) {
+  if (!specifier || specifier.startsWith(".") || specifier.startsWith("@/")) {
+    return false;
+  }
+  const root = packageRoot(specifier);
+  if (NODE_BUILTINS.has(root)) return false;
+  return true;
+}
+
+function scanBundleExternals(filePath) {
+  const found = new Set();
+  let source;
+  try {
+    source = fs.readFileSync(filePath, "utf8");
+  } catch {
+    return found;
+  }
+  for (const re of [FROM_RE, DYNAMIC_IMPORT_RE, SIDE_EFFECT_IMPORT_RE, REQUIRE_RE]) {
+    re.lastIndex = 0;
+    for (const match of source.matchAll(re)) {
+      const spec = match[1];
+      if (isExternalSpecifier(spec)) found.add(packageRoot(spec));
+    }
+  }
+  return found;
+}
+
+function pkgStorePrefix(pkg) {
+  return `${pkg.replace("/", "+")}@`;
+}
+
+function addPackageSeeds(pkg, needed) {
+  const prefix = pkgStorePrefix(pkg);
+  for (const store of STORES) {
+    for (const name of fs.readdirSync(store)) {
+      if (name.startsWith(prefix) && !isSkip(name)) needed.add(name);
+    }
+  }
 }
 
 function storeKeyFromAbs(absPath) {
@@ -115,11 +204,19 @@ if (STORES.length === 0) {
 
 fs.mkdirSync(DEST, { recursive: true });
 
+const linkPackages = new Set();
+for (const file of BUNDLE_FILES) {
+  for (const pkg of scanBundleExternals(file)) linkPackages.add(pkg);
+}
+
 const needed = new Set();
 for (const store of STORES) {
   for (const name of fs.readdirSync(store)) {
-    if (isSeed(name) && !isSkip(name)) needed.add(name);
+    if (isFixedSeed(name) && !isSkip(name)) needed.add(name);
   }
+}
+for (const pkg of linkPackages) {
+  if (!SKIP_CLOSURE_SEED.has(pkg)) addPackageSeeds(pkg, needed);
 }
 
 if (needed.size === 0) {
@@ -157,8 +254,19 @@ for (const name of needed) {
   }
 }
 
-const copied = fs.readdirSync(DEST);
-console.log(`[collect-native-pkgs] copied ${copied.length} store dirs`);
+const linkList = [...linkPackages].sort();
+fs.writeFileSync(
+  path.join(DEST, "link-packages.txt"),
+  `${linkList.join("\n")}\n`,
+  "utf8",
+);
+
+const copied = fs
+  .readdirSync(DEST)
+  .filter((name) => name !== "link-packages.txt");
+console.log(
+  `[collect-native-pkgs] copied ${copied.length} store dirs; link ${linkList.length} packages: ${linkList.join(", ")}`,
+);
 
 const requirePrefix = (prefix) => {
   if (!copied.some((name) => name.startsWith(prefix))) {
@@ -172,7 +280,13 @@ requirePrefix("c12@");
 requirePrefix("@prisma+client@");
 requirePrefix("@prisma+dev@");
 requirePrefix("@prisma+studio-core@");
-requirePrefix("@aws-sdk+client-s3@");
+
+if (linkPackages.has("@aws-sdk/client-s3")) {
+  requirePrefix("@aws-sdk+client-s3@");
+}
+if (linkPackages.has("dotenv")) {
+  requirePrefix("dotenv@");
+}
 
 if (!hasNativeAddon(DEST)) {
   console.error("[collect-native-pkgs] missing native .node (sharp)");

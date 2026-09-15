@@ -26,14 +26,11 @@ COPY data/dndtools /data/dndtools
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @fg-modules/web exec prisma generate
 RUN pnpm --filter @fg-modules/web rebuild sharp
-# NFT standalone omits Sharp natives, Prisma CLI, and custom-server externals.
-# Walk the source pnpm store (relative links in a copy do not resolve).
-RUN node /app/web/scripts/collect-native-pkgs.mjs
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
 RUN pnpm --filter @fg-modules/web run import:bundle
-# Custom HTTP+WS server (esbuild). Runs with packages external.
-RUN pnpm --filter @fg-modules/web run bundle:server
+# After esbuild bundles exist: copy Sharp/Prisma CLI + scan server.mjs externals.
+RUN node /app/web/scripts/collect-native-pkgs.mjs
 
 # --- Production ---
 # Do not inherit `base` (pnpm). Previous runner `npm install` added 220 packages
@@ -65,8 +62,8 @@ COPY --from=builder /native-pkgs /tmp/native-pkgs
 RUN overlay_pkgs() { \
       target="$1"; \
       mkdir -p "$target"; \
-      for src in /tmp/native-pkgs/*; do \
-        [ -e "$src" ] || continue; \
+      for src in /tmp/native-pkgs/*/; do \
+        [ -d "$src" ] || continue; \
         rm -rf "$target/$(basename "$src")"; \
         cp -a "$src" "$target/"; \
       done; \
@@ -84,12 +81,10 @@ RUN overlay_pkgs() { \
        ln -sfn "$src" "$dest"; \
      } \
   && link_web_pkg prisma \
-  && link_web_pkg '@prisma/client' \
-  && link_web_pkg '@prisma/adapter-pg' \
-  && link_web_pkg '@aws-sdk/client-s3' \
-  && link_web_pkg ioredis \
-  && link_web_pkg ws \
-  && link_web_pkg pg \
+  && while IFS= read -r pkg; do \
+       [ -z "$pkg" ] && continue; \
+       link_web_pkg "$pkg" || exit 1; \
+     done < /tmp/native-pkgs/link-packages.txt \
   && mkdir -p /app/web/node_modules/.bin \
   && ln -sfn ../prisma/build/index.js /app/web/node_modules/.bin/prisma \
   && chmod +x /app/web/node_modules/.bin/prisma /docker-entrypoint.sh \
