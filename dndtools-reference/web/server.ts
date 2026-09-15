@@ -40,10 +40,31 @@ async function main() {
   );
 
   const require = createRequire(import.meta.url);
+  // Next 16: `typeof import("next")` is the module namespace (not callable).
+  // CJS `require("next")` is the server factory function.
+  type NextServer = {
+    prepare: () => Promise<void>;
+    getRequestHandler: () => (
+      req: import("http").IncomingMessage,
+      res: import("http").ServerResponse,
+      parsedUrl?: import("url").UrlWithParsedQuery,
+    ) => unknown;
+    getUpgradeHandler?: () => (
+      req: import("http").IncomingMessage,
+      socket: import("stream").Duplex,
+      head: Buffer,
+    ) => unknown;
+  };
+  type CreateNextServer = (options: {
+    dev?: boolean;
+    hostname?: string;
+    port?: number;
+    dir?: string;
+  }) => NextServer;
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const next = require("next") as typeof import("next");
+  const createNextServer = require("next") as CreateNextServer;
 
-  const app = next({ dev, hostname, port, dir });
+  const app = createNextServer({ dev, hostname, port, dir });
   const handle = app.getRequestHandler();
   await app.prepare();
 
