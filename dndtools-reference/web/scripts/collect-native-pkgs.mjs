@@ -31,6 +31,7 @@ const SEED = [
   /^@prisma\+fetch-engine@/,
   /^@prisma\+adapter-pg@/,
   /^@prisma\+driver-adapter-utils@/,
+  /^@prisma\+studio-core@/,
   /^ioredis@/,
   /^@ioredis\+commands@/,
   /^cluster-key-slot@/,
@@ -41,9 +42,9 @@ const SEED = [
   /^pg@/,
 ];
 
-// prisma CLI also links studio/dev; migrate deploy does not need them.
+// Prisma 7 CLI loads @prisma/studio-core at startup (even for migrate deploy).
+// Skip dev-only Prisma packages, not studio-core or its react deps.
 const SKIP = [
-  /^@prisma\+studio/,
   /^@prisma\+dev@/,
   /^@prisma\+query-plan/,
   /^@prisma\+streams/,
@@ -51,9 +52,6 @@ const SKIP = [
   /^hono@/,
   /^@hono\+/,
   /^mysql2@/,
-  /^react@/,
-  /^react-dom@/,
-  /^scheduler@/,
   /^@types\+/,
   /^typescript@/,
 ];
@@ -156,7 +154,7 @@ while (needed.size > prev) {
   }
 }
 
-if (needed.size > 120) {
+if (needed.size > 150) {
   console.error(
     `[collect-native-pkgs] closure too large (${needed.size}); refusing to copy`,
   );
@@ -183,6 +181,10 @@ if (!copied.some((name) => name.startsWith("effect@"))) {
 }
 if (!copied.some((name) => name.startsWith("c12@"))) {
   console.error("[collect-native-pkgs] missing c12@*");
+  process.exit(1);
+}
+if (!copied.some((name) => name.startsWith("@prisma+studio-core@"))) {
+  console.error("[collect-native-pkgs] missing @prisma+studio-core@*");
   process.exit(1);
 }
 if (!hasNativeAddon(DEST)) {
