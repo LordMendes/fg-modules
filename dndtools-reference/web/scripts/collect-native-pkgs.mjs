@@ -1,9 +1,16 @@
 /**
- * Copy a pnpm virtual-store closure into /native-pkgs for the Docker runner.
+ * Copy pnpm virtual-store dirs into /native-pkgs for the Docker runner.
  *
- * Walk the SOURCE store. `cp -a` of a package leaves relative `../../pkg@ver`
- * links that `readlink -f` cannot resolve in the copy, so a shell walker never
- * sees `effect` / `c12`.
+ * Next.js standalone tracing omits:
+ * - Sharp native binaries (.node / libvips)
+ * - Prisma CLI (a devDependency used for `migrate deploy` on startup)
+ * - Custom-server externals (ioredis, ws, pg)
+ *
+ * A shell `find` over a copied store misses symlink targets (effect, c12, etc.),
+ * so this script walks the source .pnpm dirs and copies the full closure.
+ *
+ * Do not maintain a hand-picked skip list for Prisma: Prisma 7 loads studio-core,
+ * @prisma/dev, mysql2, and more at CLI startup even for `migrate deploy`.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -16,45 +23,20 @@ const STORES = (
   .split(":")
   .filter((dir) => fs.existsSync(dir));
 
+// Roots whose full dependency closure must exist in the runner image.
 const SEED = [
   /^sharp@/,
-  /^@img\+sharp-linux/,
-  /^@img\+sharp-libvips-linux/,
+  /^@img\+/,
   /^prisma@/,
-  /^@prisma\+client@/,
-  /^@prisma\+client-runtime-utils@/,
-  /^@prisma\+config@/,
-  /^@prisma\+debug@/,
-  /^@prisma\+engines@/,
-  /^@prisma\+engines-version@/,
-  /^@prisma\+get-platform@/,
-  /^@prisma\+fetch-engine@/,
-  /^@prisma\+adapter-pg@/,
-  /^@prisma\+driver-adapter-utils@/,
-  /^@prisma\+studio-core@/,
   /^ioredis@/,
-  /^@ioredis\+commands@/,
-  /^cluster-key-slot@/,
-  /^denque@/,
-  /^redis-errors@/,
-  /^standard-as-callback@/,
   /^ws@/,
   /^pg@/,
 ];
 
-// Prisma 7 CLI loads @prisma/studio-core at startup (even for migrate deploy).
-// Skip dev-only Prisma packages, not studio-core or its react deps.
-const SKIP = [
-  /^@prisma\+dev@/,
-  /^@prisma\+query-plan/,
-  /^@prisma\+streams/,
-  /^@electric-sql/,
-  /^hono@/,
-  /^@hono\+/,
-  /^mysql2@/,
-  /^@types\+/,
-  /^typescript@/,
-];
+// Type packages are never required at runtime.
+const SKIP = [/^@types\+/, /^typescript@/];
+
+const MAX_CLOSURE = Number(process.env.NATIVE_PKGS_MAX || 250);
 
 function isSeed(name) {
   return SEED.some((re) => re.test(name));
@@ -154,9 +136,9 @@ while (needed.size > prev) {
   }
 }
 
-if (needed.size > 150) {
+if (needed.size > MAX_CLOSURE) {
   console.error(
-    `[collect-native-pkgs] closure too large (${needed.size}); refusing to copy`,
+    `[collect-native-pkgs] closure too large (${needed.size} > ${MAX_CLOSURE}); refusing to copy`,
   );
   process.exit(1);
 }
@@ -175,18 +157,18 @@ for (const name of needed) {
 const copied = fs.readdirSync(DEST);
 console.log(`[collect-native-pkgs] copied ${copied.length} store dirs`);
 
-if (!copied.some((name) => name.startsWith("effect@"))) {
-  console.error("[collect-native-pkgs] missing effect@*");
-  process.exit(1);
-}
-if (!copied.some((name) => name.startsWith("c12@"))) {
-  console.error("[collect-native-pkgs] missing c12@*");
-  process.exit(1);
-}
-if (!copied.some((name) => name.startsWith("@prisma+studio-core@"))) {
-  console.error("[collect-native-pkgs] missing @prisma+studio-core@*");
-  process.exit(1);
-}
+const requirePrefix = (prefix) => {
+  if (!copied.some((name) => name.startsWith(prefix))) {
+    console.error(`[collect-native-pkgs] missing ${prefix}*`);
+    process.exit(1);
+  }
+};
+
+requirePrefix("effect@");
+requirePrefix("c12@");
+requirePrefix("@prisma+dev@");
+requirePrefix("@prisma+studio-core@");
+
 if (!hasNativeAddon(DEST)) {
   console.error("[collect-native-pkgs] missing native .node (sharp)");
   process.exit(1);
