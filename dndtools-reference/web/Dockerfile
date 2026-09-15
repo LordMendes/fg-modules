@@ -31,7 +31,7 @@ RUN pnpm --filter @fg-modules/web rebuild sharp
 RUN node /app/web/scripts/collect-native-pkgs.mjs
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
-RUN pnpm --filter @fg-modules/web import:bundle
+RUN pnpm --filter @fg-modules/web run import:bundle
 # Custom HTTP+WS server (esbuild). Runs with packages external.
 RUN pnpm --filter @fg-modules/web run bundle:server
 
