@@ -279,10 +279,18 @@ function PcPlannerBody() {
     });
   }
 
-  function addFeat(slug: string, name: string) {
+  function addFeat(slug: string, name: string, choice?: string) {
     patch((s) => {
       if (s.feats.some((f) => f.slug === slug)) return;
-      s.feats.push({ slug, name });
+      s.feats.push(choice ? { slug, name, choice } : { slug, name });
+    });
+  }
+
+  function setFeatChoice(slug: string, choice: string) {
+    patch((s) => {
+      const feat = s.feats.find((f) => f.slug === slug);
+      if (!feat) return;
+      feat.choice = choice;
     });
   }
 

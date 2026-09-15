@@ -380,7 +380,12 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
                   disabled={disabled}
                   title={
                     ready
-                      ? `Roll ${weapon.name} attack: 1d20 ${standardDisplay} (threat ${weapon.threatMin}-20)`
+                      ? [
+                          `Roll ${weapon.name} attack: 1d20 ${standardDisplay} (threat ${weapon.threatMin}-20)`,
+                          (weapon.attackSources ?? []).join(", "),
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")
                       : "Dice loading…"
                   }
                   aria-label={`Roll ${weapon.name} attack`}
@@ -432,9 +437,14 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
                     disabled={disabled}
                     title={
                       ready
-                        ? pending
-                          ? `Roll critical damage ×${pending.multiplier}: ${damageText}`
-                          : `Roll ${weapon.name} damage: ${damageText}`
+                        ? [
+                            pending
+                              ? `Roll critical damage ×${pending.multiplier}: ${damageText}`
+                              : `Roll ${weapon.name} damage: ${damageText}`,
+                            (weapon.damageSources ?? []).join(", "),
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")
                         : "Dice loading…"
                     }
                     aria-label={

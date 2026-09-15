@@ -197,16 +197,26 @@ export function syncAbilityDamageLines(row: InventoryRow): void {
   syncLegacyDamageFields(row);
 }
 
-export function inventoryAttackBonus(row: InventoryRow): number {
+/** Magic enhancement or masterwork attack bonus only (no attackMisc). */
+export function inventoryMagicAttackBonus(row: InventoryRow): number {
   const enhancement = row.enhancementBonus ?? 0;
   if (enhancement > 0) return enhancement;
-  if (row.masterwork || enhancement > 0) return 1;
+  if (row.masterwork) return 1;
   return 0;
 }
 
-export function inventoryDamageBonus(row: InventoryRow): number {
+/** Magic enhancement damage bonus only (no damageMisc). Masterwork adds 0. */
+export function inventoryMagicDamageBonus(row: InventoryRow): number {
   const enhancement = row.enhancementBonus ?? 0;
   return enhancement > 0 ? enhancement : 0;
+}
+
+export function inventoryAttackBonus(row: InventoryRow): number {
+  return inventoryMagicAttackBonus(row) + (row.attackMisc ?? 0);
+}
+
+export function inventoryDamageBonus(row: InventoryRow): number {
+  return inventoryMagicDamageBonus(row) + (row.damageMisc ?? 0);
 }
 
 export function isInventoryMasterwork(row: InventoryRow): boolean {
@@ -214,7 +224,11 @@ export function isInventoryMasterwork(row: InventoryRow): boolean {
 }
 
 export function effectiveArmorBonus(row: InventoryRow): number {
-  return (row.armorBonus ?? 0) + Math.max(0, row.enhancementBonus ?? 0);
+  return (
+    (row.armorBonus ?? 0) +
+    Math.max(0, row.enhancementBonus ?? 0) +
+    (row.armorMisc ?? 0)
+  );
 }
 
 /** Masterwork / magic armor improves ACP by 1 toward 0. */

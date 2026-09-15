@@ -5,6 +5,9 @@ import {
   createBlankInventoryRow,
   inventoryAttackBonus,
   inventoryDamageBonus,
+  inventoryMagicAttackBonus,
+  inventoryMagicDamageBonus,
+  effectiveArmorBonus,
   inventoryDamageLines,
   matchBuilderWeaponId,
   prepareRowForEdit,
@@ -119,6 +122,46 @@ describe("magic bonuses", () => {
     };
     assert.equal(inventoryAttackBonus(row), 1);
     assert.equal(inventoryDamageBonus(row), 0);
+  });
+
+  it("extra attackMisc and damageMisc stack with enhancement", () => {
+    const row: InventoryRow = {
+      name: "Longsword",
+      quantity: 1,
+      weight: 4,
+      enhancementBonus: 1,
+      attackMisc: 1,
+      damageMisc: 2,
+    };
+    assert.equal(inventoryMagicAttackBonus(row), 1);
+    assert.equal(inventoryMagicDamageBonus(row), 1);
+    assert.equal(inventoryAttackBonus(row), 2);
+    assert.equal(inventoryDamageBonus(row), 3);
+  });
+
+  it("armorMisc stacks with base and enhancement AC", () => {
+    const row: InventoryRow = {
+      name: "Full plate",
+      quantity: 1,
+      weight: 50,
+      kind: "armor",
+      armorBonus: 8,
+      enhancementBonus: 1,
+      armorMisc: 1,
+    };
+    assert.equal(effectiveArmorBonus(row), 10);
+  });
+
+  it("masterwork armor does not add AC", () => {
+    const row: InventoryRow = {
+      name: "Full plate",
+      quantity: 1,
+      weight: 50,
+      kind: "armor",
+      armorBonus: 8,
+      masterwork: true,
+    };
+    assert.equal(effectiveArmorBonus(row), 8);
   });
 });
 

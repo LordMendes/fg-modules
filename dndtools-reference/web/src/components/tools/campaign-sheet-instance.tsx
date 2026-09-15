@@ -351,10 +351,10 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
         onSpellClassIndexChange={setActiveSpellClassIndex}
         compendium={compendium}
         compendiumLoading={compendiumLoading}
-        onAddFeat={(slug, name) =>
+        onAddFeat={(slug, name, choice) =>
           patch((s) => {
             if (s.feats.some((f) => f.slug === slug)) return;
-            s.feats.push({ slug, name });
+            s.feats.push(choice ? { slug, name, choice } : { slug, name });
           })
         }
         onRemoveFeat={(slug) =>

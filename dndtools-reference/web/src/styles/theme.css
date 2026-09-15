@@ -8653,6 +8653,37 @@ body {
   padding: 0;
 }
 
+.pc-item-editor-hint {
+  margin: 0 0 0.55rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.pc-item-editor-feat-bonuses {
+  margin-top: 0.65rem;
+}
+
+.pc-item-editor-feat-list,
+.pc-item-editor-feat-apply {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+}
+
+.pc-item-editor-feat-apply {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.pc-item-editor-feat-apply li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .pc-item-editor-suggest,
 .pc-item-editor-price {
   margin: 0.55rem 0 0;

@@ -43,11 +43,19 @@ import { canEquipAsWornItem } from "@/lib/pc-planner/itemBonuses";
 import type {
   AbilityKey,
   CombatBonusStat,
+  FeatEntry,
   InventoryDamageLine,
   InventoryRow,
   ItemBonusType,
   ItemStatBonus,
 } from "@/lib/pc-planner/types";
+import {
+  computeWeaponFeatBonuses,
+  featNeedsWeaponChoice,
+  formatFeatDisplayName,
+  parseFeatWeaponChoice,
+  stripMagicWeaponPrefix,
+} from "@/lib/pc-planner/weaponFeatBonuses";
 
 const ITEM_KINDS = [
   "weapon",
@@ -128,6 +136,8 @@ export type PcInventoryItemEditorProps = {
   cascadeIndex: number;
   closeOnEscape: boolean;
   onActivate: () => void;
+  feats?: FeatEntry[];
+  onSetFeatChoice?: (slug: string, choice: string) => void;
 };
 
 function AbilityPriceHint({
@@ -154,6 +164,8 @@ export function PcInventoryItemEditor({
   cascadeIndex,
   closeOnEscape,
   onActivate,
+  feats = [],
+  onSetFeatChoice,
 }: PcInventoryItemEditorProps) {
   const [abilitySearch, setAbilitySearch] = useState("");
   const [abilitySource, setAbilitySource] = useState<SourceAbbrev | "all">("all");
@@ -165,6 +177,18 @@ export function PcInventoryItemEditor({
   const canWear = canEquipAsWornItem({ ...row, kind: kindValue });
   const enhancement = row.enhancementBonus ?? 0;
   const masterworkLocked = enhancement > 0;
+  const attackMisc = row.attackMisc ?? 0;
+  const damageMisc = row.damageMisc ?? 0;
+  const armorMisc = row.armorMisc ?? 0;
+  const matchedFeatBonuses = isWeapon
+    ? computeWeaponFeatBonuses(feats, row)
+    : null;
+  const applyableFeats = isWeapon
+    ? feats.filter((feat) => {
+        if (!featNeedsWeaponChoice(feat)) return false;
+        return !parseFeatWeaponChoice(feat);
+      })
+    : [];
   const damageLines = inventoryDamageLines(row);
   const price = showMagicBuilder || isSpellItem ? priceInventoryItem(row) : null;
   const suggestedName = showMagicBuilder ? suggestedMagicItemName(row) : null;
@@ -894,6 +918,109 @@ export function PcInventoryItemEditor({
           )}
         </section>
 
+        {isWeapon || isArmor ? (
+        <section className="pc-item-editor-section">
+          <h3>Combat bonuses</h3>
+          <p className="pc-item-editor-hint">
+            Extra bonuses for feats or class abilities this sheet does not
+            auto-apply. Magic enhancement is set under Magic below.
+          </p>
+          <div className="pc-item-editor-grid">
+            {isWeapon ? (
+              <>
+                <label className="pc-item-editor-field">
+                  <span>Extra attack bonus</span>
+                  <input
+                    type="number"
+                    className="pc-sheet-input"
+                    value={attackMisc}
+                    onChange={(event) =>
+                      patchRow((current) => {
+                        current.attackMisc = Number(event.target.value) || 0;
+                      })
+                    }
+                  />
+                </label>
+                <label className="pc-item-editor-field">
+                  <span>Extra damage bonus</span>
+                  <input
+                    type="number"
+                    className="pc-sheet-input"
+                    value={damageMisc}
+                    onChange={(event) =>
+                      patchRow((current) => {
+                        current.damageMisc = Number(event.target.value) || 0;
+                      })
+                    }
+                  />
+                </label>
+              </>
+            ) : null}
+            {isArmor ? (
+              <label className="pc-item-editor-field">
+                <span>Extra AC bonus</span>
+                <input
+                  type="number"
+                  className="pc-sheet-input"
+                  value={armorMisc}
+                  onChange={(event) =>
+                    patchRow((current) => {
+                      current.armorMisc = Number(event.target.value) || 0;
+                    })
+                  }
+                />
+              </label>
+            ) : null}
+          </div>
+          {isWeapon && matchedFeatBonuses ? (
+            <div className="pc-item-editor-feat-bonuses">
+              {matchedFeatBonuses.attackParts.length > 0 ||
+              matchedFeatBonuses.damageParts.length > 0 ? (
+                <ul className="pc-item-editor-feat-list">
+                  {matchedFeatBonuses.attackParts.map((part) => (
+                    <li key={`atk-${part.label}`}>
+                      {part.label} +{part.amount} attack
+                    </li>
+                  ))}
+                  {matchedFeatBonuses.damageParts.map((part) => (
+                    <li key={`dmg-${part.label}`}>
+                      {part.label} +{part.amount} damage
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="pc-item-editor-hint">
+                  No matching Weapon Focus / Specialization feats for this
+                  weapon yet.
+                </p>
+              )}
+              {applyableFeats.length > 0 && onSetFeatChoice ? (
+                <ul className="pc-item-editor-feat-apply">
+                  {applyableFeats.map((feat) => {
+                    const choice =
+                      stripMagicWeaponPrefix(row.name) ||
+                      row.slug ||
+                      row.name;
+                    return (
+                      <li key={feat.slug}>
+                        <span>{formatFeatDisplayName(feat)} (no weapon)</span>
+                        <button
+                          type="button"
+                          className="tool-btn tool-btn--ghost tool-btn--compact"
+                          onClick={() => onSetFeatChoice(feat.slug, choice)}
+                        >
+                          Apply to this weapon
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+            </div>
+          ) : null}
+        </section>
+        ) : null}
+
         {showMagicBuilder ? (
         <section className="pc-item-editor-section">
           <h3>Magic</h3>
@@ -926,7 +1053,11 @@ export function PcInventoryItemEditor({
               >
                 {[0, 1, 2, 3, 4, 5].map((value) => (
                   <option key={value} value={value}>
-                    {value === 0 ? "None (+0)" : `+${value}`}
+                    {value === 0
+                      ? "None"
+                      : isWeapon
+                        ? `+${value} (+${value} attack, +${value} damage)`
+                        : `+${value} (+${value} AC)`}
                   </option>
                 ))}
               </select>

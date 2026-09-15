@@ -10,11 +10,13 @@ import { isWeaponKind } from "./equippedGear";
 import { formatDamageType } from "@/lib/equipment-display";
 import {
   applyKeenThreat,
-  inventoryAttackBonus,
-  inventoryDamageBonus,
   inventoryDamageLines,
   inventoryHasKeen,
+  inventoryMagicAttackBonus,
+  inventoryMagicDamageBonus,
 } from "./inventoryItem";
+import { computeEquippedBonuses } from "./itemBonuses";
+import { computeWeaponFeatBonuses } from "./weaponFeatBonuses";
 
 export { applyKeenThreat };
 import type { FeatEntry, InventoryDamageLine, InventoryRow, PcPlanState } from "./types";
@@ -75,6 +77,10 @@ export type WeaponAttackRow = {
   damageType: string | null;
   /** Full MM-style line, e.g. Longsword +9/+4 melee (1d8+3/19-20) */
   summary: string;
+  /** Breakdown of the primary attack bonus (tooltip). */
+  attackSources: string[];
+  /** Breakdown of the damage modifier (tooltip). */
+  damageSources: string[];
 };
 
 function asDieSides(sides: number): DieSides | null {
@@ -490,6 +496,20 @@ export function meleeDamageAbilityBonus(
   return strMod;
 }
 
+export type BonusSourcePart = {
+  label: string;
+  amount: number;
+};
+
+export function formatBonusSources(parts: BonusSourcePart[]): string[] {
+  return parts
+    .filter((part) => part.amount !== 0)
+    .map((part) => {
+      const sign = part.amount > 0 ? "+" : "";
+      return `${part.label} ${sign}${part.amount}`;
+    });
+}
+
 export function computeWeaponAttackRows(
   state: PcPlanState,
   combatStats: CombatComputed,
@@ -508,6 +528,7 @@ export function computeWeaponAttackRows(
     ? twfAttackPenalties(twfFlags.twoWeaponFighting, offHandLight)
     : null;
   const rows: WeaponAttackRow[] = [];
+  const equippedBonuses = computeEquippedBonuses(state.inventory);
 
   for (let i = 0; i < inventory.length; i++) {
     const item = inventory[i];
@@ -519,13 +540,43 @@ export function computeWeaponAttackRows(
     const useDexToHit =
       mode === "ranged" || (finesse && light && mode === "melee");
 
-    const magicAttack = inventoryAttackBonus(item);
+    const featBonuses = computeWeaponFeatBonuses(state.feats, item);
+    const magicAttack = inventoryMagicAttackBonus(item);
+    const attackMisc = item.attackMisc ?? 0;
+    const abilityHit = useDexToHit ? dexMod : strMod;
+    const abilityHitLabel = useDexToHit ? "Dex" : "Str";
+    const combatMisc =
+      mode === "ranged" ? state.combat.rangedMisc : state.combat.meleeMisc;
+    const itemAttack =
+      mode === "ranged"
+        ? equippedBonuses.combat.ranged.total
+        : equippedBonuses.combat.melee.total;
     const attackBonus =
       combatStats.bab +
-      (useDexToHit ? dexMod : strMod) +
+      abilityHit +
       sizeMod +
       magicAttack +
-      (mode === "ranged" ? state.combat.rangedMisc : state.combat.meleeMisc);
+      featBonuses.attack +
+      attackMisc +
+      itemAttack +
+      combatMisc;
+    const attackSources = formatBonusSources([
+      { label: "BAB", amount: combatStats.bab },
+      { label: abilityHitLabel, amount: abilityHit },
+      { label: "size", amount: sizeMod },
+      {
+        label:
+          (item.enhancementBonus ?? 0) > 0 ? "enhancement" : "masterwork",
+        amount: magicAttack,
+      },
+      ...featBonuses.attackParts.map((part) => ({
+        label: part.label,
+        amount: part.amount,
+      })),
+      { label: "extra", amount: attackMisc },
+      { label: "item", amount: itemAttack },
+      { label: "misc", amount: combatMisc },
+    ]);
 
     const lines = inventoryDamageLines(item);
     const primaryLine =
@@ -559,13 +610,24 @@ export function computeWeaponAttackRows(
       .filter(Boolean)
       .join(" plus ");
 
-    const magicDamage = inventoryDamageBonus(item);
+    const magicDamage = inventoryMagicDamageBonus(item);
+    const damageMisc = item.damageMisc ?? 0;
     const twoHanded = isTwoHandedWeapon(item);
     let abilityDamage = 0;
     if (mode === "melee") {
       abilityDamage = meleeDamageAbilityBonus(strMod, twoHanded);
     }
-    const damageModifier = magicDamage + abilityDamage;
+    const damageModifier =
+      magicDamage + abilityDamage + featBonuses.damage + damageMisc;
+    const damageSources = formatBonusSources([
+      { label: "enhancement", amount: magicDamage },
+      { label: "Str", amount: abilityDamage },
+      ...featBonuses.damageParts.map((part) => ({
+        label: part.label,
+        amount: part.amount,
+      })),
+      { label: "extra", amount: damageMisc },
+    ]);
 
     let twfHand: TwfHand | null = null;
     if (twfPair && twfPenalties) {
@@ -574,12 +636,14 @@ export function computeWeaponAttackRows(
     }
 
     let fullAttackDamageModifier = damageModifier;
+    const nonAbilityDamage =
+      magicDamage + featBonuses.damage + damageMisc;
     if (mode === "melee" && twfHand === "main") {
       // Dual-wield main hand never gets 1.5× Str.
-      fullAttackDamageModifier = magicDamage + strMod;
+      fullAttackDamageModifier = nonAbilityDamage + strMod;
     } else if (mode === "melee" && twfHand === "off") {
       fullAttackDamageModifier =
-        magicDamage + offHandDamageAbilityBonus(strMod);
+        nonAbilityDamage + offHandDamageAbilityBonus(strMod);
     }
 
     const standardBonuses = [attackBonus];
@@ -659,6 +723,8 @@ export function computeWeaponAttackRows(
       critMultiplier: critInfo.multiplier,
       damageType: typeLabel,
       summary,
+      attackSources,
+      damageSources,
     });
   }
 

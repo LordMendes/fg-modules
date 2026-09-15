@@ -14,6 +14,11 @@ export type ClassLevelEntry = {
 export type FeatEntry = {
   slug: string;
   name: string;
+  /**
+   * Chosen weapon type for Weapon Focus / Specialization style feats
+   * (e.g. "longsword"). Matched against inventory weapon names/slugs.
+   */
+  choice?: string;
 };
 
 export type SpellMode = "preparation" | "spontaneous";
@@ -146,6 +151,21 @@ export type InventoryRow = {
   category?: string | null;
   masterwork?: boolean;
   enhancementBonus?: number;
+  /**
+   * Extra attack bonus on this weapon (feats / class abilities the sheet
+   * does not auto-apply). Stacks with enhancement / masterwork.
+   */
+  attackMisc?: number;
+  /**
+   * Extra damage bonus on this weapon (feats / class abilities).
+   * Stacks with enhancement.
+   */
+  damageMisc?: number;
+  /**
+   * Extra AC bonus on this armor/shield (feats / class abilities).
+   * Stacks with base armor and enhancement.
+   */
+  armorMisc?: number;
   weaponAbilities?: SelectedWeaponAbility[];
   armorAbilities?: SelectedArmorAbility[];
   damageLines?: InventoryDamageLine[];

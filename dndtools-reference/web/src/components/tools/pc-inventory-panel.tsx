@@ -191,7 +191,9 @@ function inventoryRowMeta(row: InventoryRow): string | null {
   }
   if (row.armorBonus != null && Number.isFinite(row.armorBonus)) {
     const ac =
-      (row.armorBonus ?? 0) + Math.max(0, row.enhancementBonus ?? 0);
+      (row.armorBonus ?? 0) +
+      Math.max(0, row.enhancementBonus ?? 0) +
+      (row.armorMisc ?? 0);
     parts.push(`+${ac} AC`);
   }
   if (row.maxDex != null && Number.isFinite(row.maxDex)) {
@@ -992,6 +994,14 @@ export function PcInventoryPanel({
                 const current = s.inventory.find((entry) => entry.id === id);
                 if (!current) return;
                 fn(current);
+              })
+            }
+            feats={state.feats}
+            onSetFeatChoice={(slug, choice) =>
+              patch((s) => {
+                const feat = s.feats.find((entry) => entry.slug === slug);
+                if (!feat) return;
+                feat.choice = choice;
               })
             }
           />

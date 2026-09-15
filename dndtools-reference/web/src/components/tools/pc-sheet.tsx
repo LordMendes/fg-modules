@@ -112,7 +112,7 @@ export type PcSheetProps = {
   onSpellClassIndexChange: (index: number) => void;
   compendium: PcCompendiumBundle | null;
   compendiumLoading?: boolean;
-  onAddFeat: (slug: string, name: string) => void;
+  onAddFeat: (slug: string, name: string, choice?: string) => void;
   onRemoveFeat: (slug: string) => void;
   onAddSpell: (slug: string, name: string, level: number) => void;
   onRemoveSpell: (slug: string) => void;

@@ -430,12 +430,12 @@ function CampaignSheetPopoutBody({
                 onSpellClassIndexChange={setActiveSpellClassIndex}
                 compendium={compendium}
                 compendiumLoading={compendiumLoading}
-                onAddFeat={(slug, name) =>
-                  patch((s) => {
-                    if (s.feats.some((f) => f.slug === slug)) return;
-                    s.feats.push({ slug, name });
-                  })
-                }
+                onAddFeat={(slug, name, choice) =>
+          patch((s) => {
+            if (s.feats.some((f) => f.slug === slug)) return;
+            s.feats.push(choice ? { slug, name, choice } : { slug, name });
+          })
+        }
                 onRemoveFeat={(slug) =>
                   patch((s) => {
                     s.feats = s.feats.filter((f) => f.slug !== slug);

@@ -155,6 +155,26 @@ describe("computeEquippedGear", () => {
     assert.equal(gear.armor, 6);
     assert.equal(gear.acp, -5);
   });
+
+  it("armorMisc adds to equipped armor AC", () => {
+    const gear = computeEquippedGear(
+      [
+        {
+          name: "+1 full plate",
+          quantity: 1,
+          weight: 50,
+          kind: "armor",
+          equipped: true,
+          armorBonus: 8,
+          enhancementBonus: 1,
+          armorMisc: 1,
+          masterwork: true,
+        },
+      ],
+      30,
+    );
+    assert.equal(gear.armor, 10);
+  });
 });
 
 describe("equipInventoryRow", () => {

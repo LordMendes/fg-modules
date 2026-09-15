@@ -2,6 +2,11 @@
 
 import type { PcCompendiumBundle } from "@/lib/entities";
 import type { FeatEntry, PcPlanState } from "@/lib/pc-planner/types";
+import {
+  featNeedsWeaponChoice,
+  formatFeatDisplayName,
+  weaponChoiceOptions,
+} from "@/lib/pc-planner/weaponFeatBonuses";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import type { CategoryKey } from "@/lib/categories";
 import {
@@ -15,7 +20,7 @@ export type PcAbilitiesPanelProps = {
   state: PcPlanState;
   compendium: PcCompendiumBundle | null;
   loading?: boolean;
-  onAddFeat: (slug: string, name: string) => void;
+  onAddFeat: (slug: string, name: string, choice?: string) => void;
   onRemoveFeat: (slug: string) => void;
 };
 
@@ -77,13 +82,15 @@ function FeatList({
   budgetTitle,
   onAddFeat,
   onRemoveFeat,
+  inventory,
 }: {
   feats: FeatEntry[];
   budgetLabel: string;
   overBudget: boolean;
   budgetTitle: string;
-  onAddFeat: (slug: string, name: string) => void;
+  onAddFeat: (slug: string, name: string, choice?: string) => void;
   onRemoveFeat: (slug: string) => void;
+  inventory: PcPlanState["inventory"];
 }) {
   return (
     <div className="npc-sheet-block">
@@ -99,7 +106,22 @@ function FeatList({
       <EntitySearchCombobox
         categories={FEAT_SEARCH_CATEGORIES}
         placeholder="Search feats to add…"
-        onSelect={(hit) => onAddFeat(hit.slug, hit.name)}
+        onSelect={(hit) => {
+          const stub = { slug: hit.slug, name: hit.name };
+          if (!featNeedsWeaponChoice(stub)) {
+            onAddFeat(hit.slug, hit.name);
+            return;
+          }
+          const options = weaponChoiceOptions(inventory);
+          const suggestion = options[0]?.label ?? "longsword";
+          const choice = window.prompt(
+            `Choose a weapon type for ${hit.name} (e.g. longsword)`,
+            suggestion,
+          );
+          if (choice == null) return;
+          const trimmed = choice.trim();
+          onAddFeat(hit.slug, hit.name, trimmed || undefined);
+        }}
       />
       {feats.length === 0 ? (
         <p className="pc-sheet-empty">No feats added.</p>
@@ -113,7 +135,7 @@ function FeatList({
                 rel="noopener noreferrer"
                 className="pc-feat-link"
               >
-                {feat.name}
+                {formatFeatDisplayName(feat)}
               </a>
               <button
                 type="button"
@@ -153,6 +175,7 @@ export function PcAbilitiesPanel({
         budgetTitle={`General ${budget.general}, human ${budget.human}, fighter ${budget.fighter}`}
         onAddFeat={onAddFeat}
         onRemoveFeat={onRemoveFeat}
+        inventory={state.inventory}
       />
       <ClassAbilityList abilities={compendium?.classAbilities ?? []} />
       <AbilityList

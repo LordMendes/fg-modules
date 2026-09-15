@@ -709,3 +709,76 @@ describe("computeWeaponAttackRows", () => {
     assert.equal(rows[0].threatMin, 17);
   });
 });
+
+describe("weapon feat and misc bonuses", () => {
+  it("Weapon Focus on matching longsword adds attack and sources", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 16;
+    state.feats = [
+      { slug: "weapon-focus", name: "Weapon Focus", choice: "longsword" },
+    ];
+    state.inventory = [
+      {
+        name: "+1 Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        slug: "longsword",
+        damageM: "1d8",
+        critical: "19-20/x2",
+        damageType: "S",
+        handed: "one",
+        weaponHand: "main",
+        equipped: true,
+        enhancementBonus: 1,
+        attackMisc: 1,
+        damageMisc: 2,
+      },
+    ];
+
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows.length, 1);
+    // BAB 1 + Str 3 + enhancement 1 + Weapon Focus 1 + attackMisc 1 = 7
+    assert.equal(rows[0].attackBonus, 7);
+    // enhancement 1 + Str 3 + damageMisc 2 = 6
+    assert.equal(rows[0].damageModifier, 6);
+    assert.ok((rows[0].attackSources ?? []).some((s) => /Weapon Focus/i.test(s)));
+    assert.ok((rows[0].attackSources ?? []).some((s) => /enhancement/i.test(s)));
+    assert.ok((rows[0].damageSources ?? []).some((s) => /extra/i.test(s)));
+  });
+
+  it("does not apply Weapon Focus to a mismatched weapon", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 12;
+    state.feats = [
+      { slug: "weapon-focus", name: "Weapon Focus", choice: "longsword" },
+    ];
+    state.inventory = [
+      {
+        name: "Greataxe",
+        quantity: 1,
+        weight: 12,
+        kind: "weapon",
+        slug: "greataxe",
+        damageM: "1d12",
+        critical: "x3",
+        damageType: "S",
+        handed: "two",
+        weaponHand: "main",
+        equipped: true,
+      },
+    ];
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows.length, 1);
+    // BAB 1 + Str 1 = 2 (1.5x only for damage)
+    assert.equal(rows[0].attackBonus, 2);
+  });
+});
