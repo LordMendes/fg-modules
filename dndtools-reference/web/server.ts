@@ -7,11 +7,15 @@
  * Requires REDIS_URL (defaults to redis://127.0.0.1:6379 locally).
  * Production fails fast if REDIS_URL is unset.
  *
+ * Production with `output: "standalone"` must set
+ * `__NEXT_PRIVATE_STANDALONE_CONFIG` before `require("next")`.
+ *
  * Next is loaded via createRequire AFTER campaign modules so Next's
  * require-hook does not break `@/` resolution under tsx.
  */
 
 import { createServer } from "http";
+import { readFileSync } from "fs";
 import { parse } from "url";
 import { createRequire } from "module";
 import { config as loadEnv } from "dotenv";
@@ -28,6 +32,32 @@ const hostname = process.env.HOSTNAME || "0.0.0.0";
 const port = parseInt(process.env.PORT || "3000", 10);
 const dir = __dirname;
 
+/**
+ * Standalone output traces a slim Next tree that omits webpack-lib.
+ * `require("next")` then crashes unless the baked config is injected first,
+ * which is what `.next/standalone/server.js` does.
+ */
+function applyStandaloneConfig(appDir: string): void {
+  if (process.env.__NEXT_PRIVATE_STANDALONE_CONFIG) return;
+  const manifestPath = path.join(
+    appDir,
+    ".next",
+    "required-server-files.json",
+  );
+  try {
+    const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
+      config?: unknown;
+    };
+    if (manifest.config && typeof manifest.config === "object") {
+      process.env.__NEXT_PRIVATE_STANDALONE_CONFIG = JSON.stringify(
+        manifest.config,
+      );
+    }
+  } catch {
+    // Dev and full node_modules installs load next.config themselves.
+  }
+}
+
 async function main() {
   // Import campaign WS modules before Next patches require().
   const { requireRedisUrlInProduction } = await import(
@@ -38,6 +68,16 @@ async function main() {
   const { createCampaignWebSocket, isCampaignWsPath } = await import(
     "./src/lib/campaign/liveWsServer"
   );
+
+  if (!dev) {
+    applyStandaloneConfig(dir);
+    if (!process.env.__NEXT_PRIVATE_STANDALONE_CONFIG) {
+      throw new Error(
+        `Missing ${path.join(dir, ".next", "required-server-files.json")}. The standalone custom server cannot start.`,
+      );
+    }
+    process.chdir(dir);
+  }
 
   const require = createRequire(import.meta.url);
   // Next 16: `typeof import("next")` is the module namespace (not callable).

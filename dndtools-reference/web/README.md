@@ -211,6 +211,8 @@ Set these as **runtime** environment variables in Coolify:
    ```
    Data is baked into the image at `/data/dndtools`; `DATA_DIR` defaults there.
 
+Do **not** set Coolify's post-deployment command to `/docker-entrypoint.sh` (or leave it empty so it defaults to `start`). That starts a second server on port 3000 and fails with `EADDRINUSE`. Leave post-deploy blank, or use `/docker-entrypoint.sh import` only when you want a data import.
+
 ### Entrypoint commands
 
 | Command | Description |
