@@ -118,17 +118,34 @@ def append_racial_traits(
     identity = fg.get("identity") or {}
     size = (identity.get("size") or "Medium").strip()
     race_lower = race_name.lower()
+    size_lower = size.lower()
+    if size_lower == "medium":
+        size_text = (
+            f"{race_name} are Medium creatures and have no bonuses or penalties "
+            f"due to their size."
+        )
+    elif size_lower == "small":
+        size_text = (
+            f"{race_name} are Small creatures and gain a +1 size bonus to Armor Class, "
+            f"a +1 size bonus on attack rolls, and a +4 size bonus on Hide checks, "
+            f"but they use smaller weapons than humans use, and their lifting and "
+            f"carrying limits are three-quarters of those of a Medium character."
+        )
+    elif size_lower == "large":
+        size_text = (
+            f"{race_name} are Large creatures and take a -1 size penalty to Armor Class, "
+            f"a -1 size penalty on attack rolls, and a -4 size penalty on Hide checks. "
+            f"They have a space of 10 feet and a reach of 10 feet, and their lifting and "
+            f"carrying limits are twice those of a Medium character."
+        )
+    else:
+        size_text = f"{race_name} are {size} creatures."
     _append_trait(
         traits_el,
         "size",
         size,
         "Size",
-        (
-            f"{race_name} are {size} creatures and have no bonuses or penalties "
-            f"due to their size."
-            if size.lower() == "medium"
-            else f"{race_name} are {size} creatures."
-        ),
+        size_text,
         ids,
     )
 
@@ -212,6 +229,9 @@ def append_racial_traits(
         slug = re.sub(r"[^a-z0-9]", "", (trait.get("slug") or trait.get("name") or "trait").lower())
         if not slug:
             slug = "trait"
+        # XML element names cannot start with a digit.
+        if slug[0].isdigit():
+            slug = f"trait{slug}"
         name = trait.get("name") or slug.title()
         text = trait.get("text") or ""
         if text and "<h>" not in text:

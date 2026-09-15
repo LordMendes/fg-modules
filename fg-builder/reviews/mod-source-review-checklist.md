@@ -4,7 +4,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 
 **How to use:** Change `- [ ]` to `- [x]` when you finish reviewing a module.
 
-**Progress:** 12 / 16 reviewed
+**Progress:** 13 / 17 reviewed
 
 ---
 
@@ -28,6 +28,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 | - [x] | Red Hand of Doom | `modules/Red Hand of Doom.mod` | [red-hand-of-doom.md](reviews/v3/red-hand-of-doom.md) |
 | - [x] | Races of Faerûn | `modules/Races of Faerûn.mod` | [races-of-faerun.md](reviews/races-of-faerun.md) |
 | - [x] | Unearthed Arcana | `modules/Unearthed Arcana.mod` | [unearthed-arcana.md](reviews/v3/unearthed-arcana.md) |
+| - [x] | Warcraft The Roleplaying Game | `modules/Warcraft The Roleplaying Game.mod` | [warcraft-the-roleplaying-game.md](reviews/v3/warcraft-the-roleplaying-game.md) |
 
 ---
 
@@ -131,3 +132,13 @@ Categories touched: classes=9, feats=84, spells=13, races=35
 - **2026-08-24:** regenerated from dndtools JSON — see [v3 report](reviews/v3/unearthed-arcana.md)
 - **Verdict:** Refactored with warnings (0 errors, 226 warnings)
 - Categories: classes=50, feats=95, spells=2
+
+### Warcraft The Roleplaying Game
+
+- **2026-09-15:** built from WRPG supplemental JSON — see [review](reviews/warcraft-the-roleplaying-game.md) and [v3 report](reviews/v3/warcraft-the-roleplaying-game.md)
+- **Verdict:** Load-ready (0 errors, warnings for WRPG-only skill name and item `cl` typing)
+- Categories: classes=20, feats=39, spells=33, races=9, items=34
+- Classes: advancement tables kept separate (`<p><b>Advancement</b></p>` + one table); rich spell-slot columns preserved for healer/priest/shaman/elven ranger; PHB/DMG overlays for clone cores; prestige `Spells per Day` from `+1 divine`/`+1 arcane`
+- Races: standard FG trait slugs (`attributes`, `size`, `speed`, `vision`, …) plus WRPG extras with effects
+- Spells: native WRPG only (cosmology stub omitted); cast actions verified; damage/heal/effect overrides for condensed text
+- Explicit non-goal: PHB spell list overlay links are not duplicated into this module

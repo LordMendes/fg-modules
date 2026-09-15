@@ -43,6 +43,7 @@ ORDINAL_LEVEL_RE = re.compile(r"^(\d+)(?:st|nd|rd|th)?$", re.I)
 _SPELLCASTING_ADVANCEMENT_RE = re.compile(
     r"(?:"
     r"\+?\s*1\s+level of existing\b|"
+    r"\+?\s*1\s+(?:divine|arcane)\b|"
     r"gains new spells per day|"
     r"determines spells per day"
     r")",

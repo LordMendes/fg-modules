@@ -30,8 +30,14 @@ _WEAPON_NAME_RE = re.compile(
 
 
 def _infer_item_type(detail: dict[str, Any], index: dict[str, Any]) -> str:
+    if detail.get("item_type"):
+        return str(detail["item_type"])
     slot = detail.get("slot") or index.get("slot_or_property") or detail.get("properties") or ""
-    if slot and slot.lower() not in ("magic item", "wondrous", ""):
+    if slot and slot.lower() not in ("magic item", "wondrous", "goods", ""):
+        if slot.lower() == "weapon":
+            return "Weapon"
+        if slot.lower() == "armor":
+            return "Armor"
         return slot
     text = " ".join(
         str(detail.get(key) or "")

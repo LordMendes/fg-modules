@@ -1,6 +1,6 @@
 # FG Module Compatibility Review — v1
 
-Generated: 2026-08-25 19:35 UTC
+Generated: 2026-09-15 03:58 UTC
 
 Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `skills/` and `.cursor/skills/fantasy-grounds/`).
 
@@ -8,16 +8,16 @@ Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `ski
 
 | Module | .mod | Load ready | Errors | Warnings | Info | Records |
 |--------|------|:----------:|-------:|---------:|-----:|--------:|
-| [Forgotten Realms Campaign Setting](forgotten-realms-campaign-setting.md) | `Forgotten Realms Campaign Setting.mod` | yes | 0 | 95 | 10 | 141 |
+| [Warcraft The Roleplaying Game](warcraft-the-roleplaying-game.md) | `Warcraft The Roleplaying Game.mod` | yes | 0 | 11 | 0 | 135 |
 
 ## Rollup totals
 
 - **Modules reviewed:** 1
 - **Load ready:** 1 / 1
-- **Total records:** 141
+- **Total records:** 135
 - **Total errors:** 0
-- **Total warnings:** 95
-- **Total info:** 10
+- **Total warnings:** 11
+- **Total info:** 0
 
 ## Verdict
 

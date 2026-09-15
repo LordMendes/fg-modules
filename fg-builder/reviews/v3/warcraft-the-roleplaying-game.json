@@ -1,0 +1,121 @@
+{
+  "module_name": "Warcraft The Roleplaying Game",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Warcraft The Roleplaying Game.mod",
+  "book_slug": "warcraft-the-roleplaying-game",
+  "load_ready": true,
+  "automation_ready": false,
+  "record_counts": {
+    "class": 20,
+    "feat": 39,
+    "spell": 33,
+    "item": 34,
+    "race": 9
+  },
+  "build_warnings": [
+    "classes/Rogue (Warcraft): unknown class skill name(s) for FG ruleset: Use Technological Device",
+    "classes/Tinker: unknown class skill name(s) for FG ruleset: Use Technological Device",
+    "classes/Infiltrator: unknown class skill name(s) for FG ruleset: Use Technological Device"
+  ],
+  "spellclass_readiness": {
+    "spell_related_features": 47,
+    "named_spells": 7,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 40,
+    "score_equal_to_count": 47
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 11,
+    "info": 0
+  },
+  "issues": [
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Rogue (Warcraft)",
+      "message": "unknown class skill name(s) for FG ruleset: Use Technological Device",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Tinker",
+      "message": "unknown class skill name(s) for FG ruleset: Use Technological Device",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "class_unknown_skill",
+      "severity": "warning",
+      "category": "class",
+      "record_name": "Infiltrator",
+      "message": "unknown class skill name(s) for FG ruleset: Use Technological Device",
+      "remediation": "Verify skill exists in 3.5E ruleset or optional supplement module."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Goblin Land Mine",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Storm Hammer",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Vampiric Runeblade",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Potion of Invulnerability",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Potion of Mana",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Potion of Greater Mana",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Cloak of Flames",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    },
+    {
+      "code": "missing_type_attr",
+      "severity": "warning",
+      "category": "item",
+      "record_name": "Gloves of Celerity",
+      "message": "Field 'cl' should have type=\"string\"",
+      "remediation": "Add type attributes per FG export conventions."
+    }
+  ]
+}

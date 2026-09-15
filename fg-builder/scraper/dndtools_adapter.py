@@ -24,6 +24,7 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Red Hand of Doom": ("RH", "red-hand-of-doom"),
     "Races of Faerûn": ("Rac", "races-of-faerun"),
     "Forgotten Realms Campaign Setting": ("FRCS", "forgotten-realms-campaign-setting"),
+    "Warcraft The Roleplaying Game": ("WRPG", "warcraft-the-roleplaying-game"),
 }
 
 CATEGORY_FILES: dict[str, str] = {
@@ -37,6 +38,16 @@ CATEGORY_FILES: dict[str, str] = {
     "deities": "deities.json",
     "domains": "domains.json",
     "psionics": "psionics.json",
+}
+
+# Supplemental WRPG JSON files live under data/dndtools/supplemental/.
+SUPPLEMENTAL_FILES: dict[str, str] = {
+    "classes": "warcraft_rpg_classes.json",
+    "feats": "warcraft_rpg_feats.json",
+    "spells": "warcraft_rpg_spells.json",
+    "items": "warcraft_rpg_items.json",
+    "equipment": "warcraft_rpg_equipment.json",
+    "races": "warcraft_rpg_races.json",
 }
 
 FG_CATEGORY_MAP: dict[str, str] = {
@@ -66,10 +77,27 @@ def load_category(category: str) -> list[dict[str, Any]]:
     if not filename:
         return []
     path = DNDTOOLS_ROOT / filename
-    if not path.exists():
-        return []
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return data if isinstance(data, list) else data.get("records", [])
+    records: list[dict[str, Any]] = []
+    if path.exists():
+        data = json.loads(path.read_text(encoding="utf-8"))
+        records = data if isinstance(data, list) else data.get("records", [])
+
+    # Merge WRPG supplemental files (and any future supplemental sources).
+    supp_name = SUPPLEMENTAL_FILES.get(category)
+    if supp_name:
+        supp_path = DNDTOOLS_ROOT / "supplemental" / supp_name
+        if supp_path.exists():
+            supp_data = json.loads(supp_path.read_text(encoding="utf-8"))
+            supp_records = (
+                supp_data if isinstance(supp_data, list) else supp_data.get("records", [])
+            )
+            seen = {(r.get("slug") or r.get("name") or id(r)) for r in records}
+            for rec in supp_records:
+                key = rec.get("slug") or rec.get("name") or id(rec)
+                if key not in seen:
+                    records.append(rec)
+                    seen.add(key)
+    return records
 
 
 # FG only accepts Good/Bad for class save progression.
@@ -110,6 +138,7 @@ _SKILL_ABILITY: dict[str, str] = {
     "Tumble": "Dex",
     "Use Magic Device": "Cha",
     "Use Rope": "Dex",
+    "Use Technological Device": "Int",
     # 3.0 leftovers mapped for display
     "Alchemy": "Int",
     "Innuendo": "Wis",
@@ -152,9 +181,11 @@ def _infer_bab(advancement: list[dict[str, Any]]) -> str:
         return ""
     try:
         last = advancement[-1]
-        bab = str(last.get("bab", "")).replace("+", "")
+        bab_raw = str(last.get("bab", "")).replace("+", "")
+        # Iterative BAB looks like "15/10/5" — use the primary bonus.
+        primary = bab_raw.split("/")[0].strip()
         level = int(last.get("level", len(advancement)))
-        bab_num = int(bab) if bab.isdigit() else 0
+        bab_num = int(primary) if primary.isdigit() else 0
         ratio = bab_num / max(level, 1)
         if ratio >= 0.95:
             return "Fast"
@@ -406,8 +437,94 @@ def _split_class_description(
     return intro, notes, features
 
 
+def _load_core_class(name: str, source_abbrev: str) -> dict[str, Any] | None:
+    """Load a core-book class record by exact name and source abbrev."""
+    for record in load_category("classes"):
+        abbrev = _source_abbrev(record)
+        if abbrev == source_abbrev and (record.get("name") or "") == name:
+            return record
+    return None
+
+
+def _load_ph_class(name: str) -> dict[str, Any] | None:
+    """Load a Player's Handbook class record by exact name."""
+    return _load_core_class(name, "PH")
+
+
+def _overlay_phb_clone(
+    record: dict[str, Any],
+    advancement: list[dict[str, Any]],
+    class_features: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    """Overlay core-book advancement/features onto WRPG delta-only clone cores."""
+    from scraper.wrpg_support import CORE_CLONE_SLUGS, PHB_CLONE_SLUGS
+
+    slug = record.get("slug") or ""
+    extras: dict[str, Any] = {}
+    if slug in PHB_CLONE_SLUGS:
+        core = _load_core_class(PHB_CLONE_SLUGS[slug], "PH")
+    elif slug in CORE_CLONE_SLUGS:
+        core_name, core_abbrev = CORE_CLONE_SLUGS[slug]
+        core = _load_core_class(core_name, core_abbrev)
+    else:
+        return advancement, class_features, extras
+
+    if not core:
+        return advancement, class_features, extras
+
+    if not advancement:
+        advancement = list(core.get("advancement") or [])
+        if not advancement and core.get("advancement_html"):
+            from scraper.wrpg_support import parse_advancement_html
+
+            advancement = parse_advancement_html(core.get("advancement_html") or "")
+        # Keep a display table if WRPG only has a pointer paragraph.
+        if not (record.get("advancement_html") or "").strip() or "<table" not in (
+            record.get("advancement_html") or ""
+        ).lower():
+            extras["advancement_html"] = core.get("advancement_html") or ""
+
+    # Always merge core class features for clones; WRPG deltas are usually incomplete.
+    _, _, core_features = _split_class_description(
+        core.get("description_html") or "",
+        advancement,
+    )
+    _, _, wrpg_features = _split_class_description(
+        record.get("description_html") or "",
+        advancement,
+    )
+    seen = {f.get("name", "").lower() for f in wrpg_features}
+    merged = list(wrpg_features)
+    for feat in core_features:
+        if (feat.get("name") or "").lower() not in seen:
+            merged.append(feat)
+    if merged:
+        class_features = merged
+    elif core_features:
+        class_features = core_features
+
+    # Prefer core hit die / skill points when WRPG delta omitted them.
+    if not record.get("hit_die") and core.get("hit_die"):
+        extras["hit_die"] = core.get("hit_die")
+    if not record.get("skill_points") and core.get("skill_points"):
+        extras["skill_points"] = core.get("skill_points")
+    if not (record.get("class_skills") or []) and core.get("class_skills"):
+        extras["class_skills_record"] = core
+
+    return advancement, class_features, extras
+
+
 def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
-    advancement = record.get("advancement") or []
+    from scraper.wrpg_support import (
+        expand_wrpg_spell_hook_text,
+        parse_advancement_html,
+    )
+
+    advancement = list(record.get("advancement") or [])
+    advancement_html = record.get("advancement_html") or ""
+    if not advancement and advancement_html and "<table" in advancement_html.lower():
+        advancement = parse_advancement_html(advancement_html)
+
     index = record.get("index") or {}
     prestige = bool(str(index.get("prestige_level") or "").strip()) or bool(
         record.get("requirements_html") or record.get("requirements_text")
@@ -416,6 +533,86 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         record.get("description_html") or "",
         advancement,
     )
+
+    advancement, class_features, overlay = _overlay_phb_clone(
+        record, advancement, class_features
+    )
+    if overlay.get("advancement_html"):
+        advancement_html = overlay["advancement_html"]
+
+    # Emit Spells per Day rows for prestige +1 caster advancement columns.
+    from scraper.parsers.classes import _merge_advancement_features
+
+    class_features = _merge_advancement_features(class_features, advancement)
+
+    # Expand WRPG spell-hook shorthand in feature text.
+    for feat in class_features:
+        if feat.get("text"):
+            feat["text"] = expand_wrpg_spell_hook_text(feat["text"])
+        if feat.get("text_html"):
+            feat["text_html"] = expand_wrpg_spell_hook_text(feat["text_html"])
+    if notes:
+        notes = expand_wrpg_spell_hook_text(notes)
+    if intro:
+        intro = expand_wrpg_spell_hook_text(intro)
+
+    # PHB-clone / WRPG caster ability text for FG Spells hook.
+    slug = record.get("slug") or ""
+    ability_by_slug = {
+        "sorcerer-wrpg": "Charisma",
+        "wizard-wrpg": "Intelligence",
+        "healer-wrpg": "Wisdom",
+        "elven-ranger-wrpg": "Wisdom",
+        "hunter-wrpg": "Wisdom",
+        "paladin-warrior-wrpg": "Wisdom",
+        "horde-assassin-wrpg": "Intelligence",
+        "priest-wrpg": "Wisdom",
+        "shaman-wrpg": "Wisdom",
+        "druid-of-the-wild-wrpg": "Wisdom",
+        "warlock-wrpg": "Charisma",
+    }
+    ability = ability_by_slug.get(slug)
+    if ability:
+        hook = (
+            f"To cast a spell, a character must have a {ability} score equal to "
+            f"10 + the spell's level."
+        )
+        # Own-slot casters need a Spells feature; +1 prestige use Spells per Day.
+        has_spells = any(
+            (f.get("name") or "").lower() in ("spells", "spells per day")
+            for f in class_features
+        )
+        has_own_slots = any(
+            isinstance(r, dict)
+            and isinstance(r.get("spells_per_day"), list)
+            and len(r.get("spells_per_day") or []) > 1
+            for r in advancement
+        )
+        if not has_spells and has_own_slots:
+            class_features.insert(
+                0,
+                {
+                    "level": 1,
+                    "name": "Spells",
+                    "type": "",
+                    "text": hook,
+                    "text_html": f"<p><b>Spells:</b> {hook}</p>",
+                },
+            )
+        for feat in class_features:
+            name = (feat.get("name") or "").lower()
+            if name in ("spells", "spells per day") and "score equal to" not in (
+                feat.get("text") or ""
+            ).lower():
+                feat["text"] = f"{(feat.get('text') or '').rstrip()} {hook}".strip()
+                html = feat.get("text_html") or ""
+                if html:
+                    feat["text_html"] = f"{html}<p>{hook}</p>"
+                else:
+                    feat["text_html"] = f"<p><b>{feat.get('name')}:</b> {feat['text']}</p>"
+        if "score equal to" not in (notes or "").lower():
+            notes = f"{notes}<p>{hook}</p>" if notes else f"<p>{hook}</p>"
+
     # Only invent an intro from plain text when HTML split found nothing usable.
     if not intro and not notes and record.get("description_text"):
         first = record["description_text"].split("\n")[0].strip()
@@ -423,6 +620,7 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
             intro = f"<p>{first}</p>"
 
     req = _parse_requirements_structured(record)
+    skills_record = overlay.get("class_skills_record") or record
     detail: dict[str, Any] = {
         "title": record.get("name", ""),
         "class_type": "prestige" if prestige else "base",
@@ -433,11 +631,17 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "requirements": req.get("text") or "",
         "requirements_html": req.get("html") or "",
         "requirements_structured": req,
-        "hit_die": record.get("hit_die") or index.get("hit_die") or "",
-        "skill_points": record.get("skill_points") or index.get("skill_points") or "",
+        "hit_die": overlay.get("hit_die")
+        or record.get("hit_die")
+        or index.get("hit_die")
+        or "",
+        "skill_points": overlay.get("skill_points")
+        or record.get("skill_points")
+        or index.get("skill_points")
+        or "",
         "advancement": advancement,
-        "advancement_html": record.get("advancement_html") or "",
-        "class_skills": _class_skills_string(record),
+        "advancement_html": advancement_html,
+        "class_skills": _class_skills_string(skills_record),
         "class_features": class_features,
         "bab": _infer_bab(advancement),
         "fort": _infer_save_progression(advancement, "fort"),
@@ -522,6 +726,22 @@ def convert_feat(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
 
 
 def convert_spell(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
+    from scraper.wrpg_support import COSMOLOGY_SPELL_SLUG, spell_actions_for_wrpg
+
+    slug = record.get("slug") or ""
+    if slug == COSMOLOGY_SPELL_SLUG:
+        # Rules stub, not a castable spell — omit from module spell section.
+        return {
+            "id": record.get("id"),
+            "slug": slug,
+            "name": record.get("name", ""),
+            "source_url": record.get("source_url", ""),
+            "book_slug": book_slug,
+            "category": "spells",
+            "index": {"school": record.get("school") or "", "skip": True},
+            "detail": {"skip": True},
+        }
+
     school = record.get("school") or ""
     descriptors = record.get("descriptors") or []
     if descriptors and "[" not in school:
@@ -544,9 +764,12 @@ def convert_spell(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "description_html": record.get("description_html") or "",
         "description_text": record.get("description_text") or record.get("description") or "",
     }
+    override = spell_actions_for_wrpg(slug)
+    if override is not None:
+        detail["actions"] = override
     return {
         "id": record.get("id"),
-        "slug": record.get("slug", ""),
+        "slug": slug,
         "name": record.get("name", ""),
         "source_url": record.get("source_url", ""),
         "book_slug": book_slug,
@@ -561,15 +784,24 @@ def convert_item(record: dict[str, Any], book_slug: str, *, mundane: bool = Fals
     detail = {
         "aura": record.get("aura") or index.get("aura") or "",
         "cl": record.get("caster_level") or index.get("caster_level") or "",
-        "price": record.get("price") or index.get("price") or "",
+        "price": record.get("price")
+        or record.get("cost")
+        or index.get("price")
+        or index.get("cost")
+        or "",
         "weight": record.get("weight") or index.get("weight") or "",
         "slot": record.get("slot") or index.get("slot_or_property") or "",
         "description_html": record.get("description_html") or "",
         "name": record.get("name", ""),
     }
     if mundane:
-        kind = record.get("kind") or "goods"
+        kind = record.get("kind") or index.get("kind") or "goods"
         detail["slot"] = kind.title()
+        # Help FG type inference for WRPG weapons/armor.
+        if kind == "weapon" or record.get("damage_m"):
+            detail["item_type"] = "Weapon"
+        elif kind == "armor":
+            detail["item_type"] = "Armor"
         if record.get("damage_m"):
             detail["description_html"] = (
                 (detail.get("description_html") or "")
@@ -590,6 +822,8 @@ def convert_item(record: dict[str, Any], book_slug: str, *, mundane: bool = Fals
 
 
 def convert_race(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
+    from scraper.wrpg_support import build_race_fg
+
     detail = {
         "size": record.get("size") or (record.get("index") or {}).get("size") or "",
         "speed": record.get("speed") or "",
@@ -598,6 +832,11 @@ def convert_race(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "description_text": record.get("description_text") or "",
         "raw_sections": [],
     }
+    # Build FG racial trait automation for WRPG (and any record with bullet traits).
+    if (record.get("index") or {}).get("source_abbrev") == "WRPG" or (
+        record.get("source") or {}
+    ).get("abbrev") == "WRPG":
+        detail["fg"] = build_race_fg(record)
     return {
         "id": record.get("id"),
         "slug": record.get("slug", ""),
@@ -742,6 +981,15 @@ def build_scraped_book(
             continue
         converter = CONVERTERS[cat]
         converted = [converter(r, book_slug) for r in records]
+        # Drop WRPG cosmology stub and any other skip-marked records.
+        converted = [
+            rec
+            for rec in converted
+            if not (rec.get("detail") or {}).get("skip")
+            and not (rec.get("index") or {}).get("skip")
+        ]
+        if not converted:
+            continue
         fg_cat = FG_CATEGORY_MAP[cat]
         if fg_cat == "items" and cat == "equipment":
             merged_items.extend(converted)

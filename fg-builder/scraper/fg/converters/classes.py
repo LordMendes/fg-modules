@@ -347,7 +347,19 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
             title = table.get("title", "Spells")
             table_html = normalize_fg_table_html(table["html"])
             parts.append(f"<h4>{title}</h4>{table_html}")
-    if detail.get("advancement"):
+
+    # Prefer original rich advancement_html (spell-slot columns) over rebuilt table.
+    prefer_original = False
+    try:
+        from scraper.wrpg_support import prefer_rich_advancement_html
+
+        prefer_original = prefer_rich_advancement_html(detail)
+    except Exception:
+        prefer_original = False
+
+    if prefer_original and detail.get("advancement_html"):
+        advancement_html = normalize_fg_table_html(detail["advancement_html"])
+    elif detail.get("advancement"):
         advancement_html = normalize_fg_table_html(
             _advancement_table_html(detail["advancement"])
         )

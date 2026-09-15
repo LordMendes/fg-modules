@@ -78,7 +78,9 @@ def convert_spells(
             typed_string(node, "shortdescription", short)
 
         if spell_actions:
-            actions = build_spell_actions({**detail, "name": rec.get("name")})
+            actions = detail.get("actions")
+            if not actions:
+                actions = build_spell_actions({**detail, "name": rec.get("name")})
             emit_spell_actions(node, actions, ids)
 
         report.add_written("spells")
