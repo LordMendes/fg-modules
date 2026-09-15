@@ -5,6 +5,9 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPoi
 export type TrayPos = { x: number; y: number };
 
 export const DRAG_MOVE_THRESHOLD_PX = 12;
+export const TRAY_EDGE_MARGIN_PX = 16;
+/** Collapsed dice tray width plus gap, so the log sits beside it on first load. */
+export const LOG_TRAY_LEFT_OFFSET_PX = 108;
 
 export function clampTrayPos(x: number, y: number, width: number, height: number): TrayPos {
   const margin = 8;
@@ -14,6 +17,20 @@ export function clampTrayPos(x: number, y: number, width: number, height: number
     x: Math.min(maxX, Math.max(margin, x)),
     y: Math.min(maxY, Math.max(margin, y)),
   };
+}
+
+/** Default first-load corner for dice/log trays (bottom-left, optional x offset). */
+export function bottomLeftTrayPos(
+  width: number,
+  height: number,
+  offsetX = 0,
+): TrayPos {
+  return clampTrayPos(
+    TRAY_EDGE_MARGIN_PX + offsetX,
+    window.innerHeight - height - TRAY_EDGE_MARGIN_PX,
+    width,
+    height,
+  );
 }
 
 type UseFloatingTrayOptions = {

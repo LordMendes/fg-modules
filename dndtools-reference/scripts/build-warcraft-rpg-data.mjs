@@ -6,9 +6,10 @@
  *
  * Page numbers are printed book pages (PDF page ≈ book page + 3).
  */
-import { writeFileSync, mkdirSync } from "fs";
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { buildWarcraftClasses } from "./warcraft-rpg-classes-data.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = join(__dirname, "../data/dndtools/supplemental");
@@ -298,208 +299,9 @@ const races = [
   },
 ].map((r) => ({ ...r, description_text: text(r.description_html) }));
 
-// ─── Classes ─────────────────────────────────────────────────────────────────
+// ─── Classes (Ch. 2, pp. 55–97) ───────────────────────────────────────────────
 
-function cls(slug, name, opts = {}) {
-  const b = base(slug, name, opts.page);
-  const isPrestige = Boolean(opts.prestige);
-  const descHtml = html(opts.description ?? "");
-  const reqHtml = opts.requirements ? html(opts.requirements) : null;
-  return {
-    ...b,
-    hit_die: opts.hitDie ?? "d8",
-    skill_points: opts.skillPoints ?? "4 + Int",
-    index: {
-      ...b.index,
-      hit_die: (opts.hitDie ?? "d8").replace("d", ""),
-      skill_points: (opts.skillPoints ?? "4 + Int").split(" ")[0],
-      prestige_level: isPrestige ? "10" : "",
-    },
-    class_skills: opts.skills ?? [],
-    description_html: descHtml,
-    description_text: text(descHtml),
-    requirements_html: reqHtml,
-    requirements_text: reqHtml ? text(reqHtml) : null,
-    advancement_html: opts.advancement ? `<table>${opts.advancement}</table>` : null,
-    advancement_text: opts.advancementText ?? null,
-  };
-}
-
-const fighterBonusFeats = [
-  a("/feats/butt-strike-wrpg", "Pistol Whip"),
-  a("/feats/war-tongue-wrpg", "Battle Language"),
-  a("/feats/point-blank-shot-no-aoo-wrpg", "Close Shot"),
-  a("/feats/defender-wrpg", "Defend"),
-  a("/feats/expert-rider-wrpg", "Expert Rider"),
-  a("/feats/rapid-reload-wrpg", "Lightning Reload"),
-  a("/feats/mounted-elite-sharpshooter-wrpg", "Mounted Sharpshooter"),
-  a("/feats/storm-arrow-wrpg", "Storm Bolt"),
-  a("/feats/skilled-shot-wrpg", "Trick Shot"),
-].join(", ");
-
-const classes = [
-  cls("barbarian-wrpg", "Barbarian (Warcraft)", {
-    page: 55,
-    hitDie: "d12",
-    skillPoints: "4 + Int",
-    skills: [sk.climb, sk.intimidate, sk.jump, sk.listen, sk.survival, sk.swim, sk.knowMilitary],
-    description: `Uses the PHB barbarian. Affiliation: any. ${a("/skills/knowledge-military-tactics", "Knowledge (military tactics)")} is a class skill. ${a("/races/orc-wrpg", "Orc")} barbarians may rage one extra time per day (stacks with racial battle rage).`,
-  }),
-  cls("fighter-wrpg", "Fighter (Warcraft)", {
-    page: 55,
-    hitDie: "d10",
-    skillPoints: "2 + Int",
-    skills: [sk.climb, sk.craft, sk.handleAnimal, sk.intimidate, sk.jump, sk.ride, sk.swim, sk.knowMilitary],
-    description: `Uses the PHB fighter. Affiliation: any. ${a("/skills/knowledge-military-tactics", "Knowledge (military tactics)")} is a class skill. Bonus feat list expands to include: ${fighterBonusFeats}, plus Bash and Sunder Armor from the WRPG feat chapter.`,
-  }),
-  cls("rogue-wrpg", "Rogue (Warcraft)", {
-    page: 56,
-    hitDie: "d6",
-    skillPoints: "8 + Int",
-    description: `Uses the PHB rogue. Affiliation: any. Gains ${a("/skills/use-technological-device", "Use Technological Device")} as a class skill.`,
-  }),
-  cls("sorcerer-wrpg", "Sorcerer (Warcraft)", {
-    page: 56,
-    hitDie: "d4",
-    skillPoints: "2 + Int",
-    description: `Uses the PHB sorcerer with Warcraft spell bans: no summon monster I–IX or planar binding (those belong to the ${a("/classes/warlock-wrpg", "warlock")}); many necromancy spells are restricted to the Necromancer (Alliance & Horde Compendium). See ${a("/spells/warcraft-cosmology-wrpg", "Warcraft Cosmology")}. Affiliation: any. Night elves who take sorcerer levels become high elves.`,
-  }),
-  cls("wizard-wrpg", "Wizard (Warcraft)", {
-    page: 57,
-    hitDie: "d4",
-    skillPoints: "2 + Int",
-    description: `Uses the PHB wizard with the same summoning/necromancy bans as the ${a("/classes/sorcerer-wrpg", "Warcraft sorcerer")}. Affiliation: any. A ${a("/races/night-elf-wrpg", "night elf")} who becomes a wizard is stripped of night elf heritage and treated as a ${a("/races/high-elf-wrpg", "high elf")}.`,
-  }),
-  cls("healer-wrpg", "Healer", {
-    page: 58,
-    hitDie: "d8",
-    skillPoints: "4 + Int",
-    skills: [sk.bluff, sk.concentration, sk.craft, sk.diplomacy, sk.gatherInfo, sk.handleAnimal, sk.heal, sk.knowArcana, sk.knowReligion, sk.listen, sk.profession, sk.senseMotive, sk.speakLanguage, sk.spellcraft, sk.spot],
-    description: `New core divine caster (Wis; prepared). Hit Die d8; 4 skill points. Proficient with simple weapons and light armor. Spontaneous cure (good) or inflict (evil); neutral chooses at creation. Gains Healing (good) or Evil (evil) domain power at +1 caster level but no extra domain slot; no turn undead. Brew Potion at 1st; bonus item-creation/metamagic/Spell Focus feats at 5/10/15/20. Spell list includes ${a("/spells/healing-rain-wrpg", "healing rain")}, ${a("/spells/death-coil-wrpg", "death coil")}, ${a("/spells/moon-glaive-spell-wrpg", "moonglaive")}, ${a("/spells/rejuvenation-wrpg", "rejuvenation")}, ${a("/spells/second-soul-wrpg", "second soul")}, and ${a("/spells/touch-of-life-wrpg", "touch of life")}.`,
-  }),
-  cls("scout-wrpg", "Scout", {
-    page: 61,
-    hitDie: "d8",
-    skillPoints: "6 + Int",
-    skills: [sk.climb, sk.craft, sk.heal, sk.hide, sk.jump, sk.knowMilitary, sk.knowNature, sk.listen, sk.moveSilently, sk.profession, sk.search, sk.spot, sk.survival, sk.swim, sk.useRope],
-    description: `New core wilderness warrior (favored class of ${a("/races/night-elf-wrpg", "night elves")}). Hit Die d8; 6 skill points; good Fort/Ref. Simple and martial weapons; light and medium armor and shields. Track and nature sense at 1st; wild healing at 2nd; woodland stride, trackless step, uncanny dodge, trap sense, swift tracker, venom immunity, evasion; spell-like abilities include locate object (6th), locate creature (11th), commune with nature (13th), find the path (16th), and wind walk (20th).`,
-  }),
-  cls("tinker-wrpg", "Tinker", {
-    page: 63,
-    hitDie: "d6",
-    skillPoints: "8 + Int",
-    skills: [sk.appraise, sk.concentration, sk.craft, sk.decipher, sk.disableDevice, sk.forgery, sk.gatherInfo, sk.knowArchEng, sk.openLock, sk.profession, sk.search, sk.useMagic, sk.useTech],
-    description: `New core technological expert (favored class of ${a("/races/goblin-wrpg", "goblins")}). Hit Die d6; 8 skill points; simple weapons. Bonus Technology feats at 1/5/10/15/20 (including ${a("/feats/create-firearms-wrpg", "Build Firearms")}, ${a("/feats/create-siege-engines-wrpg", "Build Siege Weapons")}, ${a("/feats/create-small-devices-wrpg", "Build Small Devices")}, ${a("/feats/create-vehicles-wrpg", "Build Vehicles")}). Scavenge and jury-rig devices; bomb-bouncing; coolness under fire; fire resistance progression; evasion/improved evasion.`,
-  }),
-  cls("beastmaster-wrpg", "Beastmaster", {
-    page: 66,
-    prestige: true,
-    hitDie: "d12",
-    skillPoints: "4 + Int",
-    skills: [sk.climb, sk.craft, sk.handleAnimal, sk.heal, sk.intimidate, sk.jump, sk.knowNature, sk.spot, sk.survival, sk.swim],
-    requirements: `Affiliation Horde or night elf; ${a("/skills/handle-animal", "Handle Animal")} 5 ranks; ${a("/skills/survival", "Survival")} 8 ranks; Animal Affinity; Toughness.`,
-    description: `Horde or night elf animal companion prestige class. Full BAB; d12 HD. Animal companion and wild empathy; animal friendship; empathic link; natural weaponry; speak with animals; magic fang progression; scry on companion.`,
-  }),
-  cls("druid-of-the-wild-wrpg", "Druid of the Wild", {
-    page: 69,
-    prestige: true,
-    hitDie: "d8",
-    skillPoints: "4 + Int",
-    skills: [sk.concentration, sk.craft, sk.handleAnimal, sk.heal, sk.hide, sk.knowNature, sk.profession, sk.survival, sk.swim],
-    requirements: `Race night elf or tauren; non-evil; Knowledge (nature) 5 ranks; ${a("/skills/survival", "Survival")} 5 ranks; able to cast 3rd-level divine spells.`,
-    description: `Night elf/tauren nature prestige class. +1 divine caster level each class level; spontaneous summon nature's ally. Wild shape (storm crow → stag → nightsaber → dire bear → treant); green sleep; woodland stride; nature sense; trackless step; venom immunity; timeless body; dreamwalking to the Emerald Dream. Spells include ${a("/spells/roar-wrpg", "roar")}, ${a("/spells/thorns-shield-wrpg", "thorn shield")}, and ${a("/spells/force-of-nature-wrpg", "force of nature")}.`,
-  }),
-  cls("elven-ranger-wrpg", "Elven Ranger", {
-    page: 73,
-    prestige: true,
-    hitDie: "d8",
-    skillPoints: "4 + Int",
-    skills: [sk.climb, sk.concentration, sk.craft, sk.heal, sk.hide, sk.jump, sk.knowMilitary, sk.knowNature, sk.listen, sk.moveSilently, sk.profession, sk.spot, sk.survival, sk.swim, sk.useRope],
-    requirements: `Elf (high or night); Alliance; BAB +5; Knowledge (nature) 6 ranks; ${a("/skills/survival", "Survival")} 6 ranks; Point Blank Shot; Track.`,
-    description: `Alliance elven archery prestige class (high elf ranger / night elf sentinel). Own divine spell list (Wis). +10 ft. bow/crossbow range increment per level; favored enemy; Rapid Shot; woodland stride; keen arrows; Manyshot; anticipation; arrow cleave. Spell list includes ${a("/spells/sentinel-wrpg", "sentinel")}.`,
-  }),
-  cls("gladiator-wrpg", "Gladiator", {
-    page: 77,
-    prestige: true,
-    hitDie: "d10",
-    skillPoints: "2 + Int",
-    skills: [sk.bluff, sk.climb, sk.craft, sk.intimidate, sk.jump, sk.knowMilitary, sk.perform, sk.senseMotive, sk.swim],
-    requirements: `Any affiliation; BAB +5; ${a("/skills/bluff", "Bluff")} 2 ranks; ${a("/skills/intimidate", "Intimidate")} 5 ranks; Cleave; Power Attack.`,
-    description: `Arena champion (Alliance gladiator / Horde blademaster). Full BAB; d10 HD. Supreme cleave; command aura; two-handed mastery; strike like the wind (invisibility); critical strike; maximum damage; mirror image; blade whirlwind.`,
-  }),
-  cls("horde-assassin-wrpg", "Horde Assassin", {
-    page: 79,
-    prestige: true,
-    hitDie: "d6",
-    skillPoints: "4 + Int",
-    skills: [sk.balance, sk.bluff, sk.climb, sk.craft, sk.disableDevice, sk.disguise, sk.escapeArtist, sk.hide, sk.intimidate, sk.jump, sk.listen, sk.moveSilently, sk.openLock, sk.profession, sk.search, sk.senseMotive, sk.spot, sk.swim, sk.tumble, sk.useRope],
-    requirements: `Non-good; Horde only; ${a("/skills/hide", "Hide")} 8 ranks; ${a("/skills/move-silently", "Move Silently")} 8 ranks.`,
-    description: `Horde-only prestige class using DMG assassin mechanics (death attack, sneak attack, poison use, spells) with no further deviations listed.`,
-  }),
-  cls("hunter-wrpg", "Hunter", {
-    page: 80,
-    prestige: true,
-    hitDie: "d8",
-    skillPoints: "4 + Int",
-    skills: [sk.climb, sk.concentration, sk.craft, sk.handleAnimal, sk.heal, sk.hide, sk.jump, sk.knowMilitary, sk.knowNature, sk.listen, sk.moveSilently, sk.profession, sk.spot, sk.survival, sk.swim],
-    requirements: `Horde; BAB +5; ${a("/skills/survival", "Survival")} 8 ranks; Track; Weapon Focus (any melee or thrown).`,
-    description: `Horde skirmisher prestige class with divine spells (Wis). Favored terrain; Weapon Specialization; +5 ft. thrown range increment per level; woodland stride; keen chosen weapon; Combat Reflexes; camouflage; swift tracker; improved critical multiplier.`,
-  }),
-  cls("infiltrator-wrpg", "Infiltrator", {
-    page: 83,
-    prestige: true,
-    hitDie: "d6",
-    skillPoints: "6 + Int",
-    skills: [sk.appraise, sk.balance, sk.bluff, sk.climb, sk.craft, sk.decipher, sk.diplomacy, sk.disguise, sk.escapeArtist, sk.forgery, sk.gatherInfo, sk.hide, sk.intimidate, sk.jump, sk.listen, sk.moveSilently, sk.openLock, sk.perform, sk.profession, sk.search, sk.senseMotive, sk.sleightOfHand, sk.speakLanguage, sk.spot, sk.swim, sk.tumble, sk.useMagic, sk.useTech, sk.useRope],
-    requirements: `Alliance; ${a("/skills/bluff", "Bluff")} 8 ranks; ${a("/skills/disguise", "Disguise")} 8 ranks.`,
-    description: `Alliance espionage prestige class. Poor BAB; canny defense; smooth talker; connections; uncanny dodge; flawless disguise; suggestion/mass suggestion; slippery mind; hide in plain sight; dominate monster.`,
-  }),
-  cls("mounted-combatant-wrpg", "Mounted Warrior", {
-    page: 85,
-    prestige: true,
-    hitDie: "d10",
-    skillPoints: "2 + Int",
-    skills: [sk.climb, sk.craft, sk.diplomacy, sk.handleAnimal, sk.jump, sk.knowMilitary, sk.profession, sk.ride, sk.swim],
-    requirements: `Any affiliation; BAB +5; ${a("/skills/ride", "Ride")} 8 ranks (warhorse/nightsaber Alliance, or dire wolf Horde); Mounted Combat.`,
-    description: `Elite cavalry prestige class (knight / huntress / raider). Full BAB; special mount; mounted expertise; bonus mount feats; improved Mounted Combat; mounted command; woodland ride; shock charge. Synergizes with ${a("/feats/expert-rider-wrpg", "Expert Rider")} and ${a("/feats/mounted-elite-sharpshooter-wrpg", "Mounted Sharpshooter")}.`,
-  }),
-  cls("paladin-warrior-wrpg", "Paladin Warrior", {
-    page: 88,
-    prestige: true,
-    hitDie: "d10",
-    skillPoints: "2 + Int",
-    skills: [sk.climb, sk.concentration, sk.craft, sk.diplomacy, sk.handleAnimal, sk.heal, sk.jump, sk.knowMilitary, sk.knowPlanes, sk.knowReligion, sk.knowUndead, sk.profession, sk.ride, sk.swim],
-    requirements: `Human or Ironforge dwarf; any good; Alliance; BAB +5; ${a("/skills/diplomacy", "Diplomacy")} 5 ranks; ${a("/skills/knowledge-religion", "Knowledge (religion)")} 3 ranks; Weapon Focus (warhammer); initiation quest.`,
-    description: `Alliance Silver Hand prestige class. Full BAB; divine spells (Wis). Lay on hands; detect/turn undead and outsiders; aura of courage; smite undead/outsider; divine health/grace; banishing strike; power turning. Must uphold a code of honor.`,
-  }),
-  cls("priest-wrpg", "Priest", {
-    page: 91,
-    prestige: true,
-    hitDie: "d8",
-    skillPoints: "2 + Int",
-    skills: [sk.concentration, sk.craft, sk.diplomacy, sk.gatherInfo, sk.heal, sk.knowArcana, sk.knowReligion, sk.profession, sk.spellcraft],
-    requirements: `Non-evil; Alliance; ${a("/skills/knowledge-religion", "Knowledge (religion)")} 6 ranks; able to cast 3rd-level divine spells.`,
-    description: `Alliance divine prestige class. +1 divine caster level each level; spontaneous cure; Healing and Protection domains. Divine defense vs. necromancy; turn undead; divine urge. High-level list includes ${a("/spells/falling-star-wrpg", "starfall")}.`,
-  }),
-  cls("shaman-wrpg", "Shaman", {
-    page: 93,
-    prestige: true,
-    hitDie: "d8",
-    skillPoints: "2 + Int",
-    skills: [sk.climb, sk.concentration, sk.craft, sk.heal, sk.intimidate, sk.jump, sk.knowNature, sk.knowReligion, sk.profession, sk.spellcraft, sk.survival, sk.swim],
-    requirements: `Any affiliation; BAB +4; able to cast 1st-level divine spells.`,
-    description: `Elemental/spirit prestige class. +1 divine caster level each level; spontaneous cure. Weather sense; elemental companion; elemental mastery. Spell list includes ${a("/spells/stasis-trap-wrpg", "stasis trap")}, ${a("/spells/ice-armor-wrpg", "frost armor")}, ${a("/spells/bloodlust-wrpg", "bloodlust")}, ${a("/spells/immolation-wrpg", "immolation")}, ${a("/spells/healing-totem-wrpg", "healing ward")}, and ${a("/spells/serpent-totem-wrpg", "serpent ward")}.`,
-  }),
-  cls("warlock-wrpg", "Warlock", {
-    page: 95,
-    prestige: true,
-    hitDie: "d4",
-    skillPoints: "2 + Int",
-    skills: [sk.bluff, sk.concentration, sk.craft, sk.diplomacy, sk.intimidate, sk.knowArcana, sk.profession, sk.spellcraft],
-    requirements: `Any evil; any affiliation; able to cast 3rd-level arcane spells; Conjuration not a forbidden school.`,
-    description: `Demon-pact prestige class. +1 arcane caster level each level. Enhanced conjuring (forbid additional schools; extra conjuration slots); demonic companion; improved planar ally; Augment Summoning; extended summoning; demon mastery. Exclusive access to summon monster I–IX and planar binding (see ${a("/spells/warcraft-cosmology-wrpg", "Warcraft Cosmology")}).`,
-  }),
-];
+const classes = buildWarcraftClasses({ base, html, text, a, sk, ul });
 
 // ─── Feats (pp. 106–115) ─────────────────────────────────────────────────────
 
@@ -708,6 +510,7 @@ const healer = (lv) => spellClass("Healer", "healer-wrpg", lv);
 const shaman = (lv) => spellClass("Shaman", "shaman-wrpg", lv);
 const druidWild = (lv) => spellClass("Druid of the Wild", "druid-of-the-wild-wrpg", lv);
 const priest = (lv) => spellClass("Priest", "priest-wrpg", lv);
+const elvenRanger = (lv) => spellClass("Elven Ranger", "elven-ranger-wrpg", lv);
 
 const spells = [
   spell("cripple-wrpg", "Cripple", "Transmutation", 2, wizSor(2), "Living target may take only a partial action; −2 AC, melee attack, melee damage, and Reflex; half jump distance; −1d6 Strength and an additional −1 per 2 caster levels (max −5 extra; Str minimum 1). Countered/dispelled by haste.", 160, { save: "Will negates", duration: "1 round/level" }),
@@ -738,7 +541,7 @@ const spells = [
   spell("rejuvenation-wrpg", "Rejuvenation", "Conjuration (Healing)", 5, [healer(5)], "Living touched creature regains 2d8 hp/round for 1 round/level (to maximum).", 165, { range: "Touch", duration: "1 round/level", save: "Fortitude negates (harmless)", sr: "Yes (harmless)", target: "Living creature touched" }),
   spell("roar-wrpg", "Roar", "Enchantment (Compulsion) [Mind-Affecting]", 1, [druidWild(1)], "Allies within 50 ft. gain +1 morale bonus on attack and damage rolls. Usable in dire bear form.", 166, { range: "50 ft.", duration: "1 round/level", area: "Allies within 50 ft.", save: "None", components: "V", descriptors: ["Mind-Affecting"] }),
   spell("second-soul-wrpg", "Second Soul", "Conjuration (Healing)", 9, [healer(9)], "If the subject dies, they return to life 2d4 rounds later at full hp (level loss, or −1 Con at 1st). Material component: holy water and diamonds worth at least 20,000 gp.", 166, { castingTime: "10 minutes", range: "Touch", duration: "Permanent", save: "None", components: "V, S, M, DF", target: "Living creature touched" }),
-  spell("sentinel-wrpg", "Sentinel", "Divination", 3, [healer(3)], "Creates a visible Diminutive bird sensor on a tree for 1 hour/level. Concentrate to see and hear through it at any distance. Bird Hide +7, AC 9, hp 1.", 166, { range: "Close", duration: "1 hour/level", save: "None", sr: "No", effect: "Magical sensor", components: "V, S, M" }),
+  spell("sentinel-wrpg", "Sentinel", "Divination", 3, [elvenRanger(3)], "Creates a visible Diminutive bird sensor on a tree for 1 hour/level. Concentrate to see and hear through it at any distance. Bird Hide +7, AC 9, hp 1.", 166, { range: "Close", duration: "1 hour/level", save: "None", sr: "No", effect: "Magical sensor", components: "V, S, M" }),
   spell("blade-storm-wrpg", "Bladestorm", "Transmutation", 3, wizSor(3), "Creates two longswords (+1 enhancement per 3 CL, max +5). From the next round, each full attack is one melee attack at full BAB vs. each foe within 5 ft.; ends if you skip a full attack. Material: two knives.", 158, { range: "Personal", duration: "1 round/level (D)", save: "None", sr: "No", components: "V, S, M" }),
   spell("touch-of-life-wrpg", "Touch of Life", "Conjuration (Healing)", 9, [healer(9)], "Temporarily raise a creature dead no longer than 1 round/level: full hp, no level/Con loss, for 1 round/level; then dies again. Body must be whole. Diamonds ≥ 5,000 gp.", 170, { castingTime: "1 round", range: "Touch", duration: "1 round/level", save: "None (willing)", components: "V, S, M, DF", target: "Dead creature touched" }),
   spell("healing-totem-wrpg", "Healing Ward", "Conjuration (Healing)", 3, [shaman(3)], "Totem cures 1 hp/round to living allies within 20 ft. (damages undead). Totem AC 7, hardness 5, hp 5.", 163, { range: "0 ft.", duration: "1 round/level", area: "20-ft. radius", save: "Fortitude half (harmless)", sr: "Yes (harmless)" }),
@@ -752,6 +555,292 @@ const spells = [
     "Divine casters draw power from philosophy, the Holy Light, Elune, or spirits, not PHB deities/domains (except as class features).",
   ]), 156, { castingTime: "-", components: "-", range: "-", duration: "-", save: "-", sr: "-" }),
 ];
+
+// ─── Spell-class overlay (PHB/DMG spells linked to WRPG class lists) ───────────
+
+function normalizeSpellName(name) {
+  return String(name)
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function loadSpellNameIndex() {
+  const spellsPath = join(__dirname, "../data/dndtools/spells.json");
+  if (!existsSync(spellsPath)) {
+    console.warn("spells.json not found; skipping PHB spell-class overlay");
+    return new Map();
+  }
+  const all = JSON.parse(readFileSync(spellsPath, "utf8"));
+  const byName = new Map();
+  for (const s of all) {
+    const key = normalizeSpellName(s.name);
+    if (!byName.has(key)) byName.set(key, s.slug);
+  }
+  return byName;
+}
+
+/** Healer spell list (WRPG p.60). Names marked * are WRPG-native (already on spell records). */
+const HEALER_LIST = {
+  0: [
+    "create water", "cure minor wounds", "detect magic", "detect poison", "guidance",
+    "inflict minor wounds", "light", "mending", "purify food and drink", "read magic",
+    "resistance", "virtue",
+  ],
+  1: [
+    "bane", "bless", "bless water", "cause fear", "command", "comprehend languages",
+    "cure light wounds", "curse water", "deathwatch", "divine favor", "doom",
+    "entropic shield", "inflict light wounds", "remove fear", "sanctuary", "shield of faith",
+  ],
+  2: [
+    "aid", "augury", "bears endurance", "bulls strength", "calm emotions", "consecrate",
+    "cure moderate wounds", "darkness", "delay poison", "enthrall", "find traps",
+    "gentle repose", "hold person", "inflict moderate wounds", "lesser restoration",
+    "make whole", "remove paralysis", "shatter", "shield other", "silence", "sound burst",
+    "spiritual weapon", "zone of truth",
+  ],
+  3: [
+    "bestow curse", "blindness deafness", "contagion", "continual flame", "create food and water",
+    "cure serious wounds", "daylight", "deeper darkness", "dispel magic", "glyph of warding",
+    "helping hand", "inflict serious wounds", "invisibility purge", "locate object",
+    "magic vestment", "obscure object", "prayer", "remove blindness deafness", "remove curse",
+    "remove disease",
+  ],
+  4: [
+    "cure critical wounds", "death ward", "dimensional anchor", "discern lies", "divination",
+    "divine power", "freedom of movement", "greater magic weapon", "imbue with spell ability",
+    "inflict critical wounds", "neutralize poison", "poison", "repel vermin", "restoration",
+    "sending", "spell immunity", "status", "tongues",
+  ],
+  5: [
+    "flame strike", "greater command", "hallow", "lesser planar ally", "mass cure light wounds",
+    "mass inflict light wounds", "raise dead", "righteous might", "scrying", "slay living",
+    "spell resistance", "true seeing", "unhallow",
+  ],
+  6: [
+    "blade barrier", "find the path", "geas quest", "greater dispel magic", "greater glyph of warding",
+    "harm", "heal", "heroes feast", "mass bears endurance", "mass bulls strength",
+    "mass cure moderate wounds", "mass inflict moderate wounds", "word of recall",
+  ],
+  7: [
+    "destruction", "greater restoration", "greater scrying", "mass cure serious wounds",
+    "mass inflict serious wounds", "planar ally", "refuge", "regenerate", "repulsion", "resurrection",
+  ],
+  8: [
+    "antimagic field", "discern location", "greater spell immunity", "holy aura",
+    "mass cure critical wounds", "mass inflict critical wounds", "unholy aura",
+  ],
+  9: [
+    "greater planar ally", "implosion", "mass heal", "miracle", "soul bind", "true resurrection",
+  ],
+};
+
+const PRIEST_ADD = {
+  1: ["detect undead", "hide from undead", "magic weapon", "protection from evil"],
+  2: ["align weapon", "consecrate", "lesser restoration", "undetectable alignment"],
+  3: ["magic circle against evil", "searing light"],
+  4: ["dismissal", "restoration"],
+  5: ["flame strike", "mark of justice", "plane shift"],
+  6: ["forbiddance", "undeath to death"],
+  7: ["ethereal jaunt", "holy word"],
+  8: ["dimensional lock", "holy aura"],
+  9: ["astral projection", "etherealness", "gate"],
+};
+
+const SHAMAN_ADD = {
+  1: ["burning hands", "magic stone", "obscuring mist"],
+  2: ["fog cloud", "produce flame", "soften earth and stone", "wind wall"],
+  3: ["gaseous form", "resist energy", "stone shape", "water breathing"],
+  4: ["air walk", "control water", "spike stones", "wall of fire"],
+  5: ["control winds", "fire shield", "ice storm", "wall of stone"],
+  6: ["chain lightning", "cone of cold", "fire seeds", "stoneskin"],
+  7: ["acid fog", "control weather", "fire storm", "earthquake"],
+  8: ["horrid wilting", "incendiary cloud", "iron body", "whirlwind"],
+  9: ["elemental swarm"],
+};
+
+const DRUID_ADD = {
+  0: ["flare", "know direction"],
+  1: [
+    "calm animals", "charm animal", "detect animals or plants", "detect snares and pits",
+    "entangle", "faerie fire", "goodberry", "hide from animals", "magic fang", "obscuring mist",
+    "pass without trace", "shillelagh", "speak with animals", "summon natures ally i",
+  ],
+  2: [
+    "animal messenger", "animal trance", "barkskin", "delay poison", "hold animal",
+    "reduce animal", "spider climb", "summon natures ally ii", "summon swarm", "tree shape",
+    "warp wood", "wood shape",
+  ],
+  3: [
+    "diminish plants", "dominate animal", "greater magic fang", "neutralize poison",
+    "plant growth", "poison", "remove disease", "snare", "speak with plants", "spike growth",
+    "summon natures ally iii",
+  ],
+  4: [
+    "antiplant shell", "blight", "command plants", "flame strike", "freedom of movement",
+    "giant vermin", "repel vermin", "summon natures ally iv",
+  ],
+  5: [
+    "animal growth", "awaken", "baleful polymorph", "commune with nature", "insect plague",
+    "summon natures ally v", "tree stride", "wall of thorns",
+  ],
+  6: [
+    "antilife shell", "find the path", "ironwood", "liveoak", "repel wood", "spellstaff",
+    "summon natures ally vi", "transport via plants",
+  ],
+  7: [
+    "animate plants", "changestaff", "creeping doom", "summon natures ally vii", "sunbeam",
+    "transmute metal to wood",
+  ],
+  8: ["animal shapes", "control plants", "summon natures ally viii", "whirlwind"],
+  9: ["shambler", "shapechange", "summon natures ally ix"],
+};
+
+const PALADIN_LIST = {
+  1: [
+    "bane", "bless", "bless weapon", "command", "cure light wounds", "detect poison",
+    "detect undead", "divine favor", "endure elements", "magic weapon", "protection from chaos",
+    "shield of faith",
+  ],
+  2: [
+    "aid", "bulls strength", "cure moderate wounds", "delay poison", "eagles splendor",
+    "bears endurance", "owls wisdom", "remove paralysis", "resist energy", "shield other",
+    "spiritual weapon", "undetectable alignment",
+  ],
+  3: [
+    "cure serious wounds", "discern lies", "dispel magic", "greater magic weapon",
+    "magic circle against chaos", "prayer", "remove blindness deafness", "searing light",
+  ],
+  4: [
+    "break enchantment", "cure critical wounds", "death ward", "dispel chaos", "dispel evil",
+    "freedom of movement", "holy sword", "neutralize poison", "restoration",
+  ],
+};
+
+const ELVEN_RANGER_LIST = {
+  1: [
+    "alarm", "delay poison", "detect poison", "detect snares and pits", "detect undead",
+    "entangle", "faerie fire", "hide from animals", "jump", "longstrider", "magic fang",
+    "magic weapon", "pass without trace", "read magic", "resist energy", "speak with animals",
+    "summon natures ally i",
+  ],
+  2: [
+    "barkskin", "bears endurance", "cats grace", "cure light wounds", "detect chaos",
+    "detect evil", "detect good", "detect law", "hold animal", "owls wisdom", "produce flame",
+    "protection from energy", "sleep", "snare", "speak with plants", "spike growth",
+    "summon natures ally ii", "wood shape",
+  ],
+  3: [
+    "command plants", "cure moderate wounds", "darkvision", "diminish plants",
+    "greater magic fang", "invisibility", "neutralize poison", "plant growth", "poison",
+    "remove disease", "remove paralysis", "see invisibility", "summon natures ally iii",
+    "tree shape", "water walk", "water breathing",
+  ],
+  4: [
+    "animal growth", "commune with nature", "cure serious wounds", "freedom of movement",
+    "greater magic weapon", "invisibility purge", "invisibility sphere", "nondetection",
+    "tree stride",
+  ],
+};
+
+const HUNTER_LIST = {
+  1: [
+    "alarm", "delay poison", "detect animals or plants", "detect poison", "detect snares and pits",
+    "endure elements", "jump", "longstrider", "magic stone", "obscuring mist", "read magic",
+    "resist energy",
+  ],
+  2: [
+    "bears endurance", "cats grace", "cure light wounds", "fog cloud", "owls wisdom",
+    "protection from energy", "snare", "soften earth and stone", "wind wall",
+  ],
+  3: [
+    "cure moderate wounds", "darkvision", "neutralize poison", "remove disease", "resist energy",
+    "stone shape", "water breathing", "water walk",
+  ],
+  4: [
+    "air walk", "commune with nature", "control water", "cure serious wounds",
+    "freedom of movement", "nondetection",
+  ],
+};
+
+function buildSpellClassOverlay(byName) {
+  const links = [];
+  const unresolved = [];
+  const aliases = {
+    "bears endurance": "bear s endurance",
+    "bulls strength": "bull s strength",
+    "eagles splendor": "eagle s splendor",
+    "owls wisdom": "owl s wisdom",
+    "cats grace": "cat s grace",
+    "heroes feast": "heroes feast",
+    "geas quest": "geas quest",
+    "blindness deafness": "blindness deafness",
+    "remove blindness deafness": "remove blindness deafness",
+    "summon natures ally i": "summon nature s ally i",
+    "summon natures ally ii": "summon nature s ally ii",
+    "summon natures ally iii": "summon nature s ally iii",
+    "summon natures ally iv": "summon nature s ally iv",
+    "summon natures ally v": "summon nature s ally v",
+    "summon natures ally vi": "summon nature s ally vi",
+    "summon natures ally vii": "summon nature s ally vii",
+    "summon natures ally viii": "summon nature s ally viii",
+    "summon natures ally ix": "summon nature s ally ix",
+    "mass bears endurance": "mass bear s endurance",
+    "mass bulls strength": "mass bull s strength",
+  };
+
+  function resolve(name) {
+    const norm = normalizeSpellName(name);
+    const aliased = aliases[norm] ?? norm;
+    const candidates = [aliased, norm];
+    // Corpus often stores "X, Greater/Lesser/Mass" rather than "greater/lesser/mass X".
+    for (const key of [aliased, norm]) {
+      for (const prefix of ["greater", "lesser", "mass"]) {
+        if (key.startsWith(`${prefix} `)) {
+          candidates.push(`${key.slice(prefix.length + 1)} ${prefix}`);
+        }
+      }
+    }
+    for (const key of candidates) {
+      const slug = byName.get(key);
+      if (slug) return slug;
+    }
+    return null;
+  }
+
+  function addList(classSlug, listByLevel) {
+    for (const [levelStr, names] of Object.entries(listByLevel)) {
+      const level = Number(levelStr);
+      for (const name of names) {
+        const slug = resolve(name);
+        if (!slug) {
+          unresolved.push(`${classSlug}:${level}:${name}`);
+          continue;
+        }
+        links.push({ spell_slug: slug, class_slug: classSlug, level });
+      }
+    }
+  }
+
+  addList("healer-wrpg", HEALER_LIST);
+  addList("priest-wrpg", PRIEST_ADD);
+  addList("shaman-wrpg", SHAMAN_ADD);
+  addList("druid-of-the-wild-wrpg", DRUID_ADD);
+  addList("paladin-warrior-wrpg", PALADIN_LIST);
+  addList("elven-ranger-wrpg", ELVEN_RANGER_LIST);
+  addList("hunter-wrpg", HUNTER_LIST);
+
+  // Warlock exclusive summon monster links
+  for (let i = 1; i <= 9; i++) {
+    const roman = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"][i - 1];
+    const slug = resolve(`summon monster ${roman}`);
+    if (slug) links.push({ spell_slug: slug, class_slug: "warlock-wrpg", level: i });
+    else unresolved.push(`warlock-wrpg:${i}:summon monster ${roman}`);
+  }
+
+  return { links, unresolved };
+}
 
 // ─── Write ───────────────────────────────────────────────────────────────────
 
@@ -769,6 +858,20 @@ const files = {
 for (const [name, data] of Object.entries(files)) {
   writeFileSync(join(OUT_DIR, name), JSON.stringify(data, null, 2) + "\n", "utf-8");
   console.log(`Wrote ${data.length} records to ${name}`);
+}
+
+const byName = loadSpellNameIndex();
+const { links, unresolved } = buildSpellClassOverlay(byName);
+writeFileSync(
+  join(OUT_DIR, "warcraft_rpg_spell_class_links.json"),
+  JSON.stringify(links, null, 2) + "\n",
+  "utf-8",
+);
+console.log(`Wrote ${links.length} spell-class overlay links`);
+if (unresolved.length) {
+  console.warn(`Unresolved spell names (${unresolved.length}):`);
+  for (const u of unresolved.slice(0, 40)) console.warn(" ", u);
+  if (unresolved.length > 40) console.warn(`  ... and ${unresolved.length - 40} more`);
 }
 
 console.log("Done.");

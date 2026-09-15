@@ -1,0 +1,2077 @@
+[
+  {
+    "spell_slug": "create-water-2376",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "cure-minor-wounds-2382",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "detect-magic-2489",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "detect-poison-2490",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "guidance-2501",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "inflict-minor-wounds-2747",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "light-2629",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "mending-2842",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "purify-food-and-drink-2855",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "read-magic-2511",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "resistance-2358",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "virtue-2891",
+    "class_slug": "healer-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "bane-2527",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "bless-2529",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "bless-water-2785",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "cause-fear-2716",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "command-2536",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "comprehend-languages-2482",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "cure-light-wounds-2380",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "curse-water-2725",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "deathwatch-2728",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "divine-favor-2606",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "doom-2731",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "entropic-shield-2318",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "inflict-light-wounds-2745",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "remove-fear-2353",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "sanctuary-2359",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "shield-of-faith-2361",
+    "class_slug": "healer-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "aid-2523",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "augury-2478",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "bears-endurance-2783",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "bulls-strength-2788",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "calm-emotions-2531",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "consecrate-2596",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cure-moderate-wounds-2383",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "darkness-2600",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "delay-poison-2387",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "enthrall-2548",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "find-traps-2499",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "gentle-repose-2738",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "hold-person-2558",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "inflict-moderate-wounds-2748",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "restoration-lesser-2432",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "make-whole-2840",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "remove-paralysis-2429",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "shatter-2646",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "shield-other-2363",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "silence-2704",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "sound-burst-2650",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "spiritual-weapon-2651",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "zone-of-truth-2582",
+    "class_slug": "healer-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "bestow-curse-2713",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "blindnessdeafness-2715",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "contagion-2721",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "continual-flame-2598",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "create-food-and-water-2375",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "cure-serious-wounds-2385",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "daylight-2601",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "deeper-darkness-2602",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "dispel-magic-2315",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "glyph-of-warding-2326",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "helping-hand-2620",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "inflict-serious-wounds-2750",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "invisibility-purge-2627",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "locate-object-2506",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "magic-vestment-2837",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "obscure-object-2342",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "prayer-2569",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-blindnessdeafness-2427",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-curse-2352",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-disease-2428",
+    "class_slug": "healer-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "cure-critical-wounds-2378",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "death-ward-2727",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "dimensional-anchor-2308",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "discern-lies-2496",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "divination-3543",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "divine-power-2607",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "freedom-of-movement-2322",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "magic-weapon-greater-2839",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "imbue-with-spell-ability-2625",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "inflict-critical-wounds-2743",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "neutralize-poison-2413",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "poison-2754",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "repel-vermin-2355",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "restoration-2430",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "sending-2645",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "spell-immunity-2365",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "status-2517",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "tongues-2519",
+    "class_slug": "healer-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "flame-strike-2614",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "command-greater-2537",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "hallow-2619",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "planar-ally-lesser-2419",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "cure-light-wounds-mass-2381",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "inflict-light-wounds-mass-2746",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "raise-dead-2424",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "righteous-might-2865",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "scrying-2512",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "slay-living-2758",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "spell-resistance-2367",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "true-seeing-2520",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "unhallow-2656",
+    "class_slug": "healer-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "blade-barrier-2588",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "find-the-path-2498",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "geasquest-2551",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "dispel-magic-greater-2316",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "glyph-of-warding-greater-2327",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "harm-2741",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "heal-2398",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "heroes-feast-2400",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "bears-endurance-mass-2784",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "bulls-strength-mass-2789",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "cure-moderate-wounds-mass-2384",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "inflict-moderate-wounds-mass-2749",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "word-of-recall-2473",
+    "class_slug": "healer-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "destruction-2729",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "restoration-greater-2431",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "scrying-greater-2513",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "cure-serious-wounds-mass-2386",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "inflict-serious-wounds-mass-2751",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "planar-ally-2417",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "refuge-2425",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "regenerate-2426",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "repulsion-2356",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "resurrection-2433",
+    "class_slug": "healer-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "antimagic-field-2301",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "discern-location-2497",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "spell-immunity-greater-2366",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "holy-aura-2332",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "cure-critical-wounds-mass-2379",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "inflict-critical-wounds-mass-2744",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "unholy-aura-2371",
+    "class_slug": "healer-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "planar-ally-greater-2418",
+    "class_slug": "healer-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "implosion-2626",
+    "class_slug": "healer-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "heal-mass-2399",
+    "class_slug": "healer-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "miracle-2633",
+    "class_slug": "healer-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "soul-bind-2759",
+    "class_slug": "healer-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "true-resurrection-2467",
+    "class_slug": "healer-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "detect-undead-2495",
+    "class_slug": "priest-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "hide-from-undead-2330",
+    "class_slug": "priest-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-weapon-2838",
+    "class_slug": "priest-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "protection-from-evil-2348",
+    "class_slug": "priest-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "align-weapon-2773",
+    "class_slug": "priest-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "consecrate-2596",
+    "class_slug": "priest-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "restoration-lesser-2432",
+    "class_slug": "priest-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "undetectable-alignment-2370",
+    "class_slug": "priest-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "magic-circle-against-evil-2335",
+    "class_slug": "priest-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "searing-light-2644",
+    "class_slug": "priest-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "dismissal-2310",
+    "class_slug": "priest-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "restoration-2430",
+    "class_slug": "priest-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "flame-strike-2614",
+    "class_slug": "priest-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "mark-of-justice-2753",
+    "class_slug": "priest-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "plane-shift-2423",
+    "class_slug": "priest-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "forbiddance-2321",
+    "class_slug": "priest-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "undeath-death-991",
+    "class_slug": "priest-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "ethereal-jaunt-2809",
+    "class_slug": "priest-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "holy-word-2623",
+    "class_slug": "priest-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "dimensional-lock-1574",
+    "class_slug": "priest-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "holy-aura-2332",
+    "class_slug": "priest-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "astral-projection-2712",
+    "class_slug": "priest-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "etherealness-2810",
+    "class_slug": "priest-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "gate-2394",
+    "class_slug": "priest-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "burning-hands-2590",
+    "class_slug": "shaman-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-stone-2836",
+    "class_slug": "shaman-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "obscuring-mist-2414",
+    "class_slug": "shaman-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "fog-cloud-2393",
+    "class_slug": "shaman-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "produce-flame-2641",
+    "class_slug": "shaman-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "soften-earth-and-stone-2875",
+    "class_slug": "shaman-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "wind-wall-2662",
+    "class_slug": "shaman-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "gaseous-form-2819",
+    "class_slug": "shaman-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "resist-energy-2357",
+    "class_slug": "shaman-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "stone-shape-2881",
+    "class_slug": "shaman-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "water-breathing-2893",
+    "class_slug": "shaman-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "air-walk-2772",
+    "class_slug": "shaman-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "control-water-2796",
+    "class_slug": "shaman-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "spike-stones-2879",
+    "class_slug": "shaman-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "wall-of-fire-2658",
+    "class_slug": "shaman-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "control-winds-2798",
+    "class_slug": "shaman-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "fire-shield-2610",
+    "class_slug": "shaman-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "ice-storm-2624",
+    "class_slug": "shaman-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "wall-of-stone-2470",
+    "class_slug": "shaman-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "chain-lightning-2593",
+    "class_slug": "shaman-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "cone-of-cold-2595",
+    "class_slug": "shaman-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "fire-seeds-2392",
+    "class_slug": "shaman-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "stoneskin-2369",
+    "class_slug": "shaman-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "acid-fog-2372",
+    "class_slug": "shaman-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "control-weather-2797",
+    "class_slug": "shaman-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "fire-storm-2611",
+    "class_slug": "shaman-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "earthquake-2608",
+    "class_slug": "shaman-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "horrid-wilting-2742",
+    "class_slug": "shaman-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "incendiary-cloud-2401",
+    "class_slug": "shaman-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "iron-body-2825",
+    "class_slug": "shaman-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "whirlwind-2661",
+    "class_slug": "shaman-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "elemental-swarm-2390",
+    "class_slug": "shaman-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "flare-2616",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "know-direction-2503",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 0
+  },
+  {
+    "spell_slug": "calm-animals-2530",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "charm-animal-2532",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-animals-or-plants-2484",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-snares-and-pits-2493",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "entangle-2807",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "faerie-fire-2609",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "goodberry-2822",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "hide-from-animals-2329",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-fang-2834",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "obscuring-mist-2414",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "pass-without-trace-2850",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "shillelagh-2871",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "speak-with-animals-2515",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "summon-natures-ally-i-2450",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "animal-messenger-2524",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "animal-trance-2525",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "barkskin-2782",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "delay-poison-2387",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "hold-animal-2555",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "reduce-animal-2859",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "spider-climb-2877",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "summon-natures-ally-ii-2451",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "summon-swarm-2459",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "tree-shape-2890",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "warp-wood-2892",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "wood-shape-2897",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "diminish-plants-2800",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "dominate-animal-2545",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "magic-fang-greater-2835",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "neutralize-poison-2413",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "plant-growth-2852",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "poison-2754",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-disease-2428",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "snare-2874",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "speak-with-plants-2516",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "spike-growth-2878",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "summon-natures-ally-iii-2452",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "antiplant-shell-2302",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "blight-965",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "command-plants-2794",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "flame-strike-2614",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "freedom-of-movement-2322",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "giant-vermin-2820",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "repel-vermin-2355",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "summon-natures-ally-iv-2453",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "animal-growth-2775",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "awaken-2780",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "baleful-polymorph-2781",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "commune-with-nature-2480",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "insect-plague-2402",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "summon-natures-ally-v-2454",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "tree-stride-2466",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "wall-of-thorns-2471",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "antilife-shell-2300",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "find-the-path-2498",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "ironwood-2826",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "liveoak-2831",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "repel-wood-2863",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "spellstaff-2876",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "summon-natures-ally-vi-2455",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "transport-via-plants-2464",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "animate-plants-2778",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "changestaff-2792",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "creeping-doom-2377",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "summon-natures-ally-vii-2456",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "sunbeam-2652",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "transmute-metal-to-wood-2887",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "animal-shapes-2776",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "control-plants-2795",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "summon-natures-ally-viii-2457",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "whirlwind-2661",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "shambler-2435",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "shapechange-2870",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "summon-natures-ally-ix-2458",
+    "class_slug": "druid-of-the-wild-wrpg",
+    "level": 9
+  },
+  {
+    "spell_slug": "bane-2527",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "bless-2529",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "bless-weapon-2786",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "command-2536",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "cure-light-wounds-2380",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-poison-2490",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-undead-2495",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "divine-favor-2606",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "endure-elements-2317",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-weapon-2838",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "protection-from-chaos-2346",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "shield-of-faith-2361",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "aid-2523",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "bulls-strength-2788",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cure-moderate-wounds-2383",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "delay-poison-2387",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "eagles-splendor-1218",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "bears-endurance-2783",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "owls-wisdom-2848",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "remove-paralysis-2429",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "resist-energy-2357",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "shield-other-2363",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "spiritual-weapon-2651",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "undetectable-alignment-2370",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cure-serious-wounds-2385",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "discern-lies-2496",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "dispel-magic-2315",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "magic-weapon-greater-2839",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "magic-circle-against-chaos-2334",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "prayer-2569",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-blindnessdeafness-2427",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "searing-light-2644",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "break-enchantment-2306",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "cure-critical-wounds-2378",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "death-ward-2727",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "dispel-chaos-2311",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "dispel-evil-2312",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "freedom-of-movement-2322",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "holy-sword-2622",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "neutralize-poison-2413",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "restoration-2430",
+    "class_slug": "paladin-warrior-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "alarm-2299",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "delay-poison-2387",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-poison-2490",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-snares-and-pits-2493",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-undead-2495",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "entangle-2807",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "faerie-fire-2609",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "hide-from-animals-2329",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "jump-2827",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "longstrider-2832",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-fang-2834",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-weapon-2838",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "pass-without-trace-2850",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "read-magic-2511",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "resist-energy-2357",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "speak-with-animals-2515",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "summon-natures-ally-i-2450",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "barkskin-2782",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "bears-endurance-2783",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cats-grace-2790",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cure-light-wounds-2380",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "detect-chaos-2485",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "detect-evil-2486",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "detect-good-2487",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "detect-law-2488",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "hold-animal-2555",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "owls-wisdom-2848",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "produce-flame-2641",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "protection-from-energy-2347",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "sleep-2571",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "snare-2874",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "speak-with-plants-2516",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "spike-growth-2878",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "summon-natures-ally-ii-2451",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "wood-shape-2897",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "command-plants-2794",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "cure-moderate-wounds-2383",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "darkvision-2799",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "diminish-plants-2800",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "magic-fang-greater-2835",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "invisibility-2676",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "neutralize-poison-2413",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "plant-growth-2852",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "poison-2754",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-disease-2428",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-paralysis-2429",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "see-invisibility-2514",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "summon-natures-ally-iii-2452",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "tree-shape-2890",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "water-walk-2894",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "water-breathing-2893",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "animal-growth-2775",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "commune-with-nature-2480",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "cure-serious-wounds-2385",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "freedom-of-movement-2322",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "magic-weapon-greater-2839",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "invisibility-purge-2627",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "invisibility-sphere-2675",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "nondetection-2341",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "tree-stride-2466",
+    "class_slug": "elven-ranger-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "alarm-2299",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "delay-poison-2387",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-animals-or-plants-2484",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-poison-2490",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "detect-snares-and-pits-2493",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "endure-elements-2317",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "jump-2827",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "longstrider-2832",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "magic-stone-2836",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "obscuring-mist-2414",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "read-magic-2511",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "resist-energy-2357",
+    "class_slug": "hunter-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "bears-endurance-2783",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cats-grace-2790",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cure-light-wounds-2380",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "fog-cloud-2393",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "owls-wisdom-2848",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "protection-from-energy-2347",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "snare-2874",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "soften-earth-and-stone-2875",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "wind-wall-2662",
+    "class_slug": "hunter-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "cure-moderate-wounds-2383",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "darkvision-2799",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "neutralize-poison-2413",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "remove-disease-2428",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "resist-energy-2357",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "stone-shape-2881",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "water-breathing-2893",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "water-walk-2894",
+    "class_slug": "hunter-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "air-walk-2772",
+    "class_slug": "hunter-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "commune-with-nature-2480",
+    "class_slug": "hunter-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "control-water-2796",
+    "class_slug": "hunter-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "cure-serious-wounds-2385",
+    "class_slug": "hunter-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "freedom-of-movement-2322",
+    "class_slug": "hunter-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "nondetection-2341",
+    "class_slug": "hunter-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "summon-monster-i-2441",
+    "class_slug": "warlock-wrpg",
+    "level": 1
+  },
+  {
+    "spell_slug": "summon-monster-ii-2442",
+    "class_slug": "warlock-wrpg",
+    "level": 2
+  },
+  {
+    "spell_slug": "summon-monster-iii-2443",
+    "class_slug": "warlock-wrpg",
+    "level": 3
+  },
+  {
+    "spell_slug": "summon-monster-iv-2444",
+    "class_slug": "warlock-wrpg",
+    "level": 4
+  },
+  {
+    "spell_slug": "summon-monster-v-2445",
+    "class_slug": "warlock-wrpg",
+    "level": 5
+  },
+  {
+    "spell_slug": "summon-monster-vi-2446",
+    "class_slug": "warlock-wrpg",
+    "level": 6
+  },
+  {
+    "spell_slug": "summon-monster-vii-2447",
+    "class_slug": "warlock-wrpg",
+    "level": 7
+  },
+  {
+    "spell_slug": "summon-monster-viii-2448",
+    "class_slug": "warlock-wrpg",
+    "level": 8
+  },
+  {
+    "spell_slug": "summon-monster-ix-2449",
+    "class_slug": "warlock-wrpg",
+    "level": 9
+  }
+]

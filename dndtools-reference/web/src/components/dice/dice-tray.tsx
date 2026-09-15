@@ -8,12 +8,12 @@ import { poolDieCount } from "@/lib/dice/notation";
 import { DICE_SKINS } from "@/lib/dice/skins";
 import { DIE_SIDES, type DieSides } from "@/lib/dice/types";
 import {
-  clampTrayPos,
+  bottomLeftTrayPos,
   DRAG_MOVE_THRESHOLD_PX,
   useFloatingTrayPos,
 } from "@/components/dice/use-floating-tray-pos";
 
-const TRAY_POS_KEY = "pc-planner-dice-tray-pos";
+const TRAY_POS_KEY = "pc-planner-dice-tray-pos-bl";
 
 type ThrowDrag = {
   pointerId: number;
@@ -63,8 +63,7 @@ export function DiceTray() {
   } = useDice();
 
   const defaultPos = useCallback(
-    (width: number, height: number) =>
-      clampTrayPos(16, window.innerHeight - height - 16, width, height),
+    (width: number, height: number) => bottomLeftTrayPos(width, height),
     [],
   );
 

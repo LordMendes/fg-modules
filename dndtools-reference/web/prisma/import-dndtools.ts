@@ -37,6 +37,7 @@ const SUPPLEMENTAL_RACE_FILES = ["warcraft_rpg_races.json"] as const;
 const SUPPLEMENTAL_CLASS_FILES = ["warcraft_rpg_classes.json"] as const;
 const SUPPLEMENTAL_ITEM_FILES = ["warcraft_rpg_items.json"] as const;
 const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json"] as const;
+const SPELL_CLASS_LINK_OVERLAY_FILE = "warcraft_rpg_spell_class_links.json";
 const BATCH_SIZE = 500;
 
 const PLACEHOLDER_TEXT =
@@ -312,11 +313,17 @@ function classIndexData(
   const requirementsText = cleanImportedText(record.requirements_text);
   const classSlug = typeof record.slug === "string" ? record.slug : undefined;
   const className = typeof record.name === "string" ? record.name : undefined;
-  const spellListOriginSlug = parseClassSpellOriginSlug(
-    cleanImportedText(record.description_html),
-    className,
-    classSlug,
-  );
+  const storedOrigin =
+    typeof index.spellListOriginSlug === "string" && index.spellListOriginSlug.length > 0
+      ? index.spellListOriginSlug
+      : null;
+  const spellListOriginSlug =
+    storedOrigin ??
+    parseClassSpellOriginSlug(
+      cleanImportedText(record.description_html),
+      className,
+      classSlug,
+    );
 
   return {
     ...index,
@@ -1135,6 +1142,16 @@ async function pass3Junctions(): Promise<void> {
   // Spell <-> Class
   const spells = loadAllSpellRecords();
   const spellClassRows: { spellId: string; classId: string; level: number }[] = [];
+  const spellClassKey = (spellId: string, classId: string, level: number) =>
+    `${spellId}|${classId}|${level}`;
+  const spellClassSeen = new Set<string>();
+  const pushSpellClassRow = (spellId: string, classId: string, level: number) => {
+    const key = spellClassKey(spellId, classId, level);
+    if (spellClassSeen.has(key)) return;
+    spellClassSeen.add(key);
+    spellClassRows.push({ spellId, classId, level });
+  };
+
   for (const s of spells) {
     for (const ref of (s.classes as LinkRef[]) ?? []) {
       const spellId = lookupRef("spells", { slug: s.slug });
@@ -1144,14 +1161,50 @@ async function pass3Junctions(): Promise<void> {
         continue;
       }
       if (typeof ref.level === "number") {
-        spellClassRows.push({ spellId, classId, level: ref.level });
+        pushSpellClassRow(spellId, classId, ref.level);
       }
     }
   }
 
-  const directLinksByClassId = new Map<string, number>();
-  for (const row of spellClassRows) {
-    directLinksByClassId.set(row.classId, (directLinksByClassId.get(row.classId) ?? 0) + 1);
+  // Supplemental overlay: attach existing PHB/DMG spells to WRPG class lists
+  // without editing core spells.json.
+  const overlayPath = join(SUPPLEMENTAL_DIR, SPELL_CLASS_LINK_OVERLAY_FILE);
+  let overlayCount = 0;
+  if (existsSync(overlayPath)) {
+    const overlay = JSON.parse(readFileSync(overlayPath, "utf-8")) as Array<{
+      spell_slug?: string;
+      class_slug?: string;
+      level?: number;
+    }>;
+    for (const row of overlay) {
+      if (!row.spell_slug || !row.class_slug || typeof row.level !== "number") continue;
+      const spellId = lookupRef("spells", { slug: row.spell_slug });
+      const classId = lookupRef("classes", { slug: row.class_slug });
+      if (!spellId || !classId) {
+        if (!spellId) {
+          await logUnresolved(
+            "SPELL_LINK",
+            row.class_slug,
+            "SPELL",
+            { slug: row.spell_slug },
+            "spells",
+          );
+        }
+        if (!classId) {
+          await logUnresolved(
+            "SPELL_LINK",
+            row.spell_slug,
+            "CLASS",
+            { slug: row.class_slug },
+            "classes",
+          );
+        }
+        continue;
+      }
+      pushSpellClassRow(spellId, classId, row.level);
+      overlayCount++;
+    }
+    console.log(`  spell-class overlay links: ${overlayCount}`);
   }
 
   const classIdToSlug = new Map<string, string>();
@@ -1164,18 +1217,23 @@ async function pass3Junctions(): Promise<void> {
   }));
 
   const classRecords = loadAllClassRecords();
-  const inheritedRows: { spellId: string; classId: string; level: number }[] = [];
+  let inheritedCount = 0;
+  let bannedCount = 0;
   for (const record of classRecords) {
     const slug = record.slug as string;
     const name = record.name as string;
     const classId = lookupRef("classes", { slug });
-    if (!classId || (directLinksByClassId.get(classId) ?? 0) > 0) continue;
+    if (!classId) continue;
 
-    let originSlug = parseClassSpellOriginSlug(
-      cleanImportedText(record.description_html),
-      name,
-      slug,
-    );
+    const index = (record.index ?? {}) as Record<string, unknown>;
+    let originSlug =
+      typeof index.spellListOriginSlug === "string" && index.spellListOriginSlug.length > 0
+        ? index.spellListOriginSlug
+        : parseClassSpellOriginSlug(
+            cleanImportedText(record.description_html),
+            name,
+            slug,
+          );
     if (!originSlug && isCastingClassVariant(slug, name)) {
       const info = getClassCastingInfo(slug, name);
       if (info) {
@@ -1185,21 +1243,51 @@ async function pass3Junctions(): Promise<void> {
         );
       }
     }
-    if (!originSlug || originSlug === slug) continue;
 
-    const originClassId = lookupRef("classes", { slug: originSlug });
-    if (!originClassId) continue;
+    // Union inheritance: copy origin list even when the class also has direct/overlay links.
+    if (originSlug && originSlug !== slug) {
+      const originClassId = lookupRef("classes", { slug: originSlug });
+      if (originClassId) {
+        const snapshot = [...spellClassRows];
+        for (const row of snapshot) {
+          if (row.classId === originClassId) {
+            const before = spellClassSeen.size;
+            pushSpellClassRow(row.spellId, classId, row.level);
+            if (spellClassSeen.size > before) inheritedCount++;
+          }
+        }
+      }
+    }
 
-    for (const row of spellClassRows) {
-      if (row.classId === originClassId) {
-        inheritedRows.push({ spellId: row.spellId, classId, level: row.level });
+    const banned = Array.isArray(index.spellListBannedSlugs)
+      ? (index.spellListBannedSlugs as unknown[]).filter(
+          (s): s is string => typeof s === "string" && s.length > 0,
+        )
+      : [];
+    if (banned.length > 0) {
+      const bannedIds = new Set(
+        banned
+          .map((bannedSlug) => lookupRef("spells", { slug: bannedSlug }))
+          .filter((id): id is string => Boolean(id)),
+      );
+      if (bannedIds.size > 0) {
+        for (let i = spellClassRows.length - 1; i >= 0; i--) {
+          const row = spellClassRows[i];
+          if (row.classId === classId && bannedIds.has(row.spellId)) {
+            spellClassRows.splice(i, 1);
+            spellClassSeen.delete(spellClassKey(row.spellId, row.classId, row.level));
+            bannedCount++;
+          }
+        }
       }
     }
   }
 
-  if (inheritedRows.length > 0) {
-    spellClassRows.push(...inheritedRows);
-    console.log(`  inherited spell-class links for variants: ${inheritedRows.length}`);
+  if (inheritedCount > 0) {
+    console.log(`  inherited spell-class links (union): ${inheritedCount}`);
+  }
+  if (bannedCount > 0) {
+    console.log(`  banned spell-class links removed: ${bannedCount}`);
   }
 
   await prisma.spellClassLevel.deleteMany();
