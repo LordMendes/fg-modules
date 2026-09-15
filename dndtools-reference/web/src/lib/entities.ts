@@ -1952,18 +1952,24 @@ export async function getEntityPreview(
 export async function listSources(): Promise<
   { id: string; name: string; abbrev: string | null; edition: string; counts: number }[]
 > {
-  const sources = await prisma.source.findMany({
-    orderBy: [{ edition: "asc" }, { abbrev: "asc" }],
-    include: {
-      _count: {
-        select: {
-          spells: true, feats: true, monsters: true, classes: true,
-          skills: true, races: true, items: true, equipment: true,
-          domains: true, deities: true, psionics: true, templates: true, rules: true,
+  let sources;
+  try {
+    sources = await prisma.source.findMany({
+      orderBy: [{ edition: "asc" }, { abbrev: "asc" }],
+      include: {
+        _count: {
+          select: {
+            spells: true, feats: true, monsters: true, classes: true,
+            skills: true, races: true, items: true, equipment: true,
+            domains: true, deities: true, psionics: true, templates: true, rules: true,
+          },
         },
       },
-    },
-  });
+    });
+  } catch (error) {
+    if (isUnavailableDatabaseError(error)) return [];
+    throw error;
+  }
 
   const displayNames = buildSourceDisplayNameMap(
     sources.map((s) => ({ name: s.name, abbrev: s.abbrev })),
@@ -2001,59 +2007,100 @@ export async function listSources(): Promise<
   );
 }
 
+const EMPTY_CATEGORY_COUNTS: Record<CategoryKey, number> = {
+  spells: 0,
+  feats: 0,
+  monsters: 0,
+  classes: 0,
+  skills: 0,
+  races: 0,
+  items: 0,
+  equipment: 0,
+  domains: 0,
+  deities: 0,
+  psionics: 0,
+  templates: 0,
+  rules: 0,
+};
+
+/** Docker/Coolify image builds inject DATABASE_URL before migrate/import. */
+function isUnavailableDatabaseError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const code = "code" in error ? String(error.code) : "";
+  return (
+    code === "P2021" ||
+    code === "P2022" ||
+    code === "P1001" ||
+    code === "P1000" ||
+    code === "P1003"
+  );
+}
+
 /** Live entity totals per category for hub UI. */
 export async function getCategoryCounts(): Promise<Record<CategoryKey, number>> {
-  const [
-    spells,
-    feats,
-    monsters,
-    classes,
-    skills,
-    races,
-    items,
-    equipment,
-    domains,
-    deities,
-    psionics,
-    templates,
-    rules,
-  ] = await Promise.all([
-    prisma.spell.count(),
-    prisma.feat.count(),
-    prisma.monster.count(),
-    prisma.dndClass.count(),
-    prisma.skill.count(),
-    prisma.race.count(),
-    prisma.item.count(),
-    prisma.equipment.count(),
-    prisma.domain.count(),
-    prisma.deity.count(),
-    prisma.psionic.count(),
-    prisma.template.count(),
-    prisma.rule.count(),
-  ]);
+  try {
+    const [
+      spells,
+      feats,
+      monsters,
+      classes,
+      skills,
+      races,
+      items,
+      equipment,
+      domains,
+      deities,
+      psionics,
+      templates,
+      rules,
+    ] = await Promise.all([
+      prisma.spell.count(),
+      prisma.feat.count(),
+      prisma.monster.count(),
+      prisma.dndClass.count(),
+      prisma.skill.count(),
+      prisma.race.count(),
+      prisma.item.count(),
+      prisma.equipment.count(),
+      prisma.domain.count(),
+      prisma.deity.count(),
+      prisma.psionic.count(),
+      prisma.template.count(),
+      prisma.rule.count(),
+    ]);
 
-  return {
-    spells,
-    feats,
-    monsters,
-    classes,
-    skills,
-    races,
-    items,
-    equipment,
-    domains,
-    deities,
-    psionics,
-    templates,
-    rules,
-  };
+    return {
+      spells,
+      feats,
+      monsters,
+      classes,
+      skills,
+      races,
+      items,
+      equipment,
+      domains,
+      deities,
+      psionics,
+      templates,
+      rules,
+    };
+  } catch (error) {
+    if (isUnavailableDatabaseError(error)) {
+      return { ...EMPTY_CATEGORY_COUNTS };
+    }
+    throw error;
+  }
 }
 
 /** Item count for the home-page Goods & Services card. */
 export async function getGoodsItemCount(): Promise<number> {
   const { GOODS_KINDS } = await import("@/lib/stores/goods");
-  return prisma.equipment.count({ where: { kind: { in: [...GOODS_KINDS] } } });
+  try {
+    return await prisma.equipment.count({ where: { kind: { in: [...GOODS_KINDS] } } });
+  } catch (error) {
+    if (isUnavailableDatabaseError(error)) return 0;
+    throw error;
+  }
 }
 
 export async function getSourceByAbbrev(abbrev: string) {

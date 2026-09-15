@@ -33,9 +33,13 @@ export default async function Image({ params }: Props) {
   let footer = "D&D 3.5 Edition Reference";
 
   if (category && isCategoryKey(category)) {
-    const counts = await getCategoryCounts();
-    const count = counts[category as CategoryKey];
-    footer = `${count.toLocaleString("en-US")} entries · dnd-helper.com`;
+    try {
+      const counts = await getCategoryCounts();
+      const count = counts[category as CategoryKey];
+      footer = `${count.toLocaleString("en-US")} entries · dnd-helper.com`;
+    } catch {
+      footer = "D&D 3.5 Edition Reference";
+    }
   }
 
   return ogImageResponse(

@@ -7,8 +7,13 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
-  const counts = await getCategoryCounts();
-  const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  let total = 0;
+  try {
+    const counts = await getCategoryCounts();
+    total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  } catch {
+    total = 0;
+  }
 
   return ogImageResponse(
     <OgCenteredLayout
