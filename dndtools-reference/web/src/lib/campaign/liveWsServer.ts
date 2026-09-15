@@ -1,4 +1,4 @@
-import { WebSocketServer, type WebSocket } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 import { randomUUID } from "crypto";
 import type { Server as HttpServer, IncomingMessage } from "http";
 import type { Duplex } from "stream";
