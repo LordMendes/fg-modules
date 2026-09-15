@@ -8659,6 +8659,20 @@ body {
   color: var(--text-secondary);
 }
 
+.pc-item-editor-composition {
+  margin: 0.55rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.pc-item-editor-composition-note {
+  opacity: 0.85;
+}
+
+.pc-item-editor-grid--damage-compose {
+  margin-top: 0.65rem;
+}
+
 .pc-item-editor-feat-bonuses {
   margin-top: 0.65rem;
 }

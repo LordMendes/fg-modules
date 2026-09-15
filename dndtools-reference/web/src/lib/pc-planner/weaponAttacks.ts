@@ -17,9 +17,20 @@ import {
 } from "./inventoryItem";
 import { computeEquippedBonuses } from "./itemBonuses";
 import { computeWeaponFeatBonuses } from "./weaponFeatBonuses";
+import {
+  applyDamageAbilityMult,
+  resolveAttackAbility,
+  resolveDamageAbility,
+} from "./weaponAbilityComposition";
 
 export { applyKeenThreat };
-import type { FeatEntry, InventoryDamageLine, InventoryRow, PcPlanState } from "./types";
+import type {
+  AbilityKey,
+  FeatEntry,
+  InventoryDamageLine,
+  InventoryRow,
+  PcPlanState,
+} from "./types";
 
 const ROLLABLE_SIDES = new Set<number>([4, 6, 8, 10, 12, 20, 100]);
 
@@ -515,10 +526,7 @@ export function computeWeaponAttackRows(
   combatStats: CombatComputed,
 ): WeaponAttackRow[] {
   const inventory = state.inventory ?? [];
-  const strMod = abilityModifier(state.abilities.str);
-  const dexMod = abilityModifier(state.abilities.dex);
   const sizeMod = state.combat.sizeMod;
-  const finesse = hasWeaponFinesse(state.feats);
   const twfFlags = getTwfFeatFlags(state.feats);
   const twfPair = resolveTwfPair(inventory);
   const offHandLight = twfPair
@@ -536,15 +544,13 @@ export function computeWeaponAttackRows(
     if (!item.weaponHand) continue;
 
     const mode: WeaponAttackMode = isRangedWeapon(item) ? "ranged" : "melee";
-    const light = isLightWeapon(item);
-    const useDexToHit =
-      mode === "ranged" || (finesse && light && mode === "melee");
 
     const featBonuses = computeWeaponFeatBonuses(state.feats, item);
     const magicAttack = inventoryMagicAttackBonus(item);
     const attackMisc = item.attackMisc ?? 0;
-    const abilityHit = useDexToHit ? dexMod : strMod;
-    const abilityHitLabel = useDexToHit ? "Dex" : "Str";
+    const attackAbility = resolveAttackAbility(item, state);
+    const abilityHit = attackAbility.mod;
+    const abilityHitLabel = attackAbility.label;
     const combatMisc =
       mode === "ranged" ? state.combat.rangedMisc : state.combat.meleeMisc;
     const itemAttack =
@@ -612,16 +618,19 @@ export function computeWeaponAttackRows(
 
     const magicDamage = inventoryMagicDamageBonus(item);
     const damageMisc = item.damageMisc ?? 0;
-    const twoHanded = isTwoHandedWeapon(item);
-    let abilityDamage = 0;
-    if (mode === "melee") {
-      abilityDamage = meleeDamageAbilityBonus(strMod, twoHanded);
-    }
+    const damageAbility = resolveDamageAbility(item, state);
+    const abilityDamage = damageAbility.mod;
     const damageModifier =
       magicDamage + abilityDamage + featBonuses.damage + damageMisc;
+    const damageAbilityLabel =
+      damageAbility.key === "none"
+        ? "ability"
+        : damageAbility.mult === 1.5
+          ? `${damageAbility.label} x1.5`
+          : damageAbility.label;
     const damageSources = formatBonusSources([
       { label: "enhancement", amount: magicDamage },
-      { label: "Str", amount: abilityDamage },
+      { label: damageAbilityLabel, amount: abilityDamage },
       ...featBonuses.damageParts.map((part) => ({
         label: part.label,
         amount: part.amount,
@@ -639,11 +648,19 @@ export function computeWeaponAttackRows(
     const nonAbilityDamage =
       magicDamage + featBonuses.damage + damageMisc;
     if (mode === "melee" && twfHand === "main") {
-      // Dual-wield main hand never gets 1.5× Str.
-      fullAttackDamageModifier = nonAbilityDamage + strMod;
+      // Dual-wield main hand: 1× ability mod, never 1.5×.
+      const rawMod =
+        damageAbility.key === "none"
+          ? 0
+          : abilityModifier(state.abilities[damageAbility.key as AbilityKey]);
+      fullAttackDamageModifier = nonAbilityDamage + applyDamageAbilityMult(rawMod, 1);
     } else if (mode === "melee" && twfHand === "off") {
+      const rawMod =
+        damageAbility.key === "none"
+          ? 0
+          : abilityModifier(state.abilities[damageAbility.key as AbilityKey]);
       fullAttackDamageModifier =
-        nonAbilityDamage + offHandDamageAbilityBonus(strMod);
+        nonAbilityDamage + offHandDamageAbilityBonus(rawMod);
     }
 
     const standardBonuses = [attackBonus];

@@ -5,6 +5,12 @@ import type {
 
 export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
+/** Ability used for weapon attack/damage, or none. Unset = auto (Str/Dex rules). */
+export type WeaponAbilityChoice = AbilityKey | "none";
+
+/** Str multiplier on weapon damage ability bonus (1 or 1.5). Unset = auto. */
+export type DamageAbilityMult = 1 | 1.5;
+
 export type ClassLevelEntry = {
   classSlug: string;
   className: string;
@@ -152,10 +158,24 @@ export type InventoryRow = {
   masterwork?: boolean;
   enhancementBonus?: number;
   /**
+   * Ability score for attack rolls. Unset = Dex (ranged/finesse) or Str.
+   * "none" = no ability mod to attack.
+   */
+  attackAbility?: WeaponAbilityChoice;
+  /**
    * Extra attack bonus on this weapon (feats / class abilities the sheet
    * does not auto-apply). Stacks with enhancement / masterwork.
    */
   attackMisc?: number;
+  /**
+   * Ability score for damage. Unset = Str (melee) or none (ranged).
+   * "none" = no ability mod to damage.
+   */
+  damageAbility?: WeaponAbilityChoice;
+  /**
+   * Multiplier on positive damage ability mod (1 or 1.5). Unset = 1.5 if two-handed.
+   */
+  damageAbilityMult?: DamageAbilityMult;
   /**
    * Extra damage bonus on this weapon (feats / class abilities).
    * Stacks with enhancement.

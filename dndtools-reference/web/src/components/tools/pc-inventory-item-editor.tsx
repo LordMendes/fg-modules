@@ -23,12 +23,23 @@ import {
   DAMAGE_TYPE_OPTIONS,
   createDamageLine,
   inventoryDamageLines,
+  inventoryMagicAttackBonus,
+  inventoryMagicDamageBonus,
   priceInventoryItem,
   sourceLabel,
   suggestedMagicItemName,
   syncAbilityDamageLines,
   syncLegacyDamageFields,
 } from "@/lib/pc-planner/inventoryItem";
+import {
+  buildAttackCompositionSummary,
+  buildDamageCompositionSummary,
+  defaultAttackAbility,
+  defaultDamageAbility,
+  defaultDamageAbilityMult,
+  resolveAttackAbility,
+  resolveDamageAbility,
+} from "@/lib/pc-planner/weaponAbilityComposition";
 import {
   applySpellItemKindDefaults,
   clampItemCharges,
@@ -43,11 +54,14 @@ import { canEquipAsWornItem } from "@/lib/pc-planner/itemBonuses";
 import type {
   AbilityKey,
   CombatBonusStat,
+  DamageAbilityMult,
   FeatEntry,
   InventoryDamageLine,
   InventoryRow,
   ItemBonusType,
   ItemStatBonus,
+  PcPlanState,
+  WeaponAbilityChoice,
 } from "@/lib/pc-planner/types";
 import {
   computeWeaponFeatBonuses,
@@ -82,6 +96,24 @@ const ABILITY_OPTIONS: { value: AbilityKey; label: string }[] = [
   { value: "int", label: "Intelligence" },
   { value: "wis", label: "Wisdom" },
   { value: "cha", label: "Charisma" },
+];
+
+const WEAPON_ABILITY_SELECT_OPTIONS: {
+  value: "" | WeaponAbilityChoice;
+  label: string;
+}[] = [
+  { value: "", label: "Auto" },
+  ...ABILITY_OPTIONS.map((option) => ({
+    value: option.value as WeaponAbilityChoice,
+    label: option.label,
+  })),
+  { value: "none", label: "None" },
+];
+
+const DAMAGE_MULT_OPTIONS: { value: "" | "1" | "1.5"; label: string }[] = [
+  { value: "", label: "Auto" },
+  { value: "1", label: "×1" },
+  { value: "1.5", label: "×1.5" },
 ];
 
 const BONUS_TYPE_OPTIONS: { value: ItemBonusType; label: string }[] = [
@@ -138,6 +170,7 @@ export type PcInventoryItemEditorProps = {
   onActivate: () => void;
   feats?: FeatEntry[];
   onSetFeatChoice?: (slug: string, choice: string) => void;
+  abilities?: Record<AbilityKey, number>;
 };
 
 function AbilityPriceHint({
@@ -166,6 +199,14 @@ export function PcInventoryItemEditor({
   onActivate,
   feats = [],
   onSetFeatChoice,
+  abilities = {
+    str: 10,
+    dex: 10,
+    con: 10,
+    int: 10,
+    wis: 10,
+    cha: 10,
+  },
 }: PcInventoryItemEditorProps) {
   const [abilitySearch, setAbilitySearch] = useState("");
   const [abilitySource, setAbilitySource] = useState<SourceAbbrev | "all">("all");
@@ -190,6 +231,48 @@ export function PcInventoryItemEditor({
       })
     : [];
   const damageLines = inventoryDamageLines(row);
+  const compositionCtx = useMemo(
+    () => ({ abilities, feats }),
+    [abilities, feats],
+  );
+  const miniState = useMemo(
+    () => ({ abilities, feats }) as Pick<PcPlanState, "abilities" | "feats">,
+    [abilities, feats],
+  );
+  const resolvedAttack = isWeapon ? resolveAttackAbility(row, miniState) : null;
+  const resolvedDamage = isWeapon ? resolveDamageAbility(row, miniState) : null;
+  const attackComposition = isWeapon
+    ? buildAttackCompositionSummary(row, compositionCtx, {
+        magicAttack: inventoryMagicAttackBonus(row),
+        attackMisc,
+        featAttackParts: matchedFeatBonuses?.attackParts ?? [],
+      })
+    : null;
+  const primaryDice =
+    damageLines[0]?.dice || row.damageM || row.damageS || "";
+  const damageComposition = isWeapon
+    ? buildDamageCompositionSummary(row, compositionCtx, {
+        primaryDice,
+        magicDamage: inventoryMagicDamageBonus(row),
+        damageMisc,
+        featDamageParts: matchedFeatBonuses?.damageParts ?? [],
+      })
+    : null;
+  const autoAttackLabel = isWeapon
+    ? ABILITY_OPTIONS.find((o) => o.value === defaultAttackAbility(row, feats))?.label ??
+      "Auto"
+    : "";
+  const autoDamageLabel = isWeapon
+    ? defaultDamageAbility(row) === "none"
+      ? "None"
+      : ABILITY_OPTIONS.find((o) => o.value === defaultDamageAbility(row))?.label ??
+        "Auto"
+    : "";
+  const autoMultLabel = isWeapon
+    ? defaultDamageAbilityMult(row) === 1.5
+      ? "×1.5 (two-handed)"
+      : "×1"
+    : "";
   const price = showMagicBuilder || isSpellItem ? priceInventoryItem(row) : null;
   const suggestedName = showMagicBuilder ? suggestedMagicItemName(row) : null;
   const showSuggestedName =
@@ -561,6 +644,67 @@ export function PcInventoryItemEditor({
           </div>
         </section>
 
+        {isWeapon ? (
+          <section className="pc-item-editor-section">
+            <h3>Attack</h3>
+            <p className="pc-item-editor-hint">
+              Auto uses Dex for ranged or finesse light melee, otherwise Str.
+              {autoAttackLabel ? ` Current auto: ${autoAttackLabel}.` : ""}
+            </p>
+            <div className="pc-item-editor-grid">
+              <label className="pc-item-editor-field">
+                <span>Ability</span>
+                <select
+                  className="pc-sheet-input"
+                  value={row.attackAbility ?? ""}
+                  onChange={(event) =>
+                    patchRow((current) => {
+                      const value = event.target.value;
+                      if (value === "") {
+                        delete current.attackAbility;
+                      } else {
+                        current.attackAbility = value as WeaponAbilityChoice;
+                      }
+                    })
+                  }
+                >
+                  {WEAPON_ABILITY_SELECT_OPTIONS.map((option) => (
+                    <option key={option.value || "auto"} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="pc-item-editor-field">
+                <span>Misc</span>
+                <input
+                  type="number"
+                  className="pc-sheet-input"
+                  value={attackMisc}
+                  onChange={(event) =>
+                    patchRow((current) => {
+                      current.attackMisc = Number(event.target.value) || 0;
+                    })
+                  }
+                />
+              </label>
+            </div>
+            {attackComposition ? (
+              <p className="pc-item-editor-composition">
+                <strong>Total modifiers:</strong> {attackComposition}
+                {resolvedAttack && resolvedAttack.key !== "none" ? (
+                  <span className="pc-item-editor-composition-note">
+                    {" "}
+                    (ability {resolvedAttack.label}{" "}
+                    {resolvedAttack.mod >= 0 ? "+" : ""}
+                    {resolvedAttack.mod})
+                  </span>
+                ) : null}
+              </p>
+            ) : null}
+          </section>
+        ) : null}
+
         {isWeapon || damageLines.length > 0 ? (
           <section className="pc-item-editor-section">
             <div className="pc-item-editor-section-head">
@@ -713,6 +857,86 @@ export function PcInventoryItemEditor({
                 })}
               </ul>
             )}
+            {isWeapon ? (
+              <>
+                <p className="pc-item-editor-hint">
+                  Auto damage ability: {autoDamageLabel}. Auto multiplier:{" "}
+                  {autoMultLabel}.
+                </p>
+                <div className="pc-item-editor-grid pc-item-editor-grid--damage-compose">
+                  <label className="pc-item-editor-field">
+                    <span>Multiplier</span>
+                    <select
+                      className="pc-sheet-input"
+                      value={
+                        row.damageAbilityMult === undefined
+                          ? ""
+                          : String(row.damageAbilityMult)
+                      }
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          const value = event.target.value;
+                          if (value === "") {
+                            delete current.damageAbilityMult;
+                          } else {
+                            current.damageAbilityMult = Number(
+                              value,
+                            ) as DamageAbilityMult;
+                          }
+                        })
+                      }
+                    >
+                      {DAMAGE_MULT_OPTIONS.map((option) => (
+                        <option key={option.value || "auto"} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Ability</span>
+                    <select
+                      className="pc-sheet-input"
+                      value={row.damageAbility ?? ""}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          const value = event.target.value;
+                          if (value === "") {
+                            delete current.damageAbility;
+                          } else {
+                            current.damageAbility = value as WeaponAbilityChoice;
+                          }
+                        })
+                      }
+                    >
+                      {WEAPON_ABILITY_SELECT_OPTIONS.map((option) => (
+                        <option key={option.value || "auto"} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="pc-item-editor-field">
+                    <span>Misc</span>
+                    <input
+                      type="number"
+                      className="pc-sheet-input"
+                      value={damageMisc}
+                      onChange={(event) =>
+                        patchRow((current) => {
+                          current.damageMisc = Number(event.target.value) || 0;
+                        })
+                      }
+                    />
+                  </label>
+                </div>
+                {damageComposition ? (
+                  <p className="pc-item-editor-composition">
+                    <strong>Composition:</strong> {damageComposition}
+                  </p>
+                ) : null}
+              </>
+            ) : null}
           </section>
         ) : null}
 
@@ -921,57 +1145,34 @@ export function PcInventoryItemEditor({
         {isWeapon || isArmor ? (
         <section className="pc-item-editor-section">
           <h3>Combat bonuses</h3>
-          <p className="pc-item-editor-hint">
-            Extra bonuses for feats or class abilities this sheet does not
-            auto-apply. Magic enhancement is set under Magic below.
-          </p>
-          <div className="pc-item-editor-grid">
-            {isWeapon ? (
-              <>
+          {isArmor ? (
+            <>
+              <p className="pc-item-editor-hint">
+                Extra AC for feats or class abilities. Magic enhancement is under
+                Magic below.
+              </p>
+              <div className="pc-item-editor-grid">
                 <label className="pc-item-editor-field">
-                  <span>Extra attack bonus</span>
+                  <span>Extra AC bonus</span>
                   <input
                     type="number"
                     className="pc-sheet-input"
-                    value={attackMisc}
+                    value={armorMisc}
                     onChange={(event) =>
                       patchRow((current) => {
-                        current.attackMisc = Number(event.target.value) || 0;
+                        current.armorMisc = Number(event.target.value) || 0;
                       })
                     }
                   />
                 </label>
-                <label className="pc-item-editor-field">
-                  <span>Extra damage bonus</span>
-                  <input
-                    type="number"
-                    className="pc-sheet-input"
-                    value={damageMisc}
-                    onChange={(event) =>
-                      patchRow((current) => {
-                        current.damageMisc = Number(event.target.value) || 0;
-                      })
-                    }
-                  />
-                </label>
-              </>
-            ) : null}
-            {isArmor ? (
-              <label className="pc-item-editor-field">
-                <span>Extra AC bonus</span>
-                <input
-                  type="number"
-                  className="pc-sheet-input"
-                  value={armorMisc}
-                  onChange={(event) =>
-                    patchRow((current) => {
-                      current.armorMisc = Number(event.target.value) || 0;
-                    })
-                  }
-                />
-              </label>
-            ) : null}
-          </div>
+              </div>
+            </>
+          ) : (
+            <p className="pc-item-editor-hint">
+              Attack and damage misc bonuses are under Attack and Damage above.
+              Magic enhancement is under Magic below.
+            </p>
+          )}
           {isWeapon && matchedFeatBonuses ? (
             <div className="pc-item-editor-feat-bonuses">
               {matchedFeatBonuses.attackParts.length > 0 ||

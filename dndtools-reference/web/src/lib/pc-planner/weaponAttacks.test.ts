@@ -781,4 +781,78 @@ describe("weapon feat and misc bonuses", () => {
     // BAB 1 + Str 1 = 2 (1.5x only for damage)
     assert.equal(rows[0].attackBonus, 2);
   });
+
+  it("attackAbility override uses Wis instead of Str", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 10;
+    state.abilities.wis = 18;
+    state.inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        damageM: "1d8",
+        handed: "one",
+        weaponHand: "main",
+        equipped: true,
+        attackAbility: "wis",
+      },
+    ];
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows[0].attackBonus, 5); // BAB 1 + Wis 4
+    assert.ok((rows[0].attackSources ?? []).some((s) => /Wis/i.test(s)));
+  });
+
+  it("damageAbility none removes ability mod from damage", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 16;
+    state.inventory = [
+      {
+        name: "Greataxe",
+        quantity: 1,
+        weight: 12,
+        kind: "weapon",
+        damageM: "1d12",
+        handed: "two",
+        weaponHand: "main",
+        equipped: true,
+        damageAbility: "none",
+      },
+    ];
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows[0].damageModifier, 0);
+  });
+
+  it("damageAbilityMult override uses x1 instead of two-hand x1.5", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 1 },
+    ];
+    state.abilities.str = 16;
+    state.inventory = [
+      {
+        name: "Greataxe",
+        quantity: 1,
+        weight: 12,
+        kind: "weapon",
+        damageM: "1d12",
+        handed: "two",
+        weaponHand: "main",
+        equipped: true,
+        damageAbilityMult: 1,
+      },
+    ];
+    const stats = computeCombatStats(state);
+    const rows = computeWeaponAttackRows(state, stats);
+    assert.equal(rows[0].damageModifier, 3); // Str 3, not 4
+  });
 });

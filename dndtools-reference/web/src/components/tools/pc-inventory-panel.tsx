@@ -997,6 +997,7 @@ export function PcInventoryPanel({
               })
             }
             feats={state.feats}
+            abilities={state.abilities}
             onSetFeatChoice={(slug, choice) =>
               patch((s) => {
                 const feat = s.feats.find((entry) => entry.slug === slug);
