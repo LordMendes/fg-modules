@@ -213,6 +213,16 @@ Set these as **runtime** environment variables in Coolify:
 
 Do **not** set Coolify's post-deployment command to `/docker-entrypoint.sh` (or leave it empty so it defaults to `start`). That starts a second server on port 3000 and fails with `EADDRINUSE`. Leave post-deploy blank, or use `/docker-entrypoint.sh import` only when you want a data import.
 
+If a deploy dies at **exporting layers** with exit 255, the Coolify host is out of disk or RAM. SSH in and free Docker leftovers, then redeploy:
+
+```
+docker system df
+docker builder prune -af
+docker image prune -af
+```
+
+Keep the running container's image if `image prune` asks. Do not skip this after several failed builds: each attempt leaves a multi-GB layer tree.
+
 ### Entrypoint commands
 
 | Command | Description |

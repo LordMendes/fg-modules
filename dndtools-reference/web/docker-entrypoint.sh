@@ -1,11 +1,21 @@
 #!/bin/sh
 set -e
 cd /app/web
-PRISMA="./node_modules/.bin/prisma"
+
+prisma_migrate() {
+  if [ -f ./node_modules/prisma/build/index.js ]; then
+    node ./node_modules/prisma/build/index.js migrate deploy
+  elif [ -x ./node_modules/.bin/prisma ]; then
+    ./node_modules/.bin/prisma migrate deploy
+  else
+    echo "prisma CLI not found under /app/web/node_modules" >&2
+    exit 1
+  fi
+}
 
 case "${1:-start}" in
   start)
-    "$PRISMA" migrate deploy
+    prisma_migrate
     # Prefer bundled custom server (WebSocket + Redis); fall back to Next standalone.
     if [ -f /app/web/server.mjs ]; then
       cd /app/web
@@ -23,7 +33,7 @@ case "${1:-start}" in
     exec node import-dndtools.mjs
     ;;
   migrate)
-    "$PRISMA" migrate deploy
+    prisma_migrate
     ;;
   *)
     exec "$@"

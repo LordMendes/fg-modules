@@ -26,15 +26,34 @@ COPY data/dndtools /data/dndtools
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @fg-modules/web exec prisma generate
 RUN pnpm --filter @fg-modules/web rebuild sharp
-# NFT/turbopack standalone copies often omit Sharp's .node and libvips .so.
-# Stash the complete pnpm packages so the runner can overlay them.
-RUN mkdir -p /sharp-native \
+# NFT standalone omits Sharp natives, Prisma CLI, and custom-server externals.
+# Stash complete pnpm packages so the runner can overlay them (no npm install).
+RUN mkdir -p /native-pkgs \
   && find /app/node_modules/.pnpm -maxdepth 1 \( \
        -name 'sharp@*' \
        -o -name '@img+sharp-linux*' \
        -o -name '@img+sharp-libvips-linux*' \
-     \) -exec cp -a {} /sharp-native/ \; \
-  && find /sharp-native -name '*.node' | grep -q .
+       -o -name 'prisma@*' \
+       -o -name '@prisma+client@*' \
+       -o -name '@prisma+client-runtime-utils@*' \
+       -o -name '@prisma+config@*' \
+       -o -name '@prisma+debug@*' \
+       -o -name '@prisma+engines@*' \
+       -o -name '@prisma+engines-version@*' \
+       -o -name '@prisma+get-platform@*' \
+       -o -name '@prisma+fetch-engine@*' \
+       -o -name '@prisma+adapter-pg@*' \
+       -o -name '@prisma+driver-adapter-utils@*' \
+       -o -name 'ioredis@*' \
+       -o -name '@ioredis+commands@*' \
+       -o -name 'cluster-key-slot@*' \
+       -o -name 'denque@*' \
+       -o -name 'redis-errors@*' \
+       -o -name 'standard-as-callback@*' \
+       -o -name 'ws@*' \
+       -o -name 'pg@*' \
+     \) -exec cp -a {} /native-pkgs/ \; \
+  && find /native-pkgs -name '*.node' | grep -q .
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
 RUN pnpm --filter @fg-modules/web import:bundle
@@ -42,13 +61,16 @@ RUN pnpm --filter @fg-modules/web import:bundle
 RUN pnpm --filter @fg-modules/web run bundle:server
 
 # --- Production ---
-FROM base AS runner
+# Do not inherit `base` (pnpm). Previous runner `npm install` added 220 packages
+# and made Coolify's "exporting layers" step OOM/disk-out on small hosts.
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV DATA_DIR=/data/dndtools
 
+RUN apk add --no-cache libc6-compat openssl wget
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -64,31 +86,37 @@ COPY --from=builder /app/web/prisma.config.docker.mjs ./web/prisma.config.mjs
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
 
-# Prisma CLI + config deps (migrate deploy reads prisma.config.mjs).
-WORKDIR /app/web
-RUN npm install prisma@7.8.0 ioredis@5 ws@8 --ignore-scripts --no-package-lock
-WORKDIR /app
-
-# Overlay complete Sharp packages into every traced .pnpm tree. Installing Sharp
-# with npm under /app/web/node_modules does not help: turbopack still loads the
-# pnpm store copy, which is missing the musl .node / libvips .so files.
-COPY --from=builder /sharp-native /tmp/sharp-native
-RUN overlay_sharp() { \
+COPY --from=builder /native-pkgs /tmp/native-pkgs
+RUN overlay_pkgs() { \
       target="$1"; \
       mkdir -p "$target"; \
-      for src in /tmp/sharp-native/*; do \
+      for src in /tmp/native-pkgs/*; do \
         [ -e "$src" ] || continue; \
         rm -rf "$target/$(basename "$src")"; \
         cp -a "$src" "$target/"; \
       done; \
     } \
-  && overlay_sharp /app/node_modules/.pnpm \
-  && overlay_sharp /app/web/node_modules/.pnpm \
+  && overlay_pkgs /app/node_modules/.pnpm \
+  && overlay_pkgs /app/web/node_modules/.pnpm \
   && find /app/node_modules /app/web/node_modules -name 'sharp-linuxmusl-*.node' | grep -q . \
+  && link_web_pkg() { \
+       name="$1"; \
+       dest="/app/web/node_modules/$name"; \
+       [ -e "$dest" ] && return 0; \
+       src="$(find /app/node_modules/.pnpm /app/web/node_modules/.pnpm -maxdepth 3 -type d -path "*/node_modules/$name" | head -n 1)"; \
+       [ -n "$src" ] || return 1; \
+       mkdir -p "$(dirname "$dest")"; \
+       ln -sfn "$src" "$dest"; \
+     } \
+  && link_web_pkg prisma \
+  && link_web_pkg ioredis \
+  && link_web_pkg ws \
+  && link_web_pkg pg \
+  && mkdir -p /app/web/node_modules/.bin \
+  && ln -sfn ../prisma/build/index.js /app/web/node_modules/.bin/prisma \
+  && chmod +x /app/web/node_modules/.bin/prisma /docker-entrypoint.sh \
   && chown -R nextjs:nodejs /app/node_modules /app/web/node_modules \
-  && rm -rf /tmp/sharp-native
-
-RUN chmod +x /docker-entrypoint.sh
+  && rm -rf /tmp/native-pkgs
 
 USER nextjs
 
