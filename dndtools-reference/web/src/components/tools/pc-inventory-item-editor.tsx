@@ -1223,8 +1223,8 @@ export function PcInventoryItemEditor({
         ) : null}
 
         {showMagicBuilder ? (
-        <section className="pc-item-editor-section">
-          <h3>Magic</h3>
+        <details className="pc-item-editor-section pc-item-editor-accordion">
+          <summary>Magic</summary>
           <div className="pc-item-editor-grid">
             <label className="pc-item-editor-check pc-item-editor-check--block">
               <input
@@ -1394,7 +1394,7 @@ export function PcInventoryItemEditor({
               </ul>
             </div>
           ) : null}
-        </section>
+        </details>
         ) : null}
 
         <section className="pc-item-editor-section">

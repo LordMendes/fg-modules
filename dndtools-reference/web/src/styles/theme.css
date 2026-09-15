@@ -8569,6 +8569,49 @@ body {
   color: var(--text-secondary);
 }
 
+.pc-item-editor-accordion summary {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  cursor: pointer;
+  list-style: none;
+  width: fit-content;
+}
+
+.pc-item-editor-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.pc-item-editor-accordion summary::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 0.28rem solid transparent;
+  border-bottom: 0.28rem solid transparent;
+  border-left: 0.38rem solid currentColor;
+  opacity: 0.65;
+  transition: transform 0.15s ease;
+}
+
+.pc-item-editor-accordion[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.pc-item-editor-accordion summary:hover,
+.pc-item-editor-accordion[open] summary {
+  color: var(--text-primary);
+}
+
+.pc-item-editor-accordion[open] summary {
+  margin-bottom: 0.55rem;
+}
+
 .pc-item-editor-section-head {
   display: flex;
   align-items: center;
