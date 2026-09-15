@@ -16,6 +16,23 @@ const CATEGORY_PREFIXES = [
   "rules",
 ] as const;
 
+const SANITIZE_CONFIG = {
+  ALLOWED_TAGS: [
+    "p", "br", "strong", "em", "b", "i", "u", "a", "ul", "ol", "li",
+    "h1", "h2", "h3", "h4", "h5", "h6", "table", "thead", "tbody",
+    "tr", "th", "td", "span", "div", "blockquote", "sup", "sub",
+  ],
+  ALLOWED_ATTR: ["href", "class", "colspan", "rowspan"],
+};
+
+/** Last-resort cleanup if DOMPurify cannot run. */
+function fallbackSanitize(html: string): string {
+  return html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, "")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, "")
+    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+}
+
 export function rewriteInternalLinks(html: string | null | undefined): string {
   if (!html) return "";
 
@@ -36,14 +53,12 @@ export function rewriteInternalLinks(html: string | null | undefined): string {
 export function sanitizeHtml(html: string | null | undefined): string {
   if (!html) return "";
   const rewritten = rewriteInternalLinks(html);
-  return DOMPurify.sanitize(rewritten, {
-    ALLOWED_TAGS: [
-      "p", "br", "strong", "em", "b", "i", "u", "a", "ul", "ol", "li",
-      "h1", "h2", "h3", "h4", "h5", "h6", "table", "thead", "tbody",
-      "tr", "th", "td", "span", "div", "blockquote", "sup", "sub",
-    ],
-    ALLOWED_ATTR: ["href", "class", "colspan", "rowspan"],
-  });
+  try {
+    return DOMPurify.sanitize(rewritten, SANITIZE_CONFIG);
+  } catch (error) {
+    console.error("HTML sanitizer failed", error);
+    return fallbackSanitize(rewritten);
+  }
 }
 
 function withEntityTableClass(attrs: string): string {

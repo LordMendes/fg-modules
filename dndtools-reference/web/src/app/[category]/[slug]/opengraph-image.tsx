@@ -26,9 +26,13 @@ export async function generateImageMetadata({ params }: Props) {
   let alt = `${formatSlugTitle(slug)} — ${label}`;
 
   if (category && slug && isCategoryKey(category)) {
-    const entity = await getEntityDetail(category as CategoryKey, slug);
-    if (entity) {
-      alt = `${entity.name} — D&D 3.5 ${label}`;
+    try {
+      const entity = await getEntityDetail(category as CategoryKey, slug);
+      if (entity) {
+        alt = `${entity.name} — D&D 3.5 ${label}`;
+      }
+    } catch {
+      // Keep the slug-based alt if the entity lookup fails.
     }
   }
 
@@ -44,14 +48,18 @@ export default async function Image({ params }: Props) {
   let snippet: string | null = null;
 
   if (category && slug && isCategoryKey(category)) {
-    const entity = await getEntityDetail(category as CategoryKey, slug);
-    if (entity) {
-      name = entity.name;
-      statLine = entity.statLine ?? null;
-      snippet = entity.descriptionText?.replace(/\s+/g, " ").trim() ?? null;
-      sourceLine = entity.source.abbrev
-        ? `${entity.source.name} (${entity.source.abbrev})`
-        : entity.source.name;
+    try {
+      const entity = await getEntityDetail(category as CategoryKey, slug);
+      if (entity) {
+        name = entity.name;
+        statLine = entity.statLine ?? null;
+        snippet = entity.descriptionText?.replace(/\s+/g, " ").trim() ?? null;
+        sourceLine = entity.source.abbrev
+          ? `${entity.source.name} (${entity.source.abbrev})`
+          : entity.source.name;
+      }
+    } catch {
+      // Render a title-only card when the entity lookup fails.
     }
   }
 

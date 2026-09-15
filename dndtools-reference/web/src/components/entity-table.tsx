@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-button";
 import { SaveToListButton } from "@/components/save-to-list-button";
 import { SortableTh } from "@/components/sortable-th";
 import { DEFAULT_ENTITY_SORT } from "@/lib/entity-sort";
 import type { EntityListItem } from "@/lib/entities";
 import type { CategoryKey } from "@/lib/categories";
-import { buildListSearchParams, parseListSearchParams } from "@/lib/entity-filters";
+import { buildListSearchParams, type ParsedListFilters } from "@/lib/entity-filters";
 import {
   equipmentTableColumns,
   type EquipmentTableColumn,
@@ -117,23 +117,20 @@ export function EntityTable({
   category,
   items,
   sort,
+  filters,
   equipmentView = "all",
 }: {
   category: CategoryKey;
   items: EntityListItem[];
   sort: TableSort | null;
+  filters: ParsedListFilters;
   equipmentView?: EquipmentView;
 }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const columns = resolveColumns(category, equipmentView);
   const activeSort = sort ?? DEFAULT_ENTITY_SORT;
 
   function handleSort(column: string) {
-    const filters = parseListSearchParams(
-      category,
-      Object.fromEntries(searchParams.entries()),
-    );
     const nextSort = toggleSort(filters.sort ?? DEFAULT_ENTITY_SORT, column);
     const params = buildListSearchParams({ ...filters, sort: nextSort });
     const qs = params.toString();

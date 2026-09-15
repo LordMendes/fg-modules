@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   EQUIPMENT_VIEW_TABS,
   applyEquipmentViewToFilters,
@@ -10,27 +10,21 @@ import {
 } from "@/lib/equipment-display";
 import {
   buildListSearchParams,
-  parseListSearchParams,
   type ParsedListFilters,
 } from "@/lib/entity-filters";
 
 export function EquipmentKindTabs({ initialFilters }: { initialFilters: ParsedListFilters }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const activeView = parseEquipmentView(initialFilters.fields);
 
   const setView = useCallback(
     (view: EquipmentView) => {
-      const current = parseListSearchParams(
-        "equipment",
-        Object.fromEntries(searchParams.entries()),
-      );
-      const next = applyEquipmentViewToFilters(current, view);
+      const next = applyEquipmentViewToFilters(initialFilters, view);
       const params = buildListSearchParams(next);
       const qs = params.toString();
       router.push(qs ? `/equipment?${qs}` : "/equipment");
     },
-    [router, searchParams],
+    [router, initialFilters],
   );
 
   return (

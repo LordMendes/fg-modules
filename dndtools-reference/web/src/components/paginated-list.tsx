@@ -100,12 +100,23 @@ export function PaginatedEntityList({
     return () => observer.disconnect();
   }, [cursor, loadMore]);
 
+  const filters: ParsedListFilters = {
+    search: search ?? "",
+    description: description ?? "",
+    sources: sources ?? [],
+    editions: editions ?? [],
+    fields: fields ?? {},
+    ranges: ranges ?? {},
+    sort: sort ?? null,
+  };
+
   return (
     <div className="min-w-0">
       <EntityTable
         category={category}
         items={items}
         sort={sort ?? null}
+        filters={filters}
         equipmentView={equipmentView}
       />
       {error && <p className="error-text">{error}</p>}

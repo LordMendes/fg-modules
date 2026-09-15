@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { Suspense } from "react";
 import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
 import { getCategoryFilterOptions, getCategoryCounts, listEntities } from "@/lib/entities";
 import {
@@ -161,27 +162,33 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           ) : null}
         </p>
       </div>
-      {categoryKey === "equipment" ? <EquipmentKindTabs initialFilters={filters} /> : null}
+      {categoryKey === "equipment" ? (
+        <Suspense fallback={null}>
+          <EquipmentKindTabs initialFilters={filters} />
+        </Suspense>
+      ) : null}
       <EntityListFilters
         key={serializeFilters(filters)}
         category={categoryKey}
         options={filterOptions}
         initialFilters={filters}
       />
-      <PaginatedEntityList
-        key={`list-${serializeFilters(filters)}`}
-        category={categoryKey}
-        initialItems={items}
-        initialCursor={nextCursor}
-        search={filters.search || undefined}
-        description={filters.description || undefined}
-        sources={filters.sources}
-        editions={filters.editions}
-        fields={filters.fields}
-        ranges={filters.ranges}
-        sort={filters.sort}
-        equipmentView={equipmentView}
-      />
+      <Suspense fallback={<p className="infinite-scroll-status">Loading…</p>}>
+        <PaginatedEntityList
+          key={`list-${serializeFilters(filters)}`}
+          category={categoryKey}
+          initialItems={items}
+          initialCursor={nextCursor}
+          search={filters.search || undefined}
+          description={filters.description || undefined}
+          sources={filters.sources}
+          editions={filters.editions}
+          fields={filters.fields}
+          ranges={filters.ranges}
+          sort={filters.sort}
+          equipmentView={equipmentView}
+        />
+      </Suspense>
     </>
   );
 }

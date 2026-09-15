@@ -176,11 +176,19 @@ const MONSTER_STAT_FIELDS: [label: string, key: string][] = [
   ["Caster Level", "caster_level"],
 ];
 
-function indexString(data: Record<string, unknown>, key: string): string | null {
+function indexString(data: Record<string, unknown> | null | undefined, key: string): string | null {
+  if (!data) return null;
   const value = data[key];
   if (typeof value !== "string" || value.length === 0) return null;
   if (value.includes("Do not touch this field")) return null;
   return value;
+}
+
+function asIndexRecord(value: unknown): Record<string, unknown> {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    return value as Record<string, unknown>;
+  }
+  return {};
 }
 
 function indexNumber(data: Record<string, unknown>, key: string): number | null {
@@ -1427,22 +1435,29 @@ export async function getEntityDetail(
           "Spell Resistance": r.spellResistance,
         },
         related: [
-          ...r.classLevels.map((cl) => ({
-            label: cl.class.name,
-            href: `/classes/${cl.class.slug}`,
-            meta: `Level ${cl.level}`,
-          })),
-          ...r.domains.map((d) => ({
-            label: d.domain.name,
-            href: `/domains/${d.domain.slug}`,
-          })),
+          ...r.classLevels.flatMap((cl) =>
+            cl.class
+              ? [
+                  {
+                    label: cl.class.name,
+                    href: `/classes/${cl.class.slug}`,
+                    meta: `Level ${cl.level}`,
+                  },
+                ]
+              : [],
+          ),
+          ...r.domains.flatMap((d) =>
+            d.domain
+              ? [{ label: d.domain.name, href: `/domains/${d.domain.slug}` }]
+              : [],
+          ),
         ],
       };
     }
     case "feats": {
       const r = await prisma.feat.findUnique({ where: { slug }, include: { source: src } });
       if (!r) return null;
-      const indexData = r.indexData as Record<string, unknown>;
+      const indexData = asIndexRecord(r.indexData);
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
@@ -1463,11 +1478,10 @@ export async function getEntityDetail(
         },
       });
       if (!r) return null;
-      const indexData = r.indexData as Record<string, unknown>;
-      const linkedAbilities = r.abilities.map((a) => ({
-        label: a.rule.name,
-        href: `/rules/${a.rule.slug}`,
-      }));
+      const indexData = asIndexRecord(r.indexData);
+      const linkedAbilities = r.abilities.flatMap((a) =>
+        a.rule ? [{ label: a.rule.name, href: `/rules/${a.rule.slug}` }] : [],
+      );
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
@@ -1508,7 +1522,7 @@ export async function getEntityDetail(
           })
         : [];
 
-      const indexData = r.indexData as Record<string, unknown>;
+      const indexData = asIndexRecord(r.indexData);
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
