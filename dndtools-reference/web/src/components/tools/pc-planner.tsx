@@ -24,7 +24,11 @@ import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
-import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
+import {
+  compendiumFinalizeContext,
+  finalizePcPlanWithContext,
+} from "@/lib/pc-planner/finalizeContext";
+import { createFeatEntry } from "@/lib/pc-planner/parseFeatEffects";
 import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import {
   applyDerivedFromRace,
@@ -81,15 +85,10 @@ function PcPlannerBody() {
       setState((prev) => {
         const next = structuredClone(prev);
         fn(next);
-        return finalizePcPlanState(
-          next,
-          compendium?.raceFeatures ?? null,
-          compendium?.classSpellTables ?? {},
-          compendium?.classHitDice ?? {},
-        );
+        return finalizePcPlanWithContext(next, compendiumFinalizeContext(compendium));
       });
     },
-    [compendium?.raceFeatures, compendium?.classSpellTables, compendium?.classHitDice],
+    [compendium],
   );
 
   async function refreshPlans() {
@@ -151,11 +150,9 @@ function PcPlannerBody() {
         }
         lastRaceSlug.current = raceSlug;
         applyDerivedFromRace(next, result.bundle!.raceFeatures);
-        return finalizePcPlanState(
+        return finalizePcPlanWithContext(
           next,
-          result.bundle!.raceFeatures,
-          result.bundle!.classSpellTables,
-          result.bundle!.classHitDice,
+          compendiumFinalizeContext(result.bundle!),
         );
       });
       setCompendiumLoading(false);
@@ -282,7 +279,7 @@ function PcPlannerBody() {
   function addFeat(slug: string, name: string, choice?: string) {
     patch((s) => {
       if (s.feats.some((f) => f.slug === slug)) return;
-      s.feats.push(choice ? { slug, name, choice } : { slug, name });
+      s.feats.push(createFeatEntry(slug, name, choice));
     });
   }
 

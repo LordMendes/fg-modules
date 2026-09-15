@@ -536,7 +536,16 @@ export function computeWeaponAttackRows(
     ? twfAttackPenalties(twfFlags.twoWeaponFighting, offHandLight)
     : null;
   const rows: WeaponAttackRow[] = [];
-  const equippedBonuses = computeEquippedBonuses(state.inventory);
+  const equippedBonuses = computeEquippedBonuses(
+    state.inventory,
+    Boolean(state.combat.addAllBonusTypes),
+  );
+  const modes = state.combatModes ?? {};
+  const powerAttack = Math.min(
+    Math.max(0, modes.powerAttack ?? 0),
+    combatStats.bab,
+  );
+  const rapidShotPenalty = modes.rapidShot ? -2 : 0;
 
   for (let i = 0; i < inventory.length; i++) {
     const item = inventory[i];
@@ -557,6 +566,12 @@ export function computeWeaponAttackRows(
       mode === "ranged"
         ? equippedBonuses.combat.ranged.total
         : equippedBonuses.combat.melee.total;
+    const modeAttackAdj =
+      mode === "ranged"
+        ? rapidShotPenalty
+        : mode === "melee"
+          ? -(modes.fightingDefensively ? 4 : 0) - powerAttack
+          : 0;
     const attackBonus =
       combatStats.bab +
       abilityHit +
@@ -565,7 +580,8 @@ export function computeWeaponAttackRows(
       featBonuses.attack +
       attackMisc +
       itemAttack +
-      combatMisc;
+      combatMisc +
+      modeAttackAdj;
     const attackSources = formatBonusSources([
       { label: "BAB", amount: combatStats.bab },
       { label: abilityHitLabel, amount: abilityHit },
@@ -620,8 +636,10 @@ export function computeWeaponAttackRows(
     const damageMisc = item.damageMisc ?? 0;
     const damageAbility = resolveDamageAbility(item, state);
     const abilityDamage = damageAbility.mod;
+    const powerAttackDamage =
+      mode === "melee" && powerAttack > 0 ? powerAttack : 0;
     const damageModifier =
-      magicDamage + abilityDamage + featBonuses.damage + damageMisc;
+      magicDamage + abilityDamage + featBonuses.damage + damageMisc + powerAttackDamage;
     const damageAbilityLabel =
       damageAbility.key === "none"
         ? "ability"
@@ -679,6 +697,9 @@ export function computeWeaponAttackRows(
         twfPenalties.offHand,
         twfFlags,
       );
+    } else if (mode === "ranged" && modes.rapidShot) {
+      const base = iterativeAttackBonuses(combatStats.bab, attackExtra + rapidShotPenalty);
+      fullAttackBonuses = [...base, combatStats.bab + attackExtra + rapidShotPenalty];
     } else {
       fullAttackBonuses = iterativeAttackBonuses(combatStats.bab, attackExtra);
     }

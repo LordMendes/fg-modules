@@ -810,7 +810,7 @@ export async function getCampaignPcPlan(
     id: link.pcPlan.id,
     name: link.pcPlan.name,
     shortcut: link.pcPlan.shortcut,
-    state: syncPcPlanState(parsed, null, classSpellTables),
+    state: syncPcPlanState(parsed, null, { classSpellTables }),
     updatedAt: link.pcPlan.updatedAt,
     ownerUserId: link.userId,
     canEdit: isOwner || isDm,

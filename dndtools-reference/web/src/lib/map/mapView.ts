@@ -22,6 +22,10 @@ import type {
   MapTokenVisibility,
 } from "@/lib/map/types";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import { normalizePcPlanState } from "@/lib/pc-planner/normalizePlanState";
+import {
+  visionRangeSquaresFromSenses,
+} from "@/lib/pc-planner/parseRaceFeatures";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 
@@ -154,6 +158,8 @@ type MapRow = {
 function mapTokenRow(
   t: MapRow["tokens"][number],
   pcTokenUrls: Map<string, string | null>,
+  pcVisionRanges: Map<string, number | null>,
+  scaleFeet: number,
 ): MapTokenView {
   let imageUrl: string | null = null;
   if (t.kind === "pc" && t.pcPlanId) {
@@ -175,7 +181,11 @@ function mapTokenRow(
     layer: asLayer(t.layer),
     visibility: asVisibility(t.visibility),
     ownerUserId: t.ownerUserId,
-    visionRange: t.visionRange,
+    visionRange:
+      t.visionRange ??
+      (t.kind === "pc" && t.pcPlanId
+        ? (pcVisionRanges.get(t.pcPlanId) ?? null)
+        : null),
     emitsLight: t.emitsLight,
     lightBright: t.lightBright,
     lightDim: t.lightDim,
@@ -265,6 +275,7 @@ export function mapLightRow(l: MapRow["lights"][number]): MapLightView {
 export function toCampaignMapView(
   row: MapRow,
   pcTokenUrls: Map<string, string | null>,
+  pcVisionRanges: Map<string, number | null> = new Map(),
 ): CampaignMapView {
   const imageUrl =
     tryPublicUrlForKey(row.imageKey, row.updatedAt) ?? `/media/${row.imageKey}`;
@@ -285,7 +296,9 @@ export function toCampaignMapView(
     lightingEnabled: row.lightingEnabled,
     daylight: row.daylight,
     explorerEnabled: row.explorerEnabled,
-    tokens: row.tokens.map((t) => mapTokenRow(t, pcTokenUrls)),
+    tokens: row.tokens.map((t) =>
+      mapTokenRow(t, pcTokenUrls, pcVisionRanges, row.scaleFeet),
+    ),
     fogRegions: row.fogRegions.map(mapFogRegionRow),
     drawings: row.drawings.map(mapDrawingRow),
     occluders: row.occluders.map(mapOccluderRow),
@@ -321,6 +334,44 @@ export async function loadPcTokenUrls(
   return map;
 }
 
+export async function loadPcVisionRanges(
+  pcPlanIds: string[],
+  scaleFeet = 5,
+): Promise<Map<string, number | null>> {
+  const unique = Array.from(new Set(pcPlanIds.filter(Boolean)));
+  const map = new Map<string, number | null>();
+  if (unique.length === 0) return map;
+  const plans = await prisma.pcPlan.findMany({
+    where: { id: { in: unique } },
+    select: { id: true, state: true },
+  });
+  for (const plan of plans) {
+    const state = normalizePcPlanState(parseState(plan.state));
+    const senses = state.identity.senses ?? {
+      darkvisionFeet: 0,
+      lowLight: false,
+      scent: false,
+      extra: "",
+    };
+    map.set(plan.id, visionRangeSquaresFromSenses(senses, scaleFeet));
+  }
+  return map;
+}
+
+export async function loadPcMapContext(
+  pcPlanIds: string[],
+  scaleFeet = 5,
+): Promise<{
+  tokenUrls: Map<string, string | null>;
+  visionRanges: Map<string, number | null>;
+}> {
+  const [tokenUrls, visionRanges] = await Promise.all([
+    loadPcTokenUrls(pcPlanIds),
+    loadPcVisionRanges(pcPlanIds, scaleFeet),
+  ]);
+  return { tokenUrls, visionRanges };
+}
+
 export async function loadCampaignMapView(
   mapId: string,
   viewer: MapViewer,
@@ -333,8 +384,8 @@ export async function loadCampaignMapView(
   const pcIds = row.tokens
     .map((t) => t.pcPlanId)
     .filter((id): id is string => Boolean(id));
-  const urls = await loadPcTokenUrls(pcIds);
-  const view = toCampaignMapView(row, urls);
+  const { tokenUrls, visionRanges } = await loadPcMapContext(pcIds, row.scaleFeet);
+  const view = toCampaignMapView(row, tokenUrls, visionRanges);
   return filterMapViewForViewer(view, viewer);
 }
 

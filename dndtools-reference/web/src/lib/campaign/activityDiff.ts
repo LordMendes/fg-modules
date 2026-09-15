@@ -62,6 +62,35 @@ export function diffPcPlanState(
     classLevelsLabel(after.identity.classLevels),
   );
   pushIfChanged(out, "deity", before.identity.deity, after.identity.deity);
+  pushIfChanged(out, "XP", before.identity.xp, after.identity.xp);
+  pushIfChanged(out, "age", before.identity.age, after.identity.age);
+  pushIfChanged(out, "gender", before.identity.gender, after.identity.gender);
+  pushIfChanged(out, "height", before.identity.height, after.identity.height);
+  pushIfChanged(out, "weight", before.identity.weight, after.identity.weight);
+  pushIfChanged(
+    out,
+    "senses",
+    before.identity.sensesOverride ?? null,
+    after.identity.sensesOverride ?? null,
+  );
+  pushIfChanged(
+    out,
+    "languages",
+    (before.identity.languages?.lines ?? []).join(", ") || null,
+    (after.identity.languages?.lines ?? []).join(", ") || null,
+  );
+  pushIfChanged(
+    out,
+    "defenses",
+    before.identity.defensesCustomized ? "custom" : "auto",
+    after.identity.defensesCustomized ? "custom" : "auto",
+  );
+  pushIfChanged(
+    out,
+    "opposed schools",
+    (before.identity.opposedSchools ?? []).join(", ") || null,
+    (after.identity.opposedSchools ?? []).join(", ") || null,
+  );
 
   for (const key of ABILITY_KEYS) {
     pushIfChanged(
@@ -82,6 +111,12 @@ export function diffPcPlanState(
       before.abilityDamage?.[key] ?? 0,
       after.abilityDamage?.[key] ?? 0,
     );
+    pushIfChanged(
+      out,
+      `${key.toUpperCase()} drain`,
+      before.abilityDrain?.[key] ?? 0,
+      after.abilityDrain?.[key] ?? 0,
+    );
   }
 
   pushIfChanged(
@@ -89,6 +124,12 @@ export function diffPcPlanState(
     "HP current",
     before.hitPoints?.current,
     after.hitPoints?.current,
+  );
+  pushIfChanged(
+    out,
+    "HP temporary",
+    before.hitPoints?.temporary,
+    after.hitPoints?.temporary,
   );
   const beforeHd = JSON.stringify(before.hitPoints?.rolls ?? []);
   const afterHd = JSON.stringify(after.hitPoints?.rolls ?? []);
@@ -118,10 +159,31 @@ export function diffPcPlanState(
       "srBase",
       "srMisc",
       "attacks",
+      "asfOverride",
+      "addAllBonusTypes",
+      "suppressSynergies",
     ] as const;
     for (const key of combatKeys) {
       pushIfChanged(out, `combat.${key}`, before.combat[key], after.combat[key]);
     }
+  }
+
+  const beforeModes = JSON.stringify(before.combatModes ?? {});
+  const afterModes = JSON.stringify(after.combatModes ?? {});
+  if (beforeModes !== afterModes) {
+    out.push({ path: "combat modes", from: "updated", to: "updated" });
+  }
+
+  const beforeConditions = JSON.stringify(before.conditions ?? []);
+  const afterConditions = JSON.stringify(after.conditions ?? []);
+  if (beforeConditions !== afterConditions) {
+    out.push({ path: "conditions", from: "updated", to: "updated" });
+  }
+
+  const beforeResources = JSON.stringify(before.resources ?? []);
+  const afterResources = JSON.stringify(after.resources ?? []);
+  if (beforeResources !== afterResources) {
+    out.push({ path: "resources", from: "updated", to: "updated" });
   }
 
   const beforeSkills = JSON.stringify(before.skills ?? []);

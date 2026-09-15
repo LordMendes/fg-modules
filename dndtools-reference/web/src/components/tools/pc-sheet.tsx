@@ -8,6 +8,10 @@ import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
 import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
+import {
+  PcPhysicalIdentityFields,
+  PcSensesLanguagesBlock,
+} from "@/components/tools/pc-identity-extra";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
@@ -22,7 +26,8 @@ import {
   formatBonusSources,
   skillItemBonus,
 } from "@/lib/pc-planner/itemBonuses";
-import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
+import { deriveFeatEffects, featSkillBonus } from "@/lib/pc-planner/parseFeatEffects";
+import { resolveClassFeaturesForPlan } from "@/lib/pc-planner/resolveCompendium";
 import {
   computeSkillPointSummary,
   computeSkillTotal,
@@ -48,6 +53,8 @@ import {
   applyRacialSkillBonuses,
   clampAbilityDamage,
   emptyAbilityDamage,
+  emptyAbilityDrain,
+  normalizeAbilityDrain,
   racialModLabel,
 } from "@/lib/pc-planner/syncDerived";
 import { abilityModifier } from "@/lib/pc-planner/combatStats";
@@ -242,10 +249,12 @@ export function PcSheet({
   const classSkillKeys = classSkillKeySet(compendium?.skills ?? []);
   const skillHd = skillHitDice(classLevels);
   const equippedGear = computeEquippedGear(state.inventory ?? [], state.combat.speedBase);
+  const featEffects = deriveFeatEffects(state.feats);
+  const resolvedClassFeatures = resolveClassFeaturesForPlan(compendium, state);
   const encumbrance = computeEncumbrance(state, {
     raceFeatures,
-    featFeatures: deriveFeatEffects(state.feats),
-    classFeatures: compendium?.classFeatures ?? null,
+    featFeatures: featEffects,
+    classFeatures: resolvedClassFeatures,
     equippedGear,
   });
   const skillAcp = encumbrance.totalAcp;
@@ -639,6 +648,12 @@ export function PcSheet({
               </div>
             ) : null}
 
+            <PcSensesLanguagesBlock state={state} patch={patch} readOnly={readOnly} />
+            <div className="npc-sheet-block">
+              <h3>Character details</h3>
+              <PcPhysicalIdentityFields state={state} patch={patch} readOnly={readOnly} />
+            </div>
+
             <div className="npc-sheet-block">
               <h3>Ability Scores</h3>
               <div className="npc-sheet-abilities">
@@ -647,6 +662,7 @@ export function PcSheet({
                   const itemStacked = equippedItemBonuses.abilities[key];
                   const itemTotal = itemStacked?.total ?? 0;
                   const damage = state.abilityDamage?.[key] ?? 0;
+                  const drain = state.abilityDrain?.[key] ?? 0;
                   const undamaged = abilityBase[key] + racial + itemTotal;
                   const current = state.abilities[key];
                   const damaged = damage > 0;
@@ -726,9 +742,29 @@ export function PcSheet({
                         <span className="pc-ability-sep" aria-hidden="true">
                           |
                         </span>
+                        <div className="pc-ability-col pc-ability-col--dmg">
+                          <span className="pc-ability-col-label">Drain</span>
+                          <input
+                            type="number"
+                            className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
+                            min={0}
+                            max={99}
+                            value={drain}
+                            aria-label={`${key.toUpperCase()} ability drain`}
+                            onChange={(e) =>
+                              patch((s) => {
+                                if (!s.abilityDrain) s.abilityDrain = emptyAbilityDrain();
+                                s.abilityDrain[key] = clampAbilityDamage(Number(e.target.value));
+                              })
+                            }
+                          />
+                        </div>
+                        <span className="pc-ability-sep" aria-hidden="true">
+                          |
+                        </span>
                         <div
                           className={
-                            damaged
+                            damaged || drain > 0
                               ? "pc-ability-col pc-ability-col--mod pc-ability-col--mod-damaged"
                               : "pc-ability-col pc-ability-col--mod"
                           }
@@ -774,7 +810,7 @@ export function PcSheet({
             state={state}
             patch={patch}
             raceFeatures={compendium?.raceFeatures ?? null}
-            classFeatures={compendium?.classFeatures ?? null}
+            classFeatures={resolvedClassFeatures}
             classAdvancement={compendium?.classAdvancement ?? null}
             classHitDice={compendium?.classHitDice ?? null}
           />
@@ -786,6 +822,18 @@ export function PcSheet({
               <div className="pc-skills-header">
                 <h3>Skills</h3>
                 <div className="pc-skills-header-actions">
+                  <label className="pc-checkbox-label pc-skills-synergy-toggle">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(state.combat.suppressSynergies)}
+                      onChange={(e) =>
+                        patch((s) => {
+                          s.combat.suppressSynergies = e.target.checked;
+                        })
+                      }
+                    />
+                    Suppress synergies
+                  </label>
                   {skillCatalog.length > 0 || state.skills.length > 0 ? (
                     <button
                       type="button"
@@ -900,6 +948,7 @@ export function PcSheet({
                       <th>Ability</th>
                       <th>Ranks</th>
                       <th>Racial</th>
+                      <th>Syn</th>
                       <th>Misc</th>
                       <th>ACP</th>
                       <th>Total</th>
@@ -912,11 +961,12 @@ export function PcSheet({
                       const overMax = row.ranks > maxRanks;
                       const acpValue = row.armorCheckPenalty ? skillAcp : 0;
                       const itemSkill = skillItemBonus(equippedItemBonuses, row);
+                      const featSkill = featSkillBonus(featEffects, row.name, row.slug);
                       const total = computeSkillTotal(
                         row,
                         state.abilities,
                         skillAcp,
-                        itemSkill.total,
+                        itemSkill.total + featSkill,
                       );
                       const canRemove = canRemoveSpecialtyRow(row, classSkillKeys);
                       return (
@@ -981,6 +1031,13 @@ export function PcSheet({
                                 ? `+${row.racialMisc}`
                                 : row.racialMisc}
                           </td>
+                          <td className="pc-skill-synergy">
+                            {(row.synergyMisc ?? 0) === 0
+                              ? "—"
+                              : row.synergyMisc! >= 0
+                                ? `+${row.synergyMisc}`
+                                : row.synergyMisc}
+                          </td>
                           <td>
                             <input
                               type="number"
@@ -1028,6 +1085,7 @@ export function PcSheet({
         {sheetTab === "abilities" && (
           <PcAbilitiesPanel
             state={state}
+            patch={patch}
             compendium={compendium}
             loading={compendiumLoading}
             onAddFeat={onAddFeat}
@@ -1041,7 +1099,7 @@ export function PcSheet({
             patch={patch}
             onAddInventoryRow={onAddInventoryRow}
             raceFeatures={raceFeatures}
-            classFeatures={compendium?.classFeatures ?? null}
+            classFeatures={resolvedClassFeatures}
           />
         )}
 

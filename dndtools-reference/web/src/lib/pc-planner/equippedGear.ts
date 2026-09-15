@@ -11,6 +11,8 @@ export type EquippedGear = {
   shield: number | null;
   maxDex: number | null;
   acp: number;
+  /** Sum of arcane spell failure from equipped armor and shield. */
+  arcaneSpellFailure: number;
   /** Delta applied to speedArmor (e.g. −10 when 30 → 20). */
   speedArmorDelta: number | null;
   armorName: string | null;
@@ -114,12 +116,18 @@ function readIndexString(
   return typeof value === "string" && value.trim() ? value.trim() : null;
 }
 
+function parseAsfPercent(raw: number | null | undefined): number {
+  if (raw == null || !Number.isFinite(raw)) return 0;
+  return Math.max(0, Math.min(100, Math.trunc(raw)));
+}
+
 export function emptyEquippedGear(): EquippedGear {
   return {
     armor: null,
     shield: null,
     maxDex: null,
     acp: 0,
+    arcaneSpellFailure: 0,
     speedArmorDelta: null,
     armorName: null,
     shieldName: null,
@@ -149,6 +157,7 @@ export function computeEquippedGear(
   const result = emptyEquippedGear();
   let armorAcp = 0;
   let shieldAcp = 0;
+  let asf = 0;
 
   for (const row of inventory) {
     if (isWeaponKind(row.kind) && row.weaponHand === "main") {
@@ -166,6 +175,7 @@ export function computeEquippedGear(
         result.maxDex = row.maxDex;
       }
       armorAcp = effectiveArmorCheckPenalty(row);
+      asf += parseAsfPercent(row.arcaneSpellFailure);
       const armored = armoredSpeedForBase(speedBase, row.speed30, row.speed20);
       if (armored != null) {
         result.speedArmorDelta = armored - speedBase;
@@ -174,12 +184,14 @@ export function computeEquippedGear(
       result.shield = effectiveArmorBonus(row);
       result.shieldName = row.name || null;
       shieldAcp = effectiveArmorCheckPenalty(row);
+      asf += parseAsfPercent(row.arcaneSpellFailure);
     } else if (!isWeaponKind(row.kind)) {
       if (row.name.trim()) result.wornItemNames.push(row.name.trim());
     }
   }
 
   result.acp = armorAcp + shieldAcp;
+  result.arcaneSpellFailure = Math.min(100, asf);
   return result;
 }
 
@@ -280,6 +292,7 @@ export function gearStatsFromEquipmentIndex(input: {
   | "category"
   | "weight"
   | "armorBonus"
+  | "arcaneSpellFailure"
   | "maxDex"
   | "acp"
   | "speed30"
@@ -311,6 +324,11 @@ export function gearStatsFromEquipmentIndex(input: {
     parseSignedNumber(
       typeof index.armor_check_penalty === "string" ? index.armor_check_penalty : null,
     ) ?? parseSignedNumber(stats.acp);
+  const asfRaw =
+    typeof index.arcane_spell_failure === "string"
+      ? index.arcane_spell_failure.replace(/%/g, "")
+      : null;
+  const arcaneSpellFailure = asfRaw ? parseSignedNumber(asfRaw) : null;
   const speed30 = parseSignedNumber(
     typeof index.speed_30 === "string" ? index.speed_30 : null,
   );
@@ -331,6 +349,7 @@ export function gearStatsFromEquipmentIndex(input: {
     category,
     weight: parseWeightPounds(input.weight),
     armorBonus: acBonus,
+    arcaneSpellFailure,
     maxDex,
     acp,
     speed30,

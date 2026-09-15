@@ -99,22 +99,67 @@ type Candidate = {
   label: string;
 };
 
+const STACKING_TYPES = new Set<ItemBonusType>([
+  "dodge",
+  "circumstance",
+  "luck",
+  "morale",
+  "untyped",
+]);
+
+function stacksByType(bonusType: ItemBonusType): boolean {
+  return STACKING_TYPES.has(bonusType);
+}
+
 /**
- * Sum every equipped bonus for a target. Tooltip sources list each contributor.
+ * Sum equipped bonuses with 3.5e stacking (highest per named type unless addAll).
+ * Tooltip sources list kept and dropped contributors.
  */
-export function stackBonuses(candidates: Candidate[]): StackedBonus {
+export function stackBonuses(
+  candidates: Candidate[],
+  addAllBonusTypes = false,
+): StackedBonus {
   if (candidates.length === 0) return { total: 0, sources: [] };
+
+  const valid = candidates.filter(
+    (c) => Number.isFinite(c.amount) && c.amount !== 0,
+  );
+  if (valid.length === 0) return { total: 0, sources: [] };
+
+  if (addAllBonusTypes) {
+    const sources: BonusSource[] = valid.map((c) => ({
+      label: c.label,
+      amount: c.amount,
+      bonusType: c.bonusType,
+    }));
+    sources.sort((a, b) => a.label.localeCompare(b.label));
+    return { total: sources.reduce((s, x) => s + x.amount, 0), sources };
+  }
+
+  const byType = new Map<ItemBonusType, Candidate[]>();
+  for (const c of valid) {
+    const list = byType.get(c.bonusType) ?? [];
+    list.push(c);
+    byType.set(c.bonusType, list);
+  }
 
   const sources: BonusSource[] = [];
   let total = 0;
-  for (const candidate of candidates) {
-    if (!Number.isFinite(candidate.amount) || candidate.amount === 0) continue;
-    total += candidate.amount;
-    sources.push({
-      label: candidate.label,
-      amount: candidate.amount,
-      bonusType: candidate.bonusType,
-    });
+  for (const [, group] of byType) {
+    if (stacksByType(group[0]!.bonusType)) {
+      for (const c of group) {
+        total += c.amount;
+        sources.push({ label: c.label, amount: c.amount, bonusType: c.bonusType });
+      }
+    } else {
+      const best = group.reduce((a, b) => (b.amount > a.amount ? b : a));
+      total += best.amount;
+      sources.push({
+        label: best.label,
+        amount: best.amount,
+        bonusType: best.bonusType,
+      });
+    }
   }
   sources.sort((a, b) => a.label.localeCompare(b.label));
   return { total, sources };
@@ -265,6 +310,7 @@ function pushCandidate(
  */
 export function computeEquippedBonuses(
   inventory: InventoryRow[] | null | undefined,
+  addAllBonusTypes = false,
 ): EquippedBonuses {
   const abilityBuckets = new Map<string, Candidate[]>();
   const skillBuckets = new Map<string, Candidate[]>();
@@ -301,13 +347,13 @@ export function computeEquippedBonuses(
 
   const result = emptyEquippedBonuses();
   for (const key of ABILITY_KEYS) {
-    result.abilities[key] = stackBonuses(abilityBuckets.get(key) ?? []);
+    result.abilities[key] = stackBonuses(abilityBuckets.get(key) ?? [], addAllBonusTypes);
   }
   for (const [key, candidates] of skillBuckets) {
-    result.skills[key] = stackBonuses(candidates);
+    result.skills[key] = stackBonuses(candidates, addAllBonusTypes);
   }
   for (const key of COMBAT_STATS) {
-    result.combat[key] = stackBonuses(combatBuckets.get(key) ?? []);
+    result.combat[key] = stackBonuses(combatBuckets.get(key) ?? [], addAllBonusTypes);
   }
   return result;
 }

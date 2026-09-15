@@ -13,11 +13,14 @@ import {
   computeFeatBudget,
   formatFeatBudgetSummary,
 } from "@/lib/pc-planner/featBudget";
+import { classAbilityEffectKey } from "@/lib/pc-planner/parseClassAbilityEffects";
+import { featNeedsSkillChoice } from "@/lib/pc-planner/parseFeatEffects";
 
 const FEAT_SEARCH_CATEGORIES: CategoryKey[] = ["feats"];
 
 export type PcAbilitiesPanelProps = {
   state: PcPlanState;
+  patch: (fn: (draft: PcPlanState) => void) => void;
   compendium: PcCompendiumBundle | null;
   loading?: boolean;
   onAddFeat: (slug: string, name: string, choice?: string) => void;
@@ -51,8 +54,12 @@ function AbilityList({
 
 function ClassAbilityList({
   abilities,
+  suppressed,
+  onToggle,
 }: {
   abilities: PcCompendiumBundle["classAbilities"];
+  suppressed: Set<string>;
+  onToggle: (key: string, apply: boolean) => void;
 }) {
   return (
     <div className="npc-sheet-block">
@@ -60,15 +67,27 @@ function ClassAbilityList({
       {abilities.length === 0 ? (
         <p className="pc-sheet-empty">Add a class on the Main tab to load class abilities.</p>
       ) : (
-        <ul className="pc-ability-list">
-          {abilities.map((entry) => (
-            <li key={`${entry.classSlug}-${entry.level}-${entry.name}`}>
-              <span className="pc-ability-level">
-                {entry.className} {entry.level}:
-              </span>{" "}
-              {entry.name}
-            </li>
-          ))}
+        <ul className="pc-ability-list pc-ability-list--toggle">
+          {abilities.map((entry) => {
+            const key = classAbilityEffectKey(entry);
+            const applied = !suppressed.has(key);
+            return (
+              <li key={`${entry.classSlug}-${entry.level}-${entry.name}`}>
+                <label className="pc-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={applied}
+                    onChange={(e) => onToggle(key, e.target.checked)}
+                  />
+                  Apply
+                </label>
+                <span className="pc-ability-level">
+                  {entry.className} {entry.level}:
+                </span>{" "}
+                {entry.name}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
@@ -83,6 +102,7 @@ function FeatList({
   onAddFeat,
   onRemoveFeat,
   inventory,
+  patch,
 }: {
   feats: FeatEntry[];
   budgetLabel: string;
@@ -91,6 +111,7 @@ function FeatList({
   onAddFeat: (slug: string, name: string, choice?: string) => void;
   onRemoveFeat: (slug: string) => void;
   inventory: PcPlanState["inventory"];
+  patch: PcAbilitiesPanelProps["patch"];
 }) {
   return (
     <div className="npc-sheet-block">
@@ -108,6 +129,16 @@ function FeatList({
         placeholder="Search feats to add…"
         onSelect={(hit) => {
           const stub = { slug: hit.slug, name: hit.name };
+          if (featNeedsSkillChoice(stub)) {
+            const choice = window.prompt(
+              `Choose a skill for ${hit.name} (e.g. stealth)`,
+              "stealth",
+            );
+            if (choice == null) return;
+            const trimmed = choice.trim();
+            onAddFeat(hit.slug, hit.name, trimmed || undefined);
+            return;
+          }
           if (!featNeedsWeaponChoice(stub)) {
             onAddFeat(hit.slug, hit.name);
             return;
@@ -129,6 +160,19 @@ function FeatList({
         <ul className="pc-feat-list pc-feat-list--editable">
           {feats.map((feat) => (
             <li key={feat.slug} className="pc-sheet-editable-row">
+              <label className="pc-checkbox-label pc-feat-apply">
+                <input
+                  type="checkbox"
+                  checked={!feat.suppressed}
+                  onChange={(e) =>
+                    patch((s) => {
+                      const row = s.feats.find((f) => f.slug === feat.slug);
+                      if (row) row.suppressed = !e.target.checked;
+                    })
+                  }
+                />
+                Apply
+              </label>
               <a
                 href={`/feats/${feat.slug}`}
                 target="_blank"
@@ -154,6 +198,7 @@ function FeatList({
 
 export function PcAbilitiesPanel({
   state,
+  patch,
   compendium,
   loading = false,
   onAddFeat,
@@ -164,6 +209,7 @@ export function PcAbilitiesPanel({
     ...(compendium?.racialProficiencies ?? []),
   ];
   const budget = computeFeatBudget(state, compendium?.raceFeatures ?? null);
+  const suppressed = new Set(state.suppressedClassEffects ?? []);
 
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-abilities-panel" role="tabpanel">
@@ -171,13 +217,25 @@ export function PcAbilitiesPanel({
       <FeatList
         feats={state.feats}
         budgetLabel={formatFeatBudgetSummary(budget)}
-        overBudget={budget.spent > budget.total}
-        budgetTitle={`General ${budget.general}, human ${budget.human}, fighter ${budget.fighter}`}
+        overBudget={budget.spentNonFlaw > budget.total - budget.flaws}
+        budgetTitle={`General ${budget.general}, human ${budget.human}, fighter ${budget.fighter}, wizard ${budget.wizard}, monk ${budget.monk}, ranger ${budget.ranger}, flaws ${budget.flaws}`}
         onAddFeat={onAddFeat}
         onRemoveFeat={onRemoveFeat}
         inventory={state.inventory}
+        patch={patch}
       />
-      <ClassAbilityList abilities={compendium?.classAbilities ?? []} />
+      <ClassAbilityList
+        abilities={compendium?.classAbilities ?? []}
+        suppressed={suppressed}
+        onToggle={(key, apply) =>
+          patch((s) => {
+            const set = new Set(s.suppressedClassEffects ?? []);
+            if (apply) set.delete(key);
+            else set.add(key);
+            s.suppressedClassEffects = [...set];
+          })
+        }
+      />
       <AbilityList
         title="Proficiencies"
         items={proficiencies}

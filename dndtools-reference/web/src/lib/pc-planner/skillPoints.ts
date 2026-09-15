@@ -33,7 +33,15 @@ export function computeSkillTotal(
   const abilityKey = skillAbilityKey(row.ability);
   const statMod = abilityKey ? abilityModifier(abilities[abilityKey]) : 0;
   const acp = row.armorCheckPenalty ? armorCheckPenalty : 0;
-  return row.ranks + statMod + (row.racialMisc ?? 0) + row.misc + acp + itemBonus;
+  return (
+    row.ranks +
+    statMod +
+    (row.racialMisc ?? 0) +
+    (row.synergyMisc ?? 0) +
+    row.misc +
+    acp +
+    itemBonus
+  );
 }
 
 export function formatSkillModifier(value: number): string {

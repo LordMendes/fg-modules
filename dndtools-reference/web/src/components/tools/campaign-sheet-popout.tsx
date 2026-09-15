@@ -32,7 +32,11 @@ import type { CampaignTableState } from "@/lib/campaign/types";
 import { rollViewToResult } from "@/lib/campaign/types";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
-import { finalizePcPlanState } from "@/lib/pc-planner/syncState";
+import {
+  compendiumFinalizeContext,
+  finalizePcPlanWithContext,
+} from "@/lib/pc-planner/finalizeContext";
+import { createFeatEntry } from "@/lib/pc-planner/parseFeatEffects";
 import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
 import {
   applyDerivedFromRace,
@@ -254,20 +258,10 @@ function CampaignSheetPopoutBody({
         if (!prev) return prev;
         const draft = structuredClone(prev);
         fn(draft);
-        return finalizePcPlanState(
-          draft,
-          compendium?.raceFeatures ?? null,
-          compendium?.classSpellTables ?? {},
-          compendium?.classHitDice ?? {},
-        );
+        return finalizePcPlanWithContext(draft, compendiumFinalizeContext(compendium));
       });
     },
-    [
-      plan?.canEdit,
-      compendium?.raceFeatures,
-      compendium?.classSpellTables,
-      compendium?.classHitDice,
-    ],
+    [plan?.canEdit, compendium],
   );
 
   useEffect(() => {
@@ -343,11 +337,9 @@ function CampaignSheetPopoutBody({
         }
         lastRaceSlug.current = raceSlug;
         applyDerivedFromRace(next, result.bundle!.raceFeatures);
-        return finalizePcPlanState(
+        return finalizePcPlanWithContext(
           next,
-          result.bundle!.raceFeatures,
-          result.bundle!.classSpellTables,
-          result.bundle!.classHitDice,
+          compendiumFinalizeContext(result.bundle!),
         );
       });
       setCompendiumLoading(false);
@@ -433,7 +425,7 @@ function CampaignSheetPopoutBody({
                 onAddFeat={(slug, name, choice) =>
           patch((s) => {
             if (s.feats.some((f) => f.slug === slug)) return;
-            s.feats.push(choice ? { slug, name, choice } : { slug, name });
+            s.feats.push(createFeatEntry(slug, name, choice));
           })
         }
                 onRemoveFeat={(slug) =>

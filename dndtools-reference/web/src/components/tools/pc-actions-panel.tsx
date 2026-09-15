@@ -17,12 +17,23 @@ import {
   restoreItemCharge,
   spendItemCharge,
 } from "@/lib/pc-planner/itemSpells";
+import {
+  collectPrestigeCasterContributions,
+  stackedCasterLevel,
+} from "@/lib/pc-planner/prestigeCasting";
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
+import { resolveClassFeaturesForPlan } from "@/lib/pc-planner/resolveCompendium";
+import { formatDerivedHint } from "@/lib/pc-planner/derivedField";
 import {
   computeSpellClass,
   preparedCountAtLevel,
 } from "@/lib/pc-planner/spellSlots";
 import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
+import {
+  PcCombatModesPanel,
+  PcConditionsPanel,
+  PcResourcesPanel,
+} from "@/components/tools/pc-actions-extras";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 export type PcActionsPanelProps = {
@@ -45,10 +56,11 @@ function CombatSummary({
   compendium: PcCompendiumBundle | null;
   patch: PcActionsPanelProps["patch"];
 }) {
+  const classFeatures = resolveClassFeaturesForPlan(compendium, state);
   const stats = computeCombatStats(
     state,
     compendium?.raceFeatures ?? null,
-    compendium?.classFeatures ?? null,
+    classFeatures,
     compendium?.classAdvancement ?? null,
     deriveFeatEffects(state.feats),
   );
@@ -146,6 +158,18 @@ export function PcActionsPanel({
   const [pendingSpellLevel, setPendingSpellLevel] = useState(1);
   const [spellPickerOpen, setSpellPickerOpen] = useState(false);
   const spellClass = state.spellClasses[activeSpellClassIndex];
+  const classDescriptions = compendium?.classDescriptions ?? {};
+  const prestigeContribs = useMemo(
+    () => collectPrestigeCasterContributions(state.identity.classLevels, new Map(Object.entries(classDescriptions))),
+    [state.identity.classLevels, classDescriptions],
+  );
+  const autoCasterLevel = spellClass
+    ? stackedCasterLevel(spellClass, state.identity.classLevels, prestigeContribs)
+    : 0;
+  const showSpecialist =
+    Boolean(state.identity.specialistSchool) ||
+    spellClass?.classSlug === "wizard" ||
+    spellClass?.label.toLowerCase().includes("wizard");
   const computed = spellClass
     ? computeSpellClass(
         spellClass.classSlug,
@@ -186,6 +210,9 @@ export function PcActionsPanel({
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-actions-panel" role="tabpanel">
       <CombatSummary state={state} compendium={compendium} patch={patch} />
+      <PcCombatModesPanel state={state} patch={patch} />
+      <PcConditionsPanel state={state} patch={patch} />
+      <PcResourcesPanel state={state} patch={patch} />
 
       {itemSpellActions.length > 0 ? (
         <div className="npc-sheet-block pc-actions-item-spells">
@@ -242,6 +269,55 @@ export function PcActionsPanel({
               </p>
             )}
 
+            <div className="pc-caster-level-override">
+              <label>
+                <span className="npc-sheet-sub">
+                  Caster level{" "}
+                  <span className="pc-derived-hint">
+                    {formatDerivedHint(
+                      spellClass.casterLevelOverride != null,
+                      spellClass.casterLevelOverride != null,
+                    )}
+                  </span>
+                </span>
+                <span className="npc-sheet-sub">Auto {autoCasterLevel}</span>
+                <input
+                  type="number"
+                  className="pc-sheet-input pc-sheet-input--narrow"
+                  min={1}
+                  placeholder="Auto"
+                  value={spellClass.casterLevelOverride ?? ""}
+                  onChange={(e) =>
+                    patch((s) => {
+                      const row = s.spellClasses[activeSpellClassIndex];
+                      if (!row) return;
+                      row.casterLevelOverride =
+                        e.target.value === "" ? null : Number(e.target.value);
+                    })
+                  }
+                />
+              </label>
+            </div>
+
+            {showSpecialist ? (
+              <label className="pc-opposed-schools">
+                <span className="npc-sheet-sub">Opposed schools (hint only)</span>
+                <input
+                  className="pc-sheet-input"
+                  placeholder="evocation, necromancy"
+                  value={(state.identity.opposedSchools ?? []).join(", ")}
+                  onChange={(e) =>
+                    patch((s) => {
+                      s.identity.opposedSchools = e.target.value
+                        .split(/[,;]+/)
+                        .map((x) => x.trim())
+                        .filter(Boolean);
+                    })
+                  }
+                />
+              </label>
+            ) : null}
+
             <dl className="pc-actions-casting-meta">
               <div>
                 <dt>Mode</dt>
@@ -255,26 +331,56 @@ export function PcActionsPanel({
               </div>
             </dl>
 
-            <p className="npc-sheet-sub pc-sheet-slots-label">Spells per day</p>
+            <p className="npc-sheet-sub pc-sheet-slots-label">
+              {computed.mode === "spontaneous" ? "Slots used / per day" : "Spells per day"}
+            </p>
             <div className="pc-slot-grid" title="Computed from class level and casting ability">
-              {Array.from({ length: 10 }, (_, lvl) => (
-                <div
-                  key={lvl}
-                  className={
-                    computed.slots[lvl] > 0
-                      ? "pc-slot-cell pc-slot-cell--active"
-                      : "pc-slot-cell"
-                  }
-                >
-                  <span className="pc-slot-label">L{lvl}</span>
-                  <span className="pc-slot-count">{computed.slots[lvl]}</span>
-                  {computed.bonusSlots[lvl] > 0 ? (
-                    <span className="pc-slot-bonus" title="Ability bonus slots">
-                      +{computed.bonusSlots[lvl]}
-                    </span>
-                  ) : null}
-                </div>
-              ))}
+              {Array.from({ length: 10 }, (_, lvl) => {
+                const maxSlots = computed.slots[lvl] ?? 0;
+                const used = spellClass.slotsUsed?.[lvl] ?? 0;
+                return (
+                  <div
+                    key={lvl}
+                    className={
+                      maxSlots > 0 ? "pc-slot-cell pc-slot-cell--active" : "pc-slot-cell"
+                    }
+                  >
+                    <span className="pc-slot-label">L{lvl}</span>
+                    {computed.mode === "spontaneous" && maxSlots > 0 ? (
+                      <span className="pc-slot-used-row">
+                        <input
+                          type="number"
+                          className="pc-sheet-input pc-sheet-input--narrow"
+                          min={0}
+                          max={maxSlots}
+                          value={used}
+                          onChange={(e) =>
+                            patch((s) => {
+                              const row = s.spellClasses[activeSpellClassIndex];
+                              if (!row) return;
+                              if (!row.slotsUsed) {
+                                row.slotsUsed = Array.from({ length: 10 }, () => 0);
+                              }
+                              row.slotsUsed[lvl] = Math.max(
+                                0,
+                                Math.min(maxSlots, Number(e.target.value) || 0),
+                              );
+                            })
+                          }
+                        />
+                        <span>/ {maxSlots}</span>
+                      </span>
+                    ) : (
+                      <span className="pc-slot-count">{maxSlots}</span>
+                    )}
+                    {computed.bonusSlots[lvl] > 0 ? (
+                      <span className="pc-slot-bonus" title="Ability bonus slots">
+                        +{computed.bonusSlots[lvl]}
+                      </span>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -312,6 +418,7 @@ export function PcActionsPanel({
               level={pendingSpellLevel}
               castContext={castContext!}
               addedSpellSlugs={addedSpellSlugs}
+              opposedSchools={state.identity.opposedSchools ?? []}
               onAddSpell={(slug, name) => onAddSpell(slug, name, pendingSpellLevel)}
             />
 

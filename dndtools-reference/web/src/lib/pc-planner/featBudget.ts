@@ -6,8 +6,14 @@ export type FeatBudgetBreakdown = {
   general: number;
   human: number;
   fighter: number;
+  wizard: number;
+  monk: number;
+  ranger: number;
+  flaws: number;
   total: number;
   spent: number;
+  /** Feats counting against budget (excludes flaws). */
+  spentNonFlaw: number;
 };
 
 /** General feats: 1 at 1st, then at every 3rd level (3, 6, 9, …). */
@@ -17,7 +23,6 @@ export function generalFeatBudget(characterLevel: number): number {
   return 1 + Math.floor(level / 3);
 }
 
-/** Human bonus feat at 1st level. */
 export function humanBonusFeatBudget(
   characterLevel: number,
   raceFeatures: RaceDerivedFeatures | null,
@@ -26,26 +31,67 @@ export function humanBonusFeatBudget(
   if (characterLevel < 1) return 0;
   const name = (raceName ?? "").toLowerCase();
   if (name.includes("human")) return 1;
-  // skillPointBonus firstLevel 4 is the common human marker in this codebase
   if (raceFeatures?.skillPointBonus?.firstLevel === 4) return 1;
   return 0;
 }
 
-/** Fighter bonus feats: 1st and every even fighter level. */
 export function fighterBonusFeatBudget(classLevels: ClassLevelEntry[]): number {
   let total = 0;
   for (const cl of classLevels) {
     const slug = cl.classSlug.toLowerCase();
     const name = cl.className.toLowerCase();
     const isFighter =
-      slug === "fighter" ||
-      slug.startsWith("fighter-") ||
-      name === "fighter";
+      slug === "fighter" || slug.startsWith("fighter-") || name === "fighter";
     if (!isFighter || cl.level < 1) continue;
-    // Levels 1, 2, 4, 6, … → 1 + floor(level/2)
     total += 1 + Math.floor(cl.level / 2);
   }
   return total;
+}
+
+export function wizardBonusFeatBudget(classLevels: ClassLevelEntry[]): number {
+  let total = 0;
+  for (const cl of classLevels) {
+    const slug = cl.classSlug.toLowerCase();
+    const name = cl.className.toLowerCase();
+    const isWizard =
+      slug === "wizard" || slug.startsWith("wizard-") || name === "wizard";
+    if (!isWizard || cl.level < 1) continue;
+    total += 1 + Math.floor((cl.level - 1) / 5);
+  }
+  return total;
+}
+
+export function monkBonusFeatBudget(classLevels: ClassLevelEntry[]): number {
+  let total = 0;
+  for (const cl of classLevels) {
+    const slug = cl.classSlug.toLowerCase();
+    const name = cl.className.toLowerCase();
+    const isMonk = slug === "monk" || slug.startsWith("monk-") || name === "monk";
+    if (!isMonk || cl.level < 1) continue;
+    if (cl.level >= 1) total += 1;
+    if (cl.level >= 2) total += 1;
+    if (cl.level >= 6) total += 1;
+  }
+  return total;
+}
+
+export function rangerBonusFeatBudget(classLevels: ClassLevelEntry[]): number {
+  let total = 0;
+  for (const cl of classLevels) {
+    const slug = cl.classSlug.toLowerCase();
+    const name = cl.className.toLowerCase();
+    const isRanger =
+      slug === "ranger" || slug.startsWith("ranger-") || name === "ranger";
+    if (!isRanger || cl.level < 1) continue;
+    if (cl.level >= 2) total += 1;
+    if (cl.level >= 6) total += 1;
+    if (cl.level >= 11) total += 1;
+  }
+  return total;
+}
+
+export function flawFeatBudget(feats: FeatEntry[]): number {
+  return feats.filter((f) => f.isFlaw).length;
 }
 
 export function computeFeatBudget(
@@ -60,16 +106,26 @@ export function computeFeatBudget(
     state.identity.race,
   );
   const fighter = fighterBonusFeatBudget(state.identity.classLevels);
+  const wizard = wizardBonusFeatBudget(state.identity.classLevels);
+  const monk = monkBonusFeatBudget(state.identity.classLevels);
+  const ranger = rangerBonusFeatBudget(state.identity.classLevels);
+  const flaws = flawFeatBudget(state.feats);
+  const spentNonFlaw = state.feats.filter((f) => !f.isFlaw).length;
   const spent = state.feats.length;
   return {
     general,
     human,
     fighter,
-    total: general + human + fighter,
+    wizard,
+    monk,
+    ranger,
+    flaws,
+    total: general + human + fighter + wizard + monk + ranger + flaws,
     spent,
+    spentNonFlaw,
   };
 }
 
 export function formatFeatBudgetSummary(budget: FeatBudgetBreakdown): string {
-  return `${budget.spent} / ${budget.total}`;
+  return `${budget.spentNonFlaw} / ${budget.total - budget.flaws}`;
 }

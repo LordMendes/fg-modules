@@ -2,6 +2,7 @@ import type {
   SelectedArmorAbility,
   SelectedWeaponAbility,
 } from "@/lib/magic-item/types";
+import type { DerivedListField, DerivedStringField } from "./derivedField";
 
 export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
@@ -25,6 +26,12 @@ export type FeatEntry = {
    * (e.g. "longsword"). Matched against inventory weapon names/slugs.
    */
   choice?: string;
+  /** Chosen skill for Skill Focus and similar feats. */
+  skillChoice?: string;
+  /** When false, auto-derived feat effects are not applied. Default: apply. */
+  suppressed?: boolean;
+  /** Flaw feats do not count against general feat budget when flagged. */
+  isFlaw?: boolean;
 };
 
 export type SpellMode = "preparation" | "spontaneous";
@@ -48,9 +55,15 @@ export type SpellClassState = {
   label: string;
   classSlug: string;
   casterLevel: number;
+  /** Manual CL bypass; when set, sync must not overwrite casterLevel. */
+  casterLevelOverride?: number | null;
+  /** Class slugs whose PrC levels stack into this spell class. */
+  casterProgressionFrom?: string[];
   dcAbility: AbilityKey;
   mode: SpellMode;
   spells: SpellEntry[];
+  /** Spontaneous slots used per level (0–9). */
+  slotsUsed?: number[];
 };
 
 export type SkillRow = {
@@ -61,6 +74,8 @@ export type SkillRow = {
   misc: number;
   /** Automated racial skill bonus (read-only in UI). */
   racialMisc?: number;
+  /** Automated synergy bonus (read-only in UI). */
+  synergyMisc?: number;
   trainedOnly?: boolean;
   armorCheckPenalty?: boolean;
 };
@@ -87,7 +102,7 @@ export type InventoryDamageLine = {
   fromAbilityId?: string;
 };
 
-/** Bonus types on equipped items (informational; all sources add). */
+/** Bonus types on equipped items (3.5e stacking rules apply unless bypassed). */
 export type ItemBonusType =
   | "enhancement"
   | "resistance"
@@ -95,6 +110,8 @@ export type ItemBonusType =
   | "deflection"
   | "natural"
   | "armor"
+  | "dodge"
+  | "circumstance"
   | "luck"
   | "insight"
   | "morale"
@@ -200,8 +217,12 @@ export type InventoryRow = {
   itemCasterLevel?: number | null;
   /** Cached armor/shield stats from the equipment record. */
   armorBonus?: number | null;
+  /** Arcane spell failure percent from equipment (0–100). */
+  arcaneSpellFailure?: number | null;
   maxDex?: number | null;
   acp?: number | null;
+  /** Body slot for duplicate warnings (ring, belt, amulet, etc.). */
+  bodySlot?: string | null;
   speed30?: number | null;
   speed20?: number | null;
   /** Cached weapon stats from the equipment record. */
@@ -236,6 +257,49 @@ export type HitPointsState = {
   rolls: HitDieRoll[];
   /** Optional current HP tracker for play. */
   current?: number;
+  /** Temporary HP pool (separate from current). */
+  temporary?: number;
+};
+
+export type PcSensesState = {
+  darkvisionFeet: number;
+  lowLight: boolean;
+  scent: boolean;
+  extra: string;
+};
+
+export type PcDefensesState = {
+  dr: string;
+  resistances: string;
+  immunities: string;
+  vulnerabilities: string;
+  extra: string;
+};
+
+export type PcCombatModes = {
+  powerAttack?: number;
+  combatExpertise?: number;
+  fightingDefensively?: boolean;
+  charge?: boolean;
+  rapidShot?: boolean;
+  flurry?: boolean;
+  rage?: boolean;
+};
+
+export type PcConditionEntry = {
+  id: string;
+  name: string;
+  /** Known preset id (prone, stunned, etc.) or custom. */
+  preset?: string | null;
+};
+
+export type PcResourceEntry = {
+  id: string;
+  name: string;
+  current: number;
+  max: number;
+  /** Auto-seeded rows can be removed by the player. */
+  auto?: boolean;
 };
 
 export type CombatState = {
@@ -259,6 +323,12 @@ export type CombatState = {
   srBase: number;
   srMisc: number;
   attacks: string;
+  /** Manual ASF bypass (0–100); null = auto from gear. */
+  asfOverride?: number | null;
+  /** When true, item bonuses of the same type all stack (house rule). */
+  addAllBonusTypes?: boolean;
+  /** Suppress auto skill synergy bonuses. */
+  suppressSynergies?: boolean;
 };
 
 export type PcPlanState = {
@@ -276,20 +346,40 @@ export type PcPlanState = {
     domains?: DomainEntry[];
     /** Wizard specialist school name, if any. */
     specialistSchool?: string | null;
+    /** Wizard opposed schools (hint only; picker does not enforce). */
+    opposedSchools?: string[];
     /** R2 object key for square profile image. */
     profileImageKey?: string | null;
     /** R2 object key for square token image. */
     tokenImageKey?: string | null;
+    senses?: PcSensesState;
+    /** Free-text senses line replaces structured senses when set. */
+    sensesOverride?: string | null;
+    languages?: DerivedListField;
+    defenses?: PcDefensesState;
+    defensesCustomized?: boolean;
+    xp?: number;
+    age?: string;
+    height?: string;
+    weight?: string;
+    gender?: string;
   };
   abilities: Record<AbilityKey, number>;
   /** Scores before racial adjustments — edited on Main tab. */
   abilityBase: Record<AbilityKey, number>;
   /** Temporary ability damage (poison, etc.). Subtracted from the current score. */
   abilityDamage: Record<AbilityKey, number>;
+  /** Permanent ability drain. Subtracted after damage. */
+  abilityDrain?: Record<AbilityKey, number>;
   feats: FeatEntry[];
   spellClasses: SpellClassState[];
   skills: SkillRow[];
   combat: CombatState;
+  combatModes?: PcCombatModes;
+  conditions?: PcConditionEntry[];
+  resources?: PcResourceEntry[];
+  /** Class ability effect keys the player chose not to auto-apply. */
+  suppressedClassEffects?: string[];
   hitPoints: HitPointsState;
   inventory: InventoryRow[];
   treasure: TreasureRow[];

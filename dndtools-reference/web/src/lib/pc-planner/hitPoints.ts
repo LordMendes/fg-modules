@@ -1,4 +1,5 @@
 import { abilityModifier } from "./combatStats";
+import { deriveFeatEffects } from "./parseFeatEffects";
 import { effectiveFirstClassSlug, totalCharacterLevel } from "./skillPoints";
 import type { ClassLevelEntry, HitDieRoll, HitPointsState, PcPlanState } from "./types";
 
@@ -89,7 +90,14 @@ export function normalizeHitPointsState(raw: unknown): HitPointsState {
     typeof hp.current === "number" && Number.isFinite(hp.current)
       ? Math.trunc(hp.current)
       : undefined;
-  return current === undefined ? { rolls } : { rolls, current };
+  const temporary =
+    typeof hp.temporary === "number" && Number.isFinite(hp.temporary)
+      ? Math.trunc(hp.temporary)
+      : undefined;
+  const out: HitPointsState = { rolls };
+  if (current !== undefined) out.current = current;
+  if (temporary !== undefined) out.temporary = temporary;
+  return out;
 }
 
 /**
@@ -135,6 +143,7 @@ export function computeMaxHitPoints(
   if (rolls.length === 0) return 0;
 
   const conMod = abilityModifier(state.abilities.con);
+  const toughness = deriveFeatEffects(state.feats).toughnessHp;
   let total = 0;
   for (const roll of rolls) {
     const sides = parseHitDieSides(resolveHitDie(roll.classSlug, classHitDice));
@@ -142,7 +151,7 @@ export function computeMaxHitPoints(
     // Minimum 1 HP per HD after Con.
     total += Math.max(1, capped + conMod);
   }
-  return total;
+  return total + toughness;
 }
 
 /** Group rolls into a dice string like "3d10+2d4". */

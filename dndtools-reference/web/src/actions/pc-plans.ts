@@ -188,7 +188,7 @@ export async function getPcPlan(planId: string): Promise<PcPlanWithState | null>
     id: plan.id,
     name: plan.name,
     shortcut: plan.shortcut,
-    state: syncPcPlanState(parsed, null, classSpellTables),
+    state: syncPcPlanState(parsed, null, { classSpellTables }),
     updatedAt: plan.updatedAt,
   };
 }
@@ -260,7 +260,7 @@ export async function savePcPlan(
 
   const slugs = state.spellClasses.map((sc) => sc.classSlug);
   const classSpellTables = await getClassSpellTablesBySlugs(slugs);
-  const synced = syncPcPlanState(state, null, classSpellTables);
+  const synced = syncPcPlanState(state, null, { classSpellTables });
   // Re-read keys just before write so a concurrent upload is not wiped by autosave.
   const latest = await getWritablePlan(planId, user.id);
   const ownedState = parseState(latest?.state ?? writable.state);

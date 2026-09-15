@@ -11,6 +11,14 @@ import {
 import { parseSpellsPerDayFromAdvancementHtml } from "./parseClassSpellTables";
 import { normalizeCombatState } from "./combatStats";
 import { normalizeHitPointsState, syncHitDice } from "./hitPoints";
+import { normalizePcPlanState } from "./normalizePlanState";
+import {
+  collectPrestigeCasterContributions,
+  isPrestigeOnlyCasterClass,
+  stackedCasterLevel,
+} from "./prestigeCasting";
+import { seedResourcesFromAbilities } from "./resources";
+import { applySkillSynergies } from "./skillSynergy";
 import {
   normalizeAbilityBase,
   normalizeAbilityDamage,
@@ -29,7 +37,14 @@ function buildSpellClassFromLevel(
   className: string,
   level: number,
   classSpellTables: Record<string, ClassSpellTableContext>,
+  classDescriptions: ReadonlyMap<string, string>,
 ): SpellClassState | null {
+  if (
+    isPrestigeOnlyCasterClass(classSlug, className, classDescriptions)
+  ) {
+    return null;
+  }
+
   const info = getClassCastingInfo(classSlug, className);
   if (isHalfCaster(info)) {
     if (halfCasterEffectiveLevel(level) <= 0) return null;
@@ -40,6 +55,7 @@ function buildSpellClassFromLevel(
       dcAbility: info!.dcAbility,
       mode: "preparation",
       spells: [],
+      slotsUsed: Array.from({ length: 10 }, () => 0),
     };
   }
 
@@ -56,6 +72,7 @@ function buildSpellClassFromLevel(
       dcAbility: "cha",
       mode: "spontaneous",
       spells: [],
+      slotsUsed: Array.from({ length: 10 }, () => 0),
     };
   }
 
@@ -66,6 +83,7 @@ function buildSpellClassFromLevel(
     dcAbility: info.dcAbility,
     mode: spellModeFromProgression(info.progression),
     spells: [],
+    slotsUsed: Array.from({ length: 10 }, () => 0),
   };
 }
 
@@ -87,21 +105,43 @@ export function normalizePlanIdentity(state: PcPlanState): void {
   if (!state.identity.domains) state.identity.domains = [];
 }
 
+export type SyncPcPlanOptions = {
+  classSpellTables?: Record<string, ClassSpellTableContext>;
+  classHitDice?: Record<string, string>;
+  classDescriptions?: ReadonlyMap<string, string>;
+  classAbilities?: Parameters<typeof seedResourcesFromAbilities>[0];
+};
+
 /** Recompute spell classes and clamp prepared counts when class levels or abilities change. */
 export function syncPcPlanState(
   state: PcPlanState,
   raceFeatures: Parameters<typeof syncEffectiveAbilities>[1] = null,
-  classSpellTables: Record<string, ClassSpellTableContext> = {},
-  classHitDice: Record<string, string> = {},
+  options: SyncPcPlanOptions = {},
 ): PcPlanState {
+  normalizePcPlanState(state);
   normalizePlanIdentity(state);
+
+  const classSpellTables = options.classSpellTables ?? {};
+  const classDescriptions = options.classDescriptions ?? new Map();
+  const prestigeContribs = collectPrestigeCasterContributions(
+    state.identity.classLevels,
+    classDescriptions,
+  );
+
   const nextSpellClasses: SpellClassState[] = [];
   const domainsSelected = hasClericDomains(state);
 
   for (const cl of state.identity.classLevels) {
     const sc =
       state.spellClasses.find((s) => s.classSlug === cl.classSlug) ??
-      buildSpellClassFromLevel(state, cl.classSlug, cl.className, cl.level, classSpellTables);
+      buildSpellClassFromLevel(
+        state,
+        cl.classSlug,
+        cl.className,
+        cl.level,
+        classSpellTables,
+        classDescriptions,
+      );
     if (!sc) continue;
 
     const castingInfo = getClassCastingInfo(cl.classSlug, cl.className);
@@ -109,11 +149,18 @@ export function syncPcPlanState(
       continue;
     }
 
+    const autoCl = stackedCasterLevel(sc, state.identity.classLevels, prestigeContribs);
+    const casterLevel =
+      sc.casterLevelOverride != null && Number.isFinite(sc.casterLevelOverride)
+        ? sc.casterLevelOverride
+        : autoCl;
+
     const updated: SpellClassState = {
       ...sc,
       label: cl.className,
-      casterLevel: cl.level,
+      casterLevel,
       mode: spellModeFromProgression(castingInfo?.progression ?? "prepared"),
+      slotsUsed: sc.slotsUsed ?? Array.from({ length: 10 }, () => 0),
     };
 
     const computed = computeSpellClass(
@@ -156,6 +203,18 @@ export function syncPcPlanState(
     nextSpellClasses.push({ ...updated, spells: kept });
   }
 
+  state.skills = applySkillSynergies(
+    state.skills,
+    Boolean(state.combat?.suppressSynergies),
+  );
+
+  if (options.classAbilities) {
+    state.resources = seedResourcesFromAbilities(
+      options.classAbilities,
+      state.resources ?? [],
+    );
+  }
+
   const withHitPoints: PcPlanState = {
     ...state,
     abilityBase: state.abilityBase ?? normalizeAbilityBase(state),
@@ -165,7 +224,7 @@ export function syncPcPlanState(
     treasure: ensureTreasure(state.treasure),
     spellClasses: nextSpellClasses,
   };
-  syncHitDice(withHitPoints, classHitDice);
+  syncHitDice(withHitPoints, options.classHitDice ?? {});
   return withHitPoints;
 }
 
@@ -174,8 +233,15 @@ export function finalizePcPlanState(
   raceFeatures: Parameters<typeof syncEffectiveAbilities>[1] = null,
   classSpellTables: Record<string, ClassSpellTableContext> = {},
   classHitDice: Record<string, string> = {},
+  classDescriptions: ReadonlyMap<string, string> = new Map(),
+  classAbilities: SyncPcPlanOptions["classAbilities"] = [],
 ): PcPlanState {
-  const synced = syncPcPlanState(state, raceFeatures, classSpellTables, classHitDice);
+  const synced = syncPcPlanState(state, raceFeatures, {
+    classSpellTables,
+    classHitDice,
+    classDescriptions,
+    classAbilities,
+  });
   syncEffectiveAbilities(synced, raceFeatures);
   return synced;
 }

@@ -42,6 +42,7 @@ import {
   createCustomTreasureRow,
   ensureTreasure,
 } from "@/lib/pc-planner/treasure";
+import { detectBodySlotConflicts } from "@/lib/pc-planner/bodySlots";
 import { needsWeaponStatBackfill } from "@/lib/pc-planner/weaponAttacks";
 import type { InventoryRow, PcPlanState } from "@/lib/pc-planner/types";
 
@@ -356,6 +357,7 @@ export function PcInventoryPanel({
   }, [state.inventory]);
 
   const inventory = state.inventory ?? [];
+  const bodySlotConflicts = detectBodySlotConflicts(inventory);
   const treasure = ensureTreasure(state.treasure);
   const builtinTreasure = treasure.filter((row) => row.builtin);
   const extraTreasure = treasure.filter((row) => !row.builtin);
@@ -452,6 +454,15 @@ export function PcInventoryPanel({
             {formatPounds(encumbrance.carriedWeight)}
           </span>
         </div>
+        {bodySlotConflicts.length > 0 ? (
+          <ul className="pc-inventory-slot-warnings" role="status">
+            {bodySlotConflicts.map((conflict) => (
+              <li key={conflict.slot}>
+                Multiple {conflict.slot} items equipped: {conflict.items.join(", ")}
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className={`pc-encumbrance pc-encumbrance--${fillTone}`}>
           <div

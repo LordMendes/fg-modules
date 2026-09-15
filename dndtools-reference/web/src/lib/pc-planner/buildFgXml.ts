@@ -1,4 +1,6 @@
 import { escXml } from "@/lib/npc-creator/buildXml";
+import { formatDefensesLine, formatSensesLine } from "./parseRaceFeatures";
+import { resolveDerivedList } from "./derivedField";
 import {
   getClassCastingInfo,
   halfCasterEffectiveLevel,
@@ -245,7 +247,33 @@ export function buildPcFgXml(
   parts.push(`\t\t<hd type="string">${escXml(hd)}</hd>`);
   parts.push(`\t\t<hp type="number">${hp}</hp>`);
   if (state.hitPoints?.current != null) {
-    parts.push(`\t\t<hptemp type="number">${state.hitPoints.current}</hptemp>`);
+    parts.push(`\t\t<hpcurrent type="number">${state.hitPoints.current}</hpcurrent>`);
+  }
+  if (state.hitPoints?.temporary != null && state.hitPoints.temporary > 0) {
+    parts.push(`\t\t<hptemp type="number">${state.hitPoints.temporary}</hptemp>`);
+  }
+  const sensesLine = formatSensesLine(
+    state.identity.senses ?? {
+      darkvisionFeet: 0,
+      lowLight: false,
+      scent: false,
+      extra: "",
+    },
+    state.identity.sensesOverride,
+  );
+  if (sensesLine) {
+    parts.push(`\t\t<senses type="string">${escXml(sensesLine)}</senses>`);
+  }
+  const languages = resolveDerivedList([], state.identity.languages ?? { customized: false, lines: [] });
+  if (languages.length > 0) {
+    parts.push(`\t\t<languages type="string">${escXml(languages.join(", "))}</languages>`);
+  }
+  const defenses = state.identity.defenses;
+  if (defenses) {
+    const defenseLine = formatDefensesLine(defenses);
+    if (defenseLine) {
+      parts.push(`\t\t<specialqualities type="string">${escXml(defenseLine)}</specialqualities>`);
+    }
   }
   parts.push(`\t\t<ac type="string">${escXml(acString)}</ac>`);
   parts.push(`\t\t<init type="number">${stats.initiative.total}</init>`);

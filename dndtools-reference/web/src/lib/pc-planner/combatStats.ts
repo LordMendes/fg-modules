@@ -7,6 +7,8 @@ import {
   advancementRowAtLevel,
   type ClassAdvancementRow,
 } from "./parseClassAdvancement";
+import { aggregateConditionEffects } from "./conditions";
+import { resolveDerivedNumber } from "./derivedField";
 import { computeEquippedGear } from "./equippedGear";
 import { computeEncumbrance } from "./encumbrance";
 import {
@@ -42,6 +44,8 @@ export type CombatComputed = {
   spellResistance: CombatBreakdownRow;
   /** Equipped item bonus overlay (for tooltips). */
   itemBonuses: EquippedBonuses;
+  /** Arcane spell failure percent from gear (or override). */
+  arcaneSpellFailure: number;
 };
 
 export function abilityModifier(score: number): number {
@@ -163,14 +167,25 @@ export function computeCombatStats(
 ): CombatComputed {
   const { combat, abilities, identity } = state;
 
-  const strMod = abilityModifier(abilities.str);
+  const raging = Boolean(state.combatModes?.rage);
+  const rageStr = raging ? 4 : 0;
+  const rageCon = raging ? 4 : 0;
+  const rageWill = raging ? 2 : 0;
+  const rageAc = raging ? -2 : 0;
+  const combatExpertise = Math.max(0, state.combatModes?.combatExpertise ?? 0);
+
+  const strMod = abilityModifier(abilities.str) + rageStr;
   const dexMod = abilityModifier(abilities.dex);
-  const conMod = abilityModifier(abilities.con);
+  const conMod = abilityModifier(abilities.con) + rageCon;
   const wisMod = abilityModifier(abilities.wis);
 
   const feats = featFeatures ?? emptyFeatDerivedFeatures();
   const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
-  const itemBonuses = computeEquippedBonuses(state.inventory);
+  const itemBonuses = computeEquippedBonuses(
+    state.inventory,
+    Boolean(combat.addAllBonusTypes),
+  );
+  const conditionFx = aggregateConditionEffects(state.conditions ?? []);
   const encumbrance = computeEncumbrance(state, {
     raceFeatures,
     featFeatures: feats,
@@ -183,6 +198,19 @@ export function computeCombatStats(
   const shieldBonus = gear.shield != null ? gear.shield : combat.shield;
   const cappedDex =
     encumbrance.maxDex != null ? Math.min(dexMod, encumbrance.maxDex) : dexMod;
+  const loseDex =
+    conditionFx.loseDexToAc &&
+    !(classFeatures?.uncannyDodge || classFeatures?.improvedUncannyDodge);
+  const acDex = loseDex ? 0 : cappedDex;
+  const monkUnarmored =
+    gear.armor == null &&
+    gear.shield == null &&
+    (classFeatures?.monkAcBonus ?? 0) > 0;
+  const monkAc = monkUnarmored
+    ? abilityModifier(abilities.wis) + (classFeatures?.monkAcBonus ?? 0)
+    : 0;
+  const asfAuto = gear.arcaneSpellFailure;
+  const arcaneSpellFailure = resolveDerivedNumber(asfAuto, combat.asfOverride);
   const speedArmor = encumbrance.speedUnhindered
     ? 0
     : encumbrance.speedDelta !== 0
@@ -226,13 +254,13 @@ export function computeCombatStats(
     bab,
     stat: strMod,
     size: combat.sizeMod,
-    misc: combat.meleeMisc + itemMelee,
+    misc: combat.meleeMisc + itemMelee + (conditionFx.meleeMisc ?? 0),
   };
   const rangedParts = {
     bab,
     stat: dexMod,
     size: combat.sizeMod,
-    misc: combat.rangedMisc + itemRanged,
+    misc: combat.rangedMisc + itemRanged + (conditionFx.rangedMisc ?? 0),
   };
   const grappleParts = {
     bab,
@@ -246,50 +274,64 @@ export function computeCombatStats(
     stat: conMod,
     ability: classFortAbility,
     racial: racialSave.fort,
-    misc: combat.fortMisc + classSaveBonus.fort + itemFort,
+    misc: combat.fortMisc + classSaveBonus.fort + itemFort + feats.fortBonus,
   };
   const refParts = {
     class: computeClassSave("ref", identity.classLevels, classAdvancement),
     stat: dexMod,
     ability: classRefAbility,
     racial: racialSave.ref,
-    misc: combat.refMisc + classSaveBonus.ref + itemRef,
+    misc: combat.refMisc + classSaveBonus.ref + itemRef + feats.refBonus,
   };
   const willParts = {
     class: computeClassSave("will", identity.classLevels, classAdvancement),
     stat: wisMod,
     ability: classWillAbility,
     racial: racialSave.will,
-    misc: combat.willMisc + classSaveBonus.will + itemWill,
+    misc: combat.willMisc + classSaveBonus.will + itemWill + feats.willBonus + rageWill,
   };
+
+  const fightingDefensively = Boolean(state.combatModes?.fightingDefensively);
+  const dodgeTotal =
+    combat.dodge +
+    feats.dodgeBonus +
+    itemDodge +
+    (fightingDefensively ? 2 : 0);
+  const acMisc =
+    combat.acMisc + (conditionFx.acMisc ?? 0) + rageAc + monkAc - combatExpertise;
 
   const acParts = {
     base: 10,
     armor: armorBonus,
     shield: shieldBonus,
-    stat: cappedDex,
+    stat: acDex,
     size: combat.sizeMod,
     natural: combat.natural + itemNatural,
     deflection: combat.deflection + itemDeflection,
-    dodge: combat.dodge + feats.dodgeBonus + itemDodge,
-    misc: combat.acMisc,
+    dodge: dodgeTotal,
+    misc: acMisc,
   };
+  const ffDex =
+    classFeatures?.uncannyDodge || classFeatures?.improvedUncannyDodge
+      ? cappedDex
+      : 0;
   const flatFootedParts = {
     base: 10,
     armor: armorBonus,
     shield: shieldBonus,
+    stat: ffDex,
     size: combat.sizeMod,
     natural: combat.natural + itemNatural,
     deflection: combat.deflection + itemDeflection,
-    misc: combat.acMisc,
+    misc: combat.acMisc + (conditionFx.acMisc ?? 0) + rageAc + monkAc - combatExpertise,
   };
   const touchParts = {
     base: 10,
-    stat: cappedDex,
+    stat: acDex,
     size: combat.sizeMod,
     deflection: combat.deflection + itemDeflection,
-    dodge: combat.dodge + feats.dodgeBonus + itemDodge,
-    misc: combat.acMisc,
+    dodge: dodgeTotal,
+    misc: combat.acMisc + (conditionFx.acMisc ?? 0) + rageAc - combatExpertise,
   };
 
   const initParts = {
@@ -325,7 +367,14 @@ export function computeCombatStats(
     speed: { total: sumParts(speedParts), parts: speedParts },
     spellResistance: { total: sumParts(srParts), parts: srParts },
     itemBonuses,
+    arcaneSpellFailure,
   };
+}
+
+export function computeArcaneSpellFailure(state: PcPlanState): number {
+  const combat = normalizeCombatState(state.combat);
+  const gear = computeEquippedGear(state.inventory ?? [], combat.speedBase);
+  return resolveDerivedNumber(gear.arcaneSpellFailure, combat.asfOverride);
 }
 
 /** Migrate legacy combat blobs from early PC planner saves. */
@@ -362,15 +411,25 @@ export function normalizeCombatState(raw: unknown): PcPlanState["combat"] {
     srBase: num("srBase"),
     srMisc: num("srMisc"),
     attacks: str("attacks"),
+    asfOverride:
+      combat.asfOverride != null && Number.isFinite(combat.asfOverride)
+        ? Math.max(0, Math.min(100, Math.trunc(combat.asfOverride as number)))
+        : null,
+    addAllBonusTypes: Boolean(combat.addAllBonusTypes),
+    suppressSynergies: Boolean(combat.suppressSynergies),
   };
 }
 
+type CombatNumericKey = Exclude<
+  keyof PcPlanState["combat"],
+  "attacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
+>;
+
 export function patchCombatNumber(
   state: PcPlanState,
-  key: keyof PcPlanState["combat"],
+  key: CombatNumericKey,
   raw: string,
 ): PcPlanState {
-  if (key === "attacks") return state;
   const next = structuredClone(state);
   next.combat[key] = raw === "" ? 0 : Number(raw);
   return next;

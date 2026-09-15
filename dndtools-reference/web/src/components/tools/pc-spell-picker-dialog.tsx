@@ -31,6 +31,7 @@ function SpellPickerItem({
   state,
   onToggle,
   onAdd,
+  opposedSchools,
 }: {
   spell: ClassSpellRef;
   level: number;
@@ -39,6 +40,7 @@ function SpellPickerItem({
   state: SpellAccordionState | undefined;
   onToggle: () => void;
   onAdd: () => void;
+  opposedSchools: string[];
 }) {
   const isOpen = state?.open ?? false;
   const resolvedDetails = resolveSpellCastDetails(spell.name, {
@@ -80,7 +82,17 @@ function SpellPickerItem({
             {spell.name}
           </a>
           <span className="pc-spell-picker-item-row-fill" aria-hidden="true" />
-          <span className="pc-spell-picker-item-meta">{spell.school ?? "—"}</span>
+          <span className="pc-spell-picker-item-meta">
+            {spell.school ?? "—"}
+            {opposedSchools.some(
+              (school) => school.toLowerCase() === (spell.school ?? "").toLowerCase(),
+            ) ? (
+              <span className="pc-spell-opposed-hint" title="Opposed school (hint only)">
+                {" "}
+                opposed
+              </span>
+            ) : null}
+          </span>
           <span className="pc-spell-picker-item-icon" aria-hidden="true">
             {isOpen ? "−" : "+"}
           </span>
@@ -116,6 +128,7 @@ export function PcSpellPickerDialog({
   level,
   castContext,
   addedSpellSlugs,
+  opposedSchools = [],
   onAddSpell,
 }: {
   open: boolean;
@@ -125,6 +138,7 @@ export function PcSpellPickerDialog({
   level: number;
   castContext: SpellCastContext;
   addedSpellSlugs: Set<string>;
+  opposedSchools?: string[];
   onAddSpell: (slug: string, name: string) => void;
 }) {
   const nonce = useSessionNonce();
@@ -275,6 +289,7 @@ export function PcSpellPickerDialog({
               state={itemState[spell.slug]}
               onToggle={() => toggleSpell(spell.slug, spell.name)}
               onAdd={() => onAddSpell(spell.slug, spell.name)}
+              opposedSchools={opposedSchools}
             />
           ))}
         </div>

@@ -80,17 +80,26 @@ describe("inferItemBonuses", () => {
 });
 
 describe("stackBonuses", () => {
-  it("adds every bonus for the same target", () => {
+  it("keeps highest enhancement bonus of the same type", () => {
     const stacked = stackBonuses([
       { key: "str", amount: 2, bonusType: "enhancement", label: "Gauntlets" },
       { key: "str", amount: 4, bonusType: "enhancement", label: "Belt" },
     ]);
+    assert.equal(stacked.total, 4);
+    assert.equal(stacked.sources.length, 1);
+    assert.equal(stacked.sources[0]?.label, "Belt");
+  });
+
+  it("adds every bonus when addAllBonusTypes bypass is enabled", () => {
+    const stacked = stackBonuses(
+      [
+        { key: "str", amount: 2, bonusType: "enhancement", label: "Gauntlets" },
+        { key: "str", amount: 4, bonusType: "enhancement", label: "Belt" },
+      ],
+      true,
+    );
     assert.equal(stacked.total, 6);
     assert.equal(stacked.sources.length, 2);
-    assert.deepEqual(
-      stacked.sources.map((s) => s.label).sort(),
-      ["Belt", "Gauntlets"],
-    );
   });
 
   it("adds different bonus types", () => {
@@ -136,7 +145,7 @@ describe("computeEquippedBonuses", () => {
     assert.equal(bonuses.combat.will.total, 2);
   });
 
-  it("adds enhancement from two STR items", () => {
+  it("keeps highest enhancement from two STR items", () => {
     const bonuses = computeEquippedBonuses([
       wornItem({
         name: "Gauntlets of Ogre Power",
@@ -147,8 +156,8 @@ describe("computeEquippedBonuses", () => {
         statBonuses: inferItemBonuses("Belt of Giant Strength +4"),
       }),
     ]);
-    assert.equal(bonuses.abilities.str.total, 6);
-    assert.equal(bonuses.abilities.str.sources.length, 2);
+    assert.equal(bonuses.abilities.str.total, 4);
+    assert.equal(bonuses.abilities.str.sources.length, 1);
   });
 });
 

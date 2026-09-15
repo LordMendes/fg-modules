@@ -1,4 +1,4 @@
-import type { AbilityKey } from "./types";
+import type { AbilityKey, PcDefensesState, PcSensesState } from "./types";
 
 const ABILITY_NAMES: Record<string, AbilityKey> = {
   strength: "str",
@@ -33,6 +33,9 @@ export type RaceDerivedFeatures = {
   speed: number;
   /** Dwarf-style: speed not reduced by medium/heavy armor or load. */
   speedUnhinderedByEncumbrance: boolean;
+  senses: PcSensesState;
+  languages: string[];
+  defenses: PcDefensesState;
 };
 
 function parseSignedInt(raw: string): number {
@@ -164,6 +167,112 @@ export function parseSpeedUnhinderedByEncumbrance(text: string): boolean {
   return /move at this speed even when wearing medium or heavy armor/i.test(text);
 }
 
+export function parseDarkvisionFeet(text: string): number {
+  const match = text.match(/darkvision\s*(?:out to\s*)?(\d+)\s*ft/i);
+  return match ? Number.parseInt(match[1], 10) : 0;
+}
+
+export function parseLowLightVision(text: string): boolean {
+  return /low-light vision/i.test(text);
+}
+
+export function parseScent(text: string): boolean {
+  return /\bscent\b/i.test(text);
+}
+
+export function parseRacialLanguages(text: string): string[] {
+  const langs: string[] = [];
+  const automatic = text.match(/automatic languages?:?\s*([^.+\n]+)/i);
+  if (automatic) {
+    langs.push(
+      ...automatic[1]
+        .replace(/\band\b/gi, ",")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    );
+  }
+  const bonus = text.match(/bonus languages?:?\s*([^.+\n]+)/i);
+  if (bonus && langs.length === 0) {
+    langs.push("Common");
+  }
+  if (langs.length === 0 && /\bcommon\b/i.test(text)) langs.push("Common");
+  return [...new Set(langs.map((l) => l.replace(/\.$/, "").trim()).filter(Boolean))];
+}
+
+export function parseDamageReduction(text: string): string {
+  const match = text.match(/damage reduction\s*(\d+\s*\/\s*[\w-]+)/i);
+  return match ? match[1].replace(/\s+/g, "") : "";
+}
+
+export function parseEnergyResistance(text: string): string {
+  const parts: string[] = [];
+  const pattern =
+    /resistance to\s+(acid|cold|electricity|fire|sonic)(?:\s*(\d+))?/gi;
+  for (const match of text.matchAll(pattern)) {
+    const type = match[1].toLowerCase();
+    const amount = match[2] ? Number.parseInt(match[2], 10) : null;
+    parts.push(amount != null ? `${type} ${amount}` : type);
+  }
+  return parts.join(", ");
+}
+
+export function parseImmunities(text: string): string {
+  const parts: string[] = [];
+  const sleep = /immunity to sleep/i.test(text) ? "sleep" : null;
+  const para = /immunity to paralysis/i.test(text) ? "paralysis" : null;
+  if (sleep) parts.push(sleep);
+  if (para) parts.push(para);
+  const generic = text.match(/immunity to\s+([^.+\n,;]+)/gi);
+  if (generic) {
+    for (const m of generic) {
+      const inner = m.replace(/^immunity to\s+/i, "").trim();
+      if (inner && !parts.includes(inner.toLowerCase())) parts.push(inner);
+    }
+  }
+  return parts.join(", ");
+}
+
+export function parseSensesFromText(text: string): PcSensesState {
+  return {
+    darkvisionFeet: parseDarkvisionFeet(text),
+    lowLight: parseLowLightVision(text),
+    scent: parseScent(text),
+    extra: "",
+  };
+}
+
+export function formatSensesLine(senses: PcSensesState, override?: string | null): string {
+  if (override?.trim()) return override.trim();
+  const parts: string[] = [];
+  if (senses.darkvisionFeet > 0) parts.push(`Darkvision ${senses.darkvisionFeet} ft.`);
+  if (senses.lowLight) parts.push("Low-light vision");
+  if (senses.scent) parts.push("Scent");
+  if (senses.extra.trim()) parts.push(senses.extra.trim());
+  return parts.join(", ");
+}
+
+export function formatDefensesLine(defenses: PcDefensesState): string {
+  const parts: string[] = [];
+  if (defenses.dr.trim()) parts.push(`DR ${defenses.dr.trim()}`);
+  if (defenses.resistances.trim()) parts.push(`Resist ${defenses.resistances.trim()}`);
+  if (defenses.immunities.trim()) parts.push(`Immune ${defenses.immunities.trim()}`);
+  if (defenses.vulnerabilities.trim()) parts.push(`Vulnerable ${defenses.vulnerabilities.trim()}`);
+  if (defenses.extra.trim()) parts.push(defenses.extra.trim());
+  return parts.join("; ");
+}
+
+/** Vision range in grid squares from senses (default 12 when normal vision). */
+export function visionRangeSquaresFromSenses(
+  senses: PcSensesState,
+  scaleFeet = 5,
+): number {
+  const scale = scaleFeet > 0 ? scaleFeet : 5;
+  if (senses.darkvisionFeet > 0) return Math.max(1, Math.round(senses.darkvisionFeet / scale));
+  if (senses.lowLight) return 12;
+  return 12;
+}
+
 export function parseRaceFeatures(input: {
   descriptionText?: string | null;
   size?: string | null;
@@ -182,6 +291,15 @@ export function parseRaceFeatures(input: {
     parseSpeedFromText(text) ??
     30;
   const speedUnhinderedByEncumbrance = parseSpeedUnhinderedByEncumbrance(text);
+  const senses = parseSensesFromText(text);
+  const languages = parseRacialLanguages(text);
+  const defenses: PcDefensesState = {
+    dr: parseDamageReduction(text),
+    resistances: parseEnergyResistance(text),
+    immunities: parseImmunities(text),
+    vulnerabilities: "",
+    extra: "",
+  };
 
   return {
     traits,
@@ -193,5 +311,8 @@ export function parseRaceFeatures(input: {
     sizeMod,
     speed,
     speedUnhinderedByEncumbrance,
+    senses,
+    languages,
+    defenses,
   };
 }

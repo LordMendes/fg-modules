@@ -362,6 +362,8 @@ export type PcCompendiumBundle = {
   classAdvancement: Record<string, ClassAdvancementRow[]>;
   /** HTML sources for variant caster slot/known parsing. */
   classSpellTables: Record<string, ClassSpellTableContext>;
+  /** Class slug → description text for prestige casting parse. */
+  classDescriptions: Record<string, string>;
   racialTraits: string[];
   racialProficiencies: string[];
   raceFeatures: RaceDerivedFeatures | null;
@@ -468,6 +470,7 @@ export async function getPcCompendiumBundle(input: {
     classFeatures,
     classAdvancement,
     classSpellTables,
+    classDescriptions: Object.fromEntries(classDescriptions),
     racialTraits,
     racialProficiencies,
     raceFeatures,

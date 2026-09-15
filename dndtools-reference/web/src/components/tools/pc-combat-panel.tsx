@@ -26,6 +26,8 @@ import {
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
+import { PcAsfDisplay } from "@/components/tools/pc-actions-extras";
+import { PcDefensesBlock } from "@/components/tools/pc-identity-extra";
 import type { CombatState, PcPlanState } from "@/lib/pc-planner/types";
 
 type PcCombatPanelProps = {
@@ -37,7 +39,10 @@ type PcCombatPanelProps = {
   classHitDice?: Record<string, string> | null;
 };
 
-type CombatNumberKey = Exclude<keyof CombatState, "attacks">;
+type CombatNumberKey = Exclude<
+  keyof CombatState,
+  "attacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
+>;
 
 const ROLLABLE_HIT_DIE_SIDES = new Set<number>([4, 6, 8, 10, 12, 20, 100]);
 
@@ -363,7 +368,55 @@ export function PcCombatPanel({
                 }
               />
             </div>
+            <div className="pc-combat-hp-stat">
+              <span className="pc-combat-hp-label">Temp HP</span>
+              <input
+                type="number"
+                className="pc-sheet-input pc-combat-value pc-combat-input"
+                value={state.hitPoints?.temporary ?? ""}
+                placeholder="0"
+                onChange={(e) =>
+                  patch((s) => {
+                    const raw = e.target.value;
+                    s.hitPoints = {
+                      ...(s.hitPoints ?? { rolls: [] }),
+                      temporary: raw === "" ? undefined : Number(raw),
+                    };
+                  })
+                }
+              />
+            </div>
+            <PcAsfDisplay state={state} />
           </div>
+          <label className="pc-asf-override">
+            <span className="npc-sheet-sub">ASF override (blank = auto)</span>
+            <input
+              type="number"
+              className="pc-sheet-input pc-sheet-input--narrow"
+              min={0}
+              max={100}
+              value={state.combat.asfOverride ?? ""}
+              placeholder={String(stats.arcaneSpellFailure)}
+              onChange={(e) =>
+                patch((s) => {
+                  s.combat.asfOverride =
+                    e.target.value === "" ? null : Number(e.target.value);
+                })
+              }
+            />
+          </label>
+          <label className="pc-checkbox-label">
+            <input
+              type="checkbox"
+              checked={Boolean(state.combat.addAllBonusTypes)}
+              onChange={(e) =>
+                patch((s) => {
+                  s.combat.addAllBonusTypes = e.target.checked;
+                })
+              }
+            />
+            Stack all item bonus types (house rule)
+          </label>
           {(state.hitPoints?.rolls?.length ?? 0) > 0 ? (
             <div className="pc-combat-table pc-combat-hp-rolls" style={{ ["--combat-cols" as string]: 4 }}>
               <CombatTableHeader columns={["Die", "Roll", "Con", "HP"]} />
@@ -716,6 +769,7 @@ export function PcCombatPanel({
           />
         </label>
       </div>
+      <PcDefensesBlock state={state} patch={patch} />
     </div>
   );
 }
