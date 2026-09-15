@@ -28,6 +28,8 @@ const SEED = [
   /^sharp@/,
   /^@img\+/,
   /^prisma@/,
+  /^@prisma\+client@/,
+  /^@prisma\+adapter-pg@/,
   /^ioredis@/,
   /^ws@/,
   /^pg@/,
@@ -166,6 +168,7 @@ const requirePrefix = (prefix) => {
 
 requirePrefix("effect@");
 requirePrefix("c12@");
+requirePrefix("@prisma+client@");
 requirePrefix("@prisma+dev@");
 requirePrefix("@prisma+studio-core@");
 

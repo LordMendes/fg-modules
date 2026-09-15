@@ -78,12 +78,14 @@ RUN overlay_pkgs() { \
        name="$1"; \
        dest="/app/web/node_modules/$name"; \
        [ -e "$dest" ] && return 0; \
-       src="$(find /app/node_modules/.pnpm /app/web/node_modules/.pnpm -maxdepth 3 -type d -path "*/node_modules/$name" | head -n 1)"; \
+       src="$(find /app/node_modules/.pnpm /app/web/node_modules/.pnpm -maxdepth 5 -type d -path "*/node_modules/$name" | head -n 1)"; \
        [ -n "$src" ] || return 1; \
        mkdir -p "$(dirname "$dest")"; \
        ln -sfn "$src" "$dest"; \
      } \
   && link_web_pkg prisma \
+  && link_web_pkg '@prisma/client' \
+  && link_web_pkg '@prisma/adapter-pg' \
   && link_web_pkg ioredis \
   && link_web_pkg ws \
   && link_web_pkg pg \
