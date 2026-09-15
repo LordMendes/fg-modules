@@ -1,133 +1,63 @@
 [
   {
-    "slug": "mounted-elite-sharpshooter-wrpg",
-    "name": "Mounted Sharpshooter",
+    "slug": "bash-wrpg",
+    "name": "Bash",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 112,
+      "page": 106,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "General",
-      "description_snippet": "You fire firearms accurately from the saddle."
+      "description_snippet": "One blow from your weapon can leave an opponent stunned and reeling."
     },
     "type": "General",
-    "description_html": "<p>You fire firearms accurately from the saddle.</p>",
-    "description_text": "You fire firearms accurately from the saddle.",
-    "benefit_html": "<p>You take no penalty on ranged attacks with firearms while mounted (normally −4). You still need Ride checks to control the mount.</p>",
-    "benefit_text": "You take no penalty on ranged attacks with firearms while mounted (normally −4). You still need Ride checks to control the mount.",
-    "prerequisite_html": "Dex 13, <a href=\"/skills/ride\">Ride</a> skill, <a href=\"/feats/expert-rider-wrpg\">Expert Rider</a>",
-    "prerequisite_text": "Dex 13, Ride skill, Expert Rider"
+    "description_html": "<p>One blow from your weapon can leave an opponent stunned and reeling.</p>",
+    "description_text": "One blow from your weapon can leave an opponent stunned and reeling.",
+    "benefit_html": "You can declare a bash attempt before taking a full attack action with a bludgeoning weapon. For the successful attack of your choice, roll damage normally. The foe struck must make a Fortitude save (DC 10 + the damage rolled). The foe takes no damage from that blow, but on a failed save is stunned for 1 round (cannot act, loses any Dexterity bonus to AC, and takes a −2 penalty to AC). You can use Bash only once per round and no more than once per level per day. When you use Bash, you forfeit any bonus or extra attacks granted by other feats or abilities (such as Cleave or <em>haste</em>). Constructs, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits cannot be stunned.",
+    "benefit_text": "You can declare a bash attempt before taking a full attack action with a bludgeoning weapon. For the successful attack of your choice, roll damage normally. The foe struck must make a Fortitude save (DC 10 + the damage rolled). The foe takes no damage from that blow, but on a failed save is stunned for 1 round (cannot act, loses any Dexterity bonus to AC, and takes a −2 penalty to AC). You can use Bash only once per round and no more than once per level per day. When you use Bash, you forfeit any bonus or extra attacks granted by other feats or abilities (such as Cleave or haste). Constructs, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits cannot be stunned.",
+    "prerequisite_html": "<p>Str 13, Power Attack, base attack bonus +4</p>",
+    "prerequisite_text": "Str 13, Power Attack, base attack bonus +4",
+    "special_html": "<p>A fighter may select Bash as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Bash as one of his fighter bonus feats.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
-    "slug": "expert-rider-wrpg",
-    "name": "Expert Rider",
+    "slug": "battle-cry-wrpg",
+    "name": "Battle Cry",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 111,
+      "page": 106,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "General",
-      "description_snippet": "You are an accomplished rider."
+      "description_snippet": "You can terrify opponents with a fearsome battle cry. Most characters must be berserk with rage to use this ability. Orc"
     },
     "type": "General",
-    "description_html": "<p>You are an accomplished rider.</p>",
-    "description_text": "You are an accomplished rider.",
-    "benefit_html": "All <a href=\"/skills/ride\">Ride</a> task DCs are reduced by 2. You may take 10 on Ride checks for mounted combat maneuvers even when threatened or distracted.",
-    "benefit_text": "All Ride task DCs are reduced by 2. You may take 10 on Ride checks for mounted combat maneuvers even when threatened or distracted.",
-    "prerequisite_html": "Dex 13, <a href=\"/skills/ride\">Ride</a> skill",
-    "prerequisite_text": "Dex 13, Ride skill"
-  },
-  {
-    "slug": "bareback-riding-wrpg",
-    "name": "Ride Bareback",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 113,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You ride without saddle or bridle."
-    },
-    "type": "General",
-    "description_html": "<p>You ride without saddle or bridle.</p>",
-    "description_text": "You ride without saddle or bridle.",
-    "benefit_html": "You take no −5 <a href=\"/skills/ride\">Ride</a> penalty for riding without a saddle or bridle.",
-    "benefit_text": "You take no −5 Ride penalty for riding without a saddle or bridle.",
-    "prerequisite_html": "<a href=\"/skills/ride\">Ride</a> skill",
-    "prerequisite_text": "Ride skill"
-  },
-  {
-    "slug": "butt-strike-wrpg",
-    "name": "Pistol Whip",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 112,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You use a firearm as a melee weapon without breaking it."
-    },
-    "type": "General",
-    "description_html": "<p>You use a firearm as a melee weapon without breaking it.</p>",
-    "description_text": "You use a firearm as a melee weapon without breaking it.",
-    "benefit_html": "<p>Treat a firearm as a melee weapon without breaking it: Small as a light hammer, Medium as a club, Large as a warhammer.</p>",
-    "benefit_text": "Treat a firearm as a melee weapon without breaking it: Small as a light hammer, Medium as a club, Large as a warhammer.",
-    "prerequisite_html": null,
-    "prerequisite_text": null
-  },
-  {
-    "slug": "defender-wrpg",
-    "name": "Defend",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 109,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You share your shield's protection."
-    },
-    "type": "General",
-    "description_html": "<p>You share your shield's protection.</p>",
-    "description_text": "You share your shield's protection.",
-    "benefit_html": "<p>While using a shield, allies within 5 ft. without a shield gain your shield's AC bonus. Allies within 5 ft. who also have shields gain +2 circumstance AC (does not stack with itself).</p>",
-    "benefit_text": "While using a shield, allies within 5 ft. without a shield gain your shield's AC bonus. Allies within 5 ft. who also have shields gain +2 circumstance AC (does not stack with itself).",
-    "prerequisite_html": "<p>Shield Proficiency, base attack bonus +2</p>",
-    "prerequisite_text": "Shield Proficiency, base attack bonus +2"
+    "description_html": "<p>You can terrify opponents with a fearsome battle cry. Most characters must be berserk with rage to use this ability. Orcs are so intimidating they need not rage to use Battle Cry.</p>",
+    "description_text": "You can terrify opponents with a fearsome battle cry. Most characters must be berserk with rage to use this ability. Orcs are so intimidating they need not rage to use Battle Cry.",
+    "benefit_html": "As a move action, you sound a battle cry. Foes within 30 feet must make a Will save (DC 10 + 1/2 your character level + your Cha bonus). If you have 5 or more ranks in Intimidate, the DC increases by +2. On a failure, the foe takes a −2 morale penalty on attack rolls, Will saves, and AC for 1 round. This penalty does not stack with itself unless a character with <a href=\"/feats/collective-fury-wrpg\">Collective Fury</a> is involved. This is a mind-affecting fear effect.",
+    "benefit_text": "As a move action, you sound a battle cry. Foes within 30 feet must make a Will save (DC 10 + 1/2 your character level + your Cha bonus). If you have 5 or more ranks in Intimidate, the DC increases by +2. On a failure, the foe takes a −2 morale penalty on attack rolls, Will saves, and AC for 1 round. This penalty does not stack with itself unless a character with Collective Fury is involved. This is a mind-affecting fear effect.",
+    "prerequisite_html": "<p>Cha 13, ability to rage</p>",
+    "prerequisite_text": "Cha 13, ability to rage",
+    "special_html": "<p>Non-orc characters can take this feat but can use it only while raging. Each use reduces the non-orc's remaining rage duration by 1 round.</p>",
+    "special_text": "Non-orc characters can take this feat but can use it only while raging. Each use reduces the non-orc's remaining rage duration by 1 round.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
     "slug": "war-tongue-wrpg",
@@ -145,275 +75,19 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "General",
-      "description_snippet": "You coordinate allies with battle signals."
+      "description_snippet": "You use short phrases and gestures to communicate orders during battle."
     },
     "type": "General",
-    "description_html": "<p>You coordinate allies with battle signals.</p>",
-    "description_text": "You coordinate allies with battle signals.",
-    "benefit_html": "Aid another for an ally who also has this feat within 100 ft. and line of sight as a move action. DC 15 <a href=\"/skills/bluff\">Bluff</a>: +2 circumstance to the ally's next attack or AC vs. the next attack.",
-    "benefit_text": "Aid another for an ally who also has this feat within 100 ft. and line of sight as a move action. DC 15 Bluff: +2 circumstance to the ally's next attack or AC vs. the next attack.",
+    "description_html": "<p>You use short phrases and gestures to communicate orders during battle.</p>",
+    "description_text": "You use short phrases and gestures to communicate orders during battle.",
+    "benefit_html": "You can aid another for an ally who also has this feat from up to 100 feet away if you have line of sight. Doing so is a move action. Make a DC 15 <a href=\"/skills/bluff\">Bluff</a> check; if you succeed, the recipient gains a +2 circumstance bonus on his next attack roll or to AC against an opponent's next attack. This stacks with other aid another attempts, but not with other Battle Language attempts. Opponents can make a Sense Motive check opposed by your Bluff check to intercept and negate the bonus.",
+    "benefit_text": "You can aid another for an ally who also has this feat from up to 100 feet away if you have line of sight. Doing so is a move action. Make a DC 15 Bluff check; if you succeed, the recipient gains a +2 circumstance bonus on his next attack roll or to AC against an opponent's next attack. This stacks with other aid another attempts, but not with other Battle Language attempts. Opponents can make a Sense Motive check opposed by your Bluff check to intercept and negate the bonus.",
     "prerequisite_html": "<a href=\"/skills/bluff\">Bluff</a> 3 ranks",
-    "prerequisite_text": "Bluff 3 ranks"
-  },
-  {
-    "slug": "rapid-reload-wrpg",
-    "name": "Lightning Reload",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 111,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You reload firearms faster."
-    },
-    "type": "General",
-    "description_html": "<p>You reload firearms faster.</p>",
-    "description_text": "You reload firearms faster.",
-    "benefit_html": "<p>A firearm reload that is a standard action becomes a move action; reloads longer than 1 round take half time.</p>",
-    "benefit_text": "A firearm reload that is a standard action becomes a move action; reloads longer than 1 round take half time.",
-    "prerequisite_html": "<p>Dex 13, Exotic Weapon Proficiency (firearms)</p>",
-    "prerequisite_text": "Dex 13, Exotic Weapon Proficiency (firearms)"
-  },
-  {
-    "slug": "storm-arrow-wrpg",
-    "name": "Storm Bolt",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 114,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You hurl a stunning bludgeon."
-    },
-    "type": "General",
-    "description_html": "<p>You hurl a stunning bludgeon.</p>",
-    "description_text": "You hurl a stunning bludgeon.",
-    "benefit_html": "<p>Before a full attack with a ranged bludgeoning weapon, declare Storm Bolt. A hit deals nonlethal damage; Fortitude save (DC 10 + damage rolled) or stunned 1 round. Once/round; ≤ once/level/day.</p>",
-    "benefit_text": "Before a full attack with a ranged bludgeoning weapon, declare Storm Bolt. A hit deals nonlethal damage; Fortitude save (DC 10 + damage rolled) or stunned 1 round. Once/round; ≤ once/level/day.",
-    "prerequisite_html": "<p>Str 13, Bash, Power Attack, base attack bonus +4</p>",
-    "prerequisite_text": "Str 13, Bash, Power Attack, base attack bonus +4"
-  },
-  {
-    "slug": "point-blank-shot-no-aoo-wrpg",
-    "name": "Close Shot",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 108,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You fire in melee without provoking."
-    },
-    "type": "General",
-    "description_html": "<p>You fire in melee without provoking.</p>",
-    "description_text": "You fire in melee without provoking.",
-    "benefit_html": "<p>You can fire a ranged weapon without provoking attacks of opportunity.</p>",
-    "benefit_text": "You can fire a ranged weapon without provoking attacks of opportunity.",
-    "prerequisite_html": "<p>Dex 13, Dodge, Point Blank Shot, Precise Shot, base attack bonus +4</p>",
-    "prerequisite_text": "Dex 13, Dodge, Point Blank Shot, Precise Shot, base attack bonus +4"
-  },
-  {
-    "slug": "skilled-shot-wrpg",
-    "name": "Trick Shot",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 114,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You ricochet ranged attacks."
-    },
-    "type": "General",
-    "description_html": "<p>You ricochet ranged attacks.</p>",
-    "description_text": "You ricochet ranged attacks.",
-    "benefit_html": "<p>Bounce a ranged attack off one surface (moonglaive: up to two). Cover is measured from the final approach; range penalties use full path distance.</p>",
-    "benefit_text": "Bounce a ranged attack off one surface (moonglaive: up to two). Cover is measured from the final approach; range penalties use full path distance.",
-    "prerequisite_html": "<p>Dex 13</p>",
-    "prerequisite_text": "Dex 13"
-  },
-  {
-    "slug": "exotic-weapon-thorium-wrpg",
-    "name": "Exotic Weapon Proficiency (Thorium Weapons)",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 110,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You are trained with thorium weapons."
-    },
-    "type": "General",
-    "description_html": "<p>You are trained with thorium weapons.</p>",
-    "description_text": "You are trained with thorium weapons.",
-    "benefit_html": "<p>You are proficient with a chosen thorium weapon and add half your Strength bonus to its damage (one-handed 1½× Str, two-handed 2× Str).</p>",
-    "benefit_text": "You are proficient with a chosen thorium weapon and add half your Strength bonus to its damage (one-handed 1½× Str, two-handed 2× Str).",
-    "prerequisite_html": "<p>Proficiency with the non-thorium version of the weapon</p>",
-    "prerequisite_text": "Proficiency with the non-thorium version of the weapon"
-  },
-  {
-    "slug": "dedicated-leadership-wrpg",
-    "name": "Devoted Leadership",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 110,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "Your followers fight harder near you."
-    },
-    "type": "General",
-    "description_html": "<p>Your followers fight harder near you.</p>",
-    "description_text": "Your followers fight harder near you.",
-    "benefit_html": "<p>Followers within (5 ft. × Cha bonus) gain +2 morale bonus to AC and +1 morale bonus on all saves for up to your character level rounds/day (max 20).</p>",
-    "benefit_text": "Followers within (5 ft. × Cha bonus) gain +2 morale bonus to AC and +1 morale bonus on all saves for up to your character level rounds/day (max 20).",
-    "prerequisite_html": "<p>Cha 13, Wis 13, Leadership</p>",
-    "prerequisite_text": "Cha 13, Wis 13, Leadership"
-  },
-  {
-    "slug": "enduring-leadership-wrpg",
-    "name": "Enduring Leadership",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 110,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "Your followers surge into battle."
-    },
-    "type": "General",
-    "description_html": "<p>Your followers surge into battle.</p>",
-    "description_text": "Your followers surge into battle.",
-    "benefit_html": "<p>Once/day before an encounter, as a free action, followers gain +4 morale bonus on Initiative and +10 ft. speed for that combat. If you or they rage, those who rage are not fatigued afterward.</p>",
-    "benefit_text": "Once/day before an encounter, as a free action, followers gain +4 morale bonus on Initiative and +10 ft. speed for that combat. If you or they rage, those who rage are not fatigued afterward.",
-    "prerequisite_html": "<p>Endurance, Leadership</p>",
-    "prerequisite_text": "Endurance, Leadership"
-  },
-  {
-    "slug": "precise-leadership-wrpg",
-    "name": "Precision Leadership",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 112,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "Your followers concentrate fire."
-    },
-    "type": "General",
-    "description_html": "<p>Your followers concentrate fire.</p>",
-    "description_text": "Your followers concentrate fire.",
-    "benefit_html": "<p>On a ranged attack, each follower gains +1 attack per 5 followers attacking the same target at once (same weapon kind, within 10 ft. × Cha bonus of you, target within 100 ft.). Damage from all hits is totaled before DR.</p>",
-    "benefit_text": "On a ranged attack, each follower gains +1 attack per 5 followers attacking the same target at once (same weapon kind, within 10 ft. × Cha bonus of you, target within 100 ft.). Damage from all hits is totaled before DR.",
-    "prerequisite_html": "<p>Leadership, Point Blank Shot</p>",
-    "prerequisite_text": "Leadership, Point Blank Shot"
-  },
-  {
-    "slug": "totem-follower-wrpg",
-    "name": "Follower of the Totem",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 111,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "You draw strength from ancestral totems."
-    },
-    "type": "General",
-    "description_html": "<p>You draw strength from ancestral totems.</p>",
-    "description_text": "You draw strength from ancestral totems.",
-    "benefit_html": "<p>Once/day as a free action, gain a +2 sacred bonus to any one ability score for 1d6+1 rounds. Tauren with this feat are treated as having Exotic Weapon Proficiency (tauren totem).</p>",
-    "benefit_text": "Once/day as a free action, gain a +2 sacred bonus to any one ability score for 1d6+1 rounds. Tauren with this feat are treated as having Exotic Weapon Proficiency (tauren totem).",
-    "prerequisite_html": "<p>Wis 13, orc or tauren</p>",
-    "prerequisite_text": "Wis 13, orc or tauren"
-  },
-  {
-    "slug": "drums-of-courage-wrpg",
-    "name": "Drums of Courage",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 110,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "General",
-      "description_snippet": "War drums inspire your tribe."
-    },
-    "type": "General",
-    "description_html": "<p>War drums inspire your tribe.</p>",
-    "description_text": "War drums inspire your tribe.",
-    "benefit_html": "<p>DC 20 Perform (percussion): tribe warriors who hear the drums gain +1 morale bonus on attack, damage, and Will saves while the drums play and for 5 rounds after.</p>",
-    "benefit_text": "DC 20 Perform (percussion): tribe warriors who hear the drums gain +1 morale bonus on attack, damage, and Will saves while the drums play and for 5 rounds after.",
-    "prerequisite_html": "<p>Perform (percussion instruments) 5 ranks</p>",
-    "prerequisite_text": "Perform (percussion instruments) 5 ranks"
+    "prerequisite_text": "Bluff 3 ranks",
+    "special_html": "<p>5 or more ranks in Knowledge (military tactics) grant a +2 synergy bonus to send or intercept Battle Language signals. A fighter may select Battle Language as one of his fighter bonus feats.</p>",
+    "special_text": "5 or more ranks in Knowledge (military tactics) grant a +2 synergy bonus to send or intercept Battle Language signals. A fighter may select Battle Language as one of his fighter bonus feats.",
+    "normal_html": "<p>Aid another actions usually require being adjacent to the ally.</p>",
+    "normal_text": "Aid another actions usually require being adjacent to the ally."
   },
   {
     "slug": "block-magic-wrpg",
@@ -431,145 +105,49 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Metamagic",
-      "description_snippet": "You counter spells with raw magic energy."
+      "description_snippet": "You channel energy to block a spell's effects."
     },
     "type": "Metamagic",
-    "description_html": "<p>You counter spells with raw magic energy.</p>",
-    "description_text": "You counter spells with raw magic energy.",
-    "benefit_html": "When targeted by a spell, make a <a href=\"/skills/spellcraft\">Spellcraft</a> check (DC 15 + spell level) to identify and counter it by spending a spell slot at least 1 level higher.",
-    "benefit_text": "When targeted by a spell, make a Spellcraft check (DC 15 + spell level) to identify and counter it by spending a spell slot at least 1 level higher.",
+    "description_html": "<p>You channel energy to block a spell's effects.</p>",
+    "description_text": "You channel energy to block a spell's effects.",
+    "benefit_html": "When you are targeted by a spell, you can disrupt it. Make a <a href=\"/skills/spellcraft\">Spellcraft</a> check (DC 15 + spell level). If you succeed, you can automatically counter the spell by spending a spell slot at least one level higher than the target spell. You need not prepare a specific counterspell.",
+    "benefit_text": "When you are targeted by a spell, you can disrupt it. Make a Spellcraft check (DC 15 + spell level). If you succeed, you can automatically counter the spell by spending a spell slot at least one level higher than the target spell. You need not prepare a specific counterspell.",
     "prerequisite_html": "Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, caster level 5th",
-    "prerequisite_text": "Iron Will, Magic Energy Control, caster level 5th"
+    "prerequisite_text": "Iron Will, Magic Energy Control, caster level 5th",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "Counterspelling usually requires casting the same spell, a diametrically opposed spell, or <em>dispel magic</em>.",
+    "normal_text": "Counterspelling usually requires casting the same spell, a diametrically opposed spell, or dispel magic."
   },
   {
-    "slug": "control-magic-energy-wrpg",
-    "name": "Magic Energy Control",
+    "slug": "brilliant-leadership-wrpg",
+    "name": "Brilliant Leadership",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 111,
+      "page": 107,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Metamagic",
-      "description_snippet": "You prepare spells with greater efficiency."
+      "type": "General",
+      "description_snippet": "You inspire followers to explore their magical talents."
     },
-    "type": "Metamagic",
-    "description_html": "<p>You prepare spells with greater efficiency.</p>",
-    "description_text": "You prepare spells with greater efficiency.",
-    "benefit_html": "<p>Daily spell preparation takes half the normal time. A high elf with this feat no longer suffers magic-addiction effects during preparation (prepares in normal time, not half).</p>",
-    "benefit_text": "Daily spell preparation takes half the normal time. A high elf with this feat no longer suffers magic-addiction effects during preparation (prepares in normal time, not half).",
-    "prerequisite_html": "<p>Iron Will</p>",
-    "prerequisite_text": "Iron Will"
-  },
-  {
-    "slug": "duplicate-spell-wrpg",
-    "name": "Mirror Spell",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 112,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "Metamagic",
-      "description_snippet": "You cast a spell twice at once."
-    },
-    "type": "Metamagic",
-    "description_html": "<p>You cast a spell twice at once.</p>",
-    "description_text": "You cast a spell twice at once.",
-    "benefit_html": "<p>When casting an arcane spell, treat it as cast twice (both resolve simultaneously). Spend an additional spell slot of the same level or higher.</p>",
-    "benefit_text": "When casting an arcane spell, treat it as cast twice (both resolve simultaneously). Spend an additional spell slot of the same level or higher.",
-    "prerequisite_html": "Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, caster level 3rd",
-    "prerequisite_text": "Iron Will, Magic Energy Control, caster level 3rd"
-  },
-  {
-    "slug": "deflect-magic-wrpg",
-    "name": "Deflect Spell",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 109,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "Metamagic",
-      "description_snippet": "You redirect a countered spell."
-    },
-    "type": "Metamagic",
-    "description_html": "<p>You redirect a countered spell.</p>",
-    "description_text": "You redirect a countered spell.",
-    "benefit_html": "<p>After successfully countering a spell, deflect it to any target as if you had cast it.</p>",
-    "benefit_text": "After successfully countering a spell, deflect it to any target as if you had cast it.",
-    "prerequisite_html": "<a href=\"/feats/block-magic-wrpg\">Block Spell</a>, Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, <a href=\"/feats/duplicate-spell-wrpg\">Mirror Spell</a>, <a href=\"/feats/reflect-magic-wrpg\">Reflect Spell</a>, caster level 9th",
-    "prerequisite_text": "Block Spell, Iron Will, Magic Energy Control, Mirror Spell, Reflect Spell, caster level 9th"
-  },
-  {
-    "slug": "reflect-magic-wrpg",
-    "name": "Reflect Spell",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 113,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "Metamagic",
-      "description_snippet": "You bounce a spell back at its caster."
-    },
-    "type": "Metamagic",
-    "description_html": "<p>You bounce a spell back at its caster.</p>",
-    "description_text": "You bounce a spell back at its caster.",
-    "benefit_html": "<p>After successfully countering a spell that targeted you, reflect it back at the caster.</p>",
-    "benefit_text": "After successfully countering a spell that targeted you, reflect it back at the caster.",
-    "prerequisite_html": "<a href=\"/feats/block-magic-wrpg\">Block Spell</a>, Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, <a href=\"/feats/duplicate-spell-wrpg\">Mirror Spell</a>, caster level 7th",
-    "prerequisite_text": "Block Spell, Iron Will, Magic Energy Control, Mirror Spell, caster level 7th"
-  },
-  {
-    "slug": "create-siege-engines-wrpg",
-    "name": "Build Siege Weapons",
-    "source_url": null,
-    "scraped_at": "2026-08-24T00:00:00Z",
-    "source": {
-      "name": "Warcraft - Roleplaying Game",
-      "abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "page": 108,
-      "url": null
-    },
-    "index": {
-      "source_abbrev": "WRPG",
-      "edition": "Warcraft (3.5)",
-      "type": "Technology",
-      "description_snippet": "You craft and sabotage siege engines."
-    },
-    "type": "Technology",
-    "description_html": "<p>You craft and sabotage siege engines.</p>",
-    "description_text": "You craft and sabotage siege engines.",
-    "benefit_html": "+2 <a href=\"/skills/craft\">Craft</a> (technological device) for catapults, cannons, mortars, and other siege weapons; +2 technological limit. You may sabotage Large or larger tech devices.",
-    "benefit_text": "+2 Craft (technological device) for catapults, cannons, mortars, and other siege weapons; +2 technological limit. You may sabotage Large or larger tech devices.",
-    "prerequisite_html": null,
-    "prerequisite_text": null
+    "type": "General",
+    "description_html": "<p>You inspire followers to explore their magical talents.</p>",
+    "description_text": "You inspire followers to explore their magical talents.",
+    "benefit_html": "<p>Each day, any spellcaster followers can prepare or cast extra spells. Each such follower gains one extra spell per day for each spell level up to two levels below the highest level you can cast. For example, if you cast 5th-level spells, followers gain extra spells for levels 1st through 3rd.</p>",
+    "benefit_text": "Each day, any spellcaster followers can prepare or cast extra spells. Each such follower gains one extra spell per day for each spell level up to two levels below the highest level you can cast. For example, if you cast 5th-level spells, followers gain extra spells for levels 1st through 3rd.",
+    "prerequisite_html": "<p>Leadership, able to cast 3rd-level spells</p>",
+    "prerequisite_text": "Leadership, able to cast 3rd-level spells",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
   },
   {
     "slug": "create-firearms-wrpg",
@@ -587,15 +165,49 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Technology",
-      "description_snippet": "You craft firearms."
+      "description_snippet": "You have a talent for building and using firearms."
     },
     "type": "Technology",
-    "description_html": "<p>You craft firearms.</p>",
-    "description_text": "You craft firearms.",
-    "benefit_html": "+2 <a href=\"/skills/craft\">Craft</a> (technological device) when crafting firearms; +2 technological limit for firearms. Once/week, with a firearm you built, declare an automatic critical threat (still confirm).",
-    "benefit_text": "+2 Craft (technological device) when crafting firearms; +2 technological limit for firearms. Once/week, with a firearm you built, declare an automatic critical threat (still confirm).",
+    "description_html": "<p>You have a talent for building and using firearms.</p>",
+    "description_text": "You have a talent for building and using firearms.",
+    "benefit_html": "You get a +2 bonus on <a href=\"/skills/craft\">Craft</a> (technological device) checks when crafting firearms. Your technological limit for firearms is increased by 2.",
+    "benefit_text": "You get a +2 bonus on Craft (technological device) checks when crafting firearms. Your technological limit for firearms is increased by 2.",
     "prerequisite_html": null,
-    "prerequisite_text": null
+    "prerequisite_text": null,
+    "special_html": "<p>Once per week, instead of making the usual attack roll, you may declare an automatic critical threat using a firearm that you have built. You must still roll to confirm the critical, as normal. A tinker may select Build Firearms as one of his tinker bonus feats.</p>",
+    "special_text": "Once per week, instead of making the usual attack roll, you may declare an automatic critical threat using a firearm that you have built. You must still roll to confirm the critical, as normal. A tinker may select Build Firearms as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "create-siege-engines-wrpg",
+    "name": "Build Siege Weapons",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 108,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Technology",
+      "description_snippet": "You have a talent for building, or sabotaging, large weapons and engines of destruction."
+    },
+    "type": "Technology",
+    "description_html": "<p>You have a talent for building, or sabotaging, large weapons and engines of destruction.</p>",
+    "description_text": "You have a talent for building, or sabotaging, large weapons and engines of destruction.",
+    "benefit_html": "You get a +2 bonus on <a href=\"/skills/craft\">Craft</a> (technological device) checks when building catapults, cannons, mortars, and other siege weapons. Your technological limit for building these weapons is increased by 2.",
+    "benefit_text": "You get a +2 bonus on Craft (technological device) checks when building catapults, cannons, mortars, and other siege weapons. Your technological limit for building these weapons is increased by 2.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "You may make a <a href=\"/skills/craft\">Craft</a> (technological device) check to sabotage any technological device or weapon that is larger than Medium-size. The DC equals the DC to create the item. If you succeed, the item becomes useless until repaired. If you succeed by 5 or more, you can rig the item to suffer a catastrophic malfunction the next time it is used, destroying the item and (at the GM's discretion) endangering whoever is using it. A tinker may select Build Siege Weapons as one of his tinker bonus feats.",
+    "special_text": "You may make a Craft (technological device) check to sabotage any technological device or weapon that is larger than Medium-size. The DC equals the DC to create the item. If you succeed, the item becomes useless until repaired. If you succeed by 5 or more, you can rig the item to suffer a catastrophic malfunction the next time it is used, destroying the item and (at the GM's discretion) endangering whoever is using it. A tinker may select Build Siege Weapons as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
     "slug": "create-small-devices-wrpg",
@@ -613,15 +225,49 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Technology",
-      "description_snippet": "You craft Tiny and smaller devices."
+      "description_snippet": "You have nimble fingers and a gift for fine workmanship."
     },
     "type": "Technology",
-    "description_html": "<p>You craft Tiny and smaller devices.</p>",
-    "description_text": "You craft Tiny and smaller devices.",
-    "benefit_html": "+2 <a href=\"/skills/craft\">Craft</a> (technological device) for Tiny/Diminutive/Fine devices; +2 technological limit. You may build concealed devices (Spot and Use Technological Device DC 10 + your Craft modifier).",
-    "benefit_text": "+2 Craft (technological device) for Tiny/Diminutive/Fine devices; +2 technological limit. You may build concealed devices (Spot and Use Technological Device DC 10 + your Craft modifier).",
+    "description_html": "<p>You have nimble fingers and a gift for fine workmanship.</p>",
+    "description_text": "You have nimble fingers and a gift for fine workmanship.",
+    "benefit_html": "You get a +2 bonus on <a href=\"/skills/craft\">Craft</a> (technological device) checks when building a device of Tiny, Diminutive, or Fine size. Your technological limit for building such devices is increased by 2.",
+    "benefit_text": "You get a +2 bonus on Craft (technological device) checks when building a device of Tiny, Diminutive, or Fine size. Your technological limit for building such devices is increased by 2.",
     "prerequisite_html": "<p>Dex 13</p>",
-    "prerequisite_text": "Dex 13"
+    "prerequisite_text": "Dex 13",
+    "special_html": "You can build devices that are easily concealed or disguised as other objects. If you choose to conceal or disguise a device, any character trying to find it must make a Spot check, and any character trying to discover what the device does must make a <a href=\"/skills/use-technological-device\">Use Technological Device</a> check. The DC of these checks is 10 + your Craft (technological device) skill modifier. A tinker may select Build Small Devices as one of his tinker bonus feats.",
+    "special_text": "You can build devices that are easily concealed or disguised as other objects. If you choose to conceal or disguise a device, any character trying to find it must make a Spot check, and any character trying to discover what the device does must make a Use Technological Device check. The DC of these checks is 10 + your Craft (technological device) skill modifier. A tinker may select Build Small Devices as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "build-teamwork-wrpg",
+    "name": "Build Teamwork",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 108,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Technology",
+      "description_snippet": "You work well with others and can use teamwork to speed the construction of technological devices."
+    },
+    "type": "Technology",
+    "description_html": "<p>You work well with others and can use teamwork to speed the construction of technological devices.</p>",
+    "description_text": "You work well with others and can use teamwork to speed the construction of technological devices.",
+    "benefit_html": "<p>When you are assisted in a Craft check by at least 3 other people who each have at least 1 rank in a Craft skill, the result of a successful Craft check is doubled. This feat has no effect on an unsuccessful Craft check.</p>",
+    "benefit_text": "When you are assisted in a Craft check by at least 3 other people who each have at least 1 rank in a Craft skill, the result of a successful Craft check is doubled. This feat has no effect on an unsuccessful Craft check.",
+    "prerequisite_html": "<p>Leadership, at least 2 other technology feats</p>",
+    "prerequisite_text": "Leadership, at least 2 other technology feats",
+    "special_html": "<p>A tinker may select Build Teamwork as one of his tinker bonus feats.</p>",
+    "special_text": "A tinker may select Build Teamwork as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
     "slug": "create-vehicles-wrpg",
@@ -639,41 +285,139 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Technology",
-      "description_snippet": "You craft and operate vehicles."
+      "description_snippet": "You have a talent for building and operating vehicles."
     },
     "type": "Technology",
-    "description_html": "<p>You craft and operate vehicles.</p>",
-    "description_text": "You craft and operate vehicles.",
-    "benefit_html": "+2 <a href=\"/skills/craft\">Craft</a> (technological device) and <a href=\"/skills/use-technological-device\">Use Technological Device</a> for vehicles; +2 technological limit. Once/day, double a vehicle's speed for 1d6 minutes.",
-    "benefit_text": "+2 Craft (technological device) and Use Technological Device for vehicles; +2 technological limit. Once/day, double a vehicle's speed for 1d6 minutes.",
+    "description_html": "<p>You have a talent for building and operating vehicles.</p>",
+    "description_text": "You have a talent for building and operating vehicles.",
+    "benefit_html": "You get a +2 bonus on <a href=\"/skills/craft\">Craft</a> (technological device) and <a href=\"/skills/use-technological-device\">Use Technological Device</a> checks when building or using a vehicle. Your technological limit for building vehicles is increased by 2.",
+    "benefit_text": "You get a +2 bonus on Craft (technological device) and Use Technological Device checks when building or using a vehicle. Your technological limit for building vehicles is increased by 2.",
     "prerequisite_html": null,
-    "prerequisite_text": null
+    "prerequisite_text": null,
+    "special_html": "Once per day for 1d6 minutes, you may double the speed of a vehicle you are driving. When this period ends, you may extend it for 1 additional minute by making a DC 20 <a href=\"/skills/use-technological-device\">Use Technological Device</a> check. You may continue to extend the period each minute by making another check; each subsequent check increases the DC by 1. The vehicle's speed returns to normal the first time you miss a check. A tinker may select Build Vehicles as one of his tinker bonus feats.",
+    "special_text": "Once per day for 1d6 minutes, you may double the speed of a vehicle you are driving. When this period ends, you may extend it for 1 additional minute by making a DC 20 Use Technological Device check. You may continue to extend the period each minute by making another check; each subsequent check increases the DC by 1. The vehicle's speed returns to normal the first time you miss a check. A tinker may select Build Vehicles as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
-    "slug": "emergency-repair-wrpg",
-    "name": "Emergency Repair",
+    "slug": "point-blank-shot-no-aoo-wrpg",
+    "name": "Close Shot",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 110,
+      "page": 108,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Technology",
-      "description_snippet": "You force a broken device to work briefly."
+      "type": "General",
+      "description_snippet": "You can use a ranged weapon while avoiding opponents in melee combat."
     },
-    "type": "Technology",
-    "description_html": "<p>You force a broken device to work briefly.</p>",
-    "description_text": "You force a broken device to work briefly.",
-    "benefit_html": "Full-round action, DC 20 <a href=\"/skills/craft\">Craft</a> (mechanical object): a malfunctioning or broken tech device works for 1 hour, then stops until normally repaired. Natural 20 = permanent repair.",
-    "benefit_text": "Full-round action, DC 20 Craft (mechanical object): a malfunctioning or broken tech device works for 1 hour, then stops until normally repaired. Natural 20 = permanent repair.",
-    "prerequisite_html": "Wis 13, <a href=\"/feats/delay-malfunction-wrpg\">Delay Malfunction</a>",
-    "prerequisite_text": "Wis 13, Delay Malfunction"
+    "type": "General",
+    "description_html": "<p>You can use a ranged weapon while avoiding opponents in melee combat.</p>",
+    "description_text": "You can use a ranged weapon while avoiding opponents in melee combat.",
+    "benefit_html": "<p>You may fire a ranged weapon without provoking an attack of opportunity.</p>",
+    "benefit_text": "You may fire a ranged weapon without provoking an attack of opportunity.",
+    "prerequisite_html": "<p>Dex 13, Dodge, Point Blank Shot, Precise Shot, base attack bonus +4</p>",
+    "prerequisite_text": "Dex 13, Dodge, Point Blank Shot, Precise Shot, base attack bonus +4",
+    "special_html": "<p>A fighter may select Close Shot as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Close Shot as one of his fighter bonus feats.",
+    "normal_html": "<p>If you fire a ranged weapon, any opponent that threatens you gets an attack of opportunity.</p>",
+    "normal_text": "If you fire a ranged weapon, any opponent that threatens you gets an attack of opportunity."
+  },
+  {
+    "slug": "collective-fury-wrpg",
+    "name": "Collective Fury",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "Your rage inspires nearby allies who share your fury."
+    },
+    "type": "General",
+    "description_html": "<p>Your rage inspires nearby allies who share your fury.</p>",
+    "description_text": "Your rage inspires nearby allies who share your fury.",
+    "benefit_html": "When you rage, all other characters within 30 feet who have the ability to rage gain the benefits of the <a href=\"/feats/battle-cry-wrpg\">Battle Cry</a> feat. Multiple Battle Cry effects do not stack.",
+    "benefit_text": "When you rage, all other characters within 30 feet who have the ability to rage gain the benefits of the Battle Cry feat. Multiple Battle Cry effects do not stack.",
+    "prerequisite_html": "Cha 13, <a href=\"/feats/battle-cry-wrpg\">Battle Cry</a>, Leadership",
+    "prerequisite_text": "Cha 13, Battle Cry, Leadership",
+    "special_html": "<p>When an orc with Collective Fury rages, all orcs within 30 feet gain a +2 enhancement bonus to Strength as well as the Battle Cry ability.</p>",
+    "special_text": "When an orc with Collective Fury rages, all orcs within 30 feet gain a +2 enhancement bonus to Strength as well as the Battle Cry ability.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "defender-wrpg",
+    "name": "Defend",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You're trained to fight shoulder-to-shoulder and share the benefits of a shield with a nearby ally."
+    },
+    "type": "General",
+    "description_html": "<p>You're trained to fight shoulder-to-shoulder and share the benefits of a shield with a nearby ally.</p>",
+    "description_text": "You're trained to fight shoulder-to-shoulder and share the benefits of a shield with a nearby ally.",
+    "benefit_html": "<p>If you are fighting with a shield, any ally within 5 feet who is not fighting with a shield gains your shield's AC bonus. You do not lose your shield bonus, and this bonus stacks with the ally's armor bonus as per the normal stacking rules. Any ally within 5 feet who is fighting with a shield gains a +2 circumstance bonus to AC; this bonus does not stack with itself. If multiple characters with Defend stand within 5 feet of each other and fight with shields, each character gains only the highest shield bonus to AC.</p>",
+    "benefit_text": "If you are fighting with a shield, any ally within 5 feet who is not fighting with a shield gains your shield's AC bonus. You do not lose your shield bonus, and this bonus stacks with the ally's armor bonus as per the normal stacking rules. Any ally within 5 feet who is fighting with a shield gains a +2 circumstance bonus to AC; this bonus does not stack with itself. If multiple characters with Defend stand within 5 feet of each other and fight with shields, each character gains only the highest shield bonus to AC.",
+    "prerequisite_html": "<p>Shield Proficiency, base attack bonus +2</p>",
+    "prerequisite_text": "Shield Proficiency, base attack bonus +2",
+    "special_html": "<p>A fighter may select Defend as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Defend as one of his fighter bonus feats.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "deflect-magic-wrpg",
+    "name": "Deflect Spell",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "You may counter a spell and choose a new target for it."
+    },
+    "type": "Metamagic",
+    "description_html": "<p>You may counter a spell and choose a new target for it.</p>",
+    "description_text": "You may counter a spell and choose a new target for it.",
+    "benefit_html": "If you successfully counter a spell, using the same spell, a spell with a diametrically opposed effect, <em>dispel magic</em>, or the <a href=\"/feats/block-magic-wrpg\">Block Spell</a> feat, you may deflect the spell at any target you choose. The new target is determined as if you had originally cast the spell yourself.",
+    "benefit_text": "If you successfully counter a spell, using the same spell, a spell with a diametrically opposed effect, dispel magic, or the Block Spell feat, you may deflect the spell at any target you choose. The new target is determined as if you had originally cast the spell yourself.",
+    "prerequisite_html": "<a href=\"/feats/block-magic-wrpg\">Block Spell</a>, Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, <a href=\"/feats/duplicate-spell-wrpg\">Mirror Spell</a>, <a href=\"/feats/reflect-magic-wrpg\">Reflect Spell</a>, caster level 9th",
+    "prerequisite_text": "Block Spell, Iron Will, Magic Energy Control, Mirror Spell, Reflect Spell, caster level 9th",
+    "special_html": "<p>Two or more spellcasters with Deflect Spell may counter and re-target the spell until no spellcaster succeeds at countering it. The spell then has its normal effect on its current target. Once you have identified the spell you are trying to counter, you do not need to make any further Spellcraft checks to identify it.</p>",
+    "special_text": "Two or more spellcasters with Deflect Spell may counter and re-target the spell until no spellcaster succeeds at countering it. The spell then has its normal effect on its current target. Once you have identified the spell you are trying to counter, you do not need to make any further Spellcraft checks to identify it.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
     "slug": "delay-malfunction-wrpg",
@@ -691,119 +435,409 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Technology",
-      "description_snippet": "You keep a failing device running a few rounds."
+      "description_snippet": "You know how to make last-minute repairs to malfunctioning equipment, adjustments that keep a device running a little lo"
     },
     "type": "Technology",
-    "description_html": "<p>You keep a failing device running a few rounds.</p>",
-    "description_text": "You keep a failing device running a few rounds.",
-    "benefit_html": "On malfunction, DC 15 <a href=\"/skills/craft\">Craft</a> (technological device): the device works normally for 1d3 rounds. Natural 20 averts the malfunction entirely.",
-    "benefit_text": "On malfunction, DC 15 Craft (technological device): the device works normally for 1d3 rounds. Natural 20 averts the malfunction entirely.",
+    "description_html": "<p>You know how to make last-minute repairs to malfunctioning equipment, adjustments that keep a device running a little longer.</p>",
+    "description_text": "You know how to make last-minute repairs to malfunctioning equipment, adjustments that keep a device running a little longer.",
+    "benefit_html": "When a device malfunctions, you may make a DC 15 <a href=\"/skills/craft\">Craft</a> (technological device) check. If you succeed, the device operates normally for 1d3 rounds, giving you a chance to finish the job you are doing, make an emergency repair, or get clear before it blows up. If you roll a natural 20 on the check, the malfunction is completely averted. You cannot try again for any specific malfunction, even after a successful use of this feat.",
+    "benefit_text": "When a device malfunctions, you may make a DC 15 Craft (technological device) check. If you succeed, the device operates normally for 1d3 rounds, giving you a chance to finish the job you are doing, make an emergency repair, or get clear before it blows up. If you roll a natural 20 on the check, the malfunction is completely averted. You cannot try again for any specific malfunction, even after a successful use of this feat.",
     "prerequisite_html": null,
-    "prerequisite_text": null
+    "prerequisite_text": null,
+    "special_html": "<p>Goblin characters can avoid the malfunction entirely by rolling a natural 19 or 20 on the check. A tinker may select Delay Malfunction as one of his tinker bonus feats.</p>",
+    "special_text": "Goblin characters can avoid the malfunction entirely by rolling a natural 19 or 20 on the check. A tinker may select Delay Malfunction as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
-    "slug": "use-land-vehicles-wrpg",
-    "name": "Vehicle Proficiency (Land)",
+    "slug": "dedicated-leadership-wrpg",
+    "name": "Devoted Leadership",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 114,
+      "page": 110,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Technology",
-      "description_snippet": "You operate land vehicles."
+      "type": "General",
+      "description_snippet": "Your faith in your followers gives them the confidence they need to survive difficult situations."
     },
-    "type": "Technology",
-    "description_html": "<p>You operate land vehicles.</p>",
-    "description_text": "You operate land vehicles.",
-    "benefit_html": "You can operate land vehicles with <a href=\"/skills/use-technological-device\">Use Technological Device</a> without the −4 nonproficiency penalty.",
-    "benefit_text": "You can operate land vehicles with Use Technological Device without the −4 nonproficiency penalty.",
-    "prerequisite_html": null,
-    "prerequisite_text": null
+    "type": "General",
+    "description_html": "<p>Your faith in your followers gives them the confidence they need to survive difficult situations.</p>",
+    "description_text": "Your faith in your followers gives them the confidence they need to survive difficult situations.",
+    "benefit_html": "<p>Your followers receive a +2 morale bonus to AC, as well as a +1 morale bonus on all saves. Followers must be within a distance of 5 feet × your Charisma bonus to benefit. You can use Devoted Leadership for a number of rounds per day equal to your character level (maximum 20); the rounds need not be consecutive.</p>",
+    "benefit_text": "Your followers receive a +2 morale bonus to AC, as well as a +1 morale bonus on all saves. Followers must be within a distance of 5 feet × your Charisma bonus to benefit. You can use Devoted Leadership for a number of rounds per day equal to your character level (maximum 20); the rounds need not be consecutive.",
+    "prerequisite_html": "<p>Cha 13, Wis 13, Leadership</p>",
+    "prerequisite_text": "Cha 13, Wis 13, Leadership",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
   },
   {
-    "slug": "use-water-vehicles-wrpg",
-    "name": "Vehicle Proficiency (Water)",
+    "slug": "drums-of-courage-wrpg",
+    "name": "Drums of Courage",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 114,
+      "page": 110,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Technology",
-      "description_snippet": "You operate water vehicles."
+      "type": "General",
+      "description_snippet": "You can drive your tribe's warriors into a terrifying frenzy by playing the sacred war rhythms as they go into battle."
     },
-    "type": "Technology",
-    "description_html": "<p>You operate water vehicles.</p>",
-    "description_text": "You operate water vehicles.",
-    "benefit_html": "You can operate water vehicles with <a href=\"/skills/use-technological-device\">Use Technological Device</a> without the −4 nonproficiency penalty.",
-    "benefit_text": "You can operate water vehicles with Use Technological Device without the −4 nonproficiency penalty.",
-    "prerequisite_html": null,
-    "prerequisite_text": null
+    "type": "General",
+    "description_html": "<p>You can drive your tribe's warriors into a terrifying frenzy by playing the sacred war rhythms as they go into battle.</p>",
+    "description_text": "You can drive your tribe's warriors into a terrifying frenzy by playing the sacred war rhythms as they go into battle.",
+    "benefit_html": "<p>As your tribe enters battle, you can play your war drums to inspire courage. Make a DC 20 Perform (percussion instruments) check. If successful, all warriors of your tribe who can hear your drums receive a +1 morale bonus on attack and damage rolls and on Will saves. This bonus lasts for as long as the warriors hear your drums and for 5 rounds thereafter. Playing the war drums is a standard action and requires concentration each round.</p>",
+    "benefit_text": "As your tribe enters battle, you can play your war drums to inspire courage. Make a DC 20 Perform (percussion instruments) check. If successful, all warriors of your tribe who can hear your drums receive a +1 morale bonus on attack and damage rolls and on Will saves. This bonus lasts for as long as the warriors hear your drums and for 5 rounds thereafter. Playing the war drums is a standard action and requires concentration each round.",
+    "prerequisite_html": "<p>Perform (percussion instruments) 5 ranks</p>",
+    "prerequisite_text": "Perform (percussion instruments) 5 ranks",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
   },
   {
-    "slug": "use-air-vehicles-wrpg",
-    "name": "Vehicle Proficiency (Air)",
+    "slug": "emergency-repair-wrpg",
+    "name": "Emergency Repair",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 114,
+      "page": 110,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Technology",
-      "description_snippet": "You operate air vehicles."
+      "description_snippet": "You are adept at spotting mechanical problems and making quick repairs."
     },
     "type": "Technology",
-    "description_html": "<p>You operate air vehicles.</p>",
-    "description_text": "You operate air vehicles.",
-    "benefit_html": "You can operate air vehicles with <a href=\"/skills/use-technological-device\">Use Technological Device</a> without the −4 nonproficiency penalty.",
-    "benefit_text": "You can operate air vehicles with Use Technological Device without the −4 nonproficiency penalty.",
-    "prerequisite_html": null,
-    "prerequisite_text": null
+    "description_html": "<p>You are adept at spotting mechanical problems and making quick repairs.</p>",
+    "description_text": "You are adept at spotting mechanical problems and making quick repairs.",
+    "benefit_html": "<p>As a full-round action, you may make a DC 20 Craft (mechanical object) check to repair a malfunctioning or broken technological device. If you succeed, the device does not destroy itself or endanger its user due to the malfunction. Instead, it operates normally for 1 hour and then ceases functioning until it can undergo normal repairs. If you roll a natural 20 on the check, the item is completely and permanently repaired.</p>",
+    "benefit_text": "As a full-round action, you may make a DC 20 Craft (mechanical object) check to repair a malfunctioning or broken technological device. If you succeed, the device does not destroy itself or endanger its user due to the malfunction. Instead, it operates normally for 1 hour and then ceases functioning until it can undergo normal repairs. If you roll a natural 20 on the check, the item is completely and permanently repaired.",
+    "prerequisite_html": "Wis 13, <a href=\"/feats/delay-malfunction-wrpg\">Delay Malfunction</a>",
+    "prerequisite_text": "Wis 13, Delay Malfunction",
+    "special_html": "<p>Goblin characters can completely and permanently repair an item by rolling a natural 19 or 20 on the check. A tinker may select Emergency Repair as one of his tinker bonus feats.</p>",
+    "special_text": "Goblin characters can completely and permanently repair an item by rolling a natural 19 or 20 on the check. A tinker may select Emergency Repair as one of his tinker bonus feats.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
-    "slug": "vascular-materials-wrpg",
-    "name": "Scavenge Materials",
+    "slug": "enduring-leadership-wrpg",
+    "name": "Enduring Leadership",
     "source_url": null,
     "scraped_at": "2026-08-24T00:00:00Z",
     "source": {
       "name": "Warcraft - Roleplaying Game",
       "abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "page": 113,
+      "page": 110,
       "url": null
     },
     "index": {
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
-      "type": "Technology",
-      "description_snippet": "You build with scavenged parts."
+      "type": "General",
+      "description_snippet": "Your tireless efforts are an example to your followers, and you need but a word to push those followers to the peak of t"
     },
-    "type": "Technology",
-    "description_html": "<p>You build with scavenged parts.</p>",
-    "description_text": "You build with scavenged parts.",
-    "benefit_html": "Build using raw materials worth 1/10 the item's market price; <a href=\"/skills/craft\">Craft</a> DC +10.",
-    "benefit_text": "Build using raw materials worth 1/10 the item's market price; Craft DC +10.",
-    "prerequisite_html": "<p>Craft 8 ranks</p>",
-    "prerequisite_text": "Craft 8 ranks"
+    "type": "General",
+    "description_html": "<p>Your tireless efforts are an example to your followers, and you need but a word to push those followers to the peak of their physical abilities.</p>",
+    "description_text": "Your tireless efforts are an example to your followers, and you need but a word to push those followers to the peak of their physical abilities.",
+    "benefit_html": "<p>Once per day before an encounter begins, as a free action you may inspire your followers to exceptional efforts. They receive a +4 morale bonus on their Initiative check, and their speed increases by +10 feet for the duration of the combat.</p>",
+    "benefit_text": "Once per day before an encounter begins, as a free action you may inspire your followers to exceptional efforts. They receive a +4 morale bonus on their Initiative check, and their speed increases by +10 feet for the duration of the combat.",
+    "prerequisite_html": "<p>Endurance, Leadership</p>",
+    "prerequisite_text": "Endurance, Leadership",
+    "special_html": "<p>If you or any of your followers enter a rage during this combat, the characters who rage are not fatigued when the rage ends.</p>",
+    "special_text": "If you or any of your followers enter a rage during this combat, the characters who rage are not fatigued when the rage ends.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "exotic-weapon-thorium-wrpg",
+    "name": "Exotic Weapon Proficiency (Thorium Weapons)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You can use weapons made out of thorium effectively."
+    },
+    "type": "General",
+    "description_html": "<p>You can use weapons made out of thorium effectively.</p>",
+    "description_text": "You can use weapons made out of thorium effectively.",
+    "benefit_html": "<p>You are proficient with a particular weapon made out of thorium and may add half your Strength bonus to damage rolls. Thus, an attack with a one-handed thorium weapon adds 1.5× your Strength bonus, while an attack with a two-handed thorium weapon adds double your Strength bonus.</p>",
+    "benefit_text": "You are proficient with a particular weapon made out of thorium and may add half your Strength bonus to damage rolls. Thus, an attack with a one-handed thorium weapon adds 1.5× your Strength bonus, while an attack with a two-handed thorium weapon adds double your Strength bonus.",
+    "prerequisite_html": "<p>Appropriate proficiency with the non-thorium version of the weapon</p>",
+    "prerequisite_text": "Appropriate proficiency with the non-thorium version of the weapon",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Characters who are not proficient with thorium weapons suffer a −4 penalty on attack rolls with them, even if they are proficient with a non-thorium version of the weapon. Characters receive their normal Strength bonus to damage rolls.</p>",
+    "normal_text": "Characters who are not proficient with thorium weapons suffer a −4 penalty on attack rolls with them, even if they are proficient with a non-thorium version of the weapon. Characters receive their normal Strength bonus to damage rolls."
+  },
+  {
+    "slug": "expert-rider-wrpg",
+    "name": "Expert Rider",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You can perform a variety of physical stunts while on horseback."
+    },
+    "type": "General",
+    "description_html": "<p>You can perform a variety of physical stunts while on horseback.</p>",
+    "description_text": "You can perform a variety of physical stunts while on horseback.",
+    "benefit_html": "The DCs for all <a href=\"/skills/ride\">Ride</a> tasks are reduced by 2, and you can take 10 on Ride checks for mounted combat maneuvers.",
+    "benefit_text": "The DCs for all Ride tasks are reduced by 2, and you can take 10 on Ride checks for mounted combat maneuvers.",
+    "prerequisite_html": "Dex 13, <a href=\"/skills/ride\">Ride</a> skill",
+    "prerequisite_text": "Dex 13, Ride skill",
+    "special_html": "<p>A fighter can select Expert Rider as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter can select Expert Rider as one of his fighter bonus feats.",
+    "normal_html": "<p>You cannot take 10 on skill checks when threatened or distracted.</p>",
+    "normal_text": "You cannot take 10 on skill checks when threatened or distracted."
+  },
+  {
+    "slug": "totem-follower-wrpg",
+    "name": "Follower of the Totem",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You have been trained in the shamanic traditions of the tauren and can tap into the forces of nature."
+    },
+    "type": "General",
+    "description_html": "<p>You have been trained in the shamanic traditions of the tauren and can tap into the forces of nature.</p>",
+    "description_text": "You have been trained in the shamanic traditions of the tauren and can tap into the forces of nature.",
+    "benefit_html": "<p>Once per day as a free action, you may gain a +2 sacred bonus to any one ability score. This bonus lasts for 1d6+1 rounds.</p>",
+    "benefit_text": "Once per day as a free action, you may gain a +2 sacred bonus to any one ability score. This bonus lasts for 1d6+1 rounds.",
+    "prerequisite_html": "<p>Wis 13, orc or tauren</p>",
+    "prerequisite_text": "Wis 13, orc or tauren",
+    "special_html": "<p>Tauren characters with this feat are considered to have the Exotic Weapon Proficiency (tauren totem) feat.</p>",
+    "special_text": "Tauren characters with this feat are considered to have the Exotic Weapon Proficiency (tauren totem) feat.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "rapid-reload-wrpg",
+    "name": "Lightning Reload",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You reload firearms with well-practiced efficiency."
+    },
+    "type": "General",
+    "description_html": "<p>You reload firearms with well-practiced efficiency.</p>",
+    "description_text": "You reload firearms with well-practiced efficiency.",
+    "benefit_html": "<p>If your firearm takes a standard action to reload, you may reload it as a move action. If the firearm takes more than 1 round to reload, you may reload it in half the normal time.</p>",
+    "benefit_text": "If your firearm takes a standard action to reload, you may reload it as a move action. If the firearm takes more than 1 round to reload, you may reload it in half the normal time.",
+    "prerequisite_html": "<p>Dex 13, Exotic Weapon Proficiency (firearms)</p>",
+    "prerequisite_text": "Dex 13, Exotic Weapon Proficiency (firearms)",
+    "special_html": "<p>A fighter may select Lightning Reload as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Lightning Reload as one of his fighter bonus feats.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "control-magic-energy-wrpg",
+    "name": "Magic Energy Control",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "You understand the flow of magic energy and find it easy to tap into and control."
+    },
+    "type": "Metamagic",
+    "description_html": "<p>You understand the flow of magic energy and find it easy to tap into and control.</p>",
+    "description_text": "You understand the flow of magic energy and find it easy to tap into and control.",
+    "benefit_html": "<p>You may perform your daily preparation of spells in half the normal time.</p>",
+    "benefit_text": "You may perform your daily preparation of spells in half the normal time.",
+    "prerequisite_html": "<p>Iron Will</p>",
+    "prerequisite_text": "Iron Will",
+    "special_html": "<p>A high elf character with this feat no longer suffers from the effects of magic addiction. As a result, he prepares his spells in the normal amount of time, rather than half. A high elf is not actually cured of the addiction, however, so night elves, for instance, can still detect the addiction normally.</p>",
+    "special_text": "A high elf character with this feat no longer suffers from the effects of magic addiction. As a result, he prepares his spells in the normal amount of time, rather than half. A high elf is not actually cured of the addiction, however, so night elves, for instance, can still detect the addiction normally.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "duplicate-spell-wrpg",
+    "name": "Mirror Spell",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "You may channel additional arcane energy to duplicate the effects of a spell you have just cast."
+    },
+    "type": "Metamagic",
+    "description_html": "<p>You may channel additional arcane energy to duplicate the effects of a spell you have just cast.</p>",
+    "description_text": "You may channel additional arcane energy to duplicate the effects of a spell you have just cast.",
+    "benefit_html": "<p>When you cast an arcane spell, the spell is treated as if you had cast it twice. The two copies of the spell are resolved simultaneously. They may have the same or different targets, and both copies of the spell are resolved separately. To use this feat, you must spend a spell slot as if you had used it to cast the duplicate spell. This spell slot must be of the same spell level or higher as the spell you cast.</p>",
+    "benefit_text": "When you cast an arcane spell, the spell is treated as if you had cast it twice. The two copies of the spell are resolved simultaneously. They may have the same or different targets, and both copies of the spell are resolved separately. To use this feat, you must spend a spell slot as if you had used it to cast the duplicate spell. This spell slot must be of the same spell level or higher as the spell you cast.",
+    "prerequisite_html": "Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, caster level 3rd",
+    "prerequisite_text": "Iron Will, Magic Energy Control, caster level 3rd",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "mounted-elite-sharpshooter-wrpg",
+    "name": "Mounted Sharpshooter",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You have learned how to use a firearm while mounted."
+    },
+    "type": "General",
+    "description_html": "<p>You have learned how to use a firearm while mounted.</p>",
+    "description_text": "You have learned how to use a firearm while mounted.",
+    "benefit_html": "You do not suffer any penalty while making ranged attacks with a firearm while mounted. You must still make a <a href=\"/skills/ride\">Ride</a> check to keep your mount under control.",
+    "benefit_text": "You do not suffer any penalty while making ranged attacks with a firearm while mounted. You must still make a Ride check to keep your mount under control.",
+    "prerequisite_html": "Dex 13, <a href=\"/skills/ride\">Ride</a> skill, <a href=\"/feats/expert-rider-wrpg\">Expert Rider</a>",
+    "prerequisite_text": "Dex 13, Ride skill, Expert Rider",
+    "special_html": "<p>A fighter can select Mounted Sharpshooter as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter can select Mounted Sharpshooter as one of his fighter bonus feats.",
+    "normal_html": "<p>If you make a ranged attack with a firearm while mounted, you suffer a −4 penalty on your attack roll.</p>",
+    "normal_text": "If you make a ranged attack with a firearm while mounted, you suffer a −4 penalty on your attack roll."
+  },
+  {
+    "slug": "butt-strike-wrpg",
+    "name": "Pistol Whip",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You can use a firearm as an improvised melee weapon without damaging it."
+    },
+    "type": "General",
+    "description_html": "<p>You can use a firearm as an improvised melee weapon without damaging it.</p>",
+    "description_text": "You can use a firearm as an improvised melee weapon without damaging it.",
+    "benefit_html": "<p>You are proficient at using a firearm as a melee weapon and can do so without breaking it. Small firearms are treated as light hammers, Medium firearms are treated as clubs, and Large firearms are treated as warhammers.</p>",
+    "benefit_text": "You are proficient at using a firearm as a melee weapon and can do so without breaking it. Small firearms are treated as light hammers, Medium firearms are treated as clubs, and Large firearms are treated as warhammers.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "<p>A fighter may select Pistol Whip as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Pistol Whip as one of his fighter bonus feats.",
+    "normal_html": "<p>Any character may use a firearm as a melee weapon; however, the character is not necessarily proficient with the weapon (determine proficiency based on the weapon the firearm is treated as), and the firearm is broken if it hits. It cannot be fired until repaired with a Craft (mechanical object) check.</p>",
+    "normal_text": "Any character may use a firearm as a melee weapon; however, the character is not necessarily proficient with the weapon (determine proficiency based on the weapon the firearm is treated as), and the firearm is broken if it hits. It cannot be fired until repaired with a Craft (mechanical object) check."
+  },
+  {
+    "slug": "precise-leadership-wrpg",
+    "name": "Precision Leadership",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "By training your followers to coordinate their fire, you have turned individual soldiers into a single deadly ranged wea"
+    },
+    "type": "General",
+    "description_html": "<p>By training your followers to coordinate their fire, you have turned individual soldiers into a single deadly ranged weapon.</p>",
+    "description_text": "By training your followers to coordinate their fire, you have turned individual soldiers into a single deadly ranged weapon.",
+    "benefit_html": "<p>When making a ranged attack, each of your followers gains a +1 bonus on the attack roll for every 5 followers attacking at the same time. All followers must be near you, within a radius equal to 10 feet × your Charisma bonus, and must attack with the same kind of weapon. The followers must attack the same target, which must be within 100 feet of you.</p>",
+    "benefit_text": "When making a ranged attack, each of your followers gains a +1 bonus on the attack roll for every 5 followers attacking at the same time. All followers must be near you, within a radius equal to 10 feet × your Charisma bonus, and must attack with the same kind of weapon. The followers must attack the same target, which must be within 100 feet of you.",
+    "prerequisite_html": "<p>Leadership, Point Blank Shot</p>",
+    "prerequisite_text": "Leadership, Point Blank Shot",
+    "special_html": "<p>You and all the other followers that are attacking fire a ranged attack at the same target, then the damage from all the hits is added together before any damage reduction is applied.</p>",
+    "special_text": "You and all the other followers that are attacking fire a ranged attack at the same target, then the damage from all the hits is added together before any damage reduction is applied.",
+    "normal_html": null,
+    "normal_text": null
   },
   {
     "slug": "pulverize-wrpg",
@@ -821,14 +855,318 @@
       "source_abbrev": "WRPG",
       "edition": "Warcraft (3.5)",
       "type": "Tauren",
-      "description_snippet": "You slam a totem to knock foes down."
+      "description_snippet": "A mighty blow to the ground with your tauren totem frightens the spirits of the earth, causing them to shake the ground "
     },
     "type": "Tauren",
-    "description_html": "<p>You slam a totem to knock foes down.</p>",
-    "description_text": "You slam a totem to knock foes down.",
-    "benefit_html": "<p>Full attack with a tauren totem: strike the ground (roll damage for DC only); creatures within 20 ft. Reflex save (DC 10 + damage) or fall prone. Once/round; ≤ (1 + Wis bonus)/day.</p>",
-    "benefit_text": "Full attack with a tauren totem: strike the ground (roll damage for DC only); creatures within 20 ft. Reflex save (DC 10 + damage) or fall prone. Once/round; ≤ (1 + Wis bonus)/day.",
+    "description_html": "<p>A mighty blow to the ground with your tauren totem frightens the spirits of the earth, causing them to shake the ground in their haste to escape.</p>",
+    "description_text": "A mighty blow to the ground with your tauren totem frightens the spirits of the earth, causing them to shake the ground in their haste to escape.",
+    "benefit_html": "You can declare a Pulverize attempt on a full attack action with your tauren totem. Instead of making a normal attack roll, you strike the ground with your tauren totem. Roll damage for the attack, but do not apply the damage to any target. Instead, any creature within 20 feet of you must succeed at a Reflex save (DC 10 + the damage rolled) or fall prone. You can use Pulverize only once per round and no more than a number of times per day equal to 1 + your Wisdom bonus. When you use Pulverize, you forfeit any bonus or extra attacks granted by other feats or abilities (such as Cleave or <em>haste</em>). A pulverize attempt draws an attack of opportunity.",
+    "benefit_text": "You can declare a Pulverize attempt on a full attack action with your tauren totem. Instead of making a normal attack roll, you strike the ground with your tauren totem. Roll damage for the attack, but do not apply the damage to any target. Instead, any creature within 20 feet of you must succeed at a Reflex save (DC 10 + the damage rolled) or fall prone. You can use Pulverize only once per round and no more than a number of times per day equal to 1 + your Wisdom bonus. When you use Pulverize, you forfeit any bonus or extra attacks granted by other feats or abilities (such as Cleave or haste). A pulverize attempt draws an attack of opportunity.",
     "prerequisite_html": "Wis 13, Exotic Weapon Proficiency (tauren totem), <a href=\"/feats/totem-follower-wrpg\">Follower of the Totem</a>",
-    "prerequisite_text": "Wis 13, Exotic Weapon Proficiency (tauren totem), Follower of the Totem"
+    "prerequisite_text": "Wis 13, Exotic Weapon Proficiency (tauren totem), Follower of the Totem",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "reflect-magic-wrpg",
+    "name": "Reflect Spell",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 113,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "Instead of dissipating the energy of a countered spell, you may reflect that spell back upon its caster."
+    },
+    "type": "Metamagic",
+    "description_html": "<p>Instead of dissipating the energy of a countered spell, you may reflect that spell back upon its caster.</p>",
+    "description_text": "Instead of dissipating the energy of a countered spell, you may reflect that spell back upon its caster.",
+    "benefit_html": "If you are the target of a spell and successfully counter it, using the same spell, a spell with a diametrically opposed effect, <em>dispel magic</em>, or the <a href=\"/feats/block-magic-wrpg\">Block Spell</a> feat, then you may reflect the spell back upon its caster. The spell resolves normally against this new target.",
+    "benefit_text": "If you are the target of a spell and successfully counter it, using the same spell, a spell with a diametrically opposed effect, dispel magic, or the Block Spell feat, then you may reflect the spell back upon its caster. The spell resolves normally against this new target.",
+    "prerequisite_html": "<a href=\"/feats/block-magic-wrpg\">Block Spell</a>, Iron Will, <a href=\"/feats/control-magic-energy-wrpg\">Magic Energy Control</a>, <a href=\"/feats/duplicate-spell-wrpg\">Mirror Spell</a>, caster level 7th",
+    "prerequisite_text": "Block Spell, Iron Will, Magic Energy Control, Mirror Spell, caster level 7th",
+    "special_html": "<p>Two spellcasters with Reflect Spell may bounce the spell between them until one spellcaster fails to counter it. The spell then has its normal effect on the character who failed to counter it.</p>",
+    "special_text": "Two spellcasters with Reflect Spell may bounce the spell between them until one spellcaster fails to counter it. The spell then has its normal effect on the character who failed to counter it.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "bareback-riding-wrpg",
+    "name": "Ride Bareback",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 113,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You do not need a saddle or bridle to guide a mount."
+    },
+    "type": "General",
+    "description_html": "<p>You do not need a saddle or bridle to guide a mount.</p>",
+    "description_text": "You do not need a saddle or bridle to guide a mount.",
+    "benefit_html": "You do not suffer any penalty on <a href=\"/skills/ride\">Ride</a> checks when riding bareback.",
+    "benefit_text": "You do not suffer any penalty on Ride checks when riding bareback.",
+    "prerequisite_html": "<a href=\"/skills/ride\">Ride</a> skill",
+    "prerequisite_text": "Ride skill",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Characters that ride bareback suffer a −5 penalty on Ride checks.</p>",
+    "normal_text": "Characters that ride bareback suffer a −5 penalty on Ride checks."
+  },
+  {
+    "slug": "vascular-materials-wrpg",
+    "name": "Scavenge Materials",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 113,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Technology",
+      "description_snippet": "You are adept at \"making do\" with whatever materials come to hand."
+    },
+    "type": "Technology",
+    "description_html": "<p>You are adept at \"making do\" with whatever materials come to hand.</p>",
+    "description_text": "You are adept at \"making do\" with whatever materials come to hand.",
+    "benefit_html": "<p>You may build an item using raw materials equivalent to only 1/10 the item's market value. The Craft check DC needed to build the item increases by 10.</p>",
+    "benefit_text": "You may build an item using raw materials equivalent to only 1/10 the item's market value. The Craft check DC needed to build the item increases by 10.",
+    "prerequisite_html": "<p>Craft 8 ranks</p>",
+    "prerequisite_text": "Craft 8 ranks",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "storm-arrow-wrpg",
+    "name": "Storm Bolt",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You can stun opponents with a well-hurled weapon."
+    },
+    "type": "General",
+    "description_html": "<p>You can stun opponents with a well-hurled weapon.</p>",
+    "description_text": "You can stun opponents with a well-hurled weapon.",
+    "benefit_html": "You can declare use of Storm Bolt before taking a full attack action with a ranged bludgeoning weapon. For the successful attack of your choice, roll damage normally, although the foe applies it as nonlethal damage. Also, the foe struck by your attack must make a Fortitude save (DC 10 + the damage rolled) or be stunned for 1 round. A stunned character can't act, loses any Dexterity bonus to AC, and takes a −2 penalty to AC. You can use Storm Bolt only once per round and no more than once per character level per day. When you use Storm Bolt, you forfeit any bonus or extra attacks granted by other feats or abilities (such as Manyshot or <em>haste</em>). Constructs, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits cannot be stunned.",
+    "benefit_text": "You can declare use of Storm Bolt before taking a full attack action with a ranged bludgeoning weapon. For the successful attack of your choice, roll damage normally, although the foe applies it as nonlethal damage. Also, the foe struck by your attack must make a Fortitude save (DC 10 + the damage rolled) or be stunned for 1 round. A stunned character can't act, loses any Dexterity bonus to AC, and takes a −2 penalty to AC. You can use Storm Bolt only once per round and no more than once per character level per day. When you use Storm Bolt, you forfeit any bonus or extra attacks granted by other feats or abilities (such as Manyshot or haste). Constructs, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits cannot be stunned.",
+    "prerequisite_html": "Str 13, <a href=\"/feats/bash-wrpg\">Bash</a>, Power Attack, base attack bonus +4",
+    "prerequisite_text": "Str 13, Bash, Power Attack, base attack bonus +4",
+    "special_html": "<p>A fighter may select Storm Bolt as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Storm Bolt as one of his fighter bonus feats.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "sunder-armor-wrpg",
+    "name": "Sunder Armor",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You can strike blows that damage and destroy armor."
+    },
+    "type": "General",
+    "description_html": "<p>You can strike blows that damage and destroy armor.</p>",
+    "description_text": "You can strike blows that damage and destroy armor.",
+    "benefit_html": "<p>You can use a melee attack with a slashing or bludgeoning weapon to strike a piece of armor that your opponent is wearing. Doing so does not provoke an attack of opportunity from your opponent. If you score a critical hit against your opponent while targeting his armor, roll damage normally and make a Strength check (DC 15 + the targeted armor's armor bonus). If your damage surpasses the armor's hardness and your Strength check succeeds, the armor you have targeted is reduced by 1 point of armor bonus until repaired. You cannot damage magic armor that has an enhancement bonus unless your own weapon has an enhancement bonus equal to or greater than the armor's.</p>",
+    "benefit_text": "You can use a melee attack with a slashing or bludgeoning weapon to strike a piece of armor that your opponent is wearing. Doing so does not provoke an attack of opportunity from your opponent. If you score a critical hit against your opponent while targeting his armor, roll damage normally and make a Strength check (DC 15 + the targeted armor's armor bonus). If your damage surpasses the armor's hardness and your Strength check succeeds, the armor you have targeted is reduced by 1 point of armor bonus until repaired. You cannot damage magic armor that has an enhancement bonus unless your own weapon has an enhancement bonus equal to or greater than the armor's.",
+    "prerequisite_html": "<p>Str 13, Power Attack</p>",
+    "prerequisite_text": "Str 13, Power Attack",
+    "special_html": "<p>A fighter may select Sunder Armor as one of his fighter bonus feats.</p>",
+    "special_text": "A fighter may select Sunder Armor as one of his fighter bonus feats.",
+    "normal_html": "<p>Targeting an opponent's armor provokes an attack of opportunity.</p>",
+    "normal_text": "Targeting an opponent's armor provokes an attack of opportunity."
+  },
+  {
+    "slug": "skilled-shot-wrpg",
+    "name": "Trick Shot",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "General",
+      "description_snippet": "You can bounce a ranged attack off a surface and hit a target from an unexpected angle."
+    },
+    "type": "General",
+    "description_html": "<p>You can bounce a ranged attack off a surface and hit a target from an unexpected angle.</p>",
+    "description_text": "You can bounce a ranged attack off a surface and hit a target from an unexpected angle.",
+    "benefit_html": "Trace a path from you to a wall or other convenient surface, then from that point to your target. This is the path your attack takes. Figure your target's cover based on the direction your attack is coming from when it reaches the target. With a good angle, most cover, <em>shield</em> spells, and other directional forms of protection can be negated. Concealment is not affected by this feat. You may only bounce the weapon off one surface, and any range penalty is figured based on the total distance of the path from you to the surface to the target. Hitting a target you cannot see using this feat is possible, but you suffer from the usual 50% miss chance associated with total concealment.",
+    "benefit_text": "Trace a path from you to a wall or other convenient surface, then from that point to your target. This is the path your attack takes. Figure your target's cover based on the direction your attack is coming from when it reaches the target. With a good angle, most cover, shield spells, and other directional forms of protection can be negated. Concealment is not affected by this feat. You may only bounce the weapon off one surface, and any range penalty is figured based on the total distance of the path from you to the surface to the target. Hitting a target you cannot see using this feat is possible, but you suffer from the usual 50% miss chance associated with total concealment.",
+    "prerequisite_html": "<p>Dex 13</p>",
+    "prerequisite_text": "Dex 13",
+    "special_html": "<p>If you are using a moonglaive and are proficient with that weapon, you may bounce it off two surfaces. A fighter may select Trick Shot as one of his fighter bonus feats.</p>",
+    "special_text": "If you are using a moonglaive and are proficient with that weapon, you may bounce it off two surfaces. A fighter may select Trick Shot as one of his fighter bonus feats.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "use-land-vehicles-wrpg",
+    "name": "Vehicle Proficiency (Land)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Technology",
+      "description_snippet": "You are familiar with and can operate vehicles that move over land."
+    },
+    "type": "Technology",
+    "description_html": "<p>You are familiar with and can operate vehicles that move over land.</p>",
+    "description_text": "You are familiar with and can operate vehicles that move over land.",
+    "benefit_html": "You may operate a land vehicle by making a <a href=\"/skills/use-technological-device\">Use Technological Device</a> check without the −4 nonproficiency penalty.",
+    "benefit_text": "You may operate a land vehicle by making a Use Technological Device check without the −4 nonproficiency penalty.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "<p>You can gain Vehicle Proficiency multiple times. Each time you take this feat, it applies to a different specialty (land, water, or air). A tinker may select Vehicle Proficiency as one of his tinker bonus feats.</p>",
+    "special_text": "You can gain Vehicle Proficiency multiple times. Each time you take this feat, it applies to a different specialty (land, water, or air). A tinker may select Vehicle Proficiency as one of his tinker bonus feats.",
+    "normal_html": "Characters who operate a vehicle without the appropriate proficiency suffer a −4 penalty on the <a href=\"/skills/use-technological-device\">Use Technological Device</a> check.",
+    "normal_text": "Characters who operate a vehicle without the appropriate proficiency suffer a −4 penalty on the Use Technological Device check."
+  },
+  {
+    "slug": "use-water-vehicles-wrpg",
+    "name": "Vehicle Proficiency (Water)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Technology",
+      "description_snippet": "You are familiar with and can operate vehicles that move through water."
+    },
+    "type": "Technology",
+    "description_html": "<p>You are familiar with and can operate vehicles that move through water.</p>",
+    "description_text": "You are familiar with and can operate vehicles that move through water.",
+    "benefit_html": "You may operate a water vehicle by making a <a href=\"/skills/use-technological-device\">Use Technological Device</a> check without the −4 nonproficiency penalty.",
+    "benefit_text": "You may operate a water vehicle by making a Use Technological Device check without the −4 nonproficiency penalty.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "<p>You can gain Vehicle Proficiency multiple times. Each time you take this feat, it applies to a different specialty (land, water, or air). A tinker may select Vehicle Proficiency as one of his tinker bonus feats.</p>",
+    "special_text": "You can gain Vehicle Proficiency multiple times. Each time you take this feat, it applies to a different specialty (land, water, or air). A tinker may select Vehicle Proficiency as one of his tinker bonus feats.",
+    "normal_html": "Characters who operate a vehicle without the appropriate proficiency suffer a −4 penalty on the <a href=\"/skills/use-technological-device\">Use Technological Device</a> check.",
+    "normal_text": "Characters who operate a vehicle without the appropriate proficiency suffer a −4 penalty on the Use Technological Device check."
+  },
+  {
+    "slug": "use-air-vehicles-wrpg",
+    "name": "Vehicle Proficiency (Air)",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 114,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Technology",
+      "description_snippet": "You are familiar with and can operate vehicles that move in the air."
+    },
+    "type": "Technology",
+    "description_html": "<p>You are familiar with and can operate vehicles that move in the air.</p>",
+    "description_text": "You are familiar with and can operate vehicles that move in the air.",
+    "benefit_html": "You may operate an air vehicle by making a <a href=\"/skills/use-technological-device\">Use Technological Device</a> check without the −4 nonproficiency penalty.",
+    "benefit_text": "You may operate an air vehicle by making a Use Technological Device check without the −4 nonproficiency penalty.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "<p>You can gain Vehicle Proficiency multiple times. Each time you take this feat, it applies to a different specialty (land, water, or air). A tinker may select Vehicle Proficiency as one of his tinker bonus feats.</p>",
+    "special_text": "You can gain Vehicle Proficiency multiple times. Each time you take this feat, it applies to a different specialty (land, water, or air). A tinker may select Vehicle Proficiency as one of his tinker bonus feats.",
+    "normal_html": "Characters who operate a vehicle without the appropriate proficiency suffer a −4 penalty on the <a href=\"/skills/use-technological-device\">Use Technological Device</a> check.",
+    "normal_text": "Characters who operate a vehicle without the appropriate proficiency suffer a −4 penalty on the Use Technological Device check."
+  },
+  {
+    "slug": "war-stomp-wrpg",
+    "name": "War Stomp",
+    "source_url": null,
+    "scraped_at": "2026-08-24T00:00:00Z",
+    "source": {
+      "name": "Warcraft - Roleplaying Game",
+      "abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "page": 115,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WRPG",
+      "edition": "Warcraft (3.5)",
+      "type": "Tauren",
+      "description_snippet": "With an imperious blow of your tauren totem, you command the spirits of air and earth to batter your opponents."
+    },
+    "type": "Tauren",
+    "description_html": "<p>With an imperious blow of your tauren totem, you command the spirits of air and earth to batter your opponents.</p>",
+    "description_text": "With an imperious blow of your tauren totem, you command the spirits of air and earth to batter your opponents.",
+    "benefit_html": "As a full attack action, instead of a normal attack roll, you stomp the ground with a tauren totem. Choose a number of opponents within 20 feet equal to 1 + your Wisdom bonus. Roll 1d6 + your Strength bonus points of damage. Each target must succeed at a Fortitude save (DC 10 + the damage rolled) or take that damage and be dazed for 1 round (a dazed creature takes no actions but suffers no AC penalty). You can use War Stomp only once per round and a total number of times per day equal to 1 + your Charisma bonus. When you use War Stomp, you forfeit any bonus or extra attacks from other feats or abilities (such as Cleave or <em>haste</em>). Creatures who save successfully are immune to your War Stomp for 24 hours. A war stomp attempt draws an attack of opportunity.",
+    "benefit_text": "As a full attack action, instead of a normal attack roll, you stomp the ground with a tauren totem. Choose a number of opponents within 20 feet equal to 1 + your Wisdom bonus. Roll 1d6 + your Strength bonus points of damage. Each target must succeed at a Fortitude save (DC 10 + the damage rolled) or take that damage and be dazed for 1 round (a dazed creature takes no actions but suffers no AC penalty). You can use War Stomp only once per round and a total number of times per day equal to 1 + your Charisma bonus. When you use War Stomp, you forfeit any bonus or extra attacks from other feats or abilities (such as Cleave or haste). Creatures who save successfully are immune to your War Stomp for 24 hours. A war stomp attempt draws an attack of opportunity.",
+    "prerequisite_html": "Cha 13, Wis 13, Exotic Weapon Proficiency (tauren totem), <a href=\"/feats/totem-follower-wrpg\">Follower of the Totem</a>, <a href=\"/feats/pulverize-wrpg\">Pulverize</a>, base attack bonus +8",
+    "prerequisite_text": "Cha 13, Wis 13, Exotic Weapon Proficiency (tauren totem), Follower of the Totem, Pulverize, base attack bonus +8",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
   }
 ]

@@ -64,12 +64,12 @@
         "id": null
       }
     ],
-    "description_html": "Uses the PHB barbarian. Affiliation: any. <a href=\"/skills/knowledge-military-tactics\">Knowledge (military tactics)</a> is a class skill. <a href=\"/races/orc-wrpg\">Orc</a> barbarians may rage one extra time per day (stacks with racial battle rage).",
-    "description_text": "Uses the PHB barbarian. Affiliation: any. Knowledge (military tactics) is a class skill. Orc barbarians may rage one extra time per day (stacks with racial battle rage).",
+    "description_html": "<p>Uses the Player's Handbook barbarian with the following Warcraft changes. Affiliation: any.</p><p><strong>Class Skills:</strong> <a href=\"/skills/knowledge-military-tactics\">Knowledge (military tactics)</a> is a class skill in addition to the PHB barbarian class skills.</p><p><strong>Orc Battle Rage:</strong> <a href=\"/races/orc-wrpg\">Orc</a> barbarians may rage one extra time per day (stacks with racial battle rage).</p>",
+    "description_text": "Uses the Player's Handbook barbarian with the following Warcraft changes. Affiliation: any. Class Skills: Knowledge (military tactics) is a class skill in addition to the PHB barbarian class skills. Orc Battle Rage: Orc barbarians may rage one extra time per day (stacks with racial battle rage).",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<p>Uses the Player's Handbook barbarian advancement table.</p>",
+    "advancement_text": "Uses the Player's Handbook barbarian advancement table."
   },
   {
     "slug": "fighter-wrpg",
@@ -142,12 +142,12 @@
         "id": null
       }
     ],
-    "description_html": "Uses the PHB fighter. Affiliation: any. <a href=\"/skills/knowledge-military-tactics\">Knowledge (military tactics)</a> is a class skill. Bonus feat list expands to include: <a href=\"/feats/butt-strike-wrpg\">Pistol Whip</a>, <a href=\"/feats/war-tongue-wrpg\">Battle Language</a>, <a href=\"/feats/point-blank-shot-no-aoo-wrpg\">Close Shot</a>, <a href=\"/feats/defender-wrpg\">Defend</a>, <a href=\"/feats/expert-rider-wrpg\">Expert Rider</a>, <a href=\"/feats/rapid-reload-wrpg\">Lightning Reload</a>, <a href=\"/feats/mounted-elite-sharpshooter-wrpg\">Mounted Sharpshooter</a>, <a href=\"/feats/storm-arrow-wrpg\">Storm Bolt</a>, <a href=\"/feats/skilled-shot-wrpg\">Trick Shot</a>, plus Bash and Sunder Armor from the WRPG feat chapter.",
-    "description_text": "Uses the PHB fighter. Affiliation: any. Knowledge (military tactics) is a class skill. Bonus feat list expands to include: Pistol Whip, Battle Language, Close Shot, Defend, Expert Rider, Lightning Reload, Mounted Sharpshooter, Storm Bolt, Trick Shot, plus Bash and Sunder Armor from the WRPG feat chapter.",
+    "description_html": "<p>Uses the Player's Handbook fighter with the following Warcraft changes. Affiliation: any.</p><p><strong>Class Skills:</strong> <a href=\"/skills/knowledge-military-tactics\">Knowledge (military tactics)</a> is a class skill.</p><p><strong>Bonus Feats:</strong> The fighter bonus feat list expands to include WRPG feats such as <a href=\"/feats/butt-strike-wrpg\">Pistol Whip</a>, <a href=\"/feats/defender-wrpg\">Defend</a>, <a href=\"/feats/expert-rider-wrpg\">Expert Rider</a>, <a href=\"/feats/rapid-reload-wrpg\">Lightning Reload</a>, <a href=\"/feats/mounted-elite-sharpshooter-wrpg\">Mounted Sharpshooter</a>, <a href=\"/feats/bash-wrpg\">Bash</a>, and <a href=\"/feats/sunder-armor-wrpg\">Sunder Armor</a>.</p>",
+    "description_text": "Uses the Player's Handbook fighter with the following Warcraft changes. Affiliation: any. Class Skills: Knowledge (military tactics) is a class skill. Bonus Feats: The fighter bonus feat list expands to include WRPG feats such as Pistol Whip, Defend, Expert Rider, Lightning Reload, Mounted Sharpshooter, Bash, and Sunder Armor.",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<p>Uses the Player's Handbook fighter advancement table.</p>",
+    "advancement_text": "Uses the Player's Handbook fighter advancement table."
   },
   {
     "slug": "rogue-wrpg",
@@ -170,13 +170,188 @@
     },
     "hit_die": "d6",
     "skill_points": "8 + Int",
-    "class_skills": [],
-    "description_html": "Uses the PHB rogue. Affiliation: any. Gains <a href=\"/skills/use-technological-device\">Use Technological Device</a> as a class skill.",
-    "description_text": "Uses the PHB rogue. Affiliation: any. Gains Use Technological Device as a class skill.",
+    "class_skills": [
+      {
+        "name": "Appraise",
+        "slug": "appraise",
+        "url": "/skills/appraise",
+        "id": null
+      },
+      {
+        "name": "Balance",
+        "slug": "balance",
+        "url": "/skills/balance",
+        "id": null
+      },
+      {
+        "name": "Bluff",
+        "slug": "bluff",
+        "url": "/skills/bluff",
+        "id": null
+      },
+      {
+        "name": "Climb",
+        "slug": "climb",
+        "url": "/skills/climb",
+        "id": null
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null
+      },
+      {
+        "name": "Decipher Script",
+        "slug": "decipher-script",
+        "url": "/skills/decipher-script",
+        "id": null
+      },
+      {
+        "name": "Diplomacy",
+        "slug": "diplomacy",
+        "url": "/skills/diplomacy",
+        "id": null
+      },
+      {
+        "name": "Disable Device",
+        "slug": "disable-device",
+        "url": "/skills/disable-device",
+        "id": null
+      },
+      {
+        "name": "Disguise",
+        "slug": "disguise",
+        "url": "/skills/disguise",
+        "id": null
+      },
+      {
+        "name": "Escape Artist",
+        "slug": "escape-artist",
+        "url": "/skills/escape-artist",
+        "id": null
+      },
+      {
+        "name": "Forgery",
+        "slug": "forgery",
+        "url": "/skills/forgery",
+        "id": null
+      },
+      {
+        "name": "Gather Information",
+        "slug": "gather-information",
+        "url": "/skills/gather-information",
+        "id": null
+      },
+      {
+        "name": "Hide",
+        "slug": "hide",
+        "url": "/skills/hide",
+        "id": null
+      },
+      {
+        "name": "Intimidate",
+        "slug": "intimidate",
+        "url": "/skills/intimidate",
+        "id": null
+      },
+      {
+        "name": "Jump",
+        "slug": "jump",
+        "url": "/skills/jump",
+        "id": null
+      },
+      {
+        "name": "Listen",
+        "slug": "listen",
+        "url": "/skills/listen",
+        "id": null
+      },
+      {
+        "name": "Move Silently",
+        "slug": "move-silently",
+        "url": "/skills/move-silently",
+        "id": null
+      },
+      {
+        "name": "Open Lock",
+        "slug": "open-lock",
+        "url": "/skills/open-lock",
+        "id": null
+      },
+      {
+        "name": "Perform",
+        "slug": "perform",
+        "url": "/skills/perform",
+        "id": null
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null
+      },
+      {
+        "name": "Search",
+        "slug": "search",
+        "url": "/skills/search",
+        "id": null
+      },
+      {
+        "name": "Sense Motive",
+        "slug": "sense-motive",
+        "url": "/skills/sense-motive",
+        "id": null
+      },
+      {
+        "name": "Sleight of Hand",
+        "slug": "sleight-of-hand",
+        "url": "/skills/sleight-of-hand",
+        "id": null
+      },
+      {
+        "name": "Spot",
+        "slug": "spot",
+        "url": "/skills/spot",
+        "id": null
+      },
+      {
+        "name": "Swim",
+        "slug": "swim",
+        "url": "/skills/swim",
+        "id": null
+      },
+      {
+        "name": "Tumble",
+        "slug": "tumble",
+        "url": "/skills/tumble",
+        "id": null
+      },
+      {
+        "name": "Use Magic Device",
+        "slug": "use-magic-device",
+        "url": "/skills/use-magic-device",
+        "id": null
+      },
+      {
+        "name": "Use Rope",
+        "slug": "use-rope",
+        "url": "/skills/use-rope",
+        "id": null
+      },
+      {
+        "name": "Use Technological Device",
+        "slug": "use-technological-device",
+        "url": "/skills/use-technological-device",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Uses the Player's Handbook rogue with the following Warcraft changes. Affiliation: any.</p><p><strong>Class Skills:</strong> Gains <a href=\"/skills/use-technological-device\">Use Technological Device</a> as a class skill in addition to the PHB rogue class skills.</p>",
+    "description_text": "Uses the Player's Handbook rogue with the following Warcraft changes. Affiliation: any. Class Skills: Gains Use Technological Device as a class skill in addition to the PHB rogue class skills.",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<p>Uses the Player's Handbook rogue advancement table.</p>",
+    "advancement_text": "Uses the Player's Handbook rogue advancement table."
   },
   {
     "slug": "sorcerer-wrpg",
@@ -195,17 +370,66 @@
       "edition": "Warcraft (3.5)",
       "hit_die": "4",
       "skill_points": "2",
-      "prestige_level": ""
+      "prestige_level": "",
+      "spellListOriginSlug": "sorcerer-98",
+      "spellListBannedSlugs": [
+        "summon-monster-i-2441",
+        "summon-monster-ii-2442",
+        "summon-monster-iii-2443",
+        "summon-monster-iv-2444",
+        "summon-monster-v-2445",
+        "summon-monster-vi-2446",
+        "summon-monster-vii-2447",
+        "summon-monster-viii-2448",
+        "summon-monster-ix-2449"
+      ]
     },
     "hit_die": "d4",
     "skill_points": "2 + Int",
-    "class_skills": [],
-    "description_html": "Uses the PHB sorcerer with Warcraft spell bans: no summon monster I–IX or planar binding (those belong to the <a href=\"/classes/warlock-wrpg\">warlock</a>); many necromancy spells are restricted to the Necromancer (Alliance & Horde Compendium). See <a href=\"/spells/warcraft-cosmology-wrpg\">Warcraft Cosmology</a>. Affiliation: any. Night elves who take sorcerer levels become high elves.",
-    "description_text": "Uses the PHB sorcerer with Warcraft spell bans: no summon monster I–IX or planar binding (those belong to the warlock); many necromancy spells are restricted to the Necromancer (Alliance & Horde Compendium). See Warcraft Cosmology. Affiliation: any. Night elves who take sorcerer levels become high elves.",
+    "class_skills": [
+      {
+        "name": "Bluff",
+        "slug": "bluff",
+        "url": "/skills/bluff",
+        "id": null
+      },
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Uses the Player's Handbook <a href=\"/classes/sorcerer-98\">sorcerer</a> with Warcraft spell restrictions. Affiliation: any.</p><p><strong>Spell Restrictions:</strong> No summon monster I–IX or planar binding (those belong to the <a href=\"/classes/warlock-wrpg\">warlock</a>). Many necromancy spells are restricted to the Necromancer (Alliance &amp; Horde Compendium). See <a href=\"/spells/warcraft-cosmology-wrpg\">Warcraft Cosmology</a>.</p><p><strong>Night Elf Restriction:</strong> A night elf who takes sorcerer levels becomes a high elf.</p><p><strong>Spell List:</strong> Inherits the PHB sorcerer list (minus banned conjurations) and adds WRPG arcane spells.</p>",
+    "description_text": "Uses the Player's Handbook sorcerer with Warcraft spell restrictions. Affiliation: any. Spell Restrictions: No summon monster I–IX or planar binding (those belong to the warlock). Many necromancy spells are restricted to the Necromancer (Alliance &amp; Horde Compendium). See Warcraft Cosmology. Night Elf Restriction: A night elf who takes sorcerer levels becomes a high elf. Spell List: Inherits the PHB sorcerer list (minus banned conjurations) and adds WRPG arcane spells.",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<p>Uses the Player's Handbook sorcerer advancement table.</p>",
+    "advancement_text": "Uses the Player's Handbook sorcerer advancement table."
   },
   {
     "slug": "wizard-wrpg",
@@ -224,17 +448,72 @@
       "edition": "Warcraft (3.5)",
       "hit_die": "4",
       "skill_points": "2",
-      "prestige_level": ""
+      "prestige_level": "",
+      "spellListOriginSlug": "wizard-99",
+      "spellListBannedSlugs": [
+        "summon-monster-i-2441",
+        "summon-monster-ii-2442",
+        "summon-monster-iii-2443",
+        "summon-monster-iv-2444",
+        "summon-monster-v-2445",
+        "summon-monster-vi-2446",
+        "summon-monster-vii-2447",
+        "summon-monster-viii-2448",
+        "summon-monster-ix-2449"
+      ]
     },
     "hit_die": "d4",
     "skill_points": "2 + Int",
-    "class_skills": [],
-    "description_html": "Uses the PHB wizard with the same summoning/necromancy bans as the <a href=\"/classes/sorcerer-wrpg\">Warcraft sorcerer</a>. Affiliation: any. A <a href=\"/races/night-elf-wrpg\">night elf</a> who becomes a wizard is stripped of night elf heritage and treated as a <a href=\"/races/high-elf-wrpg\">high elf</a>.",
-    "description_text": "Uses the PHB wizard with the same summoning/necromancy bans as the Warcraft sorcerer. Affiliation: any. A night elf who becomes a wizard is stripped of night elf heritage and treated as a high elf.",
+    "class_skills": [
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null
+      },
+      {
+        "name": "Decipher Script",
+        "slug": "decipher-script",
+        "url": "/skills/decipher-script",
+        "id": null
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null
+      },
+      {
+        "name": "Knowledge (the planes)",
+        "slug": "knowledge-the-planes",
+        "url": "/skills/knowledge-the-planes",
+        "id": null
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null
+      }
+    ],
+    "description_html": "<p>Uses the Player's Handbook <a href=\"/classes/wizard-99\">wizard</a> with the same summoning/necromancy bans as the <a href=\"/classes/sorcerer-wrpg\">Warcraft sorcerer</a>. Affiliation: any.</p><p><strong>Night Elf Restriction:</strong> A <a href=\"/races/night-elf-wrpg\">night elf</a> who becomes a wizard is stripped of night elf heritage and treated as a <a href=\"/races/high-elf-wrpg\">high elf</a>.</p><p><strong>Spell List:</strong> Inherits the PHB wizard list (minus banned conjurations) and adds WRPG arcane spells.</p>",
+    "description_text": "Uses the Player's Handbook wizard with the same summoning/necromancy bans as the Warcraft sorcerer. Affiliation: any. Night Elf Restriction: A night elf who becomes a wizard is stripped of night elf heritage and treated as a high elf. Spell List: Inherits the PHB wizard list (minus banned conjurations) and adds WRPG arcane spells.",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<p>Uses the Player's Handbook wizard advancement table.</p>",
+    "advancement_text": "Uses the Player's Handbook wizard advancement table."
   },
   {
     "slug": "healer-wrpg",
@@ -349,12 +628,12 @@
         "id": null
       }
     ],
-    "description_html": "New core divine caster (Wis; prepared). Hit Die d8; 4 skill points. Proficient with simple weapons and light armor. Spontaneous cure (good) or inflict (evil); neutral chooses at creation. Gains Healing (good) or Evil (evil) domain power at +1 caster level but no extra domain slot; no turn undead. Brew Potion at 1st; bonus item-creation/metamagic/Spell Focus feats at 5/10/15/20. Spell list includes <a href=\"/spells/healing-rain-wrpg\">healing rain</a>, <a href=\"/spells/death-coil-wrpg\">death coil</a>, <a href=\"/spells/moon-glaive-spell-wrpg\">moonglaive</a>, <a href=\"/spells/rejuvenation-wrpg\">rejuvenation</a>, <a href=\"/spells/second-soul-wrpg\">second soul</a>, and <a href=\"/spells/touch-of-life-wrpg\">touch of life</a>.",
-    "description_text": "New core divine caster (Wis; prepared). Hit Die d8; 4 skill points. Proficient with simple weapons and light armor. Spontaneous cure (good) or inflict (evil); neutral chooses at creation. Gains Healing (good) or Evil (evil) domain power at +1 caster level but no extra domain slot; no turn undead. Brew Potion at 1st; bonus item-creation/metamagic/Spell Focus feats at 5/10/15/20. Spell list includes healing rain, death coil, moonglaive, rejuvenation, second soul, and touch of life.",
+    "description_html": "<p>New core divine caster (Wis; prepared). Affiliation: any. Hit Die d8; 4 skill points. Proficient with all simple weapons and light armor.</p><p><strong>Spells:</strong> Prepares divine spells from the healer list. Needs Wisdom 10 + spell level. Save DC = 10 + spell level + Wis modifier. Spends 1 hour/day in quiet contemplation to prepare spells. Does not gain bonus domain slots beyond normal spells/day.</p><p><strong>Spontaneous Casting:</strong> Good healers can convert prepared spells into cure spells of equal or lower level. Evil healers convert into inflict spells. Neutral healers choose cure or inflict at creation (permanent).</p><p><strong>Healing Touch or Evil Touch:</strong> Good: Healing domain granted power (+1 caster level with Healing-domain spells). Evil: Evil domain granted power. Neutral chooses one at creation. No extra domain slot.</p><p><strong>Brew Potion:</strong> Bonus feat at 1st level.</p><p><strong>Bonus Feats:</strong> At 5th, 10th, 15th, and 20th: item creation, metamagic, or Spell Focus (must meet prerequisites).</p><p><strong>Spell List:</strong> Includes PHB cleric-style spells plus WRPG spells such as <a href=\"/spells/healing-rain-wrpg\">healing rain</a>, <a href=\"/spells/death-coil-wrpg\">death coil</a>, <a href=\"/spells/moon-glaive-spell-wrpg\">moonglaive</a>, <a href=\"/spells/rejuvenation-wrpg\">rejuvenation</a>, <a href=\"/spells/second-soul-wrpg\">second soul</a>, and <a href=\"/spells/touch-of-life-wrpg\">touch of life</a>. Full list membership is applied via spell-class links.</p>",
+    "description_text": "New core divine caster (Wis; prepared). Affiliation: any. Hit Die d8; 4 skill points. Proficient with all simple weapons and light armor. Spells: Prepares divine spells from the healer list. Needs Wisdom 10 + spell level. Save DC = 10 + spell level + Wis modifier. Spends 1 hour/day in quiet contemplation to prepare spells. Does not gain bonus domain slots beyond normal spells/day. Spontaneous Casting: Good healers can convert prepared spells into cure spells of equal or lower level. Evil healers convert into inflict spells. Neutral healers choose cure or inflict at creation (permanent). Healing Touch or Evil Touch: Good: Healing domain granted power (+1 caster level with Healing-domain spells). Evil: Evil domain granted power. Neutral chooses one at creation. No extra domain slot. Brew Potion: Bonus feat at 1st level. Bonus Feats: At 5th, 10th, 15th, and 20th: item creation, metamagic, or Spell Focus (must meet prerequisites). Spell List: Includes PHB cleric-style spells plus WRPG spells such as healing rain, death coil, moonglaive, rejuvenation, second soul, and touch of life. Full list membership is applied via spell-class links.",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>0</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Brew Potion</td><td>3</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>2nd</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>-</td><td>4</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>3rd</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>-</td><td>4</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>4th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>-</td><td>5</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>5th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Bonus feat</td><td>5</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>6th</td><td>+4</td><td>+5</td><td>+2</td><td>+5</td><td>-</td><td>5</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>7th</td><td>+5</td><td>+5</td><td>+2</td><td>+5</td><td>-</td><td>6</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>8th</td><td>+6/+1</td><td>+6</td><td>+2</td><td>+6</td><td>-</td><td>6</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>9th</td><td>+6/+1</td><td>+6</td><td>+3</td><td>+6</td><td>-</td><td>6</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>10th</td><td>+7/+2</td><td>+7</td><td>+3</td><td>+7</td><td>Bonus feat</td><td>6</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>11th</td><td>+8/+3</td><td>+7</td><td>+3</td><td>+7</td><td>-</td><td>6</td><td>5</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td></tr><tr><td>12th</td><td>+9/+4</td><td>+8</td><td>+4</td><td>+8</td><td>-</td><td>6</td><td>5</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td></tr><tr><td>13th</td><td>+9/+4</td><td>+8</td><td>+4</td><td>+8</td><td>-</td><td>6</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td></tr><tr><td>14th</td><td>+10/+5</td><td>+9</td><td>+4</td><td>+9</td><td>-</td><td>6</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td></tr><tr><td>15th</td><td>+11/+6/+1</td><td>+9</td><td>+5</td><td>+9</td><td>Bonus feat</td><td>6</td><td>5</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td></tr><tr><td>16th</td><td>+12/+7/+2</td><td>+10</td><td>+5</td><td>+10</td><td>-</td><td>6</td><td>5</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td></tr><tr><td>17th</td><td>+12/+7/+2</td><td>+10</td><td>+5</td><td>+10</td><td>-</td><td>6</td><td>5</td><td>5</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td></tr><tr><td>18th</td><td>+13/+8/+3</td><td>+11</td><td>+6</td><td>+11</td><td>-</td><td>6</td><td>5</td><td>5</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td></tr><tr><td>19th</td><td>+14/+9/+4</td><td>+11</td><td>+6</td><td>+11</td><td>-</td><td>6</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>4</td><td>4</td><td>3</td><td>3</td></tr><tr><td>20th</td><td>+15/+10/+5</td><td>+12</td><td>+6</td><td>+12</td><td>Bonus feat</td><td>6</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>4</td><td>4</td><td>4</td><td>4</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial01st2nd3rd4th5th6th7th8th9th 1st+0+2+0+2Brew Potion31-------- 2nd+1+3+0+3-42-------- 3rd+2+3+1+3-421------- 4th+3+4+1+4-532------- 5th+3+4+1+4Bonus feat5321------ 6th+4+5+2+5-5332------ 7th+5+5+2+5-64321----- 8th+6/+1+6+2+6-64332----- 9th+6/+1+6+3+6-644321---- 10th+7/+2+7+3+7Bonus feat644332---- 11th+8/+3+7+3+7-6544321--- 12th+9/+4+8+4+8-6544332--- 13th+9/+4+8+4+8-65544321-- 14th+10/+5+9+4+9-65544332-- 15th+11/+6/+1+9+5+9Bonus feat655544321- 16th+12/+7/+2+10+5+10-655544332- 17th+12/+7/+2+10+5+10-6555544321 18th+13/+8/+3+11+6+11-6555544332 19th+14/+9/+4+11+6+11-6555554433 20th+15/+10/+5+12+6+12Bonus feat6555554444"
   },
   {
     "slug": "scout-wrpg",
@@ -469,12 +748,12 @@
         "id": null
       }
     ],
-    "description_html": "New core wilderness warrior (favored class of <a href=\"/races/night-elf-wrpg\">night elves</a>). Hit Die d8; 6 skill points; good Fort/Ref. Simple and martial weapons; light and medium armor and shields. Track and nature sense at 1st; wild healing at 2nd; woodland stride, trackless step, uncanny dodge, trap sense, swift tracker, venom immunity, evasion; spell-like abilities include locate object (6th), locate creature (11th), commune with nature (13th), find the path (16th), and wind walk (20th).",
-    "description_text": "New core wilderness warrior (favored class of night elves). Hit Die d8; 6 skill points; good Fort/Ref. Simple and martial weapons; light and medium armor and shields. Track and nature sense at 1st; wild healing at 2nd; woodland stride, trackless step, uncanny dodge, trap sense, swift tracker, venom immunity, evasion; spell-like abilities include locate object (6th), locate creature (11th), commune with nature (13th), find the path (16th), and wind walk (20th).",
+    "description_html": "<p>New core wilderness warrior (favored class of <a href=\"/races/night-elf-wrpg\">night elves</a>). Affiliation: any. Hit Die d8; 6 skill points; good Fort/Ref. Proficient with all simple and martial weapons, light and medium armor, and shields.</p><p><strong>Track:</strong> Bonus Track feat at 1st level.</p><p><strong>Nature Sense (Ex):</strong> At 1st: +2 on Knowledge (nature) and Survival.</p><p><strong>Wild Healing (Ex):</strong> At 2nd: with 5 ranks Survival, spend 1 hour and make a DC 15 Survival check to prepare a wilderness poultice. Then make a Heal check (DC 10); subject recovers 1 hp per point over 10. Once/subject/day. Competence bonus to that Heal check +5 at 6th, +10 at 10th, +15 at 14th, +20 at 18th.</p><p><strong>Woodland Stride (Ex):</strong> At 3rd: move through natural undergrowth at normal speed without damage or impairment.</p><p><strong>Trackless Step (Ex):</strong> At 4th: leave no trail in natural surroundings unless desired.</p><p><strong>Uncanny Dodge (Ex):</strong> At 4th: retain Dex bonus to AC when flat-footed or struck by an invisible attacker.</p><p><strong>Trap Sense (Ex):</strong> At 5th: +1 Reflex vs traps and +1 dodge AC vs traps; +1 every three levels thereafter (max +6 at 20th).</p><p><strong>Spell-Like Abilities:</strong> Locate object 1/day (6th), locate creature 1/day (11th), commune with nature 1/day (13th), find the path 1/day (16th), wind walk 1/day (20th). Caster level = scout level.</p><p><strong>Improved Uncanny Dodge (Ex):</strong> At 7th: cannot be flanked (except by a rogue with 4+ more rogue levels than scout levels).</p><p><strong>Swift Tracker (Ex):</strong> At 8th: track at normal speed without the -5 penalty.</p><p><strong>Venom Immunity (Su):</strong> At 9th: immune to organic poisons.</p><p><strong>Evasion (Ex):</strong> At 12th: no damage on a successful Reflex save for half (light or no armor).</p>",
+    "description_text": "New core wilderness warrior (favored class of night elves). Affiliation: any. Hit Die d8; 6 skill points; good Fort/Ref. Proficient with all simple and martial weapons, light and medium armor, and shields. Track: Bonus Track feat at 1st level. Nature Sense (Ex): At 1st: +2 on Knowledge (nature) and Survival. Wild Healing (Ex): At 2nd: with 5 ranks Survival, spend 1 hour and make a DC 15 Survival check to prepare a wilderness poultice. Then make a Heal check (DC 10); subject recovers 1 hp per point over 10. Once/subject/day. Competence bonus to that Heal check +5 at 6th, +10 at 10th, +15 at 14th, +20 at 18th. Woodland Stride (Ex): At 3rd: move through natural undergrowth at normal speed without damage or impairment. Trackless Step (Ex): At 4th: leave no trail in natural surroundings unless desired. Uncanny Dodge (Ex): At 4th: retain Dex bonus to AC when flat-footed or struck by an invisible attacker. Trap Sense (Ex): At 5th: +1 Reflex vs traps and +1 dodge AC vs traps; +1 every three levels thereafter (max +6 at 20th). Spell-Like Abilities: Locate object 1/day (6th), locate creature 1/day (11th), commune with nature 1/day (13th), find the path 1/day (16th), wind walk 1/day (20th). Caster level = scout level. Improved Uncanny Dodge (Ex): At 7th: cannot be flanked (except by a rogue with 4+ more rogue levels than scout levels). Swift Tracker (Ex): At 8th: track at normal speed without the -5 penalty. Venom Immunity (Su): At 9th: immune to organic poisons. Evasion (Ex): At 12th: no damage on a successful Reflex save for half (light or no armor).",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+2</td><td>+2</td><td>+0</td><td>Track, nature sense</td></tr><tr><td>2nd</td><td>+1</td><td>+3</td><td>+3</td><td>+0</td><td>Wild healing</td></tr><tr><td>3rd</td><td>+2</td><td>+3</td><td>+3</td><td>+1</td><td>Woodland stride</td></tr><tr><td>4th</td><td>+3</td><td>+4</td><td>+4</td><td>+1</td><td>Trackless step, uncanny dodge</td></tr><tr><td>5th</td><td>+3</td><td>+4</td><td>+4</td><td>+1</td><td>Trap sense +1</td></tr><tr><td>6th</td><td>+4</td><td>+5</td><td>+5</td><td>+2</td><td>Locate object 1/day, wild healing +5</td></tr><tr><td>7th</td><td>+5</td><td>+5</td><td>+5</td><td>+2</td><td>Improved uncanny dodge</td></tr><tr><td>8th</td><td>+6/+1</td><td>+6</td><td>+6</td><td>+2</td><td>Swift tracker, trap sense +2</td></tr><tr><td>9th</td><td>+6/+1</td><td>+6</td><td>+6</td><td>+3</td><td>Venom immunity</td></tr><tr><td>10th</td><td>+7/+2</td><td>+7</td><td>+7</td><td>+3</td><td>Wild healing +10</td></tr><tr><td>11th</td><td>+8/+3</td><td>+7</td><td>+7</td><td>+3</td><td>Locate creature 1/day, trap sense +3</td></tr><tr><td>12th</td><td>+9/+4</td><td>+8</td><td>+8</td><td>+4</td><td>Evasion</td></tr><tr><td>13th</td><td>+9/+4</td><td>+8</td><td>+8</td><td>+4</td><td>Commune with nature 1/day</td></tr><tr><td>14th</td><td>+10/+5</td><td>+9</td><td>+9</td><td>+4</td><td>Wild healing +15, trap sense +4</td></tr><tr><td>15th</td><td>+11/+6/+1</td><td>+9</td><td>+9</td><td>+5</td><td>-</td></tr><tr><td>16th</td><td>+12/+7/+2</td><td>+10</td><td>+10</td><td>+5</td><td>Find the path 1/day</td></tr><tr><td>17th</td><td>+12/+7/+2</td><td>+10</td><td>+10</td><td>+5</td><td>Trap sense +5</td></tr><tr><td>18th</td><td>+13/+8/+3</td><td>+11</td><td>+11</td><td>+6</td><td>Wild healing +20</td></tr><tr><td>19th</td><td>+14/+9/+4</td><td>+11</td><td>+11</td><td>+6</td><td>-</td></tr><tr><td>20th</td><td>+15/+10/+5</td><td>+12</td><td>+12</td><td>+6</td><td>Wind walk 1/day, trap sense +6</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial 1st+0+2+2+0Track, nature sense 2nd+1+3+3+0Wild healing 3rd+2+3+3+1Woodland stride 4th+3+4+4+1Trackless step, uncanny dodge 5th+3+4+4+1Trap sense +1 6th+4+5+5+2Locate object 1/day, wild healing +5 7th+5+5+5+2Improved uncanny dodge 8th+6/+1+6+6+2Swift tracker, trap sense +2 9th+6/+1+6+6+3Venom immunity 10th+7/+2+7+7+3Wild healing +10 11th+8/+3+7+7+3Locate creature 1/day, trap sense +3 12th+9/+4+8+8+4Evasion 13th+9/+4+8+8+4Commune with nature 1/day 14th+10/+5+9+9+4Wild healing +15, trap sense +4 15th+11/+6/+1+9+9+5- 16th+12/+7/+2+10+10+5Find the path 1/day 17th+12/+7/+2+10+10+5Trap sense +5 18th+13/+8/+3+11+11+6Wild healing +20 19th+14/+9/+4+11+11+6- 20th+15/+10/+5+12+12+6Wind walk 1/day, trap sense +6"
   },
   {
     "slug": "tinker-wrpg",
@@ -577,12 +856,12 @@
         "id": null
       }
     ],
-    "description_html": "New core technological expert (favored class of <a href=\"/races/goblin-wrpg\">goblins</a>). Hit Die d6; 8 skill points; simple weapons. Bonus Technology feats at 1/5/10/15/20 (including <a href=\"/feats/create-firearms-wrpg\">Build Firearms</a>, <a href=\"/feats/create-siege-engines-wrpg\">Build Siege Weapons</a>, <a href=\"/feats/create-small-devices-wrpg\">Build Small Devices</a>, <a href=\"/feats/create-vehicles-wrpg\">Build Vehicles</a>). Scavenge and jury-rig devices; bomb-bouncing; coolness under fire; fire resistance progression; evasion/improved evasion.",
-    "description_text": "New core technological expert (favored class of goblins). Hit Die d6; 8 skill points; simple weapons. Bonus Technology feats at 1/5/10/15/20 (including Build Firearms, Build Siege Weapons, Build Small Devices, Build Vehicles). Scavenge and jury-rig devices; bomb-bouncing; coolness under fire; fire resistance progression; evasion/improved evasion.",
+    "description_html": "<p>New core technological expert (favored class of <a href=\"/races/goblin-wrpg\">goblins</a>). Affiliation: any. Hit Die d6; 8 skill points. Proficient with all simple weapons (no armor proficiency).</p><p><strong>Bonus Technology Feats:</strong> At 1st, 5th, 10th, 15th, and 20th: bonus Technology feat (must meet prerequisites), including <a href=\"/feats/create-firearms-wrpg\">Build Firearms</a>, <a href=\"/feats/create-siege-engines-wrpg\">Build Siege Weapons</a>, <a href=\"/feats/create-small-devices-wrpg\">Build Small Devices</a>, and <a href=\"/feats/create-vehicles-wrpg\">Build Vehicles</a>.</p><p><strong>Scavenge (Ex):</strong> At 1st: jury-rig devices on the fly (+10 Craft DC) using scavenged parts in 1/10 normal time. Bonus +2 at 4th and every 4 levels thereafter (max +10 at 20th). Duration of a scavenged device equals tinker level in uses or hours.</p><p><strong>Bomb-Bouncing (Ex):</strong> At 2nd: grenade-like weapons have double range increment when thrown with spin.</p><p><strong>Evasion (Ex):</strong> At 2nd: no damage on a successful Reflex save for half (light or no armor).</p><p><strong>Coolness Under Fire (Ex):</strong> At 3rd: take 10 on checks to operate or build mechanical devices even when stressed, 1/day; +1/day every 3 levels (max 6/day at 18th).</p><p><strong>Fire Resistance (Ex):</strong> At 4th: fire resistance 5; +5 every 5 levels thereafter (10/15/20 at 9th/14th/19th).</p><p><strong>Improved Evasion (Ex):</strong> At 11th: no damage on successful Reflex save for half, half damage on a failed save.</p>",
+    "description_text": "New core technological expert (favored class of goblins). Affiliation: any. Hit Die d6; 8 skill points. Proficient with all simple weapons (no armor proficiency). Bonus Technology Feats: At 1st, 5th, 10th, 15th, and 20th: bonus Technology feat (must meet prerequisites), including Build Firearms, Build Siege Weapons, Build Small Devices, and Build Vehicles. Scavenge (Ex): At 1st: jury-rig devices on the fly (+10 Craft DC) using scavenged parts in 1/10 normal time. Bonus +2 at 4th and every 4 levels thereafter (max +10 at 20th). Duration of a scavenged device equals tinker level in uses or hours. Bomb-Bouncing (Ex): At 2nd: grenade-like weapons have double range increment when thrown with spin. Evasion (Ex): At 2nd: no damage on a successful Reflex save for half (light or no armor). Coolness Under Fire (Ex): At 3rd: take 10 on checks to operate or build mechanical devices even when stressed, 1/day; +1/day every 3 levels (max 6/day at 18th). Fire Resistance (Ex): At 4th: fire resistance 5; +5 every 5 levels thereafter (10/15/20 at 9th/14th/19th). Improved Evasion (Ex): At 11th: no damage on successful Reflex save for half, half damage on a failed save.",
     "requirements_html": null,
     "requirements_text": null,
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+0</td><td>+2</td><td>+2</td><td>Bonus technology feat, scavenge</td></tr><tr><td>2nd</td><td>+1</td><td>+0</td><td>+3</td><td>+3</td><td>Bomb-bouncing, evasion</td></tr><tr><td>3rd</td><td>+2</td><td>+1</td><td>+3</td><td>+3</td><td>Coolness under fire 1/day</td></tr><tr><td>4th</td><td>+3</td><td>+1</td><td>+4</td><td>+4</td><td>Fire resistance 5, scavenge +2</td></tr><tr><td>5th</td><td>+3</td><td>+1</td><td>+4</td><td>+4</td><td>Bonus technology feat</td></tr><tr><td>6th</td><td>+4</td><td>+2</td><td>+5</td><td>+5</td><td>Coolness under fire 2/day</td></tr><tr><td>7th</td><td>+5</td><td>+2</td><td>+5</td><td>+5</td><td>-</td></tr><tr><td>8th</td><td>+6/+1</td><td>+2</td><td>+6</td><td>+6</td><td>Scavenge +4</td></tr><tr><td>9th</td><td>+6/+1</td><td>+3</td><td>+6</td><td>+6</td><td>Coolness under fire 3/day, fire resistance 10</td></tr><tr><td>10th</td><td>+7/+2</td><td>+3</td><td>+7</td><td>+7</td><td>Bonus technology feat</td></tr><tr><td>11th</td><td>+8/+3</td><td>+3</td><td>+7</td><td>+7</td><td>Improved evasion</td></tr><tr><td>12th</td><td>+9/+4</td><td>+4</td><td>+8</td><td>+8</td><td>Coolness under fire 4/day, scavenge +6</td></tr><tr><td>13th</td><td>+9/+4</td><td>+4</td><td>+8</td><td>+8</td><td>-</td></tr><tr><td>14th</td><td>+10/+5</td><td>+4</td><td>+9</td><td>+9</td><td>Fire resistance 15</td></tr><tr><td>15th</td><td>+11/+6/+1</td><td>+5</td><td>+9</td><td>+9</td><td>Coolness under fire 5/day, bonus technology feat</td></tr><tr><td>16th</td><td>+12/+7/+2</td><td>+5</td><td>+10</td><td>+10</td><td>Scavenge +8</td></tr><tr><td>17th</td><td>+12/+7/+2</td><td>+5</td><td>+10</td><td>+10</td><td>-</td></tr><tr><td>18th</td><td>+13/+8/+3</td><td>+6</td><td>+11</td><td>+11</td><td>Coolness under fire 6/day</td></tr><tr><td>19th</td><td>+14/+9/+4</td><td>+6</td><td>+11</td><td>+11</td><td>Fire resistance 20</td></tr><tr><td>20th</td><td>+15/+10/+5</td><td>+6</td><td>+12</td><td>+12</td><td>Bonus technology feat, scavenge +10</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial 1st+0+0+2+2Bonus technology feat, scavenge 2nd+1+0+3+3Bomb-bouncing, evasion 3rd+2+1+3+3Coolness under fire 1/day 4th+3+1+4+4Fire resistance 5, scavenge +2 5th+3+1+4+4Bonus technology feat 6th+4+2+5+5Coolness under fire 2/day 7th+5+2+5+5- 8th+6/+1+2+6+6Scavenge +4 9th+6/+1+3+6+6Coolness under fire 3/day, fire resistance 10 10th+7/+2+3+7+7Bonus technology feat 11th+8/+3+3+7+7Improved evasion 12th+9/+4+4+8+8Coolness under fire 4/day, scavenge +6 13th+9/+4+4+8+8- 14th+10/+5+4+9+9Fire resistance 15 15th+11/+6/+1+5+9+9Coolness under fire 5/day, bonus technology feat 16th+12/+7/+2+5+10+10Scavenge +8 17th+12/+7/+2+5+10+10- 18th+13/+8/+3+6+11+11Coolness under fire 6/day 19th+14/+9/+4+6+11+11Fire resistance 20 20th+15/+10/+5+6+12+12Bonus technology feat, scavenge +10"
   },
   {
     "slug": "beastmaster-wrpg",
@@ -667,12 +946,12 @@
         "id": null
       }
     ],
-    "description_html": "<p>Horde or night elf animal companion prestige class. Full BAB; d12 HD. Animal companion and wild empathy; animal friendship; empathic link; natural weaponry; speak with animals; magic fang progression; scry on companion.</p>",
-    "description_text": "Horde or night elf animal companion prestige class. Full BAB; d12 HD. Animal companion and wild empathy; animal friendship; empathic link; natural weaponry; speak with animals; magic fang progression; scry on companion.",
+    "description_html": "<p>Horde or night elf animal companion prestige class. Full BAB; d12 HD. Proficient with simple and martial weapons and light and medium armor.</p><p><strong>Animal Companion (Ex):</strong> At 1st: as PHB druid animal companion, using beastmaster level.</p><p><strong>Wild Empathy (Ex):</strong> At 1st: improve animal attitude as Diplomacy; 1d20 + class level + Cha.</p><p><strong>Animal Friendship (Sp):</strong> At 2nd: befriend additional animals whose total HD do not exceed class level, 1/day.</p><p><strong>Empathic Link (Su):</strong> At 3rd: empathic link with companion out to 1 mile.</p><p><strong>Natural Weaponry (Su):</strong> At 4th: grow claws and bite/gore (size-based damage); improved at 7th.</p><p><strong>Speak with Animals (Su):</strong> At 5th: as speak with animals at will with animals and magical beasts.</p><p><strong>Magic Fang (Sp):</strong> At 6th: magic fang on companion 1/day (2/day at 8th; greater magic fang 3/day at 10th).</p><p><strong>Scry on Companion (Sp):</strong> At 9th: scry on companion 1/day.</p>",
+    "description_text": "Horde or night elf animal companion prestige class. Full BAB; d12 HD. Proficient with simple and martial weapons and light and medium armor. Animal Companion (Ex): At 1st: as PHB druid animal companion, using beastmaster level. Wild Empathy (Ex): At 1st: improve animal attitude as Diplomacy; 1d20 + class level + Cha. Animal Friendship (Sp): At 2nd: befriend additional animals whose total HD do not exceed class level, 1/day. Empathic Link (Su): At 3rd: empathic link with companion out to 1 mile. Natural Weaponry (Su): At 4th: grow claws and bite/gore (size-based damage); improved at 7th. Speak with Animals (Su): At 5th: as speak with animals at will with animals and magical beasts. Magic Fang (Sp): At 6th: magic fang on companion 1/day (2/day at 8th; greater magic fang 3/day at 10th). Scry on Companion (Sp): At 9th: scry on companion 1/day.",
     "requirements_html": "Affiliation Horde or night elf; <a href=\"/skills/handle-animal\">Handle Animal</a> 5 ranks; <a href=\"/skills/survival\">Survival</a> 8 ranks; Animal Affinity; Toughness.",
     "requirements_text": "Affiliation Horde or night elf; Handle Animal 5 ranks; Survival 8 ranks; Animal Affinity; Toughness.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1st</td><td>+1</td><td>+2</td><td>+0</td><td>+0</td><td>Animal companion, wild empathy</td></tr><tr><td>2nd</td><td>+2</td><td>+3</td><td>+0</td><td>+0</td><td>Animal friendship 1/day</td></tr><tr><td>3rd</td><td>+3</td><td>+3</td><td>+1</td><td>+1</td><td>Empathic link</td></tr><tr><td>4th</td><td>+4</td><td>+4</td><td>+1</td><td>+1</td><td>Natural weaponry</td></tr><tr><td>5th</td><td>+5</td><td>+4</td><td>+1</td><td>+1</td><td>Speak with animals</td></tr><tr><td>6th</td><td>+6</td><td>+5</td><td>+2</td><td>+2</td><td>Magic fang 1/day</td></tr><tr><td>7th</td><td>+7</td><td>+5</td><td>+2</td><td>+2</td><td>Improved natural weaponry</td></tr><tr><td>8th</td><td>+8</td><td>+6</td><td>+2</td><td>+2</td><td>Magic fang 2/day</td></tr><tr><td>9th</td><td>+9</td><td>+6</td><td>+3</td><td>+3</td><td>Scry on companion</td></tr><tr><td>10th</td><td>+10</td><td>+7</td><td>+3</td><td>+3</td><td>Greater magic fang 3/day</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial 1st+1+2+0+0Animal companion, wild empathy 2nd+2+3+0+0Animal friendship 1/day 3rd+3+3+1+1Empathic link 4th+4+4+1+1Natural weaponry 5th+5+4+1+1Speak with animals 6th+6+5+2+2Magic fang 1/day 7th+7+5+2+2Improved natural weaponry 8th+8+6+2+2Magic fang 2/day 9th+9+6+3+3Scry on companion 10th+10+7+3+3Greater magic fang 3/day"
   },
   {
     "slug": "druid-of-the-wild-wrpg",
@@ -691,7 +970,8 @@
       "edition": "Warcraft (3.5)",
       "hit_die": "8",
       "skill_points": "4",
-      "prestige_level": "10"
+      "prestige_level": "10",
+      "spellListOriginSlug": "healer-wrpg"
     },
     "hit_die": "d8",
     "skill_points": "4 + Int",
@@ -751,12 +1031,12 @@
         "id": null
       }
     ],
-    "description_html": "Night elf/tauren nature prestige class. +1 divine caster level each class level; spontaneous summon nature's ally. Wild shape (storm crow → stag → nightsaber → dire bear → treant); green sleep; woodland stride; nature sense; trackless step; venom immunity; timeless body; dreamwalking to the Emerald Dream. Spells include <a href=\"/spells/roar-wrpg\">roar</a>, <a href=\"/spells/thorns-shield-wrpg\">thorn shield</a>, and <a href=\"/spells/force-of-nature-wrpg\">force of nature</a>.",
-    "description_text": "Night elf/tauren nature prestige class. +1 divine caster level each class level; spontaneous summon nature's ally. Wild shape (storm crow → stag → nightsaber → dire bear → treant); green sleep; woodland stride; nature sense; trackless step; venom immunity; timeless body; dreamwalking to the Emerald Dream. Spells include roar, thorn shield, and force of nature.",
+    "description_html": "<p>Night elf/tauren nature prestige class. +1 divine caster level each class level. Casts from the Druid of the Wild list and the <a href=\"/classes/healer-wrpg\">healer</a> list. May spontaneously cast summon nature's ally. No metal armor.</p><p><strong>Green Sleep (Ex):</strong> At 1st: hibernate into the Emerald Dream at will; body needs no food, water, or air.</p><p><strong>Wild Shape (Su):</strong> At 1st: storm crow 1/day; additional uses and forms (stag, nightsaber, dire bear, treant) as levels advance.</p><p><strong>Woodland Stride / Nature Sense / Trackless Step:</strong> As listed on the advancement table.</p><p><strong>Venom Immunity / Timeless Body / Dreamwalking:</strong> At 5th / 7th / 10th respectively.</p><p><strong>Spell List:</strong> Adds WRPG spells such as <a href=\"/spells/roar-wrpg\">roar</a>, <a href=\"/spells/thorns-shield-wrpg\">thorn shield</a>, and <a href=\"/spells/force-of-nature-wrpg\">force of nature</a>, plus a printed nature list.</p>",
+    "description_text": "Night elf/tauren nature prestige class. +1 divine caster level each class level. Casts from the Druid of the Wild list and the healer list. May spontaneously cast summon nature's ally. No metal armor. Green Sleep (Ex): At 1st: hibernate into the Emerald Dream at will; body needs no food, water, or air. Wild Shape (Su): At 1st: storm crow 1/day; additional uses and forms (stag, nightsaber, dire bear, treant) as levels advance. Woodland Stride / Nature Sense / Trackless Step: As listed on the advancement table. Venom Immunity / Timeless Body / Dreamwalking: At 5th / 7th / 10th respectively. Spell List: Adds WRPG spells such as roar, thorn shield, and force of nature, plus a printed nature list.",
     "requirements_html": "Race night elf or tauren; non-evil; Knowledge (nature) 5 ranks; <a href=\"/skills/survival\">Survival</a> 5 ranks; able to cast 3rd-level divine spells.",
     "requirements_text": "Race night elf or tauren; non-evil; Knowledge (nature) 5 ranks; Survival 5 ranks; able to cast 3rd-level divine spells.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>Spells</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Wild shape 1/day, green sleep, woodland stride</td><td>+1 divine</td></tr><tr><td>2nd</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>Nature sense</td><td>+1 divine</td></tr><tr><td>3rd</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>Trackless step, wild shape 2/day</td><td>+1 divine</td></tr><tr><td>4th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>-</td><td>+1 divine</td></tr><tr><td>5th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Venom immunity, wild shape 3/day</td><td>+1 divine</td></tr><tr><td>6th</td><td>+4</td><td>+5</td><td>+2</td><td>+5</td><td>-</td><td>+1 divine</td></tr><tr><td>7th</td><td>+5</td><td>+5</td><td>+2</td><td>+5</td><td>Timeless body, wild shape 4/day</td><td>+1 divine</td></tr><tr><td>8th</td><td>+6</td><td>+6</td><td>+2</td><td>+6</td><td>-</td><td>+1 divine</td></tr><tr><td>9th</td><td>+6</td><td>+6</td><td>+3</td><td>+6</td><td>Wild shape 5/day</td><td>+1 divine</td></tr><tr><td>10th</td><td>+7</td><td>+7</td><td>+3</td><td>+7</td><td>Dreamwalking</td><td>+1 divine</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecialSpells 1st+0+2+0+2Wild shape 1/day, green sleep, woodland stride+1 divine 2nd+1+3+0+3Nature sense+1 divine 3rd+2+3+1+3Trackless step, wild shape 2/day+1 divine 4th+3+4+1+4-+1 divine 5th+3+4+1+4Venom immunity, wild shape 3/day+1 divine 6th+4+5+2+5-+1 divine 7th+5+5+2+5Timeless body, wild shape 4/day+1 divine 8th+6+6+2+6-+1 divine 9th+6+6+3+6Wild shape 5/day+1 divine 10th+7+7+3+7Dreamwalking+1 divine"
   },
   {
     "slug": "elven-ranger-wrpg",
@@ -871,12 +1151,12 @@
         "id": null
       }
     ],
-    "description_html": "Alliance elven archery prestige class (high elf ranger / night elf sentinel). Own divine spell list (Wis). +10 ft. bow/crossbow range increment per level; favored enemy; Rapid Shot; woodland stride; keen arrows; Manyshot; anticipation; arrow cleave. Spell list includes <a href=\"/spells/sentinel-wrpg\">sentinel</a>.",
-    "description_text": "Alliance elven archery prestige class (high elf ranger / night elf sentinel). Own divine spell list (Wis). +10 ft. bow/crossbow range increment per level; favored enemy; Rapid Shot; woodland stride; keen arrows; Manyshot; anticipation; arrow cleave. Spell list includes sentinel.",
+    "description_html": "<p>Alliance elven archery prestige class (high elf ranger / night elf sentinel). Own divine spell list (Wis). Full BAB.</p><p><strong>Extended Range (Ex):</strong> Each level adds +10 ft. to bow/crossbow range increment.</p><p><strong>Favored Enemy (Ex):</strong> At 1st and odd levels thereafter, as PHB ranger (Warcraft creature options).</p><p><strong>Archery Combat Style:</strong> Rapid Shot (1st), Manyshot (6th), Improved Precise Shot (10th) without prerequisites while in light or no armor.</p><p><strong>Other Features:</strong> Heightened perception, woodland stride, keen arrows, swift tracker, bow strike, anticipation, arrow cleave.</p><p><strong>Spell List:</strong> Own 1st–4th list including <a href=\"/spells/sentinel-wrpg\">sentinel</a>.</p>",
+    "description_text": "Alliance elven archery prestige class (high elf ranger / night elf sentinel). Own divine spell list (Wis). Full BAB. Extended Range (Ex): Each level adds +10 ft. to bow/crossbow range increment. Favored Enemy (Ex): At 1st and odd levels thereafter, as PHB ranger (Warcraft creature options). Archery Combat Style: Rapid Shot (1st), Manyshot (6th), Improved Precise Shot (10th) without prerequisites while in light or no armor. Other Features: Heightened perception, woodland stride, keen arrows, swift tracker, bow strike, anticipation, arrow cleave. Spell List: Own 1st–4th list including sentinel.",
     "requirements_html": "Elf (high or night); Alliance; BAB +5; Knowledge (nature) 6 ranks; <a href=\"/skills/survival\">Survival</a> 6 ranks; Point Blank Shot; Track.",
     "requirements_text": "Elf (high or night); Alliance; BAB +5; Knowledge (nature) 6 ranks; Survival 6 ranks; Point Blank Shot; Track.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th></tr></thead><tbody><tr><td>1st</td><td>+1</td><td>+2</td><td>+2</td><td>+0</td><td>Spells, favored enemy, archery style, extended range</td><td>0</td><td>-</td><td>-</td><td>-</td></tr><tr><td>2nd</td><td>+2</td><td>+3</td><td>+3</td><td>+0</td><td>Heightened perception, woodland stride</td><td>1</td><td>-</td><td>-</td><td>-</td></tr><tr><td>3rd</td><td>+3</td><td>+3</td><td>+3</td><td>+1</td><td>2nd favored enemy</td><td>1</td><td>0</td><td>-</td><td>-</td></tr><tr><td>4th</td><td>+4</td><td>+4</td><td>+4</td><td>+1</td><td>Keen arrows, swift tracker</td><td>1</td><td>1</td><td>-</td><td>-</td></tr><tr><td>5th</td><td>+5</td><td>+4</td><td>+4</td><td>+1</td><td>3rd favored enemy</td><td>1</td><td>1</td><td>0</td><td>-</td></tr><tr><td>6th</td><td>+6</td><td>+5</td><td>+5</td><td>+2</td><td>Bow strike, improved archery style</td><td>1</td><td>1</td><td>1</td><td>-</td></tr><tr><td>7th</td><td>+7</td><td>+5</td><td>+5</td><td>+2</td><td>4th favored enemy</td><td>2</td><td>1</td><td>1</td><td>0</td></tr><tr><td>8th</td><td>+8</td><td>+6</td><td>+6</td><td>+2</td><td>Anticipation</td><td>2</td><td>1</td><td>1</td><td>1</td></tr><tr><td>9th</td><td>+9</td><td>+6</td><td>+6</td><td>+3</td><td>5th favored enemy</td><td>2</td><td>2</td><td>1</td><td>1</td></tr><tr><td>10th</td><td>+10</td><td>+7</td><td>+7</td><td>+3</td><td>Arrow cleave, archery mastery</td><td>2</td><td>2</td><td>2</td><td>1</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial1st2nd3rd4th 1st+1+2+2+0Spells, favored enemy, archery style, extended range0--- 2nd+2+3+3+0Heightened perception, woodland stride1--- 3rd+3+3+3+12nd favored enemy10-- 4th+4+4+4+1Keen arrows, swift tracker11-- 5th+5+4+4+13rd favored enemy110- 6th+6+5+5+2Bow strike, improved archery style111- 7th+7+5+5+24th favored enemy2110 8th+8+6+6+2Anticipation2111 9th+9+6+6+35th favored enemy2211 10th+10+7+7+3Arrow cleave, archery mastery2221"
   },
   {
     "slug": "gladiator-wrpg",
@@ -955,12 +1235,12 @@
         "id": null
       }
     ],
-    "description_html": "<p>Arena champion (Alliance gladiator / Horde blademaster). Full BAB; d10 HD. Supreme cleave; command aura; two-handed mastery; strike like the wind (invisibility); critical strike; maximum damage; mirror image; blade whirlwind.</p>",
-    "description_text": "Arena champion (Alliance gladiator / Horde blademaster). Full BAB; d10 HD. Supreme cleave; command aura; two-handed mastery; strike like the wind (invisibility); critical strike; maximum damage; mirror image; blade whirlwind.",
+    "description_html": "<p>Arena champion (Alliance gladiator / Horde blademaster). Full BAB; d10 HD. Proficient with simple and martial weapons and light and medium armor.</p><p><strong>Supreme Cleave (Ex):</strong> At 1st: may take a 5-ft. step between Cleave/Great Cleave attacks once/round.</p><p><strong>Command (Ex):</strong> At 2nd: rally allies within 20 ft. for a morale bonus on attacks (+1 to +5 by level), 1/day.</p><p><strong>Two-Handed Mastery (Ex):</strong> At 3rd: ×2 Strength bonus to damage with two-handed weapons.</p><p><strong>Strike Like the Wind (Su):</strong> At 4th: become invisible as a move action (free at 8th); total rounds/day = class level.</p><p><strong>Critical Strike / Maximum Damage / Mirror Image / Blade Whirlwind:</strong> As listed on the advancement table.</p>",
+    "description_text": "Arena champion (Alliance gladiator / Horde blademaster). Full BAB; d10 HD. Proficient with simple and martial weapons and light and medium armor. Supreme Cleave (Ex): At 1st: may take a 5-ft. step between Cleave/Great Cleave attacks once/round. Command (Ex): At 2nd: rally allies within 20 ft. for a morale bonus on attacks (+1 to +5 by level), 1/day. Two-Handed Mastery (Ex): At 3rd: ×2 Strength bonus to damage with two-handed weapons. Strike Like the Wind (Su): At 4th: become invisible as a move action (free at 8th); total rounds/day = class level. Critical Strike / Maximum Damage / Mirror Image / Blade Whirlwind: As listed on the advancement table.",
     "requirements_html": "Any affiliation; BAB +5; <a href=\"/skills/bluff\">Bluff</a> 2 ranks; <a href=\"/skills/intimidate\">Intimidate</a> 5 ranks; Cleave; Power Attack.",
     "requirements_text": "Any affiliation; BAB +5; Bluff 2 ranks; Intimidate 5 ranks; Cleave; Power Attack.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1st</td><td>+1</td><td>+2</td><td>+0</td><td>+0</td><td>Supreme Cleave</td></tr><tr><td>2nd</td><td>+2</td><td>+3</td><td>+0</td><td>+0</td><td>Command</td></tr><tr><td>3rd</td><td>+3</td><td>+3</td><td>+1</td><td>+1</td><td>Two-handed mastery</td></tr><tr><td>4th</td><td>+4</td><td>+4</td><td>+1</td><td>+1</td><td>Strike like the wind</td></tr><tr><td>5th</td><td>+5</td><td>+4</td><td>+1</td><td>+1</td><td>Critical strike 1/day</td></tr><tr><td>6th</td><td>+6</td><td>+5</td><td>+2</td><td>+2</td><td>Maximum damage 1/day</td></tr><tr><td>7th</td><td>+7</td><td>+5</td><td>+2</td><td>+2</td><td>Critical strike 2/day, mirror image</td></tr><tr><td>8th</td><td>+8</td><td>+6</td><td>+2</td><td>+2</td><td>Improved strike like the wind, maximum damage 2/day</td></tr><tr><td>9th</td><td>+9</td><td>+6</td><td>+3</td><td>+3</td><td>Critical strike 3/day</td></tr><tr><td>10th</td><td>+10</td><td>+7</td><td>+3</td><td>+3</td><td>Blade whirlwind, improved mirror image, maximum damage 3/day</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial 1st+1+2+0+0Supreme Cleave 2nd+2+3+0+0Command 3rd+3+3+1+1Two-handed mastery 4th+4+4+1+1Strike like the wind 5th+5+4+1+1Critical strike 1/day 6th+6+5+2+2Maximum damage 1/day 7th+7+5+2+2Critical strike 2/day, mirror image 8th+8+6+2+2Improved strike like the wind, maximum damage 2/day 9th+9+6+3+3Critical strike 3/day 10th+10+7+3+3Blade whirlwind, improved mirror image, maximum damage 3/day"
   },
   {
     "slug": "horde-assassin-wrpg",
@@ -979,7 +1259,8 @@
       "edition": "Warcraft (3.5)",
       "hit_die": "6",
       "skill_points": "4",
-      "prestige_level": "10"
+      "prestige_level": "10",
+      "spellListOriginSlug": "assassin-381"
     },
     "hit_die": "d6",
     "skill_points": "4 + Int",
@@ -1105,12 +1386,12 @@
         "id": null
       }
     ],
-    "description_html": "<p>Horde-only prestige class using DMG assassin mechanics (death attack, sneak attack, poison use, spells) with no further deviations listed.</p>",
-    "description_text": "Horde-only prestige class using DMG assassin mechanics (death attack, sneak attack, poison use, spells) with no further deviations listed.",
+    "description_html": "<p>Horde-only prestige class. Aside from the Warcraft requirements and class skills listed here, functions as the DMG <a href=\"/classes/assassin-381\">assassin</a> (death attack, sneak attack, poison use, spells).</p>",
+    "description_text": "Horde-only prestige class. Aside from the Warcraft requirements and class skills listed here, functions as the DMG assassin (death attack, sneak attack, poison use, spells).",
     "requirements_html": "Non-good; Horde only; <a href=\"/skills/hide\">Hide</a> 8 ranks; <a href=\"/skills/move-silently\">Move Silently</a> 8 ranks.",
     "requirements_text": "Non-good; Horde only; Hide 8 ranks; Move Silently 8 ranks.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<p>Uses the Dungeon Master's Guide assassin advancement table and spell list.</p>",
+    "advancement_text": "Uses the Dungeon Master's Guide assassin advancement table and spell list."
   },
   {
     "slug": "hunter-wrpg",
@@ -1225,12 +1506,12 @@
         "id": null
       }
     ],
-    "description_html": "<p>Horde skirmisher prestige class with divine spells (Wis). Favored terrain; Weapon Specialization; +5 ft. thrown range increment per level; woodland stride; keen chosen weapon; Combat Reflexes; camouflage; swift tracker; improved critical multiplier.</p>",
-    "description_text": "Horde skirmisher prestige class with divine spells (Wis). Favored terrain; Weapon Specialization; +5 ft. thrown range increment per level; woodland stride; keen chosen weapon; Combat Reflexes; camouflage; swift tracker; improved critical multiplier.",
+    "description_html": "<p>Horde skirmisher prestige class with divine spells (Wis). Full BAB.</p><p><strong>Favored Terrain (Ex):</strong> At 1st and odd levels: +2 circumstance bonuses in a chosen terrain; improve one prior terrain by +2 when selecting a new one.</p><p><strong>Weapon Combat Style:</strong> Weapon Specialization (1st), Greater Weapon Focus (6th), Greater Weapon Specialization (10th) without prerequisites in light/no armor.</p><p><strong>Extended Throwing Range:</strong> Each level +5 ft. to thrown weapon range increment.</p><p><strong>Other Features:</strong> Heightened stealth, woodland stride, keen weapon, Combat Reflexes, camouflage, swift tracker, greater critical.</p>",
+    "description_text": "Horde skirmisher prestige class with divine spells (Wis). Full BAB. Favored Terrain (Ex): At 1st and odd levels: +2 circumstance bonuses in a chosen terrain; improve one prior terrain by +2 when selecting a new one. Weapon Combat Style: Weapon Specialization (1st), Greater Weapon Focus (6th), Greater Weapon Specialization (10th) without prerequisites in light/no armor. Extended Throwing Range: Each level +5 ft. to thrown weapon range increment. Other Features: Heightened stealth, woodland stride, keen weapon, Combat Reflexes, camouflage, swift tracker, greater critical.",
     "requirements_html": "Horde; BAB +5; <a href=\"/skills/survival\">Survival</a> 8 ranks; Track; Weapon Focus (any melee or thrown).",
     "requirements_text": "Horde; BAB +5; Survival 8 ranks; Track; Weapon Focus (any melee or thrown).",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th></tr></thead><tbody><tr><td>1st</td><td>+1</td><td>+2</td><td>+0</td><td>+0</td><td>Spells, favored terrain, combat style, extended throwing range</td><td>0</td><td>-</td><td>-</td><td>-</td></tr><tr><td>2nd</td><td>+2</td><td>+3</td><td>+0</td><td>+0</td><td>Heightened stealth, woodland stride</td><td>1</td><td>-</td><td>-</td><td>-</td></tr><tr><td>3rd</td><td>+3</td><td>+3</td><td>+1</td><td>+1</td><td>2nd favored terrain</td><td>1</td><td>0</td><td>-</td><td>-</td></tr><tr><td>4th</td><td>+4</td><td>+4</td><td>+1</td><td>+1</td><td>Keen weapon</td><td>1</td><td>1</td><td>-</td><td>-</td></tr><tr><td>5th</td><td>+5</td><td>+4</td><td>+1</td><td>+1</td><td>3rd favored terrain</td><td>1</td><td>1</td><td>0</td><td>-</td></tr><tr><td>6th</td><td>+6</td><td>+5</td><td>+2</td><td>+2</td><td>Combat Reflexes, improved combat style</td><td>1</td><td>1</td><td>1</td><td>-</td></tr><tr><td>7th</td><td>+7</td><td>+5</td><td>+2</td><td>+2</td><td>Camouflage, 4th favored terrain</td><td>2</td><td>1</td><td>1</td><td>0</td></tr><tr><td>8th</td><td>+8</td><td>+6</td><td>+2</td><td>+2</td><td>Swift tracker</td><td>2</td><td>1</td><td>1</td><td>1</td></tr><tr><td>9th</td><td>+9</td><td>+6</td><td>+3</td><td>+3</td><td>5th favored terrain</td><td>2</td><td>2</td><td>1</td><td>1</td></tr><tr><td>10th</td><td>+10</td><td>+7</td><td>+3</td><td>+3</td><td>Greater critical, combat mastery</td><td>2</td><td>2</td><td>2</td><td>1</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial1st2nd3rd4th 1st+1+2+0+0Spells, favored terrain, combat style, extended throwing range0--- 2nd+2+3+0+0Heightened stealth, woodland stride1--- 3rd+3+3+1+12nd favored terrain10-- 4th+4+4+1+1Keen weapon11-- 5th+5+4+1+13rd favored terrain110- 6th+6+5+2+2Combat Reflexes, improved combat style111- 7th+7+5+2+2Camouflage, 4th favored terrain2110 8th+8+6+2+2Swift tracker2111 9th+9+6+3+35th favored terrain2211 10th+10+7+3+3Greater critical, combat mastery2221"
   },
   {
     "slug": "infiltrator-wrpg",
@@ -1429,12 +1710,12 @@
         "id": null
       }
     ],
-    "description_html": "<p>Alliance espionage prestige class. Poor BAB; canny defense; smooth talker; connections; uncanny dodge; flawless disguise; suggestion/mass suggestion; slippery mind; hide in plain sight; dominate monster.</p>",
-    "description_text": "Alliance espionage prestige class. Poor BAB; canny defense; smooth talker; connections; uncanny dodge; flawless disguise; suggestion/mass suggestion; slippery mind; hide in plain sight; dominate monster.",
+    "description_html": "<p>Alliance espionage prestige class. Poor BAB. Proficient with simple weapons and light armor.</p><p><strong>Canny Defense (Ex):</strong> While unarmored and wielding a melee weapon, add Int bonus to AC (max = infiltrator level).</p><p><strong>Smooth Talker (Ex):</strong> At 1st: +2 Bluff and Sense Motive.</p><p><strong>Connections (Ex):</strong> At 1st: 1/day seek a contact (1d20 + level + Cha vs DC by importance).</p><p><strong>Other Features:</strong> Uncanny dodge, flawless disguise, suggestion/mass suggestion, improved uncanny dodge, slippery mind, hide in plain sight, dominate monster.</p>",
+    "description_text": "Alliance espionage prestige class. Poor BAB. Proficient with simple weapons and light armor. Canny Defense (Ex): While unarmored and wielding a melee weapon, add Int bonus to AC (max = infiltrator level). Smooth Talker (Ex): At 1st: +2 Bluff and Sense Motive. Connections (Ex): At 1st: 1/day seek a contact (1d20 + level + Cha vs DC by importance). Other Features: Uncanny dodge, flawless disguise, suggestion/mass suggestion, improved uncanny dodge, slippery mind, hide in plain sight, dominate monster.",
     "requirements_html": "Alliance; <a href=\"/skills/bluff\">Bluff</a> 8 ranks; <a href=\"/skills/disguise\">Disguise</a> 8 ranks.",
     "requirements_text": "Alliance; Bluff 8 ranks; Disguise 8 ranks.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+0</td><td>+2</td><td>+0</td><td>Canny defense, smooth talker, connections</td></tr><tr><td>2nd</td><td>+1</td><td>+0</td><td>+3</td><td>+0</td><td>Uncanny dodge</td></tr><tr><td>3rd</td><td>+2</td><td>+1</td><td>+3</td><td>+1</td><td>Flawless disguise</td></tr><tr><td>4th</td><td>+3</td><td>+1</td><td>+4</td><td>+1</td><td>Suggestion 1/day</td></tr><tr><td>5th</td><td>+3</td><td>+1</td><td>+4</td><td>+1</td><td>Improved uncanny dodge</td></tr><tr><td>6th</td><td>+4</td><td>+2</td><td>+5</td><td>+2</td><td>Suggestion 2/day</td></tr><tr><td>7th</td><td>+5</td><td>+2</td><td>+5</td><td>+2</td><td>Slippery mind</td></tr><tr><td>8th</td><td>+6</td><td>+2</td><td>+6</td><td>+2</td><td>Mass suggestion 1/day</td></tr><tr><td>9th</td><td>+6</td><td>+3</td><td>+6</td><td>+3</td><td>Hide in plain sight</td></tr><tr><td>10th</td><td>+7</td><td>+3</td><td>+7</td><td>+3</td><td>Dominate 1/day</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial 1st+0+0+2+0Canny defense, smooth talker, connections 2nd+1+0+3+0Uncanny dodge 3rd+2+1+3+1Flawless disguise 4th+3+1+4+1Suggestion 1/day 5th+3+1+4+1Improved uncanny dodge 6th+4+2+5+2Suggestion 2/day 7th+5+2+5+2Slippery mind 8th+6+2+6+2Mass suggestion 1/day 9th+6+3+6+3Hide in plain sight 10th+7+3+7+3Dominate 1/day"
   },
   {
     "slug": "mounted-combatant-wrpg",
@@ -1513,12 +1794,12 @@
         "id": null
       }
     ],
-    "description_html": "Elite cavalry prestige class (knight / huntress / raider). Full BAB; special mount; mounted expertise; bonus mount feats; improved Mounted Combat; mounted command; woodland ride; shock charge. Synergizes with <a href=\"/feats/expert-rider-wrpg\">Expert Rider</a> and <a href=\"/feats/mounted-elite-sharpshooter-wrpg\">Mounted Sharpshooter</a>.",
-    "description_text": "Elite cavalry prestige class (knight / huntress / raider). Full BAB; special mount; mounted expertise; bonus mount feats; improved Mounted Combat; mounted command; woodland ride; shock charge. Synergizes with Expert Rider and Mounted Sharpshooter.",
+    "description_html": "<p>Elite cavalry prestige class (knight / huntress / raider). Full BAB. Synergizes with <a href=\"/feats/expert-rider-wrpg\">Expert Rider</a> and <a href=\"/feats/mounted-elite-sharpshooter-wrpg\">Mounted Sharpshooter</a>.</p><p><strong>Special Mount:</strong> At 1st: call an intelligent loyal mount that advances with class level.</p><p><strong>Mounted Expertise:</strong> At 2nd: shift attack and AC bonuses while mounted.</p><p><strong>Bonus Feats / Improved Mounted Combat / Mounted Command / Woodland Ride / Shock Charge:</strong> As listed on the advancement table.</p>",
+    "description_text": "Elite cavalry prestige class (knight / huntress / raider). Full BAB. Synergizes with Expert Rider and Mounted Sharpshooter. Special Mount: At 1st: call an intelligent loyal mount that advances with class level. Mounted Expertise: At 2nd: shift attack and AC bonuses while mounted. Bonus Feats / Improved Mounted Combat / Mounted Command / Woodland Ride / Shock Charge: As listed on the advancement table.",
     "requirements_html": "Any affiliation; BAB +5; <a href=\"/skills/ride\">Ride</a> 8 ranks (warhorse/nightsaber Alliance, or dire wolf Horde); Mounted Combat.",
     "requirements_text": "Any affiliation; BAB +5; Ride 8 ranks (warhorse/nightsaber Alliance, or dire wolf Horde); Mounted Combat.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1st</td><td>+1</td><td>+2</td><td>+0</td><td>+0</td><td>Special mount</td></tr><tr><td>2nd</td><td>+2</td><td>+3</td><td>+0</td><td>+0</td><td>Mounted expertise</td></tr><tr><td>3rd</td><td>+3</td><td>+3</td><td>+1</td><td>+1</td><td>Bonus feat</td></tr><tr><td>4th</td><td>+4</td><td>+4</td><td>+1</td><td>+1</td><td>Improved Mounted Combat 2/round</td></tr><tr><td>5th</td><td>+5</td><td>+4</td><td>+1</td><td>+1</td><td>Mounted command</td></tr><tr><td>6th</td><td>+6</td><td>+5</td><td>+2</td><td>+2</td><td>Bonus feat</td></tr><tr><td>7th</td><td>+7</td><td>+5</td><td>+2</td><td>+2</td><td>Woodland ride</td></tr><tr><td>8th</td><td>+8</td><td>+6</td><td>+2</td><td>+2</td><td>Improved Mounted Combat 3/round</td></tr><tr><td>9th</td><td>+9</td><td>+6</td><td>+3</td><td>+3</td><td>Bonus feat</td></tr><tr><td>10th</td><td>+10</td><td>+7</td><td>+3</td><td>+3</td><td>Shock charge</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial 1st+1+2+0+0Special mount 2nd+2+3+0+0Mounted expertise 3rd+3+3+1+1Bonus feat 4th+4+4+1+1Improved Mounted Combat 2/round 5th+5+4+1+1Mounted command 6th+6+5+2+2Bonus feat 7th+7+5+2+2Woodland ride 8th+8+6+2+2Improved Mounted Combat 3/round 9th+9+6+3+3Bonus feat 10th+10+7+3+3Shock charge"
   },
   {
     "slug": "paladin-warrior-wrpg",
@@ -1627,12 +1908,12 @@
         "id": null
       }
     ],
-    "description_html": "<p>Alliance Silver Hand prestige class. Full BAB; divine spells (Wis). Lay on hands; detect/turn undead and outsiders; aura of courage; smite undead/outsider; divine health/grace; banishing strike; power turning. Must uphold a code of honor.</p>",
-    "description_text": "Alliance Silver Hand prestige class. Full BAB; divine spells (Wis). Lay on hands; detect/turn undead and outsiders; aura of courage; smite undead/outsider; divine health/grace; banishing strike; power turning. Must uphold a code of honor.",
+    "description_html": "<p>Alliance Silver Hand prestige class. Full BAB; divine spells (Wis). Must uphold a code of honor.</p><p><strong>Lay on Hands / Detect / Turn:</strong> At 1st: lay on hands; detect outsiders and undead at will; turn undead and outsiders.</p><p><strong>Aura of Courage / Smite / Divine Health / Divine Grace:</strong> As listed on the advancement table.</p><p><strong>Greater / Power Turning / Banishing Strike:</strong> High-level turning options and 1/day banishing strike.</p>",
+    "description_text": "Alliance Silver Hand prestige class. Full BAB; divine spells (Wis). Must uphold a code of honor. Lay on Hands / Detect / Turn: At 1st: lay on hands; detect outsiders and undead at will; turn undead and outsiders. Aura of Courage / Smite / Divine Health / Divine Grace: As listed on the advancement table. Greater / Power Turning / Banishing Strike: High-level turning options and 1/day banishing strike.",
     "requirements_html": "Human or Ironforge dwarf; any good; Alliance; BAB +5; <a href=\"/skills/diplomacy\">Diplomacy</a> 5 ranks; <a href=\"/skills/knowledge-religion\">Knowledge (religion)</a> 3 ranks; Weapon Focus (warhammer); initiation quest.",
     "requirements_text": "Human or Ironforge dwarf; any good; Alliance; BAB +5; Diplomacy 5 ranks; Knowledge (religion) 3 ranks; Weapon Focus (warhammer); initiation quest.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th></tr></thead><tbody><tr><td>1st</td><td>+1</td><td>+2</td><td>+0</td><td>+0</td><td>Lay on hands, detect, turn</td><td>0</td><td>-</td><td>-</td><td>-</td></tr><tr><td>2nd</td><td>+2</td><td>+3</td><td>+0</td><td>+0</td><td>Aura of courage</td><td>1</td><td>-</td><td>-</td><td>-</td></tr><tr><td>3rd</td><td>+3</td><td>+3</td><td>+1</td><td>+1</td><td>Smite undead/outsider</td><td>1</td><td>0</td><td>-</td><td>-</td></tr><tr><td>4th</td><td>+4</td><td>+4</td><td>+1</td><td>+1</td><td>Divine health, remove disease 1/day</td><td>1</td><td>1</td><td>-</td><td>-</td></tr><tr><td>5th</td><td>+5</td><td>+4</td><td>+1</td><td>+1</td><td>Divine grace</td><td>1</td><td>1</td><td>0</td><td>-</td></tr><tr><td>6th</td><td>+6</td><td>+5</td><td>+2</td><td>+2</td><td>Greater turning, smite 2/day</td><td>1</td><td>1</td><td>1</td><td>-</td></tr><tr><td>7th</td><td>+7</td><td>+5</td><td>+2</td><td>+2</td><td>Extra Turning</td><td>2</td><td>1</td><td>1</td><td>0</td></tr><tr><td>8th</td><td>+8</td><td>+6</td><td>+2</td><td>+2</td><td>Banishing strike 1/day</td><td>2</td><td>1</td><td>1</td><td>1</td></tr><tr><td>9th</td><td>+9</td><td>+6</td><td>+3</td><td>+3</td><td>Smite 3/day</td><td>2</td><td>2</td><td>1</td><td>1</td></tr><tr><td>10th</td><td>+10</td><td>+7</td><td>+3</td><td>+3</td><td>Power turning</td><td>2</td><td>2</td><td>2</td><td>1</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecial1st2nd3rd4th 1st+1+2+0+0Lay on hands, detect, turn0--- 2nd+2+3+0+0Aura of courage1--- 3rd+3+3+1+1Smite undead/outsider10-- 4th+4+4+1+1Divine health, remove disease 1/day11-- 5th+5+4+1+1Divine grace110- 6th+6+5+2+2Greater turning, smite 2/day111- 7th+7+5+2+2Extra Turning2110 8th+8+6+2+2Banishing strike 1/day2111 9th+9+6+3+3Smite 3/day2211 10th+10+7+3+3Power turning2221"
   },
   {
     "slug": "priest-wrpg",
@@ -1651,7 +1932,8 @@
       "edition": "Warcraft (3.5)",
       "hit_die": "8",
       "skill_points": "2",
-      "prestige_level": "10"
+      "prestige_level": "10",
+      "spellListOriginSlug": "healer-wrpg"
     },
     "hit_die": "d8",
     "skill_points": "2 + Int",
@@ -1711,12 +1993,12 @@
         "id": null
       }
     ],
-    "description_html": "Alliance divine prestige class. +1 divine caster level each level; spontaneous cure; Healing and Protection domains. Divine defense vs. necromancy; turn undead; divine urge. High-level list includes <a href=\"/spells/falling-star-wrpg\">starfall</a>.",
-    "description_text": "Alliance divine prestige class. +1 divine caster level each level; spontaneous cure; Healing and Protection domains. Divine defense vs. necromancy; turn undead; divine urge. High-level list includes starfall.",
+    "description_html": "<p>Alliance divine prestige class. +1 divine caster level each level; spontaneous cure; Healing and Protection domains. Inherits the <a href=\"/classes/healer-wrpg\">healer</a> spell list plus priest additives (including <a href=\"/spells/falling-star-wrpg\">starfall</a>).</p><p><strong>Divine Defense:</strong> +1 sacred vs necromancy at 1st; +2/+3/+4 at 4th/7th/10th.</p><p><strong>Turn Undead:</strong> At 1st: turn as cleric using stacked divine levels.</p><p><strong>Divine Urge:</strong> Suggestion 1/day at 3rd (2/day at 6th); mass suggestion 1/day at 9th.</p>",
+    "description_text": "Alliance divine prestige class. +1 divine caster level each level; spontaneous cure; Healing and Protection domains. Inherits the healer spell list plus priest additives (including starfall). Divine Defense: +1 sacred vs necromancy at 1st; +2/+3/+4 at 4th/7th/10th. Turn Undead: At 1st: turn as cleric using stacked divine levels. Divine Urge: Suggestion 1/day at 3rd (2/day at 6th); mass suggestion 1/day at 9th.",
     "requirements_html": "Non-evil; Alliance; <a href=\"/skills/knowledge-religion\">Knowledge (religion)</a> 6 ranks; able to cast 3rd-level divine spells.",
     "requirements_text": "Non-evil; Alliance; Knowledge (religion) 6 ranks; able to cast 3rd-level divine spells.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>Spells</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Divine defense +1, turn undead, domains</td><td>+1 divine</td></tr><tr><td>2nd</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>-</td><td>+1 divine</td></tr><tr><td>3rd</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>Divine urge 1/day</td><td>+1 divine</td></tr><tr><td>4th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Divine defense +2</td><td>+1 divine</td></tr><tr><td>5th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>-</td><td>+1 divine</td></tr><tr><td>6th</td><td>+4</td><td>+5</td><td>+2</td><td>+5</td><td>Divine urge 2/day</td><td>+1 divine</td></tr><tr><td>7th</td><td>+5</td><td>+5</td><td>+2</td><td>+5</td><td>Divine defense +3</td><td>+1 divine</td></tr><tr><td>8th</td><td>+6</td><td>+6</td><td>+2</td><td>+6</td><td>-</td><td>+1 divine</td></tr><tr><td>9th</td><td>+6</td><td>+6</td><td>+3</td><td>+6</td><td>Mass divine urge 1/day</td><td>+1 divine</td></tr><tr><td>10th</td><td>+7</td><td>+7</td><td>+3</td><td>+7</td><td>Divine defense +4</td><td>+1 divine</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecialSpells 1st+0+2+0+2Divine defense +1, turn undead, domains+1 divine 2nd+1+3+0+3-+1 divine 3rd+2+3+1+3Divine urge 1/day+1 divine 4th+3+4+1+4Divine defense +2+1 divine 5th+3+4+1+4-+1 divine 6th+4+5+2+5Divine urge 2/day+1 divine 7th+5+5+2+5Divine defense +3+1 divine 8th+6+6+2+6-+1 divine 9th+6+6+3+6Mass divine urge 1/day+1 divine 10th+7+7+3+7Divine defense +4+1 divine"
   },
   {
     "slug": "shaman-wrpg",
@@ -1735,7 +2017,8 @@
       "edition": "Warcraft (3.5)",
       "hit_die": "8",
       "skill_points": "2",
-      "prestige_level": "10"
+      "prestige_level": "10",
+      "spellListOriginSlug": "healer-wrpg"
     },
     "hit_die": "d8",
     "skill_points": "2 + Int",
@@ -1813,12 +2096,12 @@
         "id": null
       }
     ],
-    "description_html": "Elemental/spirit prestige class. +1 divine caster level each level; spontaneous cure. Weather sense; elemental companion; elemental mastery. Spell list includes <a href=\"/spells/stasis-trap-wrpg\">stasis trap</a>, <a href=\"/spells/ice-armor-wrpg\">frost armor</a>, <a href=\"/spells/bloodlust-wrpg\">bloodlust</a>, <a href=\"/spells/immolation-wrpg\">immolation</a>, <a href=\"/spells/healing-totem-wrpg\">healing ward</a>, and <a href=\"/spells/serpent-totem-wrpg\">serpent ward</a>.",
-    "description_text": "Elemental/spirit prestige class. +1 divine caster level each level; spontaneous cure. Weather sense; elemental companion; elemental mastery. Spell list includes stasis trap, frost armor, bloodlust, immolation, healing ward, and serpent ward.",
+    "description_html": "<p>Elemental/spirit prestige class. +1 divine caster level each level; spontaneous cure. Inherits the <a href=\"/classes/healer-wrpg\">healer</a> list plus shaman additives such as <a href=\"/spells/stasis-trap-wrpg\">stasis trap</a>, <a href=\"/spells/ice-armor-wrpg\">frost armor</a>, <a href=\"/spells/bloodlust-wrpg\">bloodlust</a>, <a href=\"/spells/immolation-wrpg\">immolation</a>, <a href=\"/spells/healing-totem-wrpg\">healing ward</a>, and <a href=\"/spells/serpent-totem-wrpg\">serpent ward</a>.</p><p><strong>Weather Sense (Su):</strong> At 1st: bonus on Survival checks to predict weather (+2, improving every other level to +10 at 9th).</p><p><strong>Elemental Companion (Su):</strong> At 3rd: Small elemental companion; HD improve at 6th and 9th.</p><p><strong>Elemental Mastery (Su):</strong> At 10th: rebuke/control elementals as an evil cleric rebukes undead.</p>",
+    "description_text": "Elemental/spirit prestige class. +1 divine caster level each level; spontaneous cure. Inherits the healer list plus shaman additives such as stasis trap, frost armor, bloodlust, immolation, healing ward, and serpent ward. Weather Sense (Su): At 1st: bonus on Survival checks to predict weather (+2, improving every other level to +10 at 9th). Elemental Companion (Su): At 3rd: Small elemental companion; HD improve at 6th and 9th. Elemental Mastery (Su): At 10th: rebuke/control elementals as an evil cleric rebukes undead.",
     "requirements_html": "<p>Any affiliation; BAB +4; able to cast 1st-level divine spells.</p>",
     "requirements_text": "Any affiliation; BAB +4; able to cast 1st-level divine spells.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>Spells</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Weather sense +2</td><td>+1 divine</td></tr><tr><td>2nd</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>-</td><td>+1 divine</td></tr><tr><td>3rd</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>Elemental companion, weather sense +4</td><td>+1 divine</td></tr><tr><td>4th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>-</td><td>+1 divine</td></tr><tr><td>5th</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Weather sense +6</td><td>+1 divine</td></tr><tr><td>6th</td><td>+4</td><td>+5</td><td>+2</td><td>+5</td><td>Elemental companion +2 HD</td><td>+1 divine</td></tr><tr><td>7th</td><td>+5</td><td>+5</td><td>+2</td><td>+5</td><td>Weather sense +8</td><td>+1 divine</td></tr><tr><td>8th</td><td>+6</td><td>+6</td><td>+2</td><td>+6</td><td>-</td><td>+1 divine</td></tr><tr><td>9th</td><td>+6</td><td>+6</td><td>+3</td><td>+6</td><td>Elemental companion +4 HD, weather sense +10</td><td>+1 divine</td></tr><tr><td>10th</td><td>+7</td><td>+7</td><td>+3</td><td>+7</td><td>Elemental mastery</td><td>+1 divine</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecialSpells 1st+0+2+0+2Weather sense +2+1 divine 2nd+1+3+0+3-+1 divine 3rd+2+3+1+3Elemental companion, weather sense +4+1 divine 4th+3+4+1+4-+1 divine 5th+3+4+1+4Weather sense +6+1 divine 6th+4+5+2+5Elemental companion +2 HD+1 divine 7th+5+5+2+5Weather sense +8+1 divine 8th+6+6+2+6-+1 divine 9th+6+6+3+6Elemental companion +4 HD, weather sense +10+1 divine 10th+7+7+3+7Elemental mastery+1 divine"
   },
   {
     "slug": "warlock-wrpg",
@@ -1891,11 +2174,11 @@
         "id": null
       }
     ],
-    "description_html": "Demon-pact prestige class. +1 arcane caster level each level. Enhanced conjuring (forbid additional schools; extra conjuration slots); demonic companion; improved planar ally; Augment Summoning; extended summoning; demon mastery. Exclusive access to summon monster I–IX and planar binding (see <a href=\"/spells/warcraft-cosmology-wrpg\">Warcraft Cosmology</a>).",
-    "description_text": "Demon-pact prestige class. +1 arcane caster level each level. Enhanced conjuring (forbid additional schools; extra conjuration slots); demonic companion; improved planar ally; Augment Summoning; extended summoning; demon mastery. Exclusive access to summon monster I–IX and planar binding (see Warcraft Cosmology).",
+    "description_html": "<p>Demon-pact prestige class. +1 arcane caster level each level. Exclusive access to summon monster I–IX and planar binding (see <a href=\"/spells/warcraft-cosmology-wrpg\">Warcraft Cosmology</a>).</p><p><strong>Enhanced Conjuring:</strong> On entry, forbid two schools as a conjuration specialist (or two more if already a conjurer) and gain extra conjuration slots.</p><p><strong>Demonic Companion (Su):</strong> At 1st: imp companion (improved familiar).</p><p><strong>Improved Ally / Demonic Lore / Augment Summoning / Extended Summoning / Planar Cohort / Demon Mastery:</strong> As listed on the advancement table.</p>",
+    "description_text": "Demon-pact prestige class. +1 arcane caster level each level. Exclusive access to summon monster I–IX and planar binding (see Warcraft Cosmology). Enhanced Conjuring: On entry, forbid two schools as a conjuration specialist (or two more if already a conjurer) and gain extra conjuration slots. Demonic Companion (Su): At 1st: imp companion (improved familiar). Improved Ally / Demonic Lore / Augment Summoning / Extended Summoning / Planar Cohort / Demon Mastery: As listed on the advancement table.",
     "requirements_html": "<p>Any evil; any affiliation; able to cast 3rd-level arcane spells; Conjuration not a forbidden school.</p>",
     "requirements_text": "Any evil; any affiliation; able to cast 3rd-level arcane spells; Conjuration not a forbidden school.",
-    "advancement_html": null,
-    "advancement_text": null
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>Spells</th></tr></thead><tbody><tr><td>1st</td><td>+0</td><td>+0</td><td>+0</td><td>+2</td><td>Enhanced conjuring, demonic companion</td><td>+1 arcane</td></tr><tr><td>2nd</td><td>+1</td><td>+0</td><td>+0</td><td>+3</td><td>Improved ally</td><td>+1 arcane</td></tr><tr><td>3rd</td><td>+1</td><td>+1</td><td>+1</td><td>+3</td><td>Demonic lore</td><td>+1 arcane</td></tr><tr><td>4th</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td><td>Augment Summoning</td><td>+1 arcane</td></tr><tr><td>5th</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td><td>-</td><td>+1 arcane</td></tr><tr><td>6th</td><td>+3</td><td>+2</td><td>+2</td><td>+5</td><td>Extended summoning</td><td>+1 arcane</td></tr><tr><td>7th</td><td>+3</td><td>+2</td><td>+2</td><td>+5</td><td>-</td><td>+1 arcane</td></tr><tr><td>8th</td><td>+4</td><td>+2</td><td>+2</td><td>+6</td><td>Planar cohort</td><td>+1 arcane</td></tr><tr><td>9th</td><td>+4</td><td>+3</td><td>+3</td><td>+6</td><td>-</td><td>+1 arcane</td></tr><tr><td>10th</td><td>+5</td><td>+3</td><td>+3</td><td>+7</td><td>Demon mastery</td><td>+1 arcane</td></tr></tbody></table>",
+    "advancement_text": "LevelBABFortRefWillSpecialSpells 1st+0+0+0+2Enhanced conjuring, demonic companion+1 arcane 2nd+1+0+0+3Improved ally+1 arcane 3rd+1+1+1+3Demonic lore+1 arcane 4th+2+1+1+4Augment Summoning+1 arcane 5th+2+1+1+4-+1 arcane 6th+3+2+2+5Extended summoning+1 arcane 7th+3+2+2+5-+1 arcane 8th+4+2+2+6Planar cohort+1 arcane 9th+4+3+3+6-+1 arcane 10th+5+3+3+7Demon mastery+1 arcane"
   }
 ]

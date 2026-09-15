@@ -9425,10 +9425,11 @@ html.dice-secret-cursor * {
   color: var(--text-muted);
 }
 
-/* Separate dice log tray (bottom-right by default) */
+/* Separate dice log tray (bottom-left, beside the dice tray, on first load) */
 .dice-log-tray {
   position: fixed;
-  right: 1rem;
+  left: 7.75rem;
+  right: auto;
   bottom: 1rem;
   z-index: 95;
   max-width: min(36rem, calc(100vw - 2rem));

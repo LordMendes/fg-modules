@@ -6,11 +6,12 @@ import { useDice } from "@/components/dice/dice-provider";
 import { formatRollFormula, formatRollSummary } from "@/lib/dice/notation";
 import { ROLL_KIND_LABELS } from "@/lib/dice/types";
 import {
-  clampTrayPos,
+  bottomLeftTrayPos,
+  LOG_TRAY_LEFT_OFFSET_PX,
   useFloatingTrayPos,
 } from "@/components/dice/use-floating-tray-pos";
 
-const LOG_POS_KEY = "pc-planner-dice-log-pos";
+const LOG_POS_KEY = "pc-planner-dice-log-pos-bl";
 const LOG_EXPANDED_KEY = "pc-planner-dice-log-expanded";
 
 export function DiceLogTray() {
@@ -40,12 +41,7 @@ export function DiceLogTray() {
 
   const defaultPos = useCallback(
     (width: number, height: number) =>
-      clampTrayPos(
-        window.innerWidth - width - 16,
-        window.innerHeight - height - 16,
-        width,
-        height,
-      ),
+      bottomLeftTrayPos(width, height, LOG_TRAY_LEFT_OFFSET_PX),
     [],
   );
 

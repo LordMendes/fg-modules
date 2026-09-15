@@ -1628,10 +1628,10 @@
     "spell_resistance": "No",
     "classes": [
       {
-        "name": "Healer",
-        "slug": "healer-wrpg",
+        "name": "Elven Ranger",
+        "slug": "elven-ranger-wrpg",
         "level": 3,
-        "url": "/classes/healer-wrpg",
+        "url": "/classes/elven-ranger-wrpg",
         "id": null
       }
     ],
