@@ -4,7 +4,7 @@
  * Next.js standalone tracing omits:
  * - Sharp native binaries (.node / libvips)
  * - Prisma CLI (a devDependency used for `migrate deploy` on startup)
- * - Custom-server externals (ioredis, ws, pg)
+ * - Custom-server externals (ioredis, ws, pg, @aws-sdk/client-s3)
  *
  * A shell `find` over a copied store misses symlink targets (effect, c12, etc.),
  * so this script walks the source .pnpm dirs and copies the full closure.
@@ -30,6 +30,7 @@ const SEED = [
   /^prisma@/,
   /^@prisma\+client@/,
   /^@prisma\+adapter-pg@/,
+  /^@aws-sdk\+client-s3@/,
   /^ioredis@/,
   /^ws@/,
   /^pg@/,
@@ -38,7 +39,7 @@ const SEED = [
 // Type packages are never required at runtime.
 const SKIP = [/^@types\+/, /^typescript@/];
 
-const MAX_CLOSURE = Number(process.env.NATIVE_PKGS_MAX || 250);
+const MAX_CLOSURE = Number(process.env.NATIVE_PKGS_MAX || 350);
 
 function isSeed(name) {
   return SEED.some((re) => re.test(name));
@@ -171,6 +172,7 @@ requirePrefix("c12@");
 requirePrefix("@prisma+client@");
 requirePrefix("@prisma+dev@");
 requirePrefix("@prisma+studio-core@");
+requirePrefix("@aws-sdk+client-s3@");
 
 if (!hasNativeAddon(DEST)) {
   console.error("[collect-native-pkgs] missing native .node (sharp)");

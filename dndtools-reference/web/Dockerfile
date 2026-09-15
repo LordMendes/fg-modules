@@ -86,6 +86,7 @@ RUN overlay_pkgs() { \
   && link_web_pkg prisma \
   && link_web_pkg '@prisma/client' \
   && link_web_pkg '@prisma/adapter-pg' \
+  && link_web_pkg '@aws-sdk/client-s3' \
   && link_web_pkg ioredis \
   && link_web_pkg ws \
   && link_web_pkg pg \
