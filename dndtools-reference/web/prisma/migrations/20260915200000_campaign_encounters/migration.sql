@@ -1,4 +1,4 @@
-﻿-- Campaign combat tracker + encounter bundles
+-- Campaign combat tracker + encounter bundles
 
 CREATE TABLE IF NOT EXISTS "CampaignNpc" (
     "id" TEXT NOT NULL,
