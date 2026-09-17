@@ -389,6 +389,7 @@ export type PcPlanState = {
 export type PcSheetTab =
   | "main"
   | "combat"
+  | "status"
   | "skills"
   | "abilities"
   | "inventory"
@@ -398,6 +399,7 @@ export type PcSheetTab =
 export const PC_SHEET_TABS: { id: PcSheetTab; label: string }[] = [
   { id: "main", label: "Main" },
   { id: "combat", label: "Combat" },
+  { id: "status", label: "Status" },
   { id: "skills", label: "Skills" },
   { id: "abilities", label: "Abilities" },
   { id: "inventory", label: "Inventory" },

@@ -16,7 +16,7 @@ import {
   useFloatingTrayPos,
 } from "@/components/dice/use-floating-tray-pos";
 
-const MIN_WIDTH = 320;
+const MIN_WIDTH = 560;
 const MIN_HEIGHT = 256;
 const CASCADE_STEP = 28;
 const BASE_Z_INDEX = 80;

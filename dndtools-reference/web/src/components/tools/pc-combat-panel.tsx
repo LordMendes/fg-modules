@@ -388,35 +388,37 @@ export function PcCombatPanel({
             </div>
             <PcAsfDisplay state={state} />
           </div>
-          <label className="pc-asf-override">
-            <span className="npc-sheet-sub">ASF override (blank = auto)</span>
-            <input
-              type="number"
-              className="pc-sheet-input pc-sheet-input--narrow"
-              min={0}
-              max={100}
-              value={state.combat.asfOverride ?? ""}
-              placeholder={String(stats.arcaneSpellFailure)}
-              onChange={(e) =>
-                patch((s) => {
-                  s.combat.asfOverride =
-                    e.target.value === "" ? null : Number(e.target.value);
-                })
-              }
-            />
-          </label>
-          <label className="pc-checkbox-label">
-            <input
-              type="checkbox"
-              checked={Boolean(state.combat.addAllBonusTypes)}
-              onChange={(e) =>
-                patch((s) => {
-                  s.combat.addAllBonusTypes = e.target.checked;
-                })
-              }
-            />
-            Stack all item bonus types (house rule)
-          </label>
+          <div className="pc-combat-hp-extras">
+            <label className="pc-asf-override">
+              <span className="npc-sheet-sub">ASF override (blank = auto)</span>
+              <input
+                type="number"
+                className="pc-sheet-input pc-sheet-input--narrow"
+                min={0}
+                max={100}
+                value={state.combat.asfOverride ?? ""}
+                placeholder={String(stats.arcaneSpellFailure)}
+                onChange={(e) =>
+                  patch((s) => {
+                    s.combat.asfOverride =
+                      e.target.value === "" ? null : Number(e.target.value);
+                  })
+                }
+              />
+            </label>
+            <label className="pc-checkbox-label">
+              <input
+                type="checkbox"
+                checked={Boolean(state.combat.addAllBonusTypes)}
+                onChange={(e) =>
+                  patch((s) => {
+                    s.combat.addAllBonusTypes = e.target.checked;
+                  })
+                }
+              />
+              Stack all item bonus types (house rule)
+            </label>
+          </div>
           {(state.hitPoints?.rolls?.length ?? 0) > 0 ? (
             <div className="pc-combat-table pc-combat-hp-rolls" style={{ ["--combat-cols" as string]: 4 }}>
               <CombatTableHeader columns={["Die", "Roll", "Con", "HP"]} />

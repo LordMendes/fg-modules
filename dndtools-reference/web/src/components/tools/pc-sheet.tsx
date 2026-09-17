@@ -6,6 +6,7 @@ import type { EntityPreview, PcCompendiumBundle } from "@/lib/entities";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
+import { PcStatusPanel } from "@/components/tools/pc-status-panel";
 import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
 import {
@@ -816,6 +817,8 @@ export function PcSheet({
           />
         )}
 
+        {sheetTab === "status" && <PcStatusPanel state={state} patch={patch} />}
+
         {sheetTab === "skills" && (
           <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
             <div className="npc-sheet-block">
@@ -1133,6 +1136,7 @@ export function PcSheet({
             onRemoveSpell={onRemoveSpell}
             onUpdateSpellPrepared={onUpdateSpellPrepared}
             pcPlanId={planId ?? null}
+            onGoToCombatTab={() => onTabChange("combat")}
           />
         )}
       </div>

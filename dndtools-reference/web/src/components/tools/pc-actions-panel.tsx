@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
@@ -29,11 +29,7 @@ import {
   preparedCountAtLevel,
 } from "@/lib/pc-planner/spellSlots";
 import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
-import {
-  PcCombatModesPanel,
-  PcConditionsPanel,
-  PcResourcesPanel,
-} from "@/components/tools/pc-actions-extras";
+import { PcResourcesPanel } from "@/components/tools/pc-actions-extras";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 export type PcActionsPanelProps = {
@@ -46,18 +42,30 @@ export type PcActionsPanelProps = {
   onRemoveSpell: (slug: string) => void;
   onUpdateSpellPrepared: (slug: string, prepared: number) => void;
   pcPlanId?: string | null;
+  onGoToCombatTab?: () => void;
 };
+
+function ShortcutStat({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="pc-actions-shortcut-stat">
+      <span className="pc-actions-shortcut-stat-label">{label}</span>
+      <span className="pc-actions-shortcut-stat-value">{children}</span>
+    </div>
+  );
+}
 
 function CombatSummary({
   state,
   compendium,
   patch,
   pcPlanId,
+  onGoToCombatTab,
 }: {
   state: PcPlanState;
   compendium: PcCompendiumBundle | null;
   patch: PcActionsPanelProps["patch"];
   pcPlanId?: string | null;
+  onGoToCombatTab?: () => void;
 }) {
   const classFeatures = resolveClassFeaturesForPlan(compendium, state);
   const stats = computeCombatStats(
@@ -71,59 +79,81 @@ function CombatSummary({
 
   return (
     <div className="npc-sheet-block pc-actions-combat">
-      <h3>Combat</h3>
-      <dl className="pc-actions-combat-grid">
-        <div>
-          <dt>Init</dt>
-          <dd>
-            <RollableStat label="Initiative" modifier={stats.initiative.total} kind="initiative" />
-          </dd>
+      <details className="pc-actions-combat-shortcut" defaultOpen>
+        <summary className="pc-actions-combat-shortcut-summary">
+          <span className="pc-actions-combat-shortcut-summary-main">
+            <span className="pc-actions-combat-shortcut-title">Combat shortcut</span>
+            <span className="npc-sheet-sub pc-actions-combat-shortcut-desc">
+              Quick reference for play. Edit HP, AC breakdown, and misc on the Combat tab.
+            </span>
+            <span className="pc-actions-combat-shortcut-preview" aria-hidden="true">
+              AC {stats.ac.total} · Init {formatModifier(stats.initiative.total)} · Melee{" "}
+              {formatModifier(stats.melee.total)} · Fort {formatModifier(stats.fortitude.total)}
+            </span>
+          </span>
+          {onGoToCombatTab ? (
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost tool-btn--compact pc-actions-combat-shortcut-link"
+              onClick={(event) => {
+                event.stopPropagation();
+                onGoToCombatTab();
+              }}
+              onPointerDown={(event) => event.stopPropagation()}
+            >
+              Open Combat tab
+            </button>
+          ) : null}
+        </summary>
+
+        <div className="pc-actions-combat-groups">
+          <div className="pc-actions-combat-group">
+            <h4>Defense</h4>
+            <div className="pc-actions-combat-group-stats">
+              <ShortcutStat label="AC">{stats.ac.total}</ShortcutStat>
+              <ShortcutStat label="Touch">{stats.touch.total}</ShortcutStat>
+              <ShortcutStat label="Flat-footed">{stats.flatFooted.total}</ShortcutStat>
+            </div>
+          </div>
+
+          <div className="pc-actions-combat-group">
+            <h4>Attacks</h4>
+            <div className="pc-actions-combat-group-stats">
+              <ShortcutStat label="Init">
+                <RollableStat label="Initiative" modifier={stats.initiative.total} kind="initiative" />
+              </ShortcutStat>
+              <ShortcutStat label="Melee">
+                <RollableStat label="Melee" modifier={stats.melee.total} kind="attack" />
+              </ShortcutStat>
+              <ShortcutStat label="Ranged">
+                <RollableStat label="Ranged" modifier={stats.ranged.total} kind="attack" />
+              </ShortcutStat>
+            </div>
+          </div>
+
+          <div className="pc-actions-combat-group">
+            <h4>Saves</h4>
+            <div className="pc-actions-combat-group-stats">
+              <ShortcutStat label="Fort">
+                <RollableStat label="Fortitude" modifier={stats.fortitude.total} kind="save" />
+              </ShortcutStat>
+              <ShortcutStat label="Ref">
+                <RollableStat label="Reflex" modifier={stats.reflex.total} kind="save" />
+              </ShortcutStat>
+              <ShortcutStat label="Will">
+                <RollableStat label="Will" modifier={stats.will.total} kind="save" />
+              </ShortcutStat>
+            </div>
+          </div>
+
+          <div className="pc-actions-combat-group">
+            <h4>Movement</h4>
+            <div className="pc-actions-combat-group-stats">
+              <ShortcutStat label="Speed">{stats.speed.total} ft.</ShortcutStat>
+            </div>
+          </div>
         </div>
-        <div>
-          <dt>AC</dt>
-          <dd>{stats.ac.total}</dd>
-        </div>
-        <div>
-          <dt>Touch / FF</dt>
-          <dd>
-            {stats.touch.total} / {stats.flatFooted.total}
-          </dd>
-        </div>
-        <div>
-          <dt>Melee</dt>
-          <dd>
-            <RollableStat label="Melee" modifier={stats.melee.total} kind="attack" />
-          </dd>
-        </div>
-        <div>
-          <dt>Ranged</dt>
-          <dd>
-            <RollableStat label="Ranged" modifier={stats.ranged.total} kind="attack" />
-          </dd>
-        </div>
-        <div>
-          <dt>Fort</dt>
-          <dd>
-            <RollableStat label="Fortitude" modifier={stats.fortitude.total} kind="save" />
-          </dd>
-        </div>
-        <div>
-          <dt>Ref</dt>
-          <dd>
-            <RollableStat label="Reflex" modifier={stats.reflex.total} kind="save" />
-          </dd>
-        </div>
-        <div>
-          <dt>Will</dt>
-          <dd>
-            <RollableStat label="Will" modifier={stats.will.total} kind="save" />
-          </dd>
-        </div>
-        <div>
-          <dt>Speed</dt>
-          <dd>{stats.speed.total} ft.</dd>
-        </div>
-      </dl>
+      </details>
 
       <div className="pc-actions-weapons">
         <h4 className="pc-actions-weapons-heading">Weapons</h4>
@@ -158,6 +188,7 @@ export function PcActionsPanel({
   onRemoveSpell,
   onUpdateSpellPrepared,
   pcPlanId = null,
+  onGoToCombatTab,
 }: PcActionsPanelProps) {
   const [pendingSpellLevel, setPendingSpellLevel] = useState(1);
   const [spellPickerOpen, setSpellPickerOpen] = useState(false);
@@ -218,9 +249,8 @@ export function PcActionsPanel({
         compendium={compendium}
         patch={patch}
         pcPlanId={pcPlanId}
+        onGoToCombatTab={onGoToCombatTab}
       />
-      <PcCombatModesPanel state={state} patch={patch} />
-      <PcConditionsPanel state={state} patch={patch} />
       <PcResourcesPanel state={state} patch={patch} />
 
       {itemSpellActions.length > 0 ? (
@@ -278,35 +308,32 @@ export function PcActionsPanel({
               </p>
             )}
 
-            <div className="pc-caster-level-override">
-              <label>
-                <span className="npc-sheet-sub">
-                  Caster level{" "}
-                  <span className="pc-derived-hint">
-                    {formatDerivedHint(
-                      spellClass.casterLevelOverride != null,
-                      spellClass.casterLevelOverride != null,
-                    )}
-                  </span>
+            <label className="pc-caster-level-override">
+              <span className="npc-sheet-sub">
+                Caster level{" "}
+                <span className="pc-derived-hint">
+                  {formatDerivedHint(
+                    spellClass.casterLevelOverride != null,
+                    spellClass.casterLevelOverride != null,
+                  )}
                 </span>
-                <span className="npc-sheet-sub">Auto {autoCasterLevel}</span>
-                <input
-                  type="number"
-                  className="pc-sheet-input pc-sheet-input--narrow"
-                  min={1}
-                  placeholder="Auto"
-                  value={spellClass.casterLevelOverride ?? ""}
-                  onChange={(e) =>
-                    patch((s) => {
-                      const row = s.spellClasses[activeSpellClassIndex];
-                      if (!row) return;
-                      row.casterLevelOverride =
-                        e.target.value === "" ? null : Number(e.target.value);
-                    })
-                  }
-                />
-              </label>
-            </div>
+              </span>
+              <input
+                type="number"
+                className="pc-sheet-input pc-sheet-input--narrow"
+                min={1}
+                placeholder={String(autoCasterLevel)}
+                value={spellClass.casterLevelOverride ?? ""}
+                onChange={(e) =>
+                  patch((s) => {
+                    const row = s.spellClasses[activeSpellClassIndex];
+                    if (!row) return;
+                    row.casterLevelOverride =
+                      e.target.value === "" ? null : Number(e.target.value);
+                  })
+                }
+              />
+            </label>
 
             {showSpecialist ? (
               <label className="pc-opposed-schools">
