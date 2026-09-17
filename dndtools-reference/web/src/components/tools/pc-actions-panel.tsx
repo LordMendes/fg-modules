@@ -76,10 +76,15 @@ function CombatSummary({
     deriveFeatEffects(state.feats),
   );
   const weapons = computeWeaponAttackRows(state, stats);
+  const [shortcutOpen, setShortcutOpen] = useState(true);
 
   return (
     <div className="npc-sheet-block pc-actions-combat">
-      <details className="pc-actions-combat-shortcut" defaultOpen>
+      <details
+        className="pc-actions-combat-shortcut"
+        open={shortcutOpen}
+        onToggle={(event) => setShortcutOpen(event.currentTarget.open)}
+      >
         <summary className="pc-actions-combat-shortcut-summary">
           <span className="pc-actions-combat-shortcut-summary-main">
             <span className="pc-actions-combat-shortcut-title">Combat shortcut</span>
