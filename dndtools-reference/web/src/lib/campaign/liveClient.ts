@@ -260,6 +260,30 @@ export function useLiveRolls(store: CampaignLiveStore) {
   return store.getState().rolls;
 }
 
+export function useLiveCombat(store: CampaignLiveStore) {
+  return useSyncExternalStore(
+    store.subscribe,
+    () => store.getState().combat,
+    () => store.getState().combat,
+  );
+}
+
+export function useLiveNpcLibrary(store: CampaignLiveStore) {
+  return useSyncExternalStore(
+    store.subscribe,
+    () => store.getState().npcLibrary,
+    () => store.getState().npcLibrary,
+  );
+}
+
+export function useLiveEncounters(store: CampaignLiveStore) {
+  return useSyncExternalStore(
+    store.subscribe,
+    () => store.getState().encounters,
+    () => store.getState().encounters,
+  );
+}
+
 export function useLiveActivity(store: CampaignLiveStore) {
   useLiveStoreVersion(store);
   return store.getState().activity;

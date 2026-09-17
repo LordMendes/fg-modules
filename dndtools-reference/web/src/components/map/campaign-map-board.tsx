@@ -1,6 +1,13 @@
 "use client";
 
+import { placeCombatantOnMapAction, spawnNpcOnMap } from "@/actions/combat";
+import { UNPLACED_COMBATANT_MIME } from "@/components/combat/unplaced-combat-tray";
+import { useCampaignLive } from "@/components/tools/campaign-live-provider";
 import type { LiveSend } from "@/lib/campaign/liveClient";
+import type { CampaignCombatView } from "@/lib/combat/types";
+import { unplacedNpcCombatants } from "@/lib/combat/types";
+import { UnplacedCombatTray } from "@/components/combat/unplaced-combat-tray";
+import { reachFeetToSquares } from "@/lib/combat/parseSpaceReach";
 import {
   type Camera,
   fitCameraToImage,
@@ -32,6 +39,7 @@ import {
   useState,
 } from "react";
 import { MapDrawLayer } from "./map-draw-layer";
+import { MapTargetingLayer } from "./map-targeting-layer";
 import { MapToken } from "./map-token";
 import { MapToolbar } from "./map-toolbar";
 import { MapViewportOverlay } from "./map-viewport-overlay";
@@ -76,6 +84,8 @@ type CampaignMapBoardProps = {
   viewportGoTo?: { x: number; y: number } | null;
   sendLive: LiveSend;
   connected: boolean;
+  combat?: CampaignCombatView | null;
+  onToggleCombatTarget?: (targetCombatantId: string) => void;
 };
 
 function viewportKey(campaignId: string) {
@@ -119,6 +129,12 @@ function simplifyStroke(points: MapPoint[], maxPoints = 200): MapPoint[] {
   return out;
 }
 
+type TokenMenuPatch =
+  | { layer: "gm" | "token" }
+  | { visibility: "always" | "mask" | "hidden" }
+  | { emitsLight: boolean; lightBright: number; lightDim: number }
+  | { remove: true };
+
 export function CampaignMapBoard({
   campaignId,
   map,
@@ -131,7 +147,10 @@ export function CampaignMapBoard({
   viewportGoTo,
   sendLive,
   connected,
+  combat = null,
+  onToggleCombatTarget,
 }: CampaignMapBoardProps) {
+  const { store } = useCampaignLive();
   const viewportRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
   const viewportLiveRef = useRef<ViewportState>({ x: 0, y: 0, scale: 1 });
@@ -1042,12 +1061,92 @@ export function CampaignMapBoard({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
+  const combatantForToken = useCallback(
+    (tokenId: string) =>
+      combat?.combatants.find((c) => c.tokenId === tokenId) ?? null,
+    [combat],
+  );
+
   const handleTokenClick = (e: React.MouseEvent, token: MapTokenView) => {
     if (tool !== "select") return;
     e.stopPropagation();
+    if ((e.ctrlKey || e.metaKey) && onToggleCombatTarget) {
+      const target = combatantForToken(token.id);
+      if (target) {
+        onToggleCombatTarget(target.id);
+        return;
+      }
+    }
     setSelectedTokenId(token.id);
     setSelectedDrawingId(null);
     setTokenMenu(null);
+  };
+
+  const handleMapDragOver = (e: React.DragEvent) => {
+    if (!isDm) return;
+    // During dragover Chromium often hides custom MIME types; accept when
+    // text/plain is present or the known custom types appear.
+    const types = Array.from(e.dataTransfer.types);
+    const maybeNpcDrop =
+      types.includes("text/plain") ||
+      types.includes("application/x-campaign-npc") ||
+      types.includes(UNPLACED_COMBATANT_MIME);
+    if (!maybeNpcDrop) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = types.includes(UNPLACED_COMBATANT_MIME)
+      ? "move"
+      : "copy";
+  };
+
+  const handleMapDrop = (e: React.DragEvent) => {
+    if (!isDm) return;
+
+    const plain = e.dataTransfer.getData("text/plain").trim();
+    const unplacedRaw =
+      e.dataTransfer.getData(UNPLACED_COMBATANT_MIME) ||
+      (plain.startsWith("unplaced-combatant:")
+        ? JSON.stringify({
+            combatantId: plain.slice("unplaced-combatant:".length),
+          })
+        : "");
+    if (unplacedRaw) {
+      e.preventDefault();
+      let combatantId: string | null = null;
+      try {
+        const parsed = JSON.parse(unplacedRaw) as { combatantId?: string };
+        combatantId = parsed.combatantId ?? null;
+      } catch {
+        return;
+      }
+      if (!combatantId) return;
+      const pt = clientToGrid(e.clientX, e.clientY);
+      void placeCombatantOnMapAction(
+        campaignId,
+        map.id,
+        combatantId,
+        pt.x,
+        pt.y,
+      );
+      return;
+    }
+
+    const raw =
+      e.dataTransfer.getData("application/x-campaign-npc") ||
+      (plain.startsWith("campaign-npc:")
+        ? JSON.stringify({ npcId: plain.slice("campaign-npc:".length) })
+        : "");
+    if (!raw) return;
+    e.preventDefault();
+    let npcId: string | null = null;
+    try {
+      const parsed = JSON.parse(raw) as { npcId?: string };
+      npcId = parsed.npcId ?? null;
+    } catch {
+      return;
+    }
+    if (!npcId) return;
+    const pt = clientToGrid(e.clientX, e.clientY);
+    void spawnNpcOnMap(campaignId, map.id, npcId, pt.x, pt.y);
   };
 
   const handleTokenDoubleClick = (
@@ -1070,6 +1169,35 @@ export function CampaignMapBoard({
     setSelectedTokenId(token.id);
     setTokenMenu({ tokenId: token.id, x: e.clientX, y: e.clientY });
   };
+
+  const tokenMenuToken = useMemo(
+    () =>
+      tokenMenu
+        ? (displayTokens.find((t) => t.id === tokenMenu.tokenId) ?? null)
+        : null,
+    [tokenMenu, displayTokens],
+  );
+
+  const applyTokenMenuAction = useCallback(
+    (tokenId: string, patch: TokenMenuPatch) => {
+      if ("remove" in patch) {
+        store.applyEvent({ type: "mapTokenRemove", tokenId });
+        sendLive({ type: "mapTokenRemove", tokenId });
+        setTokenMenu(null);
+        return;
+      }
+      const token = displayTokens.find((t) => t.id === tokenId);
+      if (!token) {
+        setTokenMenu(null);
+        return;
+      }
+      const next = { ...token, ...patch };
+      store.applyEvent({ type: "mapTokenUpsert", token: next });
+      sendLive({ type: "mapTokenUpsert", tokenId, ...patch });
+      setTokenMenu(null);
+    },
+    [displayTokens, sendLive, store],
+  );
 
   const handleShapePointerDown = (
     e: React.PointerEvent,
@@ -1142,6 +1270,9 @@ export function CampaignMapBoard({
           Reconnecting to live map…
         </div>
       ) : null}
+      {isDm ? (
+        <UnplacedCombatTray combatants={unplacedNpcCombatants(combat ?? null)} />
+      ) : null}
       <div
         ref={viewportRef}
         className="campaign-map-viewport"
@@ -1154,6 +1285,8 @@ export function CampaignMapBoard({
         onPointerUp={handleBoardPointerUp}
         onPointerLeave={handleBoardPointerUp}
         onContextMenu={(e) => e.preventDefault()}
+        onDragOver={handleMapDragOver}
+        onDrop={handleMapDrop}
       >
         <MapViewportOverlay
           camera={viewport}
@@ -1279,8 +1412,32 @@ export function CampaignMapBoard({
             ) : null}
           </svg>
 
+          <MapTargetingLayer
+            tokens={displayTokens}
+            grid={grid}
+            imageWidth={map.imageWidth}
+            imageHeight={map.imageHeight}
+            actor={
+              combat?.currentCombatantId
+                ? combat.combatants.find(
+                    (c) => c.id === combat.currentCombatantId,
+                  ) ?? null
+                : null
+            }
+            combatants={combat?.combatants ?? []}
+          />
+
           <div className="map-token-layer">
-            {tokenLayer.map((token) => (
+            {tokenLayer.map((token) => {
+              const combatant = combatantForToken(token.id);
+              const reachSquares = combatant
+                ? Math.max(
+                    0,
+                    reachFeetToSquares(combatant.reachFeet, map.scaleFeet) -
+                      token.width,
+                  )
+                : 0;
+              return (
               <MemoMapToken
                 key={token.id}
                 token={token}
@@ -1288,6 +1445,8 @@ export function CampaignMapBoard({
                 selected={selectedTokenId === token.id}
                 canMove={canMoveToken(token, isDm, viewerUserId)}
                 isDm={isDm}
+                showReach={selectedTokenId === token.id}
+                reachSquares={reachSquares}
                 onPointerDown={handleTokenPointerDown}
                 onPointerMove={handleTokenPointerMove}
                 onPointerUp={handleTokenPointerUp}
@@ -1295,7 +1454,8 @@ export function CampaignMapBoard({
                 onDoubleClick={handleTokenDoubleClick}
                 onContextMenu={handleTokenContextMenu}
               />
-            ))}
+              );
+            })}
           </div>
 
           {isDm ? (
@@ -1373,119 +1533,127 @@ export function CampaignMapBoard({
           className="map-token-menu"
           style={{ left: tokenMenu.x, top: tokenMenu.y }}
           role="menu"
+          onPointerDown={(e) => e.stopPropagation()}
         >
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
-                layer: "gm",
-              });
-              setTokenMenu(null);
-            }}
+            className={
+              tokenMenuToken?.layer === "gm"
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.layer === "gm"}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, { layer: "gm" })
+            }
           >
             Move to GM layer
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
-                layer: "token",
-              });
-              setTokenMenu(null);
-            }}
+            className={
+              tokenMenuToken?.layer === "token"
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.layer === "token"}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, { layer: "token" })
+            }
           >
             Reveal to players
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
-                visibility: "always",
-              });
-              setTokenMenu(null);
-            }}
+            className={
+              tokenMenuToken?.visibility === "always"
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.visibility === "always"}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, { visibility: "always" })
+            }
           >
             Visible always
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
-                visibility: "mask",
-              });
-              setTokenMenu(null);
-            }}
+            className={
+              tokenMenuToken?.visibility === "mask"
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.visibility === "mask"}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, { visibility: "mask" })
+            }
           >
             Mask-sensitive
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
-                visibility: "hidden",
-              });
-              setTokenMenu(null);
-            }}
+            className={
+              tokenMenuToken?.visibility === "hidden"
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.visibility === "hidden"}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, { visibility: "hidden" })
+            }
           >
             Hidden
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
+            className={
+              tokenMenuToken?.emitsLight
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.emitsLight === true}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, {
                 emitsLight: true,
                 lightBright: 20,
                 lightDim: 20,
-              });
-              setTokenMenu(null);
-            }}
+              })
+            }
           >
             Torch on
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenUpsert",
-                tokenId: tokenMenu.tokenId,
+            className={
+              tokenMenuToken && !tokenMenuToken.emitsLight
+                ? "map-token-menu-item--active"
+                : undefined
+            }
+            aria-checked={tokenMenuToken?.emitsLight === false}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, {
                 emitsLight: false,
                 lightBright: 0,
                 lightDim: 0,
-              });
-              setTokenMenu(null);
-            }}
+              })
+            }
           >
             Torch off
           </button>
           <button
             type="button"
             role="menuitem"
-            onClick={() => {
-              sendLive({
-                type: "mapTokenRemove",
-                tokenId: tokenMenu.tokenId,
-              });
-              setTokenMenu(null);
-            }}
+            onClick={() =>
+              applyTokenMenuAction(tokenMenu.tokenId, { remove: true })
+            }
           >
             Remove token
           </button>

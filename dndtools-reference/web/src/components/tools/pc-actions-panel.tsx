@@ -45,16 +45,19 @@ export type PcActionsPanelProps = {
   onAddSpell: (slug: string, name: string, level: number) => void;
   onRemoveSpell: (slug: string) => void;
   onUpdateSpellPrepared: (slug: string, prepared: number) => void;
+  pcPlanId?: string | null;
 };
 
 function CombatSummary({
   state,
   compendium,
   patch,
+  pcPlanId,
 }: {
   state: PcPlanState;
   compendium: PcCompendiumBundle | null;
   patch: PcActionsPanelProps["patch"];
+  pcPlanId?: string | null;
 }) {
   const classFeatures = resolveClassFeaturesForPlan(compendium, state);
   const stats = computeCombatStats(
@@ -124,7 +127,7 @@ function CombatSummary({
 
       <div className="pc-actions-weapons">
         <h4 className="pc-actions-weapons-heading">Weapons</h4>
-        <PcWeaponAttacksList weapons={weapons} />
+        <PcWeaponAttacksList weapons={weapons} pcPlanId={pcPlanId} />
       </div>
 
       <label className="pc-actions-attacks">
@@ -154,6 +157,7 @@ export function PcActionsPanel({
   onAddSpell,
   onRemoveSpell,
   onUpdateSpellPrepared,
+  pcPlanId = null,
 }: PcActionsPanelProps) {
   const [pendingSpellLevel, setPendingSpellLevel] = useState(1);
   const [spellPickerOpen, setSpellPickerOpen] = useState(false);
@@ -209,7 +213,12 @@ export function PcActionsPanel({
 
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-actions-panel" role="tabpanel">
-      <CombatSummary state={state} compendium={compendium} patch={patch} />
+      <CombatSummary
+        state={state}
+        compendium={compendium}
+        patch={patch}
+        pcPlanId={pcPlanId}
+      />
       <PcCombatModesPanel state={state} patch={patch} />
       <PcConditionsPanel state={state} patch={patch} />
       <PcResourcesPanel state={state} patch={patch} />

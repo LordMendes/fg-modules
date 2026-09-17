@@ -18,7 +18,7 @@ type RollableStatProps = {
 
 /**
  * Clickable sheet total that throws 1d20 + modifier through the dice tray.
- * Hold Ctrl/Cmd in a campaign to make the roll DM-only (hidden).
+ * Hold Shift in a campaign to make the roll DM-only (hidden).
  */
 export function RollableStat({
   label,
@@ -33,8 +33,7 @@ export function RollableStat({
   const disabled = !ready || rolling;
 
   function onClick(e: MouseEvent<HTMLButtonElement>) {
-    const hidden = isCampaign && (e.ctrlKey || e.metaKey || secretModifierHeld);
-    void hidden;
+    void (isCampaign && (e.shiftKey || secretModifierHeld));
     rollCheck(label, modifier, kind);
   }
 
@@ -47,7 +46,7 @@ export function RollableStat({
       title={
         ready
           ? `Roll ${label}: 1d20 ${formatModifier(modifier)}${
-              isCampaign ? " (Ctrl+click to hide from players)" : ""
+              isCampaign ? " (Shift+click to hide from players)" : ""
             }`
           : "Dice loading…"
       }

@@ -139,6 +139,9 @@ export function filterLiveEventForViewer(
       if (!roll) return null;
       return { type: "roll", roll };
     }
+    case "npcLibrarySnapshot":
+    case "encountersSnapshot":
+      return viewer.isDm ? event : null;
     default:
       return event;
   }

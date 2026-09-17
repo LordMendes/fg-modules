@@ -17,6 +17,10 @@ import { DiceCanvas } from "@/components/dice/dice-canvas";
 import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
+import { CampaignCombatDrawer } from "@/components/combat/campaign-combat-drawer";
+import { CampaignNpcsDrawer } from "@/components/combat/campaign-npcs-drawer";
+import { CombatProvider } from "@/components/combat/combat-context";
+import { combatToggleTarget } from "@/actions/combat";
 import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
 import { CampaignMapBoard } from "@/components/map/campaign-map-board";
 import type { MapPing } from "@/components/map/campaign-map-board";
@@ -31,7 +35,10 @@ import {
 } from "@/lib/campaign/immersive";
 import {
   useLiveActivity,
+  useLiveCombat,
+  useLiveEncounters,
   useLiveMap,
+  useLiveNpcLibrary,
   useLivePcUpdated,
   useLivePresence,
   useLiveStoreVersion,
@@ -52,9 +59,17 @@ import {
 } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronsLeft, ChevronsRight, MapPinned, ScrollText, Users } from "lucide-react";
+import {
+  ChevronsLeft,
+  ChevronsRight,
+  MapPinned,
+  ScrollText,
+  Skull,
+  Swords,
+  Users,
+} from "lucide-react";
 
-type MenuId = "roster" | "logs" | "maps" | null;
+type MenuId = "roster" | "logs" | "maps" | "combat" | "npcs" | null;
 
 const RAIL_EXPANDED_KEY = "campaign-table-rail-expanded";
 
@@ -151,18 +166,42 @@ function CampaignRail({
         <ScrollText size={20} aria-hidden />
         <span className="campaign-rail-btn-label">Logs</span>
       </button>
+      <button
+        type="button"
+        className={`campaign-rail-btn${activeMenu === "combat" ? " campaign-rail-btn--active" : ""}`}
+        aria-pressed={activeMenu === "combat"}
+        aria-label={railExpanded ? undefined : "Combat tracker"}
+        title="Combat tracker"
+        onClick={() => onSelectMenu(activeMenu === "combat" ? null : "combat")}
+      >
+        <Swords size={20} aria-hidden />
+        <span className="campaign-rail-btn-label">Combat</span>
+      </button>
       {isDm ? (
-        <button
-          type="button"
-          className={`campaign-rail-btn${activeMenu === "maps" ? " campaign-rail-btn--active" : ""}`}
-          aria-pressed={activeMenu === "maps"}
-          aria-label={railExpanded ? undefined : "Map scenes"}
-          title="Map scenes"
-          onClick={() => onSelectMenu(activeMenu === "maps" ? null : "maps")}
-        >
-          <MapPinned size={20} aria-hidden />
-          <span className="campaign-rail-btn-label">Maps</span>
-        </button>
+        <>
+          <button
+            type="button"
+            className={`campaign-rail-btn${activeMenu === "npcs" ? " campaign-rail-btn--active" : ""}`}
+            aria-pressed={activeMenu === "npcs"}
+            aria-label={railExpanded ? undefined : "NPC library"}
+            title="NPC library"
+            onClick={() => onSelectMenu(activeMenu === "npcs" ? null : "npcs")}
+          >
+            <Skull size={20} aria-hidden />
+            <span className="campaign-rail-btn-label">NPCs</span>
+          </button>
+          <button
+            type="button"
+            className={`campaign-rail-btn${activeMenu === "maps" ? " campaign-rail-btn--active" : ""}`}
+            aria-pressed={activeMenu === "maps"}
+            aria-label={railExpanded ? undefined : "Map scenes"}
+            title="Map scenes"
+            onClick={() => onSelectMenu(activeMenu === "maps" ? null : "maps")}
+          >
+            <MapPinned size={20} aria-hidden />
+            <span className="campaign-rail-btn-label">Maps</span>
+          </button>
+        </>
       ) : null}
     </nav>
   );
@@ -296,6 +335,19 @@ function CampaignTableBody({
   const liveActivityList = useLiveActivity(store);
   const pcUpdatedEvent = useLivePcUpdated(store);
   const liveMapFromStore = useLiveMap(store);
+  const liveCombat = useLiveCombat(store);
+  const liveNpcLibrary = useLiveNpcLibrary(store);
+  const liveEncounters = useLiveEncounters(store);
+  const combat = liveCombat ?? table.combat;
+  const npcLibrary =
+    liveNpcLibrary.length > 0 ? liveNpcLibrary : table.npcLibrary;
+  const encounters =
+    liveEncounters.length > 0 ? liveEncounters : table.encounters;
+  const viewerPcPlanId =
+    table.pcs.find((p) => p.userId === user.id)?.pcPlanId ?? null;
+  const [pendingDamageTargets, setPendingDamageTargets] = useState<
+    import("@/lib/combat/types").CombatantView[]
+  >([]);
   // Store is source of truth after connect; HTTP snapshot is the fallback.
   const liveMap = liveMapFromStore ?? table.liveMap;
   const rosterPcs =
@@ -539,7 +591,14 @@ function CampaignTableBody({
       : `/tools/campaign?join=${table.joinCode}`;
 
   return (
-    <>
+    <CombatProvider
+      campaignId={table.id}
+      combat={combat}
+      isDm={isDm}
+      viewerPcPlanId={viewerPcPlanId}
+      pendingDamageTargets={pendingDamageTargets}
+      setPendingDamageTargets={setPendingDamageTargets}
+    >
       <div className="campaign-stage">
         {error ? <p className="tool-error campaign-stage-error">{error}</p> : null}
 
@@ -555,6 +614,27 @@ function CampaignTableBody({
             activities={activities}
             loading={activitiesLoading}
             onClose={() => setActiveMenu(null)}
+          />
+        ) : null}
+
+        {activeMenu === "combat" ? (
+          <CampaignCombatDrawer
+            combat={combat}
+            isDm={isDm}
+            viewerPcPlanId={viewerPcPlanId}
+            campaignId={table.id}
+            onClose={() => setActiveMenu(null)}
+            onOpenNpcs={() => setActiveMenu("npcs")}
+          />
+        ) : null}
+
+        {activeMenu === "npcs" && isDm ? (
+          <CampaignNpcsDrawer
+            campaignId={table.id}
+            npcLibrary={npcLibrary}
+            encounters={encounters}
+            onClose={() => setActiveMenu(null)}
+            onOpenCombat={() => setActiveMenu("combat")}
           />
         ) : null}
 
@@ -582,7 +662,7 @@ function CampaignTableBody({
                 <div>
                   <h2 className="campaign-drawer-title">{table.name}</h2>
                   <p className="campaign-drawer-sub">
-                    You are {isDm ? "the DM" : "a player"} · Hold Ctrl (Cmd on Mac) while rolling
+                    You are {isDm ? "the DM" : "a player"} · Hold Shift while rolling
                     to hide the result from other players
                   </p>
                 </div>
@@ -913,6 +993,10 @@ function CampaignTableBody({
             viewportGoTo={viewportGoTo}
             sendLive={sendLive}
             connected={connected}
+            combat={combat}
+            onToggleCombatTarget={(targetId) => {
+              void combatToggleTarget(table.id, targetId);
+            }}
           />
         ) : null}
 
@@ -957,6 +1041,6 @@ function CampaignTableBody({
       <DiceCanvas />
       <DiceTray />
       <DiceLogTray />
-    </>
+    </CombatProvider>
   );
 }

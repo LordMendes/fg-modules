@@ -28,6 +28,11 @@ import { syncPcPlanState } from "@/lib/pc-planner/syncState";
 import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import type { DicePoolItem, RollKind } from "@/lib/dice/types";
+import {
+  loadCombatForViewer,
+  loadEncounters,
+  loadNpcLibrary,
+} from "@/lib/combat/loadCombat";
 import { loadLiveMapForCampaign } from "@/lib/map/mapView";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 import type { Prisma } from "@/generated/prisma/client";
@@ -202,6 +207,23 @@ async function buildTableState(
         })
       : { liveMap: null, maps: [] as { id: string; name: string }[] };
 
+  const pcLink = campaign.pcs.find((p) => p.userId === user.id);
+  const combatState =
+    me.status === "active"
+      ? await loadCombatForViewer(campaignId, {
+          isDm,
+          pcPlanId: pcLink?.pcPlanId ?? null,
+        })
+      : null;
+  const npcLibrary =
+    me.status === "active" && isDm
+      ? await loadNpcLibrary(campaignId)
+      : [];
+  const encounters =
+    me.status === "active" && isDm
+      ? await loadEncounters(campaignId)
+      : [];
+
   return {
     id: campaign.id,
     name: campaign.name,
@@ -214,6 +236,9 @@ async function buildTableState(
     rolls,
     liveMap: mapState.liveMap,
     maps: mapState.maps,
+    combat: combatState,
+    npcLibrary,
+    encounters,
   };
 }
 

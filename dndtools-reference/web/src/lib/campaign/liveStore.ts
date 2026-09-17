@@ -11,6 +11,7 @@ import type {
   CampaignRollView,
   CampaignTableState,
 } from "@/lib/campaign/types";
+import type { CampaignCombatView } from "@/lib/combat/types";
 import type {
   CampaignMapListItem,
   CampaignMapView,
@@ -47,6 +48,9 @@ export type LiveStoreState = {
   selfMoves: Map<string, number>;
   viewerUserId: string;
   connected: boolean;
+  combat: CampaignCombatView | null;
+  npcLibrary: CampaignTableState["npcLibrary"];
+  encounters: CampaignTableState["encounters"];
 };
 
 type Listener = () => void;
@@ -78,6 +82,9 @@ export function createLiveStore(initial: {
     selfMoves: new Map(),
     viewerUserId: initial.viewerUserId,
     connected: false,
+    combat: initial.table.combat,
+    npcLibrary: initial.table.npcLibrary,
+    encounters: initial.table.encounters,
   };
 
   const listeners = new Set<Listener>();
@@ -163,6 +170,9 @@ export function createLiveStore(initial: {
       liveMap: next.liveMap,
       maps: next.maps,
       rolls: next.rolls,
+      combat: next.combat,
+      npcLibrary: next.npcLibrary,
+      encounters: next.encounters,
       tokens: keepTokens ? prev.tokens : tokensFromMap(next.liveMap),
     };
     if (!sameLive || !keepTokens) {
@@ -325,6 +335,31 @@ export function createLiveStore(initial: {
       case "mapAoeClear":
         state = { ...state, aoePointers: [] };
         notify({ tokens: true });
+        return;
+      case "combatSnapshot":
+        state = { ...state, combat: event.combat };
+        notify();
+        return;
+      case "npcLibrarySnapshot":
+        state = { ...state, npcLibrary: event.npcLibrary };
+        notify();
+        return;
+      case "encountersSnapshot":
+        state = { ...state, encounters: event.encounters };
+        notify();
+        return;
+      case "combatantRemove":
+        if (!state.combat) return;
+        state = {
+          ...state,
+          combat: {
+            ...state.combat,
+            combatants: state.combat.combatants.filter(
+              (c) => c.id !== event.combatantId,
+            ),
+          },
+        };
+        notify();
         return;
       default: {
         // Structural map updates (fog, drawings, lights, flags, grid, occluders).

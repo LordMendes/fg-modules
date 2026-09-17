@@ -80,7 +80,7 @@ type DiceContextValue = {
   /** Clear request after canvas consumes it (or on failure). */
   acknowledgeRollStart: () => void;
   clearSignal: number;
-  /** Ctrl/Cmd held: next roll is hidden (campaign). */
+  /** Shift held: next roll is hidden (campaign). */
   secretModifierHeld: boolean;
   /** Actor defaults for campaign rolls. */
   defaultActor: RollActor | null;
@@ -178,11 +178,11 @@ export function DiceProvider({
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Control" || e.key === "Meta") setSecretModifierHeld(true);
+      if (e.key === "Shift") setSecretModifierHeld(true);
     }
     function onKeyUp(e: KeyboardEvent) {
-      if (e.key === "Control" || e.key === "Meta") {
-        setSecretModifierHeld(e.ctrlKey || e.metaKey);
+      if (e.key === "Shift") {
+        setSecretModifierHeld(e.shiftKey);
       }
     }
     function onBlur() {

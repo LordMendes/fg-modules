@@ -1090,6 +1090,10 @@ export async function mutateRemoveToken(
   await prisma.campaignMapToken.delete({ where: { id: tokenId } });
   publishCampaignLive(actor.campaignId, { type: "mapTokenRemove", tokenId });
 
+  // Detach linked combatant (onDelete: SetNull) and refresh CT / unplaced tray.
+  const { publishCombatSnapshot } = await import("@/lib/combat/combatMutations");
+  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+
   return { success: true };
 }
 

@@ -138,4 +138,23 @@ describe("filterLiveEventForViewer", () => {
     assert.equal(filterLiveEventForViewer("player", event, ctx), null);
     assert.ok(filterLiveEventForViewer("dm", event, ctx));
   });
+
+  it("hides encounter and npc library snapshots from players", () => {
+    const ctx = filterContextFromMap("dm", null);
+    const npcEvent = {
+      type: "npcLibrarySnapshot" as const,
+      npcLibrary: [],
+    };
+    const encounterEvent = {
+      type: "encountersSnapshot" as const,
+      encounters: [],
+    };
+    assert.equal(filterLiveEventForViewer("player", npcEvent, ctx), null);
+    assert.equal(filterLiveEventForViewer("player", encounterEvent, ctx), null);
+    assert.deepEqual(filterLiveEventForViewer("dm", npcEvent, ctx), npcEvent);
+    assert.deepEqual(
+      filterLiveEventForViewer("dm", encounterEvent, ctx),
+      encounterEvent,
+    );
+  });
 });

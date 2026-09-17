@@ -59,6 +59,9 @@ function table(): CampaignTableState {
       lights: [],
     },
     maps: [],
+    combat: null,
+    npcLibrary: [],
+    encounters: [],
   };
 }
 
@@ -109,5 +112,80 @@ describe("liveStore", () => {
     });
     assert.equal(store.getTokenVersion(), tokenV0);
     assert.ok(store.getPcVersion() > pcV0);
+  });
+
+  it("mapTokenUpsert updates token layer, visibility, and torch on live map", () => {
+    const store = createLiveStore({ table: table(), viewerUserId: "dm" });
+    const base = store.getState().tokens.get("t1")!;
+
+    store.applyEvent({
+      type: "mapTokenUpsert",
+      token: { ...base, layer: "gm" },
+    });
+    assert.equal(store.getState().liveMap?.tokens[0]?.layer, "gm");
+    assert.equal(store.getState().tokens.get("t1")!.layer, "gm");
+
+    store.applyEvent({
+      type: "mapTokenUpsert",
+      token: { ...base, layer: "token", visibility: "hidden" },
+    });
+    assert.equal(store.getState().liveMap?.tokens[0]?.visibility, "hidden");
+
+    store.applyEvent({
+      type: "mapTokenUpsert",
+      token: {
+        ...base,
+        emitsLight: true,
+        lightBright: 20,
+        lightDim: 20,
+      },
+    });
+    assert.equal(store.getState().tokens.get("t1")!.emitsLight, true);
+    assert.equal(store.getState().tokens.get("t1")!.lightBright, 20);
+  });
+
+  it("mapTokenRemove drops token from live map", () => {
+    const store = createLiveStore({ table: table(), viewerUserId: "dm" });
+    store.applyEvent({ type: "mapTokenRemove", tokenId: "t1" });
+    assert.equal(store.getState().liveMap?.tokens.length, 0);
+    assert.equal(store.getState().tokens.has("t1"), false);
+  });
+
+  it("applies encounter and npc library snapshots", () => {
+    const store = createLiveStore({ table: table(), viewerUserId: "dm" });
+    store.applyEvent({
+      type: "npcLibrarySnapshot",
+      npcLibrary: [
+        {
+          id: "n1",
+          name: "Goblin",
+          faction: "foe",
+          source: "monster",
+          monsterSlug: "goblin",
+          snapshot: {},
+          imageUrl: null,
+          hpMax: 5,
+          ac: 15,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          initMod: 1,
+        },
+      ],
+    });
+    store.applyEvent({
+      type: "encountersSnapshot",
+      encounters: [
+        {
+          id: "e1",
+          name: "Ambush",
+          updatedAt: "2020-01-01T00:00:00.000Z",
+          creatureCount: 2,
+          entries: [],
+        },
+      ],
+    });
+    assert.equal(store.getState().npcLibrary[0]?.name, "Goblin");
+    assert.equal(store.getState().encounters[0]?.name, "Ambush");
   });
 });

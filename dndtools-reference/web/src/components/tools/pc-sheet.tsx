@@ -1132,6 +1132,7 @@ export function PcSheet({
             onAddSpell={onAddSpell}
             onRemoveSpell={onRemoveSpell}
             onUpdateSpellPrepared={onUpdateSpellPrepared}
+            pcPlanId={planId ?? null}
           />
         )}
       </div>

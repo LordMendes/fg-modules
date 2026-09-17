@@ -566,6 +566,9 @@ model Campaign {
   maps       CampaignMap[]
   liveMapId  String?
   liveMap    CampaignMap?       @relation("CampaignLiveMap", fields: [liveMapId], references: [id], onDelete: SetNull)
+  npcs       CampaignNpc[]
+  combat     CampaignCombat?
+  encounters CampaignEncounter[]
 
   @@index([dmUserId])
 }
@@ -634,8 +637,110 @@ model CampaignMapToken {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
+  campaignNpcId String?
+  campaignNpc   CampaignNpc? @relation(fields: [campaignNpcId], references: [id], onDelete: SetNull)
+  combatant     CampaignCombatant?
+
   @@index([mapId])
   @@index([pcPlanId])
+  @@index([campaignNpcId])
+}
+
+model CampaignNpc {
+  id          String                   @id @default(cuid())
+  campaignId  String
+  campaign    Campaign                 @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  name        String
+  /// friend | foe | neutral
+  faction     String                   @default("foe")
+  /// template | monster | adhoc
+  source      String                   @default("adhoc")
+  monsterSlug String?
+  snapshot    Json                     @default("{}")
+  imageKey    String?
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+  tokens      CampaignMapToken[]
+  combatants  CampaignCombatant[]
+  encounterEntries CampaignEncounterEntry[]
+
+  @@index([campaignId])
+}
+
+model CampaignEncounter {
+  id         String                   @id @default(cuid())
+  campaignId String
+  campaign   Campaign                 @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  name       String
+  createdAt  DateTime                 @default(now())
+  updatedAt  DateTime                 @updatedAt
+  entries    CampaignEncounterEntry[]
+
+  @@index([campaignId])
+}
+
+model CampaignEncounterEntry {
+  id            String            @id @default(cuid())
+  encounterId   String
+  encounter     CampaignEncounter @relation(fields: [encounterId], references: [id], onDelete: Cascade)
+  campaignNpcId String
+  campaignNpc   CampaignNpc     @relation(fields: [campaignNpcId], references: [id], onDelete: Cascade)
+  quantity      Int               @default(1)
+  seq           Int               @default(0)
+
+  @@unique([encounterId, campaignNpcId])
+  @@index([encounterId])
+  @@index([campaignNpcId])
+}
+
+model CampaignCombat {
+  id                   String                @id @default(cuid())
+  campaignId           String                @unique
+  campaign             Campaign              @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  round                Int                   @default(1)
+  currentCombatantId   String?
+  active               Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  combatants           CampaignCombatant[]
+}
+
+model CampaignCombatant {
+  id               String          @id @default(cuid())
+  combatId         String
+  combat           CampaignCombat  @relation(fields: [combatId], references: [id], onDelete: Cascade)
+  /// pc | npc
+  kind             String
+  tokenId          String?         @unique
+  token            CampaignMapToken? @relation(fields: [tokenId], references: [id], onDelete: SetNull)
+  pcPlanId         String?
+  campaignNpcId    String?
+  campaignNpc      CampaignNpc?    @relation(fields: [campaignNpcId], references: [id], onDelete: SetNull)
+  name             String
+  /// friend | foe | neutral
+  faction          String          @default("foe")
+  init             Float           @default(0)
+  initMod          Int             @default(0)
+  hpMax            Int             @default(1)
+  hpTemp           Int             @default(0)
+  wounds           Int             @default(0)
+  ac               Int             @default(10)
+  acTouch          Int?
+  acFlat           Int?
+  spaceSquares     Float           @default(1)
+  reachFeet        Float           @default(5)
+  attacks          Json            @default("[]")
+  targetIds        Json            @default("[]")
+  visibleToPlayers Boolean         @default(true)
+  identified       Boolean         @default(true)
+  snapshot         Json            @default("{}")
+  seq              Int             @default(0)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@index([combatId])
+  @@index([pcPlanId])
+  @@index([campaignNpcId])
 }
 
 model CampaignMapFogRegion {

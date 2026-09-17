@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDice } from "@/components/dice/dice-provider";
 import { createRollId, iterativeD20Checks } from "@/lib/dice/notation";
 import { damageTypeTone } from "@/lib/dice/damageTypeColors";
+import { useCombatContext } from "@/components/combat/combat-context";
 import {
   applyCriticalDamage,
   formatCritSuffix,
@@ -16,6 +17,7 @@ import {
 
 export type PcWeaponAttacksListProps = {
   weapons: WeaponAttackRow[];
+  pcPlanId?: string | null;
 };
 
 type AttackMode = "standard" | "full";
@@ -116,8 +118,12 @@ function twfHandLabel(hand: WeaponAttackRow["twfHand"]): string | null {
   return null;
 }
 
-export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
+export function PcWeaponAttacksList({
+  weapons,
+  pcPlanId = null,
+}: PcWeaponAttacksListProps) {
   const { roll, rolling, ready } = useDice();
+  const combatCtx = useCombatContext();
   const [pendingCrits, setPendingCrits] = useState<Record<number, PendingCrit>>(
     {},
   );
@@ -173,6 +179,12 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
     }));
 
     roll(iterativeD20Checks(label, bonuses, "attack"), (result) => {
+      if (combatCtx && pcPlanId) {
+        const totals =
+          result.attackTotals ??
+          (result.total != null ? [result.total] : []);
+        combatCtx.resolveAttackTotals(pcPlanId, totals, label);
+      }
       const threatening = result.faces.filter((face) =>
         isCriticalThreat(face, weapon.threatMin),
       );
@@ -233,8 +245,15 @@ export function PcWeaponAttacksList({ weapons }: PcWeaponAttacksListProps) {
         modifier: scaled.modifier,
         kind: "damage",
       },
-      () => {
+      (result) => {
         if (pending) clearPending(weapon.inventoryIndex);
+        if (combatCtx && combatCtx.pendingDamageTargets.length > 0) {
+          const dmg = result.total ?? 0;
+          for (const t of combatCtx.pendingDamageTargets) {
+            void combatCtx.applyDamage(t.id, dmg);
+          }
+          combatCtx.setPendingDamageTargets([]);
+        }
       },
     );
   }

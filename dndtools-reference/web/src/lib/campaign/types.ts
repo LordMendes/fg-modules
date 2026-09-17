@@ -1,5 +1,10 @@
 import type { DicePoolItem, RollKind, RollResult } from "@/lib/dice/types";
 import type {
+  CampaignCombatView,
+  CampaignEncounterView,
+  CampaignNpcView,
+} from "@/lib/combat/types";
+import type {
   CampaignMapListItem,
   CampaignMapView,
   MapAoePointerView,
@@ -57,6 +62,9 @@ export type CampaignTableState = {
   rolls: CampaignRollView[];
   liveMap: CampaignMapView | null;
   maps: CampaignMapListItem[];
+  combat: CampaignCombatView | null;
+  npcLibrary: CampaignNpcView[];
+  encounters: CampaignEncounterView[];
 };
 
 export type CampaignRollActor = {
@@ -206,7 +214,9 @@ export type ClientLiveMessage =
       lightBright?: number;
       lightDim?: number;
     }
-  | { type: "mapTokenRemove"; tokenId: string };
+  | { type: "mapTokenRemove"; tokenId: string }
+  | { type: "combatToggleTarget"; combatantId: string; targetId: string }
+  | { type: "combatNextTurn" };
 
 export type CampaignLiveEvent =
   | CampaignRollEvent
@@ -257,7 +267,12 @@ export type CampaignLiveEvent =
       lightingEnabled: boolean;
       daylight: number;
       explorerEnabled: boolean;
-    };
+    }
+  | { type: "combatSnapshot"; combat: CampaignCombatView | null }
+  | { type: "combatantUpsert"; combatantId: string }
+  | { type: "combatantRemove"; combatantId: string }
+  | { type: "npcLibrarySnapshot"; npcLibrary: CampaignNpcView[] }
+  | { type: "encountersSnapshot"; encounters: CampaignEncounterView[] };
 
 export type StartCampaignRollInput = {
   campaignId: string;

@@ -10,6 +10,9 @@ type MapTokenProps = {
   selected: boolean;
   canMove: boolean;
   isDm?: boolean;
+  /** Extra reach beyond token footprint, in grid squares. */
+  reachSquares?: number;
+  showReach?: boolean;
   onPointerDown?: (e: React.PointerEvent, token: MapTokenView) => void;
   onPointerMove?: (e: React.PointerEvent, token: MapTokenView) => void;
   onPointerUp?: (e: React.PointerEvent, token: MapTokenView) => void;
@@ -24,6 +27,8 @@ export function MapToken({
   selected,
   canMove,
   isDm,
+  reachSquares = 0,
+  showReach = false,
   onPointerDown,
   onPointerMove,
   onPointerUp,
@@ -34,6 +39,10 @@ export function MapToken({
   const topLeft = gridToPixels(token.x, token.y, grid);
   const widthPx = token.width * grid.gridSizePx;
   const heightPx = token.height * grid.gridSizePx;
+  const reachPx =
+    showReach && reachSquares > 0
+      ? reachSquares * grid.gridSizePx
+      : 0;
 
   return (
     <div
@@ -64,6 +73,18 @@ export function MapToken({
       tabIndex={0}
       aria-label={token.name}
     >
+      {reachPx > 0 ? (
+        <span
+          className="map-token-reach"
+          style={{
+            width: widthPx + reachPx * 2,
+            height: heightPx + reachPx * 2,
+            left: -reachPx,
+            top: -reachPx,
+          }}
+          aria-hidden
+        />
+      ) : null}
       {token.imageUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img

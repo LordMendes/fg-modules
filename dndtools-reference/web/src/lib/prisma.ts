@@ -27,6 +27,12 @@ const REQUIRED_DELEGATES = [
   "campaignPc",
   "campaignRoll",
   "campaignActivity",
+  "campaignMap",
+  "campaignCombat",
+  "campaignCombatant",
+  "campaignNpc",
+  "campaignEncounter",
+  "campaignEncounterEntry",
 ] as const;
 
 function isPrismaClientReady(client: PrismaClient): boolean {
