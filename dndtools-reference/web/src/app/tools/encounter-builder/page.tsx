@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { EncounterBuilderContent } from "@/components/encounter/encounter-builder-content";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
+
+const faqs = getToolFaqs("encounter-builder");
 
 const TOOL_PATH = "/tools/encounter-builder";
 const TOOL_NAME = "Encounter Builder";
@@ -30,6 +34,7 @@ export default function EncounterBuilderPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -55,6 +60,7 @@ export default function EncounterBuilderPage() {
       </div>
 
       <EncounterBuilderContent />
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

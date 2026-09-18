@@ -3,6 +3,7 @@ import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-bu
 import { SaveToListButton } from "@/components/save-to-list-button";
 import type { CategoryKey } from "@/lib/categories";
 import type { EntityDetail } from "@/lib/entities";
+import { buildEntityLead } from "@/lib/entity-lead";
 import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
@@ -24,6 +25,7 @@ export function EntityDetailView({
   entity: EntityDetail;
 }) {
   const fields = Object.entries(entity.fields).filter(([, v]) => v);
+  const lead = buildEntityLead(category, entity);
 
   return (
     <article className="entity-detail">
@@ -43,6 +45,18 @@ export function EntityDetailView({
             )}
             {entity.source.page && <>, p. {entity.source.page}</>}
           </span>
+          {entity.updatedAt ? (
+            <span className="updated-at">
+              Updated{" "}
+              <time dateTime={entity.updatedAt.toISOString()}>
+                {entity.updatedAt.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </time>
+            </span>
+          ) : null}
           <span className="edition-chip">{entity.source.edition}</span>
           {entity.secondarySources && entity.secondarySources.length > 0 && (
             <span className="secondary-sources">
@@ -67,6 +81,8 @@ export function EntityDetailView({
           )}
         </div>
       </header>
+
+      {lead ? <p className="entity-lead">{lead}</p> : null}
 
       {entity.sections && entity.sections.length > 0 && (
         <>
@@ -157,7 +173,14 @@ export function EntityDetailView({
       )}
 
       {entity.spellLevels && entity.spellLevels.length > 0 && (
-        <ClassSpellList classSlug={entity.slug} levels={entity.spellLevels} />
+        <>
+          <p className="class-spell-list-cta">
+            <Link href={`/classes/${entity.slug}/spells`}>
+              View full spell list (all levels, crawlable index)
+            </Link>
+          </p>
+          <ClassSpellList classSlug={entity.slug} levels={entity.spellLevels} />
+        </>
       )}
 
       {entity.related.length > 0 && (

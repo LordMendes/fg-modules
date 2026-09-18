@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { NpcCreator } from "@/components/tools/npc-creator";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
 import { getTool } from "@/lib/tools";
+
+const faqs = getToolFaqs("npc-creator");
 
 const TOOL_PATH = "/tools/npc-creator";
 const TOOL_NAME = "NPC Creator";
@@ -33,6 +37,7 @@ export default function NpcCreatorPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -59,6 +64,7 @@ export default function NpcCreatorPage() {
       </div>
 
       <NpcCreator />
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

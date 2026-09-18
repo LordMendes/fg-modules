@@ -8,7 +8,7 @@ import { PlausibleAnalytics } from "@/components/plausible-analytics";
 import { Providers } from "@/components/providers";
 import { SessionProvider } from "@/components/session-provider";
 import { AuthProvider } from "@/components/auth-provider";
-import { JsonLd } from "@/components/json-ld";
+import { JsonLd, organizationJsonLd } from "@/components/json-ld";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getSession, SESSION_NONCE_HEADER } from "@/lib/session";
 import {
@@ -33,13 +33,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: {
-    default: `${SITE_NAME} — D&D 3.5 Reference`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${SITE_NAME}: D&D 3.5 Reference`,
+    template: `%s - ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   robots: { index: true, follow: true },
   openGraph: {
-    title: `${SITE_NAME} — D&D 3.5 Reference`,
+    title: `${SITE_NAME}: D&D 3.5 Reference`,
     description: DEFAULT_DESCRIPTION,
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
@@ -51,14 +51,14 @@ export const metadata: Metadata = {
         secureUrl: absoluteUrl("/opengraph-image"),
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} — D&D 3.5 Reference`,
+        alt: `${SITE_NAME}: D&D 3.5 Reference`,
         type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — D&D 3.5 Reference`,
+    title: `${SITE_NAME}: D&D 3.5 Reference`,
     description: DEFAULT_DESCRIPTION,
     images: [absoluteUrl("/opengraph-image")],
   },
@@ -81,21 +81,33 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <JsonLd
-          data={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: SITE_NAME,
-            url: absoluteUrl("/"),
-            description: DEFAULT_DESCRIPTION,
-            potentialAction: {
-              "@type": "SearchAction",
-              target: {
-                "@type": "EntryPoint",
-                urlTemplate: `${absoluteUrl("/search")}?q={search_term_string}`,
+          data={[
+            organizationJsonLd({
+              name: SITE_NAME,
+              url: absoluteUrl("/"),
+              description: DEFAULT_DESCRIPTION,
+            }),
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: SITE_NAME,
+              url: absoluteUrl("/"),
+              description: DEFAULT_DESCRIPTION,
+              publisher: {
+                "@type": "Organization",
+                name: SITE_NAME,
+                url: absoluteUrl("/"),
               },
-              "query-input": "required name=search_term_string",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: `${absoluteUrl("/search")}?q={search_term_string}`,
+                },
+                "query-input": "required name=search_term_string",
+              },
             },
-          }}
+          ]}
         />
         <a href="#main-content" className="skip-link">
           Skip to main content

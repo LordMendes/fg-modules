@@ -5,7 +5,7 @@ import { getCategoryLabel } from "@/lib/categories";
 export const SITE_NAME = "DnD Helper";
 
 export const DEFAULT_DESCRIPTION =
-  "A comprehensive D&D 3.5 Edition reference — spells, feats, monsters, classes, and more.";
+  "D&D 3.5 Edition reference and tools: spells, feats, monsters, classes, calculators, and builders.";
 
 const CATEGORY_SINGULAR: Record<CategoryKey, string> = {
   spells: "Spell",
@@ -78,8 +78,8 @@ export function buildPageMetadata({
   const url = absoluteUrl(path);
   const canonical = path.startsWith("/") ? path : `/${path}`;
   const ogTitle = title
-    ? `${title} — ${SITE_NAME}`
-    : `${SITE_NAME} — D&D 3.5 Reference`;
+    ? `${title} - ${SITE_NAME}`
+    : `${SITE_NAME}: D&D 3.5 Reference`;
   const alt = imageAlt ?? ogTitle;
   const image = ogImageUrl(canonical);
 
@@ -181,7 +181,7 @@ function buildEntityDescriptionFallback(
   }
 
   return truncateMetaDescription(
-    `${entity.name} — ${label} reference for D&D 3.5 Edition${fromSource}.`,
+    `${entity.name}: ${label} reference for D&D 3.5 Edition${fromSource}.`,
   );
 }
 
@@ -191,11 +191,11 @@ export function buildEntityMetadata(
   slug: string,
 ): Metadata {
   const singular = CATEGORY_SINGULAR[category];
-  const title = `${entity.name} (${singular})`;
+  const title = `${entity.name} (D&D 3.5 ${singular})`;
   const description = entity.descriptionText
     ? truncateMetaDescription(
         entity.source.abbrev
-          ? `${entity.descriptionText} — D&D 3.5 reference from ${entity.source.abbrev}.`
+          ? `${entity.descriptionText} D&D 3.5 reference from ${entity.source.abbrev}.`
           : entity.descriptionText,
       )
     : buildEntityDescriptionFallback(entity, category);
@@ -205,7 +205,7 @@ export function buildEntityMetadata(
     description,
     path: `/${category}/${slug}`,
     type: "article",
-    imageAlt: `${entity.name} — D&D 3.5 ${singular}`,
+    imageAlt: `${entity.name} - D&D 3.5 ${singular}`,
   });
 }
 

@@ -114,13 +114,55 @@ export function bookJsonLd({
   };
 }
 
+type OrganizationJsonLdInput = {
+  name: string;
+  url: string;
+  description: string;
+};
+
+export function organizationJsonLd({
+  name,
+  url,
+  description,
+}: OrganizationJsonLdInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name,
+    url,
+    description,
+  };
+}
+
+type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+export function faqPageJsonLd(faqs: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 export function toolPageJsonLd(
   breadcrumbs: BreadcrumbItem[],
   app: WebApplicationJsonLdInput,
   toAbsoluteUrl: (path: string) => string,
+  faqs: FaqItem[] = [],
 ) {
   return [
     absoluteBreadcrumbJsonLd(breadcrumbs, toAbsoluteUrl),
     webApplicationJsonLd(app),
+    ...(faqs.length > 0 ? [faqPageJsonLd(faqs)] : []),
   ];
 }

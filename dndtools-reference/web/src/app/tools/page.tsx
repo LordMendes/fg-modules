@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { TOOLS } from "@/lib/tools";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, absoluteBreadcrumbJsonLd, faqPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { TOOLS_PAGE_FAQS } from "@/lib/tool-faqs";
 
 export const metadata = buildPageMetadata({
   title: "Tools",
@@ -14,13 +16,16 @@ export default function ToolsPage() {
   return (
     <>
       <JsonLd
-        data={absoluteBreadcrumbJsonLd(
-          [
-            { name: "Home", path: "/" },
-            { name: "Tools", path: "/tools" },
-          ],
-          absoluteUrl,
-        )}
+        data={[
+          absoluteBreadcrumbJsonLd(
+            [
+              { name: "Home", path: "/" },
+              { name: "Tools", path: "/tools" },
+            ],
+            absoluteUrl,
+          ),
+          faqPageJsonLd(TOOLS_PAGE_FAQS),
+        ]}
       />
       <div className="page-header">
         <h1>Tools</h1>
@@ -48,6 +53,7 @@ export default function ToolsPage() {
           </Link>
         ))}
       </section>
+      <ToolExplainer faqs={TOOLS_PAGE_FAQS} />
     </>
   );
 }

@@ -10,6 +10,7 @@ import {
   SOURCE_SITEMAP_ID,
   SITEMAP_COUNT,
 } from "@/lib/sitemap";
+import { CATALOG_LETTERS, catalogLetterHref } from "@/lib/catalog";
 import { siteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -76,6 +77,38 @@ export default async function sitemap(props: {
         changeFrequency: "monthly",
         priority: 0.4,
       },
+      {
+        url: `${base}/about`,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.5,
+      },
+      {
+        url: `${base}/changelog`,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.4,
+      },
+      {
+        url: `${base}/catalog`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
+      ...CATEGORIES.flatMap((category) => [
+        {
+          url: `${base}/catalog/${category.key}`,
+          lastModified: now,
+          changeFrequency: "weekly" as const,
+          priority: 0.6,
+        },
+        ...CATALOG_LETTERS.map((letter) => ({
+          url: `${base}${catalogLetterHref(category.key, letter)}`,
+          lastModified: now,
+          changeFrequency: "monthly" as const,
+          priority: 0.5,
+        })),
+      ]),
       ...categoryUrls,
     ];
   }

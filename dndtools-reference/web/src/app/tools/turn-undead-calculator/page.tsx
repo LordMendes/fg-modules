@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { TurnUndeadCalculator } from "@/components/tools/turn-undead-calculator";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
+
+const faqs = getToolFaqs("turn-undead-calculator");
 
 const TOOL_PATH = "/tools/turn-undead-calculator";
 const TOOL_NAME = "Turn Undead Calculator";
@@ -31,6 +35,7 @@ export default function TurnUndeadCalculatorPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -54,6 +59,7 @@ export default function TurnUndeadCalculatorPage() {
       <Suspense fallback={null}>
         <TurnUndeadCalculator />
       </Suspense>
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

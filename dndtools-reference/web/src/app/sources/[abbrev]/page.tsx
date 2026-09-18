@@ -77,7 +77,7 @@ export default async function SourceDetailPage({ params }: Props) {
           return (
             <Link
               key={cat.key}
-              href={`/${cat.key}?source=${abbrev}`}
+              href={`/sources/${abbrev}/${cat.key}`}
               className="category-card"
             >
               <div className="icon">{cat.icon}</div>

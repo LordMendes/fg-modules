@@ -38,9 +38,9 @@ describe("buildEntityMetadata", () => {
     fields: { Level: "3" },
   };
 
-  it("builds spell title with category suffix", () => {
+  it("builds spell title with D&D 3.5 category suffix", () => {
     const meta = buildEntityMetadata(baseEntity, "spells", "fireball");
-    assert.equal(meta.title, "Fireball (Spell)");
+    assert.equal(meta.title, "Fireball (D&D 3.5 Spell)");
   });
 
   it("includes source in description when descriptionText exists", () => {
@@ -60,7 +60,7 @@ describe("buildEntityMetadata", () => {
       "monsters",
       "goblin",
     );
-    assert.equal(meta.title, "Goblin (Monster)");
+    assert.equal(meta.title, "Goblin (D&D 3.5 Monster)");
     assert.match(String(meta.description), /CR 1\/3/);
     assert.match(String(meta.description), /MM/);
   });
@@ -77,7 +77,7 @@ describe("buildEntityMetadata", () => {
       "feats",
       "power-attack",
     );
-    assert.equal(meta.title, "Power Attack (Feat)");
+    assert.equal(meta.title, "Power Attack (D&D 3.5 Feat)");
     assert.match(String(meta.description), /General feat/);
   });
 });

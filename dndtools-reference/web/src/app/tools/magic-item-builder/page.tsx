@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { MagicItemCalculator } from "@/components/tools/magic-item-calculator";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
+
+const faqs = getToolFaqs("magic-item-builder");
 
 const TOOL_PATH = "/tools/magic-item-builder";
 const TOOL_NAME = "Magic Item Builder";
@@ -30,6 +34,7 @@ export default function MagicItemBuilderPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -52,6 +57,7 @@ export default function MagicItemBuilderPage() {
       </div>
 
       <MagicItemCalculator />
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

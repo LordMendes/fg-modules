@@ -1195,6 +1195,144 @@ body {
   margin-bottom: 2rem;
 }
 
+.updated-at {
+  font-size: 0.8125rem;
+  color: var(--text-muted, #9a928a);
+}
+
+.class-spell-list-cta {
+  margin: 0 0 1rem;
+}
+
+.class-spell-list-cta a {
+  font-weight: 600;
+}
+
+.class-spell-crawl-section {
+  margin-bottom: 2rem;
+}
+
+.class-spell-crawl-section h2 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 1.125rem;
+  color: var(--accent-gold-text);
+  margin-bottom: 0.75rem;
+}
+
+.entity-lead {
+  margin: 0 0 1.5rem;
+  max-width: 70ch;
+  line-height: 1.6;
+  color: var(--text-secondary, #c8c0b8);
+}
+
+.catalog-hub-nav {
+  margin-bottom: 1.25rem;
+}
+
+.catalog-hub-nav-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted, #9a928a);
+}
+
+.catalog-letter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalog-letter-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-secondary, #c8c0b8);
+}
+
+.catalog-letter-link:hover,
+.catalog-letter-link.is-active {
+  border-color: var(--accent-gold, #c9a227);
+  color: var(--accent-gold-text, #e8c547);
+}
+
+.catalog-entity-list {
+  columns: 2;
+  column-gap: 2rem;
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.catalog-entity-list li {
+  break-inside: avoid;
+  margin-bottom: 0.35rem;
+}
+
+.catalog-empty {
+  color: var(--text-muted, #9a928a);
+}
+
+.changelog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.changelog-list li {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+}
+
+.changelog-list time {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-muted, #9a928a);
+  margin-bottom: 0.25rem;
+}
+
+.changelog-list h2 {
+  font-size: 1.125rem;
+  margin: 0 0 0.35rem;
+}
+
+.tool-explainer {
+  margin: 2rem 0;
+  max-width: 70ch;
+}
+
+.tool-explainer h2 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 1.25rem;
+  color: var(--accent-gold-text);
+  margin-bottom: 1rem;
+}
+
+.tool-explainer h3 {
+  font-size: 1rem;
+  margin: 1.25rem 0 0.35rem;
+}
+
+.tool-explainer p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-secondary, #c8c0b8);
+}
+
+@media (max-width: 640px) {
+  .catalog-entity-list {
+    columns: 1;
+  }
+}
+
 .related-section {
   margin-bottom: 2rem;
 }

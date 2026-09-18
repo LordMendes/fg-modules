@@ -49,7 +49,13 @@ export function AppShell({
               D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
             </p>
             <p className="site-footer-links">
+              <Link href="/about">About</Link>
+              <span aria-hidden="true">·</span>
+              <Link href="/changelog">Changelog</Link>
+              <span aria-hidden="true">·</span>
               <Link href="/privacy">Privacy</Link>
+              <span aria-hidden="true">·</span>
+              <Link href="/llms.txt">llms.txt</Link>
               <span aria-hidden="true">·</span>
               <button type="button" className="site-footer-link-btn" onClick={openPreferences}>
                 Cookie settings

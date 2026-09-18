@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { StrongholdCalculator } from "@/components/tools/stronghold-calculator";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
+
+const faqs = getToolFaqs("stronghold-builder");
 
 const TOOL_PATH = "/tools/stronghold-builder";
 const TOOL_NAME = "Stronghold Builder";
@@ -30,6 +34,7 @@ export default function StrongholdBuilderPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -51,6 +56,7 @@ export default function StrongholdBuilderPage() {
       </div>
 
       <StrongholdCalculator />
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

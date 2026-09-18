@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { PcPlanner } from "@/components/tools/pc-planner";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
 import { getTool } from "@/lib/tools";
+
+const faqs = getToolFaqs("pc-planner");
 
 const TOOL_PATH = "/tools/pc-planner";
 const TOOL_NAME = "PC Planner";
@@ -34,6 +38,7 @@ export default function PcPlannerPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -58,6 +63,7 @@ export default function PcPlannerPage() {
       <Suspense fallback={<p className="pc-planner-loading">Loading…</p>}>
         <PcPlanner />
       </Suspense>
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

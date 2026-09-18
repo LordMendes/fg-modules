@@ -252,15 +252,22 @@ Re-running is idempotent (upserts on slug).
 ## SEO & Indexing
 
 - `SITE_URL` must be the canonical HTTPS origin in production (used by `metadataBase`, Open Graph, robots, and sitemaps).
-- Entity discovery for crawlers is **sitemap-first**: `robots.txt` lists chunked sitemaps at `/sitemap/0.xml`…`/sitemap/14.xml` (hubs, one file per category, sources). Category list pagination stays client infinite-scroll (no crawlable `?page=` URLs) so anti-scrape controls stay intact.
+- Entity discovery uses **sitemaps plus crawlable HTML**: `robots.txt` lists chunked sitemaps at `/sitemap/0.xml` through `/sitemap/14.xml`. Hub sitemap id 0 also includes `/catalog`, `/about`, `/changelog`, and A-Z catalog letter indexes.
+- **A-Z catalog** (`/catalog`, `/catalog/{category}`, `/catalog/{category}/{letter}`): server-rendered link lists for every entity. Category hubs still use client infinite-scroll for interactive browsing (no crawlable `?page=` URLs).
+- **AI discovery**: `/llms.txt` and `/llms-full.txt` summarize the site for LLM crawlers. `robots.txt` explicitly allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and Applebot-Extended.
+- **Entity pages**: auto-generated leads from compendium fields, D&D 3.5 titles, `DefinedTerm` JSON-LD, and last-updated dates from import timestamps.
+- **Tools**: public tool pages include visible FAQ sections and `FAQPage` schema. Campaign table routes stay behind login.
+- **Internal links**: class full spell lists at `/classes/{slug}/spells`; source category pages at `/sources/{abbrev}/{category}`.
 - Filtered category URLs and `/search?q=…` are `noindex,follow` via page metadata to avoid thin/duplicate indexing.
+- Implementation tracker: `prompts/SEO/STATUS.md`.
 
 ### Search Console checklist (after deploy)
 
 1. Confirm `SITE_URL` matches the live canonical host (no trailing slash).
-2. Submit the sitemap URLs from `robots.txt` (or the first `/sitemap/0.xml` hub) in [Google Search Console](https://search.google.com/search-console) and Bing Webmaster Tools.
-3. Request indexing for hub pages (`/`, category indexes, `/sources`) first, then monitor Coverage / Pages reports.
+2. Submit the sitemap URLs from `robots.txt` (or `/sitemap/0.xml` first) in [Google Search Console](https://search.google.com/search-console) and Bing Webmaster Tools.
+3. Request indexing for `/`, `/spells`, `/catalog/spells`, `/tools/leadership-calculator`, and `/about`.
 4. Prefer a single host (`www` vs apex) via CDN/host redirects.
+5. Monitor Coverage for "Crawled, currently not indexed" on duplicate SRD pages.
 
 ## Project Structure
 

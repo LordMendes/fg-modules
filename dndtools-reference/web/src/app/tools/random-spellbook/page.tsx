@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { RandomSpellbook } from "@/components/tools/random-spellbook";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { listWizardSpellSources } from "@/lib/entities";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
+
+const faqs = getToolFaqs("random-spellbook");
 
 const TOOL_PATH = "/tools/random-spellbook";
 const TOOL_NAME = "Random Spellbook";
@@ -39,6 +43,7 @@ export default async function RandomSpellbookPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -61,6 +66,7 @@ export default async function RandomSpellbookPage() {
       <Suspense fallback={null}>
         <RandomSpellbook sourceOptions={sourceOptions} defaultSources={defaultSources} />
       </Suspense>
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

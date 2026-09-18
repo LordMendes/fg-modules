@@ -17,6 +17,7 @@ import {
 import { PaginatedEntityList } from "@/components/paginated-list";
 import { EntityListFilters } from "@/components/entity-list-filters";
 import { EquipmentKindTabs } from "@/components/equipment-kind-tabs";
+import { CatalogLetterNav } from "@/components/catalog-letter-nav";
 import { JsonLd, absoluteBreadcrumbJsonLd, collectionPageJsonLd } from "@/components/json-ld";
 import {
   absoluteUrl,
@@ -162,6 +163,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           ) : null}
         </p>
       </div>
+      {!hasActiveFilters(filters) && !hasQueryParams(rawParams) ? (
+        <div className="catalog-hub-nav">
+          <p className="catalog-hub-nav-label">
+            Browse all entries by letter (crawlable index):
+          </p>
+          <CatalogLetterNav category={categoryKey} />
+        </div>
+      ) : null}
       {categoryKey === "equipment" ? (
         <Suspense fallback={null}>
           <EquipmentKindTabs initialFilters={filters} />

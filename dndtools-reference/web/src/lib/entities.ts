@@ -75,7 +75,12 @@ export type EntityDetail = {
   spellLevels?: ClassSpellLevelSummary[];
   classSkills?: ClassSkillRef[];
   secondarySources?: { abbrev: string; name: string }[];
+  updatedAt?: Date | null;
 };
+
+function entityUpdatedAt(scrapedAt: Date | null | undefined): Date | null {
+  return scrapedAt ?? null;
+}
 
 export type ClassSkillRef = {
   name: string;
@@ -1322,6 +1327,7 @@ async function buildEquipmentDetail(
     weight: string | null;
     indexData: unknown;
     source: { name: string; abbrev: string | null; edition: string };
+    updatedAt?: Date | null;
   },
 ): Promise<EntityDetail> {
   const index = (r.indexData ?? {}) as Record<string, unknown>;
@@ -1398,6 +1404,7 @@ async function buildEquipmentDetail(
     related,
     statLine,
     secondarySources: secondarySources.length > 0 ? secondarySources : undefined,
+    updatedAt: r.updatedAt ?? null,
   };
 }
 
@@ -1455,6 +1462,7 @@ export async function getEntityDetail(
               : [],
           ),
         ],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "feats": {
@@ -1469,6 +1477,7 @@ export async function getEntityDetail(
         fields: {},
         sections: buildFeatSections(indexData),
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "monsters": {
@@ -1499,6 +1508,7 @@ export async function getEntityDetail(
         })),
         specialAbilities: parseMonsterAbilities(indexData, linkedAbilities),
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "classes": {
@@ -1526,6 +1536,8 @@ export async function getEntityDetail(
         : [];
 
       const indexData = asIndexRecord(r.indexData);
+      const classSkills = parseClassSkills(indexData?.classSkills);
+      const totalSpells = levelCounts.reduce((sum, row) => sum + row._count.spellId, 0);
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
@@ -1538,8 +1550,24 @@ export async function getEntityDetail(
           label: formatSpellLevelLabel(row.level),
           count: row._count.spellId,
         })),
-        classSkills: parseClassSkills(indexData?.classSkills),
-        related: [],
+        classSkills,
+        related: [
+          ...classSkills.flatMap((skill) =>
+            skill.slug
+              ? [{ label: skill.name, href: `/skills/${skill.slug}` }]
+              : [],
+          ),
+          ...(totalSpells > 0
+            ? [
+                {
+                  label: "Full spell list",
+                  href: `/classes/${r.slug}/spells`,
+                  meta: `${totalSpells.toLocaleString("en-US")} spells`,
+                },
+              ]
+            : []),
+        ],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "skills": {
@@ -1571,6 +1599,7 @@ export async function getEntityDetail(
               : formatBooleanFilterLabel(r.armorCheckPenalty),
         },
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "races": {
@@ -1582,6 +1611,7 @@ export async function getEntityDetail(
         source: { ...r.source, page: null },
         fields: { Size: r.size, Type: r.creatureType, "Level Adjustment": r.levelAdjustment },
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "items": {
@@ -1593,6 +1623,7 @@ export async function getEntityDetail(
         source: { ...r.source, page: null },
         fields: { Type: r.itemType, Price: r.price, "Caster Level": r.casterLevel, Aura: r.aura },
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "equipment": {
@@ -1610,6 +1641,7 @@ export async function getEntityDetail(
         weight: r.weight,
         indexData: r.indexData,
         source: r.source,
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       });
     }
     case "domains": {
@@ -1635,6 +1667,7 @@ export async function getEntityDetail(
           href: `/spells/${ds.spell.slug}`,
           meta: `Position ${ds.position}`,
         })),
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "deities": {
@@ -1646,6 +1679,7 @@ export async function getEntityDetail(
         source: { ...r.source, page: null },
         fields: { Alignment: r.alignment, Pantheon: r.pantheon, Portfolio: r.portfolio },
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "psionics": {
@@ -1679,6 +1713,7 @@ export async function getEntityDetail(
             href: `/domains/${d.domain.slug}`,
           })),
         ],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "templates": {
@@ -1701,6 +1736,7 @@ export async function getEntityDetail(
             label: s.monster!.name,
             href: `/monsters/${s.monster!.slug}`,
           })),
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "rules": {
@@ -1712,6 +1748,7 @@ export async function getEntityDetail(
         source: { ...r.source, page: null },
         fields: { Category: r.category, Subcategory: r.subcategory },
         related: [],
+        updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     default:
@@ -2233,6 +2270,84 @@ export async function listEntitySlugsForSitemap(
     slug: r.slug,
     lastModified: r.scrapedAt,
   }));
+}
+
+export type CatalogEntityLink = {
+  slug: string;
+  name: string;
+};
+
+function buildCatalogLetterNameFilter(letter: string) {
+  if (letter === "#") {
+    return {
+      NOT: {
+        OR: "abcdefghijklmnopqrstuvwxyz".split("").map((char) => ({
+          name: { startsWith: char, mode: "insensitive" as const },
+        })),
+      },
+    };
+  }
+  return {
+    name: { startsWith: letter, mode: "insensitive" as const },
+  };
+}
+
+/** All entity names and slugs starting with a catalog letter (a-z or #). */
+export async function listEntityNamesByLetter(
+  category: CategoryKey,
+  letter: string,
+): Promise<CatalogEntityLink[]> {
+  const letterFilter = buildCatalogLetterNameFilter(letter);
+  const orderBy = { name: "asc" as const };
+  const select = { slug: true, name: true } as const;
+
+  let rows: CatalogEntityLink[];
+
+  switch (category) {
+    case "spells":
+      rows = await prisma.spell.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "feats":
+      rows = await prisma.feat.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "monsters":
+      rows = await prisma.monster.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "classes":
+      rows = await prisma.dndClass.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "skills":
+      rows = await prisma.skill.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "races":
+      rows = await prisma.race.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "items":
+      rows = await prisma.item.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "equipment":
+      rows = await prisma.equipment.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "domains":
+      rows = await prisma.domain.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "deities":
+      rows = await prisma.deity.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "psionics":
+      rows = await prisma.psionic.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "templates":
+      rows = await prisma.template.findMany({ where: letterFilter, select, orderBy });
+      break;
+    case "rules":
+      rows = await prisma.rule.findMany({ where: letterFilter, select, orderBy });
+      break;
+    default:
+      return [];
+  }
+
+  return rows;
 }
 
 /** Source abbrevs for `/sources/{abbrev}` sitemap entries. */

@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { LeadershipCalculator } from "@/components/tools/leadership-calculator";
+import { ToolExplainer } from "@/components/tool-explainer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getToolFaqs } from "@/lib/tool-faqs";
+
+const faqs = getToolFaqs("leadership-calculator");
 
 const TOOL_PATH = "/tools/leadership-calculator";
 const TOOL_NAME = "Leadership Calculator";
@@ -31,6 +35,7 @@ export default function LeadershipCalculatorPage() {
             url: absoluteUrl(TOOL_PATH),
           },
           absoluteUrl,
+          faqs,
         )}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -55,6 +60,7 @@ export default function LeadershipCalculatorPage() {
       <Suspense fallback={null}>
         <LeadershipCalculator />
       </Suspense>
+      <ToolExplainer faqs={faqs} />
     </>
   );
 }

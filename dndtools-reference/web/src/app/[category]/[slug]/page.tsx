@@ -33,7 +33,7 @@ export default async function EntityDetailPage({ params }: Props) {
   const description =
     truncateMetaDescription(
       entity.descriptionText ??
-        `${entity.name} — ${label} reference for D&D 3.5 Edition.`,
+        `${entity.name}: ${label} reference for D&D 3.5 Edition.`,
       300,
     );
 
