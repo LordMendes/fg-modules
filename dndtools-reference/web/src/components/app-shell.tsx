@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
+import { CookieBanner } from "@/components/cookie-banner";
+import { useCookieConsent } from "@/components/cookie-consent-provider";
 import { EncounterDockHost } from "@/components/encounter/encounter-dock";
 import { SiteHeader } from "@/components/site-header";
 import { isCampaignTablePath } from "@/lib/campaign/immersive";
@@ -16,6 +19,7 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const isCampaignTable = isCampaignTablePath(pathname);
+  const { openPreferences } = useCookieConsent();
 
   useEffect(() => {
     document.body.classList.toggle("campaign-table-body", isCampaignTable);
@@ -41,10 +45,20 @@ export function AppShell({
         <>
           <EncounterDockHost />
           <footer className="site-footer">
-            D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
+            <p className="site-footer-disclaimer">
+              D&D 3.5 Edition reference material. Not affiliated with Wizards of the Coast.
+            </p>
+            <p className="site-footer-links">
+              <Link href="/privacy">Privacy</Link>
+              <span aria-hidden="true">·</span>
+              <button type="button" className="site-footer-link-btn" onClick={openPreferences}>
+                Cookie settings
+              </button>
+            </p>
           </footer>
         </>
       )}
+      <CookieBanner />
     </>
   );
 }

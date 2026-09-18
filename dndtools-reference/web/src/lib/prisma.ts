@@ -49,6 +49,18 @@ function getPrismaClient(): PrismaClient {
   return client;
 }
 
+export function isUnavailableDatabaseError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const code = "code" in error ? String(error.code) : "";
+  return (
+    code === "P2021" ||
+    code === "P2022" ||
+    code === "P1001" ||
+    code === "P1000" ||
+    code === "P1003"
+  );
+}
+
 export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
   get(_target, prop, receiver) {
     const client = getPrismaClient();

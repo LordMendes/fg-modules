@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Script from "next/script";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { EncounterProvider } from "@/components/encounter/encounter-provider";
 import { AppShell } from "@/components/app-shell";
+import { CookieConsentProvider } from "@/components/cookie-consent-provider";
+import { PlausibleAnalytics } from "@/components/plausible-analytics";
 import { Providers } from "@/components/providers";
 import { SessionProvider } from "@/components/session-provider";
 import { AuthProvider } from "@/components/auth-provider";
@@ -100,23 +101,17 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <Providers>
-          <SessionProvider nonce={nonce}>
-            <AuthProvider user={user}>
-              <EncounterProvider>
-                <AppShell user={user}>{children}</AppShell>
-              </EncounterProvider>
-            </AuthProvider>
-          </SessionProvider>
+          <CookieConsentProvider>
+            <SessionProvider nonce={nonce}>
+              <AuthProvider user={user}>
+                <EncounterProvider>
+                  <AppShell user={user}>{children}</AppShell>
+                </EncounterProvider>
+              </AuthProvider>
+            </SessionProvider>
+            <PlausibleAnalytics />
+          </CookieConsentProvider>
         </Providers>
-        <Script id="plausible-init" strategy="beforeInteractive">
-          {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
-        </Script>
-        <Script
-          defer
-          data-domain="dnd-helper.com"
-          src="https://analytics.lcmendes.com/js/script.file-downloads.hash.outbound-links.pageview-props.tagged-events.js"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );

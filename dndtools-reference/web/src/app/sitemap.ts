@@ -70,6 +70,12 @@ export default async function sitemap(props: {
         changeFrequency: "monthly",
         priority: 0.3,
       },
+      {
+        url: `${base}/privacy`,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.4,
+      },
       ...categoryUrls,
     ];
   }

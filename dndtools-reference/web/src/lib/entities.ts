@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { isUnavailableDatabaseError, prisma } from "@/lib/prisma";
 import type { CategoryKey } from "@/lib/categories";
 import type { Prisma } from "@/generated/prisma/client";
 import { parseSpellComponents, spellDescriptionSnippet } from "@/lib/spell-utils";
@@ -2040,18 +2040,6 @@ const EMPTY_CATEGORY_COUNTS: Record<CategoryKey, number> = {
   rules: 0,
 };
 
-/** Docker/Coolify image builds inject DATABASE_URL before migrate/import. */
-function isUnavailableDatabaseError(error: unknown): boolean {
-  if (!error || typeof error !== "object") return false;
-  const code = "code" in error ? String(error.code) : "";
-  return (
-    code === "P2021" ||
-    code === "P2022" ||
-    code === "P1001" ||
-    code === "P1000" ||
-    code === "P1003"
-  );
-}
 
 /** Live entity totals per category for hub UI. */
 export async function getCategoryCounts(): Promise<Record<CategoryKey, number>> {

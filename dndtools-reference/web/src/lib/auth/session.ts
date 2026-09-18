@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createHash, randomBytes } from "crypto";
-import { prisma } from "@/lib/prisma";
+import { isUnavailableDatabaseError, prisma } from "@/lib/prisma";
 import {
   AUTH_COOKIE_NAME,
   AUTH_COOKIE_OPTIONS,
@@ -70,32 +70,37 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
   if (!token) return null;
 
   const tokenHash = hashToken(token);
-  const session = await prisma.userSession.findUnique({
-    where: { tokenHash },
-    include: {
-      user: {
-        select: {
-          id: true,
-          email: true,
-          username: true,
-          name: true,
+  try {
+    const session = await prisma.userSession.findUnique({
+      where: { tokenHash },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            username: true,
+            name: true,
+          },
         },
       },
-    },
-  });
-
-  if (!session) return null;
-
-  if (session.expiresAt.getTime() <= Date.now()) {
-    await prisma.userSession.delete({ where: { id: session.id } });
-    cookieStore.set(AUTH_COOKIE_NAME, "", {
-      ...AUTH_COOKIE_OPTIONS,
-      maxAge: 0,
     });
-    return null;
-  }
 
-  return session.user;
+    if (!session) return null;
+
+    if (session.expiresAt.getTime() <= Date.now()) {
+      await prisma.userSession.delete({ where: { id: session.id } });
+      cookieStore.set(AUTH_COOKIE_NAME, "", {
+        ...AUTH_COOKIE_OPTIONS,
+        maxAge: 0,
+      });
+      return null;
+    }
+
+    return session.user;
+  } catch (error) {
+    if (isUnavailableDatabaseError(error)) return null;
+    throw error;
+  }
 }
 
 export async function requireCurrentUser(): Promise<AuthUser> {
