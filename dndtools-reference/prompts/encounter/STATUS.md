@@ -26,8 +26,8 @@ Legend: `pending` | `in_progress` | `done` | `blocked` | `skipped` | `checkpoint
 | ID | Item | Status | Depends | Owner files | Notes |
 |---|---|---|---|---|---|
 | E1 | Schema and types | done | task0 | prisma/schema.prisma, src/lib/combat/types.ts | Migration `20260918200000_campaign_combat_engine` |
-| E2 | Effects parser | pending | E1 | src/lib/combat/effects/grammar.ts, parseEffect.ts, formatEffect.ts, *.test.ts | Every row in `05-effects-dsl.md` |
-| E3 | Effects support | pending | E2 | rules/modifiers.ts, effects/presets.ts, applyEffects.ts, duration.ts, pc-planner/conditions.ts | Re-export CONDITION_PRESETS from presets |
+| E2 | Effects parser | done | E1 | src/lib/combat/effects/grammar.ts, parseEffect.ts, formatEffect.ts, *.test.ts | 35 tests |
+| E3 | Effects support | done | E2 | rules/modifiers.ts, effects/presets.ts, applyEffects.ts, duration.ts, pc-planner/conditions.ts | 23 new tests |
 | E4 | Rules, offense | pending | E3 | rules/engineContext.ts, initiative.ts, attack.ts, critical.ts, concealment.ts | Parallel-safe with E5 |
 | E5 | Rules, defense | pending | E3 | rules/damage.ts, healing.ts, death.ts, saves.ts, spellResistance.ts | Parallel-safe with E4 |
 | E6 | Rules, turn | pending | E3, E5 | rules/turn.ts | Tick, DMGO, regen, dying loss, next actor |

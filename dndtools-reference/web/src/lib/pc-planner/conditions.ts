@@ -1,21 +1,15 @@
 import type { PcConditionEntry } from "./types";
+import {
+  CONDITION_PRESETS as COMBAT_CONDITION_PRESETS,
+  type ConditionEffect,
+  type ConditionPreset,
+} from "@/lib/combat/effects/presets";
 
-export type ConditionEffect = {
-  acMisc?: number;
-  loseDexToAc?: boolean;
-  loseDodge?: boolean;
-  meleeMisc?: number;
-  rangedMisc?: number;
-  speedMult?: number;
-};
+export type { ConditionEffect, ConditionPreset };
 
-export const CONDITION_PRESETS: Record<string, { label: string; effect: ConditionEffect }> = {
-  prone: { label: "Prone", effect: { meleeMisc: 4, rangedMisc: -4, acMisc: -4 } },
-  stunned: { label: "Stunned", effect: { loseDexToAc: true, loseDodge: true, acMisc: -2 } },
-  flatFooted: { label: "Flat-footed", effect: { loseDexToAc: true, loseDodge: true } },
-  grappled: { label: "Grappled", effect: { loseDexToAc: true, loseDodge: true } },
-  invisible: { label: "Invisible", effect: { meleeMisc: 2, rangedMisc: 2 } },
-};
+/** String-keyed for PC sheet preset pickers. */
+export const CONDITION_PRESETS: Record<string, ConditionPreset> =
+  COMBAT_CONDITION_PRESETS;
 
 export function aggregateConditionEffects(conditions: PcConditionEntry[]): ConditionEffect {
   const out: ConditionEffect = {};
