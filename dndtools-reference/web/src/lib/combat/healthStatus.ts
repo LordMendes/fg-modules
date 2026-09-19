@@ -19,6 +19,14 @@ export function healthStatusLabel(status: CombatHealthStatus): string {
   switch (status) {
     case "healthy":
       return "Healthy";
+    case "light":
+      return "Light";
+    case "moderate":
+      return "Moderate";
+    case "heavy":
+      return "Heavy";
+    case "critical":
+      return "Critical";
     case "wounded":
       return "Wounded";
     case "bloodied":

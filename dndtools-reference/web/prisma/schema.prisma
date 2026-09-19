@@ -700,9 +700,15 @@ model CampaignCombat {
   round                Int                   @default(1)
   currentCombatantId   String?
   active               Boolean               @default(true)
+  /// idle | active | ended
+  state                String                @default("idle")
+  startedAt            DateTime?
+  endedAt              DateTime?
+  eventSeq             Int                   @default(0)
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
   combatants           CampaignCombatant[]
+  events               CampaignCombatEvent[]
 }
 
 model CampaignCombatant {
@@ -734,13 +740,83 @@ model CampaignCombatant {
   visibleToPlayers Boolean         @default(true)
   identified       Boolean         @default(true)
   snapshot         Json            @default("{}")
+  nonlethal        Int             @default(0)
+  /// normal | delayed | readied | dead | removed
+  turnState        String          @default("normal")
+  /// dying | stable | disabled | dead | null (derived on write from hp, see rules/death.ts)
+  deathState       String?
+  /// Structured defenses parsed from stat block or edited by DM.
+  defenses         Json            @default("{}")
+  /// Server-side "who did I just hit"; cleared when the actor's turn ends.
+  pendingTargetIds Json            @default("[]")
+  /// Pending critical threat awaiting damage: { multiplier, threatFace, attackName } | null
+  pendingCrit      Json?
+  /// Ability modifiers and caster level for spells/effects: { str, dex, con, int, wis, cha, cl }
+  stats            Json            @default("{}")
   seq              Int             @default(0)
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
+  effects          CampaignCombatEffect[]
 
   @@index([combatId])
   @@index([pcPlanId])
   @@index([campaignNpcId])
+}
+
+model CampaignCombatEffect {
+  id                 String            @id @default(cuid())
+  combatantId        String
+  combatant          CampaignCombatant   @relation(fields: [combatantId], references: [id], onDelete: Cascade)
+  /// Raw string as typed: "Bless; ATK: 1 morale; SAVE: 1 morale vs fear"
+  label              String
+  /// Parsed components cached for the engine (EffectComponent[])
+  components         Json              @default("[]")
+  sourceCombatantId  String?
+  /// Remaining duration in units; null = until removed
+  duration           Int?
+  /// round | minute | hour | day
+  durationUnit       String            @default("round")
+  /// Init value whose turn start decrements duration (source init by default)
+  tickInit           Float?
+  /// startOfTurn | endOfTurn (whose: the tickInit actor)
+  expiry             String            @default("startOfTurn")
+  /// all | once | roll | single (FG apply modes; Phase 0 supports all, once)
+  applyMode          String            @default("all")
+  /// visible | hidden | gm
+  visibility         String            @default("visible")
+  active             Boolean           @default(true)
+  /// true when created by rules (Dying, Dead, Stable, Disabled) so the engine can replace it
+  system             Boolean           @default(false)
+  seq                Int               @default(0)
+  createdAt          DateTime          @default(now())
+
+  @@index([combatantId])
+}
+
+model CampaignCombatEvent {
+  id                 String         @id @default(cuid())
+  combatId           String
+  combat             CampaignCombat @relation(fields: [combatId], references: [id], onDelete: Cascade)
+  campaignId         String
+  seq                Int
+  round              Int
+  /// see CombatEventKind
+  kind               String
+  actorCombatantId   String?
+  targetCombatantId  String?
+  actorUserId        String?
+  /// Typed payload per kind (events/types.ts)
+  payload            Json
+  /// all | dm
+  visibility         String         @default("all")
+  /// Linked dice roll, if any
+  rollId             String?
+  /// Set when Phase 3 undo reverts this event
+  revertedAt         DateTime?
+  createdAt          DateTime       @default(now())
+
+  @@index([combatId, seq])
+  @@index([campaignId, createdAt])
 }
 
 model CampaignMapFogRegion {

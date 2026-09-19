@@ -7,8 +7,10 @@ import type {
   CampaignNpcView,
   CombatantView,
   CombatAttackLine,
+  CombatEffectView,
   CombatFaction,
   CombatSnapshot,
+  Defenses,
 } from "./types";
 
 type CombatantRow = {
@@ -34,6 +36,14 @@ type CombatantRow = {
   visibleToPlayers: boolean;
   identified: boolean;
   snapshot: unknown;
+  nonlethal?: number;
+  turnState?: string;
+  deathState?: string | null;
+  defenses?: unknown;
+  pendingTargetIds?: unknown;
+  pendingCrit?: unknown;
+  stats?: unknown;
+  effects?: CombatEffectView[];
 };
 
 type CombatRow = {
@@ -41,6 +51,8 @@ type CombatRow = {
   round: number;
   currentCombatantId: string | null;
   active: boolean;
+  state?: string;
+  eventSeq?: number;
   combatants: CombatantRow[];
 };
 
@@ -100,6 +112,59 @@ function asSnapshot(raw: unknown): CombatSnapshot {
   return raw as CombatSnapshot;
 }
 
+function asDefenses(raw: unknown): Defenses {
+  if (!raw || typeof raw !== "object") return {};
+  return raw as Defenses;
+}
+
+function asPendingCrit(
+  raw: unknown,
+): { multiplier: number; threatFace: number; attackName: string } | null {
+  if (!raw || typeof raw !== "object") return null;
+  const o = raw as Record<string, unknown>;
+  if (
+    typeof o.multiplier !== "number" ||
+    typeof o.threatFace !== "number" ||
+    typeof o.attackName !== "string"
+  ) {
+    return null;
+  }
+  return {
+    multiplier: o.multiplier,
+    threatFace: o.threatFace,
+    attackName: o.attackName,
+  };
+}
+
+function asCombatStats(raw: unknown): CombatantView["stats"] {
+  if (!raw || typeof raw !== "object") return {};
+  return raw as CombatantView["stats"];
+}
+
+function asTurnState(raw: string | undefined): CombatantView["turnState"] {
+  if (
+    raw === "delayed" ||
+    raw === "readied" ||
+    raw === "dead" ||
+    raw === "removed"
+  ) {
+    return raw;
+  }
+  return "normal";
+}
+
+function asDeathState(raw: string | null | undefined): CombatantView["deathState"] {
+  if (raw === "dying" || raw === "stable" || raw === "disabled" || raw === "dead") {
+    return raw;
+  }
+  return null;
+}
+
+function asCombatState(raw: string | undefined): CampaignCombatView["state"] {
+  if (raw === "active" || raw === "ended") return raw;
+  return "idle";
+}
+
 export function snapshotCombatStats(snapshot: unknown): {
   hpMax: number;
   ac: number;
@@ -142,6 +207,7 @@ export function combatantViewFromRow(
   const showExactHp =
     opts.isDm ||
     (row.kind === "pc" && row.pcPlanId === opts.viewerPcPlanId);
+  const showDefenses = opts.isDm || showExactHp;
 
   return {
     id: row.id,
@@ -170,6 +236,14 @@ export function combatantViewFromRow(
     status,
     isCurrentTurn: row.id === opts.currentCombatantId,
     tokenImageUrl: opts.tokenImageUrl ?? null,
+    nonlethal: Math.max(0, row.nonlethal ?? 0),
+    turnState: asTurnState(row.turnState),
+    deathState: asDeathState(row.deathState),
+    defenses: showDefenses ? asDefenses(row.defenses) : {},
+    effects: row.effects ?? [],
+    pendingTargetIds: opts.isDm ? asTargetIds(row.pendingTargetIds) : [],
+    pendingCrit: opts.isDm ? asPendingCrit(row.pendingCrit) : null,
+    stats: showDefenses ? asCombatStats(row.stats) : {},
   };
 }
 
@@ -201,6 +275,8 @@ export function combatViewFromRow(
     round: combat.round,
     currentCombatantId: combat.currentCombatantId,
     active: combat.active,
+    state: asCombatState(combat.state),
+    eventSeq: combat.eventSeq ?? 0,
     combatants,
   };
 }

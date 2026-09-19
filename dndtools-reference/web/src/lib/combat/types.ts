@@ -30,6 +30,139 @@ export type CombatSnapshot = {
   sr?: string;
 };
 
+export type DamageType =
+  | "slashing"
+  | "piercing"
+  | "bludgeoning"
+  | "fire"
+  | "cold"
+  | "acid"
+  | "electricity"
+  | "sonic"
+  | "force"
+  | "positive"
+  | "negative"
+  | "magic"
+  | "epic"
+  | "adamantine"
+  | "silver"
+  | "coldiron"
+  | "good"
+  | "evil"
+  | "lawful"
+  | "chaotic"
+  | "nonlethal"
+  | "precision"
+  | "spell"
+  | "untyped";
+
+export type BonusType =
+  | "alchemical"
+  | "armor"
+  | "circumstance"
+  | "competence"
+  | "deflection"
+  | "dodge"
+  | "enhancement"
+  | "insight"
+  | "luck"
+  | "morale"
+  | "natural"
+  | "profane"
+  | "racial"
+  | "resistance"
+  | "sacred"
+  | "shield"
+  | "size";
+
+export type Ability = "str" | "dex" | "con" | "int" | "wis" | "cha";
+
+/** Known condition keys from the effects DSL (05-effects-dsl.md). */
+export type ConditionKey =
+  | "blinded"
+  | "cowering"
+  | "dazed"
+  | "dazzled"
+  | "deafened"
+  | "disabled"
+  | "dying"
+  | "dead"
+  | "entangled"
+  | "exhausted"
+  | "fascinated"
+  | "fatigued"
+  | "flatFooted"
+  | "frightened"
+  | "grappled"
+  | "helpless"
+  | "incorporeal"
+  | "invisible"
+  | "nauseated"
+  | "panicked"
+  | "paralyzed"
+  | "petrified"
+  | "pinned"
+  | "prone"
+  | "shaken"
+  | "sickened"
+  | "stable"
+  | "staggered"
+  | "stunned"
+  | "turned"
+  | "unconscious";
+
+export type Defenses = {
+  dr?: { amount: number; bypass: DamageType[] }[];
+  resist?: Partial<Record<DamageType, number>>;
+  immune?: DamageType[];
+  vuln?: DamageType[];
+  sr?: number | null;
+  regen?: { amount: number; bypass: DamageType[] } | null;
+  fastHeal?: number | null;
+};
+
+export type DamagePacket = {
+  amount: number;
+  types: DamageType[];
+  source: string;
+  nonlethal?: boolean;
+  precision?: boolean;
+  fromCrit?: boolean;
+};
+
+export type EffectComponent =
+  | { tag: "COND"; condition: ConditionKey }
+  | {
+      tag: "ATK" | "AC" | "SAVE" | "FORT" | "REF" | "WILL" | "INIT" | "CL" | "SKILL" | "SPEED";
+      value: number;
+      bonusType?: BonusType;
+      descriptors: string[];
+    }
+  | { tag: "ABIL"; ability: Ability; value: number; bonusType?: BonusType }
+  | { tag: "DMG"; dice: string; value: number; types: DamageType[]; descriptors: string[] }
+  | { tag: "DMGO"; dice: string; types: DamageType[] }
+  | { tag: "DR"; amount: number; bypass: DamageType[] }
+  | { tag: "RESIST" | "VULN"; amount: number; types: DamageType[] }
+  | { tag: "IMMUNE"; types: DamageType[] }
+  | { tag: "REGEN" | "FHEAL"; amount: number; bypass?: DamageType[] }
+  | { tag: "CONC" | "TCONC" | "COVER" | "SCOVER" }
+  | { tag: "LABEL"; text: string };
+
+export type CombatEffectView = {
+  id: string;
+  label: string;
+  components: EffectComponent[];
+  sourceCombatantId: string | null;
+  sourceName: string | null;
+  duration: number | null;
+  durationUnit: "round" | "minute" | "hour" | "day";
+  expiry: "startOfTurn" | "endOfTurn";
+  applyMode: "all" | "once" | "roll" | "single";
+  visibility: "visible" | "hidden" | "gm";
+  active: boolean;
+  system: boolean;
+};
+
 export type CombatantView = {
   id: string;
   kind: CombatantKind;
@@ -59,14 +192,37 @@ export type CombatantView = {
   status: CombatHealthStatus;
   isCurrentTurn: boolean;
   tokenImageUrl: string | null;
+  nonlethal: number;
+  turnState: "normal" | "delayed" | "readied" | "dead" | "removed";
+  deathState: "dying" | "stable" | "disabled" | "dead" | null;
+  /** DM and owner only; players get {} */
+  defenses: Defenses;
+  /** Filtered per viewer */
+  effects: CombatEffectView[];
+  /** Actor and DM only */
+  pendingTargetIds: string[];
+  pendingCrit: { multiplier: number; threatFace: number; attackName: string } | null;
+  stats: {
+    str?: number;
+    dex?: number;
+    con?: number;
+    int?: number;
+    wis?: number;
+    cha?: number;
+    cl?: number;
+  };
 };
 
 export type CombatHealthStatus =
   | "healthy"
-  | "wounded"
-  | "bloodied"
+  | "light"
+  | "moderate"
+  | "heavy"
+  | "critical"
   | "dying"
-  | "dead";
+  | "dead"
+  | "wounded"
+  | "bloodied";
 
 export type CampaignNpcView = {
   id: string;
@@ -90,6 +246,8 @@ export type CampaignCombatView = {
   round: number;
   currentCombatantId: string | null;
   active: boolean;
+  state: "idle" | "active" | "ended";
+  eventSeq: number;
   combatants: CombatantView[];
 };
 

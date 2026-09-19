@@ -95,12 +95,25 @@ describe("snapshotCombatStats", () => {
 });
 
 describe("unplacedNpcCombatants", () => {
+  const defaultCombatantFields = {
+    nonlethal: 0,
+    turnState: "normal" as const,
+    deathState: null,
+    defenses: {},
+    effects: [],
+    pendingTargetIds: [],
+    pendingCrit: null,
+    stats: {},
+  };
+
   it("returns only NPCs without tokens", () => {
     const combat: CampaignCombatView = {
       id: "c1",
       round: 1,
       currentCombatantId: null,
       active: true,
+      state: "active",
+      eventSeq: 0,
       combatants: [
         {
           id: "1",
@@ -129,6 +142,7 @@ describe("unplacedNpcCombatants", () => {
           status: "healthy",
           isCurrentTurn: false,
           tokenImageUrl: null,
+          ...defaultCombatantFields,
         },
         {
           id: "2",
@@ -157,6 +171,7 @@ describe("unplacedNpcCombatants", () => {
           status: "healthy",
           isCurrentTurn: false,
           tokenImageUrl: null,
+          ...defaultCombatantFields,
         },
         {
           id: "3",
@@ -185,6 +200,7 @@ describe("unplacedNpcCombatants", () => {
           status: "healthy",
           isCurrentTurn: false,
           tokenImageUrl: null,
+          ...defaultCombatantFields,
         },
       ],
     };

@@ -19,13 +19,13 @@ Legend: `pending` | `in_progress` | `done` | `blocked` | `skipped` | `checkpoint
 
 | ID | Item | Status | Depends | Owner files | Notes |
 |---|---|---|---|---|---|
-| task0 | Execution status tracker | in_progress | - | prompts/encounter/STATUS.md | This file |
+| task0 | Execution status tracker | done | - | prompts/encounter/STATUS.md | Committed 668db4d |
 
 ## Phase 0A: engine (`10-phase-0-engine.md`)
 
 | ID | Item | Status | Depends | Owner files | Notes |
 |---|---|---|---|---|---|
-| E1 | Schema and types | pending | task0 | prisma/schema.prisma, src/lib/combat/types.ts | Migration `campaign_combat_engine`, data migration for `state` |
+| E1 | Schema and types | done | task0 | prisma/schema.prisma, src/lib/combat/types.ts | Migration `20260918200000_campaign_combat_engine` |
 | E2 | Effects parser | pending | E1 | src/lib/combat/effects/grammar.ts, parseEffect.ts, formatEffect.ts, *.test.ts | Every row in `05-effects-dsl.md` |
 | E3 | Effects support | pending | E2 | rules/modifiers.ts, effects/presets.ts, applyEffects.ts, duration.ts, pc-planner/conditions.ts | Re-export CONDITION_PRESETS from presets |
 | E4 | Rules, offense | pending | E3 | rules/engineContext.ts, initiative.ts, attack.ts, critical.ts, concealment.ts | Parallel-safe with E5 |
