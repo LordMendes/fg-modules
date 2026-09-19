@@ -118,6 +118,8 @@ export function filterEventForViewer(
     at: event.at,
     actorName,
     targetName,
+    actorCombatantId: event.actorCombatantId,
+    targetCombatantId: event.targetCombatantId,
     lines,
     payload,
     rollId: event.rollId,

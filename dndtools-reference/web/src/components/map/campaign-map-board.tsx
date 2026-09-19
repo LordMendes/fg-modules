@@ -1,6 +1,13 @@
 "use client";
 
 import { placeCombatantOnMapAction, spawnNpcOnMap } from "@/actions/combat";
+import { useCombatContext } from "@/components/combat/combat-context";
+import {
+  COMBAT_DRAG_MIME,
+  isCombatDragEvent,
+  readCombatDragPayload,
+  resolveCombatDrop,
+} from "@/components/combat/combat-roll-drop";
 import { UNPLACED_COMBATANT_MIME } from "@/components/combat/unplaced-combat-tray";
 import { useCampaignLive } from "@/components/tools/campaign-live-provider";
 import type { LiveSend } from "@/lib/campaign/liveClient";
@@ -151,6 +158,8 @@ export function CampaignMapBoard({
   onToggleCombatTarget,
 }: CampaignMapBoardProps) {
   const { store } = useCampaignLive();
+  const combatCtx = useCombatContext();
+  const [combatDropTokenId, setCombatDropTokenId] = useState<string | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
   const viewportLiveRef = useRef<ViewportState>({ x: 0, y: 0, scale: 1 });
@@ -1082,6 +1091,30 @@ export function CampaignMapBoard({
     setTokenMenu(null);
   };
 
+  const handleTokenCombatDragOver = (
+    e: React.DragEvent,
+    token: MapTokenView,
+  ) => {
+    if (!combatCtx || !isCombatDragEvent(e)) return;
+    const combatant = combatantForToken(token.id);
+    if (!combatant) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setCombatDropTokenId(token.id);
+  };
+
+  const handleTokenCombatDrop = (e: React.DragEvent, token: MapTokenView) => {
+    setCombatDropTokenId(null);
+    if (!combatCtx) return;
+    const payload = readCombatDragPayload(e);
+    if (!payload) return;
+    const combatant = combatantForToken(token.id);
+    if (!combatant) return;
+    e.preventDefault();
+    e.stopPropagation();
+    resolveCombatDrop(combatCtx, payload, combatant.id);
+  };
+
   const handleMapDragOver = (e: React.DragEvent) => {
     if (!isDm) return;
     // During dragover Chromium often hides custom MIME types; accept when
@@ -1090,7 +1123,8 @@ export function CampaignMapBoard({
     const maybeNpcDrop =
       types.includes("text/plain") ||
       types.includes("application/x-campaign-npc") ||
-      types.includes(UNPLACED_COMBATANT_MIME);
+      types.includes(UNPLACED_COMBATANT_MIME) ||
+      types.includes(COMBAT_DRAG_MIME);
     if (!maybeNpcDrop) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = types.includes(UNPLACED_COMBATANT_MIME)
@@ -1453,6 +1487,9 @@ export function CampaignMapBoard({
                 onClick={handleTokenClick}
                 onDoubleClick={handleTokenDoubleClick}
                 onContextMenu={handleTokenContextMenu}
+                onDragOver={handleTokenCombatDragOver}
+                onDrop={handleTokenCombatDrop}
+                dropHighlight={combatDropTokenId === token.id}
               />
               );
             })}

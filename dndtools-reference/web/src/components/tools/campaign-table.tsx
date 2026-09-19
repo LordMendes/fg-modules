@@ -19,7 +19,7 @@ import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { CampaignCombatDrawer } from "@/components/combat/campaign-combat-drawer";
 import { CampaignNpcsDrawer } from "@/components/combat/campaign-npcs-drawer";
-import { CombatProvider } from "@/components/combat/combat-context";
+import { CombatProvider, useCombatContext } from "@/components/combat/combat-context";
 import { combatToggleTarget } from "@/actions/combat";
 import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
 import { CampaignMapBoard } from "@/components/map/campaign-map-board";
@@ -86,6 +86,9 @@ function CampaignRail({
   activeMenu: MenuId;
   onSelectMenu: (id: MenuId) => void;
 }) {
+  const combatCtx = useCombatContext();
+  const modTotal =
+    combatCtx?.modifierStack.reduce((sum, mod) => sum + mod.value, 0) ?? 0;
   const [railExpanded, setRailExpanded] = useState(false);
 
   useEffect(() => {
@@ -168,13 +171,18 @@ function CampaignRail({
       </button>
       <button
         type="button"
-        className={`campaign-rail-btn${activeMenu === "combat" ? " campaign-rail-btn--active" : ""}`}
+        className={`campaign-rail-btn${activeMenu === "combat" ? " campaign-rail-btn--active" : ""}${modTotal !== 0 ? " campaign-rail-btn--accent" : ""}`}
         aria-pressed={activeMenu === "combat"}
         aria-label={railExpanded ? undefined : "Combat tracker"}
         title="Combat tracker"
         onClick={() => onSelectMenu(activeMenu === "combat" ? null : "combat")}
       >
         <Swords size={20} aria-hidden />
+        {modTotal !== 0 ? (
+          <span className="campaign-rail-badge" aria-label={`Modifier ${modTotal}`}>
+            {modTotal > 0 ? `+${modTotal}` : modTotal}
+          </span>
+        ) : null}
         <span className="campaign-rail-btn-label">Combat</span>
       </button>
       {isDm ? (

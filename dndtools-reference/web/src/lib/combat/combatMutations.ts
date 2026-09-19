@@ -2308,6 +2308,85 @@ export async function toggleEffectActive(
   return { success: true as const };
 }
 
+export type UpdateEffectInput = {
+  duration?: number | null;
+  durationUnit?: "round" | "minute" | "hour" | "day";
+  expiry?: "startOfTurn" | "endOfTurn";
+  visibility?: "visible" | "hidden" | "gm";
+};
+
+export async function updateEffect(
+  actor: CombatActor,
+  effectId: string,
+  input: UpdateEffectInput,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    let targetRow: LockedCombatantRow | null = null;
+    let effect: LockedCombatantRow["effects"][number] | undefined;
+    for (const row of combat.combatants) {
+      effect = row.effects.find((e) => e.id === effectId);
+      if (effect) {
+        targetRow = row;
+        break;
+      }
+    }
+    if (!targetRow || !effect) {
+      return { success: false as const, error: "Effect not found" };
+    }
+    if (effect.system) {
+      return { success: false as const, error: "Cannot edit system effect" };
+    }
+    if (!isDm(actor)) {
+      if (!(await ownsCombatant(actor, targetRow))) {
+        return { success: false as const, error: "Not allowed" };
+      }
+      if (effect.visibility === "gm") {
+        return { success: false as const, error: "Not allowed" };
+      }
+    }
+
+    const data: {
+      duration?: number | null;
+      durationUnit?: string;
+      expiry?: string;
+      visibility?: string;
+    } = {};
+    if (input.duration !== undefined) data.duration = input.duration;
+    if (input.durationUnit != null) data.durationUnit = input.durationUnit;
+    if (input.expiry != null) data.expiry = input.expiry;
+    if (input.visibility != null) data.visibility = input.visibility;
+
+    if (Object.keys(data).length === 0) {
+      return { success: false as const, error: "Nothing to update" };
+    }
+
+    await tx.campaignCombatEffect.update({
+      where: { id: effectId },
+      data,
+    });
+    if (input.duration !== undefined) effect.duration = input.duration;
+    if (input.durationUnit != null) effect.durationUnit = input.durationUnit;
+    if (input.expiry != null) effect.expiry = input.expiry;
+    if (input.visibility != null) effect.visibility = input.visibility;
+
+    const event = await writeCombatEvent(tx, combat, "note", {
+      text: `${effect.label.split(";")[0]?.trim() ?? effect.label} updated`,
+    }, {
+      targetCombatantId: targetRow.id,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
 export async function clearEffects(
   actor: CombatActor,
   scope: CombatantScope,

@@ -164,6 +164,8 @@ describe("liveStore", () => {
         at: "2026-09-18T00:00:00.000Z",
         actorName: "Goblin",
         targetName: "Hero",
+        actorCombatantId: "c1",
+        targetCombatantId: "c2",
         lines: [{ text: "Hit", tone: "hit" }],
         payload: {},
         rollId: null,

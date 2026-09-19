@@ -19,6 +19,9 @@ type MapTokenProps = {
   onClick?: (e: React.MouseEvent, token: MapTokenView) => void;
   onDoubleClick?: (e: React.MouseEvent, token: MapTokenView) => void;
   onContextMenu?: (e: React.MouseEvent, token: MapTokenView) => void;
+  onDragOver?: (e: React.DragEvent, token: MapTokenView) => void;
+  onDrop?: (e: React.DragEvent, token: MapTokenView) => void;
+  dropHighlight?: boolean;
 };
 
 export function MapToken({
@@ -35,6 +38,9 @@ export function MapToken({
   onClick,
   onDoubleClick,
   onContextMenu,
+  onDragOver,
+  onDrop,
+  dropHighlight = false,
 }: MapTokenProps) {
   const topLeft = gridToPixels(token.x, token.y, grid);
   const widthPx = token.width * grid.gridSizePx;
@@ -50,7 +56,9 @@ export function MapToken({
         canMove ? " map-token--draggable" : ""
       }${token.layer === "gm" ? " map-token--gm" : ""}${
         token.visibility === "mask" ? " map-token--mask" : ""
-      }${token.visibility === "hidden" ? " map-token--hidden" : ""}`}
+      }${token.visibility === "hidden" ? " map-token--hidden" : ""}${
+        dropHighlight ? " map-token--combat-drop" : ""
+      }`}
       style={{
         left: topLeft.x,
         top: topLeft.y,
@@ -69,6 +77,8 @@ export function MapToken({
         e.stopPropagation();
         onContextMenu(e, token);
       }}
+      onDragOver={(e) => onDragOver?.(e, token)}
+      onDrop={(e) => onDrop?.(e, token)}
       role="button"
       tabIndex={0}
       aria-label={token.name}

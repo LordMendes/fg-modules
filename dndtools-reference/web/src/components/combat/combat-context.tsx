@@ -16,14 +16,28 @@ import type {
 } from "@/lib/combat/types";
 import { createRollId, iterativeD20Checks } from "@/lib/dice/notation";
 import type { DicePoolItem } from "@/lib/dice/types";
+import { useCampaignLiveOptional } from "@/components/tools/campaign-live-provider";
+import type { CombatEventView } from "@/lib/combat/events/types";
 import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
+
+export type RowFlashKind =
+  | "hit"
+  | "miss"
+  | "crit"
+  | "damaged"
+  | "healed"
+  | "drop"
+  | "focus";
 
 export type CombatAdhocModifier = {
   value: number;
@@ -106,7 +120,35 @@ type CombatContextValue = {
   ) => CombatantView["pendingCrit"];
   /** Pending targets for the viewer's PC combatant (sheet compatibility). */
   pendingDamageTargets: CombatantView[];
+  stickyModifier: boolean;
+  rowFlashes: Record<string, RowFlashKind>;
+  focusedRowIds: string[];
+  setFocusedRowIds: (ids: string[]) => void;
+  rollStabilize: (targetId: string, label: string) => void;
 };
+
+function flashKindForEvent(event: CombatEventView): {
+  targetFlash?: RowFlashKind;
+  actorFlash?: RowFlashKind;
+} {
+  for (const line of event.lines) {
+    switch (line.tone) {
+      case "hit":
+        return { actorFlash: "hit", targetFlash: "hit" };
+      case "crit":
+        return { actorFlash: "crit", targetFlash: "crit" };
+      case "miss":
+        return { actorFlash: "miss" };
+      case "damage":
+        return { targetFlash: "damaged" };
+      case "heal":
+        return { targetFlash: "healed" };
+      default:
+        break;
+    }
+  }
+  return {};
+}
 
 const CombatContext = createContext<CombatContextValue | null>(null);
 
@@ -134,8 +176,20 @@ export function CombatProvider({
   children: ReactNode;
 }) {
   const { roll } = useDice();
+  const live = useCampaignLiveOptional();
+  const combatEvents = useSyncExternalStore(
+    (onStoreChange) => {
+      if (!live?.store) return () => {};
+      return live.store.subscribe(onStoreChange);
+    },
+    () => live?.store.getState().combatEvents ?? [],
+    () => [],
+  );
   const [modifierStack, setModifierStack] = useState<CombatAdhocModifier[]>([]);
   const [stickyModifier, setStickyModifier] = useState(false);
+  const [rowFlashes, setRowFlashes] = useState<Record<string, RowFlashKind>>({});
+  const [focusedRowIds, setFocusedRowIds] = useState<string[]>([]);
+  const lastEventSeqRef = useRef(0);
 
   const currentActor = useMemo(() => {
     if (!combat?.currentCombatantId) return null;
@@ -201,6 +255,32 @@ export function CombatProvider({
     setModifierStack([]);
     setStickyModifier(false);
   }, []);
+
+  const flashRow = useCallback((id: string, kind: RowFlashKind) => {
+    setRowFlashes((prev) => ({ ...prev, [id]: kind }));
+    window.setTimeout(() => {
+      setRowFlashes((prev) => {
+        if (prev[id] !== kind) return prev;
+        const next = { ...prev };
+        delete next[id];
+        return next;
+      });
+    }, 900);
+  }, []);
+
+  useEffect(() => {
+    if (combatEvents.length === 0) return;
+    const latest = combatEvents[combatEvents.length - 1];
+    if (!latest || latest.seq <= lastEventSeqRef.current) return;
+    lastEventSeqRef.current = latest.seq;
+    const { targetFlash, actorFlash } = flashKindForEvent(latest);
+    if (latest.targetCombatantId && targetFlash) {
+      flashRow(latest.targetCombatantId, targetFlash);
+    }
+    if (latest.actorCombatantId && actorFlash) {
+      flashRow(latest.actorCombatantId, actorFlash);
+    }
+  }, [combatEvents, flashRow]);
 
   const buildCombatRoll = useCallback(
     (
@@ -343,6 +423,21 @@ export function CombatProvider({
     [buildCombatRoll],
   );
 
+  const rollStabilize = useCallback(
+    (targetId: string, label: string) => {
+      buildCombatRoll(
+        { kind: "stabilize", targetId },
+        {
+          label,
+          dice: [{ qty: 1, sides: 20 }],
+          modifier: 0,
+          kind: "other",
+        },
+      );
+    },
+    [buildCombatRoll],
+  );
+
   const applyEffect = useCallback(
     async (combatantIds: string[], input: CombatEffectInput) => {
       await combatAddEffect(campaignId, combatantIds, input);
@@ -389,6 +484,11 @@ export function CombatProvider({
       pendingTargetsFor,
       pendingCritFor,
       pendingDamageTargets,
+      stickyModifier,
+      rowFlashes,
+      focusedRowIds,
+      setFocusedRowIds,
+      rollStabilize,
     }),
     [
       campaignId,
@@ -413,6 +513,10 @@ export function CombatProvider({
       pendingTargetsFor,
       pendingCritFor,
       pendingDamageTargets,
+      stickyModifier,
+      rowFlashes,
+      focusedRowIds,
+      rollStabilize,
     ],
   );
 

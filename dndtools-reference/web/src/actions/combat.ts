@@ -42,7 +42,9 @@ import {
   statsFromNpcSnapshot,
   toggleCombatTarget,
   toggleEffectActive,
+  updateEffect,
   type AddEffectInput,
+  type UpdateEffectInput,
   type CombatActor,
   type CombatantFlagsInput,
   type CombatantScope,
@@ -505,11 +507,24 @@ export async function combatSetInitiative(
 export async function combatApplyDamage(
   campaignId: string,
   combatantId: string,
-  damage: number,
+  damage:
+    | number
+    | { amount: number; types?: import("@/lib/combat/types").DamageType[]; source?: string },
 ): Promise<CombatActionResult> {
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
-  return applyCombatDamage(auth.actor, combatantId, damage);
+  if (typeof damage === "number") {
+    return applyCombatDamage(auth.actor, combatantId, damage);
+  }
+  return applyCombatDamage(auth.actor, combatantId, {
+    packets: [
+      {
+        amount: Math.max(0, Math.trunc(damage.amount)),
+        types: damage.types?.length ? damage.types : ["untyped"],
+        source: damage.source ?? "Damage",
+      },
+    ],
+  });
 }
 
 export async function combatApplyHeal(
@@ -582,6 +597,16 @@ export async function combatToggleEffectActive(
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
   return toggleEffectActive(auth.actor, effectId);
+}
+
+export async function combatUpdateEffect(
+  campaignId: string,
+  effectId: string,
+  input: UpdateEffectInput,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return updateEffect(auth.actor, effectId, input);
 }
 
 export async function combatClearEffects(

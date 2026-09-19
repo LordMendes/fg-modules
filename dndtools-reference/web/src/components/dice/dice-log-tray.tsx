@@ -1,5 +1,7 @@
 "use client";
 
+import { CombatLog } from "@/components/combat/combat-log";
+import { useCombatContext } from "@/components/combat/combat-context";
 import { EyeOff, ScrollText, Swords } from "lucide-react";
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useDice } from "@/components/dice/dice-provider";
@@ -20,6 +22,7 @@ type LogTab = "rolls" | "combat";
 
 export function DiceLogTray() {
   const { lastResult, history, isCampaign } = useDice();
+  const combatCtx = useCombatContext();
   const live = useCampaignLiveOptional();
   const combatEvents = useSyncExternalStore(
     (onStoreChange) => {
@@ -232,32 +235,11 @@ export function DiceLogTray() {
                 </ul>
               ) : null}
             </>
-          ) : combatEvents.length > 0 ? (
-            <ul className="dice-tray-history dice-log-tray-history combat-log-list">
-              {combatEvents.map((event) => (
-                <li
-                  key={event.id}
-                  className={`combat-log-entry combat-log-entry--${event.kind}`}
-                >
-                  <span className="combat-log-entry-meta">
-                    R{event.round}
-                    {event.actorName ? (
-                      <span className="combat-log-who">{event.actorName}</span>
-                    ) : null}
-                  </span>
-                  {event.lines.map((line, index) => (
-                    <span
-                      key={`${event.id}-${index}`}
-                      className={`combat-log-line combat-log-line--${line.tone}`}
-                    >
-                      {line.text}
-                    </span>
-                  ))}
-                </li>
-              ))}
-            </ul>
           ) : (
-            <p className="dice-tray-pool-empty">No combat events yet</p>
+            <CombatLog
+              events={combatEvents}
+              isDm={combatCtx?.isDm ?? false}
+            />
           )}
         </div>
       )}
