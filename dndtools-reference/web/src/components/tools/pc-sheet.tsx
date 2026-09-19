@@ -10,7 +10,6 @@ import { PcStatusPanel } from "@/components/tools/pc-status-panel";
 import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
 import { PcSensesLanguagesBlock } from "@/components/tools/pc-identity-extra";
 import { PcMainAbilities } from "@/components/tools/pc-main/abilities";
-import { PcMainAlias } from "@/components/tools/pc-main/alias";
 import { PcMainBiography } from "@/components/tools/pc-main/biography";
 import { BonusSourcesHint } from "@/components/tools/pc-main/bonus-sources-hint";
 import { PcMainClasses } from "@/components/tools/pc-main/classes";
@@ -59,10 +58,7 @@ export type PcSheetProps = {
   patch: (fn: (draft: PcPlanState) => void) => void;
   sheetTab: PcSheetTab;
   onTabChange: (tab: PcSheetTab) => void;
-  shortcut: string;
-  onShortcutChange: (value: string) => void;
   onNameBlur: () => void;
-  onShortcutBlur: () => void;
   activeSpellClassIndex: number;
   onSpellClassIndexChange: (index: number) => void;
   compendium: PcCompendiumBundle | null;
@@ -85,10 +81,7 @@ export function PcSheet({
   patch: patchProp,
   sheetTab,
   onTabChange,
-  shortcut,
-  onShortcutChange,
   onNameBlur,
-  onShortcutBlur,
   activeSpellClassIndex,
   onSpellClassIndexChange,
   compendium,
@@ -249,11 +242,6 @@ export function PcSheet({
             </div>
             <PcSensesLanguagesBlock state={state} patch={patch} readOnly={readOnly} />
             <PcMainBiography state={state} patch={patch} readOnly={readOnly} />
-            <PcMainAlias
-              shortcut={shortcut}
-              onShortcutChange={onShortcutChange}
-              onShortcutBlur={onShortcutBlur}
-            />
           </div>
         )}
 

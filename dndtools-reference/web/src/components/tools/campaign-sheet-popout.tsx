@@ -424,13 +424,7 @@ function CampaignSheetPopoutBody({
                   patch={patch}
                   sheetTab={sheetTab}
                   onTabChange={setSheetTab}
-                  shortcut={shortcut}
-                  onShortcutChange={setShortcut}
                   onNameBlur={() => {
-                    if (!plan.canEdit || !state) return;
-                    void renamePcPlan(plan.id, state.identity.name, shortcut);
-                  }}
-                  onShortcutBlur={() => {
                     if (!plan.canEdit || !state) return;
                     void renamePcPlan(plan.id, state.identity.name, shortcut);
                   }}

@@ -80,6 +80,7 @@ export function PcMainAbilities({
                     : "pc-ability-row-segment pc-ability-card-mod"
                 }
               >
+                <span className="pc-ability-col-label">Mod</span>
                 <RollableStat
                   className="pc-sheet-mod pc-ability-card-modifier"
                   label={`${key.toUpperCase()} check`}

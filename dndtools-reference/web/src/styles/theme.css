@@ -6284,8 +6284,7 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
     "identity abilities"
-    "senses biography"
-    "alias alias";
+    "senses biography";
   gap: 0.4rem;
   align-items: stretch;
 }
@@ -6328,10 +6327,6 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   min-width: 0;
   container-type: inline-size;
   container-name: pc-biography;
-}
-
-.pc-main-alias {
-  grid-area: alias;
 }
 
 .pc-main-profile {
@@ -6432,6 +6427,22 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-height: 0;
+}
+
+.pc-main-classes .pc-class-list {
+  --pc-class-row-height: 2.45rem;
+  max-height: calc(var(--pc-class-row-height) * 3 + 0.35rem * 2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 0;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.pc-main-classes .pc-class-row {
+  min-height: var(--pc-class-row-height);
+  box-sizing: border-box;
 }
 
 .pc-main-abilities .npc-sheet-abilities {
@@ -6492,20 +6503,33 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   flex: 0 0 auto;
   width: auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 0.08rem;
+}
+
+.pc-main-abilities .pc-ability-card-mod .pc-ability-col-label {
+  font-size: 0.5625rem;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
 }
 
 .pc-main-abilities .pc-ability-card-modifier {
-  width: auto;
+  width: 1.75rem;
   min-width: 1.75rem;
-  min-height: 1.35rem;
-  padding: 0.05rem 0.35rem;
+  max-width: 1.75rem;
+  min-height: 1.75rem;
+  height: 1.75rem;
+  padding: 0.08rem;
   border-radius: 3px;
   border: 1px solid color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
   background: color-mix(in srgb, var(--accent-gold) 8%, var(--bg-primary));
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 700;
+  line-height: 1;
   color: var(--accent-gold);
+  box-sizing: border-box;
 }
 
 .pc-main-abilities .pc-ability-card-mod--damaged .pc-ability-card-modifier {
@@ -6709,8 +6733,7 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
       "identity"
       "abilities"
       "senses"
-      "biography"
-      "alias";
+      "biography";
   }
 
   .pc-main-meta {
@@ -7111,26 +7134,6 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   color: var(--text-secondary);
   min-height: 2rem;
   border-color: var(--border-color);
-}
-
-.pc-main-alias .pc-main-shortcut-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin: 0;
-  max-width: 16rem;
-}
-
-.pc-main-alias .pc-main-shortcut-label > span {
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.pc-main-shortcut-input {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.3rem;
-  color: var(--text-muted);
 }
 
 @media (max-width: 560px) {

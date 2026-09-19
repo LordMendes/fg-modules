@@ -61,7 +61,6 @@ function PcPlannerBody() {
   const [planId, setPlanId] = useState<string | null>(null);
   const [plans, setPlans] = useState<PcPlanSummary[]>([]);
   const [listError, setListError] = useState<string | null>(null);
-  const [shortcut, setShortcut] = useState("");
   const [state, setState] = useState<PcPlanState>(() => createDefaultPcPlanState());
   const [sheetTab, setSheetTab] = useState<PcSheetTab>("main");
   const [activeSpellClassIndex, setActiveSpellClassIndex] = useState(0);
@@ -181,7 +180,6 @@ function PcPlannerBody() {
         lastCompendiumSync.current = "";
         lastRaceSlug.current = undefined;
         setPlanId(plan.id);
-        setShortcut(plan.shortcut ?? "");
         setState(plan.state);
         setHydrated(true);
         return;
@@ -220,7 +218,6 @@ function PcPlannerBody() {
       if (loaded) {
         lastCompendiumSync.current = "";
         setPlanId(loaded.id);
-        setShortcut(loaded.shortcut ?? "");
         setState(loaded.state);
         setStatusMessage(null);
       }
@@ -237,7 +234,6 @@ function PcPlannerBody() {
       }
       lastCompendiumSync.current = "";
       setPlanId(result.plan.id);
-      setShortcut(result.plan.shortcut ?? "");
       setState(result.plan.state);
       router.push(`/tools/pc-planner?id=${result.plan.id}`);
     });
@@ -419,15 +415,9 @@ function PcPlannerBody() {
             patch={patch}
             sheetTab={sheetTab}
             onTabChange={setSheetTab}
-            shortcut={shortcut}
-            onShortcutChange={setShortcut}
             onNameBlur={() => {
               if (!planId) return;
               void renamePcPlan(planId, state.identity.name || "Unnamed");
-            }}
-            onShortcutBlur={() => {
-              if (!planId) return;
-              void renamePcPlan(planId, state.identity.name, shortcut || null);
             }}
             activeSpellClassIndex={activeSpellClassIndex}
             onSpellClassIndexChange={setActiveSpellClassIndex}
