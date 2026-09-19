@@ -27,7 +27,6 @@ import {
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
-import { PcAsfDisplay } from "@/components/tools/pc-actions-extras";
 import { PcDefensesBlock } from "@/components/tools/pc-identity-extra";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { CombatState, PcPlanState } from "@/lib/pc-planner/types";
@@ -502,75 +501,88 @@ export function PcCombatPanel({
       </PcSheetCard>
 
       <PcSheetCard title="Combat stats" className="pc-combat-side-stats-card">
-        <SideStatBlock
-          title="Initiative"
-          columns={["Total", "Stat", "Misc"]}
-          total={stats.initiative.total}
-          rollLabel="Initiative"
-          rollKind="initiative"
-          fields={[
-            { label: "Stat", value: stats.initiative.parts.stat, editable: null },
-            {
-              label: "Misc",
-              value: stats.initiative.parts.misc,
-              editable: featEffects.initBonus ? null : "initMisc",
-            },
-          ]}
-          patch={patch}
-        />
-        <SideStatBlock
-          title="Speed"
-          columns={["Total", ...speedFields.map((field) => field.label)]}
-          total={stats.speed.total}
-          signedTotal={false}
-          fields={speedFields}
-          patch={patch}
-        />
-        <SideStatBlock
-          title="Spell resistance"
-          columns={["Total", "Base", "Misc"]}
-          total={stats.spellResistance.total}
-          signedTotal={false}
-          fields={[
-            { label: "Base", value: combat.srBase, editable: "srBase", signed: false },
-            { label: "Misc", value: combat.srMisc, editable: "srMisc", signed: false },
-          ]}
-          patch={patch}
-        />
-        <label className="pc-checkbox-label pc-combat-house-rule">
-          <input
-            type="checkbox"
-            checked={Boolean(state.combat.addAllBonusTypes)}
-            onChange={(e) =>
-              patch((s) => {
-                s.combat.addAllBonusTypes = e.target.checked;
-              })
-            }
-          />
-          Stack all item bonus types (house rule)
-        </label>
-      </PcSheetCard>
-
-      <PcSheetCard title="Arcane spell failure" className="pc-combat-asf-card">
-        <div className="pc-combat-asf-row">
-          <PcAsfDisplay state={state} />
-          <label className="pc-identity-field pc-combat-asf-override">
-            <span className="npc-sheet-sub">Override (blank = auto)</span>
-            <input
-              type="number"
-              className="pc-sheet-input pc-sheet-input--narrow"
-              min={0}
-              max={100}
-              value={state.combat.asfOverride ?? ""}
-              placeholder={String(stats.arcaneSpellFailure)}
-              onChange={(e) =>
-                patch((s) => {
-                  s.combat.asfOverride =
-                    e.target.value === "" ? null : Number(e.target.value);
-                })
-              }
+        <div className="pc-combat-stats-grid">
+          <div className="pc-combat-stats-init">
+            <SideStatBlock
+              title="Initiative"
+              columns={["Total", "Stat", "Misc"]}
+              total={stats.initiative.total}
+              rollLabel="Initiative"
+              rollKind="initiative"
+              fields={[
+                { label: "Stat", value: stats.initiative.parts.stat, editable: null },
+                {
+                  label: "Misc",
+                  value: stats.initiative.parts.misc,
+                  editable: featEffects.initBonus ? null : "initMisc",
+                },
+              ]}
+              patch={patch}
             />
-          </label>
+          </div>
+          <div className="pc-combat-stats-speed">
+            <SideStatBlock
+              title="Speed"
+              columns={["Total", ...speedFields.map((field) => field.label)]}
+              total={stats.speed.total}
+              signedTotal={false}
+              fields={speedFields}
+              patch={patch}
+            />
+          </div>
+          <div className="pc-combat-stats-sr">
+            <SideStatBlock
+              title="Spell resistance"
+              columns={["Total", "Base", "Misc"]}
+              total={stats.spellResistance.total}
+              signedTotal={false}
+              fields={[
+                { label: "Base", value: combat.srBase, editable: "srBase", signed: false },
+                { label: "Misc", value: combat.srMisc, editable: "srMisc", signed: false },
+              ]}
+              patch={patch}
+            />
+          </div>
+          <div className="pc-combat-stats-asf">
+            <div className="pc-combat-side-stat">
+              <span
+                className="npc-sheet-sub pc-combat-side-stat-label"
+                title="Arcane spell failure"
+              >
+                ASF
+              </span>
+              <div
+                className="pc-combat-table pc-combat-table--side"
+                style={{ ["--combat-cols" as string]: 2 }}
+              >
+                <CombatTableHeader columns={["Total", "Override"]} labeled={false} />
+                <div
+                  className="pc-combat-row pc-combat-row--no-label"
+                  style={{ ["--combat-cols" as string]: 2 }}
+                >
+                  <span className="pc-combat-value pc-combat-value--readonly">
+                    {stats.arcaneSpellFailure}%
+                  </span>
+                  <input
+                    type="number"
+                    className="pc-sheet-input pc-combat-value pc-combat-input"
+                    min={0}
+                    max={100}
+                    value={state.combat.asfOverride ?? ""}
+                    placeholder={String(stats.arcaneSpellFailure)}
+                    title="Override (blank = auto)"
+                    aria-label="Arcane spell failure override (blank = auto)"
+                    onChange={(e) =>
+                      patch((s) => {
+                        s.combat.asfOverride =
+                          e.target.value === "" ? null : Number(e.target.value);
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </PcSheetCard>
 

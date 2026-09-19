@@ -8068,7 +8068,7 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
     "hp hp"
-    "stats asf"
+    "stats stats"
     "bab bab"
     "saves saves"
     "ac ac"
@@ -8096,28 +8096,54 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   height: auto;
 }
 
-.pc-combat-asf-card {
-  grid-area: asf;
-  align-self: start;
+.pc-combat-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "init speed"
+    "sr asf";
+  gap: 0.35rem 0.5rem;
+  align-items: start;
+  width: 100%;
+}
+
+.pc-combat-stats-init {
+  grid-area: init;
   min-width: 0;
-  height: auto;
 }
 
-.pc-combat-asf-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0.5rem 0.75rem;
+.pc-combat-stats-speed {
+  grid-area: speed;
+  min-width: 0;
 }
 
-.pc-combat-asf-override {
-  min-width: 6rem;
+.pc-combat-stats-sr {
+  grid-area: sr;
+  min-width: 0;
 }
 
-.pc-combat-house-rule {
-  margin-top: 0.15rem;
-  padding-top: 0.35rem;
-  border-top: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+.pc-combat-stats-asf {
+  grid-area: asf;
+  min-width: 0;
+}
+
+.pc-combat-stats-init,
+.pc-combat-stats-speed,
+.pc-combat-stats-sr,
+.pc-combat-stats-asf {
+  overflow: hidden;
+}
+
+.pc-combat-stats-grid .pc-combat-table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.pc-combat-stats-grid .pc-combat-side-stat + .pc-combat-side-stat {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
 .pc-combat-bab-card {
@@ -8165,6 +8191,10 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 
 .pc-combat-side-stat-label {
   display: block;
+}
+
+.pc-combat-side-stat-label[title] {
+  cursor: help;
 }
 
 .pc-combat-attacks-field {
@@ -8465,8 +8495,7 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-combat-hp-dice-row .pc-combat-value,
-.pc-combat-hp-current-row .pc-combat-value,
-.pc-combat-asf-display .pc-combat-value {
+.pc-combat-hp-current-row .pc-combat-value {
   width: max-content;
   max-width: none;
 }
@@ -8511,7 +8540,6 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
     grid-template-areas:
       "hp"
       "stats"
-      "asf"
       "bab"
       "saves"
       "ac"
