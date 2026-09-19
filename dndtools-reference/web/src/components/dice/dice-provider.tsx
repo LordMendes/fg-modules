@@ -45,6 +45,7 @@ export type CampaignDiceConfig = {
   actor: RollActor;
   isDm: boolean;
   initialHistory?: RollResult[];
+  onRollError?: (message: string) => void;
 };
 
 type DiceContextValue = {
@@ -65,6 +66,8 @@ type DiceContextValue = {
   clearDice: () => void;
   rolling: boolean;
   ready: boolean;
+  /** Whether roll buttons should accept clicks. */
+  canRoll: boolean;
   lastResult: RollResult | null;
   history: RollResult[];
   activeRequest: RollRequest | null;
@@ -147,9 +150,14 @@ export function DiceProvider({
   const pendingCanonicalRef = useRef<RollResult | null>(null);
   const pendingCombatOutcomeRef = useRef<RollResult["combat"]>(undefined);
   const seenRollIds = useRef(new Set<string>());
+  const readyRef = useRef(false);
+  readyRef.current = ready;
+  const completeRollRef = useRef<(result: RollResult) => void>(() => {});
+  const failRollRef = useRef<() => void>(() => {});
   const campaignId = campaign?.campaignId ?? null;
   const isCampaign = Boolean(campaignId);
   const historyLimit = isCampaign ? HISTORY_LIMIT_CAMPAIGN : HISTORY_LIMIT_SOLO;
+  const canRoll = isCampaign ? !rolling : ready && !rolling;
 
   const defaultActor = useMemo<RollActor | null>(() => {
     if (!campaign) return null;
@@ -247,11 +255,27 @@ export function DiceProvider({
 
       pendingCanonicalRef.current = canonical;
       setSilhouetteActive(Boolean(request.silhouetteOnly));
-      setRolling(true);
-      setActiveRequest(request);
+      if (readyRef.current) {
+        setRolling(true);
+        setActiveRequest(request);
+      }
     },
     [historyLimit],
   );
+
+  useEffect(() => {
+    if (!rolling) return;
+    const timer = window.setTimeout(() => {
+      console.warn("[DiceProvider] roll watchdog reset");
+      const canonical = pendingCanonicalRef.current;
+      if (canonical) {
+        completeRollRef.current(canonical);
+      } else {
+        failRollRef.current();
+      }
+    }, 8000);
+    return () => window.clearTimeout(timer);
+  }, [rolling]);
 
   // Campaign rolls arrive on the shared WebSocket (CampaignLiveProvider).
   const live = useCampaignLiveOptional();
@@ -355,7 +379,6 @@ export function DiceProvider({
 
   const roll = useCallback(
     (request: RollRequest, onComplete?: (result: RollResult) => void) => {
-      if (!ready || rolling) return;
       if (request.dice.every((d) => d.qty <= 0)) return;
 
       const hidden =
@@ -368,9 +391,12 @@ export function DiceProvider({
       };
 
       if (!campaignId) {
+        if (!ready || rolling) return;
         rollLocal(enriched, onComplete);
         return;
       }
+
+      if (rolling) return;
 
       // Campaign: server RNG first; every client animates the shared roll once.
       // Set onComplete before await so SSE-first ingest still fires sheet callbacks.
@@ -394,10 +420,22 @@ export function DiceProvider({
             if (!result.success || !result.roll) {
               onCompleteRef.current = null;
               setRolling(false);
+              const message = result.error ?? "Combat roll failed";
+              campaign?.onRollError?.(message);
+              console.warn("[DiceProvider] combat roll failed:", message);
               return;
             }
             pendingCombatOutcomeRef.current = result.outcome;
             ingestCampaignRoll(result.roll);
+            if (!readyRef.current) {
+              setActiveRequest(null);
+              const canonical = pendingCanonicalRef.current;
+              if (canonical) {
+                completeRollRef.current(canonical);
+              } else {
+                setRolling(false);
+              }
+            }
             return;
           }
 
@@ -414,12 +452,28 @@ export function DiceProvider({
           if (!result.success || !result.roll) {
             onCompleteRef.current = null;
             setRolling(false);
+            const message = result.error ?? "Roll failed";
+            campaign?.onRollError?.(message);
+            console.warn("[DiceProvider] campaign roll failed:", message);
             return;
           }
           ingestCampaignRoll(result.roll);
-        } catch {
+          if (!readyRef.current) {
+            setActiveRequest(null);
+            const canonical = pendingCanonicalRef.current;
+            if (canonical) {
+              completeRollRef.current(canonical);
+            } else {
+              setRolling(false);
+            }
+          }
+        } catch (err) {
           onCompleteRef.current = null;
           setRolling(false);
+          const message =
+            err instanceof Error ? err.message : "Roll failed unexpectedly";
+          campaign?.onRollError?.(message);
+          console.warn("[DiceProvider] campaign roll error:", err);
         }
       })();
     },
@@ -430,6 +484,7 @@ export function DiceProvider({
       secretModifierHeld,
       defaultActor,
       campaignId,
+      campaign,
       rollLocal,
       ingestCampaignRoll,
     ],
@@ -505,6 +560,7 @@ export function DiceProvider({
     },
     [isCampaign, historyLimit],
   );
+  completeRollRef.current = completeRoll;
 
   const failRoll = useCallback(() => {
     onCompleteRef.current = null;
@@ -514,6 +570,7 @@ export function DiceProvider({
     setRolling(false);
     setActiveRequest(null);
   }, []);
+  failRollRef.current = failRoll;
 
   const clearDice = useCallback(() => {
     onCompleteRef.current = null;
@@ -547,6 +604,7 @@ export function DiceProvider({
       clearDice,
       rolling,
       ready,
+      canRoll,
       lastResult,
       history,
       activeRequest,
@@ -581,6 +639,7 @@ export function DiceProvider({
       clearDice,
       rolling,
       ready,
+      canRoll,
       lastResult,
       history,
       activeRequest,

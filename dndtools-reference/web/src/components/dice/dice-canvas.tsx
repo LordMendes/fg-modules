@@ -156,6 +156,7 @@ export function DiceCanvas() {
   const rollingRef = useRef(false);
   const fadeTimersRef = useRef<{ hold?: number; clear?: number }>({});
   const seenIdsRef = useRef(new Set<string>());
+  const initFailedRef = useRef(false);
   const themeColorRef = useRef(themeColor);
   const callbacksRef = useRef({
     acknowledgeRollStart,
@@ -203,13 +204,22 @@ export function DiceCanvas() {
       completeRoll: done,
       failRoll: fail,
     } = callbacksRef.current;
-    if (!box || rollingRef.current) {
+    if (!box) {
+      if (initFailedRef.current) {
+        fail();
+      } else {
+        queuedRequestRef.current = request;
+      }
+      return;
+    }
+    if (rollingRef.current) {
       queuedRequestRef.current = request;
       return;
     }
 
     if (seenIdsRef.current.has(request.id)) {
       ack();
+      fail();
       return;
     }
     seenIdsRef.current.add(request.id);
@@ -226,7 +236,8 @@ export function DiceCanvas() {
       request.faces,
     );
     if (!notation) {
-      rollingRef.current = false;
+      ack();
+      fail();
       return;
     }
 
@@ -342,6 +353,7 @@ export function DiceCanvas() {
         window.addEventListener("resize", onResize);
         (box as DiceBoxThreejs & { __onResize?: () => void }).__onResize = onResize;
         boxRef.current = box;
+        initFailedRef.current = false;
         setEngineReady(true);
         const queued = queuedRequestRef.current;
         if (queued) {
@@ -350,6 +362,7 @@ export function DiceCanvas() {
         }
       } catch (err) {
         console.error("[DiceCanvas] failed to init dice-box-threejs", err);
+        initFailedRef.current = true;
         setEngineReady(false);
       }
     }

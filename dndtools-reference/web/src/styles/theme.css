@@ -6079,7 +6079,7 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 
 /* PC Planner — unified FG character sheet */
 .pc-sheet-page {
-  max-width: 48rem;
+  max-width: 56rem;
   margin: 0 auto;
 }
 
@@ -6123,6 +6123,475 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.pc-sheet-card {
+  margin: 0;
+  padding: 0.75rem 0.85rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 20%, var(--border-color));
+  border-radius: var(--radius-md, 0.5rem);
+  background: color-mix(in srgb, var(--bg-primary) 40%, var(--bg-card));
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pc-sheet-card > h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.pc-main-layout {
+  container-type: inline-size;
+  container-name: pc-main;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "identity abilities"
+    "senses biography"
+    "alias alias";
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.pc-main-col-identity {
+  grid-area: identity;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.pc-main-col-identity > .pc-sheet-card {
+  width: 100%;
+  min-width: 0;
+}
+
+.pc-main-stats {
+  grid-area: abilities;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+.pc-main-abilities {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.pc-identity-extra {
+  grid-area: senses;
+  min-width: 0;
+}
+
+.pc-main-biography {
+  grid-area: biography;
+  min-width: 0;
+}
+
+.pc-main-alias {
+  grid-area: alias;
+}
+
+.pc-main-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.pc-main-profile .pc-main-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+  margin-bottom: 0;
+}
+
+.pc-main-profile .pc-main-images {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+}
+
+.pc-main-profile .pc-image-slot {
+  width: 3.75rem;
+  gap: 0.15rem;
+  justify-content: flex-end;
+}
+
+.pc-main-profile .pc-image-slot--token {
+  width: 3.35rem;
+}
+
+.pc-main-profile .pc-image-slot-label {
+  font-size: 0.5625rem;
+  letter-spacing: 0.05em;
+}
+
+.pc-main-profile .pc-image-slot-stage {
+  width: 3.75rem;
+  height: 3.75rem;
+  margin-top: 0;
+  border-width: 1px;
+}
+
+.pc-main-profile .pc-image-slot--token .pc-image-slot-stage,
+.pc-main-profile .pc-image-slot-stage--round {
+  width: 3.35rem;
+  height: 3.35rem;
+}
+
+.pc-main-profile .pc-image-slot-placeholder {
+  padding: 0.15rem;
+  font-size: 0.5rem;
+  line-height: 1.2;
+}
+
+.pc-main-profile .pc-image-slot--compact .pc-image-slot-controls {
+  gap: 0.15rem;
+}
+
+.pc-main-profile .pc-image-slot--compact .pc-image-slot-controls button {
+  padding: 0.1rem 0.25rem;
+  font-size: 0.5625rem;
+  line-height: 1.2;
+  min-height: 0;
+}
+
+.pc-main-profile .pc-main-header-text {
+  flex: 1 1 9rem;
+  width: auto;
+  min-width: 0;
+}
+
+.pc-main-profile .pc-main-header .pc-sheet-input--title,
+.pc-main-profile .pc-main-header .npc-sheet-name {
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.pc-main-profile .pc-main-identity {
+  margin: 0.2rem 0 0;
+}
+
+.pc-main-profile .pc-main-identity-core {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.pc-main-classes,
+.pc-main-abilities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pc-main-abilities .npc-sheet-abilities {
+  flex: 0 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  margin-bottom: 0;
+  align-content: start;
+}
+
+.pc-main-abilities .pc-ability-card {
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.45rem 0.45rem;
+  height: auto;
+}
+
+.pc-main-abilities .pc-ability-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.35rem;
+}
+
+.pc-main-abilities .pc-ability-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  align-self: auto;
+}
+
+.pc-main-abilities .pc-ability-card-mod {
+  flex: 0 0 auto;
+  width: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pc-main-abilities .pc-ability-card-modifier {
+  width: auto;
+  min-width: 1.75rem;
+  min-height: 1.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-gold) 8%, var(--bg-primary));
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.pc-main-abilities .pc-ability-card-mod--damaged .pc-ability-card-modifier {
+  border-color: color-mix(in srgb, var(--accent-red, #c0392b) 55%, var(--border-color));
+  color: var(--accent-red, #c0392b);
+}
+
+.pc-main-abilities .pc-ability-card-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.pc-main-abilities .pc-ability-card-score .pc-ability-step {
+  width: 1.35rem;
+  height: 1.35rem;
+  font-size: 0.875rem;
+}
+
+.pc-main-abilities .pc-ability-card-score-input {
+  flex: 0 0 3.15rem;
+  width: 3.15rem;
+  min-width: 0;
+  padding: 0.1rem 0.1rem;
+  border-color: transparent;
+  background: transparent;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.pc-main-abilities .pc-ability-card-score-input:hover,
+.pc-main-abilities .pc-ability-card-score-input:focus-visible {
+  border-color: color-mix(in srgb, var(--accent-gold) 45%, var(--border-color));
+  background: color-mix(in srgb, var(--bg-primary) 70%, transparent);
+}
+
+.pc-main-abilities .pc-ability-card-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.pc-main-abilities .pc-ability-card-fields .pc-ability-col-label {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  font-size: 0.5625rem;
+}
+
+.pc-main-abilities .pc-ability-card-fields .pc-sheet-input--ability-dmg {
+  width: 2rem;
+  min-width: 0;
+  padding: 0.1rem 0.1rem;
+  font-size: 0.6875rem;
+}
+
+.pc-main-defenses {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.pc-main-defenses-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.7fr);
+  gap: 0.5rem;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.pc-main-defense-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.45rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 22%, var(--border-color));
+  border-radius: var(--radius-sm, 0.35rem);
+  background: color-mix(in srgb, var(--accent-gold) 6%, var(--bg-primary));
+}
+
+.pc-main-defense-label {
+  width: 100%;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pc-main-defense-ac-total,
+.pc-main-defense-sr-total {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.pc-main-defense-ac-subs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.15rem 0.55rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-main-defense-saves-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem;
+  align-self: stretch;
+  width: 100%;
+}
+
+.pc-main-defense-save-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.15rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.pc-main-defense-save-name {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pc-main-defense-save-mod {
+  width: 100%;
+  min-width: 0;
+  min-height: 1.65rem;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-gold) 8%, var(--bg-primary));
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.pc-class-level-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.pc-class-level-controls .pc-sheet-input {
+  width: 2.5rem;
+  min-width: 0;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.pc-class-level-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--accent-gold) 10%, var(--bg-card));
+  color: var(--accent-gold);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pc-class-level-step:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-gold) 22%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--accent-gold) 65%, var(--border-color));
+}
+
+.pc-class-level-step:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@container pc-main (max-width: 640px) {
+  .pc-main-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "identity"
+      "abilities"
+      "senses"
+      "biography"
+      "alias";
+  }
+
+  .pc-main-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .pc-main-abilities .npc-sheet-abilities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pc-main-defenses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container pc-main (max-width: 22rem) {
+  .pc-main-profile .pc-main-header {
+    flex-direction: column;
+  }
+
+  .pc-main-profile .pc-main-images {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@container pc-main (max-width: 420px) {
+  .pc-main-abilities .npc-sheet-abilities {
+    grid-template-columns: 1fr;
+  }
 }
 
 .pc-class-list {
@@ -6249,15 +6718,15 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 
 .pc-main-header {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 0.85rem 1rem;
+  gap: 0.75rem;
   margin-bottom: 0.35rem;
 }
 
 .pc-main-header > .pc-main-meta {
-  flex: 1 1 100%;
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .pc-main-images {
@@ -6269,7 +6738,8 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-main-header-text {
-  flex: 1 1 12rem;
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
 }
 
@@ -6398,10 +6868,18 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-main-level-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 45%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-gold) 12%, var(--bg-primary));
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  text-transform: uppercase;
   color: var(--accent-gold);
   font-variant-numeric: tabular-nums;
 }
@@ -6488,38 +6966,15 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   border-color: var(--border-color);
 }
 
-.pc-main-shortcut {
-  margin-top: 1.5rem;
-  color: var(--text-muted);
-  font-size: 0.6875rem;
-}
-
-.pc-main-shortcut summary {
-  cursor: pointer;
-  width: fit-content;
-  list-style: none;
-  opacity: 0.55;
-  letter-spacing: 0.02em;
-}
-
-.pc-main-shortcut summary::-webkit-details-marker {
-  display: none;
-}
-
-.pc-main-shortcut summary:hover,
-.pc-main-shortcut[open] summary {
-  opacity: 0.85;
-}
-
-.pc-main-shortcut-label {
+.pc-main-alias .pc-main-shortcut-label {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  margin-top: 0.4rem;
-  max-width: 12rem;
+  margin: 0;
+  max-width: 16rem;
 }
 
-.pc-main-shortcut-label > span {
+.pc-main-alias .pc-main-shortcut-label > span {
   font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -8166,7 +8621,8 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   flex-wrap: wrap;
 }
 
-.pc-skills-header h3 {
+.pc-skills-header h3,
+.pc-skills-header h4 {
   margin: 0;
 }
 
@@ -8310,6 +8766,18 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: 0.65rem 1rem;
+}
+
+.pc-physical-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 0.75rem;
+}
+
+@container pc-main (max-width: 640px) {
+  .pc-physical-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .pc-identity-field {
@@ -11389,9 +11857,9 @@ html.dice-secret-cursor * {
 }
 
 .combat-row-detail {
-  padding: 0.35rem 0.5rem 0.55rem;
+  padding: 0.25rem 0.4rem 0.35rem;
   border-top: 1px solid var(--border-subtle);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .combat-detail-grid {
@@ -11407,14 +11875,16 @@ html.dice-secret-cursor * {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.1rem;
 }
 
 .combat-attack-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  gap: 0.25rem 0.4rem;
   align-items: center;
+  padding: 0.1rem 0;
+  font-size: 0.78rem;
 }
 
 .combat-dmg-btn {
@@ -11746,12 +12216,12 @@ html.dice-secret-cursor * {
 }
 
 .combat-detail-section {
-  margin-top: 0.45rem;
+  margin-top: 0.3rem;
 }
 
 .combat-detail-heading {
-  margin: 0 0 0.25rem;
-  font-size: 0.72rem;
+  margin: 0 0 0.15rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -11760,6 +12230,59 @@ html.dice-secret-cursor * {
 
 .combat-attack-name {
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.combat-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.05rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.74rem;
+  line-height: 1.3;
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--combat-accent) 10%, transparent);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.combat-chip--atk {
+  background: color-mix(in srgb, var(--combat-accent) 14%, transparent);
+}
+
+.combat-chip--dmg {
+  background: color-mix(in srgb, var(--fx-damage, #c0392b) 12%, transparent);
+}
+
+.combat-chip--crit {
+  border-color: color-mix(in srgb, var(--fx-damage, #c0392b) 45%, transparent);
+  background: color-mix(in srgb, var(--fx-damage, #c0392b) 18%, transparent);
+}
+
+.combat-chip--confirm {
+  background: color-mix(in srgb, var(--accent-gold) 16%, transparent);
+}
+
+.combat-chip--save {
+  background: color-mix(in srgb, var(--combat-accent) 10%, transparent);
+}
+
+.combat-attack-dmg-input {
+  width: 4.5rem;
+  min-width: 0;
+  padding: 0.05rem 0.3rem;
+  font-size: 0.74rem;
+}
+
+.combat-attack-dmg-empty {
+  min-width: 0;
+  font-size: 0.68rem;
+  color: var(--text-muted);
 }
 
 .combat-attack-badge {
@@ -12851,12 +13374,127 @@ html.dice-secret-cursor * {
   fill: color-mix(in srgb, var(--fx-target) 70%, transparent);
 }
 
+.combat-window {
+  position: fixed;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--border-ornament);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--bg-card);
+  box-shadow: 0 12px 40px color-mix(in srgb, #000 35%, transparent);
+  overflow: hidden;
+}
+
+.combat-window-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.45rem 0.55rem 0.45rem 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color) 65%, transparent);
+  background: color-mix(in srgb, var(--combat-accent) 10%, var(--bg-card));
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.combat-window-titlebar:active {
+  cursor: grabbing;
+}
+
+.combat-window-title-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.combat-window-title {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.combat-window-sub {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.combat-window-title-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  flex-shrink: 0;
+}
+
+.combat-window-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.combat-window-action:hover {
+  border-color: color-mix(in srgb, var(--border-color) 70%, transparent);
+  background: color-mix(in srgb, var(--combat-accent) 14%, transparent);
+}
+
+.combat-window-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.combat-window-footer {
+  flex-shrink: 0;
+  padding: 0.65rem 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--border-color) 65%, transparent);
+}
+
+.combat-window-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: nwse-resize;
+  touch-action: none;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 0 45%,
+      color-mix(in srgb, var(--border-ornament) 70%, transparent) 45% 55%,
+      transparent 55% 70%,
+      color-mix(in srgb, var(--border-ornament) 70%, transparent) 70% 80%,
+      transparent 80%
+    );
+}
+
 .campaign-pc-window {
   position: fixed;
   z-index: 80;
-  left: max(calc(var(--campaign-rail-width) + 1.25rem), calc(50vw - 21rem));
+  left: max(calc(var(--campaign-rail-width) + 1.25rem), calc(50vw - 26rem));
   top: 4.5rem;
-  width: min(42rem, calc(100vw - var(--campaign-rail-width) - 1.25rem));
+  width: min(52rem, calc(100vw - var(--campaign-rail-width) - 1.25rem));
   max-height: min(78dvh, calc(100dvh - 5.5rem));
   display: flex;
   flex-direction: column;
@@ -13181,8 +13819,8 @@ html.dice-secret-cursor * {
 }
 
 .dice-rollable:disabled {
-  cursor: wait;
-  opacity: 0.85;
+  cursor: progress;
+  opacity: 0.5;
 }
 
 .pc-combat-total .dice-rollable,

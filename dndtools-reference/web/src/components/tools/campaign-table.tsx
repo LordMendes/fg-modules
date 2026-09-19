@@ -17,8 +17,12 @@ import { DiceCanvas } from "@/components/dice/dice-canvas";
 import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
-import { CampaignCombatDrawer } from "@/components/combat/campaign-combat-drawer";
+import { CombatFloatingWindow } from "@/components/combat/combat-floating-window";
 import { CampaignNpcsDrawer } from "@/components/combat/campaign-npcs-drawer";
+import {
+  CombatTrackerPanel,
+  combatSubtitle,
+} from "@/components/combat/combat-tracker-panel";
 import { CombatProvider, useCombatContext } from "@/components/combat/combat-context";
 import { combatToggleTarget } from "@/actions/combat";
 import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
@@ -69,7 +73,7 @@ import {
   Users,
 } from "lucide-react";
 
-type MenuId = "roster" | "logs" | "maps" | "combat" | "npcs" | null;
+type MenuId = "roster" | "logs" | "maps" | "npcs" | null;
 
 const RAIL_EXPANDED_KEY = "campaign-table-rail-expanded";
 
@@ -80,11 +84,15 @@ function CampaignRail({
   isDm,
   activeMenu,
   onSelectMenu,
+  combatActive,
+  onToggleCombat,
 }: {
   campaignName: string;
   isDm: boolean;
   activeMenu: MenuId;
   onSelectMenu: (id: MenuId) => void;
+  combatActive: boolean;
+  onToggleCombat: () => void;
 }) {
   const combatCtx = useCombatContext();
   const modTotal =
@@ -171,11 +179,11 @@ function CampaignRail({
       </button>
       <button
         type="button"
-        className={`campaign-rail-btn${activeMenu === "combat" ? " campaign-rail-btn--active" : ""}${modTotal !== 0 ? " campaign-rail-btn--accent" : ""}`}
-        aria-pressed={activeMenu === "combat"}
+        className={`campaign-rail-btn${combatActive ? " campaign-rail-btn--active" : ""}${modTotal !== 0 ? " campaign-rail-btn--accent" : ""}`}
+        aria-pressed={combatActive}
         aria-label={railExpanded ? undefined : "Combat tracker"}
         title="Combat tracker"
-        onClick={() => onSelectMenu(activeMenu === "combat" ? null : "combat")}
+        onClick={onToggleCombat}
       >
         <Swords size={20} aria-hidden />
         {modTotal !== 0 ? (
@@ -301,6 +309,7 @@ export function CampaignTable({ campaignId }: { campaignId: string }) {
           },
           isDm: table.myRole === "dm",
           initialHistory,
+          onRollError: setError,
         }}
       >
         <CampaignTableBody
@@ -382,12 +391,61 @@ function CampaignTableBody({
   const [showImport, setShowImport] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuId>(null);
+  const [combatOpen, setCombatOpen] = useState(false);
+  const [combatPoppedOut, setCombatPoppedOut] = useState(false);
+  const combatPopoutRef = useRef<Window | null>(null);
+  const combatPopoutClosePollRef = useRef<number | null>(null);
   const [createOwnerUserId, setCreateOwnerUserId] = useState(user.id);
   const [activities, setActivities] = useState<CampaignActivityView[]>([]);
   const [activitiesLoading, setActivitiesLoading] = useState(false);
   const popoutWindowsRef = useRef<Map<string, Window>>(new Map());
   const popoutClosePollRef = useRef<Map<string, number>>(new Map());
   const lastActivityId = useRef<string | null>(null);
+
+  const clearCombatPopoutClosePoll = useCallback(() => {
+    if (combatPopoutClosePollRef.current != null) {
+      window.clearInterval(combatPopoutClosePollRef.current);
+      combatPopoutClosePollRef.current = null;
+    }
+  }, []);
+
+  const watchCombatPopoutClosed = useCallback(() => {
+    clearCombatPopoutClosePoll();
+    combatPopoutClosePollRef.current = window.setInterval(() => {
+      const win = combatPopoutRef.current;
+      if (win && !win.closed) return;
+      clearCombatPopoutClosePoll();
+      combatPopoutRef.current = null;
+      setCombatPoppedOut(false);
+      setCombatOpen(true);
+    }, 800);
+  }, [clearCombatPopoutClosePoll]);
+
+  const openCombatPopOut = useCallback(() => {
+    const url = `/tools/campaign/${table.id}/combat`;
+    const features =
+      "popup=yes,width=520,height=900,menubar=no,toolbar=no,location=no,status=no";
+    const win = window.open(url, `campaign-combat-${table.id}`, features);
+    if (!win) {
+      setError(
+        "Pop-up blocked. Allow pop-ups for this site to open the combat tracker in a new window.",
+      );
+      return;
+    }
+    combatPopoutRef.current = win;
+    watchCombatPopoutClosed();
+    win.focus();
+    setCombatPoppedOut(true);
+    setCombatOpen(false);
+  }, [table.id, setError, watchCombatPopoutClosed]);
+
+  const toggleCombat = useCallback(() => {
+    if (combatPoppedOut) {
+      combatPopoutRef.current?.focus();
+      return;
+    }
+    setCombatOpen((prev) => !prev);
+  }, [combatPoppedOut]);
 
   const clearPopoutClosePoll = useCallback((pcPlanId: string) => {
     const timer = popoutClosePollRef.current.get(pcPlanId);
@@ -610,6 +668,8 @@ function CampaignTableBody({
           isDm={isDm}
           activeMenu={activeMenu}
           onSelectMenu={setActiveMenu}
+          combatActive={combatOpen || combatPoppedOut}
+          onToggleCombat={toggleCombat}
         />
 
         {activeMenu === "logs" ? (
@@ -620,15 +680,22 @@ function CampaignTableBody({
           />
         ) : null}
 
-        {activeMenu === "combat" ? (
-          <CampaignCombatDrawer
-            combat={combat}
-            isDm={isDm}
-            viewerPcPlanId={viewerPcPlanId}
-            campaignId={table.id}
-            onClose={() => setActiveMenu(null)}
-            onOpenNpcs={() => setActiveMenu("npcs")}
-          />
+        {combatOpen && !combatPoppedOut ? (
+          <CombatFloatingWindow
+            title="Combat"
+            subtitle={combatSubtitle(combat)}
+            icon={<Swords size={18} aria-hidden />}
+            onClose={() => setCombatOpen(false)}
+            onPopOut={openCombatPopOut}
+          >
+            <CombatTrackerPanel
+              combat={combat}
+              isDm={isDm}
+              viewerPcPlanId={viewerPcPlanId}
+              campaignId={table.id}
+              onOpenNpcs={() => setActiveMenu("npcs")}
+            />
+          </CombatFloatingWindow>
         ) : null}
 
         {activeMenu === "npcs" && isDm ? (
@@ -637,7 +704,7 @@ function CampaignTableBody({
             npcLibrary={npcLibrary}
             encounters={encounters}
             onClose={() => setActiveMenu(null)}
-            onOpenCombat={() => setActiveMenu("combat")}
+            onOpenCombat={() => setCombatOpen(true)}
           />
         ) : null}
 

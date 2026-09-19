@@ -21,7 +21,9 @@ import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider, useDice } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { useSessionNonce } from "@/components/session-provider";
+import { CombatProvider } from "@/components/combat/combat-context";
 import { CampaignLiveProvider, useCampaignLive } from "@/components/tools/campaign-live-provider";
+import { useLiveCombat } from "@/lib/campaign/liveClient";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import {
   campaignSheetPopoutChannelName,
@@ -174,6 +176,8 @@ export function CampaignSheetPopout({
         <CampaignSheetPopoutBody
           campaignId={campaignId}
           pcPlanId={pcPlanId}
+          isDm={table.myRole === "dm"}
+          combatFallback={table.combat}
           pending={pending}
           startTransition={startTransition}
         />
@@ -185,11 +189,15 @@ export function CampaignSheetPopout({
 function CampaignSheetPopoutBody({
   campaignId,
   pcPlanId,
+  isDm,
+  combatFallback,
   pending,
   startTransition,
 }: {
   campaignId: string;
   pcPlanId: string;
+  isDm: boolean;
+  combatFallback: CampaignTableState["combat"];
   pending: boolean;
   startTransition: (fn: () => void) => void;
 }) {
@@ -240,6 +248,8 @@ function CampaignSheetPopoutBody({
   }, [reloadPlan]);
 
   const { store } = useCampaignLive();
+  const liveCombat = useLiveCombat(store);
+  const combat = liveCombat ?? combatFallback;
   const pcUpdated = useLivePcUpdated(store);
   useEffect(() => {
     if (!pcUpdated) return;
@@ -403,89 +413,96 @@ function CampaignSheetPopoutBody({
           ) : (
             <>
               <CharacterNameSync name={state.identity.name} />
-              <PcSheet
-                state={state}
-                patch={patch}
-                sheetTab={sheetTab}
-                onTabChange={setSheetTab}
-                shortcut={shortcut}
-                onShortcutChange={setShortcut}
-                onNameBlur={() => {
-                  if (!plan.canEdit || !state) return;
-                  void renamePcPlan(plan.id, state.identity.name, shortcut);
-                }}
-                onShortcutBlur={() => {
-                  if (!plan.canEdit || !state) return;
-                  void renamePcPlan(plan.id, state.identity.name, shortcut);
-                }}
-                activeSpellClassIndex={activeSpellClassIndex}
-                onSpellClassIndexChange={setActiveSpellClassIndex}
-                compendium={compendium}
-                compendiumLoading={compendiumLoading}
-                onAddFeat={(slug, name, choice) =>
-          patch((s) => {
-            if (s.feats.some((f) => f.slug === slug)) return;
-            s.feats.push(createFeatEntry(slug, name, choice));
-          })
-        }
-                onRemoveFeat={(slug) =>
-                  patch((s) => {
-                    s.feats = s.feats.filter((f) => f.slug !== slug);
-                  })
-                }
-                onAddSpell={(slug, name, level) =>
-                  patch((s) => {
-                    const target = s.spellClasses[activeSpellClassIndex];
-                    if (!target || target.spells.some((sp) => sp.slug === slug)) return;
-                    const computed = computeSpellClass(
-                      target.classSlug,
-                      target.label,
-                      target.casterLevel,
-                      s.abilities,
-                      compendium?.classSpellTables?.[target.classSlug],
-                      {
-                        hasDomains: (s.identity.domains?.length ?? 0) > 0,
-                        specialistSchool: s.identity.specialistSchool,
-                      },
-                    );
-                    if (computed.mode === "spontaneous") {
-                      const atLevel = target.spells.filter((sp) => sp.level === level).length;
-                      const knownLimit = computed.known[level] ?? 0;
-                      if (knownLimit > 0 && atLevel >= knownLimit) return;
-                    }
-                    target.spells.push({
-                      slug,
-                      name,
-                      level,
-                      prepared: computed.mode === "preparation" ? 1 : undefined,
-                    });
-                  })
-                }
-                onRemoveSpell={(slug) =>
-                  patch((s) => {
-                    const target = s.spellClasses[activeSpellClassIndex];
-                    if (!target) return;
-                    target.spells = target.spells.filter((sp) => sp.slug !== slug);
-                  })
-                }
-                onUpdateSpellPrepared={(slug, prepared) =>
-                  patch((s) => {
-                    const target = s.spellClasses[activeSpellClassIndex];
-                    if (!target) return;
-                    const spell = target.spells.find((sp) => sp.slug === slug);
-                    if (!spell) return;
-                    spell.prepared = Math.max(0, prepared);
-                  })
-                }
-                onAddInventoryRow={() =>
-                  patch((s) => {
-                    s.inventory.push(createBlankInventoryRow());
-                  })
-                }
-                updateAbility={updateAbility}
-                planId={plan.id}
-                readOnly={!plan.canEdit}
-              />
+              <CombatProvider
+                campaignId={campaignId}
+                combat={combat}
+                isDm={isDm}
+                viewerPcPlanId={pcPlanId}
+              >
+                <PcSheet
+                  state={state}
+                  patch={patch}
+                  sheetTab={sheetTab}
+                  onTabChange={setSheetTab}
+                  shortcut={shortcut}
+                  onShortcutChange={setShortcut}
+                  onNameBlur={() => {
+                    if (!plan.canEdit || !state) return;
+                    void renamePcPlan(plan.id, state.identity.name, shortcut);
+                  }}
+                  onShortcutBlur={() => {
+                    if (!plan.canEdit || !state) return;
+                    void renamePcPlan(plan.id, state.identity.name, shortcut);
+                  }}
+                  activeSpellClassIndex={activeSpellClassIndex}
+                  onSpellClassIndexChange={setActiveSpellClassIndex}
+                  compendium={compendium}
+                  compendiumLoading={compendiumLoading}
+                  onAddFeat={(slug, name, choice) =>
+                    patch((s) => {
+                      if (s.feats.some((f) => f.slug === slug)) return;
+                      s.feats.push(createFeatEntry(slug, name, choice));
+                    })
+                  }
+                  onRemoveFeat={(slug) =>
+                    patch((s) => {
+                      s.feats = s.feats.filter((f) => f.slug !== slug);
+                    })
+                  }
+                  onAddSpell={(slug, name, level) =>
+                    patch((s) => {
+                      const target = s.spellClasses[activeSpellClassIndex];
+                      if (!target || target.spells.some((sp) => sp.slug === slug)) return;
+                      const computed = computeSpellClass(
+                        target.classSlug,
+                        target.label,
+                        target.casterLevel,
+                        s.abilities,
+                        compendium?.classSpellTables?.[target.classSlug],
+                        {
+                          hasDomains: (s.identity.domains?.length ?? 0) > 0,
+                          specialistSchool: s.identity.specialistSchool,
+                        },
+                      );
+                      if (computed.mode === "spontaneous") {
+                        const atLevel = target.spells.filter((sp) => sp.level === level).length;
+                        const knownLimit = computed.known[level] ?? 0;
+                        if (knownLimit > 0 && atLevel >= knownLimit) return;
+                      }
+                      target.spells.push({
+                        slug,
+                        name,
+                        level,
+                        prepared: computed.mode === "preparation" ? 1 : undefined,
+                      });
+                    })
+                  }
+                  onRemoveSpell={(slug) =>
+                    patch((s) => {
+                      const target = s.spellClasses[activeSpellClassIndex];
+                      if (!target) return;
+                      target.spells = target.spells.filter((sp) => sp.slug !== slug);
+                    })
+                  }
+                  onUpdateSpellPrepared={(slug, prepared) =>
+                    patch((s) => {
+                      const target = s.spellClasses[activeSpellClassIndex];
+                      if (!target) return;
+                      const spell = target.spells.find((sp) => sp.slug === slug);
+                      if (!spell) return;
+                      spell.prepared = Math.max(0, prepared);
+                    })
+                  }
+                  onAddInventoryRow={() =>
+                    patch((s) => {
+                      s.inventory.push(createBlankInventoryRow());
+                    })
+                  }
+                  updateAbility={updateAbility}
+                  planId={plan.id}
+                  readOnly={!plan.canEdit}
+                />
+              </CombatProvider>
             </>
           )}
         </div>

@@ -72,6 +72,24 @@ describe("parseAttacks", () => {
     assert.equal(inferAttackType("Ray of frost", "ranged"), "rtouch");
     assert.equal(inferAttackType("Touch of fatigue", "melee"), "mtouch");
   });
+
+  it("parses damage without parentheses", () => {
+    const lines = parseAttackLines("Longsword +5 melee 1d8+3", null);
+    assert.equal(lines.length, 1);
+    assert.equal(lines[0]?.damage, "1d8+3");
+  });
+
+  it("splits or-separated attacks", () => {
+    const lines = parseAttackLines(
+      "Bite +5 melee (1d6+3) or slam +5 melee (1d4+3)",
+      null,
+    );
+    assert.equal(lines.length, 2);
+    assert.equal(lines[0]?.name, "Bite");
+    assert.equal(lines[0]?.damage, "1d6+3");
+    assert.equal(lines[1]?.name, "slam");
+    assert.equal(lines[1]?.damage, "1d4+3");
+  });
 });
 
 describe("encounter expansion", () => {

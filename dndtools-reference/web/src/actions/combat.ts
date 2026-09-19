@@ -36,6 +36,7 @@ import {
   setActiveCombatant,
   setCombatantFlags,
   setCombatantInit,
+  setCombatantAttacks,
   setCombatantSpells,
   setSpellUses,
   resetSpellUses,
@@ -60,7 +61,12 @@ import {
   loadEncounters,
   loadNpcLibrary,
 } from "@/lib/combat/loadCombat";
-import type { CombatFaction, CombatSpellEntry, CombatSpellUses } from "@/lib/combat/types";
+import type {
+  CombatAttackLine,
+  CombatFaction,
+  CombatSpellEntry,
+  CombatSpellUses,
+} from "@/lib/combat/types";
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
 import type { MapTokenView } from "@/lib/map/types";
@@ -750,6 +756,16 @@ export async function combatSetCombatantSpells(
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
   return setCombatantSpells(auth.actor, combatantId, spells);
+}
+
+export async function combatSetCombatantAttacks(
+  campaignId: string,
+  combatantId: string,
+  attacks: CombatAttackLine[],
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setCombatantAttacks(auth.actor, combatantId, attacks);
 }
 
 export async function combatSetSpellUses(

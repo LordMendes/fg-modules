@@ -28,9 +28,9 @@ export function RollableStat({
   children,
   kind = "other",
 }: RollableStatProps) {
-  const { rollCheck, rolling, ready, secretModifierHeld, isCampaign } = useDice();
+  const { rollCheck, ready, canRoll, secretModifierHeld, isCampaign } = useDice();
   const text = children ?? (signed ? formatModifier(modifier) : String(modifier));
-  const disabled = !ready || rolling;
+  const disabled = !canRoll;
 
   function onClick(e: MouseEvent<HTMLButtonElement>) {
     void (isCampaign && (e.shiftKey || secretModifierHeld));

@@ -125,14 +125,14 @@ function attackIndexForWeapon(
 ): number {
   const byName = combatant.attacks.findIndex((a) => a.name === weapon.name);
   if (byName >= 0) return byName;
-  return Math.min(weapon.inventoryIndex, Math.max(0, combatant.attacks.length - 1));
+  return -1;
 }
 
 export function PcWeaponAttacksList({
   weapons,
   pcPlanId = null,
 }: PcWeaponAttacksListProps) {
-  const { roll, rolling, ready } = useDice();
+  const { roll, rolling, ready, canRoll } = useDice();
   const combatCtx = useCombatContext();
   const combatant =
     combatCtx && pcPlanId ? combatCtx.combatantByPcPlanId(pcPlanId) : undefined;
@@ -219,7 +219,7 @@ export function PcWeaponAttacksList({
   }, [flashing]);
 
   function rollWeaponAttack(weapon: WeaponAttackRow, mode: AttackMode) {
-    if (!ready || rolling) return;
+    if (!canRoll) return;
     const bonuses =
       mode === "full"
         ? (weapon.fullAttackBonuses ?? weapon.attackBonuses)
@@ -270,10 +270,12 @@ export function PcWeaponAttacksList({
       }));
     };
 
-    if (inCombat && combatCtx && combatant) {
+    const attackIndex =
+      combatant != null ? attackIndexForWeapon(combatant, weapon) : -1;
+    if (inCombat && combatCtx && combatant && attackIndex >= 0) {
       combatCtx.rollAttack({
         attackerId: combatant.id,
-        attackIndex: attackIndexForWeapon(combatant, weapon),
+        attackIndex,
         targetIds: combatant.targetIds,
         attackType: weapon.mode === "ranged" ? "ranged" : "melee",
         label,
@@ -286,7 +288,7 @@ export function PcWeaponAttacksList({
   }
 
   function rollDamage(weapon: WeaponAttackRow) {
-    if (!ready || rolling) return;
+    if (!canRoll) return;
     const pending = pendingCritForWeapon(weapon);
     const attackMode = lastAttackMode[weapon.inventoryIndex] ?? "standard";
     const damageMod = damageModifierForMode(weapon, attackMode);
@@ -304,13 +306,19 @@ export function PcWeaponAttacksList({
       ? `${weapon.name} critical damage (×${pending.multiplier})`
       : `${weapon.name} damage`;
 
-    if (inCombat && combatCtx && combatant) {
+    const attackIndex =
+      combatant != null ? attackIndexForWeapon(combatant, weapon) : -1;
+    const targetIds =
+      inCombat && combatant
+        ? combatant.pendingTargetIds.length
+          ? combatant.pendingTargetIds
+          : combatant.targetIds
+        : [];
+    if (inCombat && combatCtx && combatant && attackIndex >= 0 && targetIds.length > 0) {
       combatCtx.rollDamage({
         attackerId: combatant.id,
-        attackIndex: attackIndexForWeapon(combatant, weapon),
-        targetIds: combatant.pendingTargetIds.length
-          ? combatant.pendingTargetIds
-          : combatant.targetIds,
+        attackIndex,
+        targetIds,
         attackType: weapon.mode === "ranged" ? "ranged" : "melee",
         label,
         dice: [...scaled.dice, ...extraDice],
@@ -370,7 +378,7 @@ export function PcWeaponAttacksList({
         const showFull = Boolean(weapon.showFullAttack);
         const handLabel = twfHandLabel(weapon.twfHand);
         const crit = critRangeLabel(weapon);
-        const disabled = !ready || rolling;
+        const disabled = !canRoll;
 
         return (
           <li

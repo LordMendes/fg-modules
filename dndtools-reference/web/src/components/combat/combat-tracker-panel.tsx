@@ -1,17 +1,15 @@
 "use client";
 
 import { combatClearTargets } from "@/actions/combat";
-import { CampaignDrawerShell } from "@/components/combat/campaign-drawer-shell";
 import { CombatModifierStack } from "@/components/combat/combat-modifier-stack";
 import { CombatRow } from "@/components/combat/combat-row";
 import { CombatRollRequests } from "@/components/combat/combat-roll-requests";
 import { CombatToolbar } from "@/components/combat/combat-toolbar";
+import { useCombatContext } from "@/components/combat/combat-context";
 import type { CampaignCombatView } from "@/lib/combat/types";
-import { Swords } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
-import { useCombatContext } from "./combat-context";
 
-function combatSubtitle(combat: CampaignCombatView | null): string {
+export function combatSubtitle(combat: CampaignCombatView | null): string {
   if (!combat) return "Idle";
   if (combat.state === "ended") return "Ended";
   if (combat.state !== "active") return "Idle";
@@ -29,19 +27,17 @@ function isTypingTarget(target: EventTarget | null): boolean {
   return Boolean(target.closest("[contenteditable='true']"));
 }
 
-export function CampaignCombatDrawer({
+export function CombatTrackerPanel({
   combat,
   isDm,
   viewerPcPlanId,
   campaignId,
-  onClose,
   onOpenNpcs,
 }: {
   combat: CampaignCombatView | null;
   isDm: boolean;
   viewerPcPlanId: string | null;
   campaignId: string;
-  onClose: () => void;
   onOpenNpcs?: () => void;
 }) {
   const ctx = useCombatContext();
@@ -57,6 +53,7 @@ export function CampaignCombatDrawer({
   const viewerCombatant = combat?.combatants.find(
     (c) => c.pcPlanId === viewerPcPlanId,
   );
+
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key !== "n" && e.key !== "N") return;
@@ -76,67 +73,7 @@ export function CampaignCombatDrawer({
   }, [isDm, ctx]);
 
   return (
-    <CampaignDrawerShell
-      title="Combat"
-      subtitle={combatSubtitle(combat)}
-      icon={<Swords size={18} aria-hidden />}
-      onClose={onClose}
-      closeLabel="Close combat tracker"
-      className="campaign-drawer--combat"
-      footer={
-        <div className="combat-footer-actions">
-          {nextError ? (
-            <span className="tool-error combat-footer-error">{nextError}</span>
-          ) : null}
-          {isDm ? (
-            <button
-              type="button"
-              className="tool-btn combat-footer-next"
-              disabled={pending || !combat?.combatants.length || !ctx}
-              onClick={() => {
-                if (!ctx) return;
-                setNextError(null);
-                startTransition(async () => {
-                  const result = await ctx.nextActor();
-                  if (!result.success) {
-                    setNextError(result.error ?? "Could not advance turn");
-                  }
-                });
-              }}
-            >
-              Next actor
-            </button>
-          ) : (
-            <p className="combat-footer-wait">
-              {viewerCombatant && viewerCombatant.targetIds.length > 0 ? (
-                <span className="combat-ready-indicator">Ready</span>
-              ) : null}
-              {current
-                ? `Waiting for ${current.name}`
-                : "Waiting for combat to start"}
-            </p>
-          )}
-          {!isDm && viewerCombatant ? (
-            <button
-              type="button"
-              className="tool-btn tool-btn--ghost"
-              disabled={pending}
-              onClick={() => {
-                startTransition(async () => {
-                  await combatClearTargets(
-                    campaignId,
-                    "one",
-                    viewerCombatant.id,
-                  );
-                });
-              }}
-            >
-              Clear targets
-            </button>
-          ) : null}
-        </div>
-      }
-    >
+    <>
       <CombatToolbar
         combat={combat}
         campaignId={campaignId}
@@ -194,6 +131,60 @@ export function CampaignCombatDrawer({
       />
 
       <CombatModifierStack />
-    </CampaignDrawerShell>
+
+      <footer className="combat-window-footer">
+        <div className="combat-footer-actions">
+          {nextError ? (
+            <span className="tool-error combat-footer-error">{nextError}</span>
+          ) : null}
+          {isDm ? (
+            <button
+              type="button"
+              className="tool-btn combat-footer-next"
+              disabled={pending || !combat?.combatants.length || !ctx}
+              onClick={() => {
+                if (!ctx) return;
+                setNextError(null);
+                startTransition(async () => {
+                  const result = await ctx.nextActor();
+                  if (!result.success) {
+                    setNextError(result.error ?? "Could not advance turn");
+                  }
+                });
+              }}
+            >
+              Next actor
+            </button>
+          ) : (
+            <p className="combat-footer-wait">
+              {viewerCombatant && viewerCombatant.targetIds.length > 0 ? (
+                <span className="combat-ready-indicator">Ready</span>
+              ) : null}
+              {current
+                ? `Waiting for ${current.name}`
+                : "Waiting for combat to start"}
+            </p>
+          )}
+          {!isDm && viewerCombatant ? (
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              disabled={pending}
+              onClick={() => {
+                startTransition(async () => {
+                  await combatClearTargets(
+                    campaignId,
+                    "one",
+                    viewerCombatant.id,
+                  );
+                });
+              }}
+            >
+              Clear targets
+            </button>
+          ) : null}
+        </div>
+      </footer>
+    </>
   );
 }

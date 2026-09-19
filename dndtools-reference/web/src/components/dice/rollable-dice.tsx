@@ -23,10 +23,10 @@ export function RollableDice({
   className,
   children,
 }: RollableDiceProps) {
-  const { roll, rolling, ready } = useDice();
+  const { roll, ready, canRoll } = useDice();
   const notation = buildNotation(dice, modifier);
   const text = children ?? notation;
-  const disabled = !ready || rolling || dice.every((d) => d.qty <= 0);
+  const disabled = !canRoll || dice.every((d) => d.qty <= 0);
 
   return (
     <button

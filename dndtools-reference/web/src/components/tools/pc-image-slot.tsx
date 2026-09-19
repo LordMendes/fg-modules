@@ -41,12 +41,15 @@ export function PcImageSlot({
   imageKey,
   onKeyChange,
   readOnly = false,
+  compact = false,
 }: {
   planId: string;
   kind: PcImageKind;
   imageKey: string | null | undefined;
   onKeyChange: (key: string | null) => void;
   readOnly?: boolean;
+  /** Hide idle Choose/Replace buttons; click the preview to pick an image. */
+  compact?: boolean;
 }) {
   const cfg = SLOT[kind];
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -300,9 +303,17 @@ export function PcImageSlot({
     }
   };
 
+  const slotClassName = [
+    "pc-image-slot",
+    `pc-image-slot--${kind}`,
+    compact ? "pc-image-slot--compact" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   if (readOnly) {
     return (
-      <div className={`pc-image-slot pc-image-slot--${kind}`}>
+      <div className={slotClassName}>
         <span className="pc-image-slot-label">{cfg.label}</span>
         <div
           className={[
@@ -325,7 +336,7 @@ export function PcImageSlot({
   }
 
   return (
-    <div className={`pc-image-slot pc-image-slot--${kind}`}>
+    <div className={slotClassName}>
       <span className="pc-image-slot-label">{cfg.label}</span>
       <div
         ref={stageRef}
@@ -374,78 +385,80 @@ export function PcImageSlot({
           </span>
         )}
       </div>
-      <div className="pc-image-slot-controls">
-        <input
-          ref={fileRef}
-          type="file"
-          accept={ACCEPTED}
-          className="sr-only"
-          onChange={(e) => {
-            void onFile(e.target.files?.[0] ?? null);
-            e.target.value = "";
-          }}
-        />
-        {editing ? (
-          <>
-            <label className="sr-only" htmlFor={`pc-zoom-${kind}`}>
-              Zoom
-            </label>
-            <input
-              id={`pc-zoom-${kind}`}
-              type="range"
-              min={0.5}
-              max={4}
-              step={0.01}
-              value={zoom}
-              className="pc-image-slot-zoom"
-              disabled={busy}
-              onChange={(e) =>
-                applyTransform({
-                  ...transformRef.current,
-                  zoom: Number(e.target.value),
-                })
-              }
-            />
-            <button
-              type="button"
-              className="tool-btn-primary"
-              disabled={busy}
-              onClick={() => void uploadCrop()}
-            >
-              {busy ? "Saving…" : "Apply"}
-            </button>
-            <button
-              type="button"
-              className="tool-btn-secondary"
-              disabled={busy}
-              onClick={cancelEdit}
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              type="button"
-              className="tool-btn-secondary"
-              disabled={busy}
-              onClick={() => fileRef.current?.click()}
-            >
-              {displayUrl ? "Replace" : "Choose"}
-            </button>
-            {displayUrl ? (
+      <input
+        ref={fileRef}
+        type="file"
+        accept={ACCEPTED}
+        className="sr-only"
+        onChange={(e) => {
+          void onFile(e.target.files?.[0] ?? null);
+          e.target.value = "";
+        }}
+      />
+      {editing || !compact ? (
+        <div className="pc-image-slot-controls">
+          {editing ? (
+            <>
+              <label className="sr-only" htmlFor={`pc-zoom-${kind}`}>
+                Zoom
+              </label>
+              <input
+                id={`pc-zoom-${kind}`}
+                type="range"
+                min={0.5}
+                max={4}
+                step={0.01}
+                value={zoom}
+                className="pc-image-slot-zoom"
+                disabled={busy}
+                onChange={(e) =>
+                  applyTransform({
+                    ...transformRef.current,
+                    zoom: Number(e.target.value),
+                  })
+                }
+              />
+              <button
+                type="button"
+                className="tool-btn-primary"
+                disabled={busy}
+                onClick={() => void uploadCrop()}
+              >
+                {busy ? "Saving…" : "Apply"}
+              </button>
               <button
                 type="button"
                 className="tool-btn-secondary"
                 disabled={busy}
-                onClick={() => void clearImage()}
+                onClick={cancelEdit}
               >
-                Remove
+                Cancel
               </button>
-            ) : null}
-          </>
-        )}
-      </div>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="tool-btn-secondary"
+                disabled={busy}
+                onClick={() => fileRef.current?.click()}
+              >
+                {displayUrl ? "Replace" : "Choose"}
+              </button>
+              {displayUrl ? (
+                <button
+                  type="button"
+                  className="tool-btn-secondary"
+                  disabled={busy}
+                  onClick={() => void clearImage()}
+                >
+                  Remove
+                </button>
+              ) : null}
+            </>
+          )}
+        </div>
+      ) : null}
       {error ? <span className="pc-image-slot-error">{error}</span> : null}
     </div>
   );

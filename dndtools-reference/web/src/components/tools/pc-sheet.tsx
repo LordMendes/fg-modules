@@ -7,26 +7,24 @@ import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
 import { PcActionsPanel } from "@/components/tools/pc-actions-panel";
 import { PcCombatPanel } from "@/components/tools/pc-combat-panel";
 import { PcStatusPanel } from "@/components/tools/pc-status-panel";
-import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcInventoryPanel } from "@/components/tools/pc-inventory-panel";
-import {
-  PcPhysicalIdentityFields,
-  PcSensesLanguagesBlock,
-} from "@/components/tools/pc-identity-extra";
+import { PcSensesLanguagesBlock } from "@/components/tools/pc-identity-extra";
+import { PcMainAbilities } from "@/components/tools/pc-main/abilities";
+import { PcMainAlias } from "@/components/tools/pc-main/alias";
+import { PcMainBiography } from "@/components/tools/pc-main/biography";
+import { BonusSourcesHint } from "@/components/tools/pc-main/bonus-sources-hint";
+import { PcMainClasses } from "@/components/tools/pc-main/classes";
+import { PcMainDefenses } from "@/components/tools/pc-main/defenses";
+import { PcMainDivineArcane } from "@/components/tools/pc-main/divine-arcane";
+import { PcMainProfile } from "@/components/tools/pc-main/profile";
+import { PcMainRaceAlignment } from "@/components/tools/pc-main/race-alignment";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
-import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
 import { useSessionNonce } from "@/components/session-provider";
-import type { CategoryKey } from "@/lib/categories";
-import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import { computeEquippedGear } from "@/lib/pc-planner/equippedGear";
 import { computeEncumbrance } from "@/lib/pc-planner/encumbrance";
-import {
-  computeEquippedBonuses,
-  formatBonusSources,
-  skillItemBonus,
-} from "@/lib/pc-planner/itemBonuses";
+import { computeEquippedBonuses, skillItemBonus } from "@/lib/pc-planner/itemBonuses";
 import { deriveFeatEffects, featSkillBonus } from "@/lib/pc-planner/parseFeatEffects";
 import { resolveClassFeaturesForPlan } from "@/lib/pc-planner/resolveCompendium";
 import {
@@ -49,63 +47,13 @@ import {
   type SpecialtyFamily,
 } from "@/lib/pc-planner/skillSpecialty";
 import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
-import {
-  abilityRacialMod,
-  applyRacialSkillBonuses,
-  clampAbilityDamage,
-  emptyAbilityDamage,
-  emptyAbilityDrain,
-  normalizeAbilityDrain,
-  racialModLabel,
-} from "@/lib/pc-planner/syncDerived";
-import { abilityModifier } from "@/lib/pc-planner/combatStats";
+import { applyRacialSkillBonuses, normalizeAbilityDrain } from "@/lib/pc-planner/syncDerived";
 import {
   PC_SHEET_TABS,
   type AbilityKey,
   type PcPlanState,
   type PcSheetTab,
 } from "@/lib/pc-planner/types";
-import type { BonusSource } from "@/lib/pc-planner/itemBonuses";
-
-const ABILITY_KEYS: AbilityKey[] = ["str", "dex", "con", "int", "wis", "cha"];
-
-const RACE_SEARCH_CATEGORIES: CategoryKey[] = ["races"];
-const CLASS_SEARCH_CATEGORIES: CategoryKey[] = ["classes"];
-const DEITY_SEARCH_CATEGORIES: CategoryKey[] = ["deities"];
-const DOMAIN_SEARCH_CATEGORIES: CategoryKey[] = ["domains"];
-
-function BonusSourcesHint({
-  amount,
-  sources,
-  ariaLabel,
-}: {
-  amount: number;
-  sources: BonusSource[];
-  ariaLabel: string;
-}) {
-  if (amount === 0 || sources.length === 0) return null;
-  const signed = amount >= 0 ? `+${amount}` : `${amount}`;
-  const lines = formatBonusSources(sources);
-  return (
-    <span className="pc-bonus-sources-wrap" tabIndex={0}>
-      <span className="pc-ability-item-bonus" aria-label={ariaLabel}>
-        ({amount})
-      </span>
-      <span className="pc-skill-tooltip pc-bonus-sources-tooltip" role="tooltip">
-        {lines.map((line, index) => (
-          <span key={`${line}-${index}`} className="pc-skill-tooltip-line">
-            {line}
-          </span>
-        ))}
-        {sources.length > 1 ? (
-          <span className="pc-skill-tooltip-line pc-skill-tooltip-line--indent">
-            Total {signed}
-          </span>
-        ) : null}
-      </span>
-    </span>
-  );
-}
 
 export type PcSheetProps = {
   state: PcPlanState;
@@ -132,23 +80,6 @@ export type PcSheetProps = {
   /** When true, sheet fields are display-only (DM viewing another player's PC). Rolls still work. */
   readOnly?: boolean;
 };
-
-function clampClassLevel(level: number): number {
-  return Math.max(1, Math.min(20, level));
-}
-
-function clampAbilityScore(value: number): number {
-  if (!Number.isFinite(value)) return 10;
-  return Math.max(1, Math.min(99, Math.round(value)));
-}
-
-function totalCharacterLevel(classLevels: PcPlanState["identity"]["classLevels"]): number {
-  return classLevels.reduce((sum, cl) => sum + cl.level, 0);
-}
-
-function formatClassLine(classLevels: PcPlanState["identity"]["classLevels"]): string {
-  return classLevels.map((cl) => `${cl.className} ${cl.level}`).join(" / ");
-}
 
 export function PcSheet({
   state,
@@ -181,7 +112,6 @@ export function PcSheet({
     [patchProp, readOnly],
   );
   const nonce = useSessionNonce();
-  const [racePickerOpen, setRacePickerOpen] = useState(false);
   const [skillPreview, setSkillPreview] = useState<EntityPreview | null>(null);
   const [skillPreviewLoading, setSkillPreviewLoading] = useState(false);
   const [skillPreviewError, setSkillPreviewError] = useState<string | null>(null);
@@ -225,27 +155,7 @@ export function PcSheet({
   }, []);
 
   const classLevels = state.identity.classLevels;
-  const totalLevel = totalCharacterLevel(classLevels);
-  const raceLabel = state.identity.race.trim();
-  const alignLabel = state.identity.alignment.trim();
-  const classLine = formatClassLine(classLevels);
-  const identityBits = [raceLabel || null, classLine || null, alignLabel || null].filter(
-    (bit): bit is string => Boolean(bit),
-  );
-  const abilityBase = state.abilityBase ?? state.abilities;
   const raceFeatures = compendium?.raceFeatures ?? null;
-  const hasRace = Boolean(state.identity.raceSlug);
-  const showRacePicker = !hasRace || racePickerOpen;
-
-  const castingNames = new Set(
-    classLevels
-      .map((cl) => getClassCastingInfo(cl.classSlug, cl.className)?.fgClassName.toLowerCase())
-      .filter((name): name is string => Boolean(name)),
-  );
-  const showDeity = castingNames.has("cleric") || castingNames.has("paladin");
-  const showDomains = castingNames.has("cleric");
-  const showSpecialist = castingNames.has("wizard");
-  const showDivineArcaneOptions = showDeity || showDomains || showSpecialist;
 
   const classSkillKeys = classSkillKeySet(compendium?.skills ?? []);
   const skillHd = skillHitDice(classLevels);
@@ -312,497 +222,40 @@ export function PcSheet({
 
       <div className="pc-sheet-panel-area">
         {sheetTab === "main" && (
-          <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
-            <div className="npc-sheet-header pc-main-header">
-              {planId ? (
-                <div className="pc-main-images" aria-label="Character images">
-                  <PcImageSlot
-                    planId={planId}
-                    kind="profile"
-                    imageKey={state.identity.profileImageKey}
-                    readOnly={readOnly}
-                    onKeyChange={(key) =>
-                      patchProp((s) => {
-                        s.identity.profileImageKey = key;
-                      })
-                    }
-                  />
-                  <PcImageSlot
-                    planId={planId}
-                    kind="token"
-                    imageKey={state.identity.tokenImageKey}
-                    readOnly={readOnly}
-                    onKeyChange={(key) =>
-                      patchProp((s) => {
-                        s.identity.tokenImageKey = key;
-                      })
-                    }
-                  />
-                </div>
-              ) : null}
-              <div className="pc-main-header-text">
-              <input
-                type="text"
-                className="pc-sheet-input pc-sheet-input--title npc-sheet-name"
-                value={state.identity.name}
-                placeholder="Character name"
-                aria-label="Character name"
-                onChange={(e) =>
-                  patch((s) => {
-                    s.identity.name = e.target.value;
-                  })
-                }
-                onBlur={onNameBlur}
+          <div className="npc-sheet-panel pc-sheet-section pc-main-layout" role="tabpanel">
+            <div className="pc-main-col-identity">
+              <PcMainProfile
+                state={state}
+                patch={patch}
+                planId={planId}
+                readOnly={readOnly}
+                onNameBlur={onNameBlur}
               />
-              {identityBits.length > 0 || totalLevel > 0 ? (
-                <p className="pc-main-identity">
-                  {identityBits.length > 0 ? (
-                    <span className="pc-main-identity-core">{identityBits.join(" · ")}</span>
-                  ) : null}
-                  {totalLevel > 0 ? (
-                    <span className="pc-main-level">Level {totalLevel}</span>
-                  ) : null}
-                </p>
-              ) : null}
-              </div>
-              <dl className="pc-main-meta">
-                <div className="pc-main-meta-race">
-                  <dt>Race</dt>
-                  <dd>
-                    {showRacePicker ? (
-                      <div className="pc-sheet-race-picker">
-                        <EntitySearchCombobox
-                          categories={RACE_SEARCH_CATEGORIES}
-                          placeholder="Search races…"
-                          label="Search races"
-                          className="pc-meta-search"
-                          onSelect={(hit) => {
-                            patch((s) => {
-                              s.identity.race = hit.name;
-                              s.identity.raceSlug = hit.slug;
-                            });
-                            setRacePickerOpen(false);
-                          }}
-                        />
-                        {hasRace ? (
-                          <button
-                            type="button"
-                            className="pc-sheet-link-btn pc-sheet-link-btn--cancel"
-                            onClick={() => setRacePickerOpen(false)}
-                          >
-                            Cancel
-                          </button>
-                        ) : null}
-                      </div>
-                    ) : (
-                      <div className="pc-sheet-race-value">
-                        <span className="pc-main-race-name">{state.identity.race}</span>
-                        <button
-                          type="button"
-                          className="pc-sheet-link-btn"
-                          onClick={() => setRacePickerOpen(true)}
-                        >
-                          Change
-                        </button>
-                      </div>
-                    )}
-                  </dd>
-                </div>
-                <div className="pc-main-meta-align">
-                  <dt>Alignment</dt>
-                  <dd>
-                    <input
-                      type="text"
-                      className="pc-sheet-input"
-                      value={state.identity.alignment}
-                      onChange={(e) =>
-                        patch((s) => {
-                          s.identity.alignment = e.target.value;
-                        })
-                      }
-                    />
-                  </dd>
-                </div>
-              </dl>
+              <PcMainRaceAlignment state={state} patch={patch} />
+              <PcMainClasses state={state} patch={patch} />
+              <PcMainDivineArcane state={state} patch={patch} />
             </div>
-
-            <div className="npc-sheet-block">
-              <div className="pc-skills-header">
-                <h3>Classes</h3>
-                {totalLevel > 0 ? (
-                  <span className="pc-main-level-badge">Level {totalLevel}</span>
-                ) : null}
-              </div>
-              {classLevels.length === 0 ? (
-                <p className="pc-sheet-empty">Add a class below.</p>
-              ) : (
-                <ul className="pc-class-list">
-                  {classLevels.map((cl, index) => {
-                    const info = getClassCastingInfo(cl.classSlug, cl.className);
-                    const isFirstClass = state.identity.firstClassSlug === cl.classSlug;
-                    const showFirstSlot = classLevels.length > 1;
-                    return (
-                      <li
-                        key={`${cl.classSlug}-${index}`}
-                        className={
-                          showFirstSlot ? "pc-class-row pc-class-row--multiclass" : "pc-class-row"
-                        }
-                      >
-                        <div className="pc-class-identity">
-                          <a
-                            href={`/classes/${cl.classSlug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="pc-class-name pc-feat-link"
-                          >
-                            {cl.className}
-                          </a>
-                          {info ? (
-                            <span className="pc-class-casting">
-                              {info.dcAbility.toUpperCase()}
-                              {info.progression === "half" ? " · half caster" : ""}
-                            </span>
-                          ) : null}
-                        </div>
-                        {showFirstSlot ? (
-                          isFirstClass ? (
-                            <span className="pc-class-first-badge" title="Skill points ×4 at 1st level">
-                              1st · ×4 skills
-                            </span>
-                          ) : (
-                            <button
-                              type="button"
-                              className="pc-class-first-btn"
-                              title="Use this class for ×4 skill points at 1st level"
-                              onClick={() =>
-                                patch((s) => {
-                                  s.identity.firstClassSlug = cl.classSlug;
-                                })
-                              }
-                            >
-                              Make 1st
-                            </button>
-                          )
-                        ) : null}
-                        <label className="pc-class-level">
-                          <span className="npc-sheet-sub">Lvl</span>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--narrow"
-                            min={1}
-                            max={20}
-                            value={cl.level}
-                            aria-label={`${cl.className} level`}
-                            onChange={(e) =>
-                              patch((s) => {
-                                if (!s.identity.classLevels[index]) return;
-                                s.identity.classLevels[index].level = clampClassLevel(
-                                  Number(e.target.value),
-                                );
-                              })
-                            }
-                          />
-                        </label>
-                        <button
-                          type="button"
-                          className="pc-class-remove"
-                          onClick={() =>
-                            patch((s) => {
-                              s.identity.classLevels.splice(index, 1);
-                            })
-                          }
-                        >
-                          Remove
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-              <EntitySearchCombobox
-                categories={CLASS_SEARCH_CATEGORIES}
-                placeholder="Search classes to add…"
-                label="Add class"
-                onSelect={(hit) =>
-                  patch((s) => {
-                    if (s.identity.classLevels.some((cl) => cl.classSlug === hit.slug)) {
-                      return;
-                    }
-                    if (s.identity.classLevels.length === 0) {
-                      s.identity.firstClassSlug = hit.slug;
-                    }
-                    s.identity.classLevels.push({
-                      classSlug: hit.slug,
-                      className: hit.name,
-                      level: 1,
-                    });
-                  })
-                }
+            <div className="pc-main-stats">
+              <PcMainAbilities
+                state={state}
+                patch={patch}
+                raceFeatures={raceFeatures}
+                updateAbility={updateAbility}
+              />
+              <PcMainDefenses
+                state={state}
+                raceFeatures={raceFeatures}
+                classFeatures={resolvedClassFeatures}
+                classAdvancement={compendium?.classAdvancement ?? null}
               />
             </div>
-
-            {showDivineArcaneOptions ? (
-              <div className="npc-sheet-block">
-                <h3>Divine / Arcane Options</h3>
-                <dl className="npc-sheet-stats pc-sheet-meta">
-                  {showDeity ? (
-                    <div>
-                      <dt>Deity</dt>
-                      <dd>
-                        {state.identity.deitySlug ? (
-                          <div className="pc-sheet-race-value">
-                            <span>{state.identity.deity}</span>
-                            <button
-                              type="button"
-                              className="pc-sheet-link-btn"
-                              onClick={() =>
-                                patch((s) => {
-                                  s.identity.deity = "";
-                                  s.identity.deitySlug = null;
-                                })
-                              }
-                            >
-                              Clear
-                            </button>
-                          </div>
-                        ) : (
-                          <EntitySearchCombobox
-                            categories={DEITY_SEARCH_CATEGORIES}
-                            placeholder="Search deities…"
-                            label="Search deities"
-                            onSelect={(hit) =>
-                              patch((s) => {
-                                s.identity.deity = hit.name;
-                                s.identity.deitySlug = hit.slug;
-                              })
-                            }
-                          />
-                        )}
-                      </dd>
-                    </div>
-                  ) : null}
-                  {showDomains ? (
-                    <div>
-                      <dt>Domains</dt>
-                      <dd>
-                        <div className="pc-domain-list">
-                          {(state.identity.domains ?? []).map((domain) => (
-                            <span key={domain.slug} className="pc-domain-chip">
-                              {domain.name}
-                              <button
-                                type="button"
-                                className="pc-sheet-link-btn"
-                                onClick={() =>
-                                  patch((s) => {
-                                    s.identity.domains = (s.identity.domains ?? []).filter(
-                                      (d) => d.slug !== domain.slug,
-                                    );
-                                  })
-                                }
-                              >
-                                ×
-                              </button>
-                            </span>
-                          ))}
-                        </div>
-                        {(state.identity.domains?.length ?? 0) < 2 ? (
-                          <EntitySearchCombobox
-                            categories={DOMAIN_SEARCH_CATEGORIES}
-                            placeholder="Add domain…"
-                            label="Add domain"
-                            onSelect={(hit) =>
-                              patch((s) => {
-                                const current = s.identity.domains ?? [];
-                                if (current.some((d) => d.slug === hit.slug) || current.length >= 2) {
-                                  return;
-                                }
-                                s.identity.domains = [
-                                  ...current,
-                                  { slug: hit.slug, name: hit.name },
-                                ];
-                              })
-                            }
-                          />
-                        ) : null}
-                      </dd>
-                    </div>
-                  ) : null}
-                  {showSpecialist ? (
-                    <div>
-                      <dt>Specialist school</dt>
-                      <dd>
-                        <input
-                          type="text"
-                          className="pc-sheet-input"
-                          placeholder="e.g. Evocation"
-                          value={state.identity.specialistSchool ?? ""}
-                          onChange={(e) =>
-                            patch((s) => {
-                              s.identity.specialistSchool = e.target.value.trim() || null;
-                            })
-                          }
-                        />
-                      </dd>
-                    </div>
-                  ) : null}
-                </dl>
-              </div>
-            ) : null}
-
             <PcSensesLanguagesBlock state={state} patch={patch} readOnly={readOnly} />
-            <div className="npc-sheet-block">
-              <h3>Character details</h3>
-              <PcPhysicalIdentityFields state={state} patch={patch} readOnly={readOnly} />
-            </div>
-
-            <div className="npc-sheet-block">
-              <h3>Ability Scores</h3>
-              <div className="npc-sheet-abilities">
-                {ABILITY_KEYS.map((key) => {
-                  const racial = abilityRacialMod(key, raceFeatures);
-                  const itemStacked = equippedItemBonuses.abilities[key];
-                  const itemTotal = itemStacked?.total ?? 0;
-                  const damage = state.abilityDamage?.[key] ?? 0;
-                  const drain = state.abilityDrain?.[key] ?? 0;
-                  const undamaged = abilityBase[key] + racial + itemTotal;
-                  const current = state.abilities[key];
-                  const damaged = damage > 0;
-                  return (
-                    <div key={key} className="pc-ability-cell">
-                      <span className="pc-ability-label">{key.toUpperCase()}</span>
-                      <div className="pc-ability-row">
-                        <div className="pc-ability-col pc-ability-col--score">
-                          <span className="pc-ability-col-label">Score</span>
-                          <div className="pc-ability-score-value">
-                            <div className="pc-ability-stepper">
-                              <button
-                                type="button"
-                                className="pc-ability-step"
-                                aria-label={`Increase ${key.toUpperCase()}`}
-                                disabled={abilityBase[key] >= 99}
-                                onClick={() => updateAbility(key, abilityBase[key] + 1)}
-                              >
-                                +
-                              </button>
-                              <button
-                                type="button"
-                                className="pc-ability-step"
-                                aria-label={`Decrease ${key.toUpperCase()}`}
-                                disabled={abilityBase[key] <= 1}
-                                onClick={() => updateAbility(key, abilityBase[key] - 1)}
-                              >
-                                −
-                              </button>
-                            </div>
-                            <input
-                              type="number"
-                              className="pc-sheet-input pc-sheet-input--ability"
-                              min={1}
-                              max={99}
-                              value={undamaged}
-                              aria-label={`${key.toUpperCase()} score`}
-                              onChange={(e) => {
-                                const desired = clampAbilityScore(Number(e.target.value));
-                                updateAbility(key, desired - racial - itemTotal);
-                              }}
-                            />
-                            <BonusSourcesHint
-                              amount={itemTotal}
-                              sources={itemStacked?.sources ?? []}
-                              ariaLabel={`${key.toUpperCase()} item bonus ${itemTotal}`}
-                            />
-                          </div>
-                        </div>
-                        <span className="pc-ability-sep" aria-hidden="true">
-                          |
-                        </span>
-                        <div
-                          className={
-                            damaged
-                              ? "pc-ability-col pc-ability-col--dmg pc-ability-col--dmg-active"
-                              : "pc-ability-col pc-ability-col--dmg"
-                          }
-                        >
-                          <span className="pc-ability-col-label">Dmg</span>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
-                            min={0}
-                            max={99}
-                            value={damage}
-                            aria-label={`${key.toUpperCase()} ability damage`}
-                            onChange={(e) => {
-                              const next = clampAbilityDamage(Number(e.target.value));
-                              patch((s) => {
-                                if (!s.abilityDamage) s.abilityDamage = emptyAbilityDamage();
-                                s.abilityDamage[key] = next;
-                              });
-                            }}
-                          />
-                        </div>
-                        <span className="pc-ability-sep" aria-hidden="true">
-                          |
-                        </span>
-                        <div className="pc-ability-col pc-ability-col--dmg">
-                          <span className="pc-ability-col-label">Drain</span>
-                          <input
-                            type="number"
-                            className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
-                            min={0}
-                            max={99}
-                            value={drain}
-                            aria-label={`${key.toUpperCase()} ability drain`}
-                            onChange={(e) =>
-                              patch((s) => {
-                                if (!s.abilityDrain) s.abilityDrain = emptyAbilityDrain();
-                                s.abilityDrain[key] = clampAbilityDamage(Number(e.target.value));
-                              })
-                            }
-                          />
-                        </div>
-                        <span className="pc-ability-sep" aria-hidden="true">
-                          |
-                        </span>
-                        <div
-                          className={
-                            damaged || drain > 0
-                              ? "pc-ability-col pc-ability-col--mod pc-ability-col--mod-damaged"
-                              : "pc-ability-col pc-ability-col--mod"
-                          }
-                        >
-                          <span className="pc-ability-col-label">Modifier</span>
-                          <RollableStat
-                            className="pc-sheet-mod"
-                            label={`${key.toUpperCase()} check`}
-                            modifier={abilityModifier(current)}
-                            kind="ability"
-                          />
-                        </div>
-                      </div>
-                      {hasRace && racialModLabel(racial) ? (
-                        <span className="pc-sheet-racial-mod">{racialModLabel(racial)}</span>
-                      ) : null}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <details className="pc-main-shortcut">
-              <summary>{shortcut.trim() ? "Alias" : "Set alias"}</summary>
-              <label className="pc-main-shortcut-label">
-                <span>Shortcut</span>
-                <input
-                  type="text"
-                  className="pc-sheet-input pc-main-shortcut-input"
-                  placeholder="e.g. hwizard"
-                  value={shortcut}
-                  aria-label="Shortcut alias"
-                  onChange={(e) => onShortcutChange(e.target.value)}
-                  onBlur={onShortcutBlur}
-                />
-              </label>
-            </details>
+            <PcMainBiography state={state} patch={patch} readOnly={readOnly} />
+            <PcMainAlias
+              shortcut={shortcut}
+              onShortcutChange={onShortcutChange}
+              onShortcutBlur={onShortcutBlur}
+            />
           </div>
         )}
 

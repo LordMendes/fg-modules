@@ -3,15 +3,11 @@
 
 
 import {
-
   attackTypeBadge,
-
+  canEditHp,
   formatDefensesSummary,
-
   formatIterativeBonuses,
-
   formatThreatRange,
-
 } from "@/components/combat/combat-utils";
 
 import { CombatSpellEditor } from "@/components/combat/combat-spell-editor";
@@ -28,7 +24,10 @@ import { useDice } from "@/components/dice/dice-provider";
 
 import { useCombatContext } from "@/components/combat/combat-context";
 
-import { combatSetCombatantSpells } from "@/actions/combat";
+import {
+  combatSetCombatantAttacks,
+  combatSetCombatantSpells,
+} from "@/actions/combat";
 
 import { spellSaveDc } from "@/lib/combat/spells/dc";
 
@@ -41,7 +40,7 @@ import type { CombatantView, CombatSpellEntry } from "@/lib/combat/types";
 
 import { formatModifier } from "@/lib/pc-planner/combatStats";
 
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import { CombatRowEffectsSection } from "./combat-row-effects";
 
@@ -175,7 +174,7 @@ function DefenseSection({ c, isDm }: { c: CombatantView; isDm: boolean }) {
 
               type="button"
 
-              className="tool-btn tool-btn--ghost dice-rollable combat-save-btn"
+              className="combat-chip combat-chip--save dice-rollable"
 
               disabled={pending || !ctx}
 
@@ -347,7 +346,7 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
                 type="button"
 
-                className="tool-btn tool-btn--ghost dice-rollable combat-spell-cast-btn"
+                className="combat-chip combat-chip--dmg dice-rollable combat-spell-cast-btn"
 
                 disabled={pending || !ctx || (usesLeft === 0)}
 
@@ -477,302 +476,243 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
 
 
-function OffenseSection({ c }: { c: CombatantView }) {
-
+function AttackDamageControl({
+  c,
+  atk,
+  attackIndex,
+  attackType,
+  critForAttack,
+  targets,
+  campaignId,
+  editable,
+}: {
+  c: CombatantView;
+  atk: CombatantView["attacks"][number];
+  attackIndex: number;
+  attackType: CombatantView["attacks"][number]["attackType"];
+  critForAttack: CombatantView["pendingCrit"];
+  targets: CombatantView[];
+  campaignId: string;
+  editable: boolean;
+}) {
   const ctx = useCombatContext();
+  const { canRoll } = useDice();
+  const [pending, startTransition] = useTransition();
+  const [draft, setDraft] = useState(atk.damage ?? "");
+  const parsed = atk.damage ? parseDiceNotation(atk.damage) : null;
+  const isGrapple = attackType === "grapple";
 
-  const { rolling: pending } = useDice();
+  useEffect(() => {
+    setDraft(atk.damage ?? "");
+  }, [atk.damage]);
 
+  function saveDamage(value: string) {
+    const trimmed = value.trim();
+    if (trimmed === (atk.damage ?? "")) return;
+    const updated = c.attacks.map((line, idx) =>
+      idx === attackIndex ? { ...line, damage: trimmed } : line,
+    );
+    startTransition(async () => {
+      await combatSetCombatantAttacks(campaignId, c.id, updated);
+    });
+  }
+
+  if (isGrapple) {
+    return <span className="combat-attack-dmg-empty" aria-hidden />;
+  }
+
+  if (parsed) {
+    const threatLabel = formatThreatRange(atk);
+    const dmgLabel = critForAttack
+      ? `x${critForAttack.multiplier} ${atk.damage}`
+      : atk.damage;
+    const chipText = threatLabel ? `${dmgLabel} ${threatLabel}` : dmgLabel;
+
+    return (
+      <button
+        type="button"
+        className={[
+          "combat-chip combat-chip--dmg dice-rollable",
+          critForAttack ? "combat-chip--crit" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        disabled={!canRoll || !ctx}
+        draggable
+        onDragStart={(e) => {
+          const payload = makeDamageDragPayload(
+            c.id,
+            attackIndex,
+            critForAttack
+              ? `${c.name} ${atk.name} critical damage`
+              : `${c.name} ${atk.name} damage`,
+            atk.damage,
+            attackType,
+            critForAttack ? { multiplier: critForAttack.multiplier } : undefined,
+          );
+          if (payload) setCombatDragData(e, payload);
+        }}
+        onClick={() => {
+          if (!ctx || !parsed) return;
+          const targetIds = c.pendingTargetIds.length
+            ? c.pendingTargetIds
+            : targets.map((t) => t.id);
+          ctx.rollDamage({
+            attackerId: c.id,
+            attackIndex,
+            targetIds,
+            attackType,
+            label: critForAttack
+              ? `${c.name} ${atk.name} critical damage`
+              : `${c.name} ${atk.name} damage`,
+            dice: parsed.dice,
+            modifier: parsed.modifier,
+            ...(critForAttack
+              ? { crit: true, multiplier: critForAttack.multiplier }
+              : {}),
+          });
+        }}
+        title={`Roll ${atk.name} damage`}
+      >
+        {chipText}
+      </button>
+    );
+  }
+
+  if (editable) {
+    return (
+      <input
+        className="tool-input tool-input-sm combat-attack-dmg-input"
+        type="text"
+        value={draft}
+        placeholder="1d8+3"
+        disabled={pending}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={() => saveDamage(draft)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.currentTarget.blur();
+          }
+        }}
+        aria-label={`${atk.name} damage dice`}
+      />
+    );
+  }
+
+  return <span className="combat-attack-dmg-empty">no dmg</span>;
+}
+
+function OffenseSection({
+  c,
+  isDm,
+  viewerPcPlanId,
+  campaignId,
+}: {
+  c: CombatantView;
+  isDm: boolean;
+  viewerPcPlanId: string | null;
+  campaignId: string;
+}) {
+  const ctx = useCombatContext();
+  const { canRoll } = useDice();
   const targets = (ctx?.combat?.combatants ?? []).filter((t) =>
-
     c.targetIds.includes(t.id),
-
   );
-
   const pendingCrit = ctx?.pendingCritFor(c.id) ?? null;
-
-
+  const editable = canEditHp(c, isDm, viewerPcPlanId);
 
   if (c.attacks.length === 0) return null;
 
-
-
   return (
-
     <section className="combat-detail-section">
-
       <h4 className="combat-detail-heading">Offense</h4>
-
       <ul className="combat-attacks">
-
         {c.attacks.map((atk, i) => {
-
           const bonuses = atk.iterativeBonuses ?? [atk.bonus];
-
           const attackType = atk.attackType ?? atk.mode;
-
-          const isGrapple = attackType === "grapple";
-
           const critForAttack =
-
             pendingCrit?.attackName === atk.name ? pendingCrit : null;
 
-          const threatLabel = formatThreatRange(atk);
-
-
-
           return (
-
             <li key={`${atk.name}-${i}`} className="combat-attack-line">
-
-              <span className="combat-attack-name">{atk.name}</span>
-
-              <span className="combat-attack-badge" title={attackType}>
-
-                {attackTypeBadge(attackType)}
-
+              <span className="combat-attack-name" title={atk.name}>
+                {atk.name}{" "}
+                <span className="combat-attack-badge" title={attackType}>
+                  {attackTypeBadge(attackType)}
+                </span>
               </span>
-
-              <span className="combat-attack-bonus">
-
-                {formatIterativeBonuses(bonuses)}
-
-              </span>
-
-              {atk.damage ? (
-
-                <span className="combat-attack-damage">{atk.damage}</span>
-
-              ) : null}
-
-              {threatLabel ? (
-
-                <span className="combat-attack-threat">{threatLabel}</span>
-
-              ) : null}
-
-
 
               <button
-
                 type="button"
-
-                className="tool-btn tool-btn--ghost dice-rollable combat-attack-btn"
-
-                disabled={pending || !ctx}
-
+                className="combat-chip combat-chip--atk dice-rollable"
+                disabled={!canRoll || !ctx}
                 draggable
-
                 onDragStart={(e) => {
-
                   if (!ctx) return;
-
                   setCombatDragData(e, {
-
                     kind: "attack",
-
                     attackerId: c.id,
-
                     attackIndex: i,
-
                     label: `${c.name} ${atk.name} attack`,
-
                     bonuses,
-
                     attackType,
-
                   });
-
                 }}
-
                 onClick={() => {
-
                   if (!ctx) return;
-
                   ctx.rollAttack({
-
                     attackerId: c.id,
-
                     attackIndex: i,
-
                     targetIds: c.targetIds,
-
                     attackType,
-
                     label: `${c.name} ${atk.name} attack`,
-
                     bonuses,
-
                   });
-
                 }}
-
+                title={`Roll ${atk.name} attack`}
               >
-
-                Attack
-
+                {formatIterativeBonuses(bonuses)}
               </button>
 
+              <AttackDamageControl
+                c={c}
+                atk={atk}
+                attackIndex={i}
+                attackType={attackType}
+                critForAttack={critForAttack}
+                targets={targets}
+                campaignId={campaignId}
+                editable={editable}
+              />
 
-
-              {critForAttack && !isGrapple ? (
-
+              {critForAttack && attackType !== "grapple" ? (
                 <button
-
                   type="button"
-
-                  className="tool-btn tool-btn--ghost dice-rollable combat-attack-btn"
-
-                  disabled={pending || !ctx || targets.length === 0}
-
+                  className="combat-chip combat-chip--confirm dice-rollable"
+                  disabled={!canRoll || !ctx || targets.length === 0}
                   onClick={() => {
-
                     if (!ctx || targets.length === 0) return;
-
                     ctx.rollConfirm({
-
                       attackerId: c.id,
-
                       attackIndex: i,
-
                       targetId: targets[0]!.id,
-
                       attackType,
-
                       label: `${c.name} ${atk.name} confirm critical`,
-
                       bonus: bonuses[0] ?? atk.bonus,
-
                     });
-
                   }}
-
                 >
-
                   Confirm
-
                 </button>
-
-              ) : null}
-
-
-
-              {atk.damage && !isGrapple ? (
-
-                <button
-
-                  type="button"
-
-                  className="tool-btn tool-btn--ghost dice-rollable combat-attack-btn"
-
-                  disabled={pending || !ctx}
-
-                  draggable
-
-                  onDragStart={(e) => {
-
-                    const payload = makeDamageDragPayload(
-
-                      c.id,
-
-                      i,
-
-                      critForAttack
-
-                        ? `${c.name} ${atk.name} critical damage`
-
-                        : `${c.name} ${atk.name} damage`,
-
-                      atk.damage,
-
-                      attackType,
-
-                      critForAttack
-
-                        ? { multiplier: critForAttack.multiplier }
-
-                        : undefined,
-
-                    );
-
-                    if (payload) setCombatDragData(e, payload);
-
-                  }}
-
-                  onClick={() => {
-
-                    if (!ctx) return;
-
-                    const parsed = parseDiceNotation(atk.damage);
-
-                    if (!parsed) return;
-
-                    const targetIds = c.pendingTargetIds.length
-
-                      ? c.pendingTargetIds
-
-                      : targets.map((t) => t.id);
-
-                    ctx.rollDamage({
-
-                      attackerId: c.id,
-
-                      attackIndex: i,
-
-                      targetIds,
-
-                      attackType,
-
-                      label: critForAttack
-
-                        ? `${c.name} ${atk.name} critical damage`
-
-                        : `${c.name} ${atk.name} damage`,
-
-                      dice: parsed.dice,
-
-                      modifier: parsed.modifier,
-
-                      ...(critForAttack
-
-                        ? {
-
-                            crit: true,
-
-                            multiplier: critForAttack.multiplier,
-
-                          }
-
-                        : {}),
-
-                    });
-
-                  }}
-
-                >
-
-                  {critForAttack
-
-                    ? `Crit damage x${critForAttack.multiplier}`
-
-                    : "Damage"}
-
-                </button>
-
-              ) : null}
-
+              ) : (
+                <span className="combat-attack-dmg-empty" aria-hidden />
+              )}
             </li>
-
           );
-
         })}
-
       </ul>
-
     </section>
-
   );
-
 }
 
 
@@ -823,7 +763,14 @@ export function CombatRowDetail({
 
       ) : null}
 
-      {showOffense ? <OffenseSection c={c} /> : null}
+      {showOffense ? (
+        <OffenseSection
+          c={c}
+          isDm={isDm}
+          viewerPcPlanId={viewerPcPlanId}
+          campaignId={campaignId}
+        />
+      ) : null}
 
       {showSpells ? <SpellsSection c={c} campaignId={campaignId} /> : null}
 

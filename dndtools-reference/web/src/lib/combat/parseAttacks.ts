@@ -52,11 +52,17 @@ function parseBonuses(text: string): number[] {
 
 function parseDamage(text: string): string {
   const paren = text.match(/\(([^)]+)\)/);
-  if (!paren) return "";
-  let inner = paren[1].trim();
-  inner = inner.replace(/\/(\d+(?:-\d+)?(?:\/x\d+)?|\d+x\d+)/i, "").trim();
-  const dmg = inner.match(/(\d+d\d+(?:[+-]\d+)?|\d+)/i);
-  return dmg ? dmg[1] : inner;
+  if (paren) {
+    let inner = paren[1].trim();
+    inner = inner.replace(/\/(\d+(?:-\d+)?(?:\/x\d+)?|\d+x\d+)/i, "").trim();
+    const dmg = inner.match(/(\d+d\d+(?:[+-]\d+)?|\d+)/i);
+    if (dmg) return dmg[1];
+    if (/\d+d\d+/i.test(inner)) return inner;
+  }
+
+  const withoutBonus = text.replace(/[+-]\d+(?:\/[+-]\d+)+\s*(?:melee|ranged\b)/i, " ").trim();
+  const fallback = withoutBonus.match(/(\d+d\d+(?:[+-]\d+)?)/i);
+  return fallback?.[1] ?? "";
 }
 
 function parseThreat(text: string): number | undefined {
@@ -152,7 +158,7 @@ export function parseAttackLines(
   const source = (full?.trim() && full !== "—" ? full : primary) ?? "";
   if (!source.trim()) return [];
 
-  const lines = source.split(/[;]+|\band\b/i).map((s) => s.trim());
+  const lines = source.split(/[;]+|\band\b|\bor\b/i).map((s) => s.trim());
   const out: CombatAttackLine[] = [];
   for (const line of lines) {
     const parsed = parseAttackLine(line);

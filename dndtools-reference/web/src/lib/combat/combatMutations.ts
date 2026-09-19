@@ -1454,6 +1454,37 @@ export async function setCombatantSpells(
   return { success: true as const };
 }
 
+export async function setCombatantAttacks(
+  actor: CombatActor,
+  combatantId: string,
+  attacks: CombatAttackLine[],
+) {
+  const combat = await loadCombatRow(actor.campaignId);
+  if (!combat) return { success: false as const, error: "No combat" };
+  const row = combat.combatants.find((c) => c.id === combatantId);
+  if (!row) return { success: false as const, error: "Combatant not found" };
+
+  const allowed =
+    isDm(actor) ||
+    (row.kind === "pc" &&
+      row.pcPlanId &&
+      (await prisma.campaignPc.findFirst({
+        where: {
+          campaignId: actor.campaignId,
+          pcPlanId: row.pcPlanId,
+          userId: actor.userId,
+        },
+      })));
+  if (!allowed) return { success: false as const, error: "Not allowed" };
+
+  await prisma.campaignCombatant.update({
+    where: { id: combatantId },
+    data: { attacks: attacks as unknown as Prisma.InputJsonValue },
+  });
+  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+  return { success: true as const };
+}
+
 export async function setSpellUses(
   actor: CombatActor,
   combatantId: string,

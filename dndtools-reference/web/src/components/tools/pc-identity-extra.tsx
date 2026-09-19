@@ -2,6 +2,7 @@
 
 import { formatDerivedHint } from "@/lib/pc-planner/derivedField";
 import { formatDefensesLine, formatSensesLine } from "@/lib/pc-planner/parseRaceFeatures";
+import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 type PatchFn = (fn: (draft: PcPlanState) => void) => void;
@@ -26,8 +27,7 @@ export function PcSensesLanguagesBlock({
   const langText = languages.lines.join(", ");
 
   return (
-    <div className="npc-sheet-block pc-identity-extra">
-      <h3>Senses and languages</h3>
+    <PcSheetCard title="Senses and languages" className="pc-identity-extra">
       <div className="pc-identity-extra-grid">
         <label className="pc-identity-field">
           <span className="npc-sheet-sub">
@@ -139,7 +139,7 @@ export function PcSensesLanguagesBlock({
           ) : null}
         </label>
       </div>
-    </div>
+    </PcSheetCard>
   );
 }
 

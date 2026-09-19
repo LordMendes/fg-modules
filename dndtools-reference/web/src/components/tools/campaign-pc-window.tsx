@@ -44,7 +44,7 @@ type CampaignPcWindowProps = {
 };
 
 function defaultSize(): WindowSize {
-  const width = Math.min(42 * 16, Math.max(MIN_WIDTH, window.innerWidth - 72));
+  const width = Math.min(52 * 16, Math.max(MIN_WIDTH, window.innerWidth - 72));
   const height = Math.min(
     Math.round(window.innerHeight * 0.7),
     Math.max(MIN_HEIGHT, window.innerHeight - 88),
