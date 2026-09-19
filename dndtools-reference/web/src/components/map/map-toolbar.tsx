@@ -4,6 +4,7 @@ import type { MapTool } from "@/lib/map/types";
 import {
   Circle,
   Compass,
+  Crosshair,
   DoorOpen,
   Eraser,
   Eye,
@@ -43,6 +44,7 @@ type MapToolbarProps = {
   onDaylightChange?: (value: number) => void;
   onClearDrawings: () => void;
   onResetFog: () => void;
+  combatActive?: boolean;
 };
 
 function ToolBtn({
@@ -114,6 +116,7 @@ export function MapToolbar({
   onDaylightChange,
   onClearDrawings,
   onResetFog,
+  combatActive = false,
 }: MapToolbarProps) {
   return (
     <div className="campaign-map-toolbar" role="toolbar" aria-label="Map tools">
@@ -124,6 +127,15 @@ export function MapToolbar({
       >
         <MousePointer2 size={16} aria-hidden />
       </ToolBtn>
+      {combatActive ? (
+        <ToolBtn
+          active={tool === "target"}
+          title="Target (T, click tokens)"
+          onClick={() => onToolChange("target")}
+        >
+          <Crosshair size={16} aria-hidden />
+        </ToolBtn>
+      ) : null}
       <ToolBtn
         active={tool === "pan"}
         title="Pan (Space or middle mouse)"

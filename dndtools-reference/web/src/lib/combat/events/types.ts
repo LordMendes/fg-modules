@@ -112,6 +112,8 @@ export type AttackEventPayload = {
   modifiers: ItemizedModifier[];
   /** Grapple log-only resolution. */
   grappleLog?: string;
+  sourceTokenId?: string;
+  targetTokenId?: string;
 };
 
 export type CritConfirmEventPayload = {
@@ -127,6 +129,8 @@ export type CritConfirmEventPayload = {
   autoHit: boolean;
   immuneToCrit: boolean;
   modifiers: ItemizedModifier[];
+  sourceTokenId?: string;
+  targetTokenId?: string;
 };
 
 export type InitEventPayload = {
@@ -134,6 +138,7 @@ export type InitEventPayload = {
   initMod: number;
   effectBonus: number;
   storedInit: number;
+  initBefore?: number;
 };
 
 export type DamageEventPayload = {
@@ -154,6 +159,12 @@ export type DamageEventPayload = {
   hpAfter: number;
   hpMax?: number;
   statusAfter: CombatHealthStatus;
+  sourceTokenId?: string;
+  targetTokenId?: string;
+  woundsBefore?: number;
+  hpTempBefore?: number;
+  nonlethalBefore?: number;
+  deathStateBefore?: "dying" | "stable" | "disabled" | "dead" | null;
 };
 
 export type HealEventPayload = {
@@ -164,6 +175,9 @@ export type HealEventPayload = {
   hpAfter: number;
   hpMax: number;
   statusAfter: CombatHealthStatus;
+  woundsBefore?: number;
+  nonlethalBefore?: number;
+  deathStateBefore?: "dying" | "stable" | "disabled" | "dead" | null;
 };
 
 export type TempHpEventPayload = {
@@ -202,10 +216,22 @@ export type SrEventPayload = {
   success: boolean;
 };
 
+export type CastAreaPayload = {
+  shape: "circle" | "square" | "cone";
+  centerX: number;
+  centerY: number;
+  radiusSquares: number;
+  angle: number;
+};
+
 export type CastEventPayload = {
   spellName: string;
   casterLevel?: number;
   targetNames: string[];
+  sourceTokenId?: string;
+  targetTokenId?: string;
+  area?: CastAreaPayload;
+  damageType?: DamageType;
 };
 
 export type EffectApplyEventPayload = {
@@ -391,4 +417,4 @@ export type CritDamageResult = {
   scaledModifier: number;
   extraDice: CritDamageComponent[];
 };
-
+

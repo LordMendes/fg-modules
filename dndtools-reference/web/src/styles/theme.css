@@ -36,6 +36,30 @@
   --combat-focus: var(--accent-violet);
   --combat-dead: var(--text-muted);
   --combat-flash-duration: 900ms;
+  --combat-band-healthy: #3d9a5c;
+  --combat-band-light: #5a9a6a;
+  --combat-band-moderate: #c9a227;
+  --combat-band-heavy: #d97706;
+  --combat-band-critical: #c44;
+  --combat-band-dying: #a33;
+  --combat-band-dead: #666;
+  --fx-hit: var(--combat-hit);
+  --fx-miss: var(--combat-miss);
+  --fx-crit: var(--combat-crit);
+  --fx-damage: var(--combat-miss);
+  --fx-heal: var(--combat-heal);
+  --fx-save: #6688cc;
+  --fx-sr: var(--accent-violet);
+  --fx-target: #ee8855;
+  --fx-burst-untyped: #ddd;
+  --fx-fire: #e85;
+  --fx-cold: #66ccff;
+  --fx-acid: #66bb66;
+  --fx-electricity: #eed044;
+  --fx-sonic: #999;
+  --fx-force: var(--accent-violet);
+  --fx-negative: #8844aa;
+  --fx-positive: var(--accent-gold);
 }
 
 .dark {
@@ -74,6 +98,30 @@
   --combat-focus: var(--accent-violet);
   --combat-dead: var(--text-muted);
   --combat-flash-duration: 900ms;
+  --combat-band-healthy: #6bbf59;
+  --combat-band-light: #7ec87a;
+  --combat-band-moderate: #d4a853;
+  --combat-band-heavy: #f0a030;
+  --combat-band-critical: #d45c5c;
+  --combat-band-dying: #c44;
+  --combat-band-dead: #888;
+  --fx-hit: var(--combat-hit);
+  --fx-miss: var(--combat-miss);
+  --fx-crit: var(--combat-crit);
+  --fx-damage: var(--combat-miss);
+  --fx-heal: var(--combat-heal);
+  --fx-save: #88aadd;
+  --fx-sr: var(--accent-violet);
+  --fx-target: #ee8855;
+  --fx-burst-untyped: #ccc;
+  --fx-fire: #ff8844;
+  --fx-cold: #88ddff;
+  --fx-acid: #88dd88;
+  --fx-electricity: #ffee66;
+  --fx-sonic: #aaa;
+  --fx-force: var(--accent-violet);
+  --fx-negative: #aa66cc;
+  --fx-positive: var(--accent-gold);
 }
 
 @theme inline {
@@ -10403,6 +10451,100 @@ html.dice-secret-cursor * {
   color: var(--accent-gold);
 }
 
+.combat-log-line--reverted,
+.combat-log-entry--reverted .combat-log-line {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.combat-ready-indicator {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--status-ok, #6bbf59);
+  border: 1px solid currentColor;
+}
+
+.combat-request-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.combat-request {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 6px;
+  background: var(--surface-raised);
+}
+
+.combat-request-dm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.combat-request-dm-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.combat-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 45%);
+}
+
+.combat-dialog {
+  width: min(420px, calc(100vw - 2rem));
+  max-height: 80vh;
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--surface-panel);
+  border: 1px solid var(--border-subtle);
+}
+
+.combat-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+}
+
+.combat-end-defeated {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.combat-row-muted {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
 .pc-spell-cast-block {
   display: flex;
   flex-direction: column;
@@ -11937,6 +12079,452 @@ html.dice-secret-cursor * {
   outline-offset: 1px;
 }
 
+.map-token--active {
+  filter: drop-shadow(0 0 6px var(--combat-accent));
+}
+
+.map-token--fx-shake {
+  animation: map-token-shake 200ms ease-in-out;
+}
+
+.map-token--fx-pulse {
+  animation: map-token-pulse 500ms ease-out;
+}
+
+.map-token--fx-death {
+  animation: map-token-death 600ms ease-out forwards;
+}
+
+.map-token-status {
+  position: absolute;
+  left: 50%;
+  bottom: -0.95rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.map-token-status--active .map-token-active-ring {
+  position: absolute;
+  inset: -0.35rem -0.45rem auto -0.45rem;
+  height: calc(100% + 0.7rem);
+  border: 2px solid var(--combat-accent);
+  border-radius: 999px;
+  animation: map-token-active-glow 200ms ease-out;
+}
+
+.map-token-hp {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border-color) 55%, transparent);
+  overflow: hidden;
+}
+
+.map-token-hp-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 240ms ease-out;
+  background: var(--combat-band-moderate);
+}
+
+.map-token-hp--healthy .map-token-hp-fill {
+  background: var(--combat-band-healthy);
+}
+
+.map-token-hp--light .map-token-hp-fill,
+.map-token-hp--wounded .map-token-hp-fill {
+  background: var(--combat-band-light);
+}
+
+.map-token-hp--moderate .map-token-hp-fill,
+.map-token-hp--bloodied .map-token-hp-fill {
+  background: var(--combat-band-moderate);
+}
+
+.map-token-hp--heavy .map-token-hp-fill {
+  background: var(--combat-band-heavy);
+}
+
+.map-token-hp--critical .map-token-hp-fill {
+  background: var(--combat-band-critical);
+}
+
+.map-token-hp--dying .map-token-hp-fill {
+  background: var(--combat-band-dying);
+}
+
+.map-token-hp--dead .map-token-hp-fill {
+  background: var(--combat-band-dead);
+}
+
+.map-token-conditions {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.map-token-condition-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  color: var(--text-muted);
+}
+
+.map-token-condition-overflow {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+}
+
+.map-token--dead .map-token-image,
+.map-token--dead .map-token-silhouette {
+  filter: grayscale(1) brightness(0.72);
+}
+
+.map-token-dead-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--combat-band-dead);
+  pointer-events: none;
+}
+
+.map-token--dying .map-token-image,
+.map-token--dying .map-token-silhouette {
+  animation: map-token-dying-pulse 1.4s ease-in-out infinite;
+}
+
+.map-token-prone-marker {
+  position: absolute;
+  inset: 0;
+  border: 2px dashed color-mix(in srgb, var(--combat-accent) 65%, transparent);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+  pointer-events: none;
+}
+
+.map-combat-fx-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+.map-combat-fx-floaters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  overflow: visible;
+}
+
+.map-fx-floater {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 2px color-mix(in srgb, #000 70%, transparent);
+  animation: map-fx-floater-rise 900ms ease-out forwards;
+  white-space: nowrap;
+}
+
+.map-fx-floater--reduced {
+  animation: map-fx-floater-fade 900ms ease-out forwards;
+}
+
+.map-fx-floater--hit {
+  color: var(--fx-hit);
+}
+
+.map-fx-floater--miss {
+  color: var(--fx-miss);
+}
+
+.map-fx-floater--crit {
+  color: var(--fx-crit);
+}
+
+.map-fx-floater--damage {
+  color: var(--fx-damage);
+}
+
+.map-fx-floater--heal {
+  color: var(--fx-heal);
+}
+
+.map-fx-floater--effect,
+.map-fx-floater--neutral {
+  color: var(--text-muted);
+}
+
+.map-fx-floater--large {
+  font-size: 1.15em;
+}
+
+.map-fx-arc {
+  fill: none;
+  stroke: var(--fx-hit);
+  stroke-width: 3;
+  stroke-linecap: round;
+  animation: map-fx-arc-stroke 300ms ease-out forwards;
+}
+
+.map-fx-projectile-trail {
+  stroke: color-mix(in srgb, var(--fx-hit) 35%, transparent);
+  stroke-width: 2;
+}
+
+.map-fx-projectile-dot {
+  fill: var(--fx-hit);
+}
+
+.map-fx-ring {
+  fill: none;
+  stroke-width: 3;
+  animation: map-fx-ring-expand 400ms ease-out forwards;
+}
+
+.map-fx-ring--crit {
+  stroke: var(--fx-crit);
+}
+
+.map-fx-ring--sr {
+  stroke: var(--fx-sr);
+}
+
+.map-fx-ring--heal {
+  stroke: var(--fx-heal);
+}
+
+.map-fx-ring--static {
+  animation: map-fx-ring-static 400ms ease-out forwards;
+}
+
+.map-fx-burst {
+  fill: color-mix(in srgb, var(--fx-burst-untyped) 28%, transparent);
+  stroke: var(--fx-burst-untyped);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-fx-burst-expand 500ms ease-out forwards;
+}
+
+.map-fx-burst--static {
+  animation: map-fx-ring-static 400ms ease-out forwards;
+}
+
+.map-fx-burst--fire {
+  fill: color-mix(in srgb, var(--fx-fire) 28%, transparent);
+  stroke: var(--fx-fire);
+}
+
+.map-fx-burst--cold {
+  fill: color-mix(in srgb, var(--fx-cold) 28%, transparent);
+  stroke: var(--fx-cold);
+}
+
+.map-fx-burst--acid {
+  fill: color-mix(in srgb, var(--fx-acid) 28%, transparent);
+  stroke: var(--fx-acid);
+}
+
+.map-fx-burst--electricity {
+  fill: color-mix(in srgb, var(--fx-electricity) 28%, transparent);
+  stroke: var(--fx-electricity);
+}
+
+.map-fx-burst--sonic {
+  fill: color-mix(in srgb, var(--fx-sonic) 28%, transparent);
+  stroke: var(--fx-sonic);
+}
+
+.map-fx-burst--force {
+  fill: color-mix(in srgb, var(--fx-force) 28%, transparent);
+  stroke: var(--fx-force);
+}
+
+.map-fx-burst--negative {
+  fill: color-mix(in srgb, var(--fx-negative) 28%, transparent);
+  stroke: var(--fx-negative);
+}
+
+.map-fx-burst--positive {
+  fill: color-mix(in srgb, var(--fx-positive) 28%, transparent);
+  stroke: var(--fx-positive);
+}
+
+.map-fx-effect-label {
+  position: absolute;
+  transform: translate(-50%, 0);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 6;
+}
+
+.map-fx-effect-label--pop {
+  animation: map-fx-effect-pop 350ms ease-out forwards;
+}
+
+.map-fx-effect-label--fade {
+  animation: map-fx-effect-fade 400ms ease-out forwards;
+}
+
+.map-fx-effect-label--reduced {
+  animation: map-fx-floater-fade 400ms ease-out forwards;
+}
+
+@keyframes map-token-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes map-token-pulse {
+  0% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  40% {
+    filter: drop-shadow(0 0 8px var(--fx-heal));
+  }
+  100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+
+@keyframes map-token-death {
+  to {
+    filter: grayscale(1) brightness(0.72);
+  }
+}
+
+@keyframes map-token-dying-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@keyframes map-token-active-glow {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes map-fx-floater-rise {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 24px));
+  }
+}
+
+@keyframes map-fx-floater-fade {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes map-fx-arc-stroke {
+  from {
+    stroke-dasharray: 0 80;
+    opacity: 0.2;
+  }
+  to {
+    stroke-dasharray: 80 0;
+    opacity: 1;
+  }
+}
+
+@keyframes map-fx-ring-expand {
+  from {
+    r: 4;
+    opacity: 0.95;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes map-fx-ring-static {
+  0%,
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes map-fx-burst-expand {
+  from {
+    transform: scale(0.15);
+    opacity: 0.85;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes map-fx-effect-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes map-fx-effect-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .npc-drawer-section {
   display: flex;
   flex-direction: column;
@@ -12246,12 +12834,21 @@ html.dice-secret-cursor * {
 }
 
 .map-targeting-arrow {
-  stroke: #e85;
+  stroke: var(--fx-target);
   stroke-width: 2;
 }
 
+.map-targeting-arrow--far {
+  stroke-dasharray: 6 4;
+  opacity: 0.75;
+}
+
 .map-targeting-arrowhead {
-  fill: #e85;
+  fill: var(--fx-target);
+}
+
+.map-targeting-arrowhead--far {
+  fill: color-mix(in srgb, var(--fx-target) 70%, transparent);
 }
 
 .campaign-pc-window {
