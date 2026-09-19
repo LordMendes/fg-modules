@@ -48,7 +48,7 @@ function newEntityId(): string {
   return randomUUID().replace(/-/g, "").slice(0, 24);
 }
 
-async function requireCombatActor(campaignId: string): Promise<
+export async function requireCombatActor(campaignId: string): Promise<
   | { ok: false; error: string }
   | { ok: true; actor: CombatActor; isDm: boolean; pcPlanId: string | null }
 > {

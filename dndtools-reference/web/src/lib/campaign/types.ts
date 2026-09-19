@@ -1,5 +1,10 @@
 import type { DicePoolItem, RollKind, RollResult } from "@/lib/dice/types";
 import type {
+  CombatEventRecord,
+  CombatEventView,
+  CombatFilterCombatant,
+} from "@/lib/combat/events/types";
+import type {
   CampaignCombatView,
   CampaignEncounterView,
   CampaignNpcView,
@@ -269,6 +274,12 @@ export type CampaignLiveEvent =
       explorerEnabled: boolean;
     }
   | { type: "combatSnapshot"; combat: CampaignCombatView | null }
+  | {
+      type: "combatEvent";
+      event: CombatEventRecord;
+      combatants: CombatFilterCombatant[];
+    }
+  | { type: "combatEventView"; event: CombatEventView }
   | { type: "combatantUpsert"; combatantId: string }
   | { type: "combatantRemove"; combatantId: string }
   | { type: "npcLibrarySnapshot"; npcLibrary: CampaignNpcView[] }

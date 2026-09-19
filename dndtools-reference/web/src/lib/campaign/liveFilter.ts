@@ -1,6 +1,7 @@
 import { canViewerSeeActivity } from "@/lib/campaign/activityVisibility";
 import { stripHiddenRollForViewer } from "@/lib/campaign/rollVisibility";
 import type { CampaignLiveEvent } from "@/lib/campaign/types";
+import { filterEventForViewer } from "@/lib/combat/events/filter";
 import {
   filterMapViewForViewer,
   filterOccluderForViewer,
@@ -138,6 +139,15 @@ export function filterLiveEventForViewer(
       });
       if (!roll) return null;
       return { type: "roll", roll };
+    }
+    case "combatEvent": {
+      const filtered = filterEventForViewer(
+        event.event,
+        { isDm: viewer.isDm },
+        { combatants: event.combatants },
+      );
+      if (!filtered) return null;
+      return { type: "combatEventView", event: filtered };
     }
     case "npcLibrarySnapshot":
     case "encountersSnapshot":

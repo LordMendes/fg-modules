@@ -9,6 +9,10 @@ import {
 } from "@/lib/campaign/activityLog";
 import { generateJoinCode, isValidJoinCode, normalizeJoinCode } from "@/lib/campaign/joinCode";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
+import {
+  persistCampaignRoll,
+  publishRoll,
+} from "@/lib/campaign/rolls";
 import { computeRollTotals, rollFaces } from "@/lib/campaign/rollFaces";
 import { toCampaignRollView } from "@/lib/campaign/rollVisibility";
 import type {
@@ -940,48 +944,22 @@ export async function startCampaignRoll(
 
   const characterName = input.characterName?.trim().slice(0, 64) || null;
 
-  const row = await prisma.campaignRoll.create({
-    data: {
-      campaignId: input.campaignId,
-      userId: user.id,
-      username: user.username,
-      characterName,
-      kind,
-      label,
-      hidden: Boolean(input.hidden),
-      dice: dice as unknown as Prisma.InputJsonValue,
-      modifier,
-      iterativeModifiers: iterative
-        ? (iterative as unknown as Prisma.InputJsonValue)
-        : undefined,
-      faces: faces as unknown as Prisma.InputJsonValue,
-      faceSum: totals.faceSum,
-      total: totals.total,
-      natural20: totals.natural20,
-      natural1: totals.natural1,
-      attackTotals: totals.attackTotals
-        ? (totals.attackTotals as unknown as Prisma.InputJsonValue)
-        : undefined,
-    },
+  const row = await persistCampaignRoll({
+    campaignId: input.campaignId,
+    userId: user.id,
+    username: user.username,
+    kind,
+    label,
+    hidden: Boolean(input.hidden),
+    characterName,
+    dice,
+    modifier,
+    iterativeModifiers: iterative,
+    faces,
+    totals,
   });
 
-  // Trim old rolls
-  const old = await prisma.campaignRoll.findMany({
-    where: { campaignId: input.campaignId },
-    orderBy: { createdAt: "desc" },
-    skip: ROLL_HISTORY_LIMIT,
-    select: { id: true },
-  });
-  if (old.length > 0) {
-    await prisma.campaignRoll.deleteMany({
-      where: { id: { in: old.map((r) => r.id) } },
-    });
-  }
-
-  const fullView = toCampaignRollView(row, { userId: user.id, isDm: true });
-
-  // Publish DM-complete roll; replicas strip via filterLiveEventForViewer.
-  publishCampaignLive(input.campaignId, { type: "roll", roll: fullView });
+  publishRoll(input.campaignId, row, user.id);
 
   return {
     success: true,
