@@ -1,4 +1,6 @@
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
+import { abilityModifier } from "@/lib/pc-planner/combatStats";
+import { parseDefensesFromParts } from "./converters/parseDefenses";
 import { parseAcString } from "./parseAc";
 import { parseAttackLines } from "./parseAttacks";
 import { parseHpFromText } from "./parseHp";
@@ -11,7 +13,12 @@ import {
   parseSpaceReachString,
   sizeCategoryToSquares,
 } from "./parseSpaceReach";
-import type { CombatAttackLine, CombatSnapshot } from "./types";
+import type {
+  CombatAttackLine,
+  CombatSnapshot,
+  CombatantView,
+  Defenses,
+} from "./types";
 
 export type CombatStatBlock = {
   name: string;
@@ -24,11 +31,72 @@ export type CombatStatBlock = {
   reachFeet: number;
   attacks: CombatAttackLine[];
   snapshot: CombatSnapshot;
+  defenses: Defenses;
+  stats: CombatantView["stats"];
 };
 
 function indexString(data: Record<string, unknown>, key: string): string | null {
   const value = data[key];
   return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+function parseCasterLevel(raw: string | null | undefined): number | undefined {
+  if (!raw?.trim()) return undefined;
+  const match =
+    raw.match(/\bCL\s+(\d+)/i) ??
+    raw.match(/\bcaster level\s+(\d+)/i) ??
+    raw.match(/(\d+)/);
+  if (!match) return undefined;
+  const value = Number.parseInt(match[1], 10);
+  return Number.isFinite(value) ? value : undefined;
+}
+
+function abilityStatsFromMods(
+  abilities: Partial<Record<"str" | "dex" | "con" | "int" | "wis" | "cha", number>>,
+  casterLevel?: number,
+): CombatantView["stats"] {
+  const stats: CombatantView["stats"] = {};
+  for (const key of ["str", "dex", "con", "int", "wis", "cha"] as const) {
+    const mod = abilities[key];
+    if (mod != null) stats[key] = mod;
+  }
+  if (casterLevel != null) stats.cl = casterLevel;
+  return stats;
+}
+
+function abilityStatsFromScores(
+  abilities: Partial<Record<"str" | "dex" | "con" | "int" | "wis" | "cha", number>>,
+  casterLevel?: number,
+): CombatantView["stats"] {
+  const stats: CombatantView["stats"] = {};
+  for (const key of ["str", "dex", "con", "int", "wis", "cha"] as const) {
+    const score = abilities[key];
+    if (score != null) stats[key] = abilityModifier(score);
+  }
+  if (casterLevel != null) stats.cl = casterLevel;
+  return stats;
+}
+
+function monsterDefenseText(index: Record<string, unknown>): string {
+  const parts: string[] = [];
+  const sr = indexString(index, "spell_resistance");
+  if (sr) parts.push(sr.startsWith("SR") ? sr : `SR ${sr}`);
+
+  const specialAbilities = index.specialAbilities;
+  if (Array.isArray(specialAbilities)) {
+    for (const entry of specialAbilities) {
+      if (entry && typeof entry === "object" && typeof (entry as { name?: unknown }).name === "string") {
+        parts.push((entry as { name: string }).name);
+      }
+    }
+  }
+
+  for (const key of ["combatHtml", "flavorHtml", "stat_line"] as const) {
+    const value = indexString(index, key);
+    if (value) parts.push(value);
+  }
+
+  return parts.join("; ");
 }
 
 export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBlock {
@@ -47,6 +115,15 @@ export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBloc
     state.offense.fullatk,
   );
 
+  const defenses = parseDefensesFromParts(
+    state.dr ? `DR ${state.dr}` : null,
+    state.resistances,
+    state.immunities,
+    state.vulnerabilities,
+    state.spellResistance,
+    state.specialqualitiesExtra,
+  );
+
   const snapshot: CombatSnapshot = {
     speed: state.offense.speed,
     fort: saves.fort,
@@ -55,10 +132,12 @@ export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBloc
     initMod: state.defense.init,
     abilities: { ...state.abilities },
     special: [
+      state.dr ? `DR ${state.dr}` : null,
       state.immunities,
       state.resistances,
       state.vulnerabilities,
       state.spellResistance,
+      state.specialqualitiesExtra,
     ]
       .filter(Boolean)
       .join("; "),
@@ -68,6 +147,10 @@ export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBloc
     hd: state.defense.hd,
     sr: state.spellResistance,
   };
+
+  const casterLevel = state.spellcasting.enabled
+    ? state.spellcasting.casterLevel
+    : undefined;
 
   return {
     name: state.identity.name.trim() || "NPC",
@@ -80,6 +163,8 @@ export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBloc
     reachFeet,
     attacks,
     snapshot,
+    defenses,
+    stats: abilityStatsFromScores(state.abilities, casterLevel),
   };
 }
 
@@ -115,18 +200,24 @@ export function monsterToCombatStats(record: {
 
   const initMod = parseInitiative(indexString(index, "initiative"));
 
+  const abilityMods = {
+    str: parseAbilityMod(indexString(index, "str")) ?? undefined,
+    dex: parseAbilityMod(indexString(index, "dex")) ?? undefined,
+    con: parseAbilityMod(indexString(index, "con")) ?? undefined,
+    int: parseAbilityMod(indexString(index, "int")) ?? undefined,
+    wis: parseAbilityMod(indexString(index, "wis")) ?? undefined,
+    cha: parseAbilityMod(indexString(index, "cha")) ?? undefined,
+  };
+
+  const casterLevel = parseCasterLevel(indexString(index, "caster_level"));
+  const defenseText = monsterDefenseText(index);
+
   const snapshot: CombatSnapshot = {
     speed: indexString(index, "speed") ?? undefined,
     ...fortRefWill,
     initMod,
-    abilities: {
-      str: parseAbilityMod(indexString(index, "str")) ?? undefined,
-      dex: parseAbilityMod(indexString(index, "dex")) ?? undefined,
-      con: parseAbilityMod(indexString(index, "con")) ?? undefined,
-      int: parseAbilityMod(indexString(index, "int")) ?? undefined,
-      wis: parseAbilityMod(indexString(index, "wis")) ?? undefined,
-      cha: parseAbilityMod(indexString(index, "cha")) ?? undefined,
-    },
+    abilities: abilityMods,
+    special: defenseText || undefined,
     atkRaw: atk ?? undefined,
     fullAtkRaw: fullAtk ?? undefined,
     acRaw: acRaw ?? undefined,
@@ -145,5 +236,7 @@ export function monsterToCombatStats(record: {
     reachFeet,
     attacks,
     snapshot,
+    defenses: parseDefensesFromParts(defenseText),
+    stats: abilityStatsFromMods(abilityMods, casterLevel),
   };
 }

@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { parseAcString } from "./parseAc";
 import { applyDamageToHp, parseHpFromText } from "./parseHp";
-import { parseAttackLines } from "./parseAttacks";
+import {
+  inferAttackType,
+  inferDamageTypes,
+  parseAttackLines,
+} from "./parseAttacks";
 import {
   parseSpaceReachString,
   sizeCategoryToSquares,
@@ -56,6 +60,17 @@ describe("parseAttacks", () => {
     assert.equal(lines[0]?.bonus, 9);
     assert.equal(lines[0]?.damage, "1d8+5");
     assert.equal(lines[0]?.threatMin, 19);
+    assert.equal(lines[0]?.critMultiplier, 2);
+    assert.deepEqual(lines[0]?.damageTypes, ["slashing"]);
+    assert.deepEqual(lines[0]?.iterativeBonuses, undefined);
+  });
+
+  it("parses iterative bonuses and touch attacks", () => {
+    const lines = parseAttackLines("Claw +9/+4 melee (1d4+2)", null);
+    assert.deepEqual(lines[0]?.iterativeBonuses, [9, 4]);
+    assert.deepEqual(inferDamageTypes("Claw"), ["slashing", "piercing"]);
+    assert.equal(inferAttackType("Ray of frost", "ranged"), "rtouch");
+    assert.equal(inferAttackType("Touch of fatigue", "melee"), "mtouch");
   });
 });
 

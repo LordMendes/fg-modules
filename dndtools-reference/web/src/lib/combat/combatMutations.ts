@@ -15,12 +15,18 @@ import { loadEncounters, loadNpcLibrary } from "@/lib/combat/loadCombat";
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
 import { prisma } from "@/lib/prisma";
 import type { PcPlanState } from "@/lib/pc-planner/types";
-import { computeCombatStats } from "@/lib/pc-planner/combatStats";
+import { abilityModifier, computeCombatStats } from "@/lib/pc-planner/combatStats";
 import {
   computeMaxHitPoints,
   normalizeHitPointsState,
 } from "@/lib/pc-planner/hitPoints";
 import { normalizePcPlanState } from "@/lib/pc-planner/normalizePlanState";
+import {
+  computeWeaponAttackRows,
+  formatDamageWithModifier,
+} from "@/lib/pc-planner/weaponAttacks";
+import { buildPcDamageTypes } from "@/lib/combat/parseAttacks";
+import type { CombatAttackLine } from "@/lib/combat/types";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 import type { MapTokenView } from "@/lib/map/types";
 
@@ -100,9 +106,10 @@ export function uniqueCombatName(existing: string[], base: string): string {
 
 export function statsFromNpcSnapshot(
   name: string,
-  snapshot: unknown,
+  snapshotRaw: unknown,
 ): CombatStatBlock {
-  const stats = snapshotCombatStats(snapshot);
+  const stats = snapshotCombatStats(snapshotRaw);
+  const raw = (snapshotRaw ?? {}) as Record<string, unknown>;
   return {
     name,
     hpMax: stats.hpMax,
@@ -114,6 +121,14 @@ export function statsFromNpcSnapshot(
     reachFeet: stats.reachFeet,
     attacks: stats.attacks,
     snapshot: stats.snapshot,
+    defenses:
+      raw.defenses && typeof raw.defenses === "object"
+        ? (raw.defenses as CombatStatBlock["defenses"])
+        : {},
+    stats:
+      raw.stats && typeof raw.stats === "object"
+        ? (raw.stats as CombatStatBlock["stats"])
+        : {},
   };
 }
 
@@ -149,6 +164,8 @@ export async function addNpcToLibrary(
         reachFeet: input.stats.reachFeet,
         attacks: input.stats.attacks,
         initMod: input.stats.initMod,
+        defenses: input.stats.defenses,
+        stats: input.stats.stats,
       },
       imageKey: input.imageKey ?? null,
     },
@@ -201,6 +218,8 @@ export async function addCombatantFromStats(
       reachFeet: input.stats.reachFeet,
       attacks: input.stats.attacks,
       snapshot: input.stats.snapshot,
+      defenses: input.stats.defenses,
+      stats: input.stats.stats,
       seq: combat.combatants.length,
     },
   });
@@ -502,6 +521,38 @@ export async function placeCombatantOnMap(
   return { success: true, token };
 }
 
+function weaponRowsToCombatAttacks(
+  state: PcPlanState,
+  combatStats: ReturnType<typeof computeCombatStats>,
+): CombatAttackLine[] {
+  return computeWeaponAttackRows(state, combatStats).map((row) => {
+    const item = state.inventory[row.inventoryIndex];
+    const enhancementBonus = item?.enhancementBonus ?? 0;
+    const damageTypes = buildPcDamageTypes(row.damageType, enhancementBonus);
+    const damage = formatDamageWithModifier(row.damageDice, row.damageModifier);
+
+    return {
+      name: row.name,
+      bonus: row.attackBonus,
+      mode: row.mode,
+      damage,
+      threatMin: row.threatMin,
+      critMultiplier: row.critMultiplier,
+      attackType: row.mode,
+      damageTypes,
+      iterativeBonuses: row.fullAttackBonuses,
+    };
+  });
+}
+
+function pcCasterLevel(state: PcPlanState): number | undefined {
+  const levels = (state.spellClasses ?? [])
+    .map((spellClass) => spellClass.casterLevelOverride ?? spellClass.casterLevel)
+    .filter((value) => Number.isFinite(value));
+  if (levels.length === 0) return undefined;
+  return Math.max(...levels);
+}
+
 export function pcPlanToCombatStats(
   name: string,
   state: PcPlanState,
@@ -511,6 +562,8 @@ export function pcPlanToCombatStats(
   const stats = computeCombatStats(normalized, null, classAdvancement ?? null);
   const hp = normalizeHitPointsState(normalized.hitPoints);
   const hpMax = computeMaxHitPoints(normalized, null) || hp.current || 1;
+  const attacks = weaponRowsToCombatAttacks(normalized, stats);
+  const cl = pcCasterLevel(normalized);
 
   return {
     name,
@@ -521,13 +574,31 @@ export function pcPlanToCombatStats(
     initMod: stats.initiative.total,
     spaceSquares: 1,
     reachFeet: 5,
-    attacks: [],
+    attacks,
     snapshot: {
       speed: `${stats.speed.total} ft.`,
       fort: stats.fortitude.total,
       ref: stats.reflex.total,
       will: stats.will.total,
       initMod: stats.initiative.total,
+      abilities: {
+        str: abilityModifier(normalized.abilities.str),
+        dex: abilityModifier(normalized.abilities.dex),
+        con: abilityModifier(normalized.abilities.con),
+        int: abilityModifier(normalized.abilities.int),
+        wis: abilityModifier(normalized.abilities.wis),
+        cha: abilityModifier(normalized.abilities.cha),
+      },
+    },
+    defenses: {},
+    stats: {
+      str: abilityModifier(normalized.abilities.str),
+      dex: abilityModifier(normalized.abilities.dex),
+      con: abilityModifier(normalized.abilities.con),
+      int: abilityModifier(normalized.abilities.int),
+      wis: abilityModifier(normalized.abilities.wis),
+      cha: abilityModifier(normalized.abilities.cha),
+      ...(cl != null ? { cl } : {}),
     },
   };
 }

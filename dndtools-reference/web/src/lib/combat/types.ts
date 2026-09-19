@@ -5,6 +5,13 @@ export type CombatantKind = "pc" | "npc";
 
 export type CombatAttackMode = "melee" | "ranged";
 
+export type CombatAttackType =
+  | "melee"
+  | "ranged"
+  | "mtouch"
+  | "rtouch"
+  | "grapple";
+
 /** Parsed offense line from FG-style attack text. */
 export type CombatAttackLine = {
   name: string;
@@ -12,6 +19,10 @@ export type CombatAttackLine = {
   mode: CombatAttackMode;
   damage: string;
   threatMin?: number;
+  attackType?: CombatAttackType;
+  critMultiplier?: number;
+  damageTypes?: DamageType[];
+  iterativeBonuses?: number[];
 };
 
 /** Stored on CampaignNpc / combatant snapshot for display and rolls. */
