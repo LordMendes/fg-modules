@@ -33,48 +33,44 @@ export function PcMainDefenses({
   return (
     <PcSheetCard title="Defenses" className="pc-main-defenses">
       <div className="pc-main-defenses-grid">
-        <div className="pc-main-defense-block pc-main-defense-ac">
-          <span className="pc-main-defense-label">AC</span>
-          <span className="pc-main-defense-ac-total" aria-label={`Armor class ${stats.ac.total}`}>
-            {stats.ac.total}
-          </span>
-          <div className="pc-main-defense-ac-subs">
-            <span>FF {stats.flatFooted.total}</span>
-            <span>Touch {stats.touch.total}</span>
-          </div>
-        </div>
-
-        <div className="pc-main-defense-block pc-main-defense-saves">
-          <span className="pc-main-defense-label">Saves</span>
-          <div className="pc-main-defense-saves-grid">
-            {(
-              [
-                ["Fort", "Fortitude", stats.fortitude.total],
-                ["Ref", "Reflex", stats.reflex.total],
-                ["Will", "Will", stats.will.total],
-              ] as const
-            ).map(([short, label, total]) => (
-              <div key={short} className="pc-main-defense-save-cell">
-                <span className="pc-main-defense-save-name">{short}</span>
-                <RollableStat
-                  className="pc-main-defense-save-mod"
-                  label={label}
-                  modifier={total}
-                  kind="save"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="pc-main-defense-block pc-main-defense-sr">
+        <div className="pc-main-defense-primary pc-main-defense-sr">
           <span className="pc-main-defense-label">SR</span>
           <span
-            className="pc-main-defense-sr-total"
+            className="pc-main-defense-primary-total"
             aria-label={`Spell resistance ${stats.spellResistance.total}`}
           >
             {stats.spellResistance.total}
           </span>
+        </div>
+
+        <div className="pc-main-defense-primary pc-main-defense-ac">
+          <span className="pc-main-defense-label">AC</span>
+          <span className="pc-main-defense-primary-total" aria-label={`Armor class ${stats.ac.total}`}>
+            {stats.ac.total}
+          </span>
+          <span className="pc-main-defense-ac-subs">
+            FF {stats.flatFooted.total} · Touch {stats.touch.total}
+          </span>
+        </div>
+
+        <div className="pc-main-defense-saves">
+          {(
+            [
+              ["Fort", "Fortitude", stats.fortitude.total],
+              ["Ref", "Reflex", stats.reflex.total],
+              ["Will", "Will", stats.will.total],
+            ] as const
+          ).map(([short, label, total]) => (
+            <div key={short} className="pc-main-defense-save-cell">
+              <span className="pc-main-defense-save-name">{short}</span>
+              <RollableStat
+                className="pc-main-defense-save-mod"
+                label={label}
+                modifier={total}
+                kind="save"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </PcSheetCard>

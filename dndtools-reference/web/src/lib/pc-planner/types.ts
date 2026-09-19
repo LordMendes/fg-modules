@@ -359,6 +359,8 @@ export type PcPlanState = {
     defenses?: PcDefensesState;
     defensesCustomized?: boolean;
     xp?: number;
+    /** XP required for next level (gauge target). */
+    xpNecessary?: number;
     age?: string;
     height?: string;
     weight?: string;

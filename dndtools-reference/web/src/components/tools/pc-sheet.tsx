@@ -17,7 +17,6 @@ import { PcMainClasses } from "@/components/tools/pc-main/classes";
 import { PcMainDefenses } from "@/components/tools/pc-main/defenses";
 import { PcMainDivineArcane } from "@/components/tools/pc-main/divine-arcane";
 import { PcMainProfile } from "@/components/tools/pc-main/profile";
-import { PcMainRaceAlignment } from "@/components/tools/pc-main/race-alignment";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
@@ -231,7 +230,6 @@ export function PcSheet({
                 readOnly={readOnly}
                 onNameBlur={onNameBlur}
               />
-              <PcMainRaceAlignment state={state} patch={patch} />
               <PcMainClasses state={state} patch={patch} />
               <PcMainDivineArcane state={state} patch={patch} />
             </div>
@@ -560,12 +558,11 @@ export function PcSheet({
         )}
 
         {sheetTab === "notes" && (
-          <div className="npc-sheet-panel pc-sheet-section" role="tabpanel">
+          <div className="npc-sheet-panel pc-sheet-section pc-sheet-section--notes" role="tabpanel">
             <div className="npc-sheet-block">
               <h3>Notes</h3>
               <textarea
                 className="pc-sheet-input pc-sheet-textarea pc-sheet-notes-area"
-                rows={14}
                 value={state.notes}
                 placeholder="Character notes, backstory, reminders…"
                 onChange={(e) =>

@@ -1,6 +1,7 @@
 "use client";
 
 import { PcImageSlot } from "@/components/tools/pc-image-slot";
+import { PcMainRaceAlignmentFields } from "@/components/tools/pc-main/race-alignment";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
@@ -23,11 +24,7 @@ export function PcMainProfile({
   readOnly?: boolean;
   onNameBlur: () => void;
 }) {
-  const alignLabel = state.identity.alignment.trim();
   const classLine = formatClassLine(state.identity.classLevels);
-  const identitySummary = [classLine || null, alignLabel || null].filter(
-    (bit): bit is string => Boolean(bit),
-  );
 
   return (
     <PcSheetCard title="Character profile" className="pc-main-profile">
@@ -74,13 +71,14 @@ export function PcMainProfile({
             }
             onBlur={onNameBlur}
           />
-          {identitySummary.length > 0 ? (
+          {classLine ? (
             <p className="pc-main-identity">
-              <span className="pc-main-identity-core">{identitySummary.join(" • ")}</span>
+              <span className="pc-main-identity-core">{classLine}</span>
             </p>
           ) : null}
         </div>
       </div>
+      <PcMainRaceAlignmentFields state={state} patch={patch} />
     </PcSheetCard>
   );
 }

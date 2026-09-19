@@ -27,6 +27,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       defenses: emptyDefenses(),
       defensesCustomized: false,
       xp: 0,
+      xpNecessary: 1000,
       age: "",
       height: "",
       weight: "",

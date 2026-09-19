@@ -76,7 +76,7 @@ function CombatSummary({
     deriveFeatEffects(state.feats),
   );
   const weapons = computeWeaponAttackRows(state, stats);
-  const [shortcutOpen, setShortcutOpen] = useState(true);
+  const [shortcutOpen, setShortcutOpen] = useState(false);
 
   return (
     <div className="npc-sheet-block pc-actions-combat">

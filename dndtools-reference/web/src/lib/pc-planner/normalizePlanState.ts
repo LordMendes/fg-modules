@@ -170,6 +170,9 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   identity.defensesCustomized = Boolean(identity.defensesCustomized);
   if (identity.sensesOverride === undefined) identity.sensesOverride = null;
   if (identity.xp == null || !Number.isFinite(identity.xp)) identity.xp = 0;
+  if (identity.xpNecessary == null || !Number.isFinite(identity.xpNecessary)) {
+    identity.xpNecessary = 0;
+  }
 
   state.abilityDamage = normalizeAbilityDamage(state.abilityDamage);
   state.abilityDrain = normalizeAbilityDrain(state.abilityDrain);

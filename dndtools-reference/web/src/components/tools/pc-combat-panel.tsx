@@ -324,7 +324,7 @@ export function PcCombatPanel({
   return (
     <div className="npc-sheet-panel pc-sheet-section pc-combat-panel" role="tabpanel">
       <div className="pc-combat-grid">
-        <section className="pc-combat-block pc-combat-block--full">
+        <section className="pc-combat-block">
           <h3 className="pc-combat-block-title">Hit Points</h3>
           <div className="pc-combat-hp-summary">
             <div className="pc-combat-hp-stat">
