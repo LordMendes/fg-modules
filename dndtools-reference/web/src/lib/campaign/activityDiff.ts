@@ -70,8 +70,8 @@ export function diffPcPlanState(
   pushIfChanged(
     out,
     "senses",
-    before.identity.sensesOverride ?? null,
-    after.identity.sensesOverride ?? null,
+    (before.identity.senses?.lines ?? []).join(", ") || null,
+    (after.identity.senses?.lines ?? []).join(", ") || null,
   );
   pushIfChanged(
     out,

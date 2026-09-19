@@ -244,12 +244,24 @@ export function parseSensesFromText(text: string): PcSensesState {
 
 export function formatSensesLine(senses: PcSensesState, override?: string | null): string {
   if (override?.trim()) return override.trim();
+  return sensesLinesFromState(senses).join(", ");
+}
+
+export function sensesLinesFromState(senses: PcSensesState): string[] {
   const parts: string[] = [];
   if (senses.darkvisionFeet > 0) parts.push(`Darkvision ${senses.darkvisionFeet} ft.`);
   if (senses.lowLight) parts.push("Low-light vision");
   if (senses.scent) parts.push("Scent");
   if (senses.extra.trim()) parts.push(senses.extra.trim());
-  return parts.join(", ");
+  return parts;
+}
+
+export function visionRangeSquaresFromSenseLines(
+  lines: string[],
+  scaleFeet = 5,
+): number {
+  if (lines.length === 0) return 12;
+  return visionRangeSquaresFromSenses(parseSensesFromText(lines.join(", ")), scaleFeet);
 }
 
 export function formatDefensesLine(defenses: PcDefensesState): string {

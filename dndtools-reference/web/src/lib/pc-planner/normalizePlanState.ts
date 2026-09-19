@@ -1,4 +1,5 @@
-import { emptyDerivedList, normalizeDerivedList } from "./derivedField";
+import { emptyDerivedList, normalizeDerivedList, type DerivedListField } from "./derivedField";
+import { sensesLinesFromState } from "./parseRaceFeatures";
 import { normalizeAbilityDamage, normalizeAbilityDrain } from "./syncDerived";
 import { normalizeCombatState } from "./combatStats";
 import { normalizeHitPointsState } from "./hitPoints";
@@ -25,7 +26,7 @@ export function emptyCombatModes(): PcCombatModes {
   return {};
 }
 
-function normalizeSenses(raw: unknown): PcSensesState {
+function normalizeStructuredSenses(raw: unknown): PcSensesState {
   if (!raw || typeof raw !== "object") return emptySenses();
   const rec = raw as Record<string, unknown>;
   return {
@@ -37,6 +38,34 @@ function normalizeSenses(raw: unknown): PcSensesState {
     scent: Boolean(rec.scent),
     extra: typeof rec.extra === "string" ? rec.extra : "",
   };
+}
+
+function splitSensesText(text: string): string[] {
+  return text
+    .split(/[,;]+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function normalizeIdentitySenses(
+  sensesRaw: unknown,
+  sensesOverride: string | null | undefined,
+): DerivedListField {
+  if (sensesRaw && typeof sensesRaw === "object") {
+    const rec = sensesRaw as Record<string, unknown>;
+    if (Array.isArray(rec.lines)) {
+      return normalizeDerivedList(sensesRaw);
+    }
+    const structured = normalizeStructuredSenses(sensesRaw);
+    if (sensesOverride?.trim()) {
+      return { customized: true, lines: splitSensesText(sensesOverride) };
+    }
+    return { customized: false, lines: sensesLinesFromState(structured) };
+  }
+  if (sensesOverride?.trim()) {
+    return { customized: true, lines: splitSensesText(sensesOverride) };
+  }
+  return emptyDerivedList();
 }
 
 function normalizeDefenses(raw: unknown): PcDefensesState {
@@ -141,6 +170,20 @@ function normalizeResources(raw: unknown): PcResourceEntry[] {
   return out;
 }
 
+function normalizeSkillShortcuts(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== "string") continue;
+    const key = entry.trim();
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(key);
+  }
+  return out;
+}
+
 function normalizeCombatModes(raw: unknown): PcCombatModes {
   if (!raw || typeof raw !== "object") return emptyCombatModes();
   const rec = raw as Record<string, unknown>;
@@ -164,11 +207,12 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   const identity = state.identity;
   identity.domains = identity.domains ?? [];
   identity.opposedSchools = identity.opposedSchools ?? [];
-  identity.senses = normalizeSenses(identity.senses);
+  const legacySensesOverride = (identity as { sensesOverride?: string | null }).sensesOverride;
+  identity.senses = normalizeIdentitySenses(identity.senses, legacySensesOverride);
+  delete (identity as { sensesOverride?: string | null }).sensesOverride;
   identity.languages = normalizeDerivedList(identity.languages);
   identity.defenses = normalizeDefenses(identity.defenses);
   identity.defensesCustomized = Boolean(identity.defensesCustomized);
-  if (identity.sensesOverride === undefined) identity.sensesOverride = null;
   if (identity.xp == null || !Number.isFinite(identity.xp)) identity.xp = 0;
   if (identity.xpNecessary == null || !Number.isFinite(identity.xpNecessary)) {
     identity.xpNecessary = 0;
@@ -182,6 +226,7 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   state.combatModes = normalizeCombatModes(state.combatModes);
   state.conditions = normalizeConditions(state.conditions);
   state.resources = normalizeResources(state.resources);
+  state.skillShortcuts = normalizeSkillShortcuts(state.skillShortcuts);
 
   if (!identity.languages) identity.languages = emptyDerivedList();
 

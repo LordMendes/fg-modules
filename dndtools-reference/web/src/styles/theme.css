@@ -6284,9 +6284,230 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
     "xp xp"
-    "identity abilities";
+    "identity abilities"
+    "shortcuts shortcuts";
   gap: 0.4rem;
   align-items: start;
+}
+
+.pc-main-skill-shortcuts {
+  grid-area: shortcuts;
+  min-width: 0;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 20%, var(--border-color));
+  border-radius: var(--radius-md, 0.5rem);
+  background: color-mix(in srgb, var(--bg-primary) 40%, var(--bg-card));
+}
+
+.pc-main-skill-shortcuts-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.65rem 0.85rem;
+}
+
+.pc-main-skill-shortcut {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 2.75rem;
+  flex: 0 0 auto;
+}
+
+.pc-main-skill-shortcut-label {
+  display: block;
+  width: 100%;
+  height: 0.8125rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 0.8125rem;
+  text-align: center;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pc-main-skill-shortcut-roll-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+}
+
+.pc-main-skill-shortcut-roll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  min-height: 2.35rem;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0.3rem;
+  border: 1px solid color-mix(in srgb, #2ec4b6 55%, var(--border-color));
+  border-radius: var(--radius-sm, 0.35rem);
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #2ec4b6 88%, #ffffff 12%) 0%,
+    color-mix(in srgb, #1a9b8f 92%, #000000 8%) 100%
+  );
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 25%, transparent);
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    filter 0.15s ease,
+    transform 0.1s ease;
+}
+
+.pc-main-skill-shortcut-roll.dice-rollable {
+  width: 2.35rem;
+  height: 2.35rem;
+  min-height: 2.35rem;
+  padding: 0.3rem;
+  border-radius: var(--radius-sm, 0.35rem);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #2ec4b6 88%, #ffffff 12%) 0%,
+    color-mix(in srgb, #1a9b8f 92%, #000000 8%) 100%
+  );
+  border-color: color-mix(in srgb, #2ec4b6 55%, var(--border-color));
+  color: #ffffff;
+}
+
+.pc-main-skill-shortcut-roll:hover:not(:disabled),
+.pc-main-skill-shortcut-roll:focus-visible,
+.pc-main-skill-shortcut-roll.dice-rollable:hover:not(:disabled),
+.pc-main-skill-shortcut-roll.dice-rollable:focus-visible {
+  filter: brightness(1.08);
+  outline: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #2ec4b6 88%, #ffffff 12%) 0%,
+    color-mix(in srgb, #1a9b8f 92%, #000000 8%) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 25%, transparent),
+    0 0 0 2px color-mix(in srgb, #2ec4b6 35%, transparent);
+}
+
+.pc-main-skill-shortcut-roll:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.pc-main-skill-shortcut-roll--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pc-main-skill-shortcut-roll--add {
+  background: color-mix(in srgb, var(--bg-primary) 65%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--accent-gold) 35%, var(--border-color));
+  color: var(--text-muted);
+}
+
+.pc-main-skill-shortcut-roll-face {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pc-main-skill-shortcut-die.dice-die-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.55rem;
+  height: 1.55rem;
+  opacity: 0.72;
+}
+
+.pc-main-skill-shortcut-mod {
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: #0f3d38;
+  text-shadow: 0 1px 0 color-mix(in srgb, #ffffff 55%, transparent);
+  pointer-events: none;
+}
+
+.pc-main-skill-shortcut-add-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.pc-main-skill-shortcut-remove {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.35rem;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--border-color) 80%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-primary) 80%, var(--bg-card));
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pc-main-skill-shortcut-remove:hover {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent-gold) 45%, var(--border-color));
+}
+
+.pc-main-skill-shortcut--add {
+  z-index: 2;
+}
+
+.pc-main-skill-shortcut-options {
+  min-width: 8rem;
+  max-width: 12rem;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 25%, var(--border-color));
+  border-radius: var(--radius-sm, 0.35rem);
+  background: var(--bg-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.pc-main-skill-shortcut-options--floating {
+  position: fixed;
+}
+
+.pc-main-skill-shortcut-option {
+  display: block;
+  width: 100%;
+  padding: 0.35rem 0.45rem;
+  border: none;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pc-main-skill-shortcut-option:hover,
+.pc-main-skill-shortcut-option:focus-visible {
+  background: color-mix(in srgb, var(--accent-gold) 12%, transparent);
+  outline: none;
 }
 
 .pc-main-xp-bar {
@@ -6902,7 +7123,8 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
     grid-template-areas:
       "xp"
       "identity"
-      "abilities";
+      "abilities"
+      "shortcuts";
   }
 
   .pc-main-meta {
@@ -9304,41 +9526,7 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   gap: 0.25rem;
 }
 
-.pc-senses-structured {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto auto;
-  align-items: center;
-  gap: 0.2rem 0.5rem;
-}
-
-.pc-senses-label {
-  grid-column: 1;
-  grid-row: 1;
-  margin-top: 0;
-}
-
-.pc-senses-darkvision {
-  grid-column: 1;
-  grid-row: 2;
-  min-width: 0;
-}
-
-.pc-senses-flags {
-  grid-column: 2;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  align-items: flex-start;
-  align-self: start;
-}
-
-.pc-senses-flags .pc-checkbox-label {
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
+.pc-sense-field,
 .pc-language-field {
   grid-column: 1 / -1;
 }

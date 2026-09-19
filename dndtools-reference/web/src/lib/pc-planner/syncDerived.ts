@@ -1,4 +1,7 @@
-import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
+import {
+  formatSensesLine,
+  type RaceDerivedFeatures,
+} from "@/lib/pc-planner/parseRaceFeatures";
 import {
   abilityItemBonusTotal,
   computeEquippedBonuses,
@@ -190,7 +193,15 @@ export function applyRaceIdentityFieldsOnRaceChange(
   state: PcPlanState,
   race: RaceDerivedFeatures,
 ): void {
-  state.identity.senses = { ...race.senses };
+  const raceSenseLines = formatSensesLine(race.senses)
+    .split(/,\s*/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  if (!state.identity.senses) {
+    state.identity.senses = { customized: false, lines: [...raceSenseLines] };
+  } else if (!state.identity.senses.customized) {
+    state.identity.senses.lines = [...raceSenseLines];
+  }
   const raceLanguages = Array.isArray(race.languages) ? race.languages : [];
   if (!state.identity.languages) {
     state.identity.languages = { customized: false, lines: [...raceLanguages] };

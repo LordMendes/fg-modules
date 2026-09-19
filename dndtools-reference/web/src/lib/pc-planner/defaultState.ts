@@ -1,6 +1,6 @@
 import { getClassCastingInfo } from "./classCasting";
 import { emptyDerivedList } from "./derivedField";
-import { emptyDefenses, emptySenses } from "./normalizePlanState";
+import { emptyDefenses } from "./normalizePlanState";
 import { createDefaultTreasure } from "./treasure";
 import type { PcPlanState } from "./types";
 
@@ -21,8 +21,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       opposedSchools: [],
       profileImageKey: null,
       tokenImageKey: null,
-      senses: emptySenses(),
-      sensesOverride: null,
+      senses: emptyDerivedList(),
       languages: emptyDerivedList(),
       defenses: emptyDefenses(),
       defensesCustomized: false,
@@ -77,6 +76,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       },
     ],
     skills: [],
+    skillShortcuts: [],
     combat: {
       sizeMod: 0,
       meleeMisc: 0,

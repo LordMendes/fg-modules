@@ -1,5 +1,5 @@
 import { escXml } from "@/lib/npc-creator/buildXml";
-import { formatDefensesLine, formatSensesLine } from "./parseRaceFeatures";
+import { formatDefensesLine } from "./parseRaceFeatures";
 import { resolveDerivedList } from "./derivedField";
 import {
   getClassCastingInfo,
@@ -252,17 +252,9 @@ export function buildPcFgXml(
   if (state.hitPoints?.temporary != null && state.hitPoints.temporary > 0) {
     parts.push(`\t\t<hptemp type="number">${state.hitPoints.temporary}</hptemp>`);
   }
-  const sensesLine = formatSensesLine(
-    state.identity.senses ?? {
-      darkvisionFeet: 0,
-      lowLight: false,
-      scent: false,
-      extra: "",
-    },
-    state.identity.sensesOverride,
-  );
-  if (sensesLine) {
-    parts.push(`\t\t<senses type="string">${escXml(sensesLine)}</senses>`);
+  const senses = resolveDerivedList([], state.identity.senses ?? { customized: false, lines: [] });
+  if (senses.length > 0) {
+    parts.push(`\t\t<senses type="string">${escXml(senses.join(", "))}</senses>`);
   }
   const languages = resolveDerivedList([], state.identity.languages ?? { customized: false, lines: [] });
   if (languages.length > 0) {

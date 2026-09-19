@@ -16,6 +16,7 @@ import { PcMainClasses } from "@/components/tools/pc-main/classes";
 import { PcMainDefenses } from "@/components/tools/pc-main/defenses";
 import { PcMainDivineArcane } from "@/components/tools/pc-main/divine-arcane";
 import { PcMainProfile } from "@/components/tools/pc-main/profile";
+import { PcMainSkillShortcuts } from "@/components/tools/pc-main/skill-shortcuts";
 import { PcMainXpGauge } from "@/components/tools/pc-main/xp-gauge";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
@@ -244,6 +245,14 @@ export function PcSheet({
               />
               <PcMainBiography state={state} patch={patch} readOnly={readOnly} />
             </div>
+            <PcMainSkillShortcuts
+              state={state}
+              patch={patch}
+              readOnly={readOnly}
+              skillAcp={skillAcp}
+              featEffects={featEffects}
+              equippedItemBonuses={equippedItemBonuses}
+            />
           </div>
         )}
 

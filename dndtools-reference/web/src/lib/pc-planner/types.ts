@@ -352,9 +352,7 @@ export type PcPlanState = {
     profileImageKey?: string | null;
     /** R2 object key for square token image. */
     tokenImageKey?: string | null;
-    senses?: PcSensesState;
-    /** Free-text senses line replaces structured senses when set. */
-    sensesOverride?: string | null;
+    senses?: DerivedListField;
     languages?: DerivedListField;
     defenses?: PcDefensesState;
     defensesCustomized?: boolean;
@@ -376,6 +374,8 @@ export type PcPlanState = {
   feats: FeatEntry[];
   spellClasses: SpellClassState[];
   skills: SkillRow[];
+  /** Skill row keys (slug or lowercase name) pinned on the Main tab. */
+  skillShortcuts?: string[];
   combat: CombatState;
   combatModes?: PcCombatModes;
   conditions?: PcConditionEntry[];

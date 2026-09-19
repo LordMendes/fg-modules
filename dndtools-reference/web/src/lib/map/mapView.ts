@@ -23,9 +23,7 @@ import type {
 } from "@/lib/map/types";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
 import { normalizePcPlanState } from "@/lib/pc-planner/normalizePlanState";
-import {
-  visionRangeSquaresFromSenses,
-} from "@/lib/pc-planner/parseRaceFeatures";
+import { visionRangeSquaresFromSenseLines } from "@/lib/pc-planner/parseRaceFeatures";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 
@@ -347,13 +345,8 @@ export async function loadPcVisionRanges(
   });
   for (const plan of plans) {
     const state = normalizePcPlanState(parseState(plan.state));
-    const senses = state.identity.senses ?? {
-      darkvisionFeet: 0,
-      lowLight: false,
-      scent: false,
-      extra: "",
-    };
-    map.set(plan.id, visionRangeSquaresFromSenses(senses, scaleFeet));
+    const senseLines = state.identity.senses?.lines ?? [];
+    map.set(plan.id, visionRangeSquaresFromSenseLines(senseLines, scaleFeet));
   }
   return map;
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import { PcLanguagePicker } from "@/components/tools/pc-language-picker";
+import { PcSensePicker } from "@/components/tools/pc-sense-picker";
 import { formatDerivedHint } from "@/lib/pc-planner/derivedField";
-import { formatDefensesLine, formatSensesLine } from "@/lib/pc-planner/parseRaceFeatures";
+import { formatDefensesLine } from "@/lib/pc-planner/parseRaceFeatures";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
@@ -17,89 +18,32 @@ export function PcSensesLanguagesBlock({
   patch: PatchFn;
   readOnly?: boolean;
 }) {
-  const senses = state.identity.senses ?? {
-    darkvisionFeet: 0,
-    lowLight: false,
-    scent: false,
-    extra: "",
-  };
-  const autoSenses = formatSensesLine(senses);
+  const senses = state.identity.senses ?? { customized: false, lines: [] };
   const languages = state.identity.languages ?? { customized: false, lines: [] };
 
   return (
     <PcSheetCard title="Senses and languages" className="pc-identity-extra">
       <div className="pc-identity-extra-grid">
-        <label className="pc-identity-field">
+        <div className="pc-identity-field pc-sense-field">
           <span className="npc-sheet-sub">
             Senses{" "}
             <span className="pc-derived-hint">
-              {formatDerivedHint(Boolean(state.identity.sensesOverride), Boolean(state.identity.sensesOverride))}
+              {formatDerivedHint(senses.customized, false)}
             </span>
           </span>
-          <input
-            className="pc-sheet-input"
-            value={state.identity.sensesOverride ?? autoSenses}
-            placeholder={autoSenses || "Normal"}
+          <PcSensePicker
+            senses={senses.lines}
             readOnly={readOnly}
-            onChange={(e) =>
+            onChange={(lines) =>
               patch((s) => {
-                s.identity.sensesOverride = e.target.value;
+                if (!s.identity.senses) {
+                  s.identity.senses = { customized: true, lines: [] };
+                }
+                s.identity.senses.customized = true;
+                s.identity.senses.lines = lines;
               })
             }
           />
-        </label>
-        <div className="pc-senses-structured">
-          <span className="npc-sheet-sub pc-senses-label">Darkvision (ft)</span>
-          <label className="pc-senses-darkvision">
-            <input
-              type="number"
-              className="pc-sheet-input pc-sheet-input--narrow"
-              value={senses.darkvisionFeet || ""}
-              readOnly={readOnly}
-              onChange={(e) =>
-                patch((s) => {
-                  if (!s.identity.senses) {
-                    s.identity.senses = { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" };
-                  }
-                  s.identity.senses!.darkvisionFeet = Number(e.target.value) || 0;
-                })
-              }
-            />
-          </label>
-          <div className="pc-senses-flags">
-            <label className="pc-checkbox-label">
-              <input
-                type="checkbox"
-                checked={senses.lowLight}
-                disabled={readOnly}
-                onChange={(e) =>
-                  patch((s) => {
-                    if (!s.identity.senses) {
-                      s.identity.senses = { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" };
-                    }
-                    s.identity.senses!.lowLight = e.target.checked;
-                  })
-                }
-              />
-              Low-light
-            </label>
-            <label className="pc-checkbox-label">
-              <input
-                type="checkbox"
-                checked={senses.scent}
-                disabled={readOnly}
-                onChange={(e) =>
-                  patch((s) => {
-                    if (!s.identity.senses) {
-                      s.identity.senses = { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" };
-                    }
-                    s.identity.senses!.scent = e.target.checked;
-                  })
-                }
-              />
-              Scent
-            </label>
-          </div>
         </div>
         <div className="pc-identity-field pc-language-field">
           <span className="npc-sheet-sub">Languages</span>
