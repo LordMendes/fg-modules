@@ -7,11 +7,13 @@ import {
   formatElDelta,
 } from "@/components/encounter/encounter-party-config";
 import { EncounterSavedList } from "@/components/encounter/encounter-saved-list";
+import { EncounterSendToCampaign } from "@/components/encounter/encounter-send-to-campaign";
 import { useEncounter } from "@/components/encounter/encounter-provider";
 import { formatEl, formatXp } from "@/lib/encounter/formatEl";
 
 export function EncounterBuilderContent() {
-  const { entries, summary, partyConfig, setPartyConfig } = useEncounter();
+  const { entries, summary, partyConfig, setPartyConfig, defaultSaveName } =
+    useEncounter();
   const deltaLabel = formatElDelta(summary.elDelta);
 
   return (
@@ -56,6 +58,11 @@ export function EncounterBuilderContent() {
           </div>
         )}
       </section>
+
+      <EncounterSendToCampaign
+        encounterName={defaultSaveName}
+        entries={entries}
+      />
 
       <EncounterSavedList />
     </>

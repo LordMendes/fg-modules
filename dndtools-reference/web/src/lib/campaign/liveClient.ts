@@ -131,6 +131,11 @@ export function useCampaignLiveConnection(
         setConnected(true);
         store.setConnected(true);
         flushQueue(ws);
+        try {
+          ws.send(JSON.stringify({ type: "combatResync" }));
+        } catch {
+          // ignore
+        }
       };
 
       ws.onmessage = (ev) => {

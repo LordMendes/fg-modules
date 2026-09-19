@@ -433,6 +433,12 @@ export function CampaignNpcsDrawer({
                   <p className="npc-encounter-summary">
                     {selectedEncounter.creatureCount} creature
                     {selectedEncounter.creatureCount === 1 ? "" : "s"}
+                    {selectedEncounter.el != null
+                      ? ` · EL ${selectedEncounter.el}`
+                      : ""}
+                    {selectedEncounter.targetEl != null
+                      ? ` (party target ${selectedEncounter.targetEl})`
+                      : ""}
                   </p>
 
                   {selectedEncounter.entries.length === 0 ? (

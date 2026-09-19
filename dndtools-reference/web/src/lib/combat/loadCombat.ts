@@ -17,6 +17,11 @@ import type {
   CampaignEncounterView,
   CampaignNpcView,
 } from "@/lib/combat/types";
+import { loadCampaignSettings } from "@/lib/campaign/settings";
+import { calculateEncounterSummary } from "@/lib/encounter/calculateEl";
+import { parseCr } from "@/lib/encounter/parseCr";
+import { averagePartyLevel } from "@/lib/combat/combatXp";
+import { loadPendingRollRequests } from "@/lib/combat/rollRequests";
 import { prisma } from "@/lib/prisma";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 
@@ -84,11 +89,33 @@ export async function loadCombatForViewer(
     tokenImages.set(t.id, t.imageKey ? tryPublicUrlForKey(t.imageKey) : null);
   }
 
-  return combatViewFromRow(combat, {
+  const settings = await loadCampaignSettings(campaignId);
+  const rollRequests =
+    combat.state === "active" || combat.state === "idle"
+      ? await loadPendingRollRequests(combat.id)
+      : [];
+
+  const view = combatViewFromRow(combat, {
     isDm: viewer.isDm,
     viewerPcPlanId: viewer.pcPlanId ?? null,
     tokenImages,
   });
+  if (!view) return null;
+  return {
+    ...view,
+    settings: {
+      strictTurns: settings.combat?.strictTurns === true,
+      askPlayersToRoll: settings.combat?.askPlayersToRoll !== false,
+    },
+    rollRequests: viewer.isDm
+      ? rollRequests
+      : rollRequests.filter((r) => {
+          const target = combat.combatants.find(
+            (c) => c.id === r.targetCombatantId,
+          );
+          return target?.pcPlanId === viewer.pcPlanId;
+        }),
+  };
 }
 
 export async function loadCombatEvents(
@@ -158,6 +185,17 @@ export async function loadNpcLibrary(
 export async function loadEncounters(
   campaignId: string,
 ): Promise<CampaignEncounterView[]> {
+  const pcs = await prisma.campaignPc.findMany({
+    where: { campaignId },
+    include: { pcPlan: { select: { state: true } } },
+  });
+  const partyLevel = averagePartyLevel(pcs.map((p) => p.pcPlan));
+  const partyConfig = {
+    partySize: Math.max(1, pcs.length),
+    partyLevel,
+    difficulty: "medium" as const,
+  };
+
   const rows = await prisma.campaignEncounter.findMany({
     where: { campaignId },
     orderBy: { updatedAt: "desc" },
@@ -180,8 +218,25 @@ export async function loadEncounters(
 
   return rows.map((row) => {
     const view = encounterViewFromRow(row);
+    const summary = calculateEncounterSummary(
+      row.entries.map((entry) => {
+        const snap = entry.campaignNpc.snapshot as { challengeRating?: string };
+        const cr =
+          snap.challengeRating ??
+          String(parseCr(snap.challengeRating) ?? "0");
+        return {
+          slug: entry.campaignNpcId,
+          name: entry.campaignNpc.name,
+          cr,
+          count: entry.quantity,
+        };
+      }),
+      partyConfig,
+    );
     return {
       ...view,
+      el: summary.el,
+      targetEl: summary.targetEl,
       entries: view.entries.map((entry, i) => {
         const raw = row.entries[i];
         const imageKey = raw?.campaignNpc.imageKey;

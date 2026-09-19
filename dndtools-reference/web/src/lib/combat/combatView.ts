@@ -10,6 +10,8 @@ import type {
   CombatEffectView,
   CombatFaction,
   CombatSnapshot,
+  CombatSpellEntry,
+  CombatSpellUses,
   Defenses,
   EffectComponent,
 } from "./types";
@@ -59,6 +61,8 @@ type CombatantRow = {
   pendingTargetIds?: unknown;
   pendingCrit?: unknown;
   stats?: unknown;
+  spells?: unknown;
+  spellUses?: unknown;
   effects?: EffectRow[];
 };
 
@@ -161,6 +165,22 @@ function asPendingCrit(
 function asCombatStats(raw: unknown): CombatantView["stats"] {
   if (!raw || typeof raw !== "object") return {};
   return raw as CombatantView["stats"];
+}
+
+function asSpells(raw: unknown): CombatSpellEntry[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter(
+    (entry): entry is CombatSpellEntry =>
+      entry &&
+      typeof entry === "object" &&
+      typeof (entry as CombatSpellEntry).key === "string" &&
+      typeof (entry as CombatSpellEntry).name === "string",
+  );
+}
+
+function asSpellUses(raw: unknown): CombatSpellUses {
+  if (!raw || typeof raw !== "object") return {};
+  return raw as CombatSpellUses;
 }
 
 function asTurnState(raw: string | undefined): CombatantView["turnState"] {
@@ -312,6 +332,9 @@ export function combatantViewFromRow(
   const showDefenses = opts.isDm || isOwner;
   const showPending = opts.isDm || isOwner;
   const showIdentifiedDetails = opts.isDm || row.identified;
+  const showSpellDetails =
+    showIdentifiedDetails && (opts.isDm || isOwner || row.kind === "pc");
+  const showNpcSpellDc = opts.isDm || row.identified;
 
   const rawEffects = (row.effects ?? []).map((effect) =>
     effectViewFromRow(effect, opts.sourceNames),
@@ -362,6 +385,14 @@ export function combatantViewFromRow(
     pendingTargetIds: showPending ? asTargetIds(row.pendingTargetIds) : [],
     pendingCrit: showPending ? asPendingCrit(row.pendingCrit) : null,
     stats: showDefenses ? asCombatStats(row.stats) : {},
+    spells: showSpellDetails
+      ? asSpells(row.spells).map((entry) =>
+          showNpcSpellDc || row.kind === "pc"
+            ? entry
+            : { ...entry, actions: { cast: { ...entry.actions.cast, savetype: "" } } },
+        )
+      : [],
+    spellUses: showSpellDetails ? asSpellUses(row.spellUses) : {},
   };
 }
 

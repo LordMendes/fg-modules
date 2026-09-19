@@ -239,6 +239,7 @@ export function DiceLogTray() {
             <CombatLog
               events={combatEvents}
               isDm={combatCtx?.isDm ?? false}
+              campaignId={combatCtx?.campaignId}
             />
           )}
         </div>

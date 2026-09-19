@@ -4,6 +4,7 @@ import { combatClearTargets } from "@/actions/combat";
 import { CampaignDrawerShell } from "@/components/combat/campaign-drawer-shell";
 import { CombatModifierStack } from "@/components/combat/combat-modifier-stack";
 import { CombatRow } from "@/components/combat/combat-row";
+import { CombatRollRequests } from "@/components/combat/combat-roll-requests";
 import { CombatToolbar } from "@/components/combat/combat-toolbar";
 import type { CampaignCombatView } from "@/lib/combat/types";
 import { Swords } from "lucide-react";
@@ -107,6 +108,9 @@ export function CampaignCombatDrawer({
             </button>
           ) : (
             <p className="combat-footer-wait">
+              {viewerCombatant && viewerCombatant.targetIds.length > 0 ? (
+                <span className="combat-ready-indicator">Ready</span>
+              ) : null}
               {current
                 ? `Waiting for ${current.name}`
                 : "Waiting for combat to start"}
@@ -181,6 +185,13 @@ export function CampaignCombatDrawer({
           </div>
         </>
       )}
+
+      <CombatRollRequests
+        campaignId={campaignId}
+        isDm={isDm}
+        viewerPcPlanId={viewerPcPlanId}
+        requests={combat?.rollRequests ?? []}
+      />
 
       <CombatModifierStack />
     </CampaignDrawerShell>

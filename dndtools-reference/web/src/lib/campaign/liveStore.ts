@@ -418,6 +418,71 @@ export function createLiveStore(initial: {
         };
         notify();
         return;
+      case "combatRollRequest":
+        if (!state.combat) return;
+        state = {
+          ...state,
+          combat: {
+            ...state.combat,
+            rollRequests: [
+              ...(state.combat.rollRequests ?? []).filter(
+                (r) => r.id !== event.request.id,
+              ),
+              event.request,
+            ],
+          },
+        };
+        notify();
+        return;
+      case "combatRollRequestResolved":
+        if (!state.combat) return;
+        state = {
+          ...state,
+          combat: {
+            ...state.combat,
+            rollRequests: (state.combat.rollRequests ?? []).filter(
+              (r) => r.id !== event.requestId,
+            ),
+          },
+        };
+        notify();
+        return;
+      case "combatEventReverted":
+        state = {
+          ...state,
+          combatEvents: state.combatEvents.map((e) =>
+            e.id === event.eventId ? { ...e, reverted: true } : e,
+          ),
+        };
+        notify();
+        return;
+      case "combatSettings":
+        if (!state.combat) return;
+        state = {
+          ...state,
+          combat: {
+            ...state.combat,
+            settings: {
+              strictTurns: event.settings.strictTurns === true,
+              askPlayersToRoll: event.settings.askPlayersToRoll !== false,
+            },
+          },
+        };
+        notify();
+        return;
+      case "combatEventsBatch": {
+        const seen = new Set(state.combatEvents.map((e) => e.seq));
+        const fresh = event.events.filter((e) => !seen.has(e.seq));
+        if (fresh.length === 0) return;
+        state = {
+          ...state,
+          combatEvents: [...state.combatEvents, ...fresh]
+            .sort((a, b) => a.seq - b.seq)
+            .slice(-COMBAT_EVENT_BUFFER),
+        };
+        notify();
+        return;
+      }
       default: {
         // Structural map updates (fog, drawings, lights, flags, grid, occluders).
         if (!state.liveMap) return;

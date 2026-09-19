@@ -4,12 +4,14 @@ import {
   addPartyToCombat,
   combatClearEffects,
   combatClearTargets,
-  combatEnd,
   combatReset,
+  combatRest,
   combatRollInitiative,
   combatRemoveDeadNpcs,
+  combatSetSettings,
   combatStart,
 } from "@/actions/combat";
+import { CombatEndDialog } from "@/components/combat/combat-end-dialog";
 import type { CampaignCombatView } from "@/lib/combat/types";
 import {
   ChevronDown,
@@ -66,6 +68,7 @@ export function CombatToolbar({
   const [pending, startTransition] = useTransition();
   const [initMenuOpen, setInitMenuOpen] = useState(false);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
+  const [endDialogOpen, setEndDialogOpen] = useState(false);
   const initRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -115,11 +118,7 @@ export function CombatToolbar({
         <ToolbarIconBtn
           title="End combat"
           disabled={pending}
-          onClick={() => {
-            startTransition(async () => {
-              await combatEnd(campaignId);
-            });
-          }}
+          onClick={() => setEndDialogOpen(true)}
         >
           <Square size={16} aria-hidden />
         </ToolbarIconBtn>
@@ -249,12 +248,62 @@ export function CombatToolbar({
                 disabled={pending}
                 onClick={() => {
                   setMainMenuOpen(false);
-                  startTransition(async () => {
-                    await combatEnd(campaignId);
-                  });
+                  setEndDialogOpen(true);
                 }}
               >
                 End combat
+              </button>
+            </li>
+            <li role="none">
+              <button
+                type="button"
+                role="menuitem"
+                className="combat-menu-item"
+                disabled={pending}
+                onClick={() => {
+                  setMainMenuOpen(false);
+                  startTransition(async () => {
+                    await combatRest(campaignId, "night");
+                  });
+                }}
+              >
+                Rest (overnight)
+              </button>
+            </li>
+            <li role="none">
+              <button
+                type="button"
+                role="menuitem"
+                className="combat-menu-item"
+                disabled={pending}
+                onClick={() => {
+                  setMainMenuOpen(false);
+                  startTransition(async () => {
+                    await combatRest(campaignId, "full");
+                  });
+                }}
+              >
+                Full bed rest
+              </button>
+            </li>
+            <li role="none">
+              <button
+                type="button"
+                role="menuitem"
+                className="combat-menu-item"
+                disabled={pending}
+                onClick={() => {
+                  setMainMenuOpen(false);
+                  startTransition(async () => {
+                    await combatSetSettings(campaignId, {
+                      strictTurns: !combat?.settings?.strictTurns,
+                    });
+                  });
+                }}
+              >
+                {combat?.settings?.strictTurns
+                  ? "Disable strict turns"
+                  : "Enable strict turns"}
               </button>
             </li>
             <li role="none">
@@ -296,6 +345,12 @@ export function CombatToolbar({
           {unplacedCount} unplaced (right tray)
         </span>
       ) : null}
+
+      <CombatEndDialog
+        campaignId={campaignId}
+        open={endDialogOpen}
+        onClose={() => setEndDialogOpen(false)}
+      />
     </div>
   );
 }

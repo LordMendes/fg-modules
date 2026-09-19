@@ -223,7 +223,8 @@ export type ClientLiveMessage =
     }
   | { type: "mapTokenRemove"; tokenId: string }
   | { type: "combatToggleTarget"; combatantId: string; targetId: string }
-  | { type: "combatNextTurn" };
+  | { type: "combatNextTurn" }
+  | { type: "combatResync" };
 
 export type CampaignLiveEvent =
   | CampaignRollEvent
@@ -297,7 +298,23 @@ export type CampaignLiveEvent =
   | { type: "combatantUpsert"; combatantId: string }
   | { type: "combatantRemove"; combatantId: string }
   | { type: "npcLibrarySnapshot"; npcLibrary: CampaignNpcView[] }
-  | { type: "encountersSnapshot"; encounters: CampaignEncounterView[] };
+  | { type: "encountersSnapshot"; encounters: CampaignEncounterView[] }
+  | {
+      type: "combatRollRequest";
+      requestId: string;
+      targetCombatantId: string;
+      saveType: "fort" | "ref" | "will";
+      dc: number | null;
+      label: string;
+      request: import("@/lib/combat/types").CombatRollRequestView;
+    }
+  | { type: "combatRollRequestResolved"; requestId: string }
+  | { type: "combatEventReverted"; eventId: string }
+  | {
+      type: "combatSettings";
+      settings: import("@/lib/campaign/settings").CampaignCombatSettings;
+    }
+  | { type: "combatEventsBatch"; events: CombatEventView[] };
 
 export type StartCampaignRollInput = {
   campaignId: string;

@@ -1,3 +1,4 @@
+import { labelsFromPayload } from "@/lib/combat/eventLabels";
 import { formatEventForViewer } from "./format";
 import type {
   CombatEventPayload,
@@ -95,8 +96,11 @@ export function filterEventForViewer(
     return null;
   }
 
-  const actorName = resolveDisplayName(actor, viewer);
-  const targetName = resolveDisplayName(target, viewer);
+  const snap = labelsFromPayload(event.payload);
+  const actorName =
+    snap?.actor ?? resolveDisplayName(actor, viewer);
+  const targetName =
+    snap?.target ?? resolveDisplayName(target, viewer);
   const payload = redactPayloadForViewer(event.kind, event.payload, viewer);
 
   const lines = formatEventForViewer(

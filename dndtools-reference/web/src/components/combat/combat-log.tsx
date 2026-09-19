@@ -1,8 +1,9 @@
 "use client";
 
+import { combatUndo } from "@/actions/combat";
 import type { CombatEventView } from "@/lib/combat/events/types";
 import type { ItemizedModifier } from "@/lib/combat/events/types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useCombatContext } from "./combat-context";
 
 function modifierTooltip(payload: unknown, isDm: boolean): string | undefined {
@@ -19,14 +20,17 @@ function isRoundSeparator(event: CombatEventView): boolean {
 export function CombatLog({
   events,
   isDm,
+  campaignId,
 }: {
   events: CombatEventView[];
   isDm: boolean;
+  campaignId?: string;
 }) {
   const ctx = useCombatContext();
   const listRef = useRef<HTMLUListElement>(null);
   const [pinnedBottom, setPinnedBottom] = useState(true);
   const [showJump, setShowJump] = useState(false);
+  const [pending, startTransition] = useTransition();
 
   const scrollToBottom = useCallback(() => {
     const el = listRef.current;
@@ -63,7 +67,10 @@ export function CombatLog({
   }
 
   return (
-    <div className="combat-log-panel">
+    <div
+      className="combat-log-panel"
+      {...(isDm ? { "aria-live": "polite" as const } : {})}
+    >
       {showJump ? (
         <button
           type="button"
@@ -84,12 +91,23 @@ export function CombatLog({
           return (
             <li
               key={event.id}
-              className={`combat-log-entry combat-log-entry--${event.kind}${separator ? " combat-log-entry--separator" : ""}`}
+              className={`combat-log-entry combat-log-entry--${event.kind}${separator ? " combat-log-entry--separator" : ""}${event.reverted ? " combat-log-entry--reverted" : ""}`}
+              onContextMenu={
+                isDm && campaignId && !event.reverted && event.kind !== "undo"
+                  ? (e) => {
+                      e.preventDefault();
+                      startTransition(async () => {
+                        await combatUndo(campaignId, event.id);
+                      });
+                    }
+                  : undefined
+              }
             >
               <button
                 type="button"
                 className="combat-log-entry-btn"
                 title={tip}
+                aria-label={`Round ${event.round} ${event.lines[0]?.text ?? event.kind}`}
                 onClick={() => focusRows(event)}
               >
                 <span className="combat-log-entry-meta">
@@ -101,7 +119,7 @@ export function CombatLog({
                 {event.lines.map((line, index) => (
                   <span
                     key={`${event.id}-${index}`}
-                    className={`combat-log-line combat-log-line--${line.tone}`}
+                    className={`combat-log-line combat-log-line--${line.tone}${event.reverted ? " combat-log-line--reverted" : ""}`}
                   >
                     {line.text}
                   </span>

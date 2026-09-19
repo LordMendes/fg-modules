@@ -82,15 +82,20 @@ export function CombatRow({
   const dead = isDeadRow(c);
   const expandable = canExpandRow(c, isDm, viewerPcPlanId);
   const currentActor = ctx?.currentActor;
+  const viewerCombatant = ctx?.combat?.combatants.find(
+    (row) => row.pcPlanId === viewerPcPlanId,
+  );
+  const actorForTargets = isDm ? currentActor : viewerCombatant;
   const canTarget =
-    ctx &&
-    (isDm ||
-      (currentActor != null &&
-        viewerPcPlanId != null &&
-        currentActor.pcPlanId === viewerPcPlanId));
-  const isTargeted = currentActor?.targetIds.includes(c.id) ?? false;
+    ctx && (isDm ? currentActor != null : viewerCombatant != null);
+  const isTargeted = actorForTargets?.targetIds.includes(c.id) ?? false;
   const showCrosshair =
-    canTarget && currentActor?.id !== c.id && !dead;
+    canTarget && actorForTargets?.id !== c.id && !dead;
+  const notOwnTurn =
+    !isDm &&
+    viewerCombatant &&
+    !viewerCombatant.isCurrentTurn &&
+    c.id === viewerCombatant.id;
 
   const rowFlash = ctx?.rowFlashes[c.id];
   const focused = ctx?.focusedRowIds.includes(c.id);
@@ -150,6 +155,9 @@ export function CombatRow({
         )}
         <div className="combat-row-identity">
           <span className="combat-row-name">{c.name}</span>
+          {notOwnTurn ? (
+            <span className="combat-row-muted">Not your turn</span>
+          ) : null}
           <CombatRowEffectsStrip
             c={c}
             isDm={isDm}
@@ -186,6 +194,7 @@ export function CombatRow({
             type="button"
             className={`combat-target-toggle${isTargeted ? " combat-target-toggle--on" : ""}`}
             title={isTargeted ? "Remove target" : "Add target"}
+            aria-label={isTargeted ? `Remove ${c.name} as target` : `Target ${c.name}`}
             onClick={() => {
               startTransition(async () => {
                 await combatToggleTarget(campaignId, c.id);

@@ -40,6 +40,20 @@ export type CombatDragPayload =
       kind: "effect";
       effectText: string;
       input: CombatEffectInput;
+    }
+  | {
+      kind: "save";
+      targetIds: string[];
+      saveType: "fort" | "ref" | "will";
+      dc: number;
+      label: string;
+      source?: string;
+    }
+  | {
+      kind: "cast";
+      casterId: string;
+      spellKey: string;
+      label: string;
     };
 
 export function setCombatDragData(
@@ -122,6 +136,33 @@ export function resolveCombatDrop(
     case "effect":
       void ctx.applyEffect([targetCombatantId], payload.input);
       break;
+    case "save":
+      ctx.rollSave({
+        targetIds: [targetCombatantId],
+        saveType: payload.saveType,
+        dc: payload.dc,
+        label: payload.label,
+        ...(payload.source ? { source: payload.source } : {}),
+      });
+      break;
+    case "cast": {
+      const caster = ctx.combat?.combatants.find((c) => c.id === payload.casterId);
+      const spell = caster?.spells.find((s) => s.key === payload.spellKey);
+      if (!caster || !spell) break;
+      const pool = [{ qty: 1, sides: 20 as const }];
+      ctx.rollCast({
+        casterId: payload.casterId,
+        spellKey: payload.spellKey,
+        targetIds: [targetCombatantId],
+        label: payload.label,
+        dice: pool,
+        casterLevel: spell.casterLevel ?? caster.stats.cl ?? undefined,
+        spellLevel: spell.level ?? undefined,
+        castingStatMod:
+          caster.stats.int ?? caster.stats.wis ?? caster.stats.cha ?? undefined,
+      });
+      break;
+    }
   }
 }
 
