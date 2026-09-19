@@ -16,6 +16,7 @@ import { PcMainClasses } from "@/components/tools/pc-main/classes";
 import { PcMainDefenses } from "@/components/tools/pc-main/defenses";
 import { PcMainDivineArcane } from "@/components/tools/pc-main/divine-arcane";
 import { PcMainProfile } from "@/components/tools/pc-main/profile";
+import { PcMainXpGauge } from "@/components/tools/pc-main/xp-gauge";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
@@ -215,6 +216,7 @@ export function PcSheet({
       <div className="pc-sheet-panel-area">
         {sheetTab === "main" && (
           <div className="npc-sheet-panel pc-sheet-section pc-main-layout" role="tabpanel">
+            <PcMainXpGauge state={state} patch={patch} readOnly={readOnly} />
             <div className="pc-main-col-identity">
               <PcMainProfile
                 state={state}
