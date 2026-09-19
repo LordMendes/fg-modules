@@ -2,11 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Plus, Star } from "lucide-react";
 import { paginateEntities } from "@/actions/data";
 import { useSessionNonce } from "@/components/session-provider";
+import {
+  ClassActionConfirmDialog,
+  type PendingClassAction,
+} from "@/components/tools/pc-main/class-action-confirm";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
+import { effectiveFirstClassSlug } from "@/lib/pc-planner/skillPoints";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 type PatchFn = (fn: (draft: PcPlanState) => void) => void;
@@ -39,6 +44,21 @@ export function PcMainClasses({
   const [isPending, startTransition] = useTransition();
   const requestId = useRef(0);
   const panelRef = useRef<HTMLDivElement>(null);
+  const [pendingAction, setPendingAction] = useState<PendingClassAction | null>(null);
+
+  function confirmPendingAction() {
+    if (!pendingAction) return;
+    if (pendingAction.kind === "first") {
+      patch((s) => {
+        s.identity.firstClassSlug = pendingAction.classSlug;
+      });
+    } else {
+      patch((s) => {
+        s.identity.classLevels.splice(pendingAction.index, 1);
+      });
+    }
+    setPendingAction(null);
+  }
 
   const addClass = useCallback(
     (hit: ClassOption) => {
@@ -115,8 +135,22 @@ export function PcMainClasses({
   }, [addOpen]);
 
   const addedSlugs = new Set(classLevels.map((cl) => cl.classSlug));
+  const firstClassSlug = effectiveFirstClassSlug(
+    classLevels,
+    state.identity.firstClassSlug,
+  );
+
+  const previousFirstClass = classLevels.find((cl) => cl.classSlug === firstClassSlug);
 
   return (
+    <>
+      {pendingAction ? (
+        <ClassActionConfirmDialog
+          action={pendingAction}
+          onConfirm={confirmPendingAction}
+          onCancel={() => setPendingAction(null)}
+        />
+      ) : null}
     <PcSheetCard
       title="Classes"
       className="pc-main-classes"
@@ -197,67 +231,76 @@ export function PcMainClasses({
       {classLevels.length === 0 ? (
         <p className="pc-sheet-empty">Add a class with + above.</p>
       ) : (
-        <ul className="pc-class-list">
+        <ul
+          className="pc-class-list"
+          {...(classLevels.length > 1
+            ? { role: "radiogroup" as const, "aria-label": "1st character level class" }
+            : {})}
+        >
           {classLevels.map((cl, index) => {
             const info = getClassCastingInfo(cl.classSlug, cl.className);
-            const isFirstClass = state.identity.firstClassSlug === cl.classSlug;
-            const showFirstSlot = classLevels.length > 1;
+            const castingLabel = info
+              ? `${info.dcAbility.toUpperCase()}${info.progression === "half" ? " · half caster" : ""}`
+              : null;
+            const isFirstClass = firstClassSlug === cl.classSlug;
+            const canPickFirst = classLevels.length > 1;
             return (
-              <li
-                key={`${cl.classSlug}-${index}`}
-                className={showFirstSlot ? "pc-class-row pc-class-row--multiclass" : "pc-class-row"}
-              >
+              <li key={`${cl.classSlug}-${index}`} className="pc-class-row">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={isFirstClass}
+                  aria-label={`${cl.className} as 1st character level class`}
+                  title="×4 skill points and maximum first hit die at level 1"
+                  className={
+                    isFirstClass
+                      ? "pc-class-first-star is-checked"
+                      : "pc-class-first-star"
+                  }
+                  disabled={!canPickFirst}
+                  onClick={() => {
+                    if (isFirstClass || !previousFirstClass) return;
+                    setPendingAction({
+                      kind: "first",
+                      classSlug: cl.classSlug,
+                      className: cl.className,
+                      previousFirstName: previousFirstClass.className,
+                    });
+                  }}
+                >
+                  <Star
+                    aria-hidden
+                    className="pc-class-first-star-icon"
+                    fill={isFirstClass ? "currentColor" : "none"}
+                  />
+                </button>
                 <div className="pc-class-identity">
-                  <a
-                    href={`/classes/${cl.classSlug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pc-class-name pc-feat-link"
-                  >
-                    {cl.className}
-                  </a>
-                  {info ? (
-                    <span className="pc-class-casting">
-                      {info.dcAbility.toUpperCase()}
-                      {info.progression === "half" ? " · half caster" : ""}
-                    </span>
-                  ) : null}
-                </div>
-                {showFirstSlot ? (
-                  isFirstClass ? (
-                    <span className="pc-class-first-badge" title="Skill points ×4 at 1st level">
-                      1st
+                  {castingLabel ? (
+                    <span className="pc-bonus-sources-wrap pc-class-name-wrap" tabIndex={0}>
+                      <a
+                        href={`/classes/${cl.classSlug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pc-class-name pc-feat-link"
+                      >
+                        {cl.className}
+                      </a>
+                      <span className="pc-skill-tooltip pc-bonus-sources-tooltip" role="tooltip">
+                        <span className="pc-skill-tooltip-line">{castingLabel}</span>
+                      </span>
                     </span>
                   ) : (
-                    <button
-                      type="button"
-                      className="pc-class-first-btn"
-                      title="Use this class for ×4 skill points at 1st level"
-                      onClick={() =>
-                        patch((s) => {
-                          s.identity.firstClassSlug = cl.classSlug;
-                        })
-                      }
+                    <a
+                      href={`/classes/${cl.classSlug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pc-class-name pc-feat-link"
                     >
-                      Make 1st
-                    </button>
-                  )
-                ) : null}
+                      {cl.className}
+                    </a>
+                  )}
+                </div>
                 <div className="pc-class-level-controls">
-                  <button
-                    type="button"
-                    className="pc-class-level-step"
-                    aria-label={`Decrease ${cl.className} level`}
-                    disabled={cl.level <= 1}
-                    onClick={() =>
-                      patch((s) => {
-                        if (!s.identity.classLevels[index]) return;
-                        s.identity.classLevels[index].level = clampClassLevel(cl.level - 1);
-                      })
-                    }
-                  >
-                    −
-                  </button>
                   <input
                     type="number"
                     className="pc-sheet-input pc-sheet-input--narrow"
@@ -274,28 +317,49 @@ export function PcMainClasses({
                       })
                     }
                   />
-                  <button
-                    type="button"
-                    className="pc-class-level-step"
-                    aria-label={`Increase ${cl.className} level`}
-                    disabled={cl.level >= 20}
-                    onClick={() =>
-                      patch((s) => {
-                        if (!s.identity.classLevels[index]) return;
-                        s.identity.classLevels[index].level = clampClassLevel(cl.level + 1);
-                      })
-                    }
-                  >
-                    +
-                  </button>
+                  <div className="pc-class-level-steps">
+                    <button
+                      type="button"
+                      className="pc-class-level-step"
+                      aria-label={`Increase ${cl.className} level`}
+                      disabled={cl.level >= 20}
+                      onClick={() =>
+                        patch((s) => {
+                          if (!s.identity.classLevels[index]) return;
+                          s.identity.classLevels[index].level = clampClassLevel(cl.level + 1);
+                        })
+                      }
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      className="pc-class-level-step"
+                      aria-label={`Decrease ${cl.className} level`}
+                      disabled={cl.level <= 1}
+                      onClick={() =>
+                        patch((s) => {
+                          if (!s.identity.classLevels[index]) return;
+                          s.identity.classLevels[index].level = clampClassLevel(cl.level - 1);
+                        })
+                      }
+                    >
+                      −
+                    </button>
+                  </div>
                 </div>
                 <button
                   type="button"
                   className="pc-class-remove"
                   aria-label={`Remove ${cl.className}`}
                   onClick={() =>
-                    patch((s) => {
-                      s.identity.classLevels.splice(index, 1);
+                    setPendingAction({
+                      kind: "remove",
+                      index,
+                      classSlug: cl.classSlug,
+                      className: cl.className,
+                      level: cl.level,
+                      isFirstClass,
                     })
                   }
                 >
@@ -307,5 +371,6 @@ export function PcMainClasses({
         </ul>
       )}
     </PcSheetCard>
+    </>
   );
 }
