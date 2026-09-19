@@ -13,12 +13,17 @@ import {
   parseSpaceReachString,
   sizeCategoryToSquares,
 } from "./parseSpaceReach";
+import { monsterIndexToCombatSpells, npcCreatorToCombatSpells } from "./converters/parseNpcSpells";
+import { pcPlanToCombatSpells } from "./converters/pcCombatSpells";
 import type {
   CombatAttackLine,
   CombatSnapshot,
+  CombatSpellEntry,
+  CombatSpellUses,
   CombatantView,
   Defenses,
 } from "./types";
+import type { PcPlanState } from "@/lib/pc-planner/types";
 
 export type CombatStatBlock = {
   name: string;
@@ -33,6 +38,8 @@ export type CombatStatBlock = {
   snapshot: CombatSnapshot;
   defenses: Defenses;
   stats: CombatantView["stats"];
+  spells?: CombatSpellEntry[];
+  spellUses?: CombatSpellUses;
 };
 
 function indexString(data: Record<string, unknown>, key: string): string | null {
@@ -151,6 +158,7 @@ export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBloc
   const casterLevel = state.spellcasting.enabled
     ? state.spellcasting.casterLevel
     : undefined;
+  const spellData = npcCreatorToCombatSpells(state);
 
   return {
     name: state.identity.name.trim() || "NPC",
@@ -165,6 +173,8 @@ export function npcCreatorToCombatStats(state: NpcFgExportState): CombatStatBloc
     snapshot,
     defenses,
     stats: abilityStatsFromScores(state.abilities, casterLevel),
+    spells: spellData.spells,
+    spellUses: spellData.spellUses,
   };
 }
 
@@ -225,6 +235,8 @@ export function monsterToCombatStats(record: {
     sr: indexString(index, "spell_resistance") ?? undefined,
   };
 
+  const spellData = monsterIndexToCombatSpells(index);
+
   return {
     name: record.name,
     hpMax,
@@ -238,5 +250,14 @@ export function monsterToCombatStats(record: {
     snapshot,
     defenses: parseDefensesFromParts(defenseText),
     stats: abilityStatsFromMods(abilityMods, casterLevel),
+    spells: spellData.spells,
+    spellUses: spellData.spellUses,
   };
+}
+
+export function pcPlanStateToCombatSpellData(state: PcPlanState): {
+  spells: CombatSpellEntry[];
+  spellUses: CombatSpellUses;
+} {
+  return pcPlanToCombatSpells(state);
 }

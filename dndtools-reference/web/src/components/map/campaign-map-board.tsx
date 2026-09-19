@@ -1,6 +1,10 @@
 "use client";
 
-import { placeCombatantOnMapAction, spawnNpcOnMap } from "@/actions/combat";
+import {
+  combatClearTargets,
+  placeCombatantOnMapAction,
+  spawnNpcOnMap,
+} from "@/actions/combat";
 import { useCombatContext } from "@/components/combat/combat-context";
 import {
   COMBAT_DRAG_MIME,
@@ -20,7 +24,8 @@ import {
   fitCameraToImage,
   zoomAtScreenPoint,
 } from "@/lib/map/camera";
-import { snapSizeFeet } from "@/lib/map/distance";
+import { snapSizeFeet, tokensInsideShape } from "@/lib/map/distance";
+import { combatSetCombatTargets } from "@/actions/combat";
 import type { GridConfig } from "@/lib/map/grid";
 import {
   gridToPixels,
@@ -44,7 +49,9 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
+import { MapCombatFxLayer } from "./map-combat-fx-layer";
 import { MapDrawLayer } from "./map-draw-layer";
 import { MapTargetingLayer } from "./map-targeting-layer";
 import { MapToken } from "./map-token";
@@ -150,7 +157,7 @@ export function CampaignMapBoard({
   onMapChange: _onMapChange,
   onOpenPcSheet,
   extraPings = [],
-  aoePointers: _aoePointers = [],
+  aoePointers = [],
   viewportGoTo,
   sendLive,
   connected,
@@ -159,7 +166,14 @@ export function CampaignMapBoard({
 }: CampaignMapBoardProps) {
   const { store } = useCampaignLive();
   const combatCtx = useCombatContext();
+  const combatEvents = useSyncExternalStore(
+    store.subscribe,
+    () => store.getState().combatEvents,
+    () => [],
+  );
   const [combatDropTokenId, setCombatDropTokenId] = useState<string | null>(null);
+  const [tokenFxClasses, setTokenFxClasses] = useState<Record<string, string>>({});
+  const tokensRef = useRef<MapTokenView[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
   const viewportLiveRef = useRef<ViewportState>({ x: 0, y: 0, scale: 1 });
@@ -329,6 +343,7 @@ export function CampaignMapBoard({
       }),
     [map.tokens, localTokenPos],
   );
+  tokensRef.current = displayTokens;
 
   const tokenLayer = useMemo(
     () => displayTokens.filter((t) => t.layer !== "gm"),
@@ -534,6 +549,12 @@ export function CampaignMapBoard({
         return;
       }
 
+      if (e.key.toLowerCase() === "t" && combat?.active) {
+        e.preventDefault();
+        setTool((prev) => (prev === "target" ? "select" : "target"));
+        return;
+      }
+
       const arrowMap: Record<string, { dx: number; dy: number }> = {
         ArrowUp: { dx: 0, dy: -1 },
         ArrowDown: { dx: 0, dy: 1 },
@@ -593,6 +614,7 @@ export function CampaignMapBoard({
     canEditDrawing,
     updateTokenLocal,
     sendLive,
+    combat?.active,
   ]);
 
   const handleDaylightChange = useCallback(
@@ -929,6 +951,44 @@ export function CampaignMapBoard({
           rotation,
         },
       });
+      if (e.shiftKey && combat?.active && combatCtx) {
+        const tokenCenters = map.tokens.map((token) => ({
+          id: token.id,
+          x: token.x + token.width / 2,
+          y: token.y + token.height / 2,
+        }));
+        const shape =
+          aoeDraft.kind === "cone"
+            ? {
+                kind: "cone" as const,
+                origin: aoeDraft.origin,
+                sizeFeet,
+                rotationDeg: rotation,
+              }
+            : aoeDraft.kind === "square"
+              ? {
+                  kind: "square" as const,
+                  center: aoeDraft.origin,
+                  widthFeet: sizeFeet,
+                  rotationDeg: rotation,
+                }
+              : {
+                  kind: "circle" as const,
+                  center: aoeDraft.origin,
+                  radiusFeet: sizeFeet,
+                };
+        const insideTokenIds = tokensInsideShape(
+          shape,
+          tokenCenters,
+          map.scaleFeet,
+        );
+        const combatantIds = insideTokenIds
+          .map((tokenId) => combatCtx.combatantByTokenId(tokenId)?.id)
+          .filter((id): id is string => Boolean(id));
+        if (combatantIds.length > 0) {
+          void combatSetCombatTargets(campaignId, combatantIds);
+        }
+      }
       setAoeDraft(null);
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -970,6 +1030,10 @@ export function CampaignMapBoard({
     e: React.PointerEvent,
     token: MapTokenView,
   ) => {
+    if (tool === "target") {
+      e.stopPropagation();
+      return;
+    }
     if (tool !== "select" && !spacePan) {
       // Let board tools (measure, fog, draw, shapes) receive the event.
       return;
@@ -1076,7 +1140,40 @@ export function CampaignMapBoard({
     [combat],
   );
 
+  const canUseTargetMode = useMemo(() => {
+    if (!combatCtx || !combat?.active) return false;
+    const currentActor = combatCtx.currentActor;
+    return (
+      isDm ||
+      (currentActor != null &&
+        combatCtx.viewerPcPlanId != null &&
+        currentActor.pcPlanId === combatCtx.viewerPcPlanId)
+    );
+  }, [combat?.active, combatCtx, isDm]);
+
+  const applyTokenFx = useCallback((tokenId: string, className: string, ms: number) => {
+    setTokenFxClasses((prev) => ({ ...prev, [tokenId]: className }));
+    window.setTimeout(() => {
+      setTokenFxClasses((prev) => {
+        if (prev[tokenId] !== className) return prev;
+        const next = { ...prev };
+        delete next[tokenId];
+        return next;
+      });
+    }, ms);
+  }, []);
+
   const handleTokenClick = (e: React.MouseEvent, token: MapTokenView) => {
+    if (tool === "target") {
+      e.stopPropagation();
+      if (!canUseTargetMode || !onToggleCombatTarget) return;
+      const target = combatantForToken(token.id);
+      if (!target) return;
+      const currentActor = combatCtx?.currentActor;
+      if (currentActor?.id === target.id) return;
+      onToggleCombatTarget(target.id);
+      return;
+    }
     if (tool !== "select") return;
     e.stopPropagation();
     if ((e.ctrlKey || e.metaKey) && onToggleCombatTarget) {
@@ -1200,6 +1297,18 @@ export function CampaignMapBoard({
     e: React.MouseEvent,
     token: MapTokenView,
   ) => {
+    if (tool === "target" && canUseTargetMode) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (isDm) {
+        void combatClearTargets(campaignId, "all");
+      } else {
+        const actor = combatCtx?.currentActor;
+        if (actor) void combatClearTargets(campaignId, "one", actor.id);
+      }
+      return;
+    }
+    if (!isDm) return;
     setSelectedTokenId(token.id);
     setTokenMenu({ tokenId: token.id, x: e.clientX, y: e.clientY });
   };
@@ -1283,6 +1392,12 @@ export function CampaignMapBoard({
     }),
     [map, localDaylight, displayDrawings, displayTokens],
   );
+
+  useEffect(() => {
+    if (!combat?.active && tool === "target") {
+      setTool("select");
+    }
+  }, [combat?.active, tool]);
 
   // Expire local pings.
   useEffect(() => {
@@ -1451,6 +1566,8 @@ export function CampaignMapBoard({
             grid={grid}
             imageWidth={map.imageWidth}
             imageHeight={map.imageHeight}
+            scaleFeet={map.scaleFeet}
+            diagonalRule={map.diagonalRule}
             actor={
               combat?.currentCombatantId
                 ? combat.combatants.find(
@@ -1460,6 +1577,70 @@ export function CampaignMapBoard({
             }
             combatants={combat?.combatants ?? []}
           />
+
+          {combat?.active && aoePointers.length > 0 ? (
+            <div className="map-aoe-pointer-layer">
+              {aoePointers.map((pointer) => {
+                const px = gridToPixels(pointer.x, pointer.y, grid);
+                return (
+                  <div
+                    key={pointer.id}
+                    className="map-aoe-pointer-chip"
+                    style={{ left: px.x, top: px.y }}
+                  >
+                    <button
+                      type="button"
+                      className="tool-btn tool-btn--ghost"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!combatCtx) return;
+                        const tokenCenters = map.tokens.map((token) => ({
+                          id: token.id,
+                          x: token.x + token.width / 2,
+                          y: token.y + token.height / 2,
+                        }));
+                        const shape =
+                          pointer.kind === "cone"
+                            ? {
+                                kind: "cone" as const,
+                                origin: { x: pointer.x, y: pointer.y },
+                                sizeFeet: pointer.sizeFeet,
+                                rotationDeg: pointer.rotation,
+                              }
+                            : pointer.kind === "square"
+                              ? {
+                                  kind: "square" as const,
+                                  center: { x: pointer.x, y: pointer.y },
+                                  widthFeet: pointer.sizeFeet,
+                                  rotationDeg: pointer.rotation,
+                                }
+                              : {
+                                  kind: "circle" as const,
+                                  center: { x: pointer.x, y: pointer.y },
+                                  radiusFeet: pointer.sizeFeet,
+                                };
+                        const insideTokenIds = tokensInsideShape(
+                          shape,
+                          tokenCenters,
+                          map.scaleFeet,
+                        );
+                        const combatantIds = insideTokenIds
+                          .map((tokenId) =>
+                            combatCtx.combatantByTokenId(tokenId)?.id,
+                          )
+                          .filter((id): id is string => Boolean(id));
+                        if (combatantIds.length > 0) {
+                          void combatSetCombatTargets(campaignId, combatantIds);
+                        }
+                      }}
+                    >
+                      Target inside
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
 
           <div className="map-token-layer">
             {tokenLayer.map((token) => {
@@ -1479,6 +1660,10 @@ export function CampaignMapBoard({
                 selected={selectedTokenId === token.id}
                 canMove={canMoveToken(token, isDm, viewerUserId)}
                 isDm={isDm}
+                viewerPcPlanId={combatCtx?.viewerPcPlanId ?? null}
+                combatant={combatant}
+                isActiveTurn={combatant?.isCurrentTurn ?? false}
+                fxClass={tokenFxClasses[token.id] ?? ""}
                 showReach={selectedTokenId === token.id}
                 reachSquares={reachSquares}
                 onPointerDown={handleTokenPointerDown}
@@ -1494,6 +1679,31 @@ export function CampaignMapBoard({
               );
             })}
           </div>
+
+          {combat?.active ? (
+            <MapCombatFxLayer
+              combatEvents={combatEvents}
+              tokens={displayTokens}
+              tokensRef={tokensRef}
+              grid={grid}
+              imageWidth={map.imageWidth}
+              imageHeight={map.imageHeight}
+              viewportScale={viewport.scale}
+              combatants={combat.combatants}
+              isDm={isDm}
+              viewerPcPlanId={combatCtx?.viewerPcPlanId ?? null}
+              combatActive={combat.active}
+              onShakeToken={(tokenId, ms) =>
+                applyTokenFx(tokenId, "map-token--fx-shake", ms)
+              }
+              onPulseToken={(tokenId, ms) =>
+                applyTokenFx(tokenId, "map-token--fx-pulse", ms)
+              }
+              onDeathToken={(tokenId, ms) =>
+                applyTokenFx(tokenId, "map-token--fx-death", ms)
+              }
+            />
+          ) : null}
 
           {isDm ? (
             <div className="map-token-layer map-token-layer--gm">
@@ -1537,6 +1747,7 @@ export function CampaignMapBoard({
         tool={tool}
         onToolChange={setTool}
         isDm={isDm}
+        combatActive={Boolean(combat?.active)}
         snap={snap}
         onSnapChange={setSnap}
         gridVisible={gridVisible}

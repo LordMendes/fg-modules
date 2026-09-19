@@ -91,6 +91,27 @@ type RollHealParams = {
   source?: string;
 };
 
+type RollSaveParams = {
+  targetIds: string[];
+  saveType: "fort" | "ref" | "will";
+  dc: number;
+  source?: string;
+  label: string;
+};
+
+type RollCastParams = {
+  casterId: string;
+  spellKey: string;
+  targetIds: string[];
+  label: string;
+  dice: DicePoolItem[];
+  casterLevel?: number;
+  spellLevel?: number;
+  castingStatMod?: number;
+  attackBonus?: number;
+  dmOverrideSlots?: boolean;
+};
+
 type CombatContextValue = {
   campaignId: string;
   combat: CampaignCombatView | null;
@@ -125,6 +146,8 @@ type CombatContextValue = {
   focusedRowIds: string[];
   setFocusedRowIds: (ids: string[]) => void;
   rollStabilize: (targetId: string, label: string) => void;
+  rollSave: (params: RollSaveParams) => void;
+  rollCast: (params: RollCastParams) => void;
 };
 
 function flashKindForEvent(event: CombatEventView): {
@@ -290,7 +313,7 @@ export function CombatProvider({
         dice: DicePoolItem[];
         modifier: number;
         iterativeModifiers?: number[];
-        kind?: "attack" | "damage" | "initiative" | "other";
+        kind?: "attack" | "damage" | "initiative" | "cast" | "other";
       },
     ) => {
       const adhoc = consumeAdhoc();
@@ -438,6 +461,54 @@ export function CombatProvider({
     [buildCombatRoll],
   );
 
+  const rollSave = useCallback(
+    (params: RollSaveParams) => {
+      buildCombatRoll(
+        {
+          kind: "save",
+          targetIds: params.targetIds,
+          saveType: params.saveType,
+          dc: params.dc,
+          ...(params.source ? { source: params.source } : {}),
+        },
+        {
+          label: params.label,
+          dice: [{ qty: params.targetIds.length, sides: 20 }],
+          modifier: 0,
+          kind: "other",
+        },
+      );
+    },
+    [buildCombatRoll],
+  );
+
+  const rollCast = useCallback(
+    (params: RollCastParams) => {
+      buildCombatRoll(
+        {
+          kind: "cast",
+          casterId: params.casterId,
+          spellKey: params.spellKey,
+          targetIds: params.targetIds,
+          ...(params.casterLevel != null ? { casterLevel: params.casterLevel } : {}),
+          ...(params.spellLevel != null ? { spellLevel: params.spellLevel } : {}),
+          ...(params.castingStatMod != null
+            ? { castingStatMod: params.castingStatMod }
+            : {}),
+          ...(params.attackBonus != null ? { attackBonus: params.attackBonus } : {}),
+          ...(params.dmOverrideSlots ? { dmOverrideSlots: true } : {}),
+        },
+        {
+          label: params.label,
+          dice: params.dice,
+          modifier: 0,
+          kind: "cast",
+        },
+      );
+    },
+    [buildCombatRoll],
+  );
+
   const applyEffect = useCallback(
     async (combatantIds: string[], input: CombatEffectInput) => {
       await combatAddEffect(campaignId, combatantIds, input);
@@ -489,6 +560,8 @@ export function CombatProvider({
       focusedRowIds,
       setFocusedRowIds,
       rollStabilize,
+      rollSave,
+      rollCast,
     }),
     [
       campaignId,
@@ -517,6 +590,8 @@ export function CombatProvider({
       rowFlashes,
       focusedRowIds,
       rollStabilize,
+      rollSave,
+      rollCast,
     ],
   );
 

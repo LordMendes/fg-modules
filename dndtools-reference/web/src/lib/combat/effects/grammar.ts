@@ -10,6 +10,7 @@ export const VALUE_TAGS = [
   "WILL",
   "INIT",
   "CL",
+  "DC",
   "SKILL",
   "SPEED",
   "DMG",

@@ -557,6 +557,8 @@ model Campaign {
   joinCode   String             @unique
   dmUserId   String
   dm         User               @relation("CampaignDm", fields: [dmUserId], references: [id], onDelete: Cascade)
+  /// Json: { combat?: { strictTurns?: boolean, askPlayersToRoll?: boolean } }
+  settings   Json               @default("{}")
   createdAt  DateTime           @default(now())
   updatedAt  DateTime           @updatedAt
   members    CampaignMember[]
@@ -709,6 +711,25 @@ model CampaignCombat {
   updatedAt            DateTime              @updatedAt
   combatants           CampaignCombatant[]
   events               CampaignCombatEvent[]
+  rollRequests         CampaignCombatRollRequest[]
+}
+
+model CampaignCombatRollRequest {
+  id                 String         @id @default(cuid())
+  combatId           String
+  combat             CampaignCombat @relation(fields: [combatId], references: [id], onDelete: Cascade)
+  targetCombatantId  String
+  kind               String         @default("save")
+  saveType           String
+  dc                 Int?
+  label              String
+  sourceEventId      String?
+  /// pending | rolled | dmRolled | dismissed
+  status             String         @default("pending")
+  createdAt          DateTime       @default(now())
+
+  @@index([combatId, status])
+  @@index([targetCombatantId])
 }
 
 model CampaignCombatant {
@@ -753,6 +774,10 @@ model CampaignCombatant {
   pendingCrit      Json?
   /// Ability modifiers and caster level for spells/effects: { str, dex, con, int, wis, cha, cl }
   stats            Json            @default("{}")
+  /// CombatSpellEntry[] : spells and spell-like abilities usable from the row
+  spells           Json            @default("[]")
+  /// Remaining uses per spell key or slot level: { "slot:3": 2, "sla:fireball": 1 }
+  spellUses        Json            @default("{}")
   seq              Int             @default(0)
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt

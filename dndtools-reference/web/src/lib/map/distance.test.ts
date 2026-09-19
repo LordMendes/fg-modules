@@ -6,6 +6,7 @@ import {
   coneSectorPath,
   squareContains,
   snapSizeFeet,
+  tokensInsideShape,
 } from "./distance";
 
 describe("distance AOE", () => {
@@ -39,5 +40,18 @@ describe("distance AOE", () => {
     assert.equal(snapSizeFeet(12, 5, true), 10);
     assert.equal(snapSizeFeet(13, 5, true), 15);
     assert.equal(snapSizeFeet(12, 5, false), 12);
+  });
+
+  it("tokensInsideShape selects token centers within a circle", () => {
+    const inside = tokensInsideShape(
+      { kind: "circle", center: { x: 5, y: 5 }, radiusFeet: 20 },
+      [
+        { id: "a", x: 5, y: 4 },
+        { id: "b", x: 8, y: 5 },
+        { id: "c", x: 0, y: 0 },
+      ],
+      5,
+    );
+    assert.deepEqual(inside.sort(), ["a", "b"]);
   });
 });

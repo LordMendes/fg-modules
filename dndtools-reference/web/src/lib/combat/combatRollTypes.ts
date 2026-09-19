@@ -47,6 +47,8 @@ export type CombatRollIntent =
       dc: number;
       source?: string;
       adhoc?: number;
+      requestId?: string;
+      consequence?: "half" | "negate" | "effect";
     }
   | {
       kind: "heal";
@@ -65,6 +67,17 @@ export type CombatRollIntent =
       targetId: string;
       spellName: string;
       casterLevel?: number;
+    }
+  | {
+      kind: "cast";
+      casterId: string;
+      spellKey: string;
+      targetIds: string[];
+      casterLevel?: number;
+      spellLevel?: number;
+      castingStatMod?: number;
+      attackBonus?: number;
+      dmOverrideSlots?: boolean;
     };
 
 export type StartCombatRollInput = {

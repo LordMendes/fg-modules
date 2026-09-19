@@ -36,11 +36,15 @@ import {
   setActiveCombatant,
   setCombatantFlags,
   setCombatantInit,
+  setCombatantSpells,
+  setSpellUses,
+  resetSpellUses,
   setEncounterEntryQuantity,
   setHp,
   startCombat,
   statsFromNpcSnapshot,
   toggleCombatTarget,
+  setCombatTargets,
   toggleEffectActive,
   updateEffect,
   type AddEffectInput,
@@ -56,7 +60,7 @@ import {
   loadEncounters,
   loadNpcLibrary,
 } from "@/lib/combat/loadCombat";
-import type { CombatFaction } from "@/lib/combat/types";
+import type { CombatFaction, CombatSpellEntry, CombatSpellUses } from "@/lib/combat/types";
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
 import type { MapTokenView } from "@/lib/map/types";
@@ -416,10 +420,100 @@ export async function combatStart(
 
 export async function combatEnd(
   campaignId: string,
+  opts?: {
+    awardXp?: boolean;
+    selectedNpcIds?: string[];
+    removeAllNpcs?: boolean;
+  },
 ): Promise<CombatActionResult> {
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
-  return endCombat(auth.actor);
+  return endCombat(auth.actor, opts);
+}
+
+export async function combatComputeEndXp(campaignId: string) {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false as const, error: auth.error };
+  const { computeEndCombatXp } = await import("@/lib/combat/phase3Mutations");
+  return computeEndCombatXp(auth.actor);
+}
+
+export async function combatUndo(
+  campaignId: string,
+  eventId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  const { undoCombatEvent } = await import("@/lib/combat/phase3Mutations");
+  return undoCombatEvent(auth.actor, eventId);
+}
+
+export async function combatRest(
+  campaignId: string,
+  kind: "night" | "full",
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  const { restParty } = await import("@/lib/combat/phase3Mutations");
+  return restParty(auth.actor, kind);
+}
+
+export async function combatReveal(
+  campaignId: string,
+  combatantId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  const { revealCombatant } = await import("@/lib/combat/phase3Mutations");
+  return revealCombatant(auth.actor, combatantId);
+}
+
+export async function combatDismissRollRequest(
+  campaignId: string,
+  requestId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  const { dismissRollRequest } = await import("@/lib/combat/phase3Mutations");
+  return dismissRollRequest(auth.actor, requestId);
+}
+
+export async function combatCreateSaveRequest(
+  campaignId: string,
+  input: {
+    targetCombatantId: string;
+    saveType: "fort" | "ref" | "will";
+    dc: number;
+    label: string;
+    sourceEventId?: string | null;
+  },
+) {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false as const, error: auth.error };
+  const { createSaveRollRequest } = await import("@/lib/combat/phase3Mutations");
+  return createSaveRollRequest(auth.actor, input);
+}
+
+export async function combatSetSettings(
+  campaignId: string,
+  patch: { strictTurns?: boolean; askPlayersToRoll?: boolean },
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  const { setCampaignCombatSettingsAction } =
+    await import("@/lib/combat/phase3Mutations");
+  return setCampaignCombatSettingsAction(auth.actor, patch);
+}
+
+export async function sendEncounterBuilderToCampaign(
+  campaignId: string,
+  encounterName: string,
+  monsters: Array<{ monsterSlug: string; quantity: number }>,
+) {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false as const, error: auth.error };
+  const { sendEncounterToCampaign } = await import("@/lib/combat/phase3Mutations");
+  return sendEncounterToCampaign(auth.actor, encounterName, monsters);
 }
 
 export async function combatReset(
@@ -483,6 +577,15 @@ export async function combatNextTurn(
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
   return advanceCombatTurn(auth.actor);
+}
+
+export async function combatSetCombatTargets(
+  campaignId: string,
+  targetIds: string[],
+): Promise<CombatActionResult & { targetIds?: string[] }> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setCombatTargets(auth.actor, targetIds);
 }
 
 export async function combatToggleTarget(
@@ -637,6 +740,35 @@ export async function combatSetCombatantFlags(
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
   return setCombatantFlags(auth.actor, combatantId, flags);
+}
+
+export async function combatSetCombatantSpells(
+  campaignId: string,
+  combatantId: string,
+  spells: CombatSpellEntry[],
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setCombatantSpells(auth.actor, combatantId, spells);
+}
+
+export async function combatSetSpellUses(
+  campaignId: string,
+  combatantId: string,
+  spellUses: CombatSpellUses,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setSpellUses(auth.actor, combatantId, spellUses);
+}
+
+export async function combatResetSpellUses(
+  campaignId: string,
+  combatantId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return resetSpellUses(auth.actor, combatantId);
 }
 
 export async function combatRemoveDeadNpcs(

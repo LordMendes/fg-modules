@@ -35,6 +35,7 @@ type CollectableTag =
   | "WILL"
   | "INIT"
   | "CL"
+  | "DC"
   | "SKILL"
   | "SPEED";
 
@@ -53,6 +54,7 @@ function isModifierComponent(
     component.tag === "WILL" ||
     component.tag === "INIT" ||
     component.tag === "CL" ||
+    component.tag === "DC" ||
     component.tag === "SKILL" ||
     component.tag === "SPEED"
   );
@@ -150,9 +152,14 @@ export function collect(
       if (!matchesDescriptors(component.descriptors, filter)) continue;
 
       parts.push({
-        label: formatPartLabel(effect.label, component.bonusType),
+        label: formatPartLabel(
+          effect.label,
+          "bonusType" in component ? component.bonusType : undefined,
+        ),
         value: component.value,
-        bonusType: component.bonusType,
+        ...("bonusType" in component && component.bonusType
+          ? { bonusType: component.bonusType }
+          : {}),
       });
     }
   }

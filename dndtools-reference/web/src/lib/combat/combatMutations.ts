@@ -11,6 +11,7 @@ import type {
   CombatFilterCombatant,
   StatePatch,
 } from "@/lib/combat/events/types";
+import { withEventTokenIds } from "@/lib/combat/eventTokenIds";
 import { deriveHealthStatus } from "@/lib/combat/healthStatus";
 import {
   applyDefenses,
@@ -47,8 +48,10 @@ import {
 import {
   npcCreatorToCombatStats,
   monsterToCombatStats,
+  pcPlanStateToCombatSpellData,
   type CombatStatBlock,
 } from "@/lib/combat/converters";
+import type { CombatSpellEntry, CombatSpellUses } from "@/lib/combat/types";
 import { loadEncounters, loadNpcLibrary } from "@/lib/combat/loadCombat";
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
 import { prisma } from "@/lib/prisma";
@@ -101,6 +104,7 @@ export type LockedCombatantRow = {
   kind: string;
   name: string;
   pcPlanId: string | null;
+  tokenId: string | null;
   init: number;
   initMod: number;
   hpMax: number;
@@ -119,6 +123,8 @@ export type LockedCombatantRow = {
   deathState: string | null;
   turnState: string;
   defenses: unknown;
+  spells: unknown;
+  spellUses: unknown;
   visibleToPlayers: boolean;
   identified: boolean;
   effects: Array<{
@@ -422,7 +428,7 @@ function filterCombatantsByScope(
   }
 }
 
-async function applyStatePatchesInTx(
+export async function applyStatePatchesInTx(
   tx: CombatTransactionClient,
   patches: StatePatch[],
 ): Promise<void> {
@@ -558,7 +564,7 @@ async function applyTurnBoundaryInTx(
   return events;
 }
 
-async function publishMutationResult(
+export async function publishMutationResult(
   actor: CombatActor,
   combat: LockedCombatRow,
   events: CombatEventRecord[],
@@ -620,7 +626,7 @@ async function applySystemEffectPatches(
   }
 }
 
-async function syncPcPlanHpFromCombatant(
+export async function syncPcPlanHpFromCombatant(
   tx: CombatTransactionClient,
   actor: CombatActor,
   combatant: LockedCombatRow["combatants"][number],
@@ -665,6 +671,10 @@ export async function applyCombatDamageInTx(
   const c = combat.combatants.find((x) => x.id === combatantId);
   if (!c) return { success: false as const, error: "Combatant not found" };
 
+  const woundsBefore = c.wounds;
+  const hpTempBefore = c.hpTemp;
+  const nonlethalBefore = c.nonlethal;
+  const deathStateBefore = c.deathState as CombatantView["deathState"];
   const hpBefore = Math.max(0, c.hpMax - c.wounds) + Math.max(0, c.hpTemp);
   const conditions = c.effects
     .filter((e) => e.active)
@@ -731,26 +741,41 @@ export async function applyCombatDamageInTx(
 
   const events: CombatEventRecord[] = [];
 
-  const damageEvent = await writeCombatEvent(tx, combat, "damage", {
-    source: opts.source ?? "Damage",
-    attackType: opts.attackType,
-    packets: opts.packets,
-    crit: Boolean(opts.crit),
-    multiplier: opts.multiplier ?? 1,
-    adjustments: defenseResult.adjustments,
-    applied: defenseResult.applied,
-    toTemp: defenseResult.toTemp,
-    toNonlethal: defenseResult.toNonlethal,
-    hpBefore,
-    hpAfter,
-    hpMax: c.hpMax,
-    statusAfter,
-  }, {
-    actorCombatantId: opts.actorCombatantId ?? null,
-    targetCombatantId: combatantId,
-    actorUserId: actor.userId,
-    rollId: opts.rollId ?? null,
-  });
+  const damageEvent = await writeCombatEvent(
+    tx,
+    combat,
+    "damage",
+    withEventTokenIds(
+      {
+        source: opts.source ?? "Damage",
+        attackType: opts.attackType,
+        packets: opts.packets,
+        crit: Boolean(opts.crit),
+        multiplier: opts.multiplier ?? 1,
+        adjustments: defenseResult.adjustments,
+        applied: defenseResult.applied,
+        toTemp: defenseResult.toTemp,
+        toNonlethal: defenseResult.toNonlethal,
+        hpBefore,
+        hpAfter,
+        hpMax: c.hpMax,
+        statusAfter,
+        woundsBefore,
+        hpTempBefore,
+        nonlethalBefore,
+        deathStateBefore,
+      },
+      combat.combatants,
+      opts.actorCombatantId ?? null,
+      combatantId,
+    ),
+    {
+      actorCombatantId: opts.actorCombatantId ?? null,
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+      rollId: opts.rollId ?? null,
+    },
+  );
   events.push(damageEvent.record);
 
   if (death.deathState) {
@@ -871,6 +896,11 @@ export function statsFromNpcSnapshot(
       raw.stats && typeof raw.stats === "object"
         ? (raw.stats as CombatStatBlock["stats"])
         : {},
+    spells: Array.isArray(raw.spells) ? (raw.spells as CombatSpellEntry[]) : [],
+    spellUses:
+      raw.spellUses && typeof raw.spellUses === "object"
+        ? (raw.spellUses as CombatSpellUses)
+        : {},
   };
 }
 
@@ -908,6 +938,8 @@ export async function addNpcToLibrary(
         initMod: input.stats.initMod,
         defenses: input.stats.defenses,
         stats: input.stats.stats,
+        spells: (input.stats.spells ?? []) as unknown as Prisma.InputJsonValue,
+        spellUses: (input.stats.spellUses ?? {}) as unknown as Prisma.InputJsonValue,
       },
       imageKey: input.imageKey ?? null,
     },
@@ -962,6 +994,8 @@ export async function addCombatantFromStats(
       snapshot: input.stats.snapshot,
       defenses: input.stats.defenses,
       stats: input.stats.stats,
+      spells: (input.stats.spells ?? []) as unknown as Prisma.InputJsonValue,
+      spellUses: (input.stats.spellUses ?? {}) as unknown as Prisma.InputJsonValue,
       seq: combat.combatants.length,
     },
   });
@@ -1306,6 +1340,7 @@ export function pcPlanToCombatStats(
   const hpMax = computeMaxHitPoints(normalized, null) || hp.current || 1;
   const attacks = weaponRowsToCombatAttacks(normalized, stats);
   const cl = pcCasterLevel(normalized);
+  const spellData = pcPlanStateToCombatSpellData(normalized);
 
   return {
     name,
@@ -1342,7 +1377,143 @@ export function pcPlanToCombatStats(
       cha: abilityModifier(normalized.abilities.cha),
       ...(cl != null ? { cl } : {}),
     },
+    spells: spellData.spells,
+    spellUses: spellData.spellUses,
   };
+}
+
+async function syncPcPlanSpellUsesFromCombatant(
+  tx: CombatTransactionClient,
+  actor: CombatActor,
+  combatant: LockedCombatRow["combatants"][number],
+  spellUses: CombatSpellUses,
+): Promise<void> {
+  if (combatant.kind !== "pc" || !combatant.pcPlanId) return;
+
+  const plan = await tx.pcPlan.findUnique({
+    where: { id: combatant.pcPlanId },
+    select: { state: true },
+  });
+  if (!plan?.state || typeof plan.state !== "object") return;
+
+  const state = normalizePcPlanState(structuredClone(plan.state as PcPlanState));
+  for (const spellClass of state.spellClasses ?? []) {
+    const slotsUsed = [...(spellClass.slotsUsed ?? Array.from({ length: 10 }, () => 0))];
+    for (let level = 0; level <= 9; level += 1) {
+      const key = `slot:${level}`;
+      const remaining = spellUses[key];
+      if (remaining == null) continue;
+      const computed = pcPlanStateToCombatSpellData(state);
+      const total = (computed.spellUses[key] ?? 0) + (spellClass.slotsUsed?.[level] ?? 0);
+      slotsUsed[level] = Math.max(0, total - remaining);
+    }
+    spellClass.slotsUsed = slotsUsed;
+  }
+
+  await tx.pcPlan.update({
+    where: { id: combatant.pcPlanId },
+    data: { state: state as object },
+  });
+
+  publishCampaignLive(actor.campaignId, {
+    type: "pcUpdated",
+    pcPlanId: combatant.pcPlanId,
+    actorUserId: actor.userId,
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+export async function setCombatantSpells(
+  actor: CombatActor,
+  combatantId: string,
+  spells: CombatSpellEntry[],
+) {
+  const combat = await loadCombatRow(actor.campaignId);
+  if (!combat) return { success: false as const, error: "No combat" };
+  const row = combat.combatants.find((c) => c.id === combatantId);
+  if (!row) return { success: false as const, error: "Combatant not found" };
+
+  const allowed =
+    isDm(actor) ||
+    (row.kind === "pc" &&
+      row.pcPlanId &&
+      (await prisma.campaignPc.findFirst({
+        where: {
+          campaignId: actor.campaignId,
+          pcPlanId: row.pcPlanId,
+          userId: actor.userId,
+        },
+      })));
+  if (!allowed) return { success: false as const, error: "Not allowed" };
+
+  await prisma.campaignCombatant.update({
+    where: { id: combatantId },
+    data: { spells: spells as unknown as Prisma.InputJsonValue },
+  });
+  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+  return { success: true as const };
+}
+
+export async function setSpellUses(
+  actor: CombatActor,
+  combatantId: string,
+  spellUses: CombatSpellUses,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+  const combat = await loadCombatRow(actor.campaignId);
+  if (!combat) return { success: false as const, error: "No combat" };
+
+  await prisma.campaignCombatant.update({
+    where: { id: combatantId },
+    data: { spellUses: spellUses as unknown as Prisma.InputJsonValue },
+  });
+  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+  return { success: true as const };
+}
+
+export async function resetSpellUses(actor: CombatActor, combatantId: string) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+  const combat = await loadCombatRow(actor.campaignId);
+  if (!combat) return { success: false as const, error: "No combat" };
+  const row = combat.combatants.find((c) => c.id === combatantId);
+  if (!row) return { success: false as const, error: "Combatant not found" };
+
+  if (row.kind === "pc" && row.pcPlanId) {
+    const plan = await prisma.pcPlan.findUnique({
+      where: { id: row.pcPlanId },
+      select: { state: true },
+    });
+    if (plan?.state && typeof plan.state === "object") {
+      const state = normalizePcPlanState(plan.state as PcPlanState);
+      const spellData = pcPlanStateToCombatSpellData(state);
+      await prisma.campaignCombatant.update({
+        where: { id: combatantId },
+        data: { spellUses: spellData.spellUses as unknown as Prisma.InputJsonValue },
+      });
+      await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+      return { success: true as const };
+    }
+  }
+
+  const dbRow = await prisma.campaignCombatant.findUnique({
+    where: { id: combatantId },
+    select: { spells: true },
+  });
+  const spells = Array.isArray(dbRow?.spells)
+    ? (dbRow.spells as unknown as CombatSpellEntry[])
+    : [];
+  const nextUses: CombatSpellUses = {};
+  for (const entry of spells) {
+    if (entry.kind === "sla" && entry.usesPerDay != null) {
+      nextUses[entry.key] = entry.usesPerDay;
+    }
+  }
+  await prisma.campaignCombatant.update({
+    where: { id: combatantId },
+    data: { spellUses: nextUses as unknown as Prisma.InputJsonValue },
+  });
+  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+  return { success: true as const };
 }
 
 export async function syncPcCombatantHp(
@@ -1402,7 +1573,7 @@ export async function applyCombatDamage(
   return { success: true as const };
 }
 
-export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
+export async function setCombatTargets(actor: CombatActor, targetIds: string[]) {
   const combat = await loadCombatRow(actor.campaignId);
   if (!combat) return { success: false as const, error: "No combat" };
 
@@ -1411,7 +1582,7 @@ export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
   );
   if (!current) return { success: false as const, error: "No active turn" };
 
-  const canToggle =
+  const canSet =
     isDm(actor) ||
     (current.kind === "pc" &&
       current.pcPlanId &&
@@ -1422,23 +1593,21 @@ export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
           userId: actor.userId,
         },
       })));
-  if (!canToggle) return { success: false as const, error: "Not your turn" };
+  if (!canSet) return { success: false as const, error: "Not your turn" };
 
-  const raw = current.targetIds;
-  const ids = Array.isArray(raw)
-    ? raw.filter((id): id is string => typeof id === "string")
-    : [];
-  const next = ids.includes(targetId)
-    ? ids.filter((id) => id !== targetId)
-    : [...ids, targetId];
-
+  const unique = [...new Set(targetIds.filter(Boolean))];
   await prisma.campaignCombatant.update({
     where: { id: current.id },
-    data: { targetIds: next },
+    data: { targetIds: unique },
   });
 
   await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
-  return { success: true as const, targetIds: next };
+  return { success: true as const, targetIds: unique };
+}
+
+export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
+  const { toggleCombatTargetPhase3 } = await import("@/lib/combat/phase3Mutations");
+  return toggleCombatTargetPhase3(actor, targetId);
 }
 
 export async function startCombat(actor: CombatActor) {
@@ -1506,56 +1675,16 @@ export async function startCombat(actor: CombatActor) {
   return { success: true as const };
 }
 
-export async function endCombat(actor: CombatActor) {
-  if (!isDm(actor)) return { success: false as const, error: "DM only" };
-
-  const result = await prisma.$transaction(async (tx) => {
-    const combat = await lockCombatRow(tx, actor.campaignId);
-    if (!combat) return { success: false as const, error: "No combat" };
-
-    const combatantIds = combat.combatants.map((c) => c.id);
-    if (combatantIds.length > 0) {
-      await tx.campaignCombatEffect.deleteMany({
-        where: {
-          combatantId: { in: combatantIds },
-          duration: { not: null },
-        },
-      });
-      await tx.campaignCombatant.updateMany({
-        where: { combatId: combat.id },
-        data: {
-          pendingTargetIds: [],
-          pendingCrit: Prisma.DbNull,
-          targetIds: [],
-        },
-      });
-      for (const c of combat.combatants) {
-        c.effects = c.effects.filter((e) => e.duration == null);
-        c.targetIds = [];
-        c.pendingTargetIds = [];
-        c.pendingCrit = null;
-      }
-    }
-
-    await tx.campaignCombat.update({
-      where: { id: combat.id },
-      data: {
-        state: "ended",
-        active: false,
-        endedAt: new Date(),
-      },
-    });
-
-    const endEvent = await writeCombatEvent(tx, combat, "combatEnd", {}, {
-      actorUserId: actor.userId,
-    });
-
-    return { success: true as const, combat, events: [endEvent.record] };
-  });
-
-  if (!result.success) return result;
-  await publishMutationResult(actor, result.combat, result.events);
-  return { success: true as const };
+export async function endCombat(
+  actor: CombatActor,
+  opts?: {
+    awardXp?: boolean;
+    selectedNpcIds?: string[];
+    removeAllNpcs?: boolean;
+  },
+) {
+  const { endCombatWithOptions } = await import("@/lib/combat/phase3Mutations");
+  return endCombatWithOptions(actor, opts);
 }
 
 export async function resetCombat(actor: CombatActor) {
@@ -2657,6 +2786,11 @@ export async function removeCombatant(actor: CombatActor, combatantId: string) {
   const combat = await loadCombatRow(actor.campaignId);
   const row = combat?.combatants.find((c) => c.id === combatantId);
 
+  if (combat) {
+    const { cleanupCombatantRemoval } = await import("@/lib/combat/phase3Mutations");
+    await cleanupCombatantRemoval(actor, combat.id, combatantId);
+  }
+
   await prisma.campaignCombatant.delete({ where: { id: combatantId } });
 
   if (combat && combat.currentCombatantId === combatantId) {
@@ -2669,7 +2803,6 @@ export async function removeCombatant(actor: CombatActor, combatantId: string) {
     });
   }
 
-  // Leave map token in place if any; DM can remove separately.
   void row;
 
   await publishCombatSnapshot(actor.campaignId, actor.dmUserId);

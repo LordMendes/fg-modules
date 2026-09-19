@@ -93,3 +93,54 @@ export function formatFeetLabel(sizeFeet: number): string {
   const rounded = Math.round(sizeFeet);
   return `${rounded} ft`;
 }
+
+export type MapTokenCenter = {
+  id: string;
+  x: number;
+  y: number;
+};
+
+export type AoeShapeInput =
+  | { kind: "circle"; center: MapPoint; radiusFeet: number }
+  | {
+      kind: "square";
+      center: MapPoint;
+      widthFeet: number;
+      rotationDeg?: number;
+    }
+  | { kind: "cone"; origin: MapPoint; sizeFeet: number; rotationDeg: number };
+
+/** Return combatant/token ids whose centers lie inside the AOE shape. */
+export function tokensInsideShape(
+  shape: AoeShapeInput,
+  tokens: MapTokenCenter[],
+  scaleFeet: number,
+): string[] {
+  return tokens
+    .filter((token) => {
+      const point = { x: token.x, y: token.y };
+      switch (shape.kind) {
+        case "circle":
+          return circleContains(shape.center, shape.radiusFeet, point, scaleFeet);
+        case "square":
+          return squareContains(
+            shape.center,
+            shape.widthFeet,
+            point,
+            scaleFeet,
+            shape.rotationDeg ?? 0,
+          );
+        case "cone":
+          return coneContains(
+            shape.origin,
+            shape.sizeFeet,
+            shape.rotationDeg,
+            point,
+            scaleFeet,
+          );
+        default:
+          return false;
+      }
+    })
+    .map((token) => token.id);
+}

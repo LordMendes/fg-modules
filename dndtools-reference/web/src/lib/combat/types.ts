@@ -1,3 +1,5 @@
+import type { SpellActionSet } from "@/lib/fg-spell-actions/types";
+
 /** Combat faction aligned with Fantasy Grounds CT. */
 export type CombatFaction = "friend" | "foe" | "neutral";
 
@@ -11,6 +13,25 @@ export type CombatAttackType =
   | "mtouch"
   | "rtouch"
   | "grapple";
+
+/** Spell or SLA entry stored on a combatant row. */
+export type CombatSpellEntry = {
+  key: string;
+  name: string;
+  level: number | null;
+  kind: "spell" | "sla";
+  actions: SpellActionSet;
+  usesPerDay: number | null;
+  casterLevel: number | null;
+  source: "compendium" | "npc" | "manual";
+  confidence: "high" | "low";
+  /** Optional area template hint for map targeting (feet). */
+  rangeFeet?: number | null;
+  areaShape?: "circle" | "square" | "cone" | "ray" | null;
+};
+
+/** Remaining spell slots / SLA uses keyed by `slot:N` or `sla:<key>`. */
+export type CombatSpellUses = Record<string, number>;
 
 /** Parsed offense line from FG-style attack text. */
 export type CombatAttackLine = {
@@ -157,6 +178,7 @@ export type EffectComponent =
   | { tag: "IMMUNE"; types: DamageType[] }
   | { tag: "REGEN" | "FHEAL"; amount: number; bypass?: DamageType[] }
   | { tag: "CONC" | "TCONC" | "COVER" | "SCOVER" }
+  | { tag: "DC"; value: number; descriptors: string[] }
   | { tag: "LABEL"; text: string };
 
 export type CombatEffectView = {
@@ -222,6 +244,10 @@ export type CombatantView = {
     cha?: number;
     cl?: number;
   };
+  /** Spells and SLAs for this row (filtered per viewer). */
+  spells: CombatSpellEntry[];
+  /** Remaining slot/SLA uses (owner and DM only). */
+  spellUses: CombatSpellUses;
 };
 
 export type CombatHealthStatus =
@@ -252,6 +278,22 @@ export type CampaignNpcView = {
   initMod: number;
 };
 
+export type CombatRollRequestView = {
+  id: string;
+  targetCombatantId: string;
+  saveType: "fort" | "ref" | "will";
+  dc: number | null;
+  label: string;
+  sourceEventId: string | null;
+  status: "pending" | "rolled" | "dmRolled" | "dismissed";
+  createdAt: string;
+};
+
+export type CampaignCombatSettingsView = {
+  strictTurns: boolean;
+  askPlayersToRoll: boolean;
+};
+
 export type CampaignCombatView = {
   id: string;
   round: number;
@@ -260,6 +302,8 @@ export type CampaignCombatView = {
   state: "idle" | "active" | "ended";
   eventSeq: number;
   combatants: CombatantView[];
+  settings?: CampaignCombatSettingsView;
+  rollRequests?: CombatRollRequestView[];
 };
 
 export type CampaignEncounterEntryView = {
@@ -280,6 +324,9 @@ export type CampaignEncounterView = {
   updatedAt: string;
   creatureCount: number;
   entries: CampaignEncounterEntryView[];
+  /** EL vs current party when computed server-side */
+  el?: number | null;
+  targetEl?: number | null;
 };
 
 export type CombatNpcSource = "template" | "monster" | "adhoc";

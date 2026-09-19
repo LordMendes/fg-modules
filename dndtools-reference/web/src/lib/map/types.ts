@@ -24,6 +24,7 @@ export type MapLightMode = "light" | "darkness";
 export type MapSnapMode = "center" | "corner" | "off";
 export type MapTool =
   | "select"
+  | "target"
   | "pan"
   | "ping"
   | "measure"

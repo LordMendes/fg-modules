@@ -1,6 +1,9 @@
 import type { SpellFollowUpAction } from "@/lib/fg-spell-actions/types";
 import { tryLookupSrdSpell } from "@/lib/npc-creator/srdSpellLookup";
 
+export { spellToActionSet } from "@/lib/spell-to-action-set";
+export type { SpellToActionSetResult } from "@/lib/spell-to-action-set";
+
 export type SpellCastDetails = {
   save: string | null;
   damage: string | null;

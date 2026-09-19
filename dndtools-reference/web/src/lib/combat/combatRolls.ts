@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
 import type { ActiveEffect } from "@/lib/combat/effects/applyEffects";
 import type { CombatEventRecord, StatePatch } from "@/lib/combat/events/types";
+import { parseEffect } from "@/lib/combat/effects/parseEffect";
 import {
   applyCombatDamageInTx,
   combatantsForEventFilter,
@@ -17,6 +18,10 @@ import {
   type CombatActor,
   type LockedCombatRow,
 } from "@/lib/combat/combatMutations";
+import {
+  resolveSpellCast,
+  type SpellCastTarget,
+} from "@/lib/combat/spells/spellAction";
 import type {
   CombatRollIntent,
   CombatRollOutcome,
@@ -37,10 +42,13 @@ import { resolveCriticalConfirm, scaleCriticalDamage } from "@/lib/combat/rules/
 import { heal } from "@/lib/combat/rules/healing";
 import { resolveSave } from "@/lib/combat/rules/saves";
 import { resolveSpellResistance } from "@/lib/combat/rules/spellResistance";
+import { withEventTokenIds } from "@/lib/combat/eventTokenIds";
 import { deriveHealthStatus } from "@/lib/combat/healthStatus";
 import type {
   CombatAttackLine,
   CombatAttackType,
+  CombatSpellEntry,
+  CombatSpellUses,
   DamagePacket,
   Defenses,
 } from "@/lib/combat/types";
@@ -72,6 +80,21 @@ function asAttacks(raw: unknown): CombatAttackLine[] {
       typeof (a as CombatAttackLine).name === "string" &&
       typeof (a as CombatAttackLine).bonus === "number",
   );
+}
+
+function asSpells(raw: unknown): CombatSpellEntry[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter(
+    (entry): entry is CombatSpellEntry =>
+      entry &&
+      typeof entry === "object" &&
+      typeof (entry as CombatSpellEntry).key === "string",
+  );
+}
+
+function asSpellUses(raw: unknown): CombatSpellUses {
+  if (!raw || typeof raw !== "object") return {};
+  return raw as CombatSpellUses;
 }
 
 function asPendingCrit(
@@ -345,12 +368,23 @@ async function resolveAttackIntent(
 
     for (const result of results) {
       patches.push(...result.patches);
-      const event = await writeCombatEvent(tx, combat, "attack", result.payload, {
-        actorCombatantId: attacker.id,
-        targetCombatantId: target.id,
-        actorUserId: actor.userId,
-        rollId,
-      });
+      const event = await writeCombatEvent(
+        tx,
+        combat,
+        "attack",
+        withEventTokenIds(
+          result.payload,
+          combat.combatants,
+          attacker.id,
+          target.id,
+        ),
+        {
+          actorCombatantId: attacker.id,
+          targetCombatantId: target.id,
+          actorUserId: actor.userId,
+          rollId,
+        },
+      );
       events.push(event.record);
     }
   }
@@ -395,12 +429,23 @@ async function resolveConfirmIntent(
   });
 
   await applyStatePatches(tx, outcome.patches);
-  const event = await writeCombatEvent(tx, combat, "critConfirm", outcome.payload, {
-    actorCombatantId: attacker.id,
-    targetCombatantId: target.id,
-    actorUserId: actor.userId,
-    rollId,
-  });
+  const event = await writeCombatEvent(
+    tx,
+    combat,
+    "critConfirm",
+    withEventTokenIds(
+      outcome.payload,
+      combat.combatants,
+      attacker.id,
+      target.id,
+    ),
+    {
+      actorCombatantId: attacker.id,
+      targetCombatantId: target.id,
+      actorUserId: actor.userId,
+      rollId,
+    },
+  );
   return [event.record];
 }
 
@@ -500,16 +545,22 @@ async function resolveSaveIntent(
       tx,
       combat,
       "save",
-      {
-        saveType: outcome.saveType,
-        dc: outcome.dc,
-        face: outcome.face,
-        bonus: outcome.bonus,
-        total: outcome.total,
-        success: outcome.success,
-        autoFail: false,
-        source: outcome.source,
-      },
+      withEventTokenIds(
+        {
+          saveType: outcome.saveType,
+          dc: outcome.dc,
+          face: outcome.face,
+          bonus: outcome.bonus,
+          total: outcome.total,
+          success: outcome.success,
+          autoFail: false,
+          source: outcome.source,
+          consequence: intent.consequence,
+        },
+        combat.combatants,
+        null,
+        target.id,
+      ),
       {
         targetCombatantId: target.id,
         actorUserId: actor.userId,
@@ -517,6 +568,18 @@ async function resolveSaveIntent(
       },
     );
     events.push(event.record);
+
+    if (intent.requestId) {
+      const { resolveRollRequestStatus } =
+        await import("@/lib/combat/phase3Mutations");
+      const { publishRollRequestResolved } =
+        await import("@/lib/combat/rollRequests");
+      await resolveRollRequestStatus(
+        intent.requestId,
+        actor.isDm ? "dmRolled" : "rolled",
+      );
+      publishRollRequestResolved(actor.campaignId, intent.requestId);
+    }
   }
 
   return events;
@@ -558,24 +621,35 @@ async function resolveHealIntent(
     target.nonlethal = result.nonlethal;
 
     const hpAfter = Math.max(0, target.hpMax - result.wounds);
-    const event = await writeCombatEvent(tx, combat, "heal", {
-      source: intent.source ?? "Heal",
-      amount: result.healed,
-      hpBefore,
-      hpAfter,
-      hpMax: target.hpMax,
-      statusAfter: deriveHealthStatus(
-        target.hpMax,
-        result.wounds,
-        target.hpTemp,
-        target.nonlethal,
-        target.deathState as import("@/lib/combat/types").CombatantView["deathState"],
+    const event = await writeCombatEvent(
+      tx,
+      combat,
+      "heal",
+      withEventTokenIds(
+        {
+          source: intent.source ?? "Heal",
+          amount: result.healed,
+          hpBefore,
+          hpAfter,
+          hpMax: target.hpMax,
+          statusAfter: deriveHealthStatus(
+            target.hpMax,
+            result.wounds,
+            target.hpTemp,
+            target.nonlethal,
+            target.deathState as import("@/lib/combat/types").CombatantView["deathState"],
+          ),
+        },
+        combat.combatants,
+        null,
+        target.id,
       ),
-    }, {
-      targetCombatantId: target.id,
-      actorUserId: actor.userId,
-      rollId,
-    });
+      {
+        targetCombatantId: target.id,
+        actorUserId: actor.userId,
+        rollId,
+      },
+    );
     events.push(event.record);
   }
 
@@ -618,6 +692,183 @@ async function resolveStabilizeIntent(
   return [event.record];
 }
 
+async function resolveCastIntent(
+  tx: Prisma.TransactionClient,
+  actor: RollActor,
+  combat: LockedCombatRow,
+  intent: Extract<CombatRollIntent, { kind: "cast" }>,
+  rollId: string,
+  faces: number[],
+): Promise<CombatEventRecord[]> {
+  const caster = combat.combatants.find((c) => c.id === intent.casterId) as
+    | LoadedCombatant
+    | undefined;
+  if (!caster) throw new Error("Caster not found");
+  if (!(await ownsCombatant(actor, caster))) {
+    throw new Error("Not allowed to cast for this combatant");
+  }
+
+  const spells = asSpells(caster.spells);
+  const entry = spells.find((s) => s.key === intent.spellKey);
+  if (!entry) throw new Error("Spell not found on combatant");
+
+  const spellUses = { ...asSpellUses(caster.spellUses) };
+  const casterEngine = buildEngineContext(combatantFields(caster));
+  const targets: SpellCastTarget[] = [];
+  for (const targetId of intent.targetIds) {
+    const row = combat.combatants.find((c) => c.id === targetId) as
+      | LoadedCombatant
+      | undefined;
+    if (!row) continue;
+    targets.push({
+      id: row.id,
+      name: row.name,
+      engine: buildEngineContext(combatantFields(row)),
+      defenses: (row.defenses ?? {}) as Defenses,
+    });
+  }
+
+  const resolution = resolveSpellCast(
+    {
+      id: caster.id,
+      name: caster.name,
+      init: caster.init,
+      effects: mapDbEffects(caster.effects),
+      spellUses,
+      engine: casterEngine,
+      attackBonus: intent.attackBonus,
+    },
+    targets,
+    entry,
+    faces,
+    {
+      casterLevel: intent.casterLevel ?? entry.casterLevel ?? casterEngine.casterLevel ?? 1,
+      spellLevel: intent.spellLevel ?? entry.level ?? 0,
+      castingStatMod: intent.castingStatMod ?? 0,
+      attackBonus: intent.attackBonus,
+      dmOverrideSlots: intent.dmOverrideSlots,
+    },
+  );
+
+  if (resolution.blocked) throw new Error(resolution.blocked);
+
+  const events: CombatEventRecord[] = [];
+  for (const draft of resolution.events) {
+    const written = await writeCombatEvent(tx, combat, draft.kind, draft.payload as never, {
+      actorCombatantId: draft.actorCombatantId ?? caster.id,
+      targetCombatantId: draft.targetCombatantId ?? null,
+      actorUserId: actor.userId,
+      rollId,
+    });
+    events.push(written.record);
+  }
+
+  for (const plan of resolution.damagePlans) {
+    if (plan.skip || plan.packets.length === 0) continue;
+    const applied = await applyCombatDamageInTx(tx, actor, combat, plan.targetId, {
+      packets: plan.packets,
+      source: entry.name,
+      flags: plan.half ? { half: true } : undefined,
+      rollId,
+      actorCombatantId: caster.id,
+    });
+    if (!applied.success) throw new Error(applied.error);
+    events.push(...applied.events);
+  }
+
+  for (const plan of resolution.healPlans) {
+    const target = combat.combatants.find((c) => c.id === plan.targetId) as
+      | LoadedCombatant
+      | undefined;
+    if (!target) continue;
+    const hpBefore = Math.max(0, target.hpMax - target.wounds);
+    const result = heal(plan.amount, {
+      hpMax: target.hpMax,
+      wounds: target.wounds,
+      hpTemp: target.hpTemp,
+      nonlethal: target.nonlethal,
+      deathState: target.deathState as import("@/lib/combat/types").CombatantView["deathState"],
+    });
+    await tx.campaignCombatant.update({
+      where: { id: target.id },
+      data: { wounds: result.wounds, nonlethal: result.nonlethal },
+    });
+    target.wounds = result.wounds;
+    target.nonlethal = result.nonlethal;
+    const event = await writeCombatEvent(tx, combat, "heal", {
+      source: entry.name,
+      amount: result.healed,
+      hpBefore,
+      hpAfter: Math.max(0, target.hpMax - result.wounds),
+      hpMax: target.hpMax,
+      statusAfter: deriveHealthStatus(
+        target.hpMax,
+        result.wounds,
+        target.hpTemp,
+        target.nonlethal,
+        target.deathState as import("@/lib/combat/types").CombatantView["deathState"],
+      ),
+    }, {
+      targetCombatantId: target.id,
+      actorUserId: actor.userId,
+      rollId,
+    });
+    events.push(event.record);
+  }
+
+  for (const plan of resolution.effectPlans) {
+    const { components } = parseEffect(plan.label);
+    const effect = await tx.campaignCombatEffect.create({
+      data: {
+        id: crypto.randomUUID(),
+        combatantId: plan.targetId,
+        label: plan.label.split(";")[0]?.trim() || plan.label,
+        components: components as Prisma.InputJsonValue,
+        sourceCombatantId: caster.id,
+        duration: plan.duration,
+        durationUnit: plan.durationUnit,
+        tickInit: caster.init,
+        expiry: "startOfTurn",
+        applyMode: "all",
+        visibility: "visible",
+        active: true,
+        system: false,
+        seq: 0,
+      },
+    });
+    const target = combat.combatants.find((c) => c.id === plan.targetId);
+    const event = await writeCombatEvent(tx, combat, "effectApply", {
+      label: effect.label,
+      effectText: plan.label,
+      duration: plan.duration,
+      durationUnit: plan.durationUnit,
+      targetName: target?.name ?? "Target",
+      sourceName: caster.name,
+    }, {
+      actorCombatantId: caster.id,
+      targetCombatantId: plan.targetId,
+      actorUserId: actor.userId,
+      rollId,
+    });
+    events.push(event.record);
+  }
+
+  if (resolution.consumeUseKey) {
+    const key = resolution.consumeUseKey;
+    const current = spellUses[key];
+    if (current != null) {
+      spellUses[key] = Math.max(0, current - 1);
+      await tx.campaignCombatant.update({
+        where: { id: caster.id },
+        data: { spellUses: spellUses as Prisma.InputJsonValue },
+      });
+      caster.spellUses = spellUses;
+    }
+  }
+
+  return events;
+}
+
 async function resolveSrIntent(
   tx: Prisma.TransactionClient,
   actor: RollActor,
@@ -641,19 +892,30 @@ async function resolveSrIntent(
     effects: mapDbEffects(target.effects),
   });
 
-  const event = await writeCombatEvent(tx, combat, "sr", {
-    spellName: intent.spellName,
-    face: outcome.face,
-    casterLevel: outcome.casterLevel,
-    clBonus: outcome.clBonus,
-    total: outcome.total,
-    sr: outcome.sr,
-    success: outcome.success,
-  }, {
-    targetCombatantId: target.id,
-    actorUserId: actor.userId,
-    rollId,
-  });
+  const event = await writeCombatEvent(
+    tx,
+    combat,
+    "sr",
+    withEventTokenIds(
+      {
+        spellName: intent.spellName,
+        face: outcome.face,
+        casterLevel: outcome.casterLevel,
+        clBonus: outcome.clBonus,
+        total: outcome.total,
+        sr: outcome.sr,
+        success: outcome.success,
+      },
+      combat.combatants,
+      null,
+      target.id,
+    ),
+    {
+      targetCombatantId: target.id,
+      actorUserId: actor.userId,
+      rollId,
+    },
+  );
   return [event.record];
 }
 
@@ -809,6 +1071,16 @@ export async function startCombatRoll(
             input.combat,
             rollRow.id,
             faces[0] ?? 1,
+          );
+          break;
+        case "cast":
+          events = await resolveCastIntent(
+            tx,
+            actor,
+            combat,
+            input.combat,
+            rollRow.id,
+            faces,
           );
           break;
         default:
