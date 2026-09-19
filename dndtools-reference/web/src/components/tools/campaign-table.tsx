@@ -345,9 +345,6 @@ function CampaignTableBody({
     liveEncounters.length > 0 ? liveEncounters : table.encounters;
   const viewerPcPlanId =
     table.pcs.find((p) => p.userId === user.id)?.pcPlanId ?? null;
-  const [pendingDamageTargets, setPendingDamageTargets] = useState<
-    import("@/lib/combat/types").CombatantView[]
-  >([]);
   // Store is source of truth after connect; HTTP snapshot is the fallback.
   const liveMap = liveMapFromStore ?? table.liveMap;
   const rosterPcs =
@@ -596,8 +593,6 @@ function CampaignTableBody({
       combat={combat}
       isDm={isDm}
       viewerPcPlanId={viewerPcPlanId}
-      pendingDamageTargets={pendingDamageTargets}
-      setPendingDamageTargets={setPendingDamageTargets}
     >
       <div className="campaign-stage">
         {error ? <p className="tool-error campaign-stage-error">{error}</p> : null}

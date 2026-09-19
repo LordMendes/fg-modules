@@ -1,20 +1,81 @@
 "use client";
 
 import {
-  combatApplyDamage,
+  combatAddEffect,
+  combatNextTurn,
+  combatRemoveEffect,
   combatToggleTarget,
 } from "@/actions/combat";
+import { useDice } from "@/components/dice/dice-provider";
+import type { CombatRollIntent } from "@/lib/combat/combatRollTypes";
 import type {
   CampaignCombatView,
   CombatantView,
+  CombatAttackType,
+  DamageType,
 } from "@/lib/combat/types";
+import { createRollId, iterativeD20Checks } from "@/lib/dice/notation";
+import type { DicePoolItem } from "@/lib/dice/types";
 import {
   createContext,
   useCallback,
   useContext,
   useMemo,
+  useState,
   type ReactNode,
 } from "react";
+
+export type CombatAdhocModifier = {
+  value: number;
+  label: string;
+};
+
+export type CombatEffectInput = {
+  effectText: string;
+  duration?: number | null;
+  durationUnit?: "round" | "minute" | "hour" | "day";
+  expiry?: "startOfTurn" | "endOfTurn";
+  visibility?: "visible" | "hidden" | "gm";
+};
+
+type RollAttackParams = {
+  attackerId: string;
+  attackIndex: number;
+  targetIds?: string[];
+  attackType?: CombatAttackType;
+  label: string;
+  bonuses: number[];
+};
+
+type RollConfirmParams = {
+  attackerId: string;
+  attackIndex: number;
+  targetId: string;
+  attackType?: CombatAttackType;
+  label: string;
+  bonus: number;
+};
+
+type RollDamageParams = {
+  attackerId: string;
+  attackIndex: number;
+  targetIds?: string[];
+  attackType?: CombatAttackType;
+  label: string;
+  dice: DicePoolItem[];
+  modifier: number;
+  crit?: boolean;
+  multiplier?: number;
+};
+
+type RollHealParams = {
+  targetIds: string[];
+  label: string;
+  dice?: DicePoolItem[];
+  modifier?: number;
+  amount?: number;
+  source?: string;
+};
 
 type CombatContextValue = {
   campaignId: string;
@@ -25,35 +86,57 @@ type CombatContextValue = {
   combatantByTokenId: (tokenId: string) => CombatantView | undefined;
   combatantByPcPlanId: (pcPlanId: string) => CombatantView | undefined;
   toggleTarget: (targetCombatantId: string) => Promise<void>;
-  applyDamage: (combatantId: string, damage: number) => Promise<void>;
-  resolveAttackTotals: (
-    attackerPcPlanId: string | null,
-    totals: number[],
-    label: string,
-  ) => { label: string; hits: string[] };
+  rollAttack: (params: RollAttackParams) => void;
+  rollConfirm: (params: RollConfirmParams) => void;
+  rollDamage: (params: RollDamageParams) => void;
+  rollHeal: (params: RollHealParams) => void;
+  rollInitiative: (combatantIds: string[], label: string, modifier: number) => void;
+  applyEffect: (
+    combatantIds: string[],
+    input: CombatEffectInput,
+  ) => Promise<void>;
+  removeEffect: (effectId: string) => Promise<void>;
+  nextActor: () => Promise<{ success: boolean; error?: string }>;
+  modifierStack: CombatAdhocModifier[];
+  pushModifier: (value: number, label?: string, sticky?: boolean) => void;
+  clearModifiers: () => void;
+  pendingTargetsFor: (attackerId: string) => CombatantView[];
+  pendingCritFor: (
+    attackerId: string,
+  ) => CombatantView["pendingCrit"];
+  /** Pending targets for the viewer's PC combatant (sheet compatibility). */
   pendingDamageTargets: CombatantView[];
-  setPendingDamageTargets: (targets: CombatantView[]) => void;
 };
 
 const CombatContext = createContext<CombatContextValue | null>(null);
+
+function resolveTargets(
+  combat: CampaignCombatView | null,
+  attackerId: string,
+  targetIds?: string[],
+): string[] {
+  if (targetIds?.length) return targetIds;
+  const attacker = combat?.combatants.find((c) => c.id === attackerId);
+  return attacker?.targetIds ?? [];
+}
 
 export function CombatProvider({
   campaignId,
   combat,
   isDm,
   viewerPcPlanId,
-  pendingDamageTargets,
-  setPendingDamageTargets,
   children,
 }: {
   campaignId: string;
   combat: CampaignCombatView | null;
   isDm: boolean;
   viewerPcPlanId: string | null;
-  pendingDamageTargets: CombatantView[];
-  setPendingDamageTargets: (targets: CombatantView[]) => void;
   children: ReactNode;
 }) {
+  const { roll } = useDice();
+  const [modifierStack, setModifierStack] = useState<CombatAdhocModifier[]>([]);
+  const [stickyModifier, setStickyModifier] = useState(false);
+
   const currentActor = useMemo(() => {
     if (!combat?.currentCombatantId) return null;
     return combat.combatants.find((c) => c.id === combat.currentCombatantId) ?? null;
@@ -71,6 +154,86 @@ export function CombatProvider({
     [combat],
   );
 
+  const pendingTargetsFor = useCallback(
+    (attackerId: string): CombatantView[] => {
+      const attacker = combat?.combatants.find((c) => c.id === attackerId);
+      if (!attacker) return [];
+      return attacker.pendingTargetIds
+        .map((id) => combat?.combatants.find((c) => c.id === id))
+        .filter((c): c is CombatantView => Boolean(c));
+    },
+    [combat],
+  );
+
+  const pendingCritFor = useCallback(
+    (attackerId: string) =>
+      combat?.combatants.find((c) => c.id === attackerId)?.pendingCrit ?? null,
+    [combat],
+  );
+
+  const pendingDamageTargets = useMemo(() => {
+    if (!viewerPcPlanId) return [];
+    const attacker = combat?.combatants.find(
+      (c) => c.pcPlanId === viewerPcPlanId,
+    );
+    if (!attacker) return [];
+    return pendingTargetsFor(attacker.id);
+  }, [combat, viewerPcPlanId, pendingTargetsFor]);
+
+  const consumeAdhoc = useCallback((): number => {
+    const value = modifierStack.reduce((sum, mod) => sum + mod.value, 0);
+    if (!stickyModifier) {
+      setModifierStack([]);
+    }
+    return value;
+  }, [modifierStack, stickyModifier]);
+
+  const pushModifier = useCallback(
+    (value: number, label = "", sticky = false) => {
+      if (value === 0) return;
+      setModifierStack((prev) => [...prev, { value, label }]);
+      setStickyModifier(sticky);
+    },
+    [],
+  );
+
+  const clearModifiers = useCallback(() => {
+    setModifierStack([]);
+    setStickyModifier(false);
+  }, []);
+
+  const buildCombatRoll = useCallback(
+    (
+      intent: CombatRollIntent,
+      request: {
+        label: string;
+        dice: DicePoolItem[];
+        modifier: number;
+        iterativeModifiers?: number[];
+        kind?: "attack" | "damage" | "initiative" | "other";
+      },
+    ) => {
+      const adhoc = consumeAdhoc();
+      const enrichedIntent =
+        adhoc !== 0 && intent.kind !== "initiative" && intent.kind !== "heal"
+          ? { ...intent, adhoc }
+          : intent;
+
+      roll({
+        id: createRollId(),
+        label: request.label,
+        dice: request.dice,
+        modifier: request.modifier,
+        ...(request.iterativeModifiers
+          ? { iterativeModifiers: request.iterativeModifiers }
+          : {}),
+        kind: request.kind ?? "other",
+        combat: enrichedIntent,
+      });
+    },
+    [consumeAdhoc, roll],
+  );
+
   const toggleTarget = useCallback(
     async (targetCombatantId: string) => {
       await combatToggleTarget(campaignId, targetCombatantId);
@@ -78,45 +241,129 @@ export function CombatProvider({
     [campaignId],
   );
 
-  const applyDamage = useCallback(
-    async (combatantId: string, damage: number) => {
-      if (damage <= 0) return;
-      await combatApplyDamage(campaignId, combatantId, damage);
+  const rollAttack = useCallback(
+    (params: RollAttackParams) => {
+      const targetIds = resolveTargets(combat, params.attackerId, params.targetIds);
+      buildCombatRoll(
+        {
+          kind: "attack",
+          attackerId: params.attackerId,
+          attackIndex: params.attackIndex,
+          targetIds,
+          ...(params.attackType ? { attackType: params.attackType } : {}),
+        },
+        {
+          ...iterativeD20Checks(params.label, params.bonuses, "attack"),
+          kind: "attack",
+        },
+      );
+    },
+    [buildCombatRoll, combat],
+  );
+
+  const rollConfirm = useCallback(
+    (params: RollConfirmParams) => {
+      buildCombatRoll(
+        {
+          kind: "confirm",
+          attackerId: params.attackerId,
+          attackIndex: params.attackIndex,
+          targetId: params.targetId,
+          ...(params.attackType ? { attackType: params.attackType } : {}),
+        },
+        {
+          label: params.label,
+          dice: [{ qty: 1, sides: 20 }],
+          modifier: params.bonus,
+          kind: "attack",
+        },
+      );
+    },
+    [buildCombatRoll],
+  );
+
+  const rollDamage = useCallback(
+    (params: RollDamageParams) => {
+      const targetIds = resolveTargets(combat, params.attackerId, params.targetIds);
+      buildCombatRoll(
+        {
+          kind: "damage",
+          attackerId: params.attackerId,
+          attackIndex: params.attackIndex,
+          targetIds,
+          ...(params.attackType ? { attackType: params.attackType } : {}),
+          ...(params.crit ? { crit: params.crit } : {}),
+          ...(params.multiplier ? { multiplier: params.multiplier } : {}),
+        },
+        {
+          label: params.label,
+          dice: params.dice,
+          modifier: params.modifier,
+          kind: "damage",
+        },
+      );
+    },
+    [buildCombatRoll, combat],
+  );
+
+  const rollHeal = useCallback(
+    (params: RollHealParams) => {
+      buildCombatRoll(
+        {
+          kind: "heal",
+          targetIds: params.targetIds,
+          ...(params.dice ? { dice: params.dice } : {}),
+          ...(params.modifier != null ? { modifier: params.modifier } : {}),
+          ...(params.amount != null ? { amount: params.amount } : {}),
+          ...(params.source ? { source: params.source } : {}),
+        },
+        {
+          label: params.label,
+          dice: params.dice ?? [{ qty: 1, sides: 6 }],
+          modifier: params.modifier ?? params.amount ?? 0,
+          kind: "other",
+        },
+      );
+    },
+    [buildCombatRoll],
+  );
+
+  const rollInitiative = useCallback(
+    (combatantIds: string[], label: string, modifier: number) => {
+      buildCombatRoll(
+        { kind: "initiative", combatantIds },
+        {
+          label,
+          dice: [{ qty: combatantIds.length, sides: 20 }],
+          modifier,
+          kind: "initiative",
+        },
+      );
+    },
+    [buildCombatRoll],
+  );
+
+  const applyEffect = useCallback(
+    async (combatantIds: string[], input: CombatEffectInput) => {
+      await combatAddEffect(campaignId, combatantIds, input);
     },
     [campaignId],
   );
 
-  const resolveAttackTotals = useCallback(
-    (
-      attackerPcPlanId: string | null,
-      totals: number[],
-      label: string,
-    ): { label: string; hits: string[] } => {
-      const actor = attackerPcPlanId
-        ? combat?.combatants.find((c) => c.pcPlanId === attackerPcPlanId)
-        : currentActor;
-      if (!actor || actor.targetIds.length === 0) {
-        return { label, hits: [] };
-      }
-      const targets = actor.targetIds
-        .map((id) => combat?.combatants.find((c) => c.id === id))
-        .filter((c): c is CombatantView => Boolean(c));
-
-      const hits: string[] = [];
-      for (const total of totals) {
-        for (const t of targets) {
-          const hit = total >= t.ac;
-          hits.push(`${t.name}: ${hit ? "Hit" : "Miss"} (AC ${t.ac})`);
-        }
-      }
-      if (targets.length > 0) {
-        setPendingDamageTargets(targets);
-      }
-      const suffix = hits.length ? ` · ${hits.join("; ")}` : "";
-      return { label: `${label}${suffix}`, hits };
+  const removeEffect = useCallback(
+    async (effectId: string) => {
+      await combatRemoveEffect(campaignId, effectId);
     },
-    [combat, currentActor, setPendingDamageTargets],
+    [campaignId],
   );
+
+  const nextActor = useCallback(async () => {
+    const result = await combatNextTurn(campaignId);
+    return {
+      success: result.success,
+      ...(result.error ? { error: result.error } : {}),
+    };
+  }, [campaignId]);
 
   const value = useMemo(
     (): CombatContextValue => ({
@@ -128,10 +375,20 @@ export function CombatProvider({
       combatantByTokenId,
       combatantByPcPlanId,
       toggleTarget,
-      applyDamage,
-      resolveAttackTotals,
+      rollAttack,
+      rollConfirm,
+      rollDamage,
+      rollHeal,
+      rollInitiative,
+      applyEffect,
+      removeEffect,
+      nextActor,
+      modifierStack,
+      pushModifier,
+      clearModifiers,
+      pendingTargetsFor,
+      pendingCritFor,
       pendingDamageTargets,
-      setPendingDamageTargets,
     }),
     [
       campaignId,
@@ -142,10 +399,20 @@ export function CombatProvider({
       combatantByTokenId,
       combatantByPcPlanId,
       toggleTarget,
-      applyDamage,
-      resolveAttackTotals,
+      rollAttack,
+      rollConfirm,
+      rollDamage,
+      rollHeal,
+      rollInitiative,
+      applyEffect,
+      removeEffect,
+      nextActor,
+      modifierStack,
+      pushModifier,
+      clearModifiers,
+      pendingTargetsFor,
+      pendingCritFor,
       pendingDamageTargets,
-      setPendingDamageTargets,
     ],
   );
 
@@ -156,4 +423,26 @@ export function CombatProvider({
 
 export function useCombatContext(): CombatContextValue | null {
   return useContext(CombatContext);
+}
+
+/** Map a weapon damage type label to combat DamageType when possible. */
+export function weaponDamageTypeToCombat(
+  raw: string | null | undefined,
+): DamageType | undefined {
+  if (!raw) return undefined;
+  const normalized = raw.trim().toLowerCase();
+  const allowed: DamageType[] = [
+    "slashing",
+    "piercing",
+    "bludgeoning",
+    "fire",
+    "cold",
+    "acid",
+    "electricity",
+    "sonic",
+    "force",
+    "positive",
+    "negative",
+  ];
+  return allowed.find((type) => type === normalized);
 }

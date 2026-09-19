@@ -235,7 +235,13 @@ function applyDmgo(
           toNonlethal: result.toNonlethal,
           hpBefore,
           hpAfter,
-          statusAfter: deriveHealthStatus(actor.hpMax, wounds, hpTemp),
+          statusAfter: deriveHealthStatus(
+            actor.hpMax,
+            wounds,
+            hpTemp,
+            nonlethal,
+            actor.deathState ?? null,
+          ),
         } satisfies DamageEventPayload,
       });
     }

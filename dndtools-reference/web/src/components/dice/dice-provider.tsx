@@ -12,6 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { startCampaignRoll } from "@/actions/campaigns";
+import { startCombatRollAction } from "@/actions/combatRolls";
 import { useCampaignLiveOptional } from "@/components/tools/campaign-live-provider";
 import { markSeenRollId } from "@/lib/campaign/seenRollIds";
 import type { CampaignRollView } from "@/lib/campaign/types";
@@ -144,6 +145,7 @@ export function DiceProvider({
   const hydrated = useRef(false);
   const onCompleteRef = useRef<((result: RollResult) => void) | null>(null);
   const pendingCanonicalRef = useRef<RollResult | null>(null);
+  const pendingCombatOutcomeRef = useRef<RollResult["combat"]>(undefined);
   const seenRollIds = useRef(new Set<string>());
   const campaignId = campaign?.campaignId ?? null;
   const isCampaign = Boolean(campaignId);
@@ -342,6 +344,7 @@ export function DiceProvider({
       if (!ready || rolling) return;
       if (request.dice.every((d) => d.qty <= 0)) return;
       pendingCanonicalRef.current = null;
+      pendingCombatOutcomeRef.current = undefined;
       onCompleteRef.current = onComplete ?? null;
       setSilhouetteActive(false);
       setRolling(true);
@@ -372,9 +375,32 @@ export function DiceProvider({
       // Campaign: server RNG first; every client animates the shared roll once.
       // Set onComplete before await so SSE-first ingest still fires sheet callbacks.
       onCompleteRef.current = onComplete ?? null;
+      pendingCombatOutcomeRef.current = undefined;
       setRolling(true);
       void (async () => {
         try {
+          if (enriched.combat) {
+            const result = await startCombatRollAction({
+              campaignId,
+              label: enriched.label,
+              kind: enriched.kind ?? "other",
+              hidden: Boolean(enriched.hidden),
+              characterName: actor?.characterName ?? null,
+              dice: enriched.dice,
+              modifier: enriched.modifier,
+              iterativeModifiers: enriched.iterativeModifiers,
+              combat: enriched.combat,
+            });
+            if (!result.success || !result.roll) {
+              onCompleteRef.current = null;
+              setRolling(false);
+              return;
+            }
+            pendingCombatOutcomeRef.current = result.outcome;
+            ingestCampaignRoll(result.roll);
+            return;
+          }
+
           const result = await startCampaignRoll({
             campaignId,
             label: enriched.label,
@@ -450,13 +476,18 @@ export function DiceProvider({
       onCompleteRef.current = null;
       const canonical = pendingCanonicalRef.current;
       pendingCanonicalRef.current = null;
+      const combatOutcome = pendingCombatOutcomeRef.current;
+      pendingCombatOutcomeRef.current = undefined;
       setSilhouetteActive(false);
 
       if (isCampaign) {
         // Log already written at ingest from server faces; do not log engine faces.
         setRolling(false);
         setActiveRequest(null);
-        apply?.(canonical ?? result);
+        const base = canonical ?? result;
+        apply?.(
+          combatOutcome != null ? { ...base, combat: combatOutcome } : base,
+        );
         return;
       }
 
@@ -478,6 +509,7 @@ export function DiceProvider({
   const failRoll = useCallback(() => {
     onCompleteRef.current = null;
     pendingCanonicalRef.current = null;
+    pendingCombatOutcomeRef.current = undefined;
     setSilhouetteActive(false);
     setRolling(false);
     setActiveRequest(null);
@@ -486,6 +518,7 @@ export function DiceProvider({
   const clearDice = useCallback(() => {
     onCompleteRef.current = null;
     pendingCanonicalRef.current = null;
+    pendingCombatOutcomeRef.current = undefined;
     setSilhouetteActive(false);
     setClearSignal((n) => n + 1);
     setRolling(false);

@@ -11,6 +11,7 @@ import type {
   CampaignRollView,
   CampaignTableState,
 } from "@/lib/campaign/types";
+import type { CombatEventView } from "@/lib/combat/events/types";
 import type { CampaignCombatView } from "@/lib/combat/types";
 import type {
   CampaignMapListItem,
@@ -49,9 +50,12 @@ export type LiveStoreState = {
   viewerUserId: string;
   connected: boolean;
   combat: CampaignCombatView | null;
+  combatEvents: CombatEventView[];
   npcLibrary: CampaignTableState["npcLibrary"];
   encounters: CampaignTableState["encounters"];
 };
+
+const COMBAT_EVENT_BUFFER = 200;
 
 type Listener = () => void;
 
@@ -83,6 +87,7 @@ export function createLiveStore(initial: {
     viewerUserId: initial.viewerUserId,
     connected: false,
     combat: initial.table.combat,
+    combatEvents: initial.table.combatEvents ?? [],
     npcLibrary: initial.table.npcLibrary,
     encounters: initial.table.encounters,
   };
@@ -171,6 +176,7 @@ export function createLiveStore(initial: {
       maps: next.maps,
       rolls: next.rolls,
       combat: next.combat,
+      combatEvents: next.combatEvents ?? prev.combatEvents,
       npcLibrary: next.npcLibrary,
       encounters: next.encounters,
       tokens: keepTokens ? prev.tokens : tokensFromMap(next.liveMap),
@@ -340,6 +346,57 @@ export function createLiveStore(initial: {
         state = { ...state, combat: event.combat };
         notify();
         return;
+      case "combatEventView": {
+        const exists = state.combatEvents.some((e) => e.id === event.event.id);
+        if (exists) return;
+        state = {
+          ...state,
+          combatEvents: [...state.combatEvents, event.event].slice(
+            -COMBAT_EVENT_BUFFER,
+          ),
+        };
+        notify();
+        return;
+      }
+      case "combatEffectUpsert": {
+        if (!state.combat) return;
+        state = {
+          ...state,
+          combat: {
+            ...state.combat,
+            combatants: state.combat.combatants.map((c) => {
+              if (c.id !== event.combatantId) return c;
+              const idx = c.effects.findIndex((e) => e.id === event.effect.id);
+              const effects =
+                idx >= 0
+                  ? c.effects.map((e, i) => (i === idx ? event.effect : e))
+                  : [...c.effects, event.effect];
+              return { ...c, effects };
+            }),
+          },
+        };
+        notify();
+        return;
+      }
+      case "combatEffectRemove": {
+        if (!state.combat) return;
+        state = {
+          ...state,
+          combat: {
+            ...state.combat,
+            combatants: state.combat.combatants.map((c) =>
+              c.id === event.combatantId
+                ? {
+                    ...c,
+                    effects: c.effects.filter((e) => e.id !== event.effectId),
+                  }
+                : c,
+            ),
+          },
+        };
+        notify();
+        return;
+      }
       case "npcLibrarySnapshot":
         state = { ...state, npcLibrary: event.npcLibrary };
         notify();

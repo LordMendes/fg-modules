@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDice } from "@/components/dice/dice-provider";
 import { createRollId, iterativeD20Checks } from "@/lib/dice/notation";
 import { damageTypeTone } from "@/lib/dice/damageTypeColors";
 import { useCombatContext } from "@/components/combat/combat-context";
+import type { CombatantView } from "@/lib/combat/types";
 import {
   applyCriticalDamage,
   formatCritSuffix,
@@ -118,28 +119,81 @@ function twfHandLabel(hand: WeaponAttackRow["twfHand"]): string | null {
   return null;
 }
 
+function attackIndexForWeapon(
+  combatant: CombatantView,
+  weapon: WeaponAttackRow,
+): number {
+  const byName = combatant.attacks.findIndex((a) => a.name === weapon.name);
+  if (byName >= 0) return byName;
+  return Math.min(weapon.inventoryIndex, Math.max(0, combatant.attacks.length - 1));
+}
+
 export function PcWeaponAttacksList({
   weapons,
   pcPlanId = null,
 }: PcWeaponAttacksListProps) {
   const { roll, rolling, ready } = useDice();
   const combatCtx = useCombatContext();
-  const [pendingCrits, setPendingCrits] = useState<Record<number, PendingCrit>>(
-    {},
-  );
+  const combatant =
+    combatCtx && pcPlanId ? combatCtx.combatantByPcPlanId(pcPlanId) : undefined;
+  const inCombat = Boolean(combatCtx?.combat && combatant);
+
+  const [localPendingCrits, setLocalPendingCrits] = useState<
+    Record<number, PendingCrit>
+  >({});
   const [flashing, setFlashing] = useState<Record<number, RowFlashes>>({});
   const [lastAttackMode, setLastAttackMode] = useState<
     Record<number, AttackMode>
   >({});
 
+  const pendingCritForWeapon = useCallback(
+    (weapon: WeaponAttackRow): PendingCrit | undefined => {
+      if (inCombat && combatant && combatCtx) {
+        const serverCrit = combatCtx.pendingCritFor(combatant.id);
+        if (serverCrit && serverCrit.attackName === weapon.name) {
+          return {
+            multiplier: serverCrit.multiplier,
+            threatFace: serverCrit.threatFace,
+            flashKey: 0,
+          };
+        }
+        return undefined;
+      }
+      return localPendingCrits[weapon.inventoryIndex];
+    },
+    [combatCtx, combatant, inCombat, localPendingCrits],
+  );
+
   const clearPending = useCallback((inventoryIndex: number) => {
-    setPendingCrits((prev) => {
+    setLocalPendingCrits((prev) => {
       if (!(inventoryIndex in prev)) return prev;
       const next = { ...prev };
       delete next[inventoryIndex];
       return next;
     });
   }, []);
+
+  const lastServerCritRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!inCombat || !combatant?.pendingCrit) return;
+    const serverCrit = combatant.pendingCrit;
+    const critKey = `${serverCrit.attackName}:${serverCrit.threatFace}:${serverCrit.multiplier}`;
+    if (critKey === lastServerCritRef.current) return;
+    lastServerCritRef.current = critKey;
+    const weapon = weapons.find((row) => row.name === serverCrit.attackName);
+    if (!weapon) return;
+    const flashKey = Date.now();
+    setFlashing((prev) => ({
+      ...prev,
+      [weapon.inventoryIndex]: {
+        crit: {
+          kind: "crit",
+          key: flashKey,
+          face: serverCrit.threatFace,
+        },
+      },
+    }));
+  }, [combatant?.pendingCrit, inCombat, weapons]);
 
   useEffect(() => {
     const timers: number[] = [];
@@ -178,21 +232,19 @@ export function PcWeaponAttacksList({
       [weapon.inventoryIndex]: mode,
     }));
 
-    roll(iterativeD20Checks(label, bonuses, "attack"), (result) => {
-      if (combatCtx && pcPlanId) {
-        const totals =
-          result.attackTotals ??
-          (result.total != null ? [result.total] : []);
-        combatCtx.resolveAttackTotals(pcPlanId, totals, label);
-      }
+    const onComplete = (result: {
+      faces: number[];
+      attackTotals?: number[];
+      total?: number;
+    }) => {
       const threatening = result.faces.filter((face) =>
         isCriticalThreat(face, weapon.threatMin),
       );
       const fumbled = result.faces.some((face) => face === 1);
       if (threatening.length === 0 && !fumbled) return;
       const flashKey = Date.now();
-      if (threatening.length > 0) {
-        setPendingCrits((prev) => ({
+      if (threatening.length > 0 && !inCombat) {
+        setLocalPendingCrits((prev) => ({
           ...prev,
           [weapon.inventoryIndex]: {
             multiplier: weapon.critMultiplier,
@@ -216,12 +268,26 @@ export function PcWeaponAttacksList({
         ...prev,
         [weapon.inventoryIndex]: flashes,
       }));
-    });
+    };
+
+    if (inCombat && combatCtx && combatant) {
+      combatCtx.rollAttack({
+        attackerId: combatant.id,
+        attackIndex: attackIndexForWeapon(combatant, weapon),
+        targetIds: combatant.targetIds,
+        attackType: weapon.mode === "ranged" ? "ranged" : "melee",
+        label,
+        bonuses,
+      });
+      return;
+    }
+
+    roll(iterativeD20Checks(label, bonuses, "attack"), onComplete);
   }
 
   function rollDamage(weapon: WeaponAttackRow) {
     if (!ready || rolling) return;
-    const pending = pendingCrits[weapon.inventoryIndex];
+    const pending = pendingCritForWeapon(weapon);
     const attackMode = lastAttackMode[weapon.inventoryIndex] ?? "standard";
     const damageMod = damageModifierForMode(weapon, attackMode);
     const scaled = pending
@@ -237,6 +303,25 @@ export function PcWeaponAttacksList({
     const label = pending
       ? `${weapon.name} critical damage (×${pending.multiplier})`
       : `${weapon.name} damage`;
+
+    if (inCombat && combatCtx && combatant) {
+      combatCtx.rollDamage({
+        attackerId: combatant.id,
+        attackIndex: attackIndexForWeapon(combatant, weapon),
+        targetIds: combatant.pendingTargetIds.length
+          ? combatant.pendingTargetIds
+          : combatant.targetIds,
+        attackType: weapon.mode === "ranged" ? "ranged" : "melee",
+        label,
+        dice: [...scaled.dice, ...extraDice],
+        modifier: scaled.modifier,
+        ...(pending
+          ? { crit: true, multiplier: pending.multiplier }
+          : {}),
+      });
+      return;
+    }
+
     roll(
       {
         id: createRollId(),
@@ -245,15 +330,8 @@ export function PcWeaponAttacksList({
         modifier: scaled.modifier,
         kind: "damage",
       },
-      (result) => {
+      () => {
         if (pending) clearPending(weapon.inventoryIndex);
-        if (combatCtx && combatCtx.pendingDamageTargets.length > 0) {
-          const dmg = result.total ?? 0;
-          for (const t of combatCtx.pendingDamageTargets) {
-            void combatCtx.applyDamage(t.id, dmg);
-          }
-          combatCtx.setPendingDamageTargets([]);
-        }
       },
     );
   }
@@ -270,7 +348,7 @@ export function PcWeaponAttacksList({
   return (
     <ul className="pc-weapon-attacks-list">
       {weapons.map((weapon) => {
-        const pending = pendingCrits[weapon.inventoryIndex];
+        const pending = pendingCritForWeapon(weapon);
         const flashes = flashing[weapon.inventoryIndex];
         const critFlash = flashes?.crit;
         const fumbleFlash = flashes?.fumble;
@@ -369,15 +447,17 @@ export function PcWeaponAttacksList({
               {pending && !critFlash ? (
                 <span className="pc-weapon-crit-armed-badge">
                   Crit armed ×{pending.multiplier}
-                  <button
-                    type="button"
-                    className="pc-weapon-crit-clear"
-                    onClick={() => clearPending(weapon.inventoryIndex)}
-                    title="Clear critical"
-                    aria-label={`Clear critical on ${weapon.name}`}
-                  >
-                    ×
-                  </button>
+                  {!inCombat ? (
+                    <button
+                      type="button"
+                      className="pc-weapon-crit-clear"
+                      onClick={() => clearPending(weapon.inventoryIndex)}
+                      title="Clear critical"
+                      aria-label={`Clear critical on ${weapon.name}`}
+                    >
+                      ×
+                    </button>
+                  ) : null}
                 </span>
               ) : null}
             </div>

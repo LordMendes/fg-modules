@@ -60,6 +60,7 @@ function table(): CampaignTableState {
     },
     maps: [],
     combat: null,
+    combatEvents: [],
     npcLibrary: [],
     encounters: [],
   };
@@ -149,6 +150,28 @@ describe("liveStore", () => {
     store.applyEvent({ type: "mapTokenRemove", tokenId: "t1" });
     assert.equal(store.getState().liveMap?.tokens.length, 0);
     assert.equal(store.getState().tokens.has("t1"), false);
+  });
+
+  it("appends combatEventView to combatEvents ring buffer", () => {
+    const store = createLiveStore({ table: table(), viewerUserId: "u1" });
+    store.applyEvent({
+      type: "combatEventView",
+      event: {
+        id: "evt-1",
+        seq: 1,
+        round: 1,
+        kind: "attack",
+        at: "2026-09-18T00:00:00.000Z",
+        actorName: "Goblin",
+        targetName: "Hero",
+        lines: [{ text: "Hit", tone: "hit" }],
+        payload: {},
+        rollId: null,
+        reverted: false,
+      },
+    });
+    assert.equal(store.getState().combatEvents.length, 1);
+    assert.equal(store.getState().combatEvents[0]?.id, "evt-1");
   });
 
   it("applies encounter and npc library snapshots", () => {

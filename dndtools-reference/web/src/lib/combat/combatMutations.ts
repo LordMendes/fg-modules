@@ -37,7 +37,7 @@ import {
   type TurnEffect,
 } from "@/lib/combat/rules/turn";
 import type { ActiveEffect } from "@/lib/combat/effects/applyEffects";
-import type { CombatFaction, DamagePacket } from "@/lib/combat/types";
+import type { CombatantView, CombatFaction, DamagePacket } from "@/lib/combat/types";
 import { Prisma } from "@/generated/prisma/client";
 import {
   combatViewFromRow,
@@ -721,7 +721,13 @@ export async function applyCombatDamageInTx(
   );
 
   const hpAfter = Math.max(0, c.hpMax - defenseResult.wounds) + Math.max(0, defenseResult.hpTemp);
-  const statusAfter = deriveHealthStatus(c.hpMax, defenseResult.wounds, defenseResult.hpTemp);
+  const statusAfter = deriveHealthStatus(
+    c.hpMax,
+    defenseResult.wounds,
+    defenseResult.hpTemp,
+    c.nonlethal,
+    c.deathState as CombatantView["deathState"],
+  );
 
   const events: CombatEventRecord[] = [];
 
@@ -767,21 +773,42 @@ export async function applyCombatDamageInTx(
 async function loadCombatRow(campaignId: string) {
   return prisma.campaignCombat.findUnique({
     where: { campaignId },
-    include: combatInclude,
+    include: combatIncludeWithEffects,
   });
 }
 
 async function publishCombatSnapshot(
   campaignId: string,
-  dmUserId: string,
+  _dmUserId: string,
   viewer?: { isDm: boolean; pcPlanId?: string | null },
 ) {
   const combat = await loadCombatRow(campaignId);
+  const tokenIds = combat?.combatants
+    .map((c) => c.tokenId)
+    .filter((id): id is string => Boolean(id)) ?? [];
+  const tokens =
+    tokenIds.length > 0
+      ? await prisma.campaignMapToken.findMany({
+          where: { id: { in: tokenIds } },
+          select: { id: true, imageKey: true },
+        })
+      : [];
+  const tokenImages: Record<string, string | null> = {};
+  for (const t of tokens) {
+    tokenImages[t.id] = t.imageKey ? tryPublicUrlForKey(t.imageKey) : null;
+  }
+
   const view = combatViewFromRow(combat, {
     isDm: viewer?.isDm ?? true,
     viewerPcPlanId: viewer?.pcPlanId ?? null,
+    tokenImages: new Map(Object.entries(tokenImages)),
   });
-  publishCampaignLive(campaignId, { type: "combatSnapshot", combat: view });
+  publishCampaignLive(campaignId, {
+    type: "combatSnapshot",
+    combat: view,
+    raw: combat,
+    tokenImages,
+  });
 }
 
 async function publishNpcLibrarySnapshot(campaignId: string) {
@@ -805,7 +832,7 @@ export async function ensureCombat(actor: CombatActor) {
         round: 1,
         active: true,
       },
-      include: combatInclude,
+      include: combatIncludeWithEffects,
     });
     await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
   }
@@ -1927,7 +1954,13 @@ export async function applyHeal(
       hpBefore,
       hpAfter,
       hpMax: row.hpMax,
-      statusAfter: deriveHealthStatus(row.hpMax, row.wounds, row.hpTemp),
+      statusAfter: deriveHealthStatus(
+        row.hpMax,
+        row.wounds,
+        row.hpTemp,
+        row.nonlethal,
+        row.deathState as CombatantView["deathState"],
+      ),
     }, {
       targetCombatantId: combatantId,
       actorUserId: actor.userId,

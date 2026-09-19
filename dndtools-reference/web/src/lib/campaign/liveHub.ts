@@ -82,6 +82,7 @@ async function loadFilterCtx(
     fogEnabled: fog.fogEnabled,
     fogRegions,
     tokens,
+    userPcPlanIds: {},
   };
 }
 

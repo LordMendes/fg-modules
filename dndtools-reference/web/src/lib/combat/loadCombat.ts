@@ -4,6 +4,14 @@ import {
   npcViewFromRow,
   snapshotCombatStats,
 } from "@/lib/combat/combatView";
+import { filterEventForViewer } from "@/lib/combat/events/filter";
+import type {
+  CombatEventKind,
+  CombatEventPayload,
+  CombatEventRecord,
+  CombatEventView,
+  CombatEventVisibility,
+} from "@/lib/combat/events/types";
 import type {
   CampaignCombatView,
   CampaignEncounterView,
@@ -12,15 +20,52 @@ import type {
 import { prisma } from "@/lib/prisma";
 import { tryPublicUrlForKey } from "@/lib/storage/r2";
 
+function eventRowToRecord(row: {
+  id: string;
+  seq: number;
+  round: number;
+  kind: string;
+  actorCombatantId: string | null;
+  targetCombatantId: string | null;
+  payload: unknown;
+  visibility: string;
+  rollId: string | null;
+  revertedAt: Date | null;
+  createdAt: Date;
+}): CombatEventRecord {
+  return {
+    id: row.id,
+    seq: row.seq,
+    round: row.round,
+    kind: row.kind as CombatEventKind,
+    at: row.createdAt.toISOString(),
+    actorCombatantId: row.actorCombatantId,
+    targetCombatantId: row.targetCombatantId,
+    actorName: null,
+    targetName: null,
+    payload: row.payload as CombatEventPayload,
+    visibility: row.visibility as CombatEventVisibility,
+    rollId: row.rollId,
+    reverted: row.revertedAt != null,
+  };
+}
+
+const combatInclude = {
+  combatants: {
+    orderBy: [{ init: "desc" as const }, { seq: "asc" as const }],
+    include: {
+      effects: { orderBy: { seq: "asc" as const } },
+    },
+  },
+};
+
 export async function loadCombatForViewer(
   campaignId: string,
   viewer: { isDm: boolean; pcPlanId?: string | null },
 ): Promise<CampaignCombatView | null> {
   const combat = await prisma.campaignCombat.findUnique({
     where: { campaignId },
-    include: {
-      combatants: { orderBy: [{ init: "desc" }, { seq: "asc" }] },
-    },
+    include: combatInclude,
   });
   if (!combat) return null;
 
@@ -44,6 +89,55 @@ export async function loadCombatForViewer(
     viewerPcPlanId: viewer.pcPlanId ?? null,
     tokenImages,
   });
+}
+
+export async function loadCombatEvents(
+  campaignId: string,
+  viewer: { isDm: boolean; pcPlanId?: string | null },
+  limit = 100,
+): Promise<CombatEventView[]> {
+  const combat = await prisma.campaignCombat.findUnique({
+    where: { campaignId },
+    include: {
+      combatants: {
+        select: {
+          id: true,
+          name: true,
+          pcPlanId: true,
+          visibleToPlayers: true,
+          identified: true,
+        },
+        orderBy: { seq: "asc" },
+      },
+      events: {
+        orderBy: { seq: "desc" },
+        take: limit,
+      },
+    },
+  });
+  if (!combat) return [];
+
+  const filterContext = {
+    combatants: combat.combatants.map((c, index) => ({
+      id: c.id,
+      name: c.name,
+      pcPlanId: c.pcPlanId,
+      visibleToPlayers: c.visibleToPlayers,
+      identified: c.identified,
+      genericLabel: `Creature ${index + 1}`,
+    })),
+  };
+
+  return combat.events
+    .map(eventRowToRecord)
+    .map((record) =>
+      filterEventForViewer(record, {
+        isDm: viewer.isDm,
+        viewerPcPlanId: viewer.pcPlanId ?? null,
+      }, filterContext),
+    )
+    .filter((event): event is CombatEventView => event != null)
+    .reverse();
 }
 
 export async function loadNpcLibrary(

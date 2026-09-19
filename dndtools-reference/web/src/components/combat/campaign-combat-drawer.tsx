@@ -2,16 +2,13 @@
 
 import {
   addPartyToCombat,
-  combatNextTurn,
   combatRemoveCombatant,
   combatSetInitiative,
   combatToggleTarget,
 } from "@/actions/combat";
 import { CampaignDrawerShell } from "@/components/combat/campaign-drawer-shell";
-import { useDice } from "@/components/dice/dice-provider";
 import { healthStatusLabel } from "@/lib/combat/healthStatus";
 import type { CampaignCombatView, CombatantView } from "@/lib/combat/types";
-import { createRollId } from "@/lib/dice/notation";
 import { parseDiceNotation } from "@/lib/dice/parseDiceNotation";
 import { formatModifier } from "@/lib/pc-planner/combatStats";
 import { ChevronDown, ChevronRight, Swords } from "lucide-react";
@@ -68,7 +65,6 @@ function CombatantRow({
   onToggleExpand: () => void;
 }) {
   const ctx = useCombatContext();
-  const { rollCheck, roll } = useDice();
   const [pending, startTransition] = useTransition();
   const [editingInit, setEditingInit] = useState(false);
   const [initDraft, setInitDraft] = useState(String(c.init));
@@ -76,6 +72,7 @@ function CombatantRow({
   const targets = (ctx?.combat?.combatants ?? []).filter((t) =>
     c.targetIds.includes(t.id),
   );
+  const pendingCrit = ctx?.pendingCritFor(c.id) ?? null;
 
   return (
     <div
@@ -125,7 +122,8 @@ function CombatantRow({
                 setEditingInit(true);
                 return;
               }
-              rollCheck(`${c.name} initiative`, c.initMod, "initiative");
+              if (!ctx) return;
+              ctx.rollInitiative([c.id], `${c.name} initiative`, c.initMod);
             }}
           >
             {c.init ? c.init.toFixed(1) : formatModifier(c.initMod)}
@@ -187,14 +185,19 @@ function CombatantRow({
                   <button
                     type="button"
                     className="dice-rollable"
-                    disabled={pending}
-                    onClick={() =>
-                      rollCheck(
-                        `${c.name} ${atk.name} attack`,
-                        atk.bonus,
-                        "attack",
-                      )
-                    }
+                    disabled={pending || !ctx}
+                    onClick={() => {
+                      if (!ctx) return;
+                      const bonuses = atk.iterativeBonuses ?? [atk.bonus];
+                      ctx.rollAttack({
+                        attackerId: c.id,
+                        attackIndex: i,
+                        targetIds: c.targetIds,
+                        attackType: atk.attackType ?? atk.mode,
+                        label: `${c.name} ${atk.name} attack`,
+                        bonuses,
+                      });
+                    }}
                   >
                     {atk.name} {formatModifier(atk.bonus)} {atk.mode}
                   </button>
@@ -202,27 +205,32 @@ function CombatantRow({
                     <button
                       type="button"
                       className="dice-rollable combat-dmg-btn"
-                      disabled={pending}
+                      disabled={pending || !ctx}
                       onClick={() => {
+                        if (!ctx) return;
                         const parsed = parseDiceNotation(atk.damage);
                         if (!parsed) return;
-                        roll(
-                          {
-                            id: createRollId(),
-                            label: `${c.name} ${atk.name} damage`,
-                            dice: parsed.dice,
-                            modifier: parsed.modifier,
-                            kind: "damage",
-                          },
-                          (result) => {
-                            const dmg = result.total ?? 0;
-                            for (const t of targets) {
-                              startTransition(async () => {
-                                await ctx?.applyDamage(t.id, dmg);
-                              });
-                            }
-                          },
-                        );
+                        const critForAttack =
+                          pendingCrit?.attackName === atk.name ? pendingCrit : null;
+                        ctx.rollDamage({
+                          attackerId: c.id,
+                          attackIndex: i,
+                          targetIds: c.pendingTargetIds.length
+                            ? c.pendingTargetIds
+                            : targets.map((t) => t.id),
+                          attackType: atk.attackType ?? atk.mode,
+                          label: critForAttack
+                            ? `${c.name} ${atk.name} critical damage`
+                            : `${c.name} ${atk.name} damage`,
+                          dice: parsed.dice,
+                          modifier: parsed.modifier,
+                          ...(critForAttack
+                            ? {
+                                crit: true,
+                                multiplier: critForAttack.multiplier,
+                              }
+                            : {}),
+                        });
                       }}
                     >
                       {atk.damage}
@@ -267,8 +275,10 @@ export function CampaignCombatDrawer({
   onClose: () => void;
   onOpenNpcs?: () => void;
 }) {
+  const ctx = useCombatContext();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [nextError, setNextError] = useState<string | null>(null);
 
   const current = combat?.combatants.find((c) => c.isCurrentTurn);
   const unplacedCount =
@@ -288,18 +298,28 @@ export function CampaignCombatDrawer({
       closeLabel="Close combat tracker"
       className="campaign-drawer--combat"
       footer={
-        <button
-          type="button"
-          className="tool-btn"
-          disabled={pending || !combat?.combatants.length}
-          onClick={() =>
-            startTransition(async () => {
-              await combatNextTurn(campaignId);
-            })
-          }
-        >
-          Next actor
-        </button>
+        <div className="combat-footer-actions">
+          {nextError ? (
+            <span className="tool-error combat-footer-error">{nextError}</span>
+          ) : null}
+          <button
+            type="button"
+            className="tool-btn"
+            disabled={pending || !combat?.combatants.length || !ctx}
+            onClick={() => {
+              if (!ctx) return;
+              setNextError(null);
+              startTransition(async () => {
+                const result = await ctx.nextActor();
+                if (!result.success) {
+                  setNextError(result.error ?? "Could not advance turn");
+                }
+              });
+            }}
+          >
+            Next actor
+          </button>
+        </div>
       }
     >
       {isDm ? (

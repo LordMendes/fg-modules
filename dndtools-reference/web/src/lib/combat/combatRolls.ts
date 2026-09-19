@@ -564,7 +564,13 @@ async function resolveHealIntent(
       hpBefore,
       hpAfter,
       hpMax: target.hpMax,
-      statusAfter: deriveHealthStatus(target.hpMax, result.wounds, target.hpTemp),
+      statusAfter: deriveHealthStatus(
+        target.hpMax,
+        result.wounds,
+        target.hpTemp,
+        target.nonlethal,
+        target.deathState as import("@/lib/combat/types").CombatantView["deathState"],
+      ),
     }, {
       targetCombatantId: target.id,
       actorUserId: actor.userId,

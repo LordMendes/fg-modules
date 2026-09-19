@@ -1,18 +1,30 @@
-import { currentHp } from "./parseHp";
-import type { CombatHealthStatus } from "./types";
+import type { CombatantView, CombatHealthStatus } from "./types";
 
 export function deriveHealthStatus(
   hpMax: number,
   wounds: number,
   hpTemp: number,
+  nonlethal = 0,
+  deathState: CombatantView["deathState"] = null,
 ): CombatHealthStatus {
-  const cur = currentHp(hpMax, wounds, hpTemp);
-  if (cur <= 0) return "dead";
-  if (wounds >= hpMax && cur > 0) return "dying";
-  const ratio = cur / Math.max(1, hpMax);
-  if (ratio <= 0.25) return "bloodied";
-  if (ratio <= 0.5) return "wounded";
-  return "healthy";
+  const max = Math.max(1, hpMax);
+  const nl = Math.max(0, nonlethal);
+  const w = Math.max(0, wounds);
+
+  if (deathState === "dead") return "dead";
+  if (deathState === "dying") return "dying";
+
+  const remaining = max - w - nl;
+  if (remaining <= 0) {
+    return deathState === "disabled" ? "dying" : "dying";
+  }
+
+  const ratio = remaining / max;
+  if (ratio >= 1) return "healthy";
+  if (ratio >= 0.75) return "light";
+  if (ratio >= 0.5) return "moderate";
+  if (ratio >= 0.25) return "heavy";
+  return "critical";
 }
 
 export function healthStatusLabel(status: CombatHealthStatus): string {

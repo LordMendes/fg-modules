@@ -10315,6 +10315,74 @@ html.dice-secret-cursor * {
   line-height: 1.35;
 }
 
+.dice-log-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0 0.65rem 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dice-log-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.55rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.dice-log-tab--active {
+  background: color-mix(in srgb, var(--accent-gold) 14%, transparent);
+  color: var(--text-primary);
+}
+
+.combat-log-list {
+  max-height: 18rem;
+}
+
+.combat-log-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.combat-log-entry:last-child {
+  border-bottom: none;
+}
+
+.combat-log-entry-meta {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.combat-log-line {
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.combat-log-line--hit,
+.combat-log-line--crit,
+.combat-log-line--heal {
+  color: var(--status-ok, #6bbf59);
+}
+
+.combat-log-line--miss,
+.combat-log-line--death {
+  color: var(--status-danger, #d45c5c);
+}
+
+.combat-log-line--damage {
+  color: var(--accent-gold);
+}
+
 .pc-spell-cast-block {
   display: flex;
   flex-direction: column;

@@ -268,6 +268,14 @@ export function useLiveCombat(store: CampaignLiveStore) {
   );
 }
 
+export function useLiveCombatEvents(store: CampaignLiveStore) {
+  return useSyncExternalStore(
+    store.subscribe,
+    () => store.getState().combatEvents,
+    () => store.getState().combatEvents,
+  );
+}
+
 export function useLiveNpcLibrary(store: CampaignLiveStore) {
   return useSyncExternalStore(
     store.subscribe,

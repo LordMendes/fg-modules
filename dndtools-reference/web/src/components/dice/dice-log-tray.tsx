@@ -1,8 +1,9 @@
 "use client";
 
-import { EyeOff, ScrollText } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { EyeOff, ScrollText, Swords } from "lucide-react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useDice } from "@/components/dice/dice-provider";
+import { useCampaignLiveOptional } from "@/components/tools/campaign-live-provider";
 import { formatRollFormula, formatRollSummary } from "@/lib/dice/notation";
 import { ROLL_KIND_LABELS } from "@/lib/dice/types";
 import {
@@ -13,14 +14,31 @@ import {
 
 const LOG_POS_KEY = "pc-planner-dice-log-pos-bl";
 const LOG_EXPANDED_KEY = "pc-planner-dice-log-expanded";
+const LOG_TAB_KEY = "pc-planner-dice-log-tab";
+
+type LogTab = "rolls" | "combat";
 
 export function DiceLogTray() {
-  const { lastResult, history } = useDice();
+  const { lastResult, history, isCampaign } = useDice();
+  const live = useCampaignLiveOptional();
+  const combatEvents = useSyncExternalStore(
+    (onStoreChange) => {
+      if (!live?.store) return () => {};
+      return live.store.subscribe(onStoreChange);
+    },
+    () => live?.store.getState().combatEvents ?? [],
+    () => [],
+  );
   const [expanded, setExpanded] = useState(false);
+  const [tab, setTab] = useState<LogTab>("rolls");
 
   useEffect(() => {
     try {
       setExpanded(sessionStorage.getItem(LOG_EXPANDED_KEY) === "1");
+      const storedTab = sessionStorage.getItem(LOG_TAB_KEY);
+      if (storedTab === "rolls" || storedTab === "combat") {
+        setTab(storedTab);
+      }
     } catch {
       // ignore
     }
@@ -30,6 +48,15 @@ export function DiceLogTray() {
     setExpanded(open);
     try {
       sessionStorage.setItem(LOG_EXPANDED_KEY, open ? "1" : "0");
+    } catch {
+      // ignore
+    }
+  }
+
+  function selectTab(next: LogTab) {
+    setTab(next);
+    try {
+      sessionStorage.setItem(LOG_TAB_KEY, next);
     } catch {
       // ignore
     }
@@ -56,12 +83,19 @@ export function DiceLogTray() {
   } = useFloatingTrayPos({
     storageKey: LOG_POS_KEY,
     defaultPos,
-    layoutKey: expanded,
+    layoutKey: expanded ? `${tab}-1` : "0",
   });
 
-  const collapsedSummary = lastResult
-    ? `${lastResult.total}${lastResult.natural20 ? "!" : lastResult.natural1 ? "…" : ""}`
-    : null;
+  const collapsedSummary =
+    tab === "combat" && isCampaign
+      ? combatEvents.length > 0
+        ? combatEvents[combatEvents.length - 1]?.lines[0]?.text ?? "Combat"
+        : "Combat"
+      : lastResult
+        ? `${lastResult.total}${lastResult.natural20 ? "!" : lastResult.natural1 ? "…" : ""}`
+        : null;
+
+  const showCombatTab = isCampaign;
 
   return (
     <div
@@ -116,7 +150,7 @@ export function DiceLogTray() {
           >
             <div className="dice-tray-header-title">
               <ScrollText className="dice-tray-icon" aria-hidden="true" />
-              <span>Dice log</span>
+              <span>Log</span>
               <span className="dice-tray-drag-hint" aria-hidden="true">
                 drag to move
               </span>
@@ -131,46 +165,100 @@ export function DiceLogTray() {
             </button>
           </header>
 
-          {lastResult ? (
-            <p className="dice-tray-last" aria-live="polite">
-              {formatRollSummary(lastResult)}
-            </p>
-          ) : (
-            <p className="dice-tray-pool-empty">No rolls yet</p>
-          )}
-
-          {history.length > 0 ? (
-            <ul className="dice-tray-history dice-log-tray-history">
-              {history.map((entry) => {
-                const who =
-                  entry.actor?.characterName?.trim() ||
-                  entry.actor?.username ||
-                  null;
-                const kind = entry.kind ? ROLL_KIND_LABELS[entry.kind] : null;
-                return (
-                  <li key={`${entry.id}-${entry.at}`} className="dice-log-entry">
-                    <span className="dice-log-entry-meta">
-                      {who ? (
-                        <span className="dice-log-who">{who}</span>
-                      ) : null}
-                      {kind ? (
-                        <span className="dice-log-kind">{kind}</span>
-                      ) : null}
-                      {entry.hidden ? (
-                        <EyeOff
-                          className="dice-log-hidden-icon"
-                          aria-label="Hidden roll"
-                        />
-                      ) : null}
-                    </span>
-                    <span className="dice-log-entry-summary">
-                      {formatRollFormula(entry)}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+          {showCombatTab ? (
+            <div className="dice-log-tabs" role="tablist" aria-label="Log type">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === "rolls"}
+                className={`dice-log-tab${tab === "rolls" ? " dice-log-tab--active" : ""}`}
+                onClick={() => selectTab("rolls")}
+              >
+                Rolls
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === "combat"}
+                className={`dice-log-tab${tab === "combat" ? " dice-log-tab--active" : ""}`}
+                onClick={() => selectTab("combat")}
+              >
+                <Swords size={14} aria-hidden />
+                Combat
+              </button>
+            </div>
           ) : null}
+
+          {tab === "rolls" || !showCombatTab ? (
+            <>
+              {lastResult ? (
+                <p className="dice-tray-last" aria-live="polite">
+                  {formatRollSummary(lastResult)}
+                </p>
+              ) : (
+                <p className="dice-tray-pool-empty">No rolls yet</p>
+              )}
+
+              {history.length > 0 ? (
+                <ul className="dice-tray-history dice-log-tray-history">
+                  {history.map((entry) => {
+                    const who =
+                      entry.actor?.characterName?.trim() ||
+                      entry.actor?.username ||
+                      null;
+                    const kind = entry.kind ? ROLL_KIND_LABELS[entry.kind] : null;
+                    return (
+                      <li key={`${entry.id}-${entry.at}`} className="dice-log-entry">
+                        <span className="dice-log-entry-meta">
+                          {who ? (
+                            <span className="dice-log-who">{who}</span>
+                          ) : null}
+                          {kind ? (
+                            <span className="dice-log-kind">{kind}</span>
+                          ) : null}
+                          {entry.hidden ? (
+                            <EyeOff
+                              className="dice-log-hidden-icon"
+                              aria-label="Hidden roll"
+                            />
+                          ) : null}
+                        </span>
+                        <span className="dice-log-entry-summary">
+                          {formatRollFormula(entry)}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+            </>
+          ) : combatEvents.length > 0 ? (
+            <ul className="dice-tray-history dice-log-tray-history combat-log-list">
+              {combatEvents.map((event) => (
+                <li
+                  key={event.id}
+                  className={`combat-log-entry combat-log-entry--${event.kind}`}
+                >
+                  <span className="combat-log-entry-meta">
+                    R{event.round}
+                    {event.actorName ? (
+                      <span className="combat-log-who">{event.actorName}</span>
+                    ) : null}
+                  </span>
+                  {event.lines.map((line, index) => (
+                    <span
+                      key={`${event.id}-${index}`}
+                      className={`combat-log-line combat-log-line--${line.tone}`}
+                    >
+                      {line.text}
+                    </span>
+                  ))}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="dice-tray-pool-empty">No combat events yet</p>
+          )}
         </div>
       )}
     </div>

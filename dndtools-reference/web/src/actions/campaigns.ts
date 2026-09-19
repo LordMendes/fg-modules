@@ -33,6 +33,7 @@ import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import type { DicePoolItem, RollKind } from "@/lib/dice/types";
 import {
+  loadCombatEvents,
   loadCombatForViewer,
   loadEncounters,
   loadNpcLibrary,
@@ -219,6 +220,13 @@ async function buildTableState(
           pcPlanId: pcLink?.pcPlanId ?? null,
         })
       : null;
+  const combatEvents =
+    me.status === "active"
+      ? await loadCombatEvents(campaignId, {
+          isDm,
+          pcPlanId: pcLink?.pcPlanId ?? null,
+        })
+      : [];
   const npcLibrary =
     me.status === "active" && isDm
       ? await loadNpcLibrary(campaignId)
@@ -241,6 +249,7 @@ async function buildTableState(
     liveMap: mapState.liveMap,
     maps: mapState.maps,
     combat: combatState,
+    combatEvents,
     npcLibrary,
     encounters,
   };

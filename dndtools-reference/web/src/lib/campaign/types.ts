@@ -8,6 +8,7 @@ import type {
   CampaignCombatView,
   CampaignEncounterView,
   CampaignNpcView,
+  CombatEffectView,
 } from "@/lib/combat/types";
 import type {
   CampaignMapListItem,
@@ -68,6 +69,7 @@ export type CampaignTableState = {
   liveMap: CampaignMapView | null;
   maps: CampaignMapListItem[];
   combat: CampaignCombatView | null;
+  combatEvents: CombatEventView[];
   npcLibrary: CampaignNpcView[];
   encounters: CampaignEncounterView[];
 };
@@ -273,13 +275,25 @@ export type CampaignLiveEvent =
       daylight: number;
       explorerEnabled: boolean;
     }
-  | { type: "combatSnapshot"; combat: CampaignCombatView | null }
+  | {
+      type: "combatSnapshot";
+      combat: CampaignCombatView | null;
+      /** Full row payload for per-viewer filtering on the live bus. */
+      raw?: unknown;
+      tokenImages?: Record<string, string | null>;
+    }
   | {
       type: "combatEvent";
       event: CombatEventRecord;
       combatants: CombatFilterCombatant[];
     }
   | { type: "combatEventView"; event: CombatEventView }
+  | {
+      type: "combatEffectUpsert";
+      combatantId: string;
+      effect: CombatEffectView;
+    }
+  | { type: "combatEffectRemove"; combatantId: string; effectId: string }
   | { type: "combatantUpsert"; combatantId: string }
   | { type: "combatantRemove"; combatantId: string }
   | { type: "npcLibrarySnapshot"; npcLibrary: CampaignNpcView[] }

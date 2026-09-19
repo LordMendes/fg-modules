@@ -11,7 +11,22 @@ import type {
   CombatFaction,
   CombatSnapshot,
   Defenses,
+  EffectComponent,
 } from "./types";
+
+type EffectRow = {
+  id: string;
+  label: string;
+  components: unknown;
+  sourceCombatantId: string | null;
+  duration: number | null;
+  durationUnit: string;
+  expiry: string;
+  applyMode: string;
+  visibility: string;
+  active: boolean;
+  system: boolean;
+};
 
 type CombatantRow = {
   id: string;
@@ -36,6 +51,7 @@ type CombatantRow = {
   visibleToPlayers: boolean;
   identified: boolean;
   snapshot: unknown;
+  seq?: number;
   nonlethal?: number;
   turnState?: string;
   deathState?: string | null;
@@ -43,7 +59,7 @@ type CombatantRow = {
   pendingTargetIds?: unknown;
   pendingCrit?: unknown;
   stats?: unknown;
-  effects?: CombatEffectView[];
+  effects?: EffectRow[];
 };
 
 type CombatRow = {
@@ -84,6 +100,12 @@ type EncounterRow = {
   name: string;
   updatedAt: Date;
   entries: EncounterEntryRow[];
+};
+
+export type CombatViewOpts = {
+  isDm: boolean;
+  viewerPcPlanId?: string | null;
+  tokenImages?: Map<string, string | null>;
 };
 
 function asFaction(raw: string): CombatFaction {
@@ -165,6 +187,76 @@ function asCombatState(raw: string | undefined): CampaignCombatView["state"] {
   return "idle";
 }
 
+function asEffectComponents(raw: unknown): EffectComponent[] {
+  if (!Array.isArray(raw)) return [];
+  return raw as EffectComponent[];
+}
+
+function effectViewFromRow(
+  row: EffectRow,
+  sourceNames: Map<string, string>,
+): CombatEffectView {
+  return {
+    id: row.id,
+    label: row.label,
+    components: asEffectComponents(row.components),
+    sourceCombatantId: row.sourceCombatantId,
+    sourceName: row.sourceCombatantId
+      ? sourceNames.get(row.sourceCombatantId) ?? null
+      : null,
+    duration: row.duration,
+    durationUnit:
+      row.durationUnit === "minute" ||
+      row.durationUnit === "hour" ||
+      row.durationUnit === "day"
+        ? row.durationUnit
+        : "round",
+    expiry: row.expiry === "endOfTurn" ? "endOfTurn" : "startOfTurn",
+    applyMode:
+      row.applyMode === "once" ||
+      row.applyMode === "roll" ||
+      row.applyMode === "single"
+        ? row.applyMode
+        : "all",
+    visibility:
+      row.visibility === "hidden" || row.visibility === "gm"
+        ? row.visibility
+        : "visible",
+    active: row.active,
+    system: row.system,
+  };
+}
+
+function filterEffectForViewer(
+  effect: CombatEffectView,
+  opts: { isDm: boolean; isOwner: boolean },
+): CombatEffectView | null {
+  if (effect.visibility === "gm" && !opts.isDm) return null;
+  if (effect.visibility === "hidden" && !opts.isDm && !opts.isOwner) {
+    return null;
+  }
+
+  const showComponents = opts.isDm || opts.isOwner;
+  return {
+    ...effect,
+    components: showComponents ? effect.components : [],
+  };
+}
+
+function buildGenericLabels(
+  combatants: CombatantRow[],
+): Map<string, string> {
+  const labels = new Map<string, string>();
+  let n = 1;
+  for (const row of [...combatants].sort((a, b) => (a.seq ?? 0) - (b.seq ?? 0))) {
+    if (row.kind === "npc") {
+      labels.set(row.id, `Creature ${n}`);
+      n += 1;
+    }
+  }
+  return labels;
+}
+
 export function snapshotCombatStats(snapshot: unknown): {
   hpMax: number;
   ac: number;
@@ -198,16 +290,42 @@ export function combatantViewFromRow(
     tokenImageUrl?: string | null;
     isDm: boolean;
     viewerPcPlanId?: string | null;
+    genericLabel?: string | null;
+    sourceNames: Map<string, string>;
   },
 ): CombatantView {
   const wounds = Math.max(0, row.wounds);
   const hpTemp = Math.max(0, row.hpTemp);
+  const nonlethal = Math.max(0, row.nonlethal ?? 0);
+  const deathState = asDeathState(row.deathState);
   const hpCurrent = currentHp(row.hpMax, wounds, hpTemp);
-  const status = deriveHealthStatus(row.hpMax, wounds, hpTemp);
-  const showExactHp =
-    opts.isDm ||
-    (row.kind === "pc" && row.pcPlanId === opts.viewerPcPlanId);
-  const showDefenses = opts.isDm || showExactHp;
+  const status = deriveHealthStatus(
+    row.hpMax,
+    wounds,
+    hpTemp,
+    nonlethal,
+    deathState,
+  );
+  const isOwner =
+    row.kind === "pc" && row.pcPlanId != null && row.pcPlanId === opts.viewerPcPlanId;
+  const showExactHp = opts.isDm || isOwner;
+  const showDefenses = opts.isDm || isOwner;
+  const showPending = opts.isDm || isOwner;
+  const showIdentifiedDetails = opts.isDm || row.identified;
+
+  const rawEffects = (row.effects ?? []).map((effect) =>
+    effectViewFromRow(effect, opts.sourceNames),
+  );
+  const effects = rawEffects
+    .map((effect) =>
+      filterEffectForViewer(effect, { isDm: opts.isDm, isOwner }),
+    )
+    .filter((effect): effect is CombatEffectView => effect != null);
+
+  const displayName =
+    !opts.isDm && !row.identified && row.kind === "npc"
+      ? opts.genericLabel ?? "Creature"
+      : row.name;
 
   return {
     id: row.id,
@@ -215,7 +333,7 @@ export function combatantViewFromRow(
     tokenId: row.tokenId,
     pcPlanId: row.pcPlanId,
     campaignNpcId: row.campaignNpcId,
-    name: row.name,
+    name: displayName,
     faction: asFaction(row.faction),
     init: row.init,
     initMod: row.initMod,
@@ -227,37 +345,43 @@ export function combatantViewFromRow(
     acFlat: row.acFlat,
     spaceSquares: row.spaceSquares,
     reachFeet: row.reachFeet,
-    attacks: asAttacks(row.attacks),
+    attacks: showIdentifiedDetails ? asAttacks(row.attacks) : [],
     targetIds: asTargetIds(row.targetIds),
     visibleToPlayers: row.visibleToPlayers,
     identified: row.identified,
-    snapshot: asSnapshot(row.snapshot),
+    snapshot: showIdentifiedDetails ? asSnapshot(row.snapshot) : {},
     hpCurrent: showExactHp ? hpCurrent : 0,
     status,
     isCurrentTurn: row.id === opts.currentCombatantId,
     tokenImageUrl: opts.tokenImageUrl ?? null,
-    nonlethal: Math.max(0, row.nonlethal ?? 0),
+    nonlethal: showExactHp ? nonlethal : 0,
     turnState: asTurnState(row.turnState),
-    deathState: asDeathState(row.deathState),
+    deathState,
     defenses: showDefenses ? asDefenses(row.defenses) : {},
-    effects: row.effects ?? [],
-    pendingTargetIds: opts.isDm ? asTargetIds(row.pendingTargetIds) : [],
-    pendingCrit: opts.isDm ? asPendingCrit(row.pendingCrit) : null,
+    effects,
+    pendingTargetIds: showPending ? asTargetIds(row.pendingTargetIds) : [],
+    pendingCrit: showPending ? asPendingCrit(row.pendingCrit) : null,
     stats: showDefenses ? asCombatStats(row.stats) : {},
   };
 }
 
 export function combatViewFromRow(
   combat: CombatRow | null,
-  opts: {
-    isDm: boolean;
-    viewerPcPlanId?: string | null;
-    tokenImages?: Map<string, string | null>;
-  },
+  opts: CombatViewOpts,
 ): CampaignCombatView | null {
   if (!combat) return null;
 
-  const combatants = combat.combatants
+  const visibleRows = opts.isDm
+    ? combat.combatants
+    : combat.combatants.filter((c) => c.visibleToPlayers);
+
+  const sourceNames = new Map<string, string>();
+  for (const c of combat.combatants) {
+    sourceNames.set(c.id, c.name);
+  }
+  const genericLabels = buildGenericLabels(combat.combatants);
+
+  const combatants = visibleRows
     .map((c) =>
       combatantViewFromRow(c, {
         currentCombatantId: combat.currentCombatantId,
@@ -266,6 +390,8 @@ export function combatViewFromRow(
           : null,
         isDm: opts.isDm,
         viewerPcPlanId: opts.viewerPcPlanId,
+        genericLabel: genericLabels.get(c.id) ?? null,
+        sourceNames,
       }),
     )
     .sort((a, b) => b.init - a.init);
@@ -280,6 +406,7 @@ export function combatViewFromRow(
     combatants,
   };
 }
+
 
 export function npcViewFromRow(
   row: NpcRow,

@@ -28,11 +28,11 @@ Legend: `pending` | `in_progress` | `done` | `blocked` | `skipped` | `checkpoint
 | E1 | Schema and types | done | task0 | prisma/schema.prisma, src/lib/combat/types.ts | Migration `20260918200000_campaign_combat_engine` |
 | E2 | Effects parser | done | E1 | src/lib/combat/effects/grammar.ts, parseEffect.ts, formatEffect.ts, *.test.ts | 35 tests |
 | E3 | Effects support | done | E2 | rules/modifiers.ts, effects/presets.ts, applyEffects.ts, duration.ts, pc-planner/conditions.ts | 23 new tests |
-| E4 | Rules, offense | pending | E3 | rules/engineContext.ts, initiative.ts, attack.ts, critical.ts, concealment.ts | Parallel-safe with E5 |
-| E5 | Rules, defense | pending | E3 | rules/damage.ts, healing.ts, death.ts, saves.ts, spellResistance.ts | Parallel-safe with E4 |
-| E6 | Rules, turn | pending | E3, E5 | rules/turn.ts | Tick, DMGO, regen, dying loss, next actor |
-| E7 | Events | pending | E4 | events/types.ts, format.ts, filter.ts | FG wording, DM vs player tests |
-| E8 | Converters | pending | E1 | converters/parseDefenses.ts, converters.ts, parseAttacks.ts, combatMutations.ts | Parallel-safe with E4-E7 |
+| E4 | Rules, offense | done | E3 | rules/engineContext.ts, initiative.ts, attack.ts, critical.ts, concealment.ts | |
+| E5 | Rules, defense | done | E3 | rules/damage.ts, healing.ts, death.ts, saves.ts, spellResistance.ts | |
+| E6 | Rules, turn | done | E3, E5 | rules/turn.ts | 5 tests |
+| E7 | Events | done | E4 | events/types.ts, format.ts, filter.ts | Commit 4addbcc (mislabeled turn) |
+| E8 | Converters | done | E1 | converters/parseDefenses.ts, converters.ts, parseAttacks.ts, combatMutations.ts | |
 | E9 | Roll pipeline server | pending | E4-E8 | lib/campaign/rolls.ts, combatRolls.ts, combatMutations.ts, actions/combatRolls.ts | Row lock, rewrite applyCombatDamage |
 | E10 | Mutations and actions | pending | E9 | combatMutations.ts, actions/combat.ts | Full lifecycle + permissions matrix |
 | E11 | Loaders, views, live | pending | E10 | loadCombat.ts, combatView.ts, campaign/types.ts, liveStore.ts | Per-viewer filtering, combatEvents |

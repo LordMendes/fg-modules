@@ -1,3 +1,8 @@
+import type {
+  CombatRollIntent,
+  CombatRollOutcome,
+} from "@/lib/combat/combatRollTypes";
+
 /** Supported polyhedral die sides (matches @3d-dice/dice-box). */
 export type DieSides = 4 | 6 | 8 | 10 | 12 | 20 | 100;
 
@@ -44,6 +49,8 @@ export type RollRequest = {
    * Still animates dice; skips log entry.
    */
   silhouetteOnly?: boolean;
+  /** When set, the dice provider routes to startCombatRoll instead of startCampaignRoll. */
+  combat?: CombatRollIntent;
 };
 
 export type RollResult = {
@@ -63,6 +70,8 @@ export type RollResult = {
   actor?: RollActor;
   /** True when this client should not show totals in the log. */
   silhouetteOnly?: boolean;
+  /** Combat roll resolution from the server (when request.combat was set). */
+  combat?: CombatRollOutcome;
 };
 
 export type DiceSkin = {
