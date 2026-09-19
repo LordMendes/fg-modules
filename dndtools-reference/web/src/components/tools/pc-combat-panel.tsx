@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import {
   computeCombatStats,
   formatIterativeAttacks,
@@ -28,6 +29,7 @@ import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEff
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
 import { PcAsfDisplay } from "@/components/tools/pc-actions-extras";
 import { PcDefensesBlock } from "@/components/tools/pc-identity-extra";
+import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { CombatState, PcPlanState } from "@/lib/pc-planner/types";
 
 type PcCombatPanelProps = {
@@ -129,19 +131,52 @@ function CombatNumberInput({
   );
 }
 
+function EllipsisText({ text, className }: { text: string; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [truncated, setTruncated] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const check = () => {
+      setTruncated(el.scrollWidth > el.clientWidth + 1);
+    };
+
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [text]);
+
+  return (
+    <span ref={ref} className={className} title={truncated ? text : undefined}>
+      {text}
+    </span>
+  );
+}
+
 function CombatTableHeader({
   columns,
   labeled = true,
+  rowLabel,
 }: {
   columns: string[];
   labeled?: boolean;
+  rowLabel?: string;
 }) {
   return (
     <div
       className={`pc-combat-header${labeled ? "" : " pc-combat-header--no-label"}`}
       style={{ ["--combat-cols" as string]: columns.length }}
     >
-      {labeled ? <span className="pc-combat-header-spacer" aria-hidden="true" /> : null}
+      {labeled ? (
+        rowLabel ? (
+          <span className="pc-combat-row-label pc-combat-header-row-label">{rowLabel}</span>
+        ) : (
+          <span className="pc-combat-header-spacer" aria-hidden="true" />
+        )
+      ) : null}
       {columns.map((col) => (
         <span key={col}>{col}</span>
       ))}
@@ -169,8 +204,8 @@ function SideStatBlock({
   patch: PcCombatPanelProps["patch"];
 }) {
   return (
-    <section className="pc-combat-side-block">
-      <h3 className="pc-combat-block-title">{title}</h3>
+    <div className="pc-combat-side-stat">
+      <span className="npc-sheet-sub pc-combat-side-stat-label">{title}</span>
       <div
         className="pc-combat-table pc-combat-table--side"
         style={{ ["--combat-cols" as string]: columns.length }}
@@ -200,7 +235,7 @@ function SideStatBlock({
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -322,17 +357,16 @@ export function PcCombatPanel({
   }
 
   return (
-    <div className="npc-sheet-panel pc-sheet-section pc-combat-panel" role="tabpanel">
-      <div className="pc-combat-grid">
-        <section className="pc-combat-block">
-          <h3 className="pc-combat-block-title">Hit Points</h3>
-          <div className="pc-combat-hp-summary">
+    <div className="npc-sheet-panel pc-sheet-section pc-combat-layout" role="tabpanel">
+      <PcSheetCard title="Hit Points" className="pc-combat-hp-card">
+        <div className="pc-combat-hp-grid">
+          <div className="pc-combat-hp-dice-row">
             <div className="pc-combat-hp-stat">
-              <span className="pc-combat-hp-label">Hit Dice</span>
+              <span className="npc-sheet-sub">Hit dice</span>
               <span className="pc-combat-value pc-combat-value--readonly">{hdString}</span>
             </div>
             <div className="pc-combat-hp-stat">
-              <span className="pc-combat-hp-label">Constitution</span>
+              <span className="npc-sheet-sub">Constitution</span>
               <span
                 className="pc-combat-total pc-combat-value"
                 aria-label={`Constitution ${conScore}, modifier ${formatModifier(conMod)}`}
@@ -340,14 +374,10 @@ export function PcCombatPanel({
                 {conScore} ({formatModifier(conMod)})
               </span>
             </div>
+          </div>
+          <div className="pc-combat-hp-current-row">
             <div className="pc-combat-hp-stat">
-              <span className="pc-combat-hp-label">Max HP</span>
-              <span className="pc-combat-total pc-combat-value" aria-label={`Max HP ${maxHp}`}>
-                {maxHp}
-              </span>
-            </div>
-            <div className="pc-combat-hp-stat">
-              <span className="pc-combat-hp-label">Current</span>
+              <span className="npc-sheet-sub">Current</span>
               <input
                 type="number"
                 className="pc-sheet-input pc-combat-value pc-combat-input"
@@ -369,7 +399,13 @@ export function PcCombatPanel({
               />
             </div>
             <div className="pc-combat-hp-stat">
-              <span className="pc-combat-hp-label">Temp HP</span>
+              <span className="npc-sheet-sub">Max HP</span>
+              <span className="pc-combat-total pc-combat-value" aria-label={`Max HP ${maxHp}`}>
+                {maxHp}
+              </span>
+            </div>
+            <div className="pc-combat-hp-stat">
+              <span className="npc-sheet-sub">Temp HP</span>
               <input
                 type="number"
                 className="pc-sheet-input pc-combat-value pc-combat-input"
@@ -386,43 +422,12 @@ export function PcCombatPanel({
                 }
               />
             </div>
-            <PcAsfDisplay state={state} />
           </div>
-          <div className="pc-combat-hp-extras">
-            <label className="pc-asf-override">
-              <span className="npc-sheet-sub">ASF override (blank = auto)</span>
-              <input
-                type="number"
-                className="pc-sheet-input pc-sheet-input--narrow"
-                min={0}
-                max={100}
-                value={state.combat.asfOverride ?? ""}
-                placeholder={String(stats.arcaneSpellFailure)}
-                onChange={(e) =>
-                  patch((s) => {
-                    s.combat.asfOverride =
-                      e.target.value === "" ? null : Number(e.target.value);
-                  })
-                }
-              />
-            </label>
-            <label className="pc-checkbox-label">
-              <input
-                type="checkbox"
-                checked={Boolean(state.combat.addAllBonusTypes)}
-                onChange={(e) =>
-                  patch((s) => {
-                    s.combat.addAllBonusTypes = e.target.checked;
-                  })
-                }
-              />
-              Stack all item bonus types (house rule)
-            </label>
-          </div>
-          {(state.hitPoints?.rolls?.length ?? 0) > 0 ? (
-            <div className="pc-combat-table pc-combat-hp-rolls" style={{ ["--combat-cols" as string]: 4 }}>
-              <CombatTableHeader columns={["Die", "Roll", "Con", "HP"]} />
-              {state.hitPoints.rolls.map((rollRow, index) => {
+          <div className="pc-combat-hp-rolls-col">
+            {(state.hitPoints?.rolls?.length ?? 0) > 0 ? (
+              <div className="pc-combat-table pc-combat-hp-rolls" style={{ ["--combat-cols" as string]: 4 }}>
+                <CombatTableHeader columns={["Die", "Roll", "Con", "HP"]} rowLabel="Class" />
+                {state.hitPoints.rolls.map((rollRow, index) => {
                 const sides = parseHitDieSides(resolveHitDie(rollRow.classSlug, hitDice));
                 const dieSides = asDieSides(sides);
                 const label =
@@ -438,9 +443,10 @@ export function PcCombatPanel({
                     className="pc-combat-row"
                     style={{ ["--combat-cols" as string]: 4 }}
                   >
-                    <div className="pc-combat-row-label">
-                      {label} {rollRow.classLevel}
-                    </div>
+                    <EllipsisText
+                      text={`${label} ${rollRow.classLevel}`}
+                      className="pc-combat-row-label"
+                    />
                     <span className="pc-combat-value pc-combat-value--readonly">
                       {sides > 0 ? `d${sides}` : "—"}
                     </span>
@@ -486,17 +492,91 @@ export function PcCombatPanel({
                     <CombatTotal value={levelHp} signed={false} />
                   </div>
                 );
-              })}
-            </div>
-          ) : (
-            <p className="pc-sheet-empty">Add a class on the Main tab to generate hit dice.</p>
-          )}
-        </section>
+                })}
+              </div>
+            ) : (
+              <p className="pc-sheet-empty">Add a class on the Main tab to generate hit dice.</p>
+            )}
+          </div>
+        </div>
+      </PcSheetCard>
 
-        <section className="pc-combat-block">
-          <h3 className="pc-combat-block-title">Base Attack Bonus</h3>
+      <PcSheetCard title="Combat stats" className="pc-combat-side-stats-card">
+        <SideStatBlock
+          title="Initiative"
+          columns={["Total", "Stat", "Misc"]}
+          total={stats.initiative.total}
+          rollLabel="Initiative"
+          rollKind="initiative"
+          fields={[
+            { label: "Stat", value: stats.initiative.parts.stat, editable: null },
+            {
+              label: "Misc",
+              value: stats.initiative.parts.misc,
+              editable: featEffects.initBonus ? null : "initMisc",
+            },
+          ]}
+          patch={patch}
+        />
+        <SideStatBlock
+          title="Speed"
+          columns={["Total", ...speedFields.map((field) => field.label)]}
+          total={stats.speed.total}
+          signedTotal={false}
+          fields={speedFields}
+          patch={patch}
+        />
+        <SideStatBlock
+          title="Spell resistance"
+          columns={["Total", "Base", "Misc"]}
+          total={stats.spellResistance.total}
+          signedTotal={false}
+          fields={[
+            { label: "Base", value: combat.srBase, editable: "srBase", signed: false },
+            { label: "Misc", value: combat.srMisc, editable: "srMisc", signed: false },
+          ]}
+          patch={patch}
+        />
+        <label className="pc-checkbox-label pc-combat-house-rule">
+          <input
+            type="checkbox"
+            checked={Boolean(state.combat.addAllBonusTypes)}
+            onChange={(e) =>
+              patch((s) => {
+                s.combat.addAllBonusTypes = e.target.checked;
+              })
+            }
+          />
+          Stack all item bonus types (house rule)
+        </label>
+      </PcSheetCard>
+
+      <PcSheetCard title="Arcane spell failure" className="pc-combat-asf-card">
+        <div className="pc-combat-asf-row">
+          <PcAsfDisplay state={state} />
+          <label className="pc-identity-field pc-combat-asf-override">
+            <span className="npc-sheet-sub">Override (blank = auto)</span>
+            <input
+              type="number"
+              className="pc-sheet-input pc-sheet-input--narrow"
+              min={0}
+              max={100}
+              value={state.combat.asfOverride ?? ""}
+              placeholder={String(stats.arcaneSpellFailure)}
+              onChange={(e) =>
+                patch((s) => {
+                  s.combat.asfOverride =
+                    e.target.value === "" ? null : Number(e.target.value);
+                })
+              }
+            />
+          </label>
+        </div>
+      </PcSheetCard>
+
+      <PcSheetCard title="Base Attack Bonus" className="pc-combat-bab-card">
           <div className="pc-combat-bab-highlight">
-            <span className="pc-combat-bab-highlight-label">BAB</span>
+            <span className="npc-sheet-sub">BAB</span>
             <div
               className="pc-combat-total pc-combat-value pc-combat-iterative"
               aria-label={`BAB ${formatIterativeAttacks(stats.bab)}`}
@@ -550,48 +630,9 @@ export function PcCombatPanel({
               </div>
             ))}
           </div>
-        </section>
+      </PcSheetCard>
 
-        <section className="pc-combat-block pc-combat-block--side">
-          <SideStatBlock
-            title="Initiative"
-            columns={["Total", "Stat", "Misc"]}
-            total={stats.initiative.total}
-            rollLabel="Initiative"
-            rollKind="initiative"
-            fields={[
-              { label: "Stat", value: stats.initiative.parts.stat, editable: null },
-              {
-                label: "Misc",
-                value: stats.initiative.parts.misc,
-                editable: featEffects.initBonus ? null : "initMisc",
-              },
-            ]}
-            patch={patch}
-          />
-          <SideStatBlock
-            title="Speed"
-            columns={["Total", ...speedFields.map((field) => field.label)]}
-            total={stats.speed.total}
-            signedTotal={false}
-            fields={speedFields}
-            patch={patch}
-          />
-          <SideStatBlock
-            title="SR — Spell Resistance"
-            columns={["Total", "Base", "Misc"]}
-            total={stats.spellResistance.total}
-            signedTotal={false}
-            fields={[
-              { label: "Base", value: combat.srBase, editable: "srBase", signed: false },
-              { label: "Misc", value: combat.srMisc, editable: "srMisc", signed: false },
-            ]}
-            patch={patch}
-          />
-        </section>
-
-        <section className="pc-combat-block pc-combat-block--full">
-          <h3 className="pc-combat-block-title">Saving Throws</h3>
+      <PcSheetCard title="Saving Throws" className="pc-combat-saves-card">
           <div className="pc-combat-table" style={{ ["--combat-cols" as string]: 6 }}>
             <CombatTableHeader columns={["Total", "Class", "Stat", "Abil", "Racial", "Misc"]} />
             {(
@@ -639,10 +680,9 @@ export function PcCombatPanel({
               </div>
             ))}
           </div>
-        </section>
+      </PcSheetCard>
 
-        <section className="pc-combat-block pc-combat-block--full">
-          <h3 className="pc-combat-block-title">Armor Class</h3>
+      <PcSheetCard title="Armor Class" className="pc-combat-ac-card">
           <div className="pc-combat-table pc-combat-table--ac" style={{ ["--combat-cols" as string]: 9 }}>
             <CombatTableHeader
               columns={["Total", "Armor", "Shield", "Stat", "Size", "Nat", "Def", "Dodge", "Misc"]}
@@ -752,12 +792,10 @@ export function PcCombatPanel({
               );
             })}
           </div>
-        </section>
-      </div>
+      </PcSheetCard>
 
-      <div className="npc-sheet-block pc-combat-attacks">
-        <label className="pc-actions-attacks">
-          <span className="npc-sheet-sub">Special attacks</span>
+      <PcSheetCard title="Special attacks" className="pc-combat-attacks-card">
+        <label className="pc-identity-field pc-combat-attacks-field">
           <textarea
             className="pc-sheet-input pc-sheet-textarea"
             rows={3}
@@ -770,7 +808,8 @@ export function PcCombatPanel({
             }
           />
         </label>
-      </div>
+      </PcSheetCard>
+
       <PcDefensesBlock state={state} patch={patch} />
     </div>
   );

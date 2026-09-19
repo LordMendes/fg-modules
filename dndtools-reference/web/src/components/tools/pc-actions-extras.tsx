@@ -240,9 +240,9 @@ export function PcResourcesPanel({ state, patch }: { state: PcPlanState; patch: 
 export function PcAsfDisplay({ state }: { state: PcPlanState }) {
   const asf = useMemo(() => computeArcaneSpellFailure(state), [state]);
   return (
-    <div className="pc-combat-hp-stat">
-      <span className="pc-combat-hp-label">ASF</span>
-      <span className="pc-combat-value">{asf}%</span>
+    <div className="pc-combat-hp-stat pc-combat-asf-display">
+      <span className="npc-sheet-sub">ASF</span>
+      <span className="pc-combat-value pc-combat-value--readonly">{asf}%</span>
     </div>
   );
 }

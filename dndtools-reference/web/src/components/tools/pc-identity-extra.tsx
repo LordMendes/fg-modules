@@ -84,13 +84,15 @@ export function PcDefensesBlock({
   };
 
   return (
-    <div className="npc-sheet-block pc-defenses-block">
-      <div className="pc-skills-header">
-        <h3>Defenses</h3>
+    <PcSheetCard
+      title="Defenses"
+      className="pc-combat-defenses-card"
+      actions={
         <span className="npc-sheet-sub pc-defenses-preview">
           {formatDefensesLine(defenses) || "None"}
         </span>
-      </div>
+      }
+    >
       <div className="pc-defenses-grid">
         {(
           [
@@ -139,7 +141,7 @@ export function PcDefensesBlock({
           Reset defenses to auto
         </button>
       ) : null}
-    </div>
+    </PcSheetCard>
   );
 }
 
