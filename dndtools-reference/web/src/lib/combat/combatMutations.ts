@@ -1,4 +1,6 @@
+import { rollFaces } from "@/lib/campaign/rollFaces";
 import { publishCampaignLive } from "@/lib/campaign/liveHub";
+import { normalizeDuration } from "@/lib/combat/effects/duration";
 import { CONDITION_PRESETS } from "@/lib/combat/effects/presets";
 import { parseEffect } from "@/lib/combat/effects/parseEffect";
 import type {
@@ -7,15 +9,36 @@ import type {
   CombatEventRecord,
   CombatEventVisibility,
   CombatFilterCombatant,
+  StatePatch,
 } from "@/lib/combat/events/types";
 import { deriveHealthStatus } from "@/lib/combat/healthStatus";
 import {
   applyDefenses,
   type DamageFlags,
 } from "@/lib/combat/rules/damage";
+import { buildEngineContext, type CombatantFields } from "@/lib/combat/rules/engineContext";
 import { resolveDeathState } from "@/lib/combat/rules/death";
+import {
+  actNow as actNowRule,
+  delayCombatant as delayCombatantRule,
+  readyCombatant as readyCombatantRule,
+  rollInitiative,
+  sortByInitiative,
+  type InitiativeCombatant,
+} from "@/lib/combat/rules/initiative";
+import { heal, tempHp } from "@/lib/combat/rules/healing";
+import {
+  nextActor,
+  turnEnd,
+  turnStart,
+  type EffectPatch,
+  type TurnActor,
+  type TurnBoundaryOutcome,
+  type TurnEffect,
+} from "@/lib/combat/rules/turn";
+import type { ActiveEffect } from "@/lib/combat/effects/applyEffects";
 import type { CombatFaction, DamagePacket } from "@/lib/combat/types";
-import type { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import {
   combatViewFromRow,
   expandEncounterNames,
@@ -88,6 +111,7 @@ export type LockedCombatantRow = {
   acTouch: number | null;
   acFlat: number | null;
   attacks: unknown;
+  targetIds: unknown;
   pendingTargetIds: unknown;
   pendingCrit: unknown;
   snapshot: unknown;
@@ -104,7 +128,35 @@ export type LockedCombatantRow = {
     active: boolean;
     applyMode: string;
     system: boolean;
+    duration: number | null;
+    durationUnit: string;
+    tickInit: number | null;
+    expiry: string;
+    visibility: string;
+    sourceCombatantId: string | null;
+    seq: number;
   }>;
+};
+
+export type InitiativeScope = "all" | "npcs" | "pcs" | "one";
+export type CombatantScope = "all" | "npcs" | "pcs" | "one";
+export type ClearTargetsScope = "all" | "one";
+
+export type AddEffectInput = {
+  effectText: string;
+  duration?: number | null;
+  durationUnit?: "round" | "minute" | "hour" | "day";
+  expiry?: "startOfTurn" | "endOfTurn";
+  visibility?: "visible" | "hidden" | "gm";
+  applyMode?: "all" | "once";
+  sourceCombatantId?: string | null;
+};
+
+export type CombatantFlagsInput = {
+  visibleToPlayers?: boolean;
+  identified?: boolean;
+  faction?: CombatFaction;
+  turnState?: "normal" | "delayed" | "readied" | "dead" | "removed";
 };
 
 export type LockedCombatRow = {
@@ -221,6 +273,312 @@ export function publishCombatEvent(
     event,
     combatants,
   });
+}
+
+function clampInt(value: unknown, min: number, max: number): number | null {
+  if (!Number.isFinite(value)) return null;
+  return Math.max(min, Math.min(max, Math.trunc(Number(value))));
+}
+
+function asTargetIds(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((id): id is string => typeof id === "string");
+}
+
+function asPendingCrit(
+  raw: unknown,
+): { multiplier: number; threatFace: number; attackName: string } | null {
+  if (!raw || typeof raw !== "object") return null;
+  const o = raw as Record<string, unknown>;
+  if (
+    typeof o.multiplier !== "number" ||
+    typeof o.threatFace !== "number" ||
+    typeof o.attackName !== "string"
+  ) {
+    return null;
+  }
+  return {
+    multiplier: o.multiplier,
+    threatFace: o.threatFace,
+    attackName: o.attackName,
+  };
+}
+
+function mapDbEffects(
+  rows: LockedCombatantRow["effects"],
+): ActiveEffect[] {
+  return rows.map((row) => ({
+    id: row.id,
+    label: row.label,
+    components: Array.isArray(row.components)
+      ? (row.components as ActiveEffect["components"])
+      : [],
+    active: row.active,
+    applyMode: row.applyMode as ActiveEffect["applyMode"],
+  }));
+}
+
+function combatantFields(c: LockedCombatantRow): CombatantFields {
+  const snapshot = (c.snapshot ?? {}) as Record<string, unknown>;
+  return {
+    id: c.id,
+    name: c.name,
+    kind: c.kind === "pc" ? "pc" : "npc",
+    ac: c.ac,
+    acTouch: c.acTouch,
+    acFlat: c.acFlat,
+    fort: typeof snapshot.fort === "number" ? snapshot.fort : undefined,
+    ref: typeof snapshot.ref === "number" ? snapshot.ref : undefined,
+    will: typeof snapshot.will === "number" ? snapshot.will : undefined,
+    initMod: c.initMod,
+    hpMax: c.hpMax,
+    hpTemp: c.hpTemp,
+    wounds: c.wounds,
+    nonlethal: c.nonlethal,
+    defenses: (c.defenses ?? {}) as CombatantFields["defenses"],
+    stats: (c.stats ?? {}) as CombatantFields["stats"],
+    effects: mapDbEffects(c.effects),
+  };
+}
+
+function toTurnEffects(rows: LockedCombatantRow["effects"]): TurnEffect[] {
+  return rows.map((row) => ({
+    id: row.id,
+    label: row.label,
+    components: Array.isArray(row.components)
+      ? (row.components as TurnEffect["components"])
+      : [],
+    active: row.active,
+    applyMode: row.applyMode as TurnEffect["applyMode"],
+    duration: row.duration,
+    durationUnit: row.durationUnit as TurnEffect["durationUnit"],
+    tickInit: row.tickInit,
+    expiry: row.expiry as TurnEffect["expiry"],
+  }));
+}
+
+function toTurnActor(c: LockedCombatantRow): TurnActor {
+  const ctx = buildEngineContext(combatantFields(c));
+  return {
+    id: c.id,
+    name: c.name,
+    init: c.init,
+    hpMax: c.hpMax,
+    wounds: c.wounds,
+    hpTemp: c.hpTemp,
+    nonlethal: c.nonlethal,
+    deathState: c.deathState as TurnActor["deathState"],
+    defenses: (c.defenses ?? {}) as TurnActor["defenses"],
+    effects: toTurnEffects(c.effects),
+    pendingTargetIds: asTargetIds(c.pendingTargetIds),
+    pendingCrit: asPendingCrit(c.pendingCrit) ?? undefined,
+    stats: (c.stats ?? {}) as TurnActor["stats"],
+    conditions: [...ctx.conditions],
+  };
+}
+
+async function ownsCombatant(
+  actor: CombatActor,
+  combatant: Pick<LockedCombatantRow, "kind" | "pcPlanId">,
+): Promise<boolean> {
+  if (isDm(actor)) return true;
+  if (combatant.kind !== "pc" || !combatant.pcPlanId) return false;
+  const link = await prisma.campaignPc.findFirst({
+    where: {
+      campaignId: actor.campaignId,
+      pcPlanId: combatant.pcPlanId,
+      userId: actor.userId,
+    },
+  });
+  return Boolean(link);
+}
+
+function combatantInCombat(
+  combat: LockedCombatRow,
+  combatantId: string,
+): LockedCombatantRow | null {
+  return combat.combatants.find((c) => c.id === combatantId) ?? null;
+}
+
+function filterCombatantsByScope(
+  combatants: LockedCombatantRow[],
+  scope: CombatantScope,
+  combatantId?: string,
+): LockedCombatantRow[] {
+  switch (scope) {
+    case "all":
+      return combatants;
+    case "npcs":
+      return combatants.filter((c) => c.kind === "npc");
+    case "pcs":
+      return combatants.filter((c) => c.kind === "pc");
+    case "one": {
+      if (!combatantId) return [];
+      const row = combatants.find((c) => c.id === combatantId);
+      return row ? [row] : [];
+    }
+    default:
+      return [];
+  }
+}
+
+async function applyStatePatchesInTx(
+  tx: CombatTransactionClient,
+  patches: StatePatch[],
+): Promise<void> {
+  const merged = new Map<string, StatePatch>();
+  for (const patch of patches) {
+    const prev = merged.get(patch.combatantId) ?? { combatantId: patch.combatantId };
+    merged.set(patch.combatantId, { ...prev, ...patch });
+  }
+
+  for (const patch of merged.values()) {
+    const data: Prisma.CampaignCombatantUpdateInput = {};
+    if (patch.init != null) data.init = patch.init;
+    if (patch.turnState != null) data.turnState = patch.turnState;
+    if (patch.pendingTargetIds != null) {
+      data.pendingTargetIds = patch.pendingTargetIds;
+    }
+    if (patch.pendingCrit !== undefined) {
+      data.pendingCrit = patch.pendingCrit as Prisma.InputJsonValue;
+    }
+    if (patch.wounds != null) data.wounds = patch.wounds;
+    if (patch.hpTemp != null) data.hpTemp = patch.hpTemp;
+    if (patch.nonlethal != null) data.nonlethal = patch.nonlethal;
+    if (patch.deathState !== undefined) data.deathState = patch.deathState;
+    if (Object.keys(data).length === 0) continue;
+    await tx.campaignCombatant.update({
+      where: { id: patch.combatantId },
+      data,
+    });
+  }
+}
+
+function applyPatchToMemory(
+  combat: LockedCombatRow,
+  patch: StatePatch,
+): LockedCombatantRow | null {
+  const c = combat.combatants.find((x) => x.id === patch.combatantId);
+  if (!c) return null;
+  if (patch.init != null) c.init = patch.init;
+  if (patch.turnState != null) c.turnState = patch.turnState;
+  if (patch.pendingTargetIds != null) {
+    c.pendingTargetIds = patch.pendingTargetIds;
+  }
+  if (patch.pendingCrit !== undefined) c.pendingCrit = patch.pendingCrit;
+  if (patch.wounds != null) c.wounds = patch.wounds;
+  if (patch.hpTemp != null) c.hpTemp = patch.hpTemp;
+  if (patch.nonlethal != null) c.nonlethal = patch.nonlethal;
+  if (patch.deathState !== undefined) c.deathState = patch.deathState;
+  return c;
+}
+
+async function applyEffectPatchesInTx(
+  tx: CombatTransactionClient,
+  combat: LockedCombatRow,
+  effectPatches: EffectPatch[],
+): Promise<void> {
+  for (const patch of effectPatches) {
+    if (patch.remove) {
+      await tx.campaignCombatEffect.deleteMany({ where: { id: patch.effectId } });
+      for (const c of combat.combatants) {
+        c.effects = c.effects.filter((e) => e.id !== patch.effectId);
+      }
+      continue;
+    }
+    if (patch.duration !== undefined) {
+      await tx.campaignCombatEffect.update({
+        where: { id: patch.effectId },
+        data: { duration: patch.duration },
+      });
+      for (const c of combat.combatants) {
+        const effect = c.effects.find((e) => e.id === patch.effectId);
+        if (effect) effect.duration = patch.duration ?? null;
+      }
+    }
+  }
+}
+
+async function syncDeathSystemEffects(
+  tx: CombatTransactionClient,
+  combatant: LockedCombatantRow,
+): Promise<void> {
+  const death = resolveDeathState({
+    hpMax: combatant.hpMax,
+    wounds: combatant.wounds,
+    nonlethal: combatant.nonlethal,
+    deathState: combatant.deathState as "dying" | "stable" | "disabled" | "dead" | null,
+  });
+  combatant.deathState = death.deathState;
+  if (death.turnState) combatant.turnState = death.turnState;
+  await applySystemEffectPatches(
+    tx,
+    combatant.id,
+    death.systemEffects.add,
+    death.systemEffects.remove,
+  );
+}
+
+async function applyTurnBoundaryInTx(
+  tx: CombatTransactionClient,
+  actor: CombatActor,
+  combat: LockedCombatRow,
+  outcome: TurnBoundaryOutcome,
+  combatantId: string,
+): Promise<CombatEventRecord[]> {
+  const events: CombatEventRecord[] = [];
+
+  await applyEffectPatchesInTx(tx, combat, outcome.effectPatches);
+  await applyStatePatchesInTx(tx, outcome.patches);
+
+  for (const patch of outcome.patches) {
+    const c = applyPatchToMemory(combat, patch);
+    if (!c) continue;
+    await syncDeathSystemEffects(tx, c);
+    if (patch.wounds != null || patch.hpTemp != null) {
+      await syncPcPlanHpFromCombatant(tx, actor, c, c.wounds, c.hpTemp);
+    }
+  }
+
+  for (const event of outcome.events) {
+    const written = await writeCombatEvent(
+      tx,
+      combat,
+      event.kind,
+      event.payload as CombatEventPayloadMap[CombatEventKind],
+      {
+        actorCombatantId: combatantId,
+        targetCombatantId: combatantId,
+        actorUserId: actor.userId,
+      },
+    );
+    events.push(written.record);
+  }
+
+  return events;
+}
+
+async function publishMutationResult(
+  actor: CombatActor,
+  combat: LockedCombatRow,
+  events: CombatEventRecord[],
+): Promise<void> {
+  const filterCombatants = combatantsForEventFilter(combat.combatants);
+  for (const event of events) {
+    publishCombatEvent(actor.campaignId, event, filterCombatants);
+  }
+  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+}
+
+function validateEffectText(text: string): { ok: true; trimmed: string } | { ok: false; error: string } {
+  const trimmed = text.trim().slice(0, 200);
+  if (!trimmed) return { ok: false, error: "Effect text required" };
+  const { components } = parseEffect(trimmed);
+  const label = trimmed.split(";")[0]?.trim() ?? "";
+  if (components.length === 0 && !label) {
+    return { ok: false, error: "Invalid effect text" };
+  }
+  return { ok: true, trimmed };
 }
 
 async function applySystemEffectPatches(
@@ -1056,26 +1414,1114 @@ export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
   return { success: true as const, targetIds: next };
 }
 
-export async function advanceCombatTurn(actor: CombatActor) {
-  const combat = await loadCombatRow(actor.campaignId);
-  if (!combat || combat.combatants.length === 0) {
-    return { success: false as const, error: "No combatants" };
-  }
+export async function startCombat(actor: CombatActor) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const sorted = [...combat.combatants].sort((a, b) => b.init - a.init);
-  const idx = sorted.findIndex((c) => c.id === combat.currentCombatantId);
-  const nextIdx = idx < 0 ? 0 : (idx + 1) % sorted.length;
-  const nextRound = idx >= 0 && nextIdx === 0;
+  const result = await prisma.$transaction(async (tx) => {
+    let combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) {
+      const id = newEntityId();
+      await tx.campaignCombat.create({
+        data: {
+          id,
+          campaignId: actor.campaignId,
+          round: 1,
+          active: true,
+          state: "active",
+          startedAt: new Date(),
+        },
+      });
+      combat = await lockCombatRow(tx, actor.campaignId);
+    }
+    if (!combat) return { success: false as const, error: "No combat" };
 
-  await prisma.campaignCombat.update({
-    where: { id: combat.id },
-    data: {
-      currentCombatantId: sorted[nextIdx]!.id,
-      round: nextRound ? combat.round + 1 : combat.round,
-    },
+    await tx.campaignCombat.update({
+      where: { id: combat.id },
+      data: {
+        state: "active",
+        active: true,
+        startedAt: new Date(),
+        endedAt: null,
+      },
+    });
+
+    const events: CombatEventRecord[] = [];
+    const startEvent = await writeCombatEvent(tx, combat, "combatStart", {}, {
+      actorUserId: actor.userId,
+    });
+    events.push(startEvent.record);
+
+    if (!combat.currentCombatantId && combat.combatants.length > 0) {
+      const sorted = sortByInitiative(
+        combat.combatants.map((c) => ({
+          id: c.id,
+          init: c.init,
+          initMod: c.initMod,
+          turnState: c.turnState as InitiativeCombatant["turnState"],
+        })),
+        { skipInactive: true },
+      );
+      const topId = sorted[0]?.id;
+      if (topId) {
+        await tx.campaignCombat.update({
+          where: { id: combat.id },
+          data: { currentCombatantId: topId },
+        });
+        combat.currentCombatantId = topId;
+      }
+    }
+
+    return { success: true as const, combat, events };
   });
 
-  await publishCombatSnapshot(actor.campaignId, actor.dmUserId);
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function endCombat(actor: CombatActor) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    const combatantIds = combat.combatants.map((c) => c.id);
+    if (combatantIds.length > 0) {
+      await tx.campaignCombatEffect.deleteMany({
+        where: {
+          combatantId: { in: combatantIds },
+          duration: { not: null },
+        },
+      });
+      await tx.campaignCombatant.updateMany({
+        where: { combatId: combat.id },
+        data: {
+          pendingTargetIds: [],
+          pendingCrit: Prisma.DbNull,
+          targetIds: [],
+        },
+      });
+      for (const c of combat.combatants) {
+        c.effects = c.effects.filter((e) => e.duration == null);
+        c.targetIds = [];
+        c.pendingTargetIds = [];
+        c.pendingCrit = null;
+      }
+    }
+
+    await tx.campaignCombat.update({
+      where: { id: combat.id },
+      data: {
+        state: "ended",
+        active: false,
+        endedAt: new Date(),
+      },
+    });
+
+    const endEvent = await writeCombatEvent(tx, combat, "combatEnd", {}, {
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [endEvent.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function resetCombat(actor: CombatActor) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    const npcIds = combat.combatants.filter((c) => c.kind === "npc").map((c) => c.id);
+    if (npcIds.length > 0) {
+      await tx.campaignCombatEffect.deleteMany({
+        where: { combatantId: { in: npcIds } },
+      });
+      await tx.campaignCombatant.deleteMany({
+        where: { id: { in: npcIds } },
+      });
+      combat.combatants = combat.combatants.filter((c) => c.kind !== "npc");
+    }
+
+    const remainingIds = combat.combatants.map((c) => c.id);
+    if (remainingIds.length > 0) {
+      await tx.campaignCombatant.updateMany({
+        where: { id: { in: remainingIds } },
+        data: {
+          init: 0,
+          pendingTargetIds: [],
+          pendingCrit: Prisma.DbNull,
+          targetIds: [],
+          turnState: "normal",
+          deathState: null,
+        },
+      });
+      for (const c of combat.combatants) {
+        c.init = 0;
+        c.targetIds = [];
+        c.pendingTargetIds = [];
+        c.pendingCrit = null;
+        c.turnState = "normal";
+        c.deathState = null;
+      }
+    }
+
+    const nextCurrent = combat.combatants[0]?.id ?? null;
+    await tx.campaignCombat.update({
+      where: { id: combat.id },
+      data: {
+        round: 1,
+        currentCombatantId: nextCurrent,
+        state: combat.combatants.length > 0 ? "active" : "idle",
+        startedAt: null,
+        endedAt: null,
+        active: combat.combatants.length > 0,
+      },
+    });
+    combat.round = 1;
+    combat.currentCombatantId = nextCurrent;
+
+    const noteEvent = await writeCombatEvent(tx, combat, "note", {
+      text: "Combat reset",
+    }, { actorUserId: actor.userId });
+
+    return { success: true as const, combat, events: [noteEvent.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function rollInitiativeFor(
+  actor: CombatActor,
+  scope: InitiativeScope,
+  combatantId?: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    let targets = filterCombatantsByScope(combat.combatants, scope, combatantId);
+    if (scope === "one" && !combatantId) {
+      return { success: false as const, error: "Combatant required" };
+    }
+
+    if (scope === "all" || scope === "npcs" || scope === "pcs") {
+      if (!isDm(actor)) return { success: false as const, error: "DM only" };
+    } else {
+      const allowed: LockedCombatantRow[] = [];
+      for (const row of targets) {
+        if (isDm(actor) || (await ownsCombatant(actor, row))) {
+          allowed.push(row);
+        }
+      }
+      targets = allowed;
+    }
+
+    if (targets.length === 0) {
+      return { success: false as const, error: "No eligible combatants" };
+    }
+
+    const events: CombatEventRecord[] = [];
+    const patches: StatePatch[] = [];
+
+    for (const row of targets) {
+      const face = rollFaces([{ qty: 1, sides: 20 }])[0] ?? 1;
+      const ctx = buildEngineContext(combatantFields(row));
+      const outcome = rollInitiative(ctx, face, row.initMod);
+      patches.push(...outcome.patches);
+
+      const event = await writeCombatEvent(tx, combat, "init", outcome.payload, {
+        actorCombatantId: row.id,
+        targetCombatantId: row.id,
+        actorUserId: actor.userId,
+      });
+      events.push(event.record);
+      row.init = outcome.payload.storedInit;
+      row.turnState = "normal";
+    }
+
+    await applyStatePatchesInTx(tx, patches);
+
+    if (!combat.currentCombatantId) {
+      const sorted = sortByInitiative(
+        combat.combatants.map((c) => ({
+          id: c.id,
+          init: c.init,
+          initMod: c.initMod,
+          turnState: c.turnState as InitiativeCombatant["turnState"],
+        })),
+        { skipInactive: true },
+      );
+      const topId = sorted[0]?.id;
+      if (topId) {
+        await tx.campaignCombat.update({
+          where: { id: combat.id },
+          data: { currentCombatantId: topId, state: "active" },
+        });
+        combat.currentCombatantId = topId;
+      }
+    }
+
+    return { success: true as const, combat, events };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setActiveCombatant(
+  actor: CombatActor,
+  combatantId: string,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    if (!combatantInCombat(combat, combatantId)) {
+      return { success: false as const, error: "Combatant not found" };
+    }
+
+    await tx.campaignCombat.update({
+      where: { id: combat.id },
+      data: { currentCombatantId: combatantId },
+    });
+    combat.currentCombatantId = combatantId;
+
+    const row = combatantInCombat(combat, combatantId)!;
+    const event = await writeCombatEvent(tx, combat, "turnStart", {
+      combatantName: row.name,
+      init: row.init,
+    }, {
+      actorCombatantId: combatantId,
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function delayCombatant(
+  actor: CombatActor,
+  combatantId: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+    if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+      return { success: false as const, error: "Not allowed" };
+    }
+
+    const patches = delayCombatantRule(combatantId);
+    await applyStatePatchesInTx(tx, patches);
+    row.turnState = "delayed";
+
+    const event = await writeCombatEvent(tx, combat, "delay", {
+      combatantName: row.name,
+    }, {
+      actorCombatantId: combatantId,
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function readyCombatant(
+  actor: CombatActor,
+  combatantId: string,
+  trigger?: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+    if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+      return { success: false as const, error: "Not allowed" };
+    }
+
+    const patches = readyCombatantRule(combatantId);
+    await applyStatePatchesInTx(tx, patches);
+    row.turnState = "readied";
+
+    const event = await writeCombatEvent(tx, combat, "ready", {
+      combatantName: row.name,
+      trigger: trigger?.trim().slice(0, 120) || undefined,
+    }, {
+      actorCombatantId: combatantId,
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function actNow(actor: CombatActor, combatantId: string) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+    if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+      return { success: false as const, error: "Not allowed" };
+    }
+
+    const current = combat.currentCombatantId
+      ? combatantInCombat(combat, combat.currentCombatantId)
+      : null;
+    const currentInit = current?.init ?? row.init + 1;
+    const outcome = actNowRule(combatantId, currentInit);
+    await applyStatePatchesInTx(tx, outcome.patches);
+    row.init = outcome.payload.init;
+    row.turnState = "normal";
+
+    const event = await writeCombatEvent(tx, combat, "init", {
+      face: 0,
+      initMod: row.initMod,
+      effectBonus: 0,
+      storedInit: outcome.payload.init,
+    }, {
+      actorCombatantId: combatantId,
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function advanceCombatTurn(actor: CombatActor) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat || combat.combatants.length === 0) {
+      return { success: false as const, error: "No combatants" };
+    }
+
+    const events: CombatEventRecord[] = [];
+    const currentId = combat.currentCombatantId;
+    const current = currentId ? combatantInCombat(combat, currentId) : null;
+
+    if (current) {
+      const endOutcome = turnEnd(toTurnActor(current));
+      events.push(
+        ...(await applyTurnBoundaryInTx(tx, actor, combat, endOutcome, current.id)),
+      );
+    }
+
+    const initiativeList = combat.combatants.map((c) => ({
+      id: c.id,
+      init: c.init,
+      initMod: c.initMod,
+      turnState: c.turnState as InitiativeCombatant["turnState"],
+    }));
+    const { nextId, roundIncrement } = nextActor(initiativeList, currentId);
+    if (!nextId) {
+      return { success: false as const, error: "No active combatants" };
+    }
+
+    const nextRound = roundIncrement ? combat.round + 1 : combat.round;
+    await tx.campaignCombat.update({
+      where: { id: combat.id },
+      data: {
+        currentCombatantId: nextId,
+        ...(roundIncrement ? { round: nextRound } : {}),
+      },
+    });
+    combat.currentCombatantId = nextId;
+    if (roundIncrement) {
+      combat.round = nextRound;
+      const roundEvent = await writeCombatEvent(tx, combat, "roundStart", {
+        round: nextRound,
+      }, { actorUserId: actor.userId });
+      events.push(roundEvent.record);
+    }
+
+    const next = combatantInCombat(combat, nextId)!;
+    const dmgoFaces = rollFaces([{ qty: 20, sides: 6 }]);
+    const startOutcome = turnStart(toTurnActor(next), { dmgoFaces });
+    events.push(
+      ...(await applyTurnBoundaryInTx(tx, actor, combat, startOutcome, next.id)),
+    );
+
+    return { success: true as const, combat, events };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function applyHeal(
+  actor: CombatActor,
+  combatantId: string,
+  amount: number,
+  source = "Heal",
+) {
+  const healAmount = clampInt(amount, 0, 9999);
+  if (healAmount == null) return { success: false as const, error: "Invalid amount" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+    if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+      return { success: false as const, error: "Not allowed" };
+    }
+
+    const hpBefore = Math.max(0, row.hpMax - row.wounds);
+    const healed = heal(healAmount, {
+      hpMax: row.hpMax,
+      wounds: row.wounds,
+      hpTemp: row.hpTemp,
+      nonlethal: row.nonlethal,
+      deathState: row.deathState as "dying" | "stable" | "disabled" | "dead" | null,
+    });
+
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { wounds: healed.wounds, nonlethal: healed.nonlethal },
+    });
+    row.wounds = healed.wounds;
+    row.nonlethal = healed.nonlethal;
+    await syncDeathSystemEffects(tx, row);
+    await syncPcPlanHpFromCombatant(tx, actor, row, row.wounds, row.hpTemp);
+
+    const hpAfter = Math.max(0, row.hpMax - row.wounds);
+    const event = await writeCombatEvent(tx, combat, "heal", {
+      source,
+      amount: healed.healed,
+      hpBefore,
+      hpAfter,
+      hpMax: row.hpMax,
+      statusAfter: deriveHealthStatus(row.hpMax, row.wounds, row.hpTemp),
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function applyTempHp(
+  actor: CombatActor,
+  combatantId: string,
+  amount: number,
+  source = "Temp HP",
+) {
+  const tempAmount = clampInt(amount, 0, 9999);
+  if (tempAmount == null) return { success: false as const, error: "Invalid amount" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+    if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+      return { success: false as const, error: "Not allowed" };
+    }
+
+    const tempBefore = row.hpTemp;
+    const applied = tempHp(tempAmount, { hpTemp: row.hpTemp });
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { hpTemp: applied.hpTemp },
+    });
+    row.hpTemp = applied.hpTemp;
+    await syncPcPlanHpFromCombatant(tx, actor, row, row.wounds, row.hpTemp);
+
+    const event = await writeCombatEvent(tx, combat, "tempHp", {
+      source,
+      amount: applied.applied,
+      tempBefore,
+      tempAfter: applied.hpTemp,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setHp(
+  actor: CombatActor,
+  combatantId: string,
+  hp: number,
+  note?: string,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetHp = clampInt(hp, -999, 9999);
+  if (targetHp == null) return { success: false as const, error: "Invalid HP" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const hpBefore = Math.max(0, row.hpMax - row.wounds);
+    const wounds = Math.max(0, row.hpMax - targetHp);
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { wounds },
+    });
+    row.wounds = wounds;
+    await syncDeathSystemEffects(tx, row);
+    await syncPcPlanHpFromCombatant(tx, actor, row, row.wounds, row.hpTemp);
+
+    const hpAfter = Math.max(0, row.hpMax - row.wounds);
+    const event = await writeCombatEvent(tx, combat, "hpEdit", {
+      hpBefore,
+      hpAfter,
+      hpMax: row.hpMax,
+      note: note?.trim().slice(0, 120) || undefined,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function applyNonlethal(
+  actor: CombatActor,
+  combatantId: string,
+  amount: number,
+  source = "Nonlethal",
+) {
+  const addAmount = clampInt(amount, 0, 9999);
+  if (addAmount == null) return { success: false as const, error: "Invalid amount" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+    if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+      return { success: false as const, error: "Not allowed" };
+    }
+
+    const nonlethalBefore = row.nonlethal;
+    const nextNonlethal = row.nonlethal + addAmount;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { nonlethal: nextNonlethal },
+    });
+    row.nonlethal = nextNonlethal;
+    await syncDeathSystemEffects(tx, row);
+
+    const event = await writeCombatEvent(tx, combat, "nonlethal", {
+      source,
+      amount: addAmount,
+      nonlethalBefore,
+      nonlethalAfter: nextNonlethal,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function addEffect(
+  actor: CombatActor,
+  combatantIds: string[],
+  input: AddEffectInput,
+) {
+  const validated = validateEffectText(input.effectText);
+  if (!validated.ok) return { success: false as const, error: validated.error };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    if (combatantIds.length === 0) {
+      return { success: false as const, error: "No targets" };
+    }
+
+    const events: CombatEventRecord[] = [];
+    const { components } = parseEffect(validated.trimmed);
+    const normalized = normalizeDuration({
+      duration: input.duration ?? null,
+      durationUnit: input.durationUnit ?? "round",
+    });
+
+    for (const combatantId of combatantIds) {
+      const row = combatantInCombat(combat, combatantId);
+      if (!row) return { success: false as const, error: "Combatant not found" };
+      if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+        return { success: false as const, error: "Not allowed" };
+      }
+
+      const sourceId = input.sourceCombatantId ?? null;
+      const sourceRow = sourceId ? combatantInCombat(combat, sourceId) : row;
+      const tickInit = sourceRow?.init ?? row.init;
+      const seq = row.effects.length;
+
+      const effectRow = await tx.campaignCombatEffect.create({
+        data: {
+          id: newEntityId(),
+          combatantId,
+          label: validated.trimmed,
+          components: components as unknown as Prisma.InputJsonValue,
+          sourceCombatantId: sourceId,
+          duration: normalized.duration,
+          durationUnit: normalized.durationUnit,
+          tickInit,
+          expiry: input.expiry ?? "startOfTurn",
+          applyMode: input.applyMode ?? "all",
+          visibility: input.visibility ?? "visible",
+          active: true,
+          system: false,
+          seq,
+        },
+      });
+
+      row.effects.push({
+        id: effectRow.id,
+        label: effectRow.label,
+        components: effectRow.components,
+        active: true,
+        applyMode: effectRow.applyMode,
+        system: false,
+        duration: effectRow.duration,
+        durationUnit: effectRow.durationUnit,
+        tickInit: effectRow.tickInit,
+        expiry: effectRow.expiry,
+        visibility: effectRow.visibility,
+        sourceCombatantId: effectRow.sourceCombatantId,
+        seq,
+      });
+
+      const sourceName = sourceRow?.name ?? null;
+      const event = await writeCombatEvent(tx, combat, "effectApply", {
+        label: validated.trimmed.split(";")[0]?.trim() ?? validated.trimmed,
+        effectText: validated.trimmed,
+        duration: normalized.duration,
+        durationUnit: normalized.durationUnit,
+        targetName: row.name,
+        sourceName,
+      }, {
+        actorCombatantId: sourceId ?? combatantId,
+        targetCombatantId: combatantId,
+        actorUserId: actor.userId,
+      });
+      events.push(event.record);
+    }
+
+    return { success: true as const, combat, events };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function removeEffect(
+  actor: CombatActor,
+  effectId: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    let targetRow: LockedCombatantRow | null = null;
+    let effect:
+      | LockedCombatantRow["effects"][number]
+      | undefined;
+    for (const row of combat.combatants) {
+      effect = row.effects.find((e) => e.id === effectId);
+      if (effect) {
+        targetRow = row;
+        break;
+      }
+    }
+    if (!targetRow || !effect) {
+      return { success: false as const, error: "Effect not found" };
+    }
+    if (effect.system) return { success: false as const, error: "Cannot remove system effect" };
+    if (!isDm(actor)) {
+      if (!(await ownsCombatant(actor, targetRow))) {
+        return { success: false as const, error: "Not allowed" };
+      }
+      if (effect.visibility === "gm") {
+        return { success: false as const, error: "Not allowed" };
+      }
+    }
+
+    await tx.campaignCombatEffect.delete({ where: { id: effectId } });
+    targetRow.effects = targetRow.effects.filter((e) => e.id !== effectId);
+
+    const event = await writeCombatEvent(tx, combat, "effectRemove", {
+      label: effect.label.split(";")[0]?.trim() ?? effect.label,
+      targetName: targetRow.name,
+    }, {
+      targetCombatantId: targetRow.id,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function toggleEffectActive(
+  actor: CombatActor,
+  effectId: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    let targetRow: LockedCombatantRow | null = null;
+    let effect:
+      | LockedCombatantRow["effects"][number]
+      | undefined;
+    for (const row of combat.combatants) {
+      effect = row.effects.find((e) => e.id === effectId);
+      if (effect) {
+        targetRow = row;
+        break;
+      }
+    }
+    if (!targetRow || !effect) {
+      return { success: false as const, error: "Effect not found" };
+    }
+    if (effect.system) return { success: false as const, error: "Cannot toggle system effect" };
+    if (!isDm(actor)) {
+      if (!(await ownsCombatant(actor, targetRow))) {
+        return { success: false as const, error: "Not allowed" };
+      }
+      if (effect.visibility === "gm") {
+        return { success: false as const, error: "Not allowed" };
+      }
+    }
+
+    const nextActive = !effect.active;
+    await tx.campaignCombatEffect.update({
+      where: { id: effectId },
+      data: { active: nextActive },
+    });
+    effect.active = nextActive;
+
+    const event = await writeCombatEvent(tx, combat, "note", {
+      text: `${effect.label.split(";")[0]?.trim() ?? effect.label} ${nextActive ? "activated" : "deactivated"}`,
+    }, {
+      targetCombatantId: targetRow.id,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function clearEffects(
+  actor: CombatActor,
+  scope: CombatantScope,
+  combatantId?: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    let targets = filterCombatantsByScope(combat.combatants, scope, combatantId);
+    if (scope === "one" && !combatantId) {
+      return { success: false as const, error: "Combatant required" };
+    }
+
+    if (scope !== "one") {
+      if (!isDm(actor)) return { success: false as const, error: "DM only" };
+    } else {
+      const allowed: LockedCombatantRow[] = [];
+      for (const row of targets) {
+        if (isDm(actor) || (await ownsCombatant(actor, row))) {
+          allowed.push(row);
+        }
+      }
+      targets = allowed;
+    }
+
+    if (targets.length === 0) {
+      return { success: false as const, error: "No eligible combatants" };
+    }
+
+    const events: CombatEventRecord[] = [];
+    for (const row of targets) {
+      const removable = row.effects.filter((e) => !e.system);
+      if (removable.length === 0) continue;
+
+      await tx.campaignCombatEffect.deleteMany({
+        where: {
+          id: { in: removable.map((e) => e.id) },
+          system: false,
+        },
+      });
+      row.effects = row.effects.filter((e) => e.system);
+
+      const event = await writeCombatEvent(tx, combat, "note", {
+        text: `Effects cleared on ${row.name}`,
+      }, {
+        targetCombatantId: row.id,
+        actorUserId: actor.userId,
+      });
+      events.push(event.record);
+    }
+
+    return { success: true as const, combat, events };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function clearTargets(
+  actor: CombatActor,
+  scope: ClearTargetsScope,
+  combatantId?: string,
+) {
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    let targets: LockedCombatantRow[];
+    if (scope === "all") {
+      if (!isDm(actor)) return { success: false as const, error: "DM only" };
+      targets = combat.combatants;
+    } else {
+      if (!combatantId) return { success: false as const, error: "Combatant required" };
+      const row = combatantInCombat(combat, combatantId);
+      if (!row) return { success: false as const, error: "Combatant not found" };
+      if (!isDm(actor) && !(await ownsCombatant(actor, row))) {
+        return { success: false as const, error: "Not allowed" };
+      }
+      targets = [row];
+    }
+
+    const events: CombatEventRecord[] = [];
+    for (const row of targets) {
+      const previous = [
+        ...new Set([
+          ...asTargetIds(row.targetIds),
+          ...asTargetIds(row.pendingTargetIds),
+        ]),
+      ];
+      if (previous.length === 0 && !row.pendingCrit) continue;
+
+      await tx.campaignCombatant.update({
+        where: { id: row.id },
+        data: {
+          targetIds: [],
+          pendingTargetIds: [],
+          pendingCrit: Prisma.DbNull,
+        },
+      });
+      row.targetIds = [];
+      row.pendingTargetIds = [];
+      row.pendingCrit = null;
+
+      const event = await writeCombatEvent(tx, combat, "untarget", {
+        targetNames: previous.map(
+          (id) => combat.combatants.find((c) => c.id === id)?.name ?? "Unknown",
+        ),
+      }, {
+        actorCombatantId: row.id,
+        actorUserId: actor.userId,
+      });
+      events.push(event.record);
+    }
+
+    return { success: true as const, combat, events };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setCombatantFlags(
+  actor: CombatActor,
+  combatantId: string,
+  flags: CombatantFlagsInput,
+) {
+  const hasVisibility = flags.visibleToPlayers != null || flags.identified != null;
+  const hasFaction = flags.faction != null;
+  const hasTurnState = flags.turnState != null;
+
+  if (!hasVisibility && !hasFaction && !hasTurnState) {
+    return { success: false as const, error: "No flags to update" };
+  }
+
+  if ((hasVisibility || hasFaction) && !isDm(actor)) {
+    return { success: false as const, error: "DM only" };
+  }
+  if (hasTurnState && !isDm(actor)) {
+    return { success: false as const, error: "DM only" };
+  }
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const data: Prisma.CampaignCombatantUpdateInput = {};
+    if (flags.visibleToPlayers != null) {
+      data.visibleToPlayers = flags.visibleToPlayers;
+      row.visibleToPlayers = flags.visibleToPlayers;
+    }
+    if (flags.identified != null) {
+      data.identified = flags.identified;
+      row.identified = flags.identified;
+    }
+    if (flags.faction != null) {
+      data.faction = flags.faction;
+    }
+    if (flags.turnState != null) {
+      data.turnState = flags.turnState;
+      row.turnState = flags.turnState;
+    }
+
+    await tx.campaignCombatant.update({ where: { id: combatantId }, data });
+
+    const notes: string[] = [];
+    if (flags.visibleToPlayers != null) {
+      notes.push(flags.visibleToPlayers ? "shown to players" : "hidden from players");
+    }
+    if (flags.identified != null) {
+      notes.push(flags.identified ? "identified" : "unidentified");
+    }
+    if (flags.faction != null) notes.push(`faction ${flags.faction}`);
+    if (flags.turnState != null) notes.push(`turn state ${flags.turnState}`);
+
+    const event = await writeCombatEvent(tx, combat, "note", {
+      text: `${row.name}: ${notes.join(", ")}`,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function removeDeadNpcs(actor: CombatActor) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const result = await prisma.$transaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+
+    const deadNpcs = combat.combatants.filter(
+      (c) =>
+        c.kind === "npc" &&
+        (c.deathState === "dead" || c.turnState === "dead"),
+    );
+    if (deadNpcs.length === 0) {
+      return { success: false as const, error: "No dead NPCs" };
+    }
+
+    const removedNames = deadNpcs.map((c) => c.name);
+    const removedIds = deadNpcs.map((c) => c.id);
+    await tx.campaignCombatEffect.deleteMany({
+      where: { combatantId: { in: removedIds } },
+    });
+    await tx.campaignCombatant.deleteMany({ where: { id: { in: removedIds } } });
+    combat.combatants = combat.combatants.filter((c) => !removedIds.includes(c.id));
+
+    if (
+      combat.currentCombatantId &&
+      removedIds.includes(combat.currentCombatantId)
+    ) {
+      const nextId = combat.combatants[0]?.id ?? null;
+      await tx.campaignCombat.update({
+        where: { id: combat.id },
+        data: { currentCombatantId: nextId },
+      });
+      combat.currentCombatantId = nextId;
+    }
+
+    const event = await writeCombatEvent(tx, combat, "note", {
+      text: `Removed dead NPCs: ${removedNames.join(", ")}`,
+    }, { actorUserId: actor.userId });
+
+    return {
+      success: true as const,
+      combat,
+      events: [event.record],
+      removedIds,
+    };
+  });
+
+  if (!result.success) return result;
+  for (const combatantId of result.removedIds) {
+    publishCampaignLive(actor.campaignId, { type: "combatantRemove", combatantId });
+  }
+  await publishMutationResult(actor, result.combat, result.events);
   return { success: true as const };
 }
 

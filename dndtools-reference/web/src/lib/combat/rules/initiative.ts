@@ -64,6 +64,11 @@ export function delayCombatant(combatantId: string): StatePatch[] {
   return [{ combatantId, turnState: "delayed" }];
 }
 
+/** Mark a combatant as readied (acts on a trigger). */
+export function readyCombatant(combatantId: string): StatePatch[] {
+  return [{ combatantId, turnState: "readied" }];
+}
+
 /** Act now: insert just before the current actor's init. */
 export function actNow(
   combatantId: string,

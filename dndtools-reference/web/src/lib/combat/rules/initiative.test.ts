@@ -5,6 +5,7 @@ import {
   actNow,
   computeStoredInit,
   delayCombatant,
+  readyCombatant,
   rollInitiative,
   sortByInitiative,
 } from "./initiative";
@@ -49,6 +50,12 @@ describe("rules/initiative (90-testing.md)", () => {
   it("computeStoredInit matches FG tiebreak formula", () => {
     assert.equal(computeStoredInit(15, 3, 0), 18.03);
     assert.equal(computeStoredInit(15, 1, 0), 16.01);
+  });
+
+  it("ready sets readied turn state", () => {
+    assert.deepEqual(readyCombatant("readied-id"), [
+      { combatantId: "readied-id", turnState: "readied" },
+    ]);
   });
 
   it("delay then act now before actor at 12: init 11.99, normal state", () => {

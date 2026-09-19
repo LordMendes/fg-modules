@@ -3,27 +3,51 @@
 import { randomUUID } from "node:crypto";
 import { requireCurrentUser } from "@/lib/auth/session";
 import {
+  actNow,
   addCombatantFromStats,
+  addEffect,
   addEncounterToCombat,
   addNpcLibraryToCombat,
   addNpcToLibrary,
   advanceCombatTurn,
   applyCombatDamage,
+  applyHeal,
+  applyNonlethal,
+  applyTempHp,
+  clearEffects,
+  clearTargets,
   createEncounter,
+  delayCombatant,
   deleteEncounter,
+  endCombat,
   ensureCombat,
   monsterToCombatStats,
   npcCreatorToCombatStats,
   pcPlanToCombatStats,
   placeCombatantOnMap,
   publishCombatSnapshot,
+  readyCombatant,
   removeCombatant,
+  removeDeadNpcs,
+  removeEffect,
   renameEncounter,
+  resetCombat,
+  rollInitiativeFor,
+  setActiveCombatant,
+  setCombatantFlags,
   setCombatantInit,
   setEncounterEntryQuantity,
+  setHp,
+  startCombat,
   statsFromNpcSnapshot,
   toggleCombatTarget,
+  toggleEffectActive,
+  type AddEffectInput,
   type CombatActor,
+  type CombatantFlagsInput,
+  type CombatantScope,
+  type ClearTargetsScope,
+  type InitiativeScope,
 } from "@/lib/combat/combatMutations";
 import {
   loadCombatForViewer,
@@ -380,6 +404,77 @@ function parseState(raw: unknown): PcPlanState {
   return raw as PcPlanState;
 }
 
+export async function combatStart(
+  campaignId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return startCombat(auth.actor);
+}
+
+export async function combatEnd(
+  campaignId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return endCombat(auth.actor);
+}
+
+export async function combatReset(
+  campaignId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return resetCombat(auth.actor);
+}
+
+export async function combatRollInitiative(
+  campaignId: string,
+  scope: InitiativeScope,
+  combatantId?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return rollInitiativeFor(auth.actor, scope, combatantId);
+}
+
+export async function combatSetActiveCombatant(
+  campaignId: string,
+  combatantId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setActiveCombatant(auth.actor, combatantId);
+}
+
+export async function combatDelayCombatant(
+  campaignId: string,
+  combatantId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return delayCombatant(auth.actor, combatantId);
+}
+
+export async function combatReadyCombatant(
+  campaignId: string,
+  combatantId: string,
+  trigger?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return readyCombatant(auth.actor, combatantId, trigger);
+}
+
+export async function combatActNow(
+  campaignId: string,
+  combatantId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return actNow(auth.actor, combatantId);
+}
+
 export async function combatNextTurn(
   campaignId: string,
 ): Promise<CombatActionResult> {
@@ -415,6 +510,116 @@ export async function combatApplyDamage(
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
   return applyCombatDamage(auth.actor, combatantId, damage);
+}
+
+export async function combatApplyHeal(
+  campaignId: string,
+  combatantId: string,
+  amount: number,
+  source?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return applyHeal(auth.actor, combatantId, amount, source);
+}
+
+export async function combatApplyTempHp(
+  campaignId: string,
+  combatantId: string,
+  amount: number,
+  source?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return applyTempHp(auth.actor, combatantId, amount, source);
+}
+
+export async function combatSetHp(
+  campaignId: string,
+  combatantId: string,
+  hp: number,
+  note?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setHp(auth.actor, combatantId, hp, note);
+}
+
+export async function combatApplyNonlethal(
+  campaignId: string,
+  combatantId: string,
+  amount: number,
+  source?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return applyNonlethal(auth.actor, combatantId, amount, source);
+}
+
+export async function combatAddEffect(
+  campaignId: string,
+  combatantIds: string[],
+  input: AddEffectInput,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return addEffect(auth.actor, combatantIds, input);
+}
+
+export async function combatRemoveEffect(
+  campaignId: string,
+  effectId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return removeEffect(auth.actor, effectId);
+}
+
+export async function combatToggleEffectActive(
+  campaignId: string,
+  effectId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return toggleEffectActive(auth.actor, effectId);
+}
+
+export async function combatClearEffects(
+  campaignId: string,
+  scope: CombatantScope,
+  combatantId?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return clearEffects(auth.actor, scope, combatantId);
+}
+
+export async function combatClearTargets(
+  campaignId: string,
+  scope: ClearTargetsScope,
+  combatantId?: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return clearTargets(auth.actor, scope, combatantId);
+}
+
+export async function combatSetCombatantFlags(
+  campaignId: string,
+  combatantId: string,
+  flags: CombatantFlagsInput,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setCombatantFlags(auth.actor, combatantId, flags);
+}
+
+export async function combatRemoveDeadNpcs(
+  campaignId: string,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return removeDeadNpcs(auth.actor);
 }
 
 export async function combatRemoveCombatant(
