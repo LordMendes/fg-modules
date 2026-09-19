@@ -1,14 +1,19 @@
 "use client";
 
+import { useState } from "react";
+import { PcImageDialog } from "@/components/tools/pc-image-dialog";
 import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcMainRaceAlignmentFields } from "@/components/tools/pc-main/race-alignment";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
+import { totalCharacterLevel } from "@/lib/pc-planner/skillPoints";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 type PatchFn = (fn: (draft: PcPlanState) => void) => void;
 
-function formatClassLine(classLevels: PcPlanState["identity"]["classLevels"]): string {
-  return classLevels.map((cl) => `${cl.className} ${cl.level}`).join(" / ");
+function formatClassSummary(classLevels: PcPlanState["identity"]["classLevels"]): string | null {
+  if (classLevels.length === 0) return null;
+  const classes = classLevels.map((cl) => `${cl.className} ${cl.level}`).join(" / ");
+  return `${classes} · Level ${totalCharacterLevel(classLevels)}`;
 }
 
 export function PcMainProfile({
@@ -24,38 +29,52 @@ export function PcMainProfile({
   readOnly?: boolean;
   onNameBlur: () => void;
 }) {
-  const classLine = formatClassLine(state.identity.classLevels);
+  const classSummary = formatClassSummary(state.identity.classLevels);
+  const [imagesDialogOpen, setImagesDialogOpen] = useState(false);
 
   return (
     <PcSheetCard title="Character profile" className="pc-main-profile">
-      <div className="npc-sheet-header pc-main-header">
+      <div
+        className={
+          planId ? "pc-main-header-block pc-main-header-block--with-images" : "pc-main-header-block"
+        }
+      >
         {planId ? (
-          <div className="pc-main-images" aria-label="Character images">
-            <PcImageSlot
+          <>
+            <div className="pc-main-images" aria-label="Character images">
+              <PcImageSlot
+                planId={planId}
+                kind="profile"
+                imageKey={state.identity.profileImageKey}
+                readOnly={readOnly}
+                compact
+                onActivate={readOnly ? undefined : () => setImagesDialogOpen(true)}
+                onKeyChange={(key) =>
+                  patch((s) => {
+                    s.identity.profileImageKey = key;
+                  })
+                }
+              />
+            </div>
+            <PcImageDialog
+              open={imagesDialogOpen}
+              onClose={() => setImagesDialogOpen(false)}
               planId={planId}
-              kind="profile"
-              imageKey={state.identity.profileImageKey}
-              readOnly={readOnly}
-              compact
-              onKeyChange={(key) =>
+              profileImageKey={state.identity.profileImageKey}
+              tokenImageKey={state.identity.tokenImageKey}
+              onProfileKeyChange={(key) =>
                 patch((s) => {
                   s.identity.profileImageKey = key;
                 })
               }
-            />
-            <PcImageSlot
-              planId={planId}
-              kind="token"
-              imageKey={state.identity.tokenImageKey}
-              readOnly={readOnly}
-              compact
-              onKeyChange={(key) =>
+              onTokenKeyChange={(key) =>
                 patch((s) => {
                   s.identity.tokenImageKey = key;
                 })
               }
+              readOnly={readOnly}
             />
-          </div>
+          </>
         ) : null}
         <div className="pc-main-header-text">
           <input
@@ -71,11 +90,7 @@ export function PcMainProfile({
             }
             onBlur={onNameBlur}
           />
-          {classLine ? (
-            <p className="pc-main-identity">
-              <span className="pc-main-identity-core">{classLine}</span>
-            </p>
-          ) : null}
+          {classSummary ? <p className="pc-main-class-summary">{classSummary}</p> : null}
         </div>
       </div>
       <PcMainRaceAlignmentFields state={state} patch={patch} />

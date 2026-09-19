@@ -225,6 +225,7 @@ export function PcSheet({
               />
               <PcMainClasses state={state} patch={patch} />
               <PcMainDivineArcane state={state} patch={patch} />
+              <PcSensesLanguagesBlock state={state} patch={patch} readOnly={readOnly} />
             </div>
             <div className="pc-main-stats">
               <PcMainAbilities
@@ -239,9 +240,8 @@ export function PcSheet({
                 classFeatures={resolvedClassFeatures}
                 classAdvancement={compendium?.classAdvancement ?? null}
               />
+              <PcMainBiography state={state} patch={patch} readOnly={readOnly} />
             </div>
-            <PcSensesLanguagesBlock state={state} patch={patch} readOnly={readOnly} />
-            <PcMainBiography state={state} patch={patch} readOnly={readOnly} />
           </div>
         )}
 

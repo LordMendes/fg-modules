@@ -35,6 +35,25 @@ const SLOT = {
   },
 } as const;
 
+const SLOT_DIALOG = {
+  profile: {
+    viewW: 176,
+    viewH: 176,
+    outW: 512,
+    outH: 512,
+    label: "Profile",
+    round: false,
+  },
+  token: {
+    viewW: 160,
+    viewH: 160,
+    outW: 256,
+    outH: 256,
+    label: "Token",
+    round: true,
+  },
+} as const;
+
 export function PcImageSlot({
   planId,
   kind,
@@ -42,6 +61,8 @@ export function PcImageSlot({
   onKeyChange,
   readOnly = false,
   compact = false,
+  onActivate,
+  variant = "default",
 }: {
   planId: string;
   kind: PcImageKind;
@@ -50,8 +71,11 @@ export function PcImageSlot({
   readOnly?: boolean;
   /** Hide idle Choose/Replace buttons; click the preview to pick an image. */
   compact?: boolean;
+  /** When set, click opens this handler instead of the file picker (profile trigger). */
+  onActivate?: () => void;
+  variant?: "default" | "dialog";
 }) {
-  const cfg = SLOT[kind];
+  const cfg = (variant === "dialog" ? SLOT_DIALOG : SLOT)[kind];
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -263,7 +287,12 @@ export function PcImageSlot({
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (!editing) {
-      if (!readOnly) fileRef.current?.click();
+      if (readOnly) return;
+      if (onActivate) {
+        onActivate();
+        return;
+      }
+      fileRef.current?.click();
       return;
     }
     e.preventDefault();
@@ -303,10 +332,14 @@ export function PcImageSlot({
     }
   };
 
+  const hideIdleControls = compact || Boolean(onActivate) || variant === "dialog";
+
   const slotClassName = [
     "pc-image-slot",
     `pc-image-slot--${kind}`,
     compact ? "pc-image-slot--compact" : "",
+    onActivate ? "pc-image-slot--trigger" : "",
+    variant === "dialog" ? "pc-image-slot--dialog" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -356,13 +389,19 @@ export function PcImageSlot({
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
+            if (onActivate) {
+              onActivate();
+              return;
+            }
             fileRef.current?.click();
           }
         }}
         title={
           editing
             ? "Drag to pan · scroll to zoom"
-            : `Click to choose ${cfg.label.toLowerCase()}`
+            : onActivate
+              ? "Click to edit character images"
+              : `Click to choose ${cfg.label.toLowerCase()}`
         }
       >
         {editing ? (
@@ -385,17 +424,19 @@ export function PcImageSlot({
           </span>
         )}
       </div>
-      <input
-        ref={fileRef}
-        type="file"
-        accept={ACCEPTED}
-        className="sr-only"
-        onChange={(e) => {
-          void onFile(e.target.files?.[0] ?? null);
-          e.target.value = "";
-        }}
-      />
-      {editing || !compact ? (
+      {onActivate ? null : (
+        <input
+          ref={fileRef}
+          type="file"
+          accept={ACCEPTED}
+          className="sr-only"
+          onChange={(e) => {
+            void onFile(e.target.files?.[0] ?? null);
+            e.target.value = "";
+          }}
+        />
+      )}
+      {editing || !hideIdleControls || (variant === "dialog" && displayUrl) ? (
         <div className="pc-image-slot-controls">
           {editing ? (
             <>
@@ -435,6 +476,15 @@ export function PcImageSlot({
                 Cancel
               </button>
             </>
+          ) : variant === "dialog" && displayUrl ? (
+            <button
+              type="button"
+              className="tool-btn-secondary"
+              disabled={busy}
+              onClick={() => void clearImage()}
+            >
+              Remove
+            </button>
           ) : (
             <>
               <button

@@ -6283,24 +6283,81 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
-    "identity abilities"
-    "senses biography";
+    "xp xp"
+    "identity abilities";
   gap: 0.4rem;
-  align-items: stretch;
+  align-items: start;
+}
+
+.pc-main-xp-bar {
+  grid-area: xp;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 20%, var(--border-color));
+  border-radius: var(--radius-md, 0.5rem);
+  background: color-mix(in srgb, var(--bg-primary) 40%, var(--bg-card));
+}
+
+.pc-main-xp-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
+.pc-main-xp-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pc-main-xp-spacer {
+  width: 1.25rem;
+  flex-shrink: 0;
+}
+
+.pc-main-xp-bar .pc-xp-gauge {
+  min-width: 0;
+}
+
+.pc-main-xp-bar .pc-xp-gauge-track {
+  height: 1.1rem;
+}
+
+.pc-main-xp-bar .pc-xp-gauge-label {
+  font-size: 0.625rem;
+}
+
+.pc-main-xp-bar .pc-xp-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.75rem;
+  margin-top: 0;
 }
 
 .pc-main-col-identity {
   grid-area: identity;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0.4rem;
   min-width: 0;
   width: 100%;
+  height: auto;
+  align-self: start;
 }
 
 .pc-main-col-identity > .pc-sheet-card {
   width: 100%;
   min-width: 0;
+  flex: 0 0 auto;
+  height: auto;
 }
 
 .pc-main-stats {
@@ -6309,7 +6366,13 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   flex-direction: column;
   gap: 0.4rem;
   min-width: 0;
-  min-height: 0;
+  height: auto;
+  align-self: start;
+}
+
+.pc-main-stats > .pc-sheet-card {
+  flex: 0 0 auto;
+  height: auto;
 }
 
 .pc-main-abilities {
@@ -6318,13 +6381,15 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-identity-extra {
-  grid-area: senses;
   min-width: 0;
+  flex: 0 0 auto;
+  height: auto;
 }
 
 .pc-main-biography {
-  grid-area: biography;
   min-width: 0;
+  flex: 0 0 auto;
+  height: auto;
   container-type: inline-size;
   container-name: pc-biography;
 }
@@ -6335,6 +6400,32 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   gap: 0.4rem;
   width: 100%;
   min-width: 0;
+}
+
+.pc-main-header-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+}
+
+.pc-main-header-block .pc-main-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pc-main-class-summary {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-secondary);
 }
 
 .pc-main-profile .pc-main-header {
@@ -6410,16 +6501,6 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 .pc-main-profile .pc-main-header .npc-sheet-name {
   font-size: 1.25rem;
   line-height: 1.2;
-}
-
-.pc-main-profile .pc-main-identity {
-  margin: 0.2rem 0 0;
-}
-
-.pc-main-profile .pc-main-identity-core {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  line-height: 1.35;
 }
 
 .pc-main-classes,
@@ -6819,10 +6900,9 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   .pc-main-layout {
     grid-template-columns: 1fr;
     grid-template-areas:
+      "xp"
       "identity"
-      "abilities"
-      "senses"
-      "biography";
+      "abilities";
   }
 
   .pc-main-meta {
@@ -7053,6 +7133,87 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 .pc-image-slot-error {
   font-size: 0.7rem;
   color: var(--danger, #c44);
+}
+
+.pc-image-slot--trigger .pc-image-slot-stage--filled {
+  cursor: pointer;
+}
+
+.pc-image-slot--trigger .pc-image-slot-stage--filled:active {
+  cursor: pointer;
+}
+
+.pc-image-dialog {
+  width: min(34rem, calc(100vw - 2rem));
+}
+
+.pc-image-dialog-intro {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.pc-image-dialog-slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+  align-items: start;
+}
+
+.pc-image-dialog .pc-image-slot--dialog {
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pc-image-dialog .pc-image-slot--dialog .pc-image-slot-label {
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.pc-image-dialog .pc-image-slot--dialog.pc-image-slot--profile .pc-image-slot-stage {
+  width: 11rem;
+  height: 11rem;
+  margin-top: 0;
+}
+
+.pc-image-dialog .pc-image-slot--dialog.pc-image-slot--token .pc-image-slot-stage,
+.pc-image-dialog .pc-image-slot--dialog .pc-image-slot-stage--round {
+  width: 10rem;
+  height: 10rem;
+}
+
+.pc-image-dialog .pc-image-slot--dialog .pc-image-slot-placeholder {
+  padding: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.pc-image-dialog .pc-image-slot--dialog .pc-image-slot-controls {
+  justify-content: center;
+  width: 100%;
+  max-width: 11rem;
+}
+
+.pc-image-dialog .pc-image-slot--dialog.pc-image-slot--token .pc-image-slot-controls {
+  max-width: 10rem;
+}
+
+.pc-image-dialog .pc-image-slot--dialog .pc-image-slot-controls button {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pc-image-dialog .pc-image-slot--dialog .pc-image-slot-error {
+  text-align: center;
+  max-width: 11rem;
+}
+
+.pc-image-dialog .pc-image-slot--dialog.pc-image-slot--token .pc-image-slot-error {
+  max-width: 10rem;
 }
 
 .pc-main-identity {
@@ -9054,29 +9215,10 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   gap: 0.5rem 0.75rem;
 }
 
-.pc-biography-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
 .pc-biography-physical {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem 0.5rem;
-}
-
-.pc-biography-xp {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.pc-biography-xp-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.35rem;
 }
 
 .pc-xp-settings-toggle {
@@ -9152,10 +9294,6 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 
 @container pc-main (max-width: 640px) {
   .pc-physical-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .pc-xp-settings {
     grid-template-columns: 1fr;
   }
 }
