@@ -12,6 +12,7 @@ import { parseSpellsPerDayFromAdvancementHtml } from "./parseClassSpellTables";
 import { normalizeCombatState } from "./combatStats";
 import { normalizeHitPointsState, syncHitDice } from "./hitPoints";
 import { normalizePcPlanState } from "./normalizePlanState";
+import { computeAutoDefenses } from "./pcDefenses";
 import {
   collectPrestigeCasterContributions,
   isPrestigeOnlyCasterClass,
@@ -19,6 +20,7 @@ import {
 } from "./prestigeCasting";
 import { seedResourcesFromAbilities } from "./resources";
 import { applySkillSynergies } from "./skillSynergy";
+import { applySpecialAttacksNormalization } from "./specialAttacks";
 import {
   normalizeAbilityBase,
   normalizeAbilityDamage,
@@ -215,6 +217,15 @@ export function syncPcPlanState(
     );
   }
 
+  if (!state.identity.defensesCustomized) {
+    state.identity.defenses = computeAutoDefenses(
+      raceFeatures,
+      options.classAbilities ?? [],
+      classDescriptions,
+      state.identity.race,
+    );
+  }
+
   const withHitPoints: PcPlanState = {
     ...state,
     abilityBase: state.abilityBase ?? normalizeAbilityBase(state),
@@ -224,6 +235,7 @@ export function syncPcPlanState(
     treasure: ensureTreasure(state.treasure),
     spellClasses: nextSpellClasses,
   };
+  applySpecialAttacksNormalization(withHitPoints.combat);
   syncHitDice(withHitPoints, options.classHitDice ?? {});
   return withHitPoints;
 }

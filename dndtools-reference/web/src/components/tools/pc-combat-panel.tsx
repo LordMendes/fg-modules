@@ -28,6 +28,7 @@ import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { ClassDerivedFeatures } from "@/lib/pc-planner/parseClassAbilityEffects";
 import type { RaceDerivedFeatures } from "@/lib/pc-planner/parseRaceFeatures";
 import { PcDefensesBlock } from "@/components/tools/pc-identity-extra";
+import { PcSpecialAttacksBlock } from "@/components/tools/pc-special-attacks-block";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { CombatState, PcPlanState } from "@/lib/pc-planner/types";
 
@@ -42,7 +43,7 @@ type PcCombatPanelProps = {
 
 type CombatNumberKey = Exclude<
   keyof CombatState,
-  "attacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
+  "attacks" | "specialAttacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
 >;
 
 const ROLLABLE_HIT_DIE_SIDES = new Set<number>([4, 6, 8, 10, 12, 20, 100]);
@@ -806,21 +807,7 @@ export function PcCombatPanel({
           </div>
       </PcSheetCard>
 
-      <PcSheetCard title="Special attacks" className="pc-combat-attacks-card">
-        <label className="pc-identity-field pc-combat-attacks-field">
-          <textarea
-            className="pc-sheet-input pc-sheet-textarea"
-            rows={3}
-            value={state.combat.attacks}
-            placeholder="Special attacks, natural weapons…"
-            onChange={(e) =>
-              patch((s) => {
-                s.combat.attacks = e.target.value;
-              })
-            }
-          />
-        </label>
-      </PcSheetCard>
+      <PcSpecialAttacksBlock state={state} patch={patch} bab={stats.bab} />
 
       <PcDefensesBlock state={state} patch={patch} />
     </div>

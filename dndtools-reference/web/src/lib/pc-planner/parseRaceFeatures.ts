@@ -1,4 +1,7 @@
 import type { AbilityKey, PcDefensesState, PcSensesState } from "./types";
+import { parseDefenseEntriesFromText } from "./pcDefenses";
+
+export { formatDefensesLine } from "./pcDefenses";
 
 const ABILITY_NAMES: Record<string, AbilityKey> = {
   strength: "str",
@@ -264,16 +267,6 @@ export function visionRangeSquaresFromSenseLines(
   return visionRangeSquaresFromSenses(parseSensesFromText(lines.join(", ")), scaleFeet);
 }
 
-export function formatDefensesLine(defenses: PcDefensesState): string {
-  const parts: string[] = [];
-  if (defenses.dr.trim()) parts.push(`DR ${defenses.dr.trim()}`);
-  if (defenses.resistances.trim()) parts.push(`Resist ${defenses.resistances.trim()}`);
-  if (defenses.immunities.trim()) parts.push(`Immune ${defenses.immunities.trim()}`);
-  if (defenses.vulnerabilities.trim()) parts.push(`Vulnerable ${defenses.vulnerabilities.trim()}`);
-  if (defenses.extra.trim()) parts.push(defenses.extra.trim());
-  return parts.join("; ");
-}
-
 /** Vision range in grid squares from senses (default 12 when normal vision). */
 export function visionRangeSquaresFromSenses(
   senses: PcSensesState,
@@ -306,11 +299,7 @@ export function parseRaceFeatures(input: {
   const senses = parseSensesFromText(text);
   const languages = parseRacialLanguages(text);
   const defenses: PcDefensesState = {
-    dr: parseDamageReduction(text),
-    resistances: parseEnergyResistance(text),
-    immunities: parseImmunities(text),
-    vulnerabilities: "",
-    extra: "",
+    entries: parseDefenseEntriesFromText(text, "race"),
   };
 
   return {

@@ -20,6 +20,8 @@ const LOG_TAB_KEY = "pc-planner-dice-log-tab";
 
 type LogTab = "rolls" | "combat";
 
+const EMPTY_COMBAT_EVENTS: never[] = [];
+
 export function DiceLogTray() {
   const { lastResult, history, isCampaign } = useDice();
   const combatCtx = useCombatContext();
@@ -29,8 +31,8 @@ export function DiceLogTray() {
       if (!live?.store) return () => {};
       return live.store.subscribe(onStoreChange);
     },
-    () => live?.store.getState().combatEvents ?? [],
-    () => [],
+    () => live?.store.getState().combatEvents ?? EMPTY_COMBAT_EVENTS,
+    () => EMPTY_COMBAT_EVENTS,
   );
   const [expanded, setExpanded] = useState(false);
   const [tab, setTab] = useState<LogTab>("rolls");

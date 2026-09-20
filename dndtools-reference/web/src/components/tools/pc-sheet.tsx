@@ -65,7 +65,7 @@ export type PcSheetProps = {
   onSpellClassIndexChange: (index: number) => void;
   compendium: PcCompendiumBundle | null;
   compendiumLoading?: boolean;
-  onAddFeat: (slug: string, name: string, choice?: string) => void;
+  onAddFeat: (slug: string, name: string, choice?: string, isFlaw?: boolean) => void;
   onRemoveFeat: (slug: string) => void;
   onAddSpell: (slug: string, name: string, level: number) => void;
   onRemoveSpell: (slug: string) => void;
@@ -227,7 +227,12 @@ export function PcSheet({
                 onNameBlur={onNameBlur}
               />
               <PcMainClasses state={state} patch={patch} />
-              <PcMainDivineArcane state={state} patch={patch} />
+              <PcMainDivineArcane
+                state={state}
+                patch={patch}
+                readOnly={readOnly}
+                section="divine"
+              />
               <PcSensesLanguagesBlock state={state} patch={patch} readOnly={readOnly} />
             </div>
             <div className="pc-main-stats">
@@ -242,6 +247,12 @@ export function PcSheet({
                 raceFeatures={raceFeatures}
                 classFeatures={resolvedClassFeatures}
                 classAdvancement={compendium?.classAdvancement ?? null}
+              />
+              <PcMainDivineArcane
+                state={state}
+                patch={patch}
+                readOnly={readOnly}
+                section="arcane"
               />
               <PcMainBiography state={state} patch={patch} readOnly={readOnly} />
             </div>
@@ -543,6 +554,7 @@ export function PcSheet({
             loading={compendiumLoading}
             onAddFeat={onAddFeat}
             onRemoveFeat={onRemoveFeat}
+            readOnly={readOnly}
           />
         )}
 

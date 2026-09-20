@@ -25,6 +25,9 @@ const emptyRace = (extra: Partial<RaceDerivedFeatures> = {}): RaceDerivedFeature
   sizeMod: 0,
   speed: 30,
   speedUnhinderedByEncumbrance: false,
+  senses: { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" },
+  languages: [],
+  defenses: { entries: [] },
   ...extra,
 });
 

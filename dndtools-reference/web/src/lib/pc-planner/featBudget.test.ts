@@ -5,6 +5,7 @@ import { createDefaultPcPlanState } from "./defaultState";
 import {
   computeFeatBudget,
   fighterBonusFeatBudget,
+  formatFeatBudgetSummary,
   generalFeatBudget,
   humanBonusFeatBudget,
 } from "./featBudget";
@@ -48,6 +49,23 @@ describe("feat budget", () => {
     });
     // general 1 + human 1 + fighter 2 = 4
     assert.equal(budget.total, 4);
+  });
+
+  it("grants an extra feat slot per flaw", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [{ classSlug: "fighter-93", className: "Fighter", level: 1 }];
+    state.feats = [
+      { slug: "dodge", name: "Dodge" },
+      { slug: "shaky", name: "Shaky", isFlaw: true },
+    ];
+    const budget = computeFeatBudget(state, null);
+    // general 1 + fighter 1 + flaw 1 = 3
+    assert.equal(budget.general, 1);
+    assert.equal(budget.fighter, 1);
+    assert.equal(budget.flaws, 1);
+    assert.equal(budget.total, 3);
+    assert.equal(budget.spentNonFlaw, 1);
+    assert.equal(formatFeatBudgetSummary(budget), "1 / 3");
   });
 });
 

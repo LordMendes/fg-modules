@@ -13,6 +13,8 @@ export type EntitySearchHit = {
   sourceAbbrev?: string | null;
   /** Spell min level from catalog (when searching spells). */
   minLevel?: number | null;
+  /** Feat category from list extra.type (e.g. "Flaw"). */
+  type?: string | null;
 };
 
 const DEBOUNCE_MS = 250;
@@ -127,6 +129,7 @@ export function EntitySearchCombobox({
               slug: item.slug,
               name: item.name,
               sourceAbbrev: item.sourceAbbrev,
+              type: item.extra?.type ?? null,
               ...(Number.isFinite(parsedLevel) ? { minLevel: parsedLevel } : {}),
             });
             if (hits.length >= 20) break;

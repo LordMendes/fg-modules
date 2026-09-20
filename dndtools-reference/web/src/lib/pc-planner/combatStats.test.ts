@@ -77,6 +77,9 @@ describe("computeCombatStats", () => {
       sizeMod: 0,
       speed: 30,
       speedUnhinderedByEncumbrance: false,
+      senses: { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" },
+      languages: [],
+      defenses: { entries: [] },
     };
 
     const stats = computeCombatStats(state, raceFeatures);
@@ -116,6 +119,9 @@ describe("computeCombatStats", () => {
       sizeMod: 0,
       speed: 20,
       speedUnhinderedByEncumbrance: true,
+      senses: { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" },
+      languages: [],
+      defenses: { entries: [] },
     };
     const stats = computeCombatStats(state, raceFeatures);
     assert.equal(stats.speed.parts.armor, 0);

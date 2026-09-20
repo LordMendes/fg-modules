@@ -23,7 +23,7 @@ const elfRace: RaceDerivedFeatures = {
   speedUnhinderedByEncumbrance: false,
   senses: { darkvisionFeet: 0, lowLight: true, scent: false, extra: "" },
   languages: ["Common", "Elven"],
-  defenses: { dr: "", resistances: "", immunities: "", vulnerabilities: "", extra: "" },
+  defenses: { entries: [] },
 };
 
 describe("effectiveAbilities", () => {

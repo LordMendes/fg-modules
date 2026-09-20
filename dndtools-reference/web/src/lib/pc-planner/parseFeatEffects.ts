@@ -181,10 +181,18 @@ export function featNeedsSkillChoice(feat: Pick<FeatEntry, "name" | "slug">): bo
   return normalized === "skill focus" || slug === "skill-focus" || slug.startsWith("skill-focus-");
 }
 
-export function createFeatEntry(slug: string, name: string, choice?: string): FeatEntry {
+export function createFeatEntry(
+  slug: string,
+  name: string,
+  choice?: string,
+  isFlaw = false,
+): FeatEntry {
   const stub = { slug, name };
-  if (featNeedsSkillChoice(stub)) {
-    return { slug, name, skillChoice: choice };
-  }
-  return choice ? { slug, name, choice } : { slug, name };
+  const entry: FeatEntry = featNeedsSkillChoice(stub)
+    ? { slug, name, skillChoice: choice }
+    : choice
+      ? { slug, name, choice }
+      : { slug, name };
+  if (isFlaw) entry.isFlaw = true;
+  return entry;
 }

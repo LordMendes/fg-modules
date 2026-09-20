@@ -1,25 +1,25 @@
 import { emptyDerivedList, normalizeDerivedList, type DerivedListField } from "./derivedField";
+import { emptyDefenses, normalizeDefensesState } from "./pcDefenses";
 import { sensesLinesFromState } from "./parseRaceFeatures";
 import { normalizeAbilityDamage, normalizeAbilityDrain } from "./syncDerived";
 import { normalizeCombatState } from "./combatStats";
+import { applySpecialAttacksNormalization } from "./specialAttacks";
+
 import { normalizeHitPointsState } from "./hitPoints";
 import { ensureTreasure } from "./treasure";
 import type {
   PcCombatModes,
   PcConditionEntry,
-  PcDefensesState,
   PcPlanState,
   PcResourceEntry,
   PcSensesState,
   SpellClassState,
 } from "./types";
 
+export { emptyDefenses } from "./pcDefenses";
+
 export function emptySenses(): PcSensesState {
   return { darkvisionFeet: 0, lowLight: false, scent: false, extra: "" };
-}
-
-export function emptyDefenses(): PcDefensesState {
-  return { dr: "", resistances: "", immunities: "", vulnerabilities: "", extra: "" };
 }
 
 export function emptyCombatModes(): PcCombatModes {
@@ -68,18 +68,8 @@ function normalizeIdentitySenses(
   return emptyDerivedList();
 }
 
-function normalizeDefenses(raw: unknown): PcDefensesState {
-  if (!raw || typeof raw !== "object") return emptyDefenses();
-  const rec = raw as Record<string, unknown>;
-  const str = (key: keyof PcDefensesState) =>
-    typeof rec[key] === "string" ? (rec[key] as string) : "";
-  return {
-    dr: str("dr"),
-    resistances: str("resistances"),
-    immunities: str("immunities"),
-    vulnerabilities: str("vulnerabilities"),
-    extra: str("extra"),
-  };
+function normalizeDefenses(raw: unknown) {
+  return normalizeDefensesState(raw);
 }
 
 function normalizeSpellClass(raw: unknown): SpellClassState | null {
@@ -221,6 +211,7 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   state.abilityDamage = normalizeAbilityDamage(state.abilityDamage);
   state.abilityDrain = normalizeAbilityDrain(state.abilityDrain);
   state.combat = normalizeCombatState(state.combat);
+  applySpecialAttacksNormalization(state.combat);
   state.hitPoints = normalizeHitPointsState(state.hitPoints);
   state.treasure = ensureTreasure(state.treasure);
   state.combatModes = normalizeCombatModes(state.combatModes);

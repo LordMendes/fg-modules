@@ -15,14 +15,12 @@ export function PcSheetCard({
 }) {
   return (
     <section className={["pc-sheet-card", className].filter(Boolean).join(" ")}>
-      {actions ? (
-        <div className="pc-sheet-card-header">
-          <h3>{title}</h3>
-          <div className="pc-sheet-card-header-actions">{actions}</div>
-        </div>
-      ) : (
+      <div className="pc-sheet-card-header">
         <h3>{title}</h3>
-      )}
+        {actions ? (
+          <div className="pc-sheet-card-header-actions">{actions}</div>
+        ) : null}
+      </div>
       {children}
     </section>
   );

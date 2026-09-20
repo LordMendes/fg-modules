@@ -208,7 +208,5 @@ export function applyRaceIdentityFieldsOnRaceChange(
   } else if (!state.identity.languages.customized) {
     state.identity.languages.lines = [...raceLanguages];
   }
-  if (!state.identity.defensesCustomized) {
-    state.identity.defenses = { ...race.defenses };
-  }
+  // Defenses are synced from race + class in syncPcPlanState.
 }

@@ -268,12 +268,26 @@ export type PcSensesState = {
   extra: string;
 };
 
+export type PcDefenseKind = "dr" | "resistance" | "immunity" | "vulnerability";
+
+export type PcDefenseSource = "race" | "class" | "custom";
+
+export type PcDefenseEntry = {
+  id: string;
+  kind: PcDefenseKind;
+  /** DR / resistance amount. */
+  amount?: number;
+  /** DR bypass (e.g. "-", "magic", "adamantine"). */
+  bypass?: string;
+  /** Energy type or immunity/vulnerability target. */
+  subject?: string;
+  source: PcDefenseSource;
+  /** Human-readable origin for tooltips (race name, class ability, etc.). */
+  sourceLabel?: string;
+};
+
 export type PcDefensesState = {
-  dr: string;
-  resistances: string;
-  immunities: string;
-  vulnerabilities: string;
-  extra: string;
+  entries: PcDefenseEntry[];
 };
 
 export type PcCombatModes = {
@@ -302,6 +316,30 @@ export type PcResourceEntry = {
   auto?: boolean;
 };
 
+export type PcSpecialAttackKind = "natural" | "special";
+
+export type PcSpecialAttackSaveType = "fort" | "ref" | "will";
+
+export type PcSpecialAttackEntry = {
+  id: string;
+  kind: PcSpecialAttackKind;
+  /** Catalog id, e.g. "bite", "claw", "breath", "custom". */
+  templateId: string;
+  name: string;
+  count: number;
+  /** Natural: full Str vs secondary -5 / ½ Str. */
+  primary: boolean;
+  damageM: string;
+  damageS: string;
+  damageType: string;
+  critical?: string | null;
+  attackMisc?: number;
+  damageMisc?: number;
+  saveDc?: number | null;
+  saveType?: PcSpecialAttackSaveType | null;
+  notes?: string;
+};
+
 export type CombatState = {
   sizeMod: number;
   meleeMisc: number;
@@ -323,6 +361,8 @@ export type CombatState = {
   srBase: number;
   srMisc: number;
   attacks: string;
+  /** Structured natural / special attacks (Combat + Actions). */
+  specialAttacks?: PcSpecialAttackEntry[];
   /** Manual ASF bypass (0–100); null = auto from gear. */
   asfOverride?: number | null;
   /** When true, item bonuses of the same type all stack (house rule). */

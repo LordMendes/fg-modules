@@ -7,6 +7,7 @@ import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
 import { PcSpellListItem } from "@/components/tools/pc-spell-list-item";
 import { PcItemSpellListItem } from "@/components/tools/pc-item-spell-list-item";
 import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
+import { PcSpecialAttacksActions } from "@/components/tools/pc-special-attacks-actions";
 import { castingModeLabel, getClassCastingInfo, halfCasterEffectiveLevel, isHalfCaster } from "@/lib/pc-planner/classCasting";
 import {
   computeCombatStats,
@@ -28,6 +29,7 @@ import {
   computeSpellClass,
   preparedCountAtLevel,
 } from "@/lib/pc-planner/spellSlots";
+import { computeNaturalAttackRows } from "@/lib/pc-planner/specialAttacks";
 import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
 import { PcResourcesPanel } from "@/components/tools/pc-actions-extras";
 import type { PcPlanState } from "@/lib/pc-planner/types";
@@ -76,6 +78,7 @@ function CombatSummary({
     deriveFeatEffects(state.feats),
   );
   const weapons = computeWeaponAttackRows(state, stats);
+  const naturalWeapons = computeNaturalAttackRows(state, stats);
   const [shortcutOpen, setShortcutOpen] = useState(false);
 
   return (
@@ -165,20 +168,14 @@ function CombatSummary({
         <PcWeaponAttacksList weapons={weapons} pcPlanId={pcPlanId} />
       </div>
 
-      <label className="pc-actions-attacks">
-        <span className="npc-sheet-sub">Special attacks</span>
-        <textarea
-          className="pc-sheet-input pc-sheet-textarea"
-          rows={2}
-          value={state.combat.attacks}
-          placeholder="Special attacks, natural weapons…"
-          onChange={(e) =>
-            patch((s) => {
-              s.combat.attacks = e.target.value;
-            })
-          }
-        />
-      </label>
+      {naturalWeapons.length > 0 ? (
+        <div className="pc-actions-weapons pc-actions-natural-weapons">
+          <h4 className="pc-actions-weapons-heading">Natural weapons</h4>
+          <PcWeaponAttacksList weapons={naturalWeapons} pcPlanId={pcPlanId} />
+        </div>
+      ) : null}
+
+      <PcSpecialAttacksActions state={state} />
     </div>
   );
 }
@@ -339,25 +336,6 @@ export function PcActionsPanel({
                 }
               />
             </label>
-
-            {showSpecialist ? (
-              <label className="pc-opposed-schools">
-                <span className="npc-sheet-sub">Opposed schools (hint only)</span>
-                <input
-                  className="pc-sheet-input"
-                  placeholder="evocation, necromancy"
-                  value={(state.identity.opposedSchools ?? []).join(", ")}
-                  onChange={(e) =>
-                    patch((s) => {
-                      s.identity.opposedSchools = e.target.value
-                        .split(/[,;]+/)
-                        .map((x) => x.trim())
-                        .filter(Boolean);
-                    })
-                  }
-                />
-              </label>
-            ) : null}
 
             <dl className="pc-actions-casting-meta">
               <div>

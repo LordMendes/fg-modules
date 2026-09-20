@@ -127,5 +127,5 @@ export function computeFeatBudget(
 }
 
 export function formatFeatBudgetSummary(budget: FeatBudgetBreakdown): string {
-  return `${budget.spentNonFlaw} / ${budget.total - budget.flaws}`;
+  return `${budget.spentNonFlaw} / ${budget.total}`;
 }

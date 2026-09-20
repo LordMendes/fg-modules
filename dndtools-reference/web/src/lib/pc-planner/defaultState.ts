@@ -98,6 +98,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
       srBase: 0,
       srMisc: 0,
       attacks: "",
+      specialAttacks: [],
       asfOverride: null,
       addAllBonusTypes: false,
       suppressSynergies: false,

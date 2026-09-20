@@ -21,6 +21,7 @@ import type { FeatDerivedFeatures } from "./parseFeatEffects";
 import { emptyFeatDerivedFeatures } from "./parseFeatEffects";
 import type { PcPlanState } from "./types";
 
+
 export type ClassAdvancementMap = Record<string, ClassAdvancementRow[]>;
 
 export type CombatBreakdownRow = {
@@ -390,6 +391,11 @@ export function normalizeCombatState(raw: unknown): PcPlanState["combat"] {
   const str = (key: string, fallback = "") =>
     typeof combat[key] === "string" ? (combat[key] as string) : fallback;
 
+  const legacyAttacks = str("attacks");
+  const specialAttacksRaw = Array.isArray(combat.specialAttacks)
+    ? combat.specialAttacks
+    : undefined;
+
   return {
     sizeMod: num("sizeMod"),
     meleeMisc: num("meleeMisc"),
@@ -410,7 +416,8 @@ export function normalizeCombatState(raw: unknown): PcPlanState["combat"] {
     speedMisc: num("speedMisc"),
     srBase: num("srBase"),
     srMisc: num("srMisc"),
-    attacks: str("attacks"),
+    attacks: legacyAttacks,
+    ...(specialAttacksRaw != null ? { specialAttacks: specialAttacksRaw as PcPlanState["combat"]["specialAttacks"] } : {}),
     asfOverride:
       combat.asfOverride != null && Number.isFinite(combat.asfOverride)
         ? Math.max(0, Math.min(100, Math.trunc(combat.asfOverride as number)))
@@ -422,7 +429,7 @@ export function normalizeCombatState(raw: unknown): PcPlanState["combat"] {
 
 type CombatNumericKey = Exclude<
   keyof PcPlanState["combat"],
-  "attacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
+  "attacks" | "specialAttacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
 >;
 
 export function patchCombatNumber(
