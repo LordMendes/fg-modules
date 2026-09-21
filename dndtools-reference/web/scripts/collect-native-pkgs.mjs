@@ -98,13 +98,20 @@ function packageRoot(specifier) {
   return specifier.split("/")[0];
 }
 
+/** npm name: optional @scope/, then unscoped name. Rejects prose like `from "If any Tiny..."`. */
+function isValidNpmPackageName(name) {
+  if (!name || name.length > 214) return false;
+  if (name.startsWith(".") || name.startsWith("_")) return false;
+  return /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/i.test(name);
+}
+
 function isExternalSpecifier(specifier) {
   if (!specifier || specifier.startsWith(".") || specifier.startsWith("@/")) {
     return false;
   }
   const root = packageRoot(specifier);
   if (NODE_BUILTINS.has(root)) return false;
-  return true;
+  return isValidNpmPackageName(root);
 }
 
 function scanBundleExternals(filePath) {

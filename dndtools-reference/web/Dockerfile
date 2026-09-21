@@ -83,7 +83,7 @@ RUN overlay_pkgs() { \
   && link_web_pkg prisma \
   && while IFS= read -r pkg; do \
        [ -z "$pkg" ] && continue; \
-       link_web_pkg "$pkg" || exit 1; \
+       link_web_pkg "$pkg" || { echo "failed to link package: $pkg" >&2; exit 1; }; \
      done < /tmp/native-pkgs/link-packages.txt \
   && mkdir -p /app/web/node_modules/.bin \
   && ln -sfn ../prisma/build/index.js /app/web/node_modules/.bin/prisma \
