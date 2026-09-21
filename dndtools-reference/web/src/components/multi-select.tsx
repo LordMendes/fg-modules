@@ -7,7 +7,7 @@ import {
   useMemo,
   useRef,
   useState,
-  type MouseEvent as ReactMouseEvent,
+  type SyntheticEvent,
 } from "react";
 import { createPortal } from "react-dom";
 import { Check, ChevronDown, Search, X } from "lucide-react";
@@ -157,7 +157,7 @@ export function MultiSelect({
     onChange(next);
   }
 
-  function removeBadge(optionValue: string, event: ReactMouseEvent) {
+  function removeBadge(optionValue: string, event: SyntheticEvent) {
     event.preventDefault();
     event.stopPropagation();
     onChange(value.filter((v) => v !== optionValue));
