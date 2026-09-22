@@ -62,7 +62,6 @@ export const TOOLS = [
     description:
       "Plan player characters with a Fantasy Grounds character sheet, compendium feat and spell search, and automatic spell slot calculation.",
     source: "SRD 3.5 / Fantasy Grounds",
-    badge: "Beta",
   },
   {
     key: "campaign",
@@ -91,7 +90,6 @@ export const TOOLS = [
     description:
       "Compare expected damage for two weapons by target AC. Pick catalog weapons, edit them like the PC Planner, enter BAB and ability scores or load a saved PC.",
     source: "PHB / SRD",
-    badge: "Beta",
   },
 ] as const;
 
