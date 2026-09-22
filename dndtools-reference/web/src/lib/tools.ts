@@ -83,6 +83,16 @@ export const TOOLS = [
       "Generate a wizard spellbook and level-scaled wishlist from selected compendium sources, with optional specialization and reproducible seeds.",
     source: "PHB / SRD + selected sources",
   },
+  {
+    key: "damage-statistic",
+    label: "Damage Statistic",
+    icon: "📊",
+    href: "/tools/damage-statistic",
+    description:
+      "Compare expected damage for two weapons by target AC. Pick catalog weapons, edit them like the PC Planner, enter BAB and ability scores or load a saved PC.",
+    source: "PHB / SRD",
+    badge: "Beta",
+  },
 ] as const;
 
 export type ToolKey = (typeof TOOLS)[number]["key"];

@@ -12,6 +12,7 @@ import {
   searchAll,
 } from "@/lib/entities";
 import { lookupInventoryItem } from "@/lib/pc-planner/inventoryLookup";
+import { prisma } from "@/lib/prisma";
 import { validateSessionNonce } from "@/lib/session";
 import { rateLimit, getClientIp } from "@/lib/ratelimit";
 import type { CategoryKey } from "@/lib/categories";
@@ -315,4 +316,57 @@ export async function fetchInventoryItem(
   const item = await lookupInventoryItem(input.source, input.slug);
   if (!item) return { success: false, error: "Entry not found" };
   return { success: true, item };
+}
+
+export type CatalogWeaponSummary = {
+  slug: string;
+  name: string;
+  category: string | null;
+  handed: string | null;
+};
+
+export type ListCatalogWeaponsResult = {
+  success: boolean;
+  error?: string;
+  weapons?: CatalogWeaponSummary[];
+};
+
+export async function listCatalogWeapons(
+  nonce: string,
+): Promise<ListCatalogWeaponsResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`catalog-weapons:${ip}`, 30, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  const rows = await prisma.equipment.findMany({
+    where: { kind: "weapon" },
+    orderBy: { name: "asc" },
+    select: {
+      slug: true,
+      name: true,
+      category: true,
+      indexData: true,
+    },
+  });
+
+  const weapons = rows.map((row) => {
+    const index = (row.indexData ?? {}) as Record<string, unknown>;
+    const handed =
+      typeof index.handed === "string" && index.handed.trim()
+        ? index.handed.trim()
+        : null;
+    return {
+      slug: row.slug,
+      name: row.name,
+      category: row.category,
+      handed,
+    };
+  });
+
+  return { success: true, weapons };
 }

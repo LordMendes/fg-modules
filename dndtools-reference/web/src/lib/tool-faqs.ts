@@ -142,6 +142,33 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
         "Optional seeds let you regenerate the same spellbook and wishlist when inputs stay the same, useful for sharing NPC wizards.",
     },
   ],
+  "damage-statistic": [
+    {
+      question: "How is expected damage calculated?",
+      answer:
+        "Hit chance uses a d20 with natural 1 always missing and natural 20 always hitting. Expected damage blends normal hits and confirmed criticals using average dice results.",
+    },
+    {
+      question: "Can I compare two weapons?",
+      answer:
+        "Yes. Weapon A and Weapon B share the same attacker and target. The table shows expected damage for both plus the difference (B minus A) for one round.",
+    },
+    {
+      question: "Does the table include iterative attacks?",
+      answer:
+        "Yes. The full attack columns sum expected damage for every iterative attack bonus from your BAB, using the same attacker stats for each weapon.",
+    },
+    {
+      question: "How does damage reduction work here?",
+      answer:
+        "DR reduces the physical portion of weapon damage only. Energy extras such as flaming still apply. Magic weapons bypass DR/magic when the enhancement bonus is at least +1.",
+    },
+    {
+      question: "Can I load a saved PC Planner character?",
+      answer:
+        "When signed in, pick one of your saved PC plans to fill BAB, ability scores, feats, and equipped weapons. You can still edit any field after loading.",
+    },
+  ],
 };
 
 export const TOOLS_PAGE_FAQS: ToolFaq[] = [

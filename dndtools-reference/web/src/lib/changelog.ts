@@ -7,6 +7,12 @@ export type ChangelogEntry = {
 /** Site feature releases (not per-scrape data imports). */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: "2026-09-22",
+    title: "Damage Statistic tool",
+    summary:
+      "Compare expected damage for two weapons by target AC, with catalog search, PC Planner-style weapon editing, optional saved PC loading, and DR.",
+  },
+  {
     date: "2026-09-18",
     title: "SEO and AI discovery",
     summary:

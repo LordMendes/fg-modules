@@ -3644,6 +3644,212 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   margin-top: 1rem;
 }
 
+.damage-statistic-calculator {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.damage-statistic-grid,
+.damage-statistic-weapons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.damage-statistic-weapons-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.damage-statistic-panel {
+  padding: 1rem;
+}
+
+.damage-statistic-panel-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.damage-statistic-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.75rem;
+}
+
+.damage-statistic-note {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.damage-statistic-error {
+  margin: 0.5rem 0 0;
+  color: var(--danger, #b42318);
+  font-size: 0.92rem;
+}
+
+.damage-statistic-equipped {
+  margin-bottom: 0.75rem;
+}
+
+.damage-statistic-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.damage-statistic-chip {
+  font-size: 0.85rem;
+}
+
+.damage-statistic-weapon-list {
+  margin-top: 0.5rem;
+  max-height: 10rem;
+  overflow: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+}
+
+.damage-statistic-weapon-option {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.damage-statistic-weapon-option:last-child {
+  border-bottom: 0;
+}
+
+.damage-statistic-weapon-option:hover {
+  background: var(--bg-secondary);
+}
+
+.damage-statistic-weapon-hint {
+  margin: 0.5rem;
+}
+
+.damage-statistic-weapon-meta {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.damage-statistic-weapon-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.damage-statistic-weapon-name {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.damage-statistic-weapon-line {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.damage-statistic-dr {
+  margin-top: 0.75rem;
+}
+
+.damage-statistic-dr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.damage-statistic-dr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.damage-statistic-dr-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+.damage-statistic-results {
+  padding: 1rem;
+}
+
+.damage-statistic-table-wrap {
+  overflow: auto;
+}
+
+.damage-statistic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.damage-statistic-table th,
+.damage-statistic-table td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.damage-statistic-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  z-index: 1;
+}
+
+.damage-statistic-compare-table thead tr:first-child th {
+  text-align: center;
+}
+
+.damage-statistic-compare-table thead tr:last-child th {
+  top: 2.4rem;
+}
+
+.damage-statistic-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.damage-statistic-win {
+  font-weight: 600;
+  color: var(--combat-hit);
+}
+
+.damage-statistic-delta-pos {
+  color: var(--combat-hit);
+}
+
+.damage-statistic-delta-neg {
+  color: var(--combat-miss);
+}
+
 .turn-undead-target-list {
   list-style: none;
   padding: 0;
