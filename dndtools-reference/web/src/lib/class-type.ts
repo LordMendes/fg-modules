@@ -4,6 +4,7 @@ export type ClassTypeInput = {
   index?: { prestige_level?: string | null } | null;
   requirements_html?: string | null;
   requirements_text?: string | null;
+  min_bab_req?: string | null;
   advancement?: Array<{ level?: number | string | null }> | null;
 };
 
@@ -31,10 +32,11 @@ export function classifyClassType(record: ClassTypeInput): ClassType {
   const prestigeLevel = String(index.prestige_level ?? "").trim();
   if (prestigeLevel) return "prestige";
 
-  const requirements = String(
-    record.requirements_html ?? record.requirements_text ?? "",
-  ).trim();
-  if (requirements) return "prestige";
+  const hasRequirements =
+    String(record.requirements_html ?? "").trim().length > 0 ||
+    String(record.requirements_text ?? "").trim().length > 0 ||
+    String(record.min_bab_req ?? "").trim().length > 0;
+  if (hasRequirements) return "prestige";
 
   const maxLevel = maxAdvancementLevel(record);
   if (maxLevel != null && maxLevel < 20) return "prestige";

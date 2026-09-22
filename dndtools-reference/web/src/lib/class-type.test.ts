@@ -29,6 +29,29 @@ describe("classifyClassType", () => {
     );
   });
 
+  it("classifies requirements text as prestige when requirements HTML is empty", () => {
+    assert.equal(
+      classifyClassType({
+        requirements_html: "",
+        requirements_text: "Base attack bonus +5",
+        advancement: makeAdvancement(20),
+      }),
+      "prestige",
+    );
+  });
+
+  it("classifies a minimum BAB prerequisite as prestige", () => {
+    assert.equal(
+      classifyClassType({
+        requirements_html: "",
+        requirements_text: "",
+        min_bab_req: "+5",
+        advancement: makeAdvancement(20),
+      }),
+      "prestige",
+    );
+  });
+
   it("classifies short advancement tables without requirements as prestige", () => {
     assert.equal(
       classifyClassType({
