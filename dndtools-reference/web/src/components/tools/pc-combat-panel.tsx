@@ -275,7 +275,7 @@ export function PcCombatPanel({
   classAdvancement = null,
   classHitDice = null,
 }: PcCombatPanelProps) {
-  const { roll, rolling, ready, themeColor } = useDice();
+  const { roll, canRoll, themeColor } = useDice();
   const stats = computeCombatStats(
     state,
     raceFeatures,
@@ -335,7 +335,7 @@ export function PcCombatPanel({
 
   function rollHitDie(index: number, sides: number, label: string) {
     const dieSides = asDieSides(sides);
-    if (!dieSides || !ready || rolling) return;
+    if (!dieSides || !canRoll) return;
     roll(
       {
         id: createRollId(),
@@ -467,7 +467,7 @@ export function PcCombatPanel({
                       <button
                         type="button"
                         className="pc-combat-hp-roll-btn"
-                        disabled={!dieSides || !ready || rolling || sides <= 0}
+                        disabled={!dieSides || !canRoll || sides <= 0}
                         title={
                           dieSides
                             ? `Roll d${sides} for ${label} level ${rollRow.classLevel}`

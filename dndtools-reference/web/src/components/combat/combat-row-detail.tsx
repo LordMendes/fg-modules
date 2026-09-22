@@ -74,7 +74,7 @@ function DefenseSection({ c, isDm }: { c: CombatantView; isDm: boolean }) {
 
   const ctx = useCombatContext();
 
-  const { rolling: pending } = useDice();
+  const { canRoll } = useDice();
 
   const [lastDc, setLastDc] = useState(readLastSaveDc);
 
@@ -176,7 +176,7 @@ function DefenseSection({ c, isDm }: { c: CombatantView; isDm: boolean }) {
 
               className="combat-chip combat-chip--save dice-rollable"
 
-              disabled={pending || !ctx}
+              disabled={!canRoll || !ctx}
 
               draggable
 
@@ -266,7 +266,7 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
   const ctx = useCombatContext();
 
-  const { rolling: pending } = useDice();
+  const { canRoll } = useDice();
 
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
@@ -348,7 +348,7 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
                 className="combat-chip combat-chip--dmg dice-rollable combat-spell-cast-btn"
 
-                disabled={pending || !ctx || (usesLeft === 0)}
+                disabled={!canRoll || !ctx || usesLeft === 0}
 
                 draggable
 

@@ -72,7 +72,7 @@ export function SpellCastDetailsView({
   }
 
   function rollCombatCast(overrideSlots = false) {
-    if (!diceCtx || !diceCtx.ready || diceCtx.rolling || !combatCtx || !combatant || !mirroredSpell || !spellKey) {
+    if (!diceCtx || !diceCtx.canRoll || !combatCtx || !combatant || !mirroredSpell || !spellKey) {
       return;
     }
     if (slotsLeft === 0 && !overrideSlots) return;
@@ -152,7 +152,7 @@ export function SpellCastDetailsView({
             <button
               type="button"
               className="tool-btn tool-btn--ghost dice-rollable"
-              disabled={!diceCtx.ready || diceCtx.rolling || !canCast}
+              disabled={!diceCtx.canRoll || !canCast}
               title={
                 slotsLeft === 0
                   ? "No slots remaining"
@@ -168,7 +168,7 @@ export function SpellCastDetailsView({
               <button
                 type="button"
                 className="tool-btn tool-btn--ghost"
-                disabled={!diceCtx.ready || diceCtx.rolling}
+                disabled={!diceCtx.canRoll}
                 onClick={() => rollCombatCast(true)}
               >
                 DM override
@@ -214,7 +214,7 @@ export function SpellCastDetailsView({
           <button
             type="button"
             className="tool-btn tool-btn--ghost dice-rollable"
-            disabled={!diceCtx.ready || diceCtx.rolling}
+            disabled={!diceCtx.canRoll}
             onClick={() =>
               diceCtx.roll({
                 id: createRollId(),

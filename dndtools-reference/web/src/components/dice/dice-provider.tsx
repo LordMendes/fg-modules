@@ -39,6 +39,11 @@ const SKIN_ID_KEY = "pc-planner-dice-skin-id";
 const THEME_COLOR_KEY = "pc-planner-dice-theme-color";
 const HISTORY_LIMIT_SOLO = 24;
 const HISTORY_LIMIT_CAMPAIGN = 50;
+const ROLL_QUEUE_LIMIT = 8;
+
+type QueuedRoll = {
+  run: () => void | Promise<void>;
+};
 
 export type CampaignDiceConfig = {
   campaignId: string;
@@ -129,6 +134,7 @@ export function DiceProvider({
   const [pool, setPool] = useState<DicePoolItem[]>([]);
   const [modifier, setModifier] = useState(0);
   const [rolling, setRolling] = useState(false);
+  const [queuedCount, setQueuedCount] = useState(0);
   const [ready, setReady] = useState(false);
   const [activeRequest, setActiveRequest] = useState<RollRequest | null>(null);
   const [lastResult, setLastResult] = useState<RollResult | null>(null);
@@ -152,12 +158,77 @@ export function DiceProvider({
   const seenRollIds = useRef(new Set<string>());
   const readyRef = useRef(false);
   readyRef.current = ready;
+  const activeRequestRef = useRef<RollRequest | null>(null);
+  activeRequestRef.current = activeRequest;
   const completeRollRef = useRef<(result: RollResult) => void>(() => {});
   const failRollRef = useRef<() => void>(() => {});
+  const finishCurrentRollRef = useRef<() => void>(() => {});
+  const busyRef = useRef(false);
+  const rollQueueRef = useRef<QueuedRoll[]>([]);
   const campaignId = campaign?.campaignId ?? null;
   const isCampaign = Boolean(campaignId);
   const historyLimit = isCampaign ? HISTORY_LIMIT_CAMPAIGN : HISTORY_LIMIT_SOLO;
-  const canRoll = isCampaign ? !rolling : ready && !rolling;
+  const canRoll = (isCampaign || ready) && queuedCount < ROLL_QUEUE_LIMIT;
+
+  const syncQueueCount = useCallback(() => {
+    setQueuedCount(rollQueueRef.current.length);
+  }, []);
+
+  const markBusy = useCallback(() => {
+    busyRef.current = true;
+    setRolling(true);
+  }, []);
+
+  const enqueueRoll = useCallback(
+    (run: () => void | Promise<void>): boolean => {
+      if (rollQueueRef.current.length >= ROLL_QUEUE_LIMIT) return false;
+      rollQueueRef.current.push({ run });
+      syncQueueCount();
+      return true;
+    },
+    [syncQueueCount],
+  );
+
+  const finishCurrentRoll = useCallback(() => {
+    setActiveRequest(null);
+    setSilhouetteActive(false);
+
+    if (rollQueueRef.current.length === 0) {
+      busyRef.current = false;
+      setRolling(false);
+      syncQueueCount();
+      return;
+    }
+
+    syncQueueCount();
+    const next = rollQueueRef.current.shift();
+    syncQueueCount();
+    if (!next) {
+      busyRef.current = false;
+      setRolling(false);
+      return;
+    }
+    void Promise.resolve(next.run());
+  }, [syncQueueCount]);
+  finishCurrentRollRef.current = finishCurrentRoll;
+
+  const startIngestAnimation = useCallback(
+    (request: RollRequest, canonical: RollResult | null) => {
+      pendingCanonicalRef.current = canonical;
+      setSilhouetteActive(Boolean(request.silhouetteOnly));
+      if (!readyRef.current) {
+        if (canonical) {
+          completeRollRef.current(canonical);
+        } else {
+          finishCurrentRollRef.current();
+        }
+        return;
+      }
+      markBusy();
+      setActiveRequest(request);
+    },
+    [markBusy],
+  );
 
   const defaultActor = useMemo<RollActor | null>(() => {
     if (!campaign) return null;
@@ -253,14 +324,14 @@ export function DiceProvider({
         });
       }
 
-      pendingCanonicalRef.current = canonical;
-      setSilhouetteActive(Boolean(request.silhouetteOnly));
-      if (readyRef.current) {
-        setRolling(true);
-        setActiveRequest(request);
+      if (busyRef.current && activeRequestRef.current) {
+        enqueueRoll(() => startIngestAnimation(request, canonical));
+        return;
       }
+
+      startIngestAnimation(request, canonical);
     },
-    [historyLimit],
+    [historyLimit, enqueueRoll, startIngestAnimation],
   );
 
   useEffect(() => {
@@ -365,16 +436,26 @@ export function DiceProvider({
 
   const rollLocal = useCallback(
     (request: RollRequest, onComplete?: (result: RollResult) => void) => {
-      if (!ready || rolling) return;
+      if (!readyRef.current) return;
       if (request.dice.every((d) => d.qty <= 0)) return;
-      pendingCanonicalRef.current = null;
-      pendingCombatOutcomeRef.current = undefined;
-      onCompleteRef.current = onComplete ?? null;
-      setSilhouetteActive(false);
-      setRolling(true);
-      setActiveRequest(request);
+
+      const start = () => {
+        if (!readyRef.current) return;
+        pendingCanonicalRef.current = null;
+        pendingCombatOutcomeRef.current = undefined;
+        onCompleteRef.current = onComplete ?? null;
+        setSilhouetteActive(false);
+        markBusy();
+        setActiveRequest(request);
+      };
+
+      if (busyRef.current) {
+        enqueueRoll(start);
+        return;
+      }
+      start();
     },
-    [ready, rolling],
+    [enqueueRoll, markBusy],
   );
 
   const roll = useCallback(
@@ -391,22 +472,44 @@ export function DiceProvider({
       };
 
       if (!campaignId) {
-        if (!ready || rolling) return;
         rollLocal(enriched, onComplete);
         return;
       }
 
-      if (rolling) return;
+      const executeCampaignRoll = () => {
+        // Campaign: server RNG first; every client animates the shared roll once.
+        // Set onComplete before await so SSE-first ingest still fires sheet callbacks.
+        onCompleteRef.current = onComplete ?? null;
+        pendingCombatOutcomeRef.current = undefined;
+        markBusy();
+        void (async () => {
+          try {
+            if (enriched.combat) {
+              const result = await startCombatRollAction({
+                campaignId,
+                label: enriched.label,
+                kind: enriched.kind ?? "other",
+                hidden: Boolean(enriched.hidden),
+                characterName: actor?.characterName ?? null,
+                dice: enriched.dice,
+                modifier: enriched.modifier,
+                iterativeModifiers: enriched.iterativeModifiers,
+                combat: enriched.combat,
+              });
+              if (!result.success || !result.roll) {
+                onCompleteRef.current = null;
+                const message = result.error ?? "Combat roll failed";
+                campaign?.onRollError?.(message);
+                console.warn("[DiceProvider] combat roll failed:", message);
+                finishCurrentRollRef.current();
+                return;
+              }
+              pendingCombatOutcomeRef.current = result.outcome;
+              ingestCampaignRoll(result.roll);
+              return;
+            }
 
-      // Campaign: server RNG first; every client animates the shared roll once.
-      // Set onComplete before await so SSE-first ingest still fires sheet callbacks.
-      onCompleteRef.current = onComplete ?? null;
-      pendingCombatOutcomeRef.current = undefined;
-      setRolling(true);
-      void (async () => {
-        try {
-          if (enriched.combat) {
-            const result = await startCombatRollAction({
+            const result = await startCampaignRoll({
               campaignId,
               label: enriched.label,
               kind: enriched.kind ?? "other",
@@ -415,71 +518,34 @@ export function DiceProvider({
               dice: enriched.dice,
               modifier: enriched.modifier,
               iterativeModifiers: enriched.iterativeModifiers,
-              combat: enriched.combat,
             });
             if (!result.success || !result.roll) {
               onCompleteRef.current = null;
-              setRolling(false);
-              const message = result.error ?? "Combat roll failed";
+              const message = result.error ?? "Roll failed";
               campaign?.onRollError?.(message);
-              console.warn("[DiceProvider] combat roll failed:", message);
+              console.warn("[DiceProvider] campaign roll failed:", message);
+              finishCurrentRollRef.current();
               return;
             }
-            pendingCombatOutcomeRef.current = result.outcome;
             ingestCampaignRoll(result.roll);
-            if (!readyRef.current) {
-              setActiveRequest(null);
-              const canonical = pendingCanonicalRef.current;
-              if (canonical) {
-                completeRollRef.current(canonical);
-              } else {
-                setRolling(false);
-              }
-            }
-            return;
-          }
-
-          const result = await startCampaignRoll({
-            campaignId,
-            label: enriched.label,
-            kind: enriched.kind ?? "other",
-            hidden: Boolean(enriched.hidden),
-            characterName: actor?.characterName ?? null,
-            dice: enriched.dice,
-            modifier: enriched.modifier,
-            iterativeModifiers: enriched.iterativeModifiers,
-          });
-          if (!result.success || !result.roll) {
+          } catch (err) {
             onCompleteRef.current = null;
-            setRolling(false);
-            const message = result.error ?? "Roll failed";
+            const message =
+              err instanceof Error ? err.message : "Roll failed unexpectedly";
             campaign?.onRollError?.(message);
-            console.warn("[DiceProvider] campaign roll failed:", message);
-            return;
+            console.warn("[DiceProvider] campaign roll error:", err);
+            finishCurrentRollRef.current();
           }
-          ingestCampaignRoll(result.roll);
-          if (!readyRef.current) {
-            setActiveRequest(null);
-            const canonical = pendingCanonicalRef.current;
-            if (canonical) {
-              completeRollRef.current(canonical);
-            } else {
-              setRolling(false);
-            }
-          }
-        } catch (err) {
-          onCompleteRef.current = null;
-          setRolling(false);
-          const message =
-            err instanceof Error ? err.message : "Roll failed unexpectedly";
-          campaign?.onRollError?.(message);
-          console.warn("[DiceProvider] campaign roll error:", err);
-        }
-      })();
+        })();
+      };
+
+      if (busyRef.current) {
+        enqueueRoll(executeCampaignRoll);
+        return;
+      }
+      executeCampaignRoll();
     },
     [
-      ready,
-      rolling,
       isCampaign,
       secretModifierHeld,
       defaultActor,
@@ -487,6 +553,8 @@ export function DiceProvider({
       campaign,
       rollLocal,
       ingestCampaignRoll,
+      enqueueRoll,
+      markBusy,
     ],
   );
 
@@ -537,12 +605,11 @@ export function DiceProvider({
 
       if (isCampaign) {
         // Log already written at ingest from server faces; do not log engine faces.
-        setRolling(false);
-        setActiveRequest(null);
         const base = canonical ?? result;
         apply?.(
           combatOutcome != null ? { ...base, combat: combatOutcome } : base,
         );
+        finishCurrentRoll();
         return;
       }
 
@@ -554,11 +621,10 @@ export function DiceProvider({
         });
       }
 
-      setRolling(false);
-      setActiveRequest(null);
       apply?.(result);
+      finishCurrentRoll();
     },
-    [isCampaign, historyLimit],
+    [isCampaign, historyLimit, finishCurrentRoll],
   );
   completeRollRef.current = completeRoll;
 
@@ -566,21 +632,22 @@ export function DiceProvider({
     onCompleteRef.current = null;
     pendingCanonicalRef.current = null;
     pendingCombatOutcomeRef.current = undefined;
-    setSilhouetteActive(false);
-    setRolling(false);
-    setActiveRequest(null);
-  }, []);
+    finishCurrentRoll();
+  }, [finishCurrentRoll]);
   failRollRef.current = failRoll;
 
   const clearDice = useCallback(() => {
     onCompleteRef.current = null;
     pendingCanonicalRef.current = null;
     pendingCombatOutcomeRef.current = undefined;
+    rollQueueRef.current = [];
+    syncQueueCount();
+    busyRef.current = false;
     setSilhouetteActive(false);
     setClearSignal((n) => n + 1);
     setRolling(false);
     setActiveRequest(null);
-  }, []);
+  }, [syncQueueCount]);
 
   const setEngineReady = useCallback((isReady: boolean) => {
     setReady(isReady);

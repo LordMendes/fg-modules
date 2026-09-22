@@ -132,7 +132,7 @@ export function PcWeaponAttacksList({
   weapons,
   pcPlanId = null,
 }: PcWeaponAttacksListProps) {
-  const { roll, rolling, ready, canRoll } = useDice();
+  const { roll, canRoll, ready } = useDice();
   const combatCtx = useCombatContext();
   const combatant =
     combatCtx && pcPlanId ? combatCtx.combatantByPcPlanId(pcPlanId) : undefined;

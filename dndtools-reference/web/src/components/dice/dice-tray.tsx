@@ -56,6 +56,7 @@ export function DiceTray() {
     clearDice,
     rolling,
     ready,
+    canRoll,
     skinId,
     themeColor,
     setSkinId,
@@ -89,7 +90,7 @@ export function DiceTray() {
     kind: "die" | "pool",
     sides?: DieSides,
   ) {
-    if (event.button !== 0 || rolling || !ready) return;
+    if (event.button !== 0 || !canRoll) return;
     if (kind === "pool" && poolDieCount(pool) === 0) return;
     event.preventDefault();
     event.stopPropagation();
@@ -226,7 +227,7 @@ export function DiceTray() {
                   key={sides}
                   type="button"
                   className="dice-tray-die-btn"
-                  disabled={rolling || !ready}
+                  disabled={!canRoll}
                   title={`Drag onto the screen to throw ${dieLabel(sides)}`}
                   aria-label={dieLabel(sides)}
                   onPointerDown={(e) => beginThrowDrag(e, "die", sides)}
@@ -249,7 +250,6 @@ export function DiceTray() {
                     type="button"
                     className="dice-tray-chip"
                     onClick={() => removeDie(item.sides)}
-                    disabled={rolling}
                     title={`Remove one ${dieLabel(item.sides)}`}
                   >
                     <DieIcon
@@ -271,7 +271,6 @@ export function DiceTray() {
                   className="pc-sheet-input dice-tray-mod-input"
                   value={modifier === 0 ? "" : modifier}
                   placeholder="0"
-                  disabled={rolling}
                   onChange={(e) => {
                     const raw = e.target.value;
                     setModifier(raw === "" ? 0 : Number(raw));
@@ -281,7 +280,7 @@ export function DiceTray() {
               <button
                 type="button"
                 className="tool-btn dice-tray-roll-btn"
-                disabled={!ready || rolling || poolDieCount(pool) === 0}
+                disabled={!canRoll || poolDieCount(pool) === 0}
                 title="Click or drag onto the screen to throw the pool"
                 onPointerDown={(e) => beginThrowDrag(e, "pool")}
                 onPointerMove={onThrowPointerMove}
@@ -297,7 +296,6 @@ export function DiceTray() {
                   clearDice();
                   clearPool();
                 }}
-                disabled={rolling}
               >
                 Clear
               </button>
@@ -309,7 +307,6 @@ export function DiceTray() {
                 <select
                   className="pc-sheet-input dice-tray-skin-select"
                   value={skinId}
-                  disabled={rolling}
                   onChange={(e) => setSkinId(e.target.value)}
                 >
                   {DICE_SKINS.map((skin) => (
@@ -325,7 +322,6 @@ export function DiceTray() {
                   type="color"
                   className="dice-tray-color-input"
                   value={themeColor}
-                  disabled={rolling}
                   onChange={(e) => setThemeColor(e.target.value)}
                   title="Dice color"
                 />
