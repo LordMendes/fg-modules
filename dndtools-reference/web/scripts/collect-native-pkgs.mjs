@@ -31,7 +31,13 @@ const BUNDLE_FILES = (
   .filter((file) => fs.existsSync(file));
 
 // Fixed roots not always present in esbuild bundles (native binaries, Prisma CLI).
-const FIXED_SEED = [/^sharp@/, /^@img\+/, /^prisma@/];
+const SHARP_ARCH = process.arch === "arm64" ? "arm64" : "x64";
+const SHARP_PLATFORM = `linuxmusl-${SHARP_ARCH}@`;
+const FIXED_SEED = [
+  /^sharp@/,
+  new RegExp(`^@img\\+sharp-(?:libvips-)?${SHARP_PLATFORM}`),
+  /^prisma@/,
+];
 
 // Standalone already ships these; do not copy their full pnpm closure into /native-pkgs.
 const SKIP_CLOSURE_SEED = new Set(["next"]);
@@ -84,6 +90,9 @@ function isFixedSeed(name) {
 }
 
 function isSkip(name) {
+  if (name.startsWith("@img+sharp-") && !name.includes(SHARP_PLATFORM)) {
+    return true;
+  }
   return SKIP.some((re) => re.test(name));
 }
 
