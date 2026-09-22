@@ -7,6 +7,7 @@ import { fetchInventoryItem, listCatalogWeapons, type CatalogWeaponSummary } fro
 import { getPcPlan, getUserPcPlans, type PcPlanSummary } from "@/actions/pc-plans";
 import { useAuthUser } from "@/components/auth-provider";
 import { useSessionNonce } from "@/components/session-provider";
+import { DamageStatisticChart } from "@/components/tools/damage-statistic-chart";
 import { PcInventoryItemEditor } from "@/components/tools/pc-inventory-item-editor";
 import {
   compareDamageStatistics,
@@ -687,6 +688,11 @@ export function DamageStatisticCalculator() {
             <p className="damage-statistic-note">
               Difference is Weapon B minus Weapon A for one round.
             </p>
+            <DamageStatisticChart
+              rows={comparison.rows}
+              nameA={weaponA.name || "Weapon A"}
+              nameB={weaponB.name || "Weapon B"}
+            />
             <div className="damage-statistic-table-wrap">
               <table className="damage-statistic-table damage-statistic-compare-table">
                 <thead>
