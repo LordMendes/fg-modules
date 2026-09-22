@@ -31,6 +31,7 @@ const CATEGORY_COLUMNS: Record<Exclude<CategoryKey, "equipment">, Column[]> = {
     { key: "hd", label: "HD" },
   ],
   classes: [
+    { key: "classType", label: "Type" },
     { key: "hitDie", label: "Hit Die" },
     { key: "skillPoints", label: "Skill Pts" },
   ],

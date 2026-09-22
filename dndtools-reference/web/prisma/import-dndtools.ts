@@ -14,6 +14,7 @@ import {
   PLACEHOLDER_SOURCE_NAME,
   buildSourceDisplayNameMap,
 } from "@/lib/source-display";
+import { classifyClassType } from "@/lib/class-type";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -691,7 +692,7 @@ async function pass2Entities(
             descriptionText: cleanImportedText(r.description_text),
             hitDie: (r.hit_die as string) ?? index?.hit_die ?? null,
             skillPoints: (r.skill_points as string) ?? index?.skill_points ?? null,
-            isPrestige: Boolean(index?.prestige_level && index.prestige_level !== ""),
+            isPrestige: classifyClassType(r) === "prestige",
           },
           update: {
             name: r.name,
@@ -704,7 +705,7 @@ async function pass2Entities(
             descriptionText: cleanImportedText(r.description_text),
             hitDie: (r.hit_die as string) ?? index?.hit_die ?? null,
             skillPoints: (r.skill_points as string) ?? index?.skill_points ?? null,
-            isPrestige: Boolean(index?.prestige_level && index.prestige_level !== ""),
+            isPrestige: classifyClassType(r) === "prestige",
           },
         });
       }

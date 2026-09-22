@@ -690,6 +690,7 @@ export async function listEntities(
         include: { source: sourceSelect() },
       });
       return formatList(rows, (r) => ({
+        classType: r.isPrestige ? "Prestige" : "Base",
         hitDie: r.hitDie,
         skillPoints: r.skillPoints,
       }));
@@ -1542,7 +1543,11 @@ export async function getEntityDetail(
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
         source: { ...r.source, page: null },
-        fields: { "Hit Die": r.hitDie, "Skill Points": r.skillPoints },
+        fields: {
+          Type: r.isPrestige ? "Prestige" : "Base",
+          "Hit Die": r.hitDie,
+          "Skill Points": r.skillPoints,
+        },
         sections: buildClassSections(indexData),
         advancementHtml: (indexData?.advancementHtml as string) ?? null,
         spellLevels: levelCounts.map((row) => ({
