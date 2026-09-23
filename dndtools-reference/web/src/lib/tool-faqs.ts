@@ -124,6 +124,11 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
       answer:
         "Yes. Use the export action to download FG-compatible XML after filling race, class, feats, skills, and equipment.",
     },
+    {
+      question: "Can I share a PC plan with another player?",
+      answer:
+        "Yes. On the PC Planner sheet, use Share to copy a link. Anyone signed in can view the character read-only and add a copy to their own plans.",
+    },
   ],
   "random-spellbook": [
     {

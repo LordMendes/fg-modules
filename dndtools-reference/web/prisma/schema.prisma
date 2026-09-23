@@ -541,6 +541,7 @@ model PcPlan {
   user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   name       String
   shortcut   String?
+  shareToken String?      @unique
   state      Json         @default("{}")
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt

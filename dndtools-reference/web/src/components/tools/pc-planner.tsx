@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import {
+  copySharedPcPlan,
   createPcPlan,
   deletePcPlan,
   getPcPlan,
+  getSharedPcPlan,
   getUserPcPlans,
   renamePcPlan,
   savePcPlan,
@@ -20,6 +22,7 @@ import { DiceTray } from "@/components/dice/dice-tray";
 import { useAuthUser } from "@/components/auth-provider";
 import { useSessionNonce } from "@/components/session-provider";
 import { PcPlanList } from "@/components/tools/pc-plan-list";
+import { PcPlanShareDialog } from "@/components/tools/pc-plan-share-dialog";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
@@ -58,7 +61,12 @@ function PcPlannerBody() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const planIdParam = searchParams.get("id");
+  const shareTokenParam = searchParams.get("share");
+  const isSharedView = Boolean(shareTokenParam && !planIdParam);
   const [planId, setPlanId] = useState<string | null>(null);
+  const [sharedOwnerUsername, setSharedOwnerUsername] = useState<string | null>(null);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [copyPending, setCopyPending] = useState(false);
   const [plans, setPlans] = useState<PcPlanSummary[]>([]);
   const [listError, setListError] = useState<string | null>(null);
   const [state, setState] = useState<PcPlanState>(() => createDefaultPcPlanState());
@@ -104,7 +112,7 @@ function PcPlannerBody() {
   }, [state.spellClasses.length]);
 
   useEffect(() => {
-    if (!hydrated || !user || !planIdParam) return;
+    if (!hydrated || !user || (!planIdParam && !isSharedView)) return;
 
     const syncKey = `${compendiumKeyValue}:${nonce}`;
     if (syncKey === lastCompendiumSync.current) return;
@@ -156,7 +164,7 @@ function PcPlannerBody() {
       });
       setCompendiumLoading(false);
     });
-  }, [compendiumKeyValue, hydrated, user, nonce, planIdParam]);
+  }, [compendiumKeyValue, hydrated, user, nonce, planIdParam, isSharedView]);
 
   useEffect(() => {
     if (!user) {
@@ -167,10 +175,38 @@ function PcPlannerBody() {
     setHydrated(false);
 
     startTransition(async () => {
+      if (shareTokenParam && !planIdParam) {
+        const shared = await getSharedPcPlan(shareTokenParam);
+        if (!shared) {
+          setListError("Share link is invalid or has been revoked.");
+          router.replace("/tools/pc-planner");
+          const userPlans = await getUserPcPlans();
+          setPlans(userPlans);
+          setPlanId(null);
+          setSharedOwnerUsername(null);
+          setHydrated(true);
+          return;
+        }
+
+        if (shared.isOwner) {
+          router.replace(`/tools/pc-planner?id=${shared.id}`);
+          return;
+        }
+
+        lastCompendiumSync.current = "";
+        lastRaceSlug.current = undefined;
+        setPlanId(null);
+        setSharedOwnerUsername(shared.ownerUsername);
+        setState(shared.state);
+        setHydrated(true);
+        return;
+      }
+
       if (!planIdParam) {
         const userPlans = await getUserPcPlans();
         setPlans(userPlans);
         setPlanId(null);
+        setSharedOwnerUsername(null);
         setHydrated(true);
         return;
       }
@@ -180,6 +216,7 @@ function PcPlannerBody() {
         lastCompendiumSync.current = "";
         lastRaceSlug.current = undefined;
         setPlanId(plan.id);
+        setSharedOwnerUsername(null);
         setState(plan.state);
         setHydrated(true);
         return;
@@ -190,12 +227,13 @@ function PcPlannerBody() {
       const userPlans = await getUserPcPlans();
       setPlans(userPlans);
       setPlanId(null);
+      setSharedOwnerUsername(null);
       setHydrated(true);
     });
-  }, [user, planIdParam, router]);
+  }, [user, planIdParam, shareTokenParam, router]);
 
   useEffect(() => {
-    if (!hydrated || !planId || !user || !planIdParam) return;
+    if (!hydrated || !planId || !user || !planIdParam || isSharedView) return;
 
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
@@ -209,7 +247,22 @@ function PcPlannerBody() {
     return () => {
       if (saveTimer.current) clearTimeout(saveTimer.current);
     };
-  }, [state, hydrated, planId, user, planIdParam]);
+  }, [state, hydrated, planId, user, planIdParam, isSharedView]);
+
+  function handleAddSharedPlan() {
+    if (!shareTokenParam || copyPending) return;
+    setCopyPending(true);
+    setStatusMessage(null);
+    startTransition(async () => {
+      const result = await copySharedPcPlan(shareTokenParam);
+      setCopyPending(false);
+      if (!result.success || !result.plan) {
+        setStatusMessage(result.error ?? "Could not add character to your plans");
+        return;
+      }
+      router.push(`/tools/pc-planner?id=${result.plan.id}`);
+    });
+  }
 
   function handleShortcutSelect(plan: PcPlanSummary) {
     router.push(`/tools/pc-planner?id=${plan.id}`);
@@ -347,13 +400,20 @@ function PcPlannerBody() {
   }
 
   if (!user) {
+    const loginNext =
+      shareTokenParam && !planIdParam
+        ? `/tools/pc-planner?share=${encodeURIComponent(shareTokenParam)}`
+        : planIdParam
+          ? `/tools/pc-planner?id=${encodeURIComponent(planIdParam)}`
+          : "/tools/pc-planner";
+
     return (
       <div className="pc-planner-auth-gate">
         <p>
           PC Planner saves character builds to your account. Sign in to use the Fantasy
           Grounds character sheet with automatic spell slot calculation.
         </p>
-        <Link href="/login?next=/tools/pc-planner" className="tool-btn">
+        <Link href={`/login?next=${encodeURIComponent(loginNext)}`} className="tool-btn">
           Sign in to continue
         </Link>
       </div>
@@ -365,7 +425,62 @@ function PcPlannerBody() {
   }
 
   let body: ReactNode;
-  if (!planIdParam) {
+  if (isSharedView) {
+    body = (
+      <div className="pc-sheet-page">
+        <div className="pc-sheet-toolbar">
+          <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
+            ← All characters
+          </button>
+        </div>
+
+        <div className="pc-plan-share-banner" role="status">
+          <p>
+            <strong>{state.identity.name || "Unnamed"}</strong> shared by{" "}
+            <strong>@{sharedOwnerUsername ?? "unknown"}</strong>. View only.
+          </p>
+          <div className="pc-plan-share-banner-actions">
+            <button
+              type="button"
+              className="tool-btn"
+              onClick={handleAddSharedPlan}
+              disabled={copyPending || pending}
+            >
+              {copyPending ? "Adding…" : "Add to my plans"}
+            </button>
+          </div>
+        </div>
+
+        {statusMessage ? (
+          <p className="npc-creator-status pc-sheet-status" role="alert">
+            {statusMessage}
+          </p>
+        ) : null}
+
+        <div className="pc-sheet-frame npc-sheet">
+          <PcSheet
+            state={state}
+            patch={patch}
+            sheetTab={sheetTab}
+            onTabChange={setSheetTab}
+            onNameBlur={() => {}}
+            readOnly
+            activeSpellClassIndex={activeSpellClassIndex}
+            onSpellClassIndexChange={setActiveSpellClassIndex}
+            compendium={compendium}
+            compendiumLoading={compendiumLoading}
+            onAddFeat={addFeat}
+            onRemoveFeat={removeFeat}
+            onAddSpell={addSpell}
+            onRemoveSpell={removeSpell}
+            onUpdateSpellPrepared={updateSpellPrepared}
+            onAddInventoryRow={addInventoryRow}
+            updateAbility={updateAbility}
+          />
+        </div>
+      </div>
+    );
+  } else if (!planIdParam) {
     body = (
       <>
         {statusMessage ? (
@@ -391,6 +506,14 @@ function PcPlannerBody() {
           </button>
           <PcShortcutSearch onSelect={handleShortcutSelect} />
           <div className="pc-sheet-toolbar-actions">
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              onClick={() => setShareDialogOpen(true)}
+              disabled={!planId}
+            >
+              Share
+            </button>
             <span className="pc-save-status" aria-live="polite">
               {saveStatus === "saving"
                 ? "Saving…"
@@ -402,6 +525,14 @@ function PcPlannerBody() {
             </span>
           </div>
         </div>
+
+        {shareDialogOpen && planId ? (
+          <PcPlanShareDialog
+            planId={planId}
+            planName={state.identity.name || "Unnamed"}
+            onClose={() => setShareDialogOpen(false)}
+          />
+        ) : null}
 
         {statusMessage ? (
           <p className="npc-creator-status pc-sheet-status" role="status">

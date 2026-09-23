@@ -6568,6 +6568,38 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   gap: 0.5rem;
 }
 
+.pc-plan-share-url {
+  margin: 0 0 0.75rem;
+  word-break: break-all;
+}
+
+.pc-plan-share-url code {
+  font-size: 0.85rem;
+}
+
+.pc-plan-share-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 25%, var(--border-color));
+  border-radius: var(--radius-md, 0.5rem);
+  background: color-mix(in srgb, var(--bg-primary) 35%, var(--bg-card));
+}
+
+.pc-plan-share-banner p {
+  margin: 0;
+}
+
+.pc-plan-share-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .pc-sheet-status {
   margin: 0 0 0.5rem;
 }

@@ -18,6 +18,12 @@ import {
   parsePcShortcutQuery,
 } from "@/lib/pc-planner/shortcutSearch";
 import { syncPcPlanState } from "@/lib/pc-planner/syncState";
+import {
+  buildPcPlanSharePath,
+  generateShareToken,
+  isValidShareToken,
+  normalizeShareToken,
+} from "@/lib/pc-planner/shareToken";
 import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import {
@@ -47,6 +53,20 @@ export type PcPlanWithState = {
 export type PcPlanActionResult = {
   success: boolean;
   error?: string;
+};
+
+export type PcPlanShareInfo = {
+  token: string;
+  sharePath: string;
+};
+
+export type SharedPcPlanView = {
+  id: string;
+  name: string;
+  state: PcPlanState;
+  updatedAt: Date;
+  ownerUsername: string;
+  isOwner: boolean;
 };
 
 function validatePlanName(name: string): string | null {
@@ -210,6 +230,75 @@ async function nextPcPlanName(userId: string, username: string): Promise<string>
   }
 
   return `${username}-${max + 1}`;
+}
+
+async function nextCopyPlanName(userId: string, sourceName: string): Promise<string> {
+  const baseName = `${sourceName} (copy)`;
+  let name = baseName;
+  let suffix = 2;
+  while (
+    await prisma.pcPlan.findUnique({
+      where: { userId_name: { userId, name } },
+    })
+  ) {
+    name = `${sourceName} (copy ${suffix})`;
+    suffix++;
+  }
+  return name;
+}
+
+async function clonePcPlanForUser(
+  targetUserId: string,
+  sourceState: PcPlanState,
+  name: string,
+): Promise<PcPlanWithState> {
+  const state = structuredClone(sourceState);
+  const sourceProfileKey = state.identity.profileImageKey ?? null;
+  const sourceTokenKey = state.identity.tokenImageKey ?? null;
+  state.identity.profileImageKey = null;
+  state.identity.tokenImageKey = null;
+
+  const plan = await prisma.pcPlan.create({
+    data: {
+      userId: targetUserId,
+      name,
+      state: state as unknown as Prisma.InputJsonValue,
+    },
+  });
+
+  if (sourceProfileKey) {
+    const dest = pcImageObjectKey(targetUserId, plan.id, "profile");
+    try {
+      await copyPcImageObject(sourceProfileKey, dest);
+      state.identity.profileImageKey = dest;
+    } catch {
+      // Leave null if copy fails.
+    }
+  }
+  if (sourceTokenKey) {
+    const dest = pcImageObjectKey(targetUserId, plan.id, "token");
+    try {
+      await copyPcImageObject(sourceTokenKey, dest);
+      state.identity.tokenImageKey = dest;
+    } catch {
+      // Leave null if copy fails.
+    }
+  }
+
+  if (state.identity.profileImageKey || state.identity.tokenImageKey) {
+    await prisma.pcPlan.update({
+      where: { id: plan.id },
+      data: { state: state as unknown as Prisma.InputJsonValue },
+    });
+  }
+
+  return {
+    id: plan.id,
+    name: plan.name,
+    shortcut: plan.shortcut,
+    state,
+    updatedAt: plan.updatedAt,
+  };
 }
 
 export async function createPcPlan(
@@ -428,67 +517,122 @@ export async function duplicatePcPlan(
   const owned = await getOwnedPlan(planId, user.id);
   if (!owned) return { success: false, error: "Plan not found" };
 
-  const baseName = `${owned.name} (copy)`;
-  let name = baseName;
-  let suffix = 2;
-  while (
-    await prisma.pcPlan.findUnique({
-      where: { userId_name: { userId: user.id, name } },
-    })
-  ) {
-    name = `${owned.name} (copy ${suffix})`;
-    suffix++;
-  }
-
+  const name = await nextCopyPlanName(user.id, owned.name);
   const state = parseState(owned.state);
-  const sourceProfileKey = state.identity.profileImageKey ?? null;
-  const sourceTokenKey = state.identity.tokenImageKey ?? null;
-  // Clear keys until copies succeed; do not share object keys across plans.
-  state.identity.profileImageKey = null;
-  state.identity.tokenImageKey = null;
+  const plan = await clonePcPlanForUser(user.id, state, name);
 
-  const plan = await prisma.pcPlan.create({
-    data: {
-      userId: user.id,
-      name,
-      state: state as unknown as Prisma.InputJsonValue,
-    },
-  });
+  return { success: true, plan };
+}
 
-  if (sourceProfileKey) {
-    const dest = pcImageObjectKey(user.id, plan.id, "profile");
-    try {
-      await copyPcImageObject(sourceProfileKey, dest);
-      state.identity.profileImageKey = dest;
-    } catch {
-      // Leave null if copy fails.
-    }
-  }
-  if (sourceTokenKey) {
-    const dest = pcImageObjectKey(user.id, plan.id, "token");
-    try {
-      await copyPcImageObject(sourceTokenKey, dest);
-      state.identity.tokenImageKey = dest;
-    } catch {
-      // Leave null if copy fails.
-    }
-  }
-
-  if (state.identity.profileImageKey || state.identity.tokenImageKey) {
-    await prisma.pcPlan.update({
-      where: { id: plan.id },
-      data: { state: state as unknown as Prisma.InputJsonValue },
-    });
-  }
+export async function getPcPlanShare(
+  planId: string,
+): Promise<PcPlanShareInfo | null> {
+  const user = await requireCurrentUser();
+  const owned = await getOwnedPlan(planId, user.id);
+  if (!owned || !owned.shareToken) return null;
 
   return {
-    success: true,
-    plan: {
-      id: plan.id,
-      name: plan.name,
-      shortcut: plan.shortcut,
-      state,
-      updatedAt: plan.updatedAt,
-    },
+    token: owned.shareToken,
+    sharePath: buildPcPlanSharePath(owned.shareToken),
   };
+}
+
+export async function enablePcPlanShare(
+  planId: string,
+): Promise<PcPlanActionResult & { share?: PcPlanShareInfo }> {
+  const user = await requireCurrentUser();
+  const owned = await getOwnedPlan(planId, user.id);
+  if (!owned) return { success: false, error: "Plan not found" };
+
+  if (owned.shareToken) {
+    return {
+      success: true,
+      share: {
+        token: owned.shareToken,
+        sharePath: buildPcPlanSharePath(owned.shareToken),
+      },
+    };
+  }
+
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const token = generateShareToken();
+    try {
+      const updated = await prisma.pcPlan.update({
+        where: { id: planId },
+        data: { shareToken: token },
+      });
+      return {
+        success: true,
+        share: {
+          token: updated.shareToken!,
+          sharePath: buildPcPlanSharePath(updated.shareToken!),
+        },
+      };
+    } catch {
+      // Unique constraint collision; retry with a new token.
+    }
+  }
+
+  return { success: false, error: "Could not create share link. Try again." };
+}
+
+export async function disablePcPlanShare(planId: string): Promise<PcPlanActionResult> {
+  const user = await requireCurrentUser();
+  const owned = await getOwnedPlan(planId, user.id);
+  if (!owned) return { success: false, error: "Plan not found" };
+
+  await prisma.pcPlan.update({
+    where: { id: planId },
+    data: { shareToken: null },
+  });
+
+  return { success: true };
+}
+
+export async function getSharedPcPlan(token: string): Promise<SharedPcPlanView | null> {
+  const user = await requireCurrentUser();
+  const normalized = normalizeShareToken(token);
+  if (!isValidShareToken(normalized)) return null;
+
+  const plan = await prisma.pcPlan.findFirst({
+    where: { shareToken: normalized },
+    include: { user: { select: { id: true, username: true } } },
+  });
+  if (!plan) return null;
+
+  const parsed = parseState(plan.state);
+  const slugs = parsed.spellClasses.map((sc) => sc.classSlug);
+  const classSpellTables = await getClassSpellTablesBySlugs(slugs);
+
+  return {
+    id: plan.id,
+    name: plan.name,
+    state: syncPcPlanState(parsed, null, { classSpellTables }),
+    updatedAt: plan.updatedAt,
+    ownerUsername: plan.user.username,
+    isOwner: plan.userId === user.id,
+  };
+}
+
+export async function copySharedPcPlan(
+  token: string,
+): Promise<PcPlanActionResult & { plan?: PcPlanWithState }> {
+  const user = await requireCurrentUser();
+  const normalized = normalizeShareToken(token);
+  if (!isValidShareToken(normalized)) {
+    return { success: false, error: "Share link is invalid or has been revoked." };
+  }
+
+  const source = await prisma.pcPlan.findFirst({
+    where: { shareToken: normalized },
+  });
+  if (!source) {
+    return { success: false, error: "Share link is invalid or has been revoked." };
+  }
+
+  const name = await nextCopyPlanName(user.id, source.name);
+  const state = parseState(source.state);
+  const plan = await clonePcPlanForUser(user.id, state, name);
+
+  return { success: true, plan };
 }
