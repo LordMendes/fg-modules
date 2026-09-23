@@ -218,6 +218,7 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   state.conditions = normalizeConditions(state.conditions);
   state.resources = normalizeResources(state.resources);
   state.skillShortcuts = normalizeSkillShortcuts(state.skillShortcuts);
+  state.skillsAllSources = Boolean(state.skillsAllSources);
 
   if (!identity.languages) identity.languages = emptyDerivedList();
 

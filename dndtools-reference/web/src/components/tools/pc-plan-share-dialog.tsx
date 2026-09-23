@@ -18,6 +18,8 @@ export function PcPlanShareDialog({
   onClose: () => void;
 }) {
   const [share, setShare] = useState<PcPlanShareInfo | null>(null);
+  const [isPublic, setIsPublic] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -32,17 +34,13 @@ export function PcPlanShareDialog({
 
   useEffect(() => {
     startTransition(async () => {
+      setLoading(true);
       const existing = await getPcPlanShare(planId);
       if (existing) {
         setShare(existing);
-        return;
+        setIsPublic(true);
       }
-      const result = await enablePcPlanShare(planId);
-      if (!result.success || !result.share) {
-        setError(result.error ?? "Could not enable sharing");
-        return;
-      }
-      setShare(result.share);
+      setLoading(false);
     });
   }, [planId]);
 
@@ -64,14 +62,27 @@ export function PcPlanShareDialog({
     }
   }
 
-  function handleStopSharing() {
+  function handleTogglePublic(enabled: boolean) {
+    setError(null);
     startTransition(async () => {
+      if (enabled) {
+        const result = await enablePcPlanShare(planId);
+        if (!result.success || !result.share) {
+          setError(result.error ?? "Could not enable sharing");
+          return;
+        }
+        setShare(result.share);
+        setIsPublic(true);
+        return;
+      }
+
       const result = await disablePcPlanShare(planId);
       if (!result.success) {
         setError(result.error ?? "Could not stop sharing");
         return;
       }
-      onClose();
+      setShare(null);
+      setIsPublic(false);
     });
   }
 
@@ -92,21 +103,38 @@ export function PcPlanShareDialog({
       >
         <h3 id="pc-plan-share-title">Share character</h3>
         <p>
-          Anyone with this link can view <strong>{planName}</strong> read-only and add a copy to
-          their own plans.
+          Share <strong>{planName}</strong> with a link. Viewers see a read-only copy of the
+          character sheet.
         </p>
+
+        <label className="pc-checkbox-label pc-plan-share-public-toggle">
+          <input
+            type="checkbox"
+            checked={isPublic}
+            disabled={pending || loading}
+            onChange={(event) => handleTogglePublic(event.target.checked)}
+          />
+          Public (no sign-in required)
+        </label>
+        <p className="damage-statistic-note">
+          When public, anyone with the link can view the character without an account. Sign in is
+          still required to add a copy to your own plans.
+        </p>
+
         {error ? (
           <p className="profile-error" role="alert">
             {error}
           </p>
         ) : null}
-        {share ? (
+
+        {isPublic && share ? (
           <p className="pc-plan-share-url">
             <code>{shareUrl()}</code>
           </p>
-        ) : (
-          <p className="pc-plan-share-url">Generating link…</p>
-        )}
+        ) : loading ? (
+          <p className="pc-plan-share-url">Loading…</p>
+        ) : null}
+
         <div className="confirm-dialog-actions">
           <button
             type="button"
@@ -118,17 +146,9 @@ export function PcPlanShareDialog({
           </button>
           <button
             type="button"
-            className="tool-btn tool-btn--ghost tool-btn--danger"
-            onClick={handleStopSharing}
-            disabled={pending || !share}
-          >
-            Stop sharing
-          </button>
-          <button
-            type="button"
             className="tool-btn"
             onClick={() => void handleCopyLink()}
-            disabled={pending || !share}
+            disabled={pending || !share || !isPublic}
           >
             {copied ? "Copied!" : "Copy link"}
           </button>

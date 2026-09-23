@@ -11,6 +11,7 @@ import { DamageStatisticChart } from "@/components/tools/damage-statistic-chart"
 import { PcInventoryItemEditor } from "@/components/tools/pc-inventory-item-editor";
 import {
   compareDamageStatistics,
+  computeDamageStatistic,
   DEFAULT_ATTACKER,
   DEFAULT_TARGET,
   DEFAULT_WEAPON,
@@ -255,6 +256,7 @@ export function DamageStatisticCalculator() {
   const [pcSource, setPcSource] = useState<PcPlanState | null>(null);
   const [editingSlot, setEditingSlot] = useState<WeaponSlot | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [compareEnabled, setCompareEnabled] = useState(false);
 
   useEffect(() => {
     startTransition(async () => {
@@ -283,23 +285,32 @@ export function DamageStatisticCalculator() {
     });
   }, [user]);
 
+  const weaponInputA = useMemo(
+    () => ({
+      attacker,
+      weapon: inventoryRowToAnalyzedWeapon(weaponA),
+      target,
+      pcSource,
+    }),
+    [attacker, weaponA, target, pcSource],
+  );
+
   const comparison = useMemo(
     () =>
-      compareDamageStatistics(
-        {
-          attacker,
-          weapon: inventoryRowToAnalyzedWeapon(weaponA),
-          target,
-          pcSource,
-        },
-        {
-          attacker,
-          weapon: inventoryRowToAnalyzedWeapon(weaponB),
-          target,
-          pcSource,
-        },
-      ),
-    [attacker, weaponA, weaponB, target, pcSource],
+      compareEnabled
+        ? compareDamageStatistics(weaponInputA, {
+            attacker,
+            weapon: inventoryRowToAnalyzedWeapon(weaponB),
+            target,
+            pcSource,
+          })
+        : null,
+    [compareEnabled, weaponInputA, attacker, weaponB, target, pcSource],
+  );
+
+  const singleResult = useMemo(
+    () => (compareEnabled ? null : computeDamageStatistic(weaponInputA)),
+    [compareEnabled, weaponInputA],
   );
 
   const patchAttacker = useCallback((patch: Partial<AttackerInput>) => {
@@ -369,6 +380,7 @@ export function DamageStatisticCalculator() {
           });
         }
         if (equipped[1]) {
+          setCompareEnabled(true);
           setWeaponForSlot("b", {
             ...equipped[1],
             id: equipped[1].id ?? newInventoryId(),
@@ -628,23 +640,41 @@ export function DamageStatisticCalculator() {
       </div>
 
       <div className="damage-statistic-weapons-toolbar">
-        <button type="button" className="tool-btn-secondary" onClick={swapWeapons}>
-          <ArrowLeftRight size={15} aria-hidden />
-          Swap weapons
-        </button>
-        <button type="button" className="tool-btn-secondary" onClick={copyAToB}>
-          <Copy size={15} aria-hidden />
-          Copy A to B
-        </button>
+        <div className="damage-statistic-chart-modes" role="group" aria-label="Compare mode">
+          <button
+            type="button"
+            className="damage-statistic-chart-mode"
+            aria-pressed={compareEnabled}
+            onClick={() => setCompareEnabled((current) => !current)}
+          >
+            Compare weapons
+          </button>
+        </div>
+        {compareEnabled ? (
+          <>
+            <button type="button" className="tool-btn-secondary" onClick={swapWeapons}>
+              <ArrowLeftRight size={15} aria-hidden />
+              Swap weapons
+            </button>
+            <button type="button" className="tool-btn-secondary" onClick={copyAToB}>
+              <Copy size={15} aria-hidden />
+              Copy A to B
+            </button>
+          </>
+        ) : null}
       </div>
 
       <div className="damage-statistic-weapons">
         <WeaponPanel
           slot="a"
-          title="Weapon A"
+          title={compareEnabled ? "Weapon A" : "Weapon"}
           weapon={weaponA}
           query={queryA}
-          summary={comparison?.a.weaponSummary ?? null}
+          summary={
+            compareEnabled
+              ? (comparison?.a.weaponSummary ?? null)
+              : (singleResult?.weaponSummary ?? null)
+          }
           catalogWeapons={catalogWeapons}
           catalogError={catalogError}
           pcWeapons={pcWeapons}
@@ -656,108 +686,153 @@ export function DamageStatisticCalculator() {
           }
           onEdit={() => openWeaponEditor("a")}
         />
-        <WeaponPanel
-          slot="b"
-          title="Weapon B"
-          weapon={weaponB}
-          query={queryB}
-          summary={comparison?.b.weaponSummary ?? null}
-          catalogWeapons={catalogWeapons}
-          catalogError={catalogError}
-          pcWeapons={pcWeapons}
-          pending={pending}
-          onQueryChange={setQueryB}
-          onSelectCatalog={(slug) => loadCatalogWeapon("b", slug)}
-          onSelectPcWeapon={(row) =>
-            setWeaponForSlot("b", { ...row, id: row.id ?? newInventoryId() })
-          }
-          onEdit={() => openWeaponEditor("b")}
-        />
+        {compareEnabled ? (
+          <WeaponPanel
+            slot="b"
+            title="Weapon B"
+            weapon={weaponB}
+            query={queryB}
+            summary={comparison?.b.weaponSummary ?? null}
+            catalogWeapons={catalogWeapons}
+            catalogError={catalogError}
+            pcWeapons={pcWeapons}
+            pending={pending}
+            onQueryChange={setQueryB}
+            onSelectCatalog={(slug) => loadCatalogWeapon("b", slug)}
+            onSelectPcWeapon={(row) =>
+              setWeaponForSlot("b", { ...row, id: row.id ?? newInventoryId() })
+            }
+            onEdit={() => openWeaponEditor("b")}
+          />
+        ) : null}
       </div>
 
       {loadError ? <p className="damage-statistic-error">{loadError}</p> : null}
 
       <section className="category-card damage-statistic-results">
         <h2 className="damage-statistic-panel-title">Expected damage by AC</h2>
-        {!comparison || comparison.rows.length === 0 ? (
+        {compareEnabled ? (
+          !comparison || comparison.rows.length === 0 ? (
+            <p className="damage-statistic-note">
+              Configure both weapons with valid damage dice to compare them.
+            </p>
+          ) : (
+            <>
+              <p className="damage-statistic-note">
+                Difference is Weapon B minus Weapon A for one round.
+              </p>
+              <DamageStatisticChart
+                compare
+                compareRows={comparison.rows}
+                nameA={weaponA.name || "Weapon A"}
+                nameB={weaponB.name || "Weapon B"}
+              />
+              <div className="damage-statistic-table-wrap">
+                <table className="damage-statistic-table damage-statistic-compare-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" rowSpan={2}>
+                        AC
+                      </th>
+                      <th scope="colgroup" colSpan={3}>
+                        {weaponA.name || "Weapon A"}
+                      </th>
+                      <th scope="colgroup" colSpan={3}>
+                        {weaponB.name || "Weapon B"}
+                      </th>
+                      <th scope="colgroup" colSpan={2}>
+                        Difference
+                      </th>
+                    </tr>
+                    <tr>
+                      <th scope="col">Hit</th>
+                      <th scope="col">Standard</th>
+                      <th scope="col">Full attack</th>
+                      <th scope="col">Hit</th>
+                      <th scope="col">Standard</th>
+                      <th scope="col">Full attack</th>
+                      <th scope="col">Standard</th>
+                      <th scope="col">Full attack</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comparison.rows.map((row) => (
+                      <tr key={row.ac}>
+                        <td>{row.ac}</td>
+                        <td className="damage-statistic-num">
+                          {formatHitChance(row.a.hitChance)}
+                        </td>
+                        <td className={numericClass(row.a.standardDamage, row.b.standardDamage)}>
+                          {formatExpectedDamage(row.a.standardDamage)}
+                        </td>
+                        <td
+                          className={numericClass(
+                            row.a.fullAttackDamage,
+                            row.b.fullAttackDamage,
+                          )}
+                        >
+                          {formatExpectedDamage(row.a.fullAttackDamage)}
+                        </td>
+                        <td className="damage-statistic-num">
+                          {formatHitChance(row.b.hitChance)}
+                        </td>
+                        <td className={numericClass(row.b.standardDamage, row.a.standardDamage)}>
+                          {formatExpectedDamage(row.b.standardDamage)}
+                        </td>
+                        <td
+                          className={numericClass(
+                            row.b.fullAttackDamage,
+                            row.a.fullAttackDamage,
+                          )}
+                        >
+                          {formatExpectedDamage(row.b.fullAttackDamage)}
+                        </td>
+                        <td className={deltaClass(row.standardDelta)}>
+                          {formatExpectedDelta(row.standardDelta)}
+                        </td>
+                        <td className={deltaClass(row.fullAttackDelta)}>
+                          {formatExpectedDelta(row.fullAttackDelta)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )
+        ) : !singleResult || singleResult.rows.length === 0 ? (
           <p className="damage-statistic-note">
-            Configure both weapons with valid damage dice to compare them.
+            Configure the weapon with valid damage dice to see expected damage.
           </p>
         ) : (
           <>
-            <p className="damage-statistic-note">
-              Difference is Weapon B minus Weapon A for one round.
-            </p>
             <DamageStatisticChart
-              rows={comparison.rows}
-              nameA={weaponA.name || "Weapon A"}
-              nameB={weaponB.name || "Weapon B"}
+              compare={false}
+              singleRows={singleResult.rows}
+              nameA={weaponA.name || "Weapon"}
             />
             <div className="damage-statistic-table-wrap">
-              <table className="damage-statistic-table damage-statistic-compare-table">
+              <table className="damage-statistic-table">
                 <thead>
                   <tr>
-                    <th scope="col" rowSpan={2}>
-                      AC
-                    </th>
-                    <th scope="colgroup" colSpan={3}>
-                      {weaponA.name || "Weapon A"}
-                    </th>
-                    <th scope="colgroup" colSpan={3}>
-                      {weaponB.name || "Weapon B"}
-                    </th>
-                    <th scope="colgroup" colSpan={2}>
-                      Difference
-                    </th>
-                  </tr>
-                  <tr>
+                    <th scope="col">AC</th>
                     <th scope="col">Hit</th>
-                    <th scope="col">Standard</th>
-                    <th scope="col">Full attack</th>
-                    <th scope="col">Hit</th>
-                    <th scope="col">Standard</th>
-                    <th scope="col">Full attack</th>
                     <th scope="col">Standard</th>
                     <th scope="col">Full attack</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {comparison.rows.map((row) => (
+                  {singleResult.rows.map((row) => (
                     <tr key={row.ac}>
                       <td>{row.ac}</td>
                       <td className="damage-statistic-num">
-                        {formatHitChance(row.a.hitChance)}
-                      </td>
-                      <td className={numericClass(row.a.standardDamage, row.b.standardDamage)}>
-                        {formatExpectedDamage(row.a.standardDamage)}
-                      </td>
-                      <td
-                        className={numericClass(
-                          row.a.fullAttackDamage,
-                          row.b.fullAttackDamage,
-                        )}
-                      >
-                        {formatExpectedDamage(row.a.fullAttackDamage)}
+                        {formatHitChance(row.hitChance)}
                       </td>
                       <td className="damage-statistic-num">
-                        {formatHitChance(row.b.hitChance)}
+                        {formatExpectedDamage(row.standardDamage)}
                       </td>
-                      <td className={numericClass(row.b.standardDamage, row.a.standardDamage)}>
-                        {formatExpectedDamage(row.b.standardDamage)}
-                      </td>
-                      <td
-                        className={numericClass(
-                          row.b.fullAttackDamage,
-                          row.a.fullAttackDamage,
-                        )}
-                      >
-                        {formatExpectedDamage(row.b.fullAttackDamage)}
-                      </td>
-                      <td className={deltaClass(row.standardDelta)}>
-                        {formatExpectedDelta(row.standardDelta)}
-                      </td>
-                      <td className={deltaClass(row.fullAttackDelta)}>
-                        {formatExpectedDelta(row.fullAttackDelta)}
+                      <td className="damage-statistic-num">
+                        {formatExpectedDamage(row.fullAttackDamage)}
                       </td>
                     </tr>
                   ))}

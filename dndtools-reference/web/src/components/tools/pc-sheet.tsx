@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { Settings } from "lucide-react";
 import { fetchEntityPreview } from "@/actions/data";
 import type { EntityPreview, PcCompendiumBundle } from "@/lib/entities";
 import { PcAbilitiesPanel } from "@/components/tools/pc-abilities-panel";
@@ -46,7 +47,7 @@ import {
   specialtyVariantOptions,
   type SpecialtyFamily,
 } from "@/lib/pc-planner/skillSpecialty";
-import { classSkillKeySet } from "@/lib/pc-planner/syncSkills";
+import { classSkillKeySet, mergeCompendiumSkills } from "@/lib/pc-planner/syncSkills";
 import { applyRacialSkillBonuses, normalizeAbilityDrain } from "@/lib/pc-planner/syncDerived";
 import {
   PC_SHEET_TABS,
@@ -112,7 +113,21 @@ export function PcSheet({
   const [addSkillOpen, setAddSkillOpen] = useState(false);
   const [addSkillFamily, setAddSkillFamily] = useState<SpecialtyFamily>("craft");
   const [addSkillVariant, setAddSkillVariant] = useState("");
+  const [skillsSettingsOpen, setSkillsSettingsOpen] = useState(false);
+  const skillsSettingsRef = useRef<HTMLDivElement>(null);
   const addSkillListId = useId();
+
+  useEffect(() => {
+    if (!skillsSettingsOpen) return;
+    function handlePointerDown(event: MouseEvent) {
+      const target = event.target as Node;
+      if (skillsSettingsRef.current?.contains(target)) return;
+      if ((event.target as Element).closest?.(".pc-skills-settings-toggle")) return;
+      setSkillsSettingsOpen(false);
+    }
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [skillsSettingsOpen]);
 
   const openSkillPreview = useCallback(
     async (slug: string | null | undefined) => {
@@ -286,6 +301,17 @@ export function PcSheet({
               <div className="pc-skills-header">
                 <h3>Skills</h3>
                 <div className="pc-skills-header-actions">
+                  {!readOnly ? (
+                    <button
+                      type="button"
+                      className="pc-xp-settings-toggle pc-skills-settings-toggle"
+                      aria-expanded={skillsSettingsOpen}
+                      aria-label={skillsSettingsOpen ? "Close skill settings" : "Skill settings"}
+                      onClick={() => setSkillsSettingsOpen((open) => !open)}
+                    >
+                      <Settings aria-hidden className="pc-xp-settings-toggle-icon" />
+                    </button>
+                  ) : null}
                   <label className="pc-checkbox-label pc-skills-synergy-toggle">
                     <input
                       type="checkbox"
@@ -337,6 +363,35 @@ export function PcSheet({
                   ) : null}
                 </div>
               </div>
+              {skillsSettingsOpen && !readOnly ? (
+                <div className="pc-skills-settings" ref={skillsSettingsRef}>
+                  <label className="pc-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(state.skillsAllSources)}
+                      onChange={(e) => {
+                        const allSources = e.target.checked;
+                        patch((s) => {
+                          s.skillsAllSources = allSources;
+                          if (
+                            compendium &&
+                            (compendium.allSkills.length > 0 || compendium.skills.length > 0)
+                          ) {
+                            s.skills = mergeCompendiumSkills(compendium, s.skills, {
+                              allSources,
+                            });
+                          }
+                        });
+                      }}
+                    />
+                    All skill sources
+                  </label>
+                  <p className="npc-sheet-sub pc-skills-settings-note">
+                    Default shows Player&apos;s Handbook skills plus class skills and ranked
+                    skills. Duplicate variant pages are never listed.
+                  </p>
+                </div>
+              ) : null}
               {addSkillOpen ? (
                 <form
                   className="pc-skill-add-form"

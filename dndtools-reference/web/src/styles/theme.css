@@ -10777,6 +10777,22 @@ button.pc-abilities-row-name-btn:focus-visible {
   background: color-mix(in srgb, var(--bg-primary) 55%, transparent);
 }
 
+.pc-skills-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 22%, var(--border-color));
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--bg-primary) 55%, transparent);
+}
+
+.pc-skills-settings-note {
+  margin: 0;
+  line-height: 1.35;
+}
+
 @container pc-biography (max-width: 220px) {
   .pc-biography-physical {
     grid-template-columns: 1fr;

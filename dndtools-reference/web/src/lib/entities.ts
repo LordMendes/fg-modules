@@ -95,6 +95,8 @@ export type SkillCatalogEntry = {
   ability: string | null;
   trainedOnly: boolean;
   armorCheckPenalty: boolean;
+  /** Source abbrev (e.g. PH, XPH). Used to filter core vs all-sources in the Skills tab. */
+  sourceAbbrev?: string | null;
 };
 
 export type ClassSpellLevelSummary = {
@@ -314,17 +316,25 @@ export async function getAllSkillCatalogEntries(): Promise<SkillCatalogEntry[]> 
       keyAbility: true,
       trainedOnly: true,
       armorCheckPenalty: true,
+      indexData: true,
+      source: { select: { abbrev: true } },
     },
     orderBy: { name: "asc" },
   });
 
-  return rows.map((row) => ({
-    name: row.name,
-    slug: row.slug,
-    ability: row.keyAbility,
-    trainedOnly: Boolean(row.trainedOnly),
-    armorCheckPenalty: Boolean(row.armorCheckPenalty),
-  }));
+  return rows.map((row) => {
+    const indexData = row.indexData as Record<string, unknown>;
+    const indexAbbrev =
+      typeof indexData?.source_abbrev === "string" ? indexData.source_abbrev : null;
+    return {
+      name: row.name,
+      slug: row.slug,
+      ability: row.keyAbility,
+      trainedOnly: Boolean(row.trainedOnly),
+      armorCheckPenalty: Boolean(row.armorCheckPenalty),
+      sourceAbbrev: row.source?.abbrev ?? indexAbbrev,
+    };
+  });
 }
 
 export async function getClassSpellTablesBySlugs(

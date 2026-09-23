@@ -7,6 +7,18 @@ export type ChangelogEntry = {
 /** Site feature releases (not per-scrape data imports). */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: "2026-09-23",
+    title: "PC Planner Skills tab defaults",
+    summary:
+      "Skills tab now defaults to Player's Handbook skills plus class skills and ranked skills, with duplicate variant pages collapsed. Use the Skills settings toggle to show all sourcebooks.",
+  },
+  {
+    date: "2026-09-23",
+    title: "Public PC shares and optional weapon compare",
+    summary:
+      "PC Planner share links can be made public so viewers do not need an account. Damage Statistic compare mode is now optional via a Compare weapons toggle.",
+  },
+  {
     date: "2026-09-22",
     title: "Damage Statistic tool",
     summary:

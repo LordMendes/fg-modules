@@ -37,11 +37,7 @@ import {
   applyDerivedFromRace,
   applyRaceCombatBasicsOnRaceChange,
 } from "@/lib/pc-planner/syncDerived";
-import {
-  classSkillKeySet,
-  compendiumSyncKey,
-  mergeSkillsIntoRows,
-} from "@/lib/pc-planner/syncSkills";
+import { compendiumSyncKey, mergeCompendiumSkills } from "@/lib/pc-planner/syncSkills";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
 
@@ -112,7 +108,8 @@ function PcPlannerBody() {
   }, [state.spellClasses.length]);
 
   useEffect(() => {
-    if (!hydrated || !user || (!planIdParam && !isSharedView)) return;
+    if (!hydrated || (!planIdParam && !isSharedView)) return;
+    if (!user && !isSharedView) return;
 
     const syncKey = `${compendiumKeyValue}:${nonce}`;
     if (syncKey === lastCompendiumSync.current) return;
@@ -133,19 +130,9 @@ function PcPlannerBody() {
       setState((prev) => {
         const next = structuredClone(prev);
         if (result.bundle!.allSkills.length > 0 || result.bundle!.skills.length > 0) {
-          next.skills = mergeSkillsIntoRows(
-            result.bundle!.allSkills.length > 0
-              ? result.bundle!.allSkills
-              : result.bundle!.skills.map((ref) => ({
-                  name: ref.name,
-                  slug: ref.slug,
-                  ability: ref.ability,
-                  trainedOnly: false,
-                  armorCheckPenalty: false,
-                })),
-            prev.skills,
-            classSkillKeySet(result.bundle!.skills),
-          );
+          next.skills = mergeCompendiumSkills(result.bundle!, prev.skills, {
+            allSources: Boolean(prev.skillsAllSources),
+          });
         } else if (prev.identity.classLevels.length === 0) {
           next.skills = [];
         }
@@ -167,7 +154,7 @@ function PcPlannerBody() {
   }, [compendiumKeyValue, hydrated, user, nonce, planIdParam, isSharedView]);
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !isSharedView) {
       setHydrated(true);
       return;
     }
@@ -179,9 +166,11 @@ function PcPlannerBody() {
         const shared = await getSharedPcPlan(shareTokenParam);
         if (!shared) {
           setListError("Share link is invalid or has been revoked.");
-          router.replace("/tools/pc-planner");
-          const userPlans = await getUserPcPlans();
-          setPlans(userPlans);
+          if (user) {
+            router.replace("/tools/pc-planner");
+            const userPlans = await getUserPcPlans();
+            setPlans(userPlans);
+          }
           setPlanId(null);
           setSharedOwnerUsername(null);
           setHydrated(true);
@@ -198,6 +187,11 @@ function PcPlannerBody() {
         setPlanId(null);
         setSharedOwnerUsername(shared.ownerUsername);
         setState(shared.state);
+        setHydrated(true);
+        return;
+      }
+
+      if (!user) {
         setHydrated(true);
         return;
       }
@@ -230,7 +224,7 @@ function PcPlannerBody() {
       setSharedOwnerUsername(null);
       setHydrated(true);
     });
-  }, [user, planIdParam, shareTokenParam, router]);
+  }, [user, planIdParam, shareTokenParam, isSharedView, router]);
 
   useEffect(() => {
     if (!hydrated || !planId || !user || !planIdParam || isSharedView) return;
@@ -399,13 +393,11 @@ function PcPlannerBody() {
     });
   }
 
-  if (!user) {
+  if (!user && !isSharedView) {
     const loginNext =
-      shareTokenParam && !planIdParam
-        ? `/tools/pc-planner?share=${encodeURIComponent(shareTokenParam)}`
-        : planIdParam
-          ? `/tools/pc-planner?id=${encodeURIComponent(planIdParam)}`
-          : "/tools/pc-planner";
+      planIdParam
+        ? `/tools/pc-planner?id=${encodeURIComponent(planIdParam)}`
+        : "/tools/pc-planner";
 
     return (
       <div className="pc-planner-auth-gate">
@@ -424,14 +416,37 @@ function PcPlannerBody() {
     return <p className="pc-planner-loading">Loading…</p>;
   }
 
+  if (isSharedView && listError) {
+    return (
+      <div className="pc-planner-auth-gate">
+        <p role="alert">{listError}</p>
+        {user ? (
+          <button type="button" className="tool-btn" onClick={handleBackToList}>
+            All characters
+          </button>
+        ) : (
+          <Link href="/tools/pc-planner" className="tool-btn">
+            Go to PC Planner
+          </Link>
+        )}
+      </div>
+    );
+  }
+
   let body: ReactNode;
   if (isSharedView) {
+    const shareLoginNext = shareTokenParam
+      ? `/tools/pc-planner?share=${encodeURIComponent(shareTokenParam)}`
+      : "/tools/pc-planner";
+
     body = (
       <div className="pc-sheet-page">
         <div className="pc-sheet-toolbar">
-          <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
-            ← All characters
-          </button>
+          {user ? (
+            <button type="button" className="tool-btn tool-btn--ghost" onClick={handleBackToList}>
+              ← All characters
+            </button>
+          ) : null}
         </div>
 
         <div className="pc-plan-share-banner" role="status">
@@ -440,14 +455,23 @@ function PcPlannerBody() {
             <strong>@{sharedOwnerUsername ?? "unknown"}</strong>. View only.
           </p>
           <div className="pc-plan-share-banner-actions">
-            <button
-              type="button"
-              className="tool-btn"
-              onClick={handleAddSharedPlan}
-              disabled={copyPending || pending}
-            >
-              {copyPending ? "Adding…" : "Add to my plans"}
-            </button>
+            {user ? (
+              <button
+                type="button"
+                className="tool-btn"
+                onClick={handleAddSharedPlan}
+                disabled={copyPending || pending}
+              >
+                {copyPending ? "Adding…" : "Add to my plans"}
+              </button>
+            ) : (
+              <Link
+                href={`/login?next=${encodeURIComponent(shareLoginNext)}`}
+                className="tool-btn"
+              >
+                Sign in to add to my plans
+              </Link>
+            )}
           </div>
         </div>
 

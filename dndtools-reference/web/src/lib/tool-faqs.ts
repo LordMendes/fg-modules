@@ -127,7 +127,7 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
     {
       question: "Can I share a PC plan with another player?",
       answer:
-        "Yes. On the PC Planner sheet, use Share to copy a link. Anyone signed in can view the character read-only and add a copy to their own plans.",
+        "Yes. On the PC Planner sheet, use Share and turn on Public to copy a link. Anyone with the link can view the character read-only without signing in. Sign in is still required to add a copy to your own plans.",
     },
   ],
   "random-spellbook": [
@@ -156,7 +156,7 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
     {
       question: "Can I compare two weapons?",
       answer:
-        "Yes. Weapon A and Weapon B share the same attacker and target. The table shows expected damage for both plus the difference (B minus A) for one round.",
+        "Yes. Turn on Compare weapons to add Weapon B. Both weapons share the same attacker and target. The table shows expected damage for both plus the difference (B minus A) for one round.",
     },
     {
       question: "Does the table include iterative attacks?",

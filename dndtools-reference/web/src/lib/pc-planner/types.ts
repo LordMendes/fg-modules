@@ -416,6 +416,8 @@ export type PcPlanState = {
   skills: SkillRow[];
   /** Skill row keys (slug or lowercase name) pinned on the Main tab. */
   skillShortcuts?: string[];
+  /** When true, Skills tab lists every sourcebook (still one row per display name). */
+  skillsAllSources?: boolean;
   combat: CombatState;
   combatModes?: PcCombatModes;
   conditions?: PcConditionEntry[];

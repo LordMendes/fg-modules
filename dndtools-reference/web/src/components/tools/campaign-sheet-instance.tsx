@@ -32,9 +32,8 @@ import {
   applyRaceCombatBasicsOnRaceChange,
 } from "@/lib/pc-planner/syncDerived";
 import {
-  classSkillKeySet,
   compendiumSyncKey,
-  mergeSkillsIntoRows,
+  mergeCompendiumSkills,
 } from "@/lib/pc-planner/syncSkills";
 import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
 
@@ -226,19 +225,9 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
         if (!prev) return prev;
         const next = structuredClone(prev);
         if (result.bundle!.allSkills.length > 0 || result.bundle!.skills.length > 0) {
-          next.skills = mergeSkillsIntoRows(
-            result.bundle!.allSkills.length > 0
-              ? result.bundle!.allSkills
-              : result.bundle!.skills.map((ref) => ({
-                  name: ref.name,
-                  slug: ref.slug,
-                  ability: ref.ability,
-                  trainedOnly: false,
-                  armorCheckPenalty: false,
-                })),
-            prev.skills,
-            classSkillKeySet(result.bundle!.skills),
-          );
+          next.skills = mergeCompendiumSkills(result.bundle!, prev.skills, {
+            allSources: Boolean(prev.skillsAllSources),
+          });
         } else if (prev.identity.classLevels.length === 0) {
           next.skills = [];
         }

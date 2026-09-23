@@ -77,6 +77,7 @@ export function createDefaultPcPlanState(name = "Unnamed"): PcPlanState {
     ],
     skills: [],
     skillShortcuts: [],
+    skillsAllSources: false,
     combat: {
       sizeMod: 0,
       meleeMisc: 0,

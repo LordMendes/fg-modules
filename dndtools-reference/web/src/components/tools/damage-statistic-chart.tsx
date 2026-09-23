@@ -5,6 +5,7 @@ import {
   formatExpectedDelta,
   formatExpectedDamage,
   type AcCompareRow,
+  type AcDamageRow,
 } from "@/lib/damage-statistic";
 
 type ChartMode = "full" | "standard";
@@ -21,11 +22,19 @@ const VIEW_H = 320;
 const INNER_W = VIEW_W - PAD.left - PAD.right;
 const INNER_H = VIEW_H - PAD.top - PAD.bottom;
 
-function valuesForMode(rows: AcCompareRow[], mode: ChartMode): ChartPoint[] {
+function valuesForCompareMode(rows: AcCompareRow[], mode: ChartMode): ChartPoint[] {
   return rows.map((row) => ({
     ac: row.ac,
     a: mode === "full" ? row.a.fullAttackDamage : row.a.standardDamage,
     b: mode === "full" ? row.b.fullAttackDamage : row.b.standardDamage,
+  }));
+}
+
+function valuesForSingleMode(rows: AcDamageRow[], mode: ChartMode): ChartPoint[] {
+  return rows.map((row) => ({
+    ac: row.ac,
+    a: mode === "full" ? row.fullAttackDamage : row.standardDamage,
+    b: 0,
   }));
 }
 
@@ -82,28 +91,37 @@ function areaPath(
 }
 
 export function DamageStatisticChart({
-  rows,
+  compareRows,
+  singleRows,
   nameA,
   nameB,
+  compare = true,
 }: {
-  rows: AcCompareRow[];
+  compareRows?: AcCompareRow[];
+  singleRows?: AcDamageRow[];
   nameA: string;
-  nameB: string;
+  nameB?: string;
+  compare?: boolean;
 }) {
   const uid = useId().replace(/:/g, "");
   const [mode, setMode] = useState<ChartMode>("full");
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  const points = useMemo(() => valuesForMode(rows, mode), [rows, mode]);
+  const points = useMemo(() => {
+    if (compare && compareRows) return valuesForCompareMode(compareRows, mode);
+    if (!compare && singleRows) return valuesForSingleMode(singleRows, mode);
+    return [];
+  }, [compare, compareRows, singleRows, mode]);
+
   const acMin = points[0]?.ac ?? 0;
   const acMax = points[points.length - 1]?.ac ?? 1;
   const yMax = useMemo(() => {
     const peak = points.reduce(
-      (max, point) => Math.max(max, point.a, point.b),
+      (max, point) => Math.max(max, point.a, compare ? point.b : 0),
       0,
     );
     return Math.max(1, peak * 1.08);
-  }, [points]);
+  }, [points, compare]);
 
   const x = (ac: number) =>
     PAD.left + ((ac - acMin) / Math.max(1, acMax - acMin)) * INNER_W;
@@ -113,9 +131,9 @@ export function DamageStatisticChart({
   const xTicks = acTicks(acMin, acMax);
   const yTicks = damageTicks(yMax);
   const pathA = linePath(points, "a", x, y);
-  const pathB = linePath(points, "b", x, y);
+  const pathB = compare ? linePath(points, "b", x, y) : "";
   const fillA = areaPath(points, "a", x, y, baseline);
-  const fillB = areaPath(points, "b", x, y, baseline);
+  const fillB = compare ? areaPath(points, "b", x, y, baseline) : "";
 
   const hover = hoverIndex == null ? null : points[hoverIndex];
   const hoverX = hover ? x(hover.ac) : null;
@@ -140,9 +158,12 @@ export function DamageStatisticChart({
     return nearest;
   }
 
-  const labelA = nameA || "Weapon A";
+  const labelA = nameA || "Weapon";
   const labelB = nameB || "Weapon B";
   const modeLabel = mode === "full" ? "Full attack" : "Standard attack";
+  const ariaLabel = compare
+    ? `${modeLabel} expected damage from AC ${acMin} to ${acMax} for ${labelA} and ${labelB}.`
+    : `${modeLabel} expected damage from AC ${acMin} to ${acMax} for ${labelA}.`;
 
   return (
     <div className="damage-statistic-chart">
@@ -152,10 +173,12 @@ export function DamageStatisticChart({
             <span className="damage-statistic-chart-swatch damage-statistic-chart-swatch-a" />
             {labelA}
           </li>
-          <li>
-            <span className="damage-statistic-chart-swatch damage-statistic-chart-swatch-b" />
-            {labelB}
-          </li>
+          {compare ? (
+            <li>
+              <span className="damage-statistic-chart-swatch damage-statistic-chart-swatch-b" />
+              {labelB}
+            </li>
+          ) : null}
         </ul>
         <div className="damage-statistic-chart-modes" role="group" aria-label="Attack type">
           <button
@@ -182,7 +205,7 @@ export function DamageStatisticChart({
           className="damage-statistic-chart-svg"
           viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
           role="img"
-          aria-label={`${modeLabel} expected damage from AC ${acMin} to ${acMax} for ${labelA} and ${labelB}.`}
+          aria-label={ariaLabel}
           onPointerMove={(event) => {
             setHoverIndex(indexFromClientX(event.clientX, event.currentTarget));
           }}
@@ -272,7 +295,7 @@ export function DamageStatisticChart({
           </text>
 
           {fillA ? <path d={fillA} fill={`url(#${uid}-fill-a)`} /> : null}
-          {fillB ? <path d={fillB} fill={`url(#${uid}-fill-b)`} /> : null}
+          {compare && fillB ? <path d={fillB} fill={`url(#${uid}-fill-b)`} /> : null}
           {pathA ? (
             <path
               d={pathA}
@@ -281,7 +304,7 @@ export function DamageStatisticChart({
               filter={`url(#${uid}-glow)`}
             />
           ) : null}
-          {pathB ? (
+          {compare && pathB ? (
             <path
               d={pathB}
               className="damage-statistic-chart-line"
@@ -305,12 +328,14 @@ export function DamageStatisticChart({
                 cy={y(hover.a)}
                 r="5"
               />
-              <circle
-                className="damage-statistic-chart-dot damage-statistic-chart-dot-b"
-                cx={hoverX}
-                cy={y(hover.b)}
-                r="5"
-              />
+              {compare ? (
+                <circle
+                  className="damage-statistic-chart-dot damage-statistic-chart-dot-b"
+                  cx={hoverX}
+                  cy={y(hover.b)}
+                  r="5"
+                />
+              ) : null}
             </>
           ) : null}
         </svg>
@@ -327,13 +352,17 @@ export function DamageStatisticChart({
               <span className="damage-statistic-chart-swatch damage-statistic-chart-swatch-a" />
               {labelA}: <strong>{formatExpectedDamage(hover.a)}</strong>
             </p>
-            <p>
-              <span className="damage-statistic-chart-swatch damage-statistic-chart-swatch-b" />
-              {labelB}: <strong>{formatExpectedDamage(hover.b)}</strong>
-            </p>
-            <p className="damage-statistic-chart-tooltip-delta">
-              Difference {formatExpectedDelta(hover.b - hover.a)}
-            </p>
+            {compare ? (
+              <>
+                <p>
+                  <span className="damage-statistic-chart-swatch damage-statistic-chart-swatch-b" />
+                  {labelB}: <strong>{formatExpectedDamage(hover.b)}</strong>
+                </p>
+                <p className="damage-statistic-chart-tooltip-delta">
+                  Difference {formatExpectedDelta(hover.b - hover.a)}
+                </p>
+              </>
+            ) : null}
           </div>
         ) : (
           <p className="damage-statistic-chart-hint">

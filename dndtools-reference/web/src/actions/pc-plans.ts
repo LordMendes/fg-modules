@@ -1,7 +1,9 @@
 "use server";
 
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { requireCurrentUser } from "@/lib/auth/session";
+import { getCurrentUser, requireCurrentUser } from "@/lib/auth/session";
+import { getClientIp, rateLimit } from "@/lib/ratelimit";
 import {
   diffPcPlanState,
   summarizePcUpdate,
@@ -590,7 +592,14 @@ export async function disablePcPlanShare(planId: string): Promise<PcPlanActionRe
 }
 
 export async function getSharedPcPlan(token: string): Promise<SharedPcPlanView | null> {
-  const user = await requireCurrentUser();
+  const user = await getCurrentUser();
+  if (!user) {
+    const hdrs = await headers();
+    const ip = getClientIp(hdrs);
+    const rl = rateLimit(`pc-plan-share:${ip}`, 60, 60_000);
+    if (!rl.success) return null;
+  }
+
   const normalized = normalizeShareToken(token);
   if (!isValidShareToken(normalized)) return null;
 
@@ -610,7 +619,7 @@ export async function getSharedPcPlan(token: string): Promise<SharedPcPlanView |
     state: syncPcPlanState(parsed, null, { classSpellTables }),
     updatedAt: plan.updatedAt,
     ownerUsername: plan.user.username,
-    isOwner: plan.userId === user.id,
+    isOwner: user ? plan.userId === user.id : false,
   };
 }
 
