@@ -7436,6 +7436,22 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   justify-content: center;
 }
 
+.pc-main-abilities .pc-ability-score-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  min-width: 0;
+  width: auto;
+}
+
+.pc-main-abilities .pc-ability-score-controls .pc-ability-step {
+  width: 1.25rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+}
+
 .pc-main-abilities .pc-ability-card-score-input {
   flex: 0 0 2.25rem;
   width: 2.25rem;
@@ -7447,6 +7463,10 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--text-primary);
+}
+
+.pc-main-abilities .pc-ability-penalties {
+  display: contents;
 }
 
 .pc-main-abilities .pc-ability-row-segment.pc-ability-col {
@@ -7472,6 +7492,77 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   min-width: 0;
   padding: 0.08rem 0.08rem;
   font-size: 0.6875rem;
+}
+
+@media (max-width: 640px) {
+  .pc-sheet-frame {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .pc-main-abilities .pc-ability-card--row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "label label"
+      "score mod"
+      "penalties penalties";
+    gap: 0.3rem 0.45rem;
+    align-items: center;
+  }
+
+  .pc-main-abilities .pc-ability-label,
+  .pc-main-abilities .pc-ability-label-wrap {
+    grid-area: label;
+    align-self: start;
+    justify-self: start;
+    padding-right: 0;
+  }
+
+  .pc-main-abilities .pc-ability-label {
+    font-size: 0.75rem;
+  }
+
+  .pc-main-abilities .pc-ability-card-score {
+    grid-area: score;
+    justify-content: flex-start;
+  }
+
+  .pc-main-abilities .pc-ability-card-mod {
+    grid-area: mod;
+    justify-self: end;
+  }
+
+  .pc-main-abilities .pc-ability-penalties {
+    display: flex;
+    grid-area: penalties;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .pc-main-abilities .pc-ability-score-controls {
+    width: auto;
+  }
+
+  .pc-main-abilities .pc-ability-card-score-input {
+    flex: 0 0 2.5rem;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .pc-main-abilities .pc-ability-score-controls .pc-ability-step {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .pc-main-abilities .pc-ability-row-segment .pc-sheet-input--ability-dmg {
+    width: 2.25rem;
+    min-width: 2.25rem;
+    font-size: 1rem;
+  }
 }
 
 .pc-main-defenses {

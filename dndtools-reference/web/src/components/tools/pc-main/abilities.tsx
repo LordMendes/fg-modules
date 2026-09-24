@@ -59,18 +59,48 @@ export function PcMainAbilities({
               />
 
               <div className="pc-ability-row-segment pc-ability-card-score">
-                <input
-                  type="number"
-                  className="pc-sheet-input pc-sheet-input--ability pc-ability-card-score-input"
-                  min={1}
-                  max={99}
-                  value={undamaged}
-                  aria-label={`${key.toUpperCase()} score`}
-                  onChange={(e) => {
-                    const desired = clampAbilityScore(Number(e.target.value));
-                    updateAbility(key, desired - racial - itemTotal);
-                  }}
-                />
+                <div className="pc-ability-score-controls">
+                  <button
+                    type="button"
+                    className="pc-ability-step"
+                    aria-label={`Decrease ${key.toUpperCase()} score`}
+                    disabled={undamaged <= 1}
+                    onClick={() =>
+                      updateAbility(
+                        key,
+                        clampAbilityScore(undamaged - 1) - racial - itemTotal,
+                      )
+                    }
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    className="pc-sheet-input pc-sheet-input--ability pc-ability-card-score-input"
+                    min={1}
+                    max={99}
+                    value={undamaged}
+                    aria-label={`${key.toUpperCase()} score`}
+                    onChange={(e) => {
+                      const desired = clampAbilityScore(Number(e.target.value));
+                      updateAbility(key, desired - racial - itemTotal);
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="pc-ability-step"
+                    aria-label={`Increase ${key.toUpperCase()} score`}
+                    disabled={undamaged >= 99}
+                    onClick={() =>
+                      updateAbility(
+                        key,
+                        clampAbilityScore(undamaged + 1) - racial - itemTotal,
+                      )
+                    }
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
               <div
@@ -89,47 +119,49 @@ export function PcMainAbilities({
                 />
               </div>
 
-              <div
-                className={
-                  damaged
-                    ? "pc-ability-row-segment pc-ability-col pc-ability-col--dmg pc-ability-col--dmg-active"
-                    : "pc-ability-row-segment pc-ability-col pc-ability-col--dmg"
-                }
-              >
-                <span className="pc-ability-col-label">Dmg</span>
-                <input
-                  type="number"
-                  className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
-                  min={0}
-                  max={99}
-                  value={damage}
-                  aria-label={`${key.toUpperCase()} ability damage`}
-                  onChange={(e) => {
-                    const next = clampAbilityDamage(Number(e.target.value));
-                    patch((s) => {
-                      if (!s.abilityDamage) s.abilityDamage = emptyAbilityDamage();
-                      s.abilityDamage[key] = next;
-                    });
-                  }}
-                />
-              </div>
-
-              <div className="pc-ability-row-segment pc-ability-col pc-ability-col--dmg">
-                <span className="pc-ability-col-label">Drain</span>
-                <input
-                  type="number"
-                  className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
-                  min={0}
-                  max={99}
-                  value={drain}
-                  aria-label={`${key.toUpperCase()} ability drain`}
-                  onChange={(e) =>
-                    patch((s) => {
-                      if (!s.abilityDrain) s.abilityDrain = emptyAbilityDrain();
-                      s.abilityDrain[key] = clampAbilityDamage(Number(e.target.value));
-                    })
+              <div className="pc-ability-penalties">
+                <div
+                  className={
+                    damaged
+                      ? "pc-ability-row-segment pc-ability-col pc-ability-col--dmg pc-ability-col--dmg-active"
+                      : "pc-ability-row-segment pc-ability-col pc-ability-col--dmg"
                   }
-                />
+                >
+                  <span className="pc-ability-col-label">Dmg</span>
+                  <input
+                    type="number"
+                    className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
+                    min={0}
+                    max={99}
+                    value={damage}
+                    aria-label={`${key.toUpperCase()} ability damage`}
+                    onChange={(e) => {
+                      const next = clampAbilityDamage(Number(e.target.value));
+                      patch((s) => {
+                        if (!s.abilityDamage) s.abilityDamage = emptyAbilityDamage();
+                        s.abilityDamage[key] = next;
+                      });
+                    }}
+                  />
+                </div>
+
+                <div className="pc-ability-row-segment pc-ability-col pc-ability-col--dmg">
+                  <span className="pc-ability-col-label">Drain</span>
+                  <input
+                    type="number"
+                    className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
+                    min={0}
+                    max={99}
+                    value={drain}
+                    aria-label={`${key.toUpperCase()} ability drain`}
+                    onChange={(e) =>
+                      patch((s) => {
+                        if (!s.abilityDrain) s.abilityDrain = emptyAbilityDrain();
+                        s.abilityDrain[key] = clampAbilityDamage(Number(e.target.value));
+                      })
+                    }
+                  />
+                </div>
               </div>
             </div>
           );
