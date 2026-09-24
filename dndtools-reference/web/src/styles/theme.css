@@ -7445,6 +7445,23 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   width: auto;
 }
 
+/* Desktop: − score + (same order as before) */
+.pc-main-abilities .pc-ability-score-steps {
+  display: contents;
+}
+
+.pc-main-abilities .pc-ability-score-controls .pc-ability-card-score-input {
+  order: 0;
+}
+
+.pc-main-abilities .pc-ability-score-controls .pc-ability-step--dec {
+  order: -1;
+}
+
+.pc-main-abilities .pc-ability-score-controls .pc-ability-step--inc {
+  order: 1;
+}
+
 .pc-main-abilities .pc-ability-score-controls .pc-ability-step {
   width: 1.25rem;
   height: 1.75rem;
@@ -7501,13 +7518,14 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   }
 
   .pc-main-abilities .pc-ability-card--row {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
       "label label"
       "score mod"
       "penalties penalties";
-    gap: 0.3rem 0.45rem;
+    gap: 0.35rem 0.5rem;
     align-items: center;
+    justify-items: stretch;
   }
 
   .pc-main-abilities .pc-ability-label,
@@ -7524,25 +7542,42 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 
   .pc-main-abilities .pc-ability-card-score {
     grid-area: score;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .pc-main-abilities .pc-ability-card-mod {
     grid-area: mod;
-    justify-self: end;
+    justify-self: center;
   }
 
   .pc-main-abilities .pc-ability-penalties {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-area: penalties;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 0.65rem;
+    gap: 0.5rem;
     min-width: 0;
+    width: 100%;
+  }
+
+  .pc-main-abilities .pc-ability-penalties > .pc-ability-col {
+    justify-self: center;
   }
 
   .pc-main-abilities .pc-ability-score-controls {
     width: auto;
+  }
+
+  /* Mobile: input, then +/− stacked on the right (class-level pattern) */
+  .pc-main-abilities .pc-ability-score-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+    flex-shrink: 0;
+  }
+
+  .pc-main-abilities .pc-ability-score-controls .pc-ability-step--dec,
+  .pc-main-abilities .pc-ability-score-controls .pc-ability-step--inc {
+    order: 0;
   }
 
   .pc-main-abilities .pc-ability-card-score-input {
@@ -7553,9 +7588,9 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   }
 
   .pc-main-abilities .pc-ability-score-controls .pc-ability-step {
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
+    width: 1.25rem;
+    height: 1.1rem;
+    font-size: 0.6875rem;
   }
 
   .pc-main-abilities .pc-ability-row-segment .pc-sheet-input--ability-dmg {
@@ -10787,8 +10822,10 @@ button.pc-abilities-row-name-btn:focus-visible {
 
 .pc-identity-extra-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem 1rem;
+  min-width: 0;
+  width: 100%;
 }
 
 .pc-physical-grid {
@@ -10900,11 +10937,14 @@ button.pc-abilities-row-name-btn:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .pc-sense-field,
 .pc-language-field {
   grid-column: 1 / -1;
+  min-width: 0;
 }
 
 .pc-language-picker {
@@ -10912,6 +10952,7 @@ button.pc-abilities-row-name-btn:focus-visible {
   flex-direction: column;
   gap: 0.3rem;
   min-width: 0;
+  max-width: 100%;
 }
 
 .pc-language-list {
@@ -10958,9 +10999,15 @@ button.pc-abilities-row-name-btn:focus-visible {
 
 .pc-language-add {
   position: relative;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 .pc-language-add-input {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
   font-size: 0.75rem;
   padding: 0.15rem 0.35rem;
 }

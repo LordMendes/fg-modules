@@ -60,20 +60,6 @@ export function PcMainAbilities({
 
               <div className="pc-ability-row-segment pc-ability-card-score">
                 <div className="pc-ability-score-controls">
-                  <button
-                    type="button"
-                    className="pc-ability-step"
-                    aria-label={`Decrease ${key.toUpperCase()} score`}
-                    disabled={undamaged <= 1}
-                    onClick={() =>
-                      updateAbility(
-                        key,
-                        clampAbilityScore(undamaged - 1) - racial - itemTotal,
-                      )
-                    }
-                  >
-                    −
-                  </button>
                   <input
                     type="number"
                     className="pc-sheet-input pc-sheet-input--ability pc-ability-card-score-input"
@@ -86,20 +72,36 @@ export function PcMainAbilities({
                       updateAbility(key, desired - racial - itemTotal);
                     }}
                   />
-                  <button
-                    type="button"
-                    className="pc-ability-step"
-                    aria-label={`Increase ${key.toUpperCase()} score`}
-                    disabled={undamaged >= 99}
-                    onClick={() =>
-                      updateAbility(
-                        key,
-                        clampAbilityScore(undamaged + 1) - racial - itemTotal,
-                      )
-                    }
-                  >
-                    +
-                  </button>
+                  <div className="pc-ability-score-steps">
+                    <button
+                      type="button"
+                      className="pc-ability-step pc-ability-step--inc"
+                      aria-label={`Increase ${key.toUpperCase()} score`}
+                      disabled={undamaged >= 99}
+                      onClick={() =>
+                        updateAbility(
+                          key,
+                          clampAbilityScore(undamaged + 1) - racial - itemTotal,
+                        )
+                      }
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      className="pc-ability-step pc-ability-step--dec"
+                      aria-label={`Decrease ${key.toUpperCase()} score`}
+                      disabled={undamaged <= 1}
+                      onClick={() =>
+                        updateAbility(
+                          key,
+                          clampAbilityScore(undamaged - 1) - racial - itemTotal,
+                        )
+                      }
+                    >
+                      −
+                    </button>
+                  </div>
                 </div>
               </div>
 
