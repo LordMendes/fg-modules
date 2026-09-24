@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 
 const monorepoRoot = path.join(__dirname, "..");
 const isDev = process.env.NODE_ENV === "development";
-const plausibleOrigin = "http://analytics.lcmendes.com";
+const plausibleOrigin = "https://analytics.lcmendes.com";
+const cloudflareInsightsScriptOrigin = "https://static.cloudflareinsights.com";
+const cloudflareInsightsConnectOrigin = "https://cloudflareinsights.com";
 const r2PublicOrigin =
   process.env.NEXT_PUBLIC_R2_PUBLIC_BASE_URL?.replace(/\/$/, "") ||
   "https://pub-f74b850de3e6476e8302459341d9917e.r2.dev";
@@ -18,12 +20,12 @@ const r2PublicOrigin =
 const contentSecurityPolicy = [
   "default-src 'self'",
   // unsafe-eval kept in dev for Next HMR.
-  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' ${plausibleOrigin}${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' ${plausibleOrigin} ${cloudflareInsightsScriptOrigin}${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' blob: data: ${r2PublicOrigin}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${plausibleOrigin} ws: wss:`,
+  `connect-src 'self' ${plausibleOrigin} ${cloudflareInsightsConnectOrigin} ws: wss:`,
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",

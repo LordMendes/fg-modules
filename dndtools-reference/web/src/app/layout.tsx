@@ -5,6 +5,7 @@ import { EncounterProvider } from "@/components/encounter/encounter-provider";
 import { AppShell } from "@/components/app-shell";
 import { CookieConsentProvider } from "@/components/cookie-consent-provider";
 import { PlausibleAnalytics } from "@/components/plausible-analytics";
+import { StaleServerActionRecovery } from "@/components/stale-server-action-recovery";
 import { Providers } from "@/components/providers";
 import { SessionProvider } from "@/components/session-provider";
 import { AuthProvider } from "@/components/auth-provider";
@@ -112,6 +113,7 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <StaleServerActionRecovery />
         <Providers>
           <CookieConsentProvider>
             <SessionProvider nonce={nonce}>
