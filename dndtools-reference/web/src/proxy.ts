@@ -9,6 +9,7 @@ import {
   parseSessionToken,
 } from "@/lib/session";
 import { AUTH_COOKIE_NAME } from "@/lib/auth/session";
+import { canonicalEntityPath } from "@/lib/classic-links";
 
 function ensureSession(request: NextRequest) {
   const existing = request.cookies.get(COOKIE_NAME)?.value;
@@ -23,6 +24,13 @@ function ensureSession(request: NextRequest) {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const canonical = canonicalEntityPath(pathname);
+  if (canonical) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = canonical;
+    return NextResponse.redirect(redirectUrl, 308);
+  }
 
   if (pathname.startsWith("/api/") && pathname !== "/api/health") {
     return NextResponse.json({ error: "Not found" }, { status: 404 });

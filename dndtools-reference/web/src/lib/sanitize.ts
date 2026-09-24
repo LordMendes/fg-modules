@@ -1,20 +1,5 @@
 import DOMPurify from "isomorphic-dompurify";
-
-const CATEGORY_PREFIXES = [
-  "spells",
-  "feats",
-  "monsters",
-  "classes",
-  "skills",
-  "races",
-  "items",
-  "equipment",
-  "domains",
-  "deities",
-  "psionics",
-  "templates",
-  "rules",
-] as const;
+import { canonicalEntityPath } from "@/lib/classic-links";
 
 const SANITIZE_CONFIG = {
   ALLOWED_TAGS: [
@@ -33,21 +18,34 @@ function fallbackSanitize(html: string): string {
     .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "");
 }
 
+function rewriteHrefValue(href: string): string {
+  if (href.startsWith("http://") || href.startsWith("https://")) {
+    return href;
+  }
+
+  const hashIndex = href.indexOf("#");
+  const queryIndex = href.indexOf("?");
+  const pathEnd =
+    queryIndex === -1
+      ? hashIndex === -1
+        ? href.length
+        : hashIndex
+      : hashIndex === -1
+        ? queryIndex
+        : Math.min(queryIndex, hashIndex);
+  const pathOnly = href.slice(0, pathEnd);
+  const suffix = href.slice(pathEnd);
+
+  const canonical = canonicalEntityPath(pathOnly);
+  return canonical ? `${canonical}${suffix}` : href;
+}
+
 export function rewriteInternalLinks(html: string | null | undefined): string {
   if (!html) return "";
 
-  let result = html;
-  for (const cat of CATEGORY_PREFIXES) {
-    result = result.replace(
-      new RegExp(`href="/${cat}/([^"]+)"`, "g"),
-      `href="/${cat}/$1"`,
-    );
-    result = result.replace(
-      new RegExp(`href='/${cat}/([^']+)'`, "g"),
-      `href="/${cat}/$1"`,
-    );
-  }
-  return result;
+  return html.replace(/\bhref=(["'])([^"']*)\1/gi, (_match, _quote, href) => {
+    return `href="${rewriteHrefValue(href)}"`;
+  });
 }
 
 export function sanitizeHtml(html: string | null | undefined): string {
