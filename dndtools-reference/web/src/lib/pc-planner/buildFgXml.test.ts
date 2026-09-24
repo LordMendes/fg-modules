@@ -4,7 +4,7 @@ import { buildPcFgXml } from "./buildFgXml";
 import { createDefaultPcPlanState } from "./defaultState";
 
 describe("buildPcFgXml", () => {
-  it("emits a CoreRPG character root with combat and ability fields", () => {
+  it("emits structured 3.5E character nodes with combat fields", () => {
     const state = createDefaultPcPlanState("Test Hero");
     state.identity.classLevels = [
       { classSlug: "fighter-93", className: "Fighter", level: 6 },
@@ -13,6 +13,15 @@ describe("buildPcFgXml", () => {
     state.abilities.str = 16;
     state.abilityBase.str = 16;
     state.feats = [{ slug: "dodge", name: "Dodge" }];
+    state.skills = [
+      {
+        name: "Climb",
+        ability: "Str",
+        ranks: 5,
+        misc: 0,
+        armorCheckPenalty: true,
+      },
+    ];
     state.hitPoints = {
       rolls: [
         { classSlug: "fighter-93", classLevel: 1, rolled: 10 },
@@ -25,13 +34,21 @@ describe("buildPcFgXml", () => {
     };
 
     const xml = buildPcFgXml(state, { classHitDice: { "fighter-93": "d10" } });
-    assert.match(xml, /<root version="5.1" release="9\|CoreRPG:7">/);
+    assert.match(xml, /<root version="5.1" release="18\|CoreRPG:7">/);
     assert.match(xml, /<character>/);
     assert.match(xml, /<name type="string">Test Hero<\/name>/);
-    assert.match(xml, /<babgrp type="string">\+6\/\+1/);
-    assert.match(xml, /<atk type="string">Melee \+9\/\+4 or Ranged \+6\/\+1/);
-    assert.match(xml, /<feats type="string">Dodge<\/feats>/);
-    assert.match(xml, /<hd type="string">6d10<\/hd>/);
+    assert.match(xml, /<strength>\s*<score type="number">16<\/score>/);
+    assert.match(xml, /<classes>/);
+    assert.match(xml, /<name type="string">Fighter<\/name>/);
+    assert.match(xml, /<attackbonus>\s*<base type="number">6<\/base>/);
+    assert.match(xml, /<featlist>/);
+    assert.match(xml, /<name type="string">Dodge<\/name>/);
+    assert.match(xml, /<skilllist>/);
+    assert.match(xml, /<label type="string">Climb<\/label>/);
+    assert.match(xml, /<ranks type="number">5<\/ranks>/);
+    assert.match(xml, /<hp>\s*<total type="number">40<\/total>/);
+    assert.doesNotMatch(xml, /<babgrp type="string">/);
+    assert.doesNotMatch(xml, /<ac type="string">/);
     assert.doesNotMatch(xml, /<npc>/);
   });
 
@@ -46,12 +63,37 @@ describe("buildPcFgXml", () => {
     assert.match(xml, /<availablelevel1 type="number">/);
   });
 
-  it("appends non-zero treasure to gear", () => {
+  it("exports coins and equipped weapons", () => {
     const state = createDefaultPcPlanState("Merchant");
-    state.inventory = [{ name: "Backpack", quantity: 1, weight: 2 }];
+    state.identity.classLevels = [
+      { classSlug: "fighter-93", className: "Fighter", level: 1 },
+    ];
+    state.identity.firstClassSlug = "fighter-93";
+    state.abilities.str = 14;
+    state.abilityBase.str = 14;
+    state.inventory = [
+      {
+        name: "Longsword",
+        quantity: 1,
+        weight: 4,
+        kind: "weapon",
+        handed: "one",
+        damageM: "1d8",
+        damageType: "Slashing",
+        critical: "19-20/x2",
+        weaponHand: "main",
+      },
+    ];
     state.treasure[1].amount = 50;
     state.treasure.push({ id: "gems", name: "Gems", amount: 2 });
+
     const xml = buildPcFgXml(state);
-    assert.match(xml, /Backpack; 50 GP, 2 Gems/);
+    assert.match(xml, /<coins>/);
+    assert.match(xml, /<amount type="number">50<\/amount>/);
+    assert.match(xml, /<name type="string">GP<\/name>/);
+    assert.match(xml, /<name type="string">Gems<\/name>/);
+    assert.match(xml, /<weaponlist>/);
+    assert.match(xml, /<name type="string">Longsword<\/name>/);
+    assert.match(xml, /<dice type="dice">1d8<\/dice>/);
   });
 });

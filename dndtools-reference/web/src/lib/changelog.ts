@@ -8,6 +8,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: "2026-09-23",
+    title: "PC Planner Fantasy Grounds export",
+    summary:
+      "Download a structured 3.5E character sheet XML from the PC Planner toolbar for import into Fantasy Grounds.",
+  },
+  {
+    date: "2026-09-23",
     title: "PC Planner Skills tab defaults",
     summary:
       "Skills tab now defaults to Player's Handbook skills plus class skills and ranked skills, with duplicate variant pages collapsed. Use the Skills settings toggle to show all sourcebooks.",

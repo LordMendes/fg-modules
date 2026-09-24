@@ -39,6 +39,12 @@ import {
 } from "@/lib/pc-planner/syncDerived";
 import { compendiumSyncKey, mergeCompendiumSkills } from "@/lib/pc-planner/syncSkills";
 import type { PcCompendiumBundle } from "@/lib/entities";
+import {
+  buildPcFgXml,
+  downloadTextFile,
+  pcFgExportOptionsFromCompendium,
+  pcPlanExportBasename,
+} from "@/lib/pc-planner/buildFgXml";
 import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
@@ -393,6 +399,15 @@ function PcPlannerBody() {
     });
   }
 
+  const handleDownloadXml = useCallback(() => {
+    const xml = buildPcFgXml(state, pcFgExportOptionsFromCompendium(compendium));
+    downloadTextFile(
+      `${pcPlanExportBasename(state)}.xml`,
+      xml,
+      "application/xml",
+    );
+  }, [state, compendium]);
+
   if (!user && !isSharedView) {
     const loginNext =
       planIdParam
@@ -447,6 +462,11 @@ function PcPlannerBody() {
               ← All characters
             </button>
           ) : null}
+          <div className="pc-sheet-toolbar-actions">
+            <button type="button" className="tool-btn tool-btn--ghost" onClick={handleDownloadXml}>
+              Download XML
+            </button>
+          </div>
         </div>
 
         <div className="pc-plan-share-banner" role="status">
@@ -530,6 +550,9 @@ function PcPlannerBody() {
           </button>
           <PcShortcutSearch onSelect={handleShortcutSelect} />
           <div className="pc-sheet-toolbar-actions">
+            <button type="button" className="tool-btn tool-btn--ghost" onClick={handleDownloadXml}>
+              Download XML
+            </button>
             <button
               type="button"
               className="tool-btn tool-btn--ghost"

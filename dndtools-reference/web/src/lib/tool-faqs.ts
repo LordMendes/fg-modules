@@ -122,7 +122,7 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
     {
       question: "Can I export a character to Fantasy Grounds?",
       answer:
-        "Yes. Use the export action to download FG-compatible XML after filling race, class, feats, skills, and equipment.",
+        "Yes. Use Download XML on the PC sheet to get a structured 3.5E character file. Import it from the Fantasy Grounds Characters window.",
     },
     {
       question: "Can I share a PC plan with another player?",
