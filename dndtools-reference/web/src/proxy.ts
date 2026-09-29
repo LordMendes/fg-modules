@@ -46,6 +46,16 @@ export function proxy(request: NextRequest) {
     }
   }
 
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+    if (!authToken) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/login";
+      loginUrl.searchParams.set("next", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   if (pathname === "/tools/campaign" || pathname.startsWith("/tools/campaign/")) {
     const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value;
     if (!authToken) {

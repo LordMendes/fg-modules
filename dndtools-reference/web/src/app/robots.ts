@@ -4,7 +4,14 @@ import { siteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-const CRAWL_DISALLOW = ["/api/", "/health", "/login", "/register", "/profile"];
+const CRAWL_DISALLOW = [
+  "/api/",
+  "/health",
+  "/login",
+  "/register",
+  "/profile",
+  "/admin",
+];
 
 const AI_CRAWLER_AGENTS = [
   "GPTBot",

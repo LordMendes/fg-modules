@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { LogoutButton } from "@/components/logout-button";
+import { isAdminUser } from "@/lib/auth/admin";
 import type { AuthUser } from "@/lib/auth/session";
 
 export function HeaderAccountMenu({ user }: { user: AuthUser }) {
@@ -64,6 +65,16 @@ export function HeaderAccountMenu({ user }: { user: AuthUser }) {
           >
             Profile
           </Link>
+          {isAdminUser(user) ? (
+            <Link
+              href="/admin"
+              className="header-menu-item"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+            >
+              Admin
+            </Link>
+          ) : null}
           <LogoutButton
             className="header-menu-item header-menu-item--button"
             onLoggedOut={() => setOpen(false)}

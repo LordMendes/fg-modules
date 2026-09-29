@@ -13,6 +13,7 @@ import {
 } from "@/lib/nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoutButton } from "@/components/logout-button";
+import { isAdminUser } from "@/lib/auth/admin";
 import type { AuthUser } from "@/lib/auth/session";
 
 export function HeaderMobileMenu({ user }: { user: AuthUser | null }) {
@@ -156,6 +157,15 @@ export function HeaderMobileMenu({ user }: { user: AuthUser | null }) {
                   >
                     Profile
                   </Link>
+                  {isAdminUser(user) ? (
+                    <Link
+                      href="/admin"
+                      className="header-mobile-link"
+                      onClick={() => setOpen(false)}
+                    >
+                      Admin
+                    </Link>
+                  ) : null}
                   <LogoutButton
                     className="header-mobile-link header-mobile-link--button"
                     onLoggedOut={() => setOpen(false)}
