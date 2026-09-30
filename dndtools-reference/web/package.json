@@ -6,7 +6,7 @@
     "dev": "node ./scripts/dev.mjs",
     "dev:next": "next dev",
     "dev:ws": "node ./scripts/dev.mjs",
-    "build": "prisma generate && next build && pnpm run bundle:server",
+    "build": "prisma generate && next build --webpack && pnpm run bundle:server",
     "bundle:server": "esbuild server.ts --bundle --platform=node --format=esm --outfile=server.mjs --packages=external --alias:@=./src --banner:js=\"import { createRequire as __createRequire } from 'module'; const require = __createRequire(import.meta.url);\"",
     "start": "node ./scripts/dev.mjs",
     "start:prod": "node server.mjs",
