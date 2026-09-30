@@ -39,7 +39,9 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
-  serverExternalPackages: ["sharp"],
+  // jsdom reads default-stylesheet.css via __dirname. Bundling it makes that
+  // path point at .next/server/app/browser/ and page-data collection fails.
+  serverExternalPackages: ["sharp", "jsdom", "isomorphic-dompurify"],
   // pnpm keeps Sharp's .node addon and libvips .so under node_modules/.pnpm.
   // Next 16 turbopack tracing follows JS requires, so those native files must
   // be included explicitly or image routes fail at runtime with linuxmusl-x64.
