@@ -39,30 +39,9 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
-  // jsdom reads default-stylesheet.css via __dirname. Bundling it makes that
-  // path point at .next/server/app/browser/ and entity pages 500. Keep it
-  // external and copy it into the standalone image (collect-native-pkgs.mjs).
-  serverExternalPackages: ["sharp", "jsdom", "isomorphic-dompurify"],
-  // pnpm keeps Sharp's .node addon and libvips .so under node_modules/.pnpm.
-  // Next 16 turbopack tracing follows JS requires, so those native files must
-  // be included explicitly or image routes fail at runtime with linuxmusl-x64.
-  outputFileTracingIncludes: {
-    "/*": [
-      "./node_modules/sharp/**/*",
-      "./node_modules/@img/**/*",
-      "./node_modules/isomorphic-dompurify/**/*",
-      "./node_modules/jsdom/**/*",
-      "../node_modules/sharp/**/*",
-      "../node_modules/@img/**/*",
-      "../node_modules/isomorphic-dompurify/**/*",
-      "../node_modules/jsdom/**/*",
-      "../node_modules/.pnpm/sharp@*/**/*",
-      "../node_modules/.pnpm/@img+sharp-linux*/**/*",
-      "../node_modules/.pnpm/@img+sharp-libvips-linux*/**/*",
-      "../node_modules/.pnpm/isomorphic-dompurify@*/**/*",
-      "../node_modules/.pnpm/jsdom@*/**/*",
-    ],
-  },
+  // Native addon. scripts/stage-runtime-packages.mjs copies the musl build
+  // into the runner image. Next's file tracer does not follow that pnpm path.
+  serverExternalPackages: ["sharp"],
   poweredByHeader: false,
   transpilePackages: ["@3d-dice/dice-box-threejs"],
   experimental: {

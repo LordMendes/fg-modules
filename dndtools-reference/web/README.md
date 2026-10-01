@@ -194,7 +194,7 @@ Set these as **runtime** environment variables in Coolify:
 | `R2_SECRET_ACCESS_KEY` | R2 API token secret |
 | `NEXT_PUBLIC_R2_PUBLIC_BASE_URL` | Public r2.dev or custom domain base URL |
 
-`prisma generate` during the Docker build uses a harmless placeholder URL when no database is available — the real `DATABASE_URL` is only read at container startup.
+`prisma generate` during the Docker build uses a harmless placeholder URL when no database is available. The real `DATABASE_URL` is read at container startup, when `migrate.mjs` applies the SQL files in `prisma/migrations`. Local `pnpm db:deploy` still uses the Prisma CLI.
 
 ## Coolify Deployment
 
@@ -227,9 +227,9 @@ Keep the running container's image if `image prune` asks. Do not skip this after
 
 | Command | Description |
 |---------|-------------|
-| `start` (default) | Run migrations, then start the web server |
+| `start` (default) | Apply SQL migrations, then start the web server |
 | `import` | Import JSON data into PostgreSQL |
-| `migrate` | Run migrations only |
+| `migrate` | Apply SQL migrations only |
 
 ## Data Import
 

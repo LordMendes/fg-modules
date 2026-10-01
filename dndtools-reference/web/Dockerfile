@@ -28,18 +28,7 @@ RUN pnpm --filter @fg-modules/web exec prisma generate
 RUN pnpm --filter @fg-modules/web rebuild sharp
 RUN pnpm --filter @fg-modules/web run copy:dice-assets
 RUN pnpm --filter @fg-modules/web build
-RUN pnpm --filter @fg-modules/web run import:bundle
-# After esbuild bundles exist: copy Sharp/Prisma CLI + scan server.mjs externals.
-RUN node /app/web/scripts/collect-native-pkgs.mjs
-# Merge the runtime closure before the runner COPY so packages are stored in one image layer.
-RUN target=/app/web/.next/standalone/node_modules/.pnpm \
-  && mkdir -p "$target" \
-  && for src in /native-pkgs/*/; do \
-       [ -d "$src" ] || continue; \
-       rm -rf "$target/$(basename "$src")"; \
-       cp -a "$src" "$target/"; \
-     done \
-  && cp /native-pkgs/link-packages.txt "$target/link-packages.txt"
+RUN node /app/web/scripts/stage-runtime-packages.mjs
 
 # --- Production ---
 # Do not inherit `base` (pnpm). Previous runner `npm install` added 220 packages
@@ -60,32 +49,26 @@ COPY --from=builder /app/web/prisma ./web/prisma
 COPY --from=builder /app/web/public ./web/public
 COPY --from=builder /app/web/import-dndtools.mjs ./web/import-dndtools.mjs
 COPY --from=builder /app/web/server.mjs ./web/server.mjs
+COPY --from=builder /app/web/migrate.mjs ./web/migrate.mjs
 COPY --from=builder /app/web/docker-entrypoint.sh /docker-entrypoint.sh
-COPY --from=builder /app/web/prisma.config.docker.mjs ./web/prisma.config.mjs
 
 # Monorepo standalone layout: .next/standalone/{web,node_modules}
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
+# Standalone tracing leaves symlinks here. Docker cannot copy a directory onto a symlink.
+RUN rm -rf \
+  /app/web/node_modules/sharp \
+  /app/web/node_modules/detect-libc \
+  /app/web/node_modules/semver \
+  /app/web/node_modules/@img/colour \
+  /app/web/node_modules/@img/sharp-linux* \
+  /app/web/node_modules/@img/sharp-libvips-linux* \
+  /app/web/node_modules/@prisma/client \
+  /app/web/node_modules/@prisma/client-runtime-utils
+# Sharp musl binaries and the Prisma client runtime.
+COPY --from=builder --chown=nextjs:nodejs /runtime-pkgs/node_modules/ ./web/node_modules/
 
-RUN find /app/node_modules /app/web/node_modules -name 'sharp-linuxmusl-*.node' | grep -q . \
-  && link_web_pkg() { \
-       name="$1"; \
-       dest="/app/web/node_modules/$name"; \
-       [ -e "$dest" ] && return 0; \
-       src="$(find /app/node_modules/.pnpm /app/web/node_modules/.pnpm -maxdepth 5 -type d -path "*/node_modules/$name" | head -n 1)"; \
-       [ -n "$src" ] || return 1; \
-       mkdir -p "$(dirname "$dest")"; \
-       ln -sfn "$src" "$dest"; \
-     } \
-  && link_web_pkg prisma \
-  && while IFS= read -r pkg; do \
-       [ -z "$pkg" ] && continue; \
-       link_web_pkg "$pkg" || { echo "failed to link package: $pkg" >&2; exit 1; }; \
-     done < /app/node_modules/.pnpm/link-packages.txt \
-  && mkdir -p /app/web/node_modules/.bin \
-  && ln -sfn ../prisma/build/index.js /app/web/node_modules/.bin/prisma \
-  && chmod +x /app/web/node_modules/.bin/prisma /docker-entrypoint.sh \
-  && rm /app/node_modules/.pnpm/link-packages.txt
+RUN chmod +x /docker-entrypoint.sh
 
 USER nextjs
 

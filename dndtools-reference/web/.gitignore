@@ -40,3 +40,4 @@ next-env.d.ts
 /ws-standalone.mjs
 /server.mjs
 /server.cjs
+/migrate.mjs

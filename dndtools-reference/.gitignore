@@ -5,6 +5,7 @@ node_modules/
 web/node_modules/
 web/import-dndtools.mjs
 web/import-dndtools.cjs
+web/migrate.mjs
 web/.env
 web/.next/
 web/lighthouse-reports/

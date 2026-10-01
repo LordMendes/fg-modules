@@ -1,3 +1,4 @@
+import sanitizeHtmlLib from "sanitize-html";
 import { canonicalEntityPath } from "@/lib/classic-links";
 
 export const SANITIZE_CONFIG = {
@@ -15,7 +16,7 @@ export type HtmlSanitizer = {
   sanitize: (html: string, config: SanitizeConfig) => string;
 };
 
-/** Last-resort cleanup if DOMPurify cannot run. */
+/** Last-resort cleanup if the HTML sanitizer throws. */
 export function fallbackSanitize(html: string): string {
   return html
     .replace(/<script\b[\s\S]*?<\/script>/gi, "")
@@ -95,4 +96,29 @@ export function formatProseHtmlWith(
   sanitizer: HtmlSanitizer | null,
 ): string {
   return wrapProseTables(applyHtmlSanitizer(html, sanitizer));
+}
+
+const htmlSanitizer: HtmlSanitizer = {
+  sanitize(html) {
+    return sanitizeHtmlLib(html, {
+      allowedTags: [...SANITIZE_CONFIG.ALLOWED_TAGS],
+      allowedAttributes: {
+        "*": ["class", "colspan", "rowspan"],
+        a: ["href", "class"],
+      },
+      allowedSchemes: ["http", "https", "mailto"],
+      allowProtocolRelative: false,
+      parseStyleAttributes: false,
+      disallowedTagsMode: "discard",
+      enforceHtmlBoundary: false,
+    });
+  },
+};
+
+export function sanitizeHtml(html: string | null | undefined): string {
+  return applyHtmlSanitizer(html, htmlSanitizer);
+}
+
+export function formatProseHtml(html: string | null | undefined): string {
+  return formatProseHtmlWith(html, htmlSanitizer);
 }
