@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { EntityPreview } from "@/lib/entities";
-import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
+import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize-client";
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';

@@ -48,8 +48,8 @@ export function EntityDetailView({
           {entity.updatedAt ? (
             <span className="updated-at">
               Updated{" "}
-              <time dateTime={entity.updatedAt.toISOString()}>
-                {entity.updatedAt.toLocaleDateString("en-US", {
+              <time dateTime={entity.updatedAt}>
+                {new Date(entity.updatedAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",

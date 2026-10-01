@@ -75,11 +75,16 @@ export type EntityDetail = {
   spellLevels?: ClassSpellLevelSummary[];
   classSkills?: ClassSkillRef[];
   secondarySources?: { abbrev: string; name: string }[];
-  updatedAt?: Date | null;
+  updatedAt?: string | null;
 };
 
-function entityUpdatedAt(scrapedAt: Date | null | undefined): Date | null {
-  return scrapedAt ?? null;
+function entityUpdatedAt(
+  scrapedAt: Date | string | null | undefined,
+): string | null {
+  if (!scrapedAt) return null;
+  const date = scrapedAt instanceof Date ? scrapedAt : new Date(scrapedAt);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toISOString();
 }
 
 export type ClassSkillRef = {
@@ -1338,7 +1343,7 @@ async function buildEquipmentDetail(
     weight: string | null;
     indexData: unknown;
     source: { name: string; abbrev: string | null; edition: string };
-    updatedAt?: Date | null;
+    updatedAt?: string | null;
   },
 ): Promise<EntityDetail> {
   const index = (r.indexData ?? {}) as Record<string, unknown>;

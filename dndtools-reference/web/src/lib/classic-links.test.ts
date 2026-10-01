@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { canonicalEntityPath } from "./classic-links";
-import { rewriteInternalLinks } from "./sanitize";
+import { rewriteInternalLinks } from "./sanitize-core";
 
 describe("canonicalEntityPath", () => {
   it("rewrites classic feat hrefs", () => {

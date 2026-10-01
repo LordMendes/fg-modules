@@ -40,7 +40,8 @@ const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
   // jsdom reads default-stylesheet.css via __dirname. Bundling it makes that
-  // path point at .next/server/app/browser/ and page-data collection fails.
+  // path point at .next/server/app/browser/ and entity pages 500. Keep it
+  // external and copy it into the standalone image (collect-native-pkgs.mjs).
   serverExternalPackages: ["sharp", "jsdom", "isomorphic-dompurify"],
   // pnpm keeps Sharp's .node addon and libvips .so under node_modules/.pnpm.
   // Next 16 turbopack tracing follows JS requires, so those native files must

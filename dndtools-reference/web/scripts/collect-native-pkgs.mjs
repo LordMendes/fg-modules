@@ -37,6 +37,10 @@ const FIXED_SEED = [
   /^sharp@/,
   new RegExp(`^@img\\+sharp-(?:libvips-)?${SHARP_PLATFORM}`),
   /^prisma@/,
+  // Entity pages import isomorphic-dompurify, which constructs JSDOM at load.
+  /^jsdom@/,
+  /^isomorphic-dompurify@/,
+  /^dompurify@/,
 ];
 
 // Standalone already ships these; do not copy their full pnpm closure into /native-pkgs.
@@ -224,6 +228,9 @@ const linkPackages = new Set();
 for (const file of BUNDLE_FILES) {
   for (const pkg of scanBundleExternals(file)) linkPackages.add(pkg);
 }
+for (const pkg of ["jsdom", "isomorphic-dompurify", "dompurify"]) {
+  linkPackages.add(pkg);
+}
 
 const needed = new Set();
 for (const store of STORES) {
@@ -296,6 +303,9 @@ requirePrefix("c12@");
 requirePrefix("@prisma+client@");
 requirePrefix("@prisma+dev@");
 requirePrefix("@prisma+studio-core@");
+requirePrefix("jsdom@");
+requirePrefix("isomorphic-dompurify@");
+requirePrefix("dompurify@");
 
 if (linkPackages.has("@aws-sdk/client-s3")) {
   requirePrefix("@aws-sdk+client-s3@");

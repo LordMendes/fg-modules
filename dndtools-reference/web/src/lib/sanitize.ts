@@ -1,83 +1,42 @@
-import DOMPurify from "isomorphic-dompurify";
-import { canonicalEntityPath } from "@/lib/classic-links";
+import { createRequire } from "node:module";
+import {
+  applyHtmlSanitizer,
+  formatProseHtmlWith,
+  type HtmlSanitizer,
+} from "@/lib/sanitize-core";
 
-const SANITIZE_CONFIG = {
-  ALLOWED_TAGS: [
-    "p", "br", "strong", "em", "b", "i", "u", "a", "ul", "ol", "li",
-    "h1", "h2", "h3", "h4", "h5", "h6", "table", "thead", "tbody",
-    "tr", "th", "td", "span", "div", "blockquote", "sup", "sub",
-  ],
-  ALLOWED_ATTR: ["href", "class", "colspan", "rowspan"],
-};
+export { rewriteInternalLinks } from "@/lib/sanitize-core";
 
-/** Last-resort cleanup if DOMPurify cannot run. */
-function fallbackSanitize(html: string): string {
-  return html
-    .replace(/<script\b[\s\S]*?<\/script>/gi, "")
-    .replace(/<style\b[\s\S]*?<\/style>/gi, "")
-    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "");
-}
+let purify: HtmlSanitizer | null | undefined;
 
-function rewriteHrefValue(href: string): string {
-  if (href.startsWith("http://") || href.startsWith("https://")) {
-    return href;
+/**
+ * isomorphic-dompurify constructs JSDOM at import time. That throws in the
+ * standalone image when jsdom is missing or its CSS path is wrong, which 500s
+ * every entity page. Load it lazily and fall back to regex sanitizing.
+ */
+function getPurify(): HtmlSanitizer | null {
+  if (purify !== undefined) return purify;
+  try {
+    const require = createRequire(import.meta.url);
+    const loaded = require("isomorphic-dompurify") as
+      | HtmlSanitizer
+      | { default: HtmlSanitizer };
+    const instance =
+      loaded && typeof loaded === "object" && "sanitize" in loaded
+        ? loaded
+        : loaded.default;
+    purify = instance ?? null;
+  } catch (error) {
+    console.error("HTML sanitizer unavailable", error);
+    purify = null;
   }
-
-  const hashIndex = href.indexOf("#");
-  const queryIndex = href.indexOf("?");
-  const pathEnd =
-    queryIndex === -1
-      ? hashIndex === -1
-        ? href.length
-        : hashIndex
-      : hashIndex === -1
-        ? queryIndex
-        : Math.min(queryIndex, hashIndex);
-  const pathOnly = href.slice(0, pathEnd);
-  const suffix = href.slice(pathEnd);
-
-  const canonical = canonicalEntityPath(pathOnly);
-  return canonical ? `${canonical}${suffix}` : href;
-}
-
-export function rewriteInternalLinks(html: string | null | undefined): string {
-  if (!html) return "";
-
-  return html.replace(/\bhref=(["'])([^"']*)\1/gi, (_match, _quote, href) => {
-    return `href="${rewriteHrefValue(href)}"`;
-  });
+  return purify;
 }
 
 export function sanitizeHtml(html: string | null | undefined): string {
-  if (!html) return "";
-  const rewritten = rewriteInternalLinks(html);
-  try {
-    return DOMPurify.sanitize(rewritten, SANITIZE_CONFIG);
-  } catch (error) {
-    console.error("HTML sanitizer failed", error);
-    return fallbackSanitize(rewritten);
-  }
+  return applyHtmlSanitizer(html, getPurify());
 }
 
-function withEntityTableClass(attrs: string): string {
-  const classMatch = attrs.match(/\sclass="([^"]*)"/i);
-  if (classMatch) {
-    const classes = classMatch[1].includes("entity-table")
-      ? classMatch[1]
-      : `${classMatch[1]} entity-table`.trim();
-    return attrs.replace(/\sclass="[^"]*"/i, ` class="${classes}"`);
-  }
-  return `${attrs} class="entity-table"`;
-}
-
-/** Wrap prose tables for scroll + shared entity-table styling. */
 export function formatProseHtml(html: string | null | undefined): string {
-  const sanitized = sanitizeHtml(html);
-  if (!sanitized.includes("<table")) return sanitized;
-
-  return sanitized
-    .replace(/<table(\s[^>]*)?>/gi, (_match, attrs = "") => {
-      return `<div class="table-wrap"><table${withEntityTableClass(attrs)}>`;
-    })
-    .replace(/<\/table>/gi, "</table></div>");
+  return formatProseHtmlWith(html, getPurify());
 }
