@@ -79,6 +79,21 @@ describe("planMigrations", () => {
     const plan = planMigrations([files[0]!], applied);
     assert.equal(plan[0]?.action, "skip");
   });
+  it("skips a finished migration whose checksum is the LF form of a CRLF file", () => {
+    const sql = "CREATE TABLE \"Campaign\" (\n    \"id\" TEXT NOT NULL\n);\n";
+    const crlf = file("20260904160000_campaigns", sql.replace(/\n/g, "\r\n"));
+    const applied: AppliedMigration[] = [
+      {
+        migrationName: crlf.name,
+        checksum: migrationChecksum(sql),
+        finishedAt: new Date(),
+        rolledBackAt: null,
+      },
+    ];
+    const plan = planMigrations([crlf], applied);
+    assert.equal(plan[0]?.action, "skip");
+  });
+
   it("aborts when an applied checksum differs", () => {
     const applied: AppliedMigration[] = [
       {

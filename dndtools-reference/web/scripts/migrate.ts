@@ -60,6 +60,19 @@ export function migrationChecksum(contents: string): string {
   return createHash("sha256").update(contents).digest("hex");
 }
 
+/** Prisma stores the hash of the bytes it applied. One committed rewrite
+ *  changed only line endings, so a finished row matches the raw file, the
+ *  LF form, or the CRLF form. A real SQL edit still fails the check. */
+export function migrationChecksumCandidates(sql: string): Set<string> {
+  const lf = sql.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  const crlf = lf.replace(/\n/g, "\r\n");
+  return new Set([
+    migrationChecksum(sql),
+    migrationChecksum(lf),
+    migrationChecksum(crlf),
+  ]);
+}
+
 export function listMigrationFiles(migrationsDir: string): MigrationFile[] {
   const names = readdirSync(migrationsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -107,9 +120,11 @@ export function planMigrations(
     if (finished.length > 0) {
       const recorded = finished.filter((row) => row.checksum.length > 0);
       // Some applied rows have an empty checksum. Prisma still treats them as applied.
+      // Line-ending rewrites of the same SQL also match.
+      const candidates = migrationChecksumCandidates(file.sql);
       if (
         recorded.length > 0 &&
-        !recorded.some((row) => row.checksum === file.checksum)
+        !recorded.some((row) => candidates.has(row.checksum))
       ) {
         throw new MigrationChecksumError(file.name);
       }
