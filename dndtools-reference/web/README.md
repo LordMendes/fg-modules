@@ -196,6 +196,47 @@ Set these as **runtime** environment variables in Coolify:
 
 `prisma generate` during the Docker build uses a harmless placeholder URL when no database is available. The real `DATABASE_URL` is read at container startup, when `migrate.mjs` applies the SQL files in `prisma/migrations`. Local `pnpm db:deploy` still uses the Prisma CLI.
 
+## Error tracking
+
+Production errors go to a self-hosted [GlitchTip](https://glitchtip.com/) instance (Sentry-compatible ingest) when `NEXT_PUBLIC_SENTRY_DSN` is set. With no DSN, reporting is a no-op.
+
+**Captured:** browser errors, server render and Server Action failures, uncaught process crashes (`server.mjs`), and campaign live WebSocket / Redis failures (rate-limited so reconnect loops do not flood the tracker).
+
+**Not captured:** stale Server Action reloads after deploy (handled in-app), expected auth denials (for example admin-only `Forbidden`), and other noise filtered in `src/lib/monitoring/scrub.ts`.
+
+**Discord:** GlitchTip **project alerts** post to a Discord webhook when event counts cross a threshold (for example 1 event in 10 minutes). Tune quantity and timespan after the first week. **Coolify Discord notifications** (separate) cover deploys and container status, including OOM kills and restart loops that never reach the SDK.
+
+### Variables
+
+| Variable | When | Description |
+|----------|------|-------------|
+| `NEXT_PUBLIC_SENTRY_DSN` | Both | GlitchTip project DSN (browser and server ingest) |
+| `NEXT_PUBLIC_ERROR_DASHBOARD_URL` | Both | GlitchTip project URL for the admin monitoring panel link |
+| `SENTRY_ENVIRONMENT` | Runtime | Environment tag on events (default: `NODE_ENV`) |
+| `SENTRY_RELEASE` | Runtime | Optional release tag override (Docker builds default to `SOURCE_COMMIT`) |
+| `SENTRY_URL` | Build | GlitchTip base URL for source map upload (`withSentryConfig`) |
+| `SENTRY_ORG` | Build | GlitchTip organization slug |
+| `SENTRY_PROJECT` | Build | GlitchTip project slug |
+| `SENTRY_AUTH_TOKEN` | Build | Token with release/project write scopes; omit to skip upload (build still succeeds) |
+| `SOURCE_COMMIT` | Build | Git commit for release tagging (Coolify: enable source commit during build) |
+
+In Coolify, mark `SENTRY_AUTH_TOKEN`, `SENTRY_URL`, `SENTRY_ORG`, and `SENTRY_PROJECT` as **build-time only** (runtime off). Set `NEXT_PUBLIC_SENTRY_DSN` and `NEXT_PUBLIC_ERROR_DASHBOARD_URL` for **build and runtime**.
+
+### Coolify runbook (GlitchTip + app)
+
+1. In Coolify: New Resource, Services, GlitchTip. Give it a dedicated domain (for example `errors.<your-domain>`). Create your account, then set `ENABLE_USER_REGISTRATION=false`. Configure `EMAIL_URL` if you want email as a fallback.
+2. In GlitchTip: create an organization and a Next.js project, copy the DSN, and create an auth token (profile or auth tokens) with release and project write scopes.
+3. In Discord: create `#app-errors`, then Channel settings, Integrations, Webhooks, and copy the webhook URL.
+4. In the GlitchTip project settings, open Project Alerts: add an alert (start with 1 event in 10 minutes), set recipient type to Discord with the webhook URL, and enable the uptime option. Use the test alert to confirm delivery.
+5. In GlitchTip, add an uptime monitor on `https://<your-site>/health`.
+6. In Coolify, Notifications, Discord: enable deployment and container status events.
+7. On the app service, set environment variables per the table above. Under Application, Advanced, Build, set source commit availability to **Available during build** so `SOURCE_COMMIT` is passed into the Docker build.
+8. Redeploy, open `/admin`, use each monitoring test button, and confirm issues appear in GlitchTip and Discord within the alert window.
+
+### Local testing without GlitchTip
+
+From `web/`, run `node scripts/monitoring-sink.mjs` (added in Wave 2) to listen for Sentry envelopes on a local port. Point `NEXT_PUBLIC_SENTRY_DSN` at that URL (for example `http://key@localhost:9999/1`) when building or running production mode to verify events without a remote GlitchTip instance.
+
 ## Coolify Deployment
 
 1. Create a new application in Coolify pointing to **`dndtools-reference/`**.

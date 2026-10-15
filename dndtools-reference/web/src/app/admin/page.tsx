@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { MonitoringPanel } from "@/components/admin/monitoring-panel";
 import { isAdminUser } from "@/lib/auth/admin";
 import { getCurrentUser } from "@/lib/auth/session";
 import { loadAdminOverview } from "@/lib/admin/overview";
@@ -183,6 +184,11 @@ export default async function AdminPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="admin-section">
+        <h2>Error tracking test</h2>
+        <MonitoringPanel />
       </section>
     </div>
   );

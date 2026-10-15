@@ -8,6 +8,7 @@ import {
   toThreejsNotation,
 } from "@/lib/dice/notation";
 import type { RollRequest } from "@/lib/dice/types";
+import { reportError } from "@/lib/monitoring/report";
 
 /** How long settled dice stay visible before fading. */
 const FADE_HOLD_MS = 2800;
@@ -275,6 +276,7 @@ export function DiceCanvas() {
         finishOnce(results);
       } catch (err) {
         console.error("[DiceCanvas] roll failed", err);
+        reportError(err, { source: "client", dedupeKey: "client:dice-roll" });
         if (!finished && pendingRef.current?.id === request.id) {
           finished = true;
           pendingRef.current = null;
@@ -362,6 +364,7 @@ export function DiceCanvas() {
         }
       } catch (err) {
         console.error("[DiceCanvas] failed to init dice-box-threejs", err);
+        reportError(err, { source: "client", dedupeKey: "client:dice-init" });
         initFailedRef.current = true;
         setEngineReady(false);
       }

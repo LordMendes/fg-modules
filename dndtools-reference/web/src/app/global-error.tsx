@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { reportError } from "@/lib/monitoring/report";
 import {
   ErrorPageLayout,
   SERVER_ERROR_ILLUSTRATION,
@@ -14,6 +16,12 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    if (error.digest === undefined) {
+      reportError(error, { source: "client", level: "error" });
+    }
+  }, [error]);
+
   return (
     <html lang="en">
       <body className="min-h-full min-w-0 flex flex-col antialiased">

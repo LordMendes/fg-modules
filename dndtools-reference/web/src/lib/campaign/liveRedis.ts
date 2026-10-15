@@ -1,4 +1,5 @@
 import Redis from "ioredis";
+import { reportError } from "@/lib/monitoring/report";
 
 const globalForRedis = globalThis as typeof globalThis & {
   __campaignRedis?: Redis;
@@ -29,10 +30,12 @@ export function getRedis(): Redis {
     });
     client.on("error", (err) => {
       console.error("[redis] command client:", err.message);
+      reportError(err, { source: "redis", dedupeKey: "redis:command" });
     });
     globalForRedis.__campaignRedis = client;
     void client.connect().catch((err) => {
       console.error("[redis] connect failed:", err.message);
+      reportError(err, { source: "redis", dedupeKey: "redis:connect" });
     });
   }
   return globalForRedis.__campaignRedis;
@@ -51,10 +54,15 @@ export function getRedisSubscriber(): Redis {
     });
     client.on("error", (err) => {
       console.error("[redis] subscriber:", err.message);
+      reportError(err, { source: "redis", dedupeKey: "redis:subscriber" });
     });
     globalForRedis.__campaignRedisSub = client;
     void client.connect().catch((err) => {
       console.error("[redis] subscriber connect failed:", err.message);
+      reportError(err, {
+        source: "redis",
+        dedupeKey: "redis:subscriber-connect",
+      });
     });
   }
   return globalForRedis.__campaignRedisSub;

@@ -1,5 +1,6 @@
 import sanitizeHtmlLib from "sanitize-html";
 import { canonicalEntityPath } from "@/lib/classic-links";
+import { reportError } from "@/lib/monitoring/report";
 
 export const SANITIZE_CONFIG = {
   ALLOWED_TAGS: [
@@ -87,6 +88,10 @@ export function applyHtmlSanitizer(
     return sanitizer.sanitize(rewritten, SANITIZE_CONFIG);
   } catch (error) {
     console.error("HTML sanitizer failed", error);
+    reportError(error, {
+      source: typeof window === "undefined" ? "action" : "client",
+      dedupeKey: "sanitize:html",
+    });
     return fallbackSanitize(rewritten);
   }
 }

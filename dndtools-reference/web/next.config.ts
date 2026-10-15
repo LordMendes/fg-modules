@@ -1,5 +1,7 @@
 import path from "path";
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs/config";
+import { dsnIngestOrigin, getRelease } from "./src/lib/monitoring/config";
 
 const monorepoRoot = path.join(__dirname, "..");
 const isDev = process.env.NODE_ENV === "development";
@@ -9,6 +11,11 @@ const cloudflareInsightsConnectOrigin = "https://cloudflareinsights.com";
 const r2PublicOrigin =
   process.env.NEXT_PUBLIC_R2_PUBLIC_BASE_URL?.replace(/\/$/, "") ||
   "https://pub-f74b850de3e6476e8302459341d9917e.r2.dev";
+const sentryIngestOrigin = process.env.NEXT_PUBLIC_SENTRY_DSN
+  ? dsnIngestOrigin(process.env.NEXT_PUBLIC_SENTRY_DSN)
+  : undefined;
+const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN?.trim() ?? "";
+const sentryRelease = getRelease();
 
 /**
  * Security headers for Lighthouse Best Practices (CSP, clickjacking, COOP, HSTS).
@@ -25,7 +32,7 @@ const contentSecurityPolicy = [
   `img-src 'self' blob: data: ${r2PublicOrigin}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${plausibleOrigin} ${cloudflareInsightsConnectOrigin} ws: wss:`,
+  `connect-src 'self' ${plausibleOrigin} ${cloudflareInsightsConnectOrigin}${sentryIngestOrigin ? ` ${sentryIngestOrigin}` : ""} ws: wss:`,
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
@@ -37,6 +44,9 @@ const contentSecurityPolicy = [
   .trim();
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_SENTRY_RELEASE: sentryRelease ?? "",
+  },
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
   // Native addon. scripts/stage-runtime-packages.mjs copies the musl build
@@ -92,4 +102,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  sentryUrl: process.env.SENTRY_URL,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: sentryAuthToken || undefined,
+  telemetry: false,
+  ...(sentryRelease ? { release: { name: sentryRelease } } : {}),
+  sourcemaps: {
+    disable: !sentryAuthToken,
+  },
+  suppressOnRouterTransitionStartWarning: true,
+});

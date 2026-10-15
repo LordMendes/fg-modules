@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { reportError } from "@/lib/monitoring/report";
 import {
   applyEventToFilterContext,
   filterContextFromMap,
@@ -190,6 +191,11 @@ export function publishCampaignLive(
     .publish(campaignChannel(campaignId), JSON.stringify(wire))
     .catch((err) => {
       console.error("[liveHub] publish failed", campaignId, err);
+      reportError(err, {
+        source: "redis",
+        dedupeKey: "redis:publish",
+        tags: { campaignId },
+      });
     });
 
   // Keep Redis room meta in sync for filter context.

@@ -28,6 +28,7 @@ import {
 } from "@/lib/pc-planner/shareToken";
 import { getClassSpellTablesBySlugs } from "@/lib/entities";
 import type { PcPlanState } from "@/lib/pc-planner/types";
+import { reportError } from "@/lib/monitoring/report";
 import {
   copyPcImageObject,
   deletePcPlanImages,
@@ -387,6 +388,10 @@ export async function savePcPlan(
     });
   } catch (err) {
     console.error("Campaign activity log failed after savePcPlan", err);
+    reportError(err, {
+      source: "action",
+      dedupeKey: "action:activity-log-savePcPlan",
+    });
   }
 
   return { success: true };
@@ -447,6 +452,10 @@ export async function renamePcPlan(
       });
     } catch (err) {
       console.error("Campaign activity log failed after renamePcPlan", err);
+      reportError(err, {
+        source: "action",
+        dedupeKey: "action:activity-log-renamePcPlan",
+      });
     }
   }
 

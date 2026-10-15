@@ -21,11 +21,31 @@ import { createRequire } from "module";
 import { config as loadEnv } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import { flushReports, reportError } from "./src/lib/monitoring/report";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 loadEnv({ path: path.join(__dirname, ".env") });
+
+function exitAfterFatalProcessError(err: unknown, dedupeKey: string): void {
+  reportError(err, {
+    source: "process",
+    level: "fatal",
+    dedupeKey,
+  });
+  void flushReports(2000).finally(() => {
+    process.exit(1);
+  });
+}
+
+process.on("uncaughtException", (err) => {
+  exitAfterFatalProcessError(err, "process:uncaughtException");
+});
+
+process.on("unhandledRejection", (reason) => {
+  exitAfterFatalProcessError(reason, "process:unhandledRejection");
+});
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = process.env.HOSTNAME || "0.0.0.0";
@@ -135,7 +155,13 @@ async function main() {
   });
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error(err);
+  reportError(err, {
+    source: "process",
+    level: "fatal",
+    dedupeKey: "process:startup",
+  });
+  await flushReports(2000);
   process.exit(1);
 });

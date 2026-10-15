@@ -1,4 +1,5 @@
 import { WebSocketServer, WebSocket } from "ws";
+import { reportError } from "@/lib/monitoring/report";
 import { randomUUID } from "crypto";
 import type { Server as HttpServer, IncomingMessage } from "http";
 import type { Duplex } from "stream";
@@ -85,6 +86,11 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
         await sendInitialSnapshot(auth, send);
       })().catch((err) => {
         console.error("[ws] connect setup failed", err);
+        reportError(err, {
+          source: "ws",
+          dedupeKey: "ws:connect-setup",
+          tags: { campaignId: auth.campaignId },
+        });
       });
 
       ws.on("message", (data, isBinary) => {
@@ -141,6 +147,11 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
       });
     })().catch((err) => {
       console.error("[ws] upgrade failed", campaignId, err);
+      reportError(err, {
+        source: "ws",
+        dedupeKey: "ws:upgrade",
+        tags: { campaignId },
+      });
       try {
         socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n");
       } catch {
