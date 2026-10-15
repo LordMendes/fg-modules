@@ -187,7 +187,7 @@ Set these as **runtime** environment variables in Coolify:
 | `DATABASE_URL` | From your linked PostgreSQL service |
 | `REDIS_URL` | From your linked Redis service (campaign live sync) |
 | `SESSION_SECRET` | `openssl rand -base64 32` |
-| `SITE_URL` | Your public URL, e.g. `https://dnd.example.com` |
+| `SITE_URL` | Canonical public origin. Production: `https://dnd-helper.com` (no trailing slash). Enable for **build and runtime** (see SEO & Indexing) |
 | `R2_ENDPOINT` | Cloudflare R2 S3 API endpoint |
 | `R2_BUCKET` | R2 bucket name |
 | `R2_ACCESS_KEY_ID` | R2 API token access key |
@@ -292,7 +292,9 @@ Re-running is idempotent (upserts on slug).
 
 ## SEO & Indexing
 
-- `SITE_URL` must be the canonical HTTPS origin in production (used by `metadataBase`, Open Graph, robots, and sitemaps).
+- `SITE_URL` must be the canonical HTTPS origin in production (used by `metadataBase`, Open Graph, robots, sitemaps, and `llms.txt` / `llms-full.txt`). The production origin is `https://dnd-helper.com`. No hostname is hardcoded in the app, so a wrong value here leaks into every canonical URL.
+- Prerendered pages bake `SITE_URL` into their HTML (canonical, `og:url`, JSON-LD) at **build** time. After changing it, **redeploy (rebuild)**, do not just restart. `llms.txt`, `llms-full.txt`, and `robots.txt` read it per request, but still need the variable present at runtime.
+- Cloudflare caches `llms.txt` and `llms-full.txt` (`Cache-Control: public, max-age=86400`). Purge those URLs after a host change.
 - Entity discovery uses **sitemaps plus crawlable HTML**: `robots.txt` lists chunked sitemaps at `/sitemap/0.xml` through `/sitemap/14.xml`. Hub sitemap id 0 also includes `/catalog`, `/about`, `/changelog`, and A-Z catalog letter indexes.
 - **A-Z catalog** (`/catalog`, `/catalog/{category}`, `/catalog/{category}/{letter}`): server-rendered link lists for every entity. Category hubs still use client infinite-scroll for interactive browsing (no crawlable `?page=` URLs).
 - **AI discovery**: `/llms.txt` and `/llms-full.txt` summarize the site for LLM crawlers. `robots.txt` explicitly allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and Applebot-Extended.
@@ -304,7 +306,13 @@ Re-running is idempotent (upserts on slug).
 
 ### Search Console checklist (after deploy)
 
-1. Confirm `SITE_URL` matches the live canonical host (no trailing slash).
+1. Confirm `SITE_URL` matches the live canonical host (no trailing slash). Verify against production, for example:
+   ```
+   curl -s https://dnd-helper.com/llms.txt | head -n 12
+   curl -s https://dnd-helper.com/robots.txt | grep -i sitemap
+   curl -s https://dnd-helper.com/ | grep -o '<link rel="canonical"[^>]*>'
+   ```
+   Every URL returned must start with `https://dnd-helper.com`.
 2. Submit the sitemap URLs from `robots.txt` (or `/sitemap/0.xml` first) in [Google Search Console](https://search.google.com/search-console) and Bing Webmaster Tools.
 3. Request indexing for `/`, `/spells`, `/catalog/spells`, `/tools/leadership-calculator`, and `/about`.
 4. Prefer a single host (`www` vs apex) via CDN/host redirects.

@@ -13,6 +13,7 @@ Legend: `pending` | `in_progress` | `done` | `blocked` | `skipped` | `ops`
 | G3 | D&D 3.5 titles and descriptions (no em dash) | done | task0 | seo.ts, seo.test.ts, layout.tsx | |
 | G4 | Internal links (class spells, source category pages, related) | done | G1 | entities.ts, sources pages, [slug]/spells | Feat prereq auto-link skipped |
 | G5 | Search Console / Bing submission | ops | deploy | manual | Confirm SITE_URL, submit sitemaps 0-14, request indexing |
+| G9 | Canonical host is `dnd-helper.com` everywhere | ops | deploy | Coolify env, llms-txt.test.ts | Code is host-agnostic and tested. Production `SITE_URL` still `https://dnd-helper.lcmendes.com`: set to `https://dnd-helper.com` (build + runtime), rebuild, purge Cloudflare cache for llms files, then verify canonical, robots sitemaps, sitemap/0.xml, llms.txt |
 | G6 | Last-updated dates on entities | done | G2 | entities.ts, entity-detail.tsx | G6-bot-cookies skipped |
 | G7 | Backlinks and community mentions | ops | deploy | manual | Link tools on EN World, r/3d6, r/dnd |
 | G8 | About and changelog pages | done | task0 | about, changelog, app-shell, json-ld | |

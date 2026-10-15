@@ -232,6 +232,70 @@ export async function applyMigrations(sql: Sql, migrationsDir: string): Promise<
   console.log(`[migrate] applied ${appliedCount}, skipped ${skippedCount}`);
 }
 
+export const DB_WAIT_TIMEOUT_MS = 60_000;
+export const DB_WAIT_INTERVAL_MS = 2_000;
+
+/** One key shared by every replica, so only one runs migrations at a time. */
+export const MIGRATION_LOCK_KEY = 7_234_569_011;
+
+export type WaitForDatabaseOptions = {
+  timeoutMs?: number;
+  intervalMs?: number;
+  now?: () => number;
+  sleep?: (ms: number) => Promise<void>;
+  log?: (message: string) => void;
+};
+
+/**
+ * Retries a cheap probe until the database accepts a query, so a container
+ * that starts before Postgres waits instead of crash-looping. Throws the last
+ * error once the next attempt would pass the timeout.
+ */
+export async function waitForDatabase(
+  probe: () => Promise<unknown>,
+  options: WaitForDatabaseOptions = {},
+): Promise<void> {
+  const timeoutMs = options.timeoutMs ?? DB_WAIT_TIMEOUT_MS;
+  const intervalMs = options.intervalMs ?? DB_WAIT_INTERVAL_MS;
+  const now = options.now ?? Date.now;
+  const sleep =
+    options.sleep ??
+    ((ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms)));
+  const log = options.log ?? ((message: string) => console.log(message));
+  const deadline = now() + timeoutMs;
+
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      await probe();
+      return;
+    } catch (error) {
+      if (now() + intervalMs > deadline) {
+        throw error;
+      }
+      log(
+        `[migrate] database not ready (attempt ${attempt}), retrying in ${intervalMs} ms`,
+      );
+      await sleep(intervalMs);
+    }
+  }
+}
+
+/**
+ * Runs `work` while holding a session-level advisory lock. Postgres drops the
+ * lock with the connection, so a crashed replica cannot leave it held.
+ */
+export async function withMigrationLock<T>(
+  sql: Sql,
+  work: () => Promise<T>,
+): Promise<T> {
+  await sql`SELECT pg_advisory_lock(${MIGRATION_LOCK_KEY}::bigint)`;
+  try {
+    return await work();
+  } finally {
+    await sql`SELECT pg_advisory_unlock(${MIGRATION_LOCK_KEY}::bigint)`;
+  }
+}
+
 function isDirectRun(): boolean {
   const entry = process.argv[1];
   if (!entry) return false;
@@ -246,10 +310,12 @@ async function main(): Promise<void> {
   const migrationsDir = process.env.MIGRATIONS_DIR || defaultMigrationsDir();
   const sql = postgres(connectionString(databaseUrl), {
     max: 1,
+    connect_timeout: 5,
     onnotice: () => {},
   });
   try {
-    await applyMigrations(sql, migrationsDir);
+    await waitForDatabase(() => sql`SELECT 1`);
+    await withMigrationLock(sql, () => applyMigrations(sql, migrationsDir));
   } finally {
     await sql.end();
   }

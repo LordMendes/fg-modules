@@ -11,6 +11,7 @@ import {
   listMigrationFiles,
   migrationChecksum,
   planMigrations,
+  waitForDatabase,
   type AppliedMigration,
   type MigrationFile,
 } from "./migrate.ts";
@@ -154,5 +155,61 @@ describe("connectionString", () => {
     );
     assert.equal(url.includes("schema="), false);
     assert.match(url, /^postgresql:\/\/dndtools:dndtools@localhost:5432\/dndtools/);
+  });
+});
+
+describe("waitForDatabase", () => {
+  const quiet = { log: () => {} };
+
+  it("returns after a single successful probe", async () => {
+    let calls = 0;
+    await waitForDatabase(async () => {
+      calls += 1;
+    }, { ...quiet, sleep: async () => {} });
+    assert.equal(calls, 1);
+  });
+
+  it("retries until the probe succeeds", async () => {
+    let calls = 0;
+    const sleeps: number[] = [];
+    await waitForDatabase(
+      async () => {
+        calls += 1;
+        if (calls < 3) throw new Error("ECONNREFUSED");
+      },
+      {
+        ...quiet,
+        intervalMs: 500,
+        sleep: async (ms) => {
+          sleeps.push(ms);
+        },
+      },
+    );
+    assert.equal(calls, 3);
+    assert.deepEqual(sleeps, [500, 500]);
+  });
+
+  it("gives up with the last error once the timeout is reached", async () => {
+    let clock = 0;
+    let calls = 0;
+    await assert.rejects(
+      waitForDatabase(
+        async () => {
+          calls += 1;
+          throw new Error(`down ${calls}`);
+        },
+        {
+          ...quiet,
+          timeoutMs: 5_000,
+          intervalMs: 1_000,
+          now: () => clock,
+          sleep: async (ms) => {
+            clock += ms;
+          },
+        },
+      ),
+      /down 6/,
+    );
+    assert.equal(calls, 6);
   });
 });

@@ -6,6 +6,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import type { PcImageKind } from "@/lib/storage/pc-image-kind";
+import { isMissingObjectError } from "@/lib/storage/media-response";
 import {
   isCampaignMapImageKey,
   isCampaignMapTokenImageKey,
@@ -23,6 +24,14 @@ export {
 };
 
 const CACHE_CONTROL = "public, max-age=31536000";
+
+/**
+ * Bounds how long one R2 call can stall a request. A slow object store
+ * should fail fast instead of holding a connection and a request open.
+ */
+const R2_CONNECTION_TIMEOUT_MS = 3_000;
+const R2_REQUEST_TIMEOUT_MS = 10_000;
+const R2_MAX_ATTEMPTS = 2;
 
 function requireEnv(name: string): string {
   const value = process.env[name]?.trim();
@@ -47,6 +56,11 @@ export function getR2Client(): S3Client {
       accessKeyId: requireEnv("R2_ACCESS_KEY_ID"),
       secretAccessKey: requireEnv("R2_SECRET_ACCESS_KEY"),
     },
+    requestHandler: {
+      connectionTimeout: R2_CONNECTION_TIMEOUT_MS,
+      requestTimeout: R2_REQUEST_TIMEOUT_MS,
+    },
+    maxAttempts: R2_MAX_ATTEMPTS,
   });
   return client;
 }
@@ -92,26 +106,42 @@ export function tryPublicUrlForKey(
   return mediaPublicUrl(key, cacheBust);
 }
 
+export type PcImageObject = {
+  /** Streamed from R2, so the image is never buffered whole in memory. */
+  body: ReadableStream;
+  contentType: string;
+  contentLength?: number;
+};
+
+/**
+ * Returns null only when the object does not exist. Other failures (timeouts,
+ * network errors, missing configuration) are thrown, so the caller can answer
+ * 503 instead of a misleading 404.
+ */
 export async function getPcImageObject(
   key: string,
-): Promise<{ body: Uint8Array; contentType: string } | null> {
+): Promise<PcImageObject | null> {
   if (!isMediaObjectKey(key)) return null;
+
+  let out;
   try {
-    const out = await getR2Client().send(
+    out = await getR2Client().send(
       new GetObjectCommand({
         Bucket: getBucket(),
         Key: key,
       }),
     );
-    if (!out.Body) return null;
-    const body = await out.Body.transformToByteArray();
-    return {
-      body,
-      contentType: out.ContentType || "image/webp",
-    };
-  } catch {
-    return null;
+  } catch (error) {
+    if (isMissingObjectError(error)) return null;
+    throw error;
   }
+
+  if (!out.Body) return null;
+  return {
+    body: out.Body.transformToWebStream(),
+    contentType: out.ContentType || "image/webp",
+    contentLength: out.ContentLength,
+  };
 }
 
 export async function putPcImageObject(

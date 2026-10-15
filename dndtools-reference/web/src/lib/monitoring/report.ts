@@ -10,6 +10,7 @@ export type ErrorSource =
   | "redis"
   | "action"
   | "client"
+  | "media"
   | "admin-test";
 
 export type ReportContext = {
