@@ -272,6 +272,36 @@ Keep the running container's image if `image prune` asks. Do not skip this after
 | `import` | Import JSON data into PostgreSQL |
 | `migrate` | Apply SQL migrations only |
 
+## Production Operations Checklist
+
+Settings to make in Coolify and at Cloudflare. They are not in the repo, so check them after any hosting change.
+
+### Coolify
+
+- **Health check**: enable it on `/health` (liveness). Rolling updates then wait for the new container to answer before the old one stops, which avoids a 502 window. Do not use `/health/ready` for the container check: a database blip would restart a healthy process.
+- **Stop grace period**: at least 15 seconds. On SIGTERM the server stops accepting connections, closes live sockets, and disconnects from Postgres and Redis, then exits. The process gets a hard exit after 8 seconds. tini (PID 1) forwards the signal.
+- **Memory**: set a container memory limit and `NODE_OPTIONS=--max-old-space-size=N`, with N about 75% of the limit (for a 1 GB limit, use 768). Image decoding (sharp) allocates outside the V8 heap, so the rest is headroom for that work.
+- **Database connections**: each process opens up to `DB_POOL_MAX` connections (default 10). Multiply by the replica count and keep the total below Postgres `max_connections`, leaving room for migrations and admin tools. For example, two replicas at the default use 20.
+- **Query limits**: `DB_STATEMENT_TIMEOUT_MS` (default 15000) ends a runaway query before it holds a connection. Combat transactions also wait at most 3 seconds for a row lock and run at most 10 seconds.
+
+### Builds
+
+- Build off-host: build in CI and push the image to a registry, or give the build host swap space. A build inside the serving container competes with live traffic, and an out-of-memory kill during a build can take the site down.
+- Prefer a one-off container for imports (the same image and environment, running `/docker-entrypoint.sh import`) over Coolify's Execute Command on the serving container, so the import's memory use does not compete with live traffic.
+
+### Cloudflare
+
+- **Cache Rule for public pages**: mark entity pages (`/<category>/<slug>`, `/<category>/<slug>/spells`), `/catalog/*`, and `/sources/*` as eligible for cache, honoring the origin `Cache-Control` (`s-maxage`). These pages set no cookies and contain no per-user data. The signed-in state loads in the browser after the page. Never cache `/profile`, `/admin`, `/login`, `/tools/campaign`, `/session`, or `/api/*`. Verify with the `cf-cache-status` response header.
+- **Rate limit or challenge** `/ws/*` (WebSocket reconnect churn) and AI crawlers.
+- **Trust the client IP header only behind Cloudflare.** The in-app rate limits key on `cf-connecting-ip`. Restrict origin access to Cloudflare's IP ranges (or a tunnel). If the origin is reachable directly, any client can send that header and pick its own rate-limit bucket.
+
+### Alerts
+
+- **Uptime monitor** on `https://<site>/health/ready`: alert after two consecutive non-200 responses. A 503 means Postgres did not answer within 2 seconds.
+- **Log alert on `[fatal]`**: the process writes this line before it exits on an uncaught exception.
+- **Log alert on `[redis]`** (optional): these lines are throttled to one per error per 30 seconds, so seeing them for several minutes means a sustained Redis outage.
+- **Error tracking**: `/media` answers 503 when R2 cannot be reached, and reports the error under the `media` source.
+
 ## Data Import
 
 The import script (`web/prisma/import-dndtools.ts`) runs in 3 passes:

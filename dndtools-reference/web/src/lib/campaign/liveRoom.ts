@@ -84,14 +84,28 @@ export async function roomReplaceTokens(
   await pipeline.exec();
 }
 
+/**
+ * Presence lives in Redis, so a crashed or redeployed server never gets to
+ * remove its connections. The per-user connection set expires unless the
+ * heartbeat refreshes it (every 30 s), and reads drop users whose set is gone.
+ */
+export const PRESENCE_TTL_SECONDS = 90;
+
+function onlineConnKey(campaignId: string, userId: string): string {
+  return `${campaignOnlineKey(campaignId)}:${userId}`;
+}
+
 export async function roomAddOnline(
   campaignId: string,
   userId: string,
   connectionId: string,
 ) {
   // Track connection ids so multi-tab does not drop presence early.
-  await getRedis().sadd(`${campaignOnlineKey(campaignId)}:${userId}`, connectionId);
-  await getRedis().sadd(campaignOnlineKey(campaignId), userId);
+  const redis = getRedis();
+  const connKey = onlineConnKey(campaignId, userId);
+  await redis.sadd(connKey, connectionId);
+  await redis.expire(connKey, PRESENCE_TTL_SECONDS);
+  await redis.sadd(campaignOnlineKey(campaignId), userId);
 }
 
 export async function roomRemoveOnline(
@@ -100,7 +114,7 @@ export async function roomRemoveOnline(
   connectionId: string,
 ): Promise<boolean> {
   const redis = getRedis();
-  const connKey = `${campaignOnlineKey(campaignId)}:${userId}`;
+  const connKey = onlineConnKey(campaignId, userId);
   await redis.srem(connKey, connectionId);
   const remaining = await redis.scard(connKey);
   if (remaining <= 0) {
@@ -111,8 +125,49 @@ export async function roomRemoveOnline(
   return false;
 }
 
+/**
+ * Splits presence candidates into users with at least one live connection and
+ * users whose connection set is empty or expired. Pure, so it is unit tested.
+ */
+export function partitionPresence(
+  userIds: readonly string[],
+  connectionCounts: readonly number[],
+): { live: string[]; stale: string[] } {
+  const live: string[] = [];
+  const stale: string[] = [];
+  userIds.forEach((userId, index) => {
+    if ((connectionCounts[index] ?? 0) > 0) {
+      live.push(userId);
+    } else {
+      stale.push(userId);
+    }
+  });
+  return { live, stale };
+}
+
 export async function roomGetOnlineUserIds(
   campaignId: string,
 ): Promise<string[]> {
-  return getRedis().smembers(campaignOnlineKey(campaignId));
+  const redis = getRedis();
+  const campaignKey = campaignOnlineKey(campaignId);
+  const userIds = await redis.smembers(campaignKey);
+  if (userIds.length === 0) return [];
+
+  const pipeline = redis.pipeline();
+  for (const userId of userIds) {
+    pipeline.scard(onlineConnKey(campaignId, userId));
+  }
+  const results = (await pipeline.exec()) ?? [];
+  const counts = userIds.map((_, index) => {
+    const [err, count] = results[index] ?? [null, 0];
+    return err ? 0 : Number(count);
+  });
+
+  const { live, stale } = partitionPresence(userIds, counts);
+  if (stale.length > 0) {
+    // Ghost entries from a crashed server. Removing them here keeps the
+    // count honest without waiting for a socket event that never comes.
+    await redis.srem(campaignKey, ...stale);
+  }
+  return live;
 }

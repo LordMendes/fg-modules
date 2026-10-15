@@ -16,6 +16,10 @@ import {
   guardUpgradeSocket,
   rejectUpgrade,
 } from "@/lib/campaign/liveWsUpgrade";
+import {
+  HEARTBEAT_INTERVAL_MS,
+  sweepHeartbeat,
+} from "@/lib/campaign/liveHeartbeat";
 import type { CampaignLiveEvent } from "@/lib/campaign/types";
 import {
   createHandlerCtx,
@@ -60,6 +64,30 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
     maxPayload: MAX_WS_MESSAGE_BYTES,
   });
 
+  // Sockets that answered the last ping. Anything missing is dead.
+  const answeredPing = new WeakSet<WebSocket>();
+  const presenceByClient = new WeakMap<
+    WebSocket,
+    { campaignId: string; userId: string; connectionId: string }
+  >();
+
+  const heartbeat = setInterval(() => {
+    sweepHeartbeat(wss.clients, answeredPing, (client) => {
+      // Refresh presence TTLs, so a live user never expires and a crashed
+      // server's users do.
+      const presence = presenceByClient.get(client);
+      if (!presence) return;
+      void roomAddOnline(
+        presence.campaignId,
+        presence.userId,
+        presence.connectionId,
+      ).catch((err: unknown) => {
+        console.warn("[ws] presence refresh failed", presence.campaignId, err);
+      });
+    });
+  }, HEARTBEAT_INTERVAL_MS);
+  heartbeat.unref?.();
+
   wss.on(
     "connection",
     (
@@ -73,7 +101,15 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
         console.warn("[ws] socket error", auth.campaignId, auth.userId, err.message);
       });
 
+      answeredPing.add(ws);
+      ws.on("pong", () => answeredPing.add(ws));
+
       const connectionId = randomUUID();
+      presenceByClient.set(ws, {
+        campaignId: auth.campaignId,
+        userId: auth.userId,
+        connectionId,
+      });
       const send = (event: CampaignLiveEvent) => {
         if (ws.readyState !== WebSocket.OPEN) return;
         try {
@@ -175,6 +211,7 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
   return {
     handleUpgrade,
     close: () => {
+      clearInterval(heartbeat);
       // 1012 "service restart" tells clients to reconnect, and the existing
       // client backoff does the rest.
       for (const client of wss.clients) {

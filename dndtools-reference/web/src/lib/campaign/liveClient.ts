@@ -6,6 +6,10 @@ import {
   mapViewWithTokens,
   type CampaignLiveStore,
 } from "@/lib/campaign/liveStore";
+import {
+  reconnectDelayMs,
+  shouldGiveUpBeforeFirstOpen,
+} from "@/lib/campaign/liveReconnect";
 import type {
   CampaignLiveEvent,
   CampaignTableState,
@@ -107,6 +111,9 @@ export function useCampaignLiveConnection(
     let retryTimer: ReturnType<typeof setTimeout> | null = null;
     let startTimer: ReturnType<typeof setTimeout> | null = null;
     let attempt = 0;
+    // Failures before the first open mean the socket is refused (for example
+    // a 401). Those stop after a few tries; a socket that opened keeps retrying.
+    let everOpened = false;
 
     const flushQueue = (ws: WebSocket) => {
       const q = queueRef.current;
@@ -128,6 +135,7 @@ export function useCampaignLiveConnection(
 
       ws.onopen = () => {
         attempt = 0;
+        everOpened = true;
         setConnected(true);
         store.setConnected(true);
         flushQueue(ws);
@@ -152,9 +160,14 @@ export function useCampaignLiveConnection(
         setConnected(false);
         store.setConnected(false);
         if (closed) return;
-        const delay = Math.min(10_000, 500 * 2 ** attempt);
         attempt += 1;
-        retryTimer = setTimeout(connect, delay);
+        if (!everOpened && shouldGiveUpBeforeFirstOpen(attempt)) {
+          console.warn(
+            "[live] campaign live sync could not connect. Reload the page to try again.",
+          );
+          return;
+        }
+        retryTimer = setTimeout(connect, reconnectDelayMs(attempt - 1));
       };
     };
 
