@@ -61,3 +61,15 @@ export function acceptCommandRate(
     COMMAND_WINDOW_MS,
   );
 }
+
+/**
+ * Evicts the oldest entries (Map insertion order) until the map holds at most
+ * `max` entries. Keeps per-connection maps bounded when clients send random ids.
+ */
+export function trimToCap<K, V>(map: Map<K, V>, max: number): void {
+  while (map.size > max) {
+    const oldest = map.keys().next();
+    if (oldest.done) return;
+    map.delete(oldest.value);
+  }
+}

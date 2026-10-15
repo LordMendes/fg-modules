@@ -1,11 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { paginateEntities } from "@/actions/data";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { MultiSelect, type MultiSelectOption } from "@/components/multi-select";
-import { useSessionNonce } from "@/components/session-provider";
+import { useRefreshSession, useSessionNonce, useSessionReady } from "@/components/session-provider";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
@@ -39,12 +38,14 @@ function schoolOptions(exclude?: string | null): MultiSelectOption[] {
 
 function useDomainOptions(enabled: boolean): MultiSelectOption[] {
   const nonce = useSessionNonce();
-  const router = useRouter();
+  const sessionReady = useSessionReady();
+  const refreshSession = useRefreshSession();
   const [options, setOptions] = useState<MultiSelectOption[]>([]);
   const [, startTransition] = useTransition();
 
   const loadDomains = useCallback(() => {
-    if (!enabled) return;
+    // Wait for the nonce so the first request is not sent with an empty one.
+    if (!enabled || !sessionReady) return;
     startTransition(async () => {
       const collected: MultiSelectOption[] = [];
       let cursor: string | undefined;
@@ -56,7 +57,7 @@ function useDomainOptions(enabled: boolean): MultiSelectOption[] {
           sort: { column: "name", direction: "asc" },
         });
         if (!result.success) {
-          if (result.error === "Invalid session") router.refresh();
+          if (result.error === "Invalid session") void refreshSession();
           break;
         }
         for (const item of result.items ?? []) {
@@ -66,7 +67,7 @@ function useDomainOptions(enabled: boolean): MultiSelectOption[] {
       } while (cursor);
       setOptions(collected);
     });
-  }, [enabled, nonce, router]);
+  }, [enabled, nonce, sessionReady, refreshSession]);
 
   useEffect(() => {
     loadDomains();

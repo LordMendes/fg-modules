@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { EncounterProvider } from "@/components/encounter/encounter-provider";
 import { AppShell } from "@/components/app-shell";
@@ -7,11 +6,8 @@ import { CookieConsentProvider } from "@/components/cookie-consent-provider";
 import { PlausibleAnalytics } from "@/components/plausible-analytics";
 import { StaleServerActionRecovery } from "@/components/stale-server-action-recovery";
 import { Providers } from "@/components/providers";
-import { SessionProvider } from "@/components/session-provider";
-import { AuthProvider } from "@/components/auth-provider";
+import { BootstrapProvider } from "@/components/bootstrap-provider";
 import { JsonLd, organizationJsonLd } from "@/components/json-ld";
-import { getCurrentUser } from "@/lib/auth/session";
-import { getSession, SESSION_NONCE_HEADER } from "@/lib/session";
 import {
   absoluteUrl,
   DEFAULT_DESCRIPTION,
@@ -65,16 +61,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+// Static on purpose: nothing here reads cookies or headers or touches the DB.
+// Per-viewer data (nonce, signed-in user) is fetched on the client by
+// BootstrapProvider, so entity pages can be cached as ISR.
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerStore = await headers();
-  const nonce =
-    headerStore.get(SESSION_NONCE_HEADER) ?? (await getSession())?.nonce ?? "";
-  const user = await getCurrentUser();
-
   return (
     <html lang="en" suppressHydrationWarning className={`${plusJakarta.variable} ${inter.variable} h-full`}>
       <body
@@ -116,13 +110,11 @@ export default async function RootLayout({
         <StaleServerActionRecovery />
         <Providers>
           <CookieConsentProvider>
-            <SessionProvider nonce={nonce}>
-              <AuthProvider user={user}>
-                <EncounterProvider>
-                  <AppShell user={user}>{children}</AppShell>
-                </EncounterProvider>
-              </AuthProvider>
-            </SessionProvider>
+            <BootstrapProvider>
+              <EncounterProvider>
+                <AppShell>{children}</AppShell>
+              </EncounterProvider>
+            </BootstrapProvider>
             <PlausibleAnalytics />
           </CookieConsentProvider>
         </Providers>

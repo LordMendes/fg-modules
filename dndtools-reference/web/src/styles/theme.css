@@ -241,6 +241,13 @@ body {
   gap: 0.5rem;
 }
 
+/* Holds the signed-out button width while the session loads, so the header does not shift. */
+.header-auth-placeholder {
+  display: inline-block;
+  width: 9.5rem;
+  height: 2.25rem;
+}
+
 .header-menu {
   position: relative;
 }

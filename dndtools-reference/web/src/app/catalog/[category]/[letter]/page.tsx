@@ -13,6 +13,11 @@ import type { CategoryKey } from "@/lib/categories";
 
 export const revalidate = 86400;
 
+// Empty list so the route is cached on demand (ISR) instead of rendered per request.
+export function generateStaticParams() {
+  return [];
+}
+
 type Props = {
   params: Promise<{ category: string; letter: string }>;
 };

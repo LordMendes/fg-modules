@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import sharp from "sharp";
 import {
   MAP_IMAGE_MAX_EDGE,
+  MAP_IMAGE_MAX_PIXELS,
   processMapImage,
 } from "./map-image";
 
@@ -44,5 +45,23 @@ describe("processMapImage", () => {
     const result = await processMapImage(input);
     assert.ok(result.width <= MAP_IMAGE_MAX_EDGE);
     assert.ok(result.height <= MAP_IMAGE_MAX_EDGE);
+  });
+
+  it("rejects an image over the pixel cap before decoding", async () => {
+    const input = await makeJpeg(800, 400);
+    await assert.rejects(
+      () => processMapImage(input, { maxPixels: 100_000 }),
+      /too large/,
+    );
+  });
+
+  it("accepts an image exactly at the pixel cap", async () => {
+    const input = await makeJpeg(400, 250);
+    const result = await processMapImage(input, { maxPixels: 100_000 });
+    assert.equal(result.format, "webp");
+  });
+
+  it("caps map input at an 8192 x 8192 square by default", () => {
+    assert.equal(MAP_IMAGE_MAX_PIXELS, 8192 * 8192);
   });
 });

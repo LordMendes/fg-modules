@@ -68,6 +68,17 @@ export function getRedisSubscriber(): Redis {
   return globalForRedis.__campaignRedisSub;
 }
 
+/** Disconnect both campaign Redis clients. Safe to call when they were never opened. */
+export function closeCampaignRedis(): Promise<void> {
+  for (const client of [
+    globalForRedis.__campaignRedis,
+    globalForRedis.__campaignRedisSub,
+  ]) {
+    client?.disconnect();
+  }
+  return Promise.resolve();
+}
+
 export function campaignChannel(campaignId: string): string {
   return `campaign:${campaignId}`;
 }

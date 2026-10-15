@@ -1,10 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Plus, Star } from "lucide-react";
 import { paginateEntities } from "@/actions/data";
-import { useSessionNonce } from "@/components/session-provider";
+import { useRefreshSession, useSessionNonce } from "@/components/session-provider";
 import {
   ClassActionConfirmDialog,
   type PendingClassAction,
@@ -35,7 +34,7 @@ export function PcMainClasses({
 }) {
   const classLevels = state.identity.classLevels;
   const nonce = useSessionNonce();
-  const router = useRouter();
+  const refreshSession = useRefreshSession();
   const [addOpen, setAddOpen] = useState(false);
   const [filter, setFilter] = useState("");
   const [options, setOptions] = useState<ClassOption[]>([]);
@@ -93,7 +92,8 @@ export function PcMainClasses({
         });
         if (id !== requestId.current) return;
         if (!result.success) {
-          if (result.error === "Invalid session") router.refresh();
+          // A new nonce changes loadClasses, which re-runs the open-picker effect once.
+          if (result.error === "Invalid session") void refreshSession();
           setLoadError(result.error ?? "Could not load classes");
           if (!append) setOptions([]);
           setNextCursor(null);
@@ -110,7 +110,7 @@ export function PcMainClasses({
         setNextCursor(result.nextCursor ?? null);
       });
     },
-    [nonce, router],
+    [nonce, refreshSession],
   );
 
   useEffect(() => {

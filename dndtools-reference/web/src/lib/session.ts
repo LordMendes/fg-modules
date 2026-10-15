@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { randomBytes, createHmac } from "crypto";
 
 export const COOKIE_NAME = "dnd_session";
-export const SESSION_NONCE_HEADER = "x-session-nonce";
 const MAX_AGE = 60 * 60 * 24;
 
 export const SESSION_COOKIE_OPTIONS = {
@@ -68,4 +67,32 @@ export async function validateSessionNonce(nonce: string | undefined): Promise<b
   if (!nonce) return false;
   const session = await getSession();
   return session?.nonce === nonce;
+}
+
+/**
+ * Decides which session a bootstrap request uses. A valid signed cookie is
+ * reused. A missing, tampered, or malformed cookie is replaced by a fresh
+ * session, and the caller sets the cookie on the response. Pure, so it can be
+ * tested without a request.
+ */
+export function resolveBootstrapSession(cookieValue: string | undefined): {
+  session: SessionData;
+  token: string;
+  isNew: boolean;
+} {
+  const existing = parseSessionToken(cookieValue);
+  if (existing && cookieValue) {
+    return { session: existing, token: cookieValue, isNew: false };
+  }
+  const fresh = createSession();
+  return { session: fresh, token: buildSessionToken(fresh), isNew: true };
+}
+
+/**
+ * True when the browser says the request came from another site. Modern
+ * browsers always send Sec-Fetch-Site, and unlike comparing Host it cannot be
+ * broken by Cloudflare or a reverse proxy rewriting the host.
+ */
+export function isCrossSiteRequest(headers: Headers): boolean {
+  return headers.get("sec-fetch-site") === "cross-site";
 }

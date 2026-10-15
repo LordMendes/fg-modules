@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { isUnavailableDatabaseError, prisma } from "@/lib/prisma";
 import type { CategoryKey } from "@/lib/categories";
 import type { Prisma } from "@/generated/prisma/client";
@@ -1424,7 +1425,13 @@ async function buildEquipmentDetail(
   };
 }
 
-export async function getEntityDetail(
+/**
+ * Memoized per render, so generateMetadata and the page share one query.
+ * It is not a cross-request cache. ISR handles that.
+ */
+export const getEntityDetail = cache(loadEntityDetail);
+
+async function loadEntityDetail(
   category: CategoryKey,
   slug: string,
 ): Promise<EntityDetail | null> {

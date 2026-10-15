@@ -87,12 +87,11 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
 
     if (!session) return null;
 
+    // This runs from Server Components too, where cookies cannot be written
+    // (setting one there throws). Deleting the row is enough: the browser drops
+    // the cookie at the same maxAge the row expires on.
     if (session.expiresAt.getTime() <= Date.now()) {
       await prisma.userSession.delete({ where: { id: session.id } });
-      cookieStore.set(AUTH_COOKIE_NAME, "", {
-        ...AUTH_COOKIE_OPTIONS,
-        maxAge: 0,
-      });
       return null;
     }
 

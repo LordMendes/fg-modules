@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import sharp from "sharp";
 import {
+  PC_IMAGE_MAX_PIXELS,
   PC_IMAGE_SIZES,
   processPcImage,
 } from "./process-pc-image";
@@ -56,5 +57,23 @@ describe("processPcImage", () => {
     assert.equal(meta.format, "webp");
     assert.equal(meta.width, 256);
     assert.equal(meta.height, 256);
+  });
+
+  it("rejects an image over the pixel cap before decoding", async () => {
+    const input = await makeJpeg(800, 400);
+    await assert.rejects(
+      () => processPcImage(input, "profile", { maxPixels: 100_000 }),
+      /too large/,
+    );
+  });
+
+  it("accepts an image exactly at the pixel cap", async () => {
+    const input = await makeJpeg(400, 250);
+    const result = await processPcImage(input, "profile", { maxPixels: 100_000 });
+    assert.equal(result.width, PC_IMAGE_SIZES.profile);
+  });
+
+  it("caps PC input at 24 megapixels by default", () => {
+    assert.equal(PC_IMAGE_MAX_PIXELS, 24_000_000);
   });
 });

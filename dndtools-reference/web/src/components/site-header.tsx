@@ -10,6 +10,7 @@ import { HeaderBrowseMenu } from "@/components/header-browse-menu";
 import { HeaderAccountMenu } from "@/components/header-account-menu";
 import { HeaderMobileMenu } from "@/components/header-mobile-menu";
 import { HeaderSearch } from "@/components/header-search";
+import { useAuthReady, useAuthUser } from "@/components/bootstrap-provider";
 import type { AuthUser } from "@/lib/auth/session";
 
 function HeaderNavLinks() {
@@ -34,7 +35,12 @@ function HeaderNavLinks() {
   );
 }
 
-function HeaderAuth({ user }: { user: AuthUser | null }) {
+function HeaderAuth({ user, ready }: { user: AuthUser | null; ready: boolean }) {
+  if (!ready) {
+    // Reserve the width of the signed-out buttons so the header does not shift.
+    return <span className="header-auth-placeholder" aria-hidden="true" />;
+  }
+
   if (user) {
     return <HeaderAccountMenu user={user} />;
   }
@@ -51,7 +57,7 @@ function HeaderAuth({ user }: { user: AuthUser | null }) {
   );
 }
 
-function SiteHeaderInner({ user }: { user: AuthUser | null }) {
+function SiteHeaderInner({ user, ready }: { user: AuthUser | null; ready: boolean }) {
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -69,7 +75,7 @@ function SiteHeaderInner({ user }: { user: AuthUser | null }) {
         <div className="header-actions">
           <HeaderSearch />
           <div className="header-actions-desktop">
-            <HeaderAuth user={user} />
+            <HeaderAuth user={user} ready={ready} />
             <ThemeToggle />
           </div>
           <Suspense fallback={null}>
@@ -81,10 +87,12 @@ function SiteHeaderInner({ user }: { user: AuthUser | null }) {
   );
 }
 
-export function SiteHeader({ user }: { user: AuthUser | null }) {
+export function SiteHeader() {
+  const user = useAuthUser();
+  const ready = useAuthReady();
   return (
     <Suspense fallback={null}>
-      <SiteHeaderInner user={user} />
+      <SiteHeaderInner user={user} ready={ready} />
     </Suspense>
   );
 }

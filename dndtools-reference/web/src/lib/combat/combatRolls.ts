@@ -11,6 +11,7 @@ import { parseEffect } from "@/lib/combat/effects/parseEffect";
 import {
   applyCombatDamageInTx,
   combatantsForEventFilter,
+  combatTransaction,
   lockCombatRow,
   publishCombatEvent,
   publishCombatSnapshot,
@@ -964,7 +965,7 @@ export async function startCombatRoll(
   let lockedCombatants: LockedCombatRow["combatants"] = [];
 
   try {
-    await prisma.$transaction(async (tx) => {
+    await combatTransaction(async (tx) => {
       const combat = await lockCombatRow(tx, actor.campaignId);
       if (!combat) throw new Error("No combat");
       lockedCombatants = combat.combatants;

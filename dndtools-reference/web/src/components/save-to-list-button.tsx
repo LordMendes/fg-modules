@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { BookmarkPlus } from "lucide-react";
 import { addListItem, createList, getUserLists, type ListSummary } from "@/actions/lists";
-import { useAuthUser } from "@/components/auth-provider";
+import { useAuthReady, useAuthUser } from "@/components/auth-provider";
 import type { CategoryKey } from "@/lib/categories";
 
 type SaveTarget = {
@@ -20,6 +20,7 @@ export function SaveToListButton({
   compact = false,
 }: SaveTarget & { compact?: boolean }) {
   const user = useAuthUser();
+  const authReady = useAuthReady();
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -71,6 +72,8 @@ export function SaveToListButton({
   }, [open]);
 
   function handleOpen() {
+    // Clicking before bootstrap finishes must not send a signed-in user to login.
+    if (!authReady) return;
     if (!user) {
       const next = encodeURIComponent(pathname);
       router.push(`/login?next=${next}`);

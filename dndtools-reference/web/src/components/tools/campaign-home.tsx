@@ -10,11 +10,12 @@ import {
   joinCampaignByCode,
   listMyCampaigns,
 } from "@/actions/campaigns";
-import { useAuthUser } from "@/components/auth-provider";
+import { useAuthReady, useAuthUser } from "@/components/auth-provider";
 import type { CampaignSummary } from "@/lib/campaign/types";
 
 export function CampaignHome() {
   const user = useAuthUser();
+  const authReady = useAuthReady();
   const router = useRouter();
   const searchParams = useSearchParams();
   const joinParam = searchParams.get("join");
@@ -60,6 +61,9 @@ export function CampaignHome() {
       }
     });
   }, [user, joinParam, router]);
+
+  // Nothing until bootstrap resolves, so the sign-in prompt does not flash.
+  if (!authReady) return null;
 
   if (!user) {
     return (

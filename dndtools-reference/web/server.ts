@@ -12,45 +12,46 @@
  *
  * Next is loaded via createRequire AFTER campaign modules so Next's
  * require-hook does not break `@/` resolution under tsx.
+ *
+ * Lifecycle: SIGTERM, SIGINT and uncaught exceptions share one shutdown path
+ * (WebSockets, HTTP, Redis, database) with a hard exit timer.
  */
 
-import { createServer } from "http";
+import { createServer, type Server } from "http";
 import { readFileSync } from "fs";
 import { parse } from "url";
 import { createRequire } from "module";
 import { config as loadEnv } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import { flushReports, reportError } from "./src/lib/monitoring/report";
+import {
+  closeHttpServer,
+  createShutdown,
+  type Shutdown,
+} from "./src/lib/server/shutdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 loadEnv({ path: path.join(__dirname, ".env") });
 
-function exitAfterFatalProcessError(err: unknown, dedupeKey: string): void {
-  reportError(err, {
-    source: "process",
-    level: "fatal",
-    dedupeKey,
-  });
-  void flushReports(2000).finally(() => {
-    process.exit(1);
-  });
-}
-
-process.on("uncaughtException", (err) => {
-  exitAfterFatalProcessError(err, "process:uncaughtException");
-});
-
-process.on("unhandledRejection", (reason) => {
-  exitAfterFatalProcessError(reason, "process:unhandledRejection");
-});
-
 const dev = process.env.NODE_ENV !== "production";
 const hostname = process.env.HOSTNAME || "0.0.0.0";
 const port = parseInt(process.env.PORT || "3000", 10);
 const dir = __dirname;
+
+// Replaced by the real shutdown once the server is wired. A signal or fatal
+// error that arrives during startup just exits.
+let stop: Shutdown = async (_reason, exitCode) => {
+  process.exit(exitCode);
+};
+
+process.on("SIGTERM", () => void stop("SIGTERM", 0));
+process.on("SIGINT", () => void stop("SIGINT", 0));
+process.on("uncaughtException", (err) => {
+  console.error("[fatal] uncaught exception", err);
+  void stop("uncaught exception", 1);
+});
 
 /**
  * Standalone output traces a slim Next tree that omits webpack-lib.
@@ -80,7 +81,7 @@ function applyStandaloneConfig(appDir: string): void {
 
 async function main() {
   // Import campaign WS modules before Next patches require().
-  const { requireRedisUrlInProduction } = await import(
+  const { requireRedisUrlInProduction, closeCampaignRedis } = await import(
     "./src/lib/campaign/liveRedis"
   );
   requireRedisUrlInProduction();
@@ -88,6 +89,7 @@ async function main() {
   const { createCampaignWebSocket, isCampaignWsPath } = await import(
     "./src/lib/campaign/liveWsServer"
   );
+  const { disconnectPrisma } = await import("./src/lib/prisma");
 
   if (!dev) {
     applyStandaloneConfig(dir);
@@ -128,17 +130,51 @@ async function main() {
   const handle = app.getRequestHandler();
   await app.prepare();
 
-  const campaignWs = createCampaignWebSocket();
+  let httpServer: Server | null = null;
+  let campaignWs: ReturnType<typeof createCampaignWebSocket> | null = null;
+  stop = createShutdown({
+    closeWs: () => campaignWs?.close(),
+    closeHttp: () =>
+      httpServer ? closeHttpServer(httpServer) : Promise.resolve(),
+    closeRedis: () => closeCampaignRedis(),
+    disconnectDb: () => disconnectPrisma(),
+    exit: (code) => process.exit(code),
+  });
+
+  campaignWs = createCampaignWebSocket();
   const nextUpgrade = app.getUpgradeHandler?.();
 
   const server = createServer((req, res) => {
-    const parsedUrl = parse(req.url!, true);
-    void handle(req, res, parsedUrl);
+    // A throw inside Next's handler must not become an unhandled rejection
+    // or a dropped response. Answer 500 and keep the process alive.
+    void Promise.resolve()
+      .then(() => handle(req, res, parse(req.url ?? "/", true)))
+      .catch((err) => {
+        console.error("[http] request failed", req.method, req.url, err);
+        if (!res.headersSent) {
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "text/plain; charset=utf-8");
+          res.end("Internal Server Error");
+        } else {
+          res.destroy();
+        }
+      });
+  });
+  httpServer = server;
+
+  // Keep-alive must outlive the reverse proxy's idle connections, or the
+  // proxy reuses a socket Node already closed and returns a 502.
+  server.keepAliveTimeout = 65_000;
+  server.headersTimeout = 66_000;
+
+  server.on("error", (err) => {
+    console.error("[http] server error", err);
+    if (!server.listening) void stop("listen failed", 1);
   });
 
   server.on("upgrade", (req, socket, head) => {
     if (isCampaignWsPath(req.url)) {
-      campaignWs.handleUpgrade(req, socket, head);
+      campaignWs?.handleUpgrade(req, socket, head);
       return;
     }
     if (nextUpgrade) {
@@ -155,13 +191,7 @@ async function main() {
   });
 }
 
-main().catch(async (err) => {
+main().catch((err) => {
   console.error(err);
-  reportError(err, {
-    source: "process",
-    level: "fatal",
-    dedupeKey: "process:startup",
-  });
-  await flushReports(2000);
   process.exit(1);
 });

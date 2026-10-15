@@ -8,15 +8,8 @@ import { useCookieConsent } from "@/components/cookie-consent-provider";
 import { EncounterDockHost } from "@/components/encounter/encounter-dock";
 import { SiteHeader } from "@/components/site-header";
 import { isCampaignTablePath } from "@/lib/campaign/immersive";
-import type { AuthUser } from "@/lib/auth/session";
 
-export function AppShell({
-  user,
-  children,
-}: {
-  user: AuthUser | null;
-  children: ReactNode;
-}) {
+export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isCampaignTable = isCampaignTablePath(pathname);
   const { openPreferences } = useCookieConsent();
@@ -30,7 +23,7 @@ export function AppShell({
 
   return (
     <>
-      {isCampaignTable ? null : <SiteHeader user={user} />}
+      {isCampaignTable ? null : <SiteHeader />}
       <main
         id="main-content"
         className={

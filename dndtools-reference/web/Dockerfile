@@ -54,7 +54,9 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV DATA_DIR=/data/dndtools
 
-RUN apk add --no-cache libc6-compat openssl wget
+# tini runs as PID 1 and forwards SIGTERM to Node. Without it Node ignores
+# SIGTERM in PID 1 and every deploy waits out the kill timeout.
+RUN apk add --no-cache libc6-compat openssl wget tini
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -91,7 +93,7 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-  CMD wget -qO- http://localhost:3000/health || exit 1
+    CMD wget -qO- http://127.0.0.1:3000/health || exit 1
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/docker-entrypoint.sh"]
 CMD ["start"]

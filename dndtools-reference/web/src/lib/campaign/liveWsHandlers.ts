@@ -1,7 +1,10 @@
 import {
   acceptCommandRate,
+  acceptRateLimited,
   acceptTokenMoveRate,
   createRateLimitState,
+  TOKEN_MOVE_WINDOW_MS,
+  trimToCap,
   type RateLimitState,
 } from "@/lib/campaign/liveRateLimit";
 import {
@@ -47,14 +50,69 @@ import { prisma } from "@/lib/prisma";
 
 export const MAX_WS_MESSAGE_BYTES = 64 * 1024;
 
+/** Live messages per connection still waiting on DB or Redis. Anything above is dropped. */
+export const MAX_IN_FLIGHT = 16;
+/** Uncommitted token ticks are dropped above this, so drags never queue behind commands. */
+export const MAX_IN_FLIGHT_TOKEN_TICKS = 4;
+/** Uncommitted token moves per connection, across all tokens. */
+export const TOKEN_MOVE_CONN_MAX_PER_SEC = 60;
+/** Per-connection token maps stop growing past this many entries (oldest evicted). */
+export const MAX_TRACKED_TOKENS = 256;
+/** Token ids that failed the DB lookup or were forbidden are not re-queried for this long. */
+export const TOKEN_MISS_TTL_MS = 5_000;
+
+/** Message types that mutate the map and therefore reach the DB. */
+const DISCRETE_TYPES: ReadonlySet<ClientLiveMessage["type"]> = new Set<
+  ClientLiveMessage["type"]
+>([
+  "tokenMoveCommit",
+  "mapPing",
+  "mapViewportGoTo",
+  "mapDrawingUpsert",
+  "mapDrawingRemove",
+  "mapDrawingClear",
+  "mapFogUpsert",
+  "mapFogRemove",
+  "mapFogReset",
+  "mapOccluderUpsert",
+  "mapOccluderRemove",
+  "mapDoorState",
+  "mapLightUpsert",
+  "mapLightRemove",
+  "mapFlags",
+  "mapGrid",
+  "mapTokenUpsert",
+  "mapTokenRemove",
+]);
+
 type HandlerCtx = {
   auth: CampaignSocketAuth;
-  /** Per-token rate limit state. */
+  /** Per-token rate limit state, capped at MAX_TRACKED_TOKENS. */
   moveRates: Map<string, RateLimitState>;
+  /** Connection-wide cap on uncommitted token moves. */
+  moveConnRate: RateLimitState;
+  /** Token ids that failed the DB lookup or were forbidden, mapped to expiry (ms). */
+  tokenMisses: Map<string, number>;
   /** Coarse per-connection rate for discrete commands. */
   commandRate: RateLimitState;
+  /** Messages currently awaiting DB or Redis work. */
+  inFlight: number;
   send: (event: CampaignLiveEvent) => void;
 };
+
+function isTokenMissCached(ctx: HandlerCtx, tokenId: string): boolean {
+  const expiresAt = ctx.tokenMisses.get(tokenId);
+  if (expiresAt === undefined) return false;
+  if (expiresAt > Date.now()) return true;
+  ctx.tokenMisses.delete(tokenId);
+  return false;
+}
+
+function rememberTokenMiss(ctx: HandlerCtx, tokenId: string): void {
+  ctx.tokenMisses.delete(tokenId);
+  ctx.tokenMisses.set(tokenId, Date.now() + TOKEN_MISS_TTL_MS);
+  trimToCap(ctx.tokenMisses, MAX_TRACKED_TOKENS);
+}
 
 function parseClientMessage(raw: string): ClientLiveMessage | null {
   if (raw.length > MAX_WS_MESSAGE_BYTES) return null;
@@ -116,14 +174,25 @@ async function handleTokenMove(
     return;
   }
 
-  // Uncommitted ticks use the per-token move limiter. Commits are gated by
-  // commandRate in handleClientLiveMessage so a drag burst cannot starve the
-  // pointer-up persist.
+  // Uncommitted ticks use a connection-wide cap plus a per-token limiter.
+  // Commits are gated by commandRate in handleClientLiveMessage so a drag
+  // burst cannot starve the pointer-up persist.
   if (!committed) {
+    if (
+      !acceptRateLimited(
+        ctx.moveConnRate,
+        Date.now(),
+        TOKEN_MOVE_CONN_MAX_PER_SEC,
+        TOKEN_MOVE_WINDOW_MS,
+      )
+    ) {
+      return;
+    }
     let rate = ctx.moveRates.get(msg.tokenId);
     if (!rate) {
       rate = createRateLimitState();
       ctx.moveRates.set(msg.tokenId, rate);
+      trimToCap(ctx.moveRates, MAX_TRACKED_TOKENS);
     }
     if (!acceptTokenMoveRate(rate)) return;
   }
@@ -143,14 +212,22 @@ async function handleTokenMove(
   const tokens = await roomGetTokens(auth.campaignId);
   let meta = tokens[msg.tokenId];
 
-  // Cold cache: load from DB once.
+  // Cold cache: load from DB once. Misses are remembered briefly so a flood
+  // of unknown or forbidden ids cannot turn into a flood of queries.
   if (!meta) {
+    if (isTokenMissCached(ctx, msg.tokenId)) return;
     const row = await prisma.campaignMapToken.findUnique({
       where: { id: msg.tokenId },
       include: { map: { select: { campaignId: true } } },
     });
-    if (!row || row.map.campaignId !== auth.campaignId) return;
-    if (!canMoveToken(row, auth)) return;
+    if (
+      !row ||
+      row.map.campaignId !== auth.campaignId ||
+      !canMoveToken(row, auth)
+    ) {
+      rememberTokenMiss(ctx, msg.tokenId);
+      return;
+    }
     meta = {
       id: row.id,
       layer: row.layer === "gm" ? "gm" : "token",
@@ -189,14 +266,15 @@ async function handleTokenMove(
   });
 }
 
-async function handleDiscrete(
-  ctx: HandlerCtx,
-  run: () => Promise<unknown>,
-): Promise<void> {
-  if (!acceptCommandRate(ctx.commandRate)) return;
+async function handleDiscrete(run: () => Promise<unknown>): Promise<void> {
   await run();
 }
 
+/**
+ * Entry point for every client message. Cheap gates run before any DB or
+ * Redis work, so a flood costs the server almost nothing: in-flight cap first,
+ * then the command rate limit, then the handler.
+ */
 export async function handleClientLiveMessage(
   ctx: HandlerCtx,
   raw: string,
@@ -204,6 +282,26 @@ export async function handleClientLiveMessage(
   const msg = parseClientMessage(raw);
   if (!msg) return;
 
+  if (ctx.inFlight >= MAX_IN_FLIGHT) return;
+  if (msg.type === "tokenMove" && ctx.inFlight >= MAX_IN_FLIGHT_TOKEN_TICKS) {
+    return;
+  }
+  if (DISCRETE_TYPES.has(msg.type) && !acceptCommandRate(ctx.commandRate)) {
+    return;
+  }
+
+  ctx.inFlight += 1;
+  try {
+    await dispatchLiveMessage(ctx, msg);
+  } finally {
+    ctx.inFlight -= 1;
+  }
+}
+
+async function dispatchLiveMessage(
+  ctx: HandlerCtx,
+  msg: ClientLiveMessage,
+): Promise<void> {
   const actor = actorFromAuth(ctx.auth);
 
   switch (msg.type) {
@@ -214,16 +312,16 @@ export async function handleClientLiveMessage(
       await handleTokenMove(ctx, msg, false);
       return;
     case "tokenMoveCommit":
-      await handleDiscrete(ctx, () => handleTokenMove(ctx, msg, true));
+      await handleDiscrete(() => handleTokenMove(ctx, msg, true));
       return;
     case "mapPing": {
       if (typeof msg.x !== "number" || typeof msg.y !== "number") return;
-      await handleDiscrete(ctx, () => mutateMapPing(actor, msg.x, msg.y));
+      await handleDiscrete(() => mutateMapPing(actor, msg.x, msg.y));
       return;
     }
     case "mapViewportGoTo": {
       if (typeof msg.x !== "number" || typeof msg.y !== "number") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateViewportGoTo(actor, msg.x, msg.y),
       );
       return;
@@ -231,7 +329,7 @@ export async function handleClientLiveMessage(
     case "mapDrawingUpsert": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, async () => {
+      await handleDiscrete(async () => {
         if (msg.drawingId) {
           // Prefer update when client already has an id; fall through to add (upsert).
           await mutateAddDrawing(actor, mapId, {
@@ -253,7 +351,7 @@ export async function handleClientLiveMessage(
     case "mapDrawingRemove": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || typeof msg.drawingId !== "string") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateDeleteDrawing(actor, mapId, msg.drawingId),
       );
       return;
@@ -261,13 +359,13 @@ export async function handleClientLiveMessage(
     case "mapDrawingClear": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () => mutateClearDrawings(actor, mapId));
+      await handleDiscrete(() => mutateClearDrawings(actor, mapId));
       return;
     }
     case "mapFogUpsert": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateAddFogRegion(
           actor,
           mapId,
@@ -281,7 +379,7 @@ export async function handleClientLiveMessage(
     case "mapFogRemove": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || typeof msg.regionId !== "string") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateRemoveFogRegion(actor, mapId, msg.regionId),
       );
       return;
@@ -289,13 +387,13 @@ export async function handleClientLiveMessage(
     case "mapFogReset": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () => mutateResetFog(actor, mapId));
+      await handleDiscrete(() => mutateResetFog(actor, mapId));
       return;
     }
     case "mapOccluderUpsert": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateAddOccluder(actor, mapId, msg.kind, msg.points, msg.state),
       );
       return;
@@ -303,7 +401,7 @@ export async function handleClientLiveMessage(
     case "mapOccluderRemove": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || typeof msg.occluderId !== "string") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateRemoveOccluder(actor, mapId, msg.occluderId),
       );
       return;
@@ -311,7 +409,7 @@ export async function handleClientLiveMessage(
     case "mapDoorState": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateSetDoorState(actor, mapId, msg.occluderId, msg.state),
       );
       return;
@@ -319,7 +417,7 @@ export async function handleClientLiveMessage(
     case "mapLightUpsert": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || !msg.light) return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateUpsertLight(actor, mapId, {
           id: msg.light.id,
           x: msg.light.x,
@@ -336,7 +434,7 @@ export async function handleClientLiveMessage(
     case "mapLightRemove": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || typeof msg.lightId !== "string") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateRemoveLight(actor, mapId, msg.lightId),
       );
       return;
@@ -344,7 +442,7 @@ export async function handleClientLiveMessage(
     case "mapFlags": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateSetMapFlags(actor, mapId, {
           fogEnabled: msg.fogEnabled,
           losEnabled: msg.losEnabled,
@@ -358,7 +456,7 @@ export async function handleClientLiveMessage(
     case "mapGrid": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId) return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateUpdateGrid(
           actor,
           mapId,
@@ -374,7 +472,7 @@ export async function handleClientLiveMessage(
     case "mapTokenUpsert": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || typeof msg.tokenId !== "string") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateTokenProps(actor, mapId, msg.tokenId, {
           layer: msg.layer,
           visibility: msg.visibility,
@@ -388,7 +486,7 @@ export async function handleClientLiveMessage(
     case "mapTokenRemove": {
       const mapId = await resolveLiveMapId(ctx.auth);
       if (!mapId || typeof msg.tokenId !== "string") return;
-      await handleDiscrete(ctx, () =>
+      await handleDiscrete(() =>
         mutateRemoveToken(actor, mapId, msg.tokenId),
       );
       return;
@@ -446,7 +544,10 @@ export function createHandlerCtx(
   return {
     auth,
     moveRates: new Map(),
+    moveConnRate: createRateLimitState(),
+    tokenMisses: new Map(),
     commandRate: createRateLimitState(),
+    inFlight: 0,
     send,
   };
 }

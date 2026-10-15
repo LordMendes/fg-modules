@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import {
@@ -20,6 +19,8 @@ import {
 export type AuthActionResult = {
   success: boolean;
   error?: string;
+  /** Set on success. The client does a hard navigation here so bootstrap state resets. */
+  redirectTo?: string;
 };
 
 function safeRedirectPath(next: string | undefined): string {
@@ -70,7 +71,7 @@ export async function register(input: {
   });
 
   await createUserSession(user.id);
-  return { success: true };
+  return { success: true, redirectTo: "/profile" };
 }
 
 export async function login(input: {
@@ -99,12 +100,12 @@ export async function login(input: {
   }
 
   await createUserSession(user.id);
-  return { success: true };
+  return { success: true, redirectTo: safeRedirectPath(input.next) };
 }
 
+/** Clears the auth cookie. The client navigates to "/" afterwards. */
 export async function logout(): Promise<void> {
   await destroyUserSession();
-  redirect("/");
 }
 
 export async function getAuthUserSummary() {
@@ -118,26 +119,3 @@ export async function getAuthUserSummary() {
   };
 }
 
-export async function registerAndRedirect(input: {
-  email: string;
-  username: string;
-  password: string;
-}): Promise<AuthActionResult> {
-  const result = await register(input);
-  if (result.success) {
-    redirect("/profile");
-  }
-  return result;
-}
-
-export async function loginAndRedirect(input: {
-  identifier: string;
-  password: string;
-  next?: string;
-}): Promise<AuthActionResult> {
-  const result = await login(input);
-  if (result.success) {
-    redirect(safeRedirectPath(input.next));
-  }
-  return result;
-}

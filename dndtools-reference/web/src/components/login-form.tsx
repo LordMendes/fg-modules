@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
-import { loginAndRedirect } from "@/actions/auth";
+import { login } from "@/actions/auth";
 
 export function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next") ?? "/profile";
   const [identifier, setIdentifier] = useState("");
@@ -19,12 +18,13 @@ export function LoginForm() {
     setError(null);
 
     startTransition(async () => {
-      const result = await loginAndRedirect({ identifier, password, next });
+      const result = await login({ identifier, password, next });
       if (!result.success) {
         setError(result.error ?? "Login failed");
         return;
       }
-      router.refresh();
+      // Hard navigation: the new session cookie and user load fresh on the next page.
+      window.location.assign(result.redirectTo ?? "/profile");
     });
   }
 

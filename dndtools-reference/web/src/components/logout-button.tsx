@@ -23,6 +23,8 @@ export function LogoutButton({
         startTransition(async () => {
           await logout();
           onLoggedOut?.();
+          // Hard navigation so no signed-in client state survives the logout.
+          window.location.assign("/");
         })
       }
     >

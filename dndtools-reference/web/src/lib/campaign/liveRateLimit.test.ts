@@ -4,6 +4,7 @@ import {
   acceptRateLimited,
   acceptTokenMoveRate,
   createRateLimitState,
+  trimToCap,
   TOKEN_MOVE_MAX_PER_SEC,
 } from "./liveRateLimit";
 
@@ -25,5 +26,22 @@ describe("liveRateLimit", () => {
     }
     assert.equal(acceptRateLimited(state, t0, 5, 1000), false);
     assert.equal(acceptRateLimited(state, t0 + 1001, 5, 1000), true);
+  });
+
+  it("trimToCap evicts the oldest entries first", () => {
+    const map = new Map<string, number>([
+      ["a", 1],
+      ["b", 2],
+      ["c", 3],
+      ["d", 4],
+    ]);
+    trimToCap(map, 2);
+    assert.deepEqual([...map.keys()], ["c", "d"]);
+  });
+
+  it("trimToCap leaves a map under the cap untouched", () => {
+    const map = new Map<string, number>([["a", 1]]);
+    trimToCap(map, 2);
+    assert.deepEqual([...map.entries()], [["a", 1]]);
   });
 });

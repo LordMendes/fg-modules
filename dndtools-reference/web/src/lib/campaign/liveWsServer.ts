@@ -1,5 +1,4 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { reportError } from "@/lib/monitoring/report";
 import { randomUUID } from "crypto";
 import type { Server as HttpServer, IncomingMessage } from "http";
 import type { Duplex } from "stream";
@@ -13,10 +12,15 @@ import {
   roomGetOnlineUserIds,
   roomRemoveOnline,
 } from "@/lib/campaign/liveRoom";
+import {
+  guardUpgradeSocket,
+  rejectUpgrade,
+} from "@/lib/campaign/liveWsUpgrade";
 import type { CampaignLiveEvent } from "@/lib/campaign/types";
 import {
   createHandlerCtx,
   handleClientLiveMessage,
+  MAX_WS_MESSAGE_BYTES,
   sendInitialSnapshot,
 } from "@/lib/campaign/liveWsHandlers";
 
@@ -50,7 +54,11 @@ export type CampaignWsAttachment = {
 };
 
 export function createCampaignWebSocket(): CampaignWsAttachment {
-  const wss = new WebSocketServer({ noServer: true });
+  // maxPayload makes ws reject oversized frames before buffering them.
+  const wss = new WebSocketServer({
+    noServer: true,
+    maxPayload: MAX_WS_MESSAGE_BYTES,
+  });
 
   wss.on(
     "connection",
@@ -59,6 +67,12 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
       _req: IncomingMessage,
       auth: NonNullable<Awaited<ReturnType<typeof authorizeCampaignSocket>>>,
     ) => {
+      // ws emits "error" for bad frames and oversized payloads. Without a
+      // listener that becomes an uncaught exception and kills the process.
+      ws.on("error", (err) => {
+        console.warn("[ws] socket error", auth.campaignId, auth.userId, err.message);
+      });
+
       const connectionId = randomUUID();
       const send = (event: CampaignLiveEvent) => {
         if (ws.readyState !== WebSocket.OPEN) return;
@@ -86,11 +100,6 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
         await sendInitialSnapshot(auth, send);
       })().catch((err) => {
         console.error("[ws] connect setup failed", err);
-        reportError(err, {
-          source: "ws",
-          dedupeKey: "ws:connect-setup",
-          tags: { campaignId: auth.campaignId },
-        });
       });
 
       ws.on("message", (data, isBinary) => {
@@ -131,39 +140,46 @@ export function createCampaignWebSocket(): CampaignWsAttachment {
       return;
     }
 
+    // Errors on the raw socket are logged and the socket is closed while we await auth.
+    const releaseGuard = guardUpgradeSocket(socket, (err) => {
+      console.warn("[ws] upgrade socket error", campaignId, err.message);
+    });
+    let handedOff = false;
+
     void (async () => {
       const auth = await authorizeCampaignSocket(
         req.headers.cookie,
         campaignId,
       );
+      releaseGuard();
       if (!auth) {
-        socket.write("HTTP/1.1 401 Unauthorized\r\n\r\n");
-        socket.destroy();
+        rejectUpgrade(socket, "HTTP/1.1 401 Unauthorized\r\n\r\n");
         return;
       }
 
+      handedOff = true;
       wss.handleUpgrade(req, socket, head, (ws) => {
         wss.emit("connection", ws, req, auth);
       });
     })().catch((err) => {
       console.error("[ws] upgrade failed", campaignId, err);
-      reportError(err, {
-        source: "ws",
-        dedupeKey: "ws:upgrade",
-        tags: { campaignId },
-      });
-      try {
-        socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n");
-      } catch {
-        // ignore
+      releaseGuard();
+      if (handedOff) {
+        socket.destroy();
+      } else {
+        rejectUpgrade(socket, "HTTP/1.1 500 Internal Server Error\r\n\r\n");
       }
-      socket.destroy();
     });
   };
 
   return {
     handleUpgrade,
     close: () => {
+      // 1012 "service restart" tells clients to reconnect, and the existing
+      // client backoff does the rest.
+      for (const client of wss.clients) {
+        client.close(1012, "server restarting");
+      }
       wss.close();
     },
   };

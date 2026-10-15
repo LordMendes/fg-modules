@@ -1,19 +1,34 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
+import { poolConfigFromEnv } from "@/lib/prisma-config";
+
+export {
+  COMBAT_TX_OPTIONS,
+  isBusyDatabaseError,
+  isUnavailableDatabaseError,
+} from "@/lib/prisma-config";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
   pool: Pool | undefined;
 };
 
-function createPrismaClient(): PrismaClient {
-  const pool = globalForPrisma.pool ?? new Pool({
-    connectionString: process.env.DATABASE_URL,
+function createPool(): Pool {
+  const pool = new Pool(poolConfigFromEnv());
+  // The adapter attaches its own idle-client listener, but it only forwards
+  // errors when `onPoolError` is set, so they would otherwise disappear.
+  pool.on("error", (err) => {
+    console.error("[db] idle client error", err.message);
   });
-  if (process.env.NODE_ENV !== "production") {
-    globalForPrisma.pool = pool;
-  }
+  return pool;
+}
+
+function createPrismaClient(): PrismaClient {
+  // Cache the pool in every environment. Production used to build a new pool
+  // on every client rebuild, which leaked connections.
+  const pool = globalForPrisma.pool ?? createPool();
+  globalForPrisma.pool = pool;
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }
@@ -52,16 +67,12 @@ function getPrismaClient(): PrismaClient {
   return client;
 }
 
-export function isUnavailableDatabaseError(error: unknown): boolean {
-  if (!error || typeof error !== "object") return false;
-  const code = "code" in error ? String(error.code) : "";
-  return (
-    code === "P2021" ||
-    code === "P2022" ||
-    code === "P1001" ||
-    code === "P1000" ||
-    code === "P1003"
-  );
+/** Close the Prisma client and the pg pool. Used by graceful shutdown. */
+export async function disconnectPrisma(): Promise<void> {
+  const client = globalForPrisma.prisma;
+  const pool = globalForPrisma.pool;
+  if (client) await client.$disconnect();
+  if (pool) await pool.end();
 }
 
 export const prisma: PrismaClient = new Proxy({} as PrismaClient, {

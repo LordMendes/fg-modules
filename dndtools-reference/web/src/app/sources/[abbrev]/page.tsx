@@ -23,6 +23,13 @@ export async function generateMetadata({ params }: Props) {
   });
 }
 
+export const revalidate = 86400;
+
+// Empty list so the route is cached on demand (ISR) instead of rendered per request.
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function SourceDetailPage({ params }: Props) {
   const { abbrev } = await params;
   const source = await getSourceByAbbrev(abbrev);

@@ -55,6 +55,11 @@ import type { CombatSpellEntry, CombatSpellUses } from "@/lib/combat/types";
 import { loadEncounters, loadNpcLibrary } from "@/lib/combat/loadCombat";
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
 import { prisma } from "@/lib/prisma";
+import {
+  COMBAT_LOCK_TIMEOUT,
+  COMBAT_TX_OPTIONS,
+  isBusyDatabaseError,
+} from "@/lib/prisma-config";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import { abilityModifier, computeCombatStats } from "@/lib/pc-planner/combatStats";
 import {
@@ -98,6 +103,29 @@ const combatIncludeWithEffects = {
 };
 
 export type CombatTransactionClient = Prisma.TransactionClient;
+
+/** Raised when a combat write cannot get a connection or a row lock in time. */
+export class CombatBusyError extends Error {
+  constructor() {
+    super("Combat is busy. Try again in a moment.");
+    this.name = "CombatBusyError";
+  }
+}
+
+/**
+ * Every combat write goes through here so the wait and transaction budgets
+ * stay uniform. Pool exhaustion and lock timeouts surface as CombatBusyError.
+ */
+export async function combatTransaction<R>(
+  fn: (tx: CombatTransactionClient) => Promise<R>,
+): Promise<R> {
+  try {
+    return await prisma.$transaction(fn, COMBAT_TX_OPTIONS);
+  } catch (err) {
+    if (isBusyDatabaseError(err)) throw new CombatBusyError();
+    throw err;
+  }
+}
 
 export type LockedCombatantRow = {
   id: string;
@@ -197,6 +225,9 @@ export async function lockCombatRow(
   tx: CombatTransactionClient,
   campaignId: string,
 ): Promise<LockedCombatRow | null> {
+  // Fail fast when another transaction holds this combat row, instead of
+  // queueing behind it while holding a pooled connection.
+  await tx.$executeRawUnsafe(`SET LOCAL lock_timeout = '${COMBAT_LOCK_TIMEOUT}'`);
   await tx.$queryRaw`
     SELECT id FROM "CampaignCombat" WHERE "campaignId" = ${campaignId} FOR UPDATE
   `;
@@ -1583,7 +1614,7 @@ export async function applyCombatDamage(
         }
       : input;
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -1644,7 +1675,7 @@ export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
 export async function startCombat(actor: CombatActor) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     let combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) {
       const id = newEntityId();
@@ -1721,7 +1752,7 @@ export async function endCombat(
 export async function resetCombat(actor: CombatActor) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -1791,7 +1822,7 @@ export async function rollInitiativeFor(
   scope: InitiativeScope,
   combatantId?: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -1871,7 +1902,7 @@ export async function setActiveCombatant(
 ) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     if (!combatantInCombat(combat, combatantId)) {
@@ -1906,7 +1937,7 @@ export async function delayCombatant(
   actor: CombatActor,
   combatantId: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -1940,7 +1971,7 @@ export async function readyCombatant(
   combatantId: string,
   trigger?: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -1971,7 +2002,7 @@ export async function readyCombatant(
 }
 
 export async function actNow(actor: CombatActor, combatantId: string) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -2011,7 +2042,7 @@ export async function actNow(actor: CombatActor, combatantId: string) {
 export async function advanceCombatTurn(actor: CombatActor) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat || combat.combatants.length === 0) {
       return { success: false as const, error: "No combatants" };
@@ -2080,7 +2111,7 @@ export async function applyHeal(
   const healAmount = clampInt(amount, 0, 9999);
   if (healAmount == null) return { success: false as const, error: "Invalid amount" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -2143,7 +2174,7 @@ export async function applyTempHp(
   const tempAmount = clampInt(amount, 0, 9999);
   if (tempAmount == null) return { success: false as const, error: "Invalid amount" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -2190,7 +2221,7 @@ export async function setHp(
   const targetHp = clampInt(hp, -999, 9999);
   if (targetHp == null) return { success: false as const, error: "Invalid HP" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -2234,7 +2265,7 @@ export async function applyNonlethal(
   const addAmount = clampInt(amount, 0, 9999);
   if (addAmount == null) return { success: false as const, error: "Invalid amount" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -2278,7 +2309,7 @@ export async function addEffect(
   const validated = validateEffectText(input.effectText);
   if (!validated.ok) return { success: false as const, error: validated.error };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     if (combatantIds.length === 0) {
@@ -2367,7 +2398,7 @@ export async function removeEffect(
   actor: CombatActor,
   effectId: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -2418,7 +2449,7 @@ export async function toggleEffectActive(
   actor: CombatActor,
   effectId: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -2480,7 +2511,7 @@ export async function updateEffect(
   effectId: string,
   input: UpdateEffectInput,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -2552,7 +2583,7 @@ export async function clearEffects(
   scope: CombatantScope,
   combatantId?: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -2612,7 +2643,7 @@ export async function clearTargets(
   scope: ClearTargetsScope,
   combatantId?: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -2691,7 +2722,7 @@ export async function setCombatantFlags(
     return { success: false as const, error: "DM only" };
   }
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combatantInCombat(combat, combatantId);
@@ -2744,7 +2775,7 @@ export async function setCombatantFlags(
 export async function removeDeadNpcs(actor: CombatActor) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 

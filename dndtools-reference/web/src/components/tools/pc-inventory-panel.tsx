@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Backpack, Package, Pencil, Plus, Shield, Shirt, Sparkles, Sword, Trash2 } from "lucide-react";
 import { fetchInventoryItem } from "@/actions/data";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { PcInventoryItemEditor } from "@/components/tools/pc-inventory-item-editor";
-import { useSessionNonce } from "@/components/session-provider";
+import { useRefreshSession, useSessionNonce } from "@/components/session-provider";
 import type { CategoryKey } from "@/lib/categories";
 import { formatDamageType } from "@/lib/equipment-display";
 import {
@@ -233,7 +232,7 @@ export function PcInventoryPanel({
 }: PcInventoryPanelProps) {
   const [, startInventoryTransition] = useTransition();
   const nonce = useSessionNonce();
-  const router = useRouter();
+  const refreshSession = useRefreshSession();
   const weaponBackfillAttempted = useRef(new Set<string>());
   const focusNewRow = useRef(false);
   const listRef = useRef<HTMLUListElement>(null);
@@ -247,6 +246,8 @@ export function PcInventoryPanel({
 
   /** Backfill weapon damage/crit for older inventory rows that only have kind. */
   useEffect(() => {
+    // Backfill calls server actions, so wait for the nonce.
+    if (!nonce) return;
     const missing = (state.inventory ?? [])
       .map((row, index) => ({ row, index }))
       .filter(({ row }) => {
@@ -545,7 +546,7 @@ export function PcInventoryPanel({
                     });
                   }
                   if (!result.success || !result.item) {
-                    if (result.error === "Invalid session") router.refresh();
+                    if (result.error === "Invalid session") void refreshSession();
                     patch((s) => {
                       s.inventory.push({
                         id: newInventoryId(),

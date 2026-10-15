@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import { useSessionNonce } from "@/components/session-provider";
+import { useRefreshSession, useSessionNonce } from "@/components/session-provider";
 import { fetchClassSpellsAtLevel, paginateEntities } from "@/actions/data";
 import type { CategoryKey } from "@/lib/categories";
 
@@ -47,7 +46,7 @@ export function EntitySearchCombobox({
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isPending, startTransition] = useTransition();
   const nonce = useSessionNonce();
-  const router = useRouter();
+  const refreshSession = useRefreshSession();
   const rootRef = useRef<HTMLDivElement>(null);
   const listId = useId();
   const requestId = useRef(0);
@@ -80,7 +79,8 @@ export function EntitySearchCombobox({
             });
             if (id !== requestId.current) return;
             if (!result.success || !result.spells) {
-              if (result.error === "Invalid session") router.refresh();
+              // A new nonce re-runs the search effect (nonce is a dependency), so this is the one retry.
+              if (result.error === "Invalid session") void refreshSession();
               setResults([]);
               setOpen(false);
               setActiveIndex(-1);
@@ -115,7 +115,7 @@ export function EntitySearchCombobox({
           });
           if (id !== requestId.current) return;
           if (!result.success) {
-            if (result.error === "Invalid session") router.refresh();
+            if (result.error === "Invalid session") void refreshSession();
             continue;
           }
           if (!result.items) continue;
@@ -144,7 +144,7 @@ export function EntitySearchCombobox({
     }, DEBOUNCE_MS);
 
     return () => window.clearTimeout(timer);
-  }, [query, nonce, categoriesKey, categories, spellClassSlug, spellLevel, router]);
+  }, [query, nonce, categoriesKey, categories, spellClassSlug, spellLevel, refreshSession]);
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent) {

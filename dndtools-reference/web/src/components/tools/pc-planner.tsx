@@ -19,7 +19,7 @@ import { DiceCanvas } from "@/components/dice/dice-canvas";
 import { DiceLogTray } from "@/components/dice/dice-log-tray";
 import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
-import { useAuthUser } from "@/components/auth-provider";
+import { useAuthReady, useAuthUser } from "@/components/auth-provider";
 import { useSessionNonce } from "@/components/session-provider";
 import { PcPlanList } from "@/components/tools/pc-plan-list";
 import { PcPlanShareDialog } from "@/components/tools/pc-plan-share-dialog";
@@ -59,6 +59,7 @@ export function PcPlanner() {
 
 function PcPlannerBody() {
   const user = useAuthUser();
+  const authReady = useAuthReady();
   const nonce = useSessionNonce();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -116,6 +117,8 @@ function PcPlannerBody() {
   useEffect(() => {
     if (!hydrated || (!planIdParam && !isSharedView)) return;
     if (!user && !isSharedView) return;
+    // Wait for the nonce so the first compendium request is not sent empty.
+    if (!nonce) return;
 
     const syncKey = `${compendiumKeyValue}:${nonce}`;
     if (syncKey === lastCompendiumSync.current) return;
@@ -160,6 +163,9 @@ function PcPlannerBody() {
   }, [compendiumKeyValue, hydrated, user, nonce, planIdParam, isSharedView]);
 
   useEffect(() => {
+    // Until bootstrap finishes the viewer might be signed in. Do not pick the
+    // guest branch yet, or a signed-in planner flashes as guest.
+    if (!authReady) return;
     if (!user && !isSharedView) {
       setHydrated(true);
       return;
@@ -230,7 +236,7 @@ function PcPlannerBody() {
       setSharedOwnerUsername(null);
       setHydrated(true);
     });
-  }, [user, planIdParam, shareTokenParam, isSharedView, router]);
+  }, [authReady, user, planIdParam, shareTokenParam, isSharedView, router]);
 
   useEffect(() => {
     if (!hydrated || !planId || !user || !planIdParam || isSharedView) return;
@@ -407,6 +413,10 @@ function PcPlannerBody() {
       "application/xml",
     );
   }, [state, compendium]);
+
+  // Render nothing until bootstrap resolves the viewer, so the sign-in gate
+  // does not flash for a signed-in user.
+  if (!authReady && !isSharedView) return null;
 
   if (!user && !isSharedView) {
     const loginNext =

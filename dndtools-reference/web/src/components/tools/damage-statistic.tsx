@@ -5,7 +5,7 @@ import { ArrowLeftRight, Copy, Pencil, Plus, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { fetchInventoryItem, listCatalogWeapons, type CatalogWeaponSummary } from "@/actions/data";
 import { getPcPlan, getUserPcPlans, type PcPlanSummary } from "@/actions/pc-plans";
-import { useAuthUser } from "@/components/auth-provider";
+import { useAuthReady, useAuthUser } from "@/components/auth-provider";
 import { useSessionNonce } from "@/components/session-provider";
 import { DamageStatisticChart } from "@/components/tools/damage-statistic-chart";
 import { PcInventoryItemEditor } from "@/components/tools/pc-inventory-item-editor";
@@ -233,6 +233,7 @@ function WeaponPanel({
 
 export function DamageStatisticCalculator() {
   const user = useAuthUser();
+  const authReady = useAuthReady();
   const nonce = useSessionNonce();
   const [pending, startTransition] = useTransition();
 
@@ -259,6 +260,8 @@ export function DamageStatisticCalculator() {
   const [compareEnabled, setCompareEnabled] = useState(false);
 
   useEffect(() => {
+    // Wait for the nonce so the catalog request is not sent empty.
+    if (!nonce) return;
     startTransition(async () => {
       const result = await listCatalogWeapons(nonce);
       if (!result.success || !result.weapons) {
@@ -426,7 +429,7 @@ export function DamageStatisticCalculator() {
         <section className="category-card damage-statistic-panel">
           <h2 className="damage-statistic-panel-title">Attacker</h2>
 
-          {user ? (
+          {!authReady ? null : user ? (
             <div className="tool-field tool-field-wide">
               <Label htmlFor="ds-pc-plan">Saved PC</Label>
               <select

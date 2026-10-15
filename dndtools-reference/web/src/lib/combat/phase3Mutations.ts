@@ -32,6 +32,7 @@ import {
   addNpcToLibrary,
   applyStatePatchesInTx,
   combatantsForEventFilter,
+  combatTransaction,
   createEncounter,
   lockCombatRow,
   monsterToCombatStats,
@@ -84,7 +85,7 @@ export async function toggleCombatTargetPhase3(
   actor: CombatActor,
   targetId: string,
 ) {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -151,7 +152,7 @@ export async function revealCombatant(
 ) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const row = combat.combatants.find((c) => c.id === combatantId);
@@ -192,7 +193,7 @@ export async function revealCombatant(
 export async function undoCombatEvent(actor: CombatActor, eventId: string) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -299,7 +300,7 @@ export async function undoCombatEvent(actor: CombatActor, eventId: string) {
 export async function restParty(actor: CombatActor, kind: RestKind) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -403,7 +404,7 @@ export async function endCombatWithOptions(
 ) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
@@ -519,7 +520,7 @@ export async function createSaveRollRequest(
 ) {
   if (!isDm(actor)) return { success: false as const, error: "DM only" };
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
     const target = combat.combatants.find((c) => c.id === input.targetCombatantId);

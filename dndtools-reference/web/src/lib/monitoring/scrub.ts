@@ -79,8 +79,9 @@ function scrubRequestHeaders(
   const next: Record<string, string> = {};
   for (const [key, value] of Object.entries(headers)) {
     const lower = key.toLowerCase();
-    // x-session-nonce mirrors SESSION_NONCE_HEADER in src/lib/session.ts. It is
-    // hardcoded here so this module stays free of server-only imports.
+    // x-session-nonce is no longer set by the proxy, but it is still scrubbed in
+    // case a client sends it. It is hardcoded here so this module stays free of
+    // server-only imports.
     if (
       lower === "authorization" ||
       lower === "cookie" ||

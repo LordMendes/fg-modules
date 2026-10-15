@@ -10,6 +10,13 @@ import type { CategoryKey } from "@/lib/categories";
 /** Entity pages change only on data import — revalidate daily for crawl efficiency. */
 export const revalidate = 86400;
 
+// Empty list: nothing is prerendered at build. Each entity is generated on first
+// request and then cached (ISR). Without this export, Next treats the dynamic
+// segment as fully dynamic and ignores revalidate.
+export function generateStaticParams() {
+  return [];
+}
+
 type Props = {
   params: Promise<{ category: string; slug: string }>;
 };

@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { registerAndRedirect } from "@/actions/auth";
+import { register } from "@/actions/auth";
 
 export function RegisterForm() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,12 +22,13 @@ export function RegisterForm() {
     }
 
     startTransition(async () => {
-      const result = await registerAndRedirect({ email, username, password });
+      const result = await register({ email, username, password });
       if (!result.success) {
         setError(result.error ?? "Registration failed");
         return;
       }
-      router.refresh();
+      // Hard navigation: the new session cookie and user load fresh on the next page.
+      window.location.assign(result.redirectTo ?? "/profile");
     });
   }
 

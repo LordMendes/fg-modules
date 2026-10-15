@@ -264,10 +264,13 @@ export function RandomSpellbook({
   useEffect(() => {
     if (autoGenerateAttempted.current) return;
     if (!initialUrlState.seed.trim()) return;
+    // A shared link with a seed generates on mount, so wait for the nonce.
+    // runGenerate changes with the nonce, so this effect runs again once it arrives.
+    if (!nonce) return;
 
     autoGenerateAttempted.current = true;
     void runGenerate();
-  }, [initialUrlState.seed, runGenerate]);
+  }, [initialUrlState.seed, nonce, runGenerate]);
 
   async function handleCopyLink() {
     setShareStatus(null);

@@ -1,26 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import {
-  COOKIE_NAME,
-  SESSION_COOKIE_OPTIONS,
-  SESSION_NONCE_HEADER,
-  buildSessionToken,
-  createSession,
-  parseSessionToken,
-} from "@/lib/session";
 import { AUTH_COOKIE_NAME } from "@/lib/auth/session";
 import { canonicalEntityPath } from "@/lib/classic-links";
 
-function ensureSession(request: NextRequest) {
-  const existing = request.cookies.get(COOKIE_NAME)?.value;
-  const session = parseSessionToken(existing);
-  if (session) {
-    return { session, token: existing!, isNew: false };
-  }
-
-  const fresh = createSession();
-  return { session: fresh, token: buildSessionToken(fresh), isNew: true };
-}
+// The session nonce is no longer minted here. Pages stay static, and the
+// browser fetches the nonce from POST /session (see BootstrapProvider).
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -66,19 +50,7 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  const { session, token, isNew } = ensureSession(request);
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set(SESSION_NONCE_HEADER, session.nonce);
-
-  const response = NextResponse.next({
-    request: { headers: requestHeaders },
-  });
-
-  if (isNew) {
-    response.cookies.set(COOKIE_NAME, token, SESSION_COOKIE_OPTIONS);
-  }
-
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
