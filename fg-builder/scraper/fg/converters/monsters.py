@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import xml.etree.ElementTree as ET
 from typing import Any
 
@@ -12,8 +13,33 @@ from ..xml_builder import (
     make_category,
     set_formatted_inner,
     typed_formattedtext,
+    typed_number,
     typed_string,
 )
+
+
+def _number(parent: ET.Element, tag: str, value: Any) -> None:
+    if value is None or value == "":
+        return
+    text = str(value).strip()
+    if re.fullmatch(r"[+-]?\d+", text):
+        typed_number(parent, tag, int(text))
+        return
+    if re.fullmatch(r"\d+\s*/\s*\d+", text):
+        numerator, denominator = text.split("/")
+        if int(denominator) == 0:
+            return
+        rendered = f"{int(numerator) / int(denominator):.2f}".rstrip("0").rstrip(".")
+        el = ET.SubElement(parent, tag)
+        el.set("type", "number")
+        el.text = rendered
+        return
+    if re.fullmatch(r"[+-]?\d+\.\d+", text):
+        el = ET.SubElement(parent, tag)
+        el.set("type", "number")
+        el.text = text
+        return
+    typed_string(parent, tag, text)
 
 
 def convert_monsters(
@@ -34,31 +60,24 @@ def convert_monsters(
         node = ET.SubElement(category, rec_id)
 
         typed_string(node, "name", rec.get("name"))
-        typed_string(node, "cr", str(detail.get("cr") or ""))
+        typed_string(node, "type", detail.get("creature_type") or detail.get("type"))
+        typed_string(node, "alignment", detail.get("alignment"))
+        _number(node, "init", detail.get("init"))
+        _number(node, "cr", detail.get("cr"))
+        typed_string(node, "senses", detail.get("senses"))
         typed_string(node, "ac", str(detail.get("ac") or ""))
         typed_string(node, "hd", str(detail.get("hd") or ""))
-
-        hp = detail.get("hp")
-        if hp not in (None, ""):
-            try:
-                from ..xml_builder import typed_number
-
-                typed_number(node, "hp", int(hp))
-            except (TypeError, ValueError):
-                typed_string(node, "hp", str(hp))
-
+        _number(node, "hp", detail.get("hp"))
+        _number(node, "fortitudesave", detail.get("fort"))
+        _number(node, "reflexsave", detail.get("ref"))
+        _number(node, "willsave", detail.get("will"))
+        typed_string(node, "specialqualities", detail.get("special_qualities"))
+        typed_string(node, "speed", detail.get("speed"))
+        typed_string(node, "atk", detail.get("attack"))
+        typed_string(node, "fullatk", detail.get("full_attack"))
+        typed_string(node, "spacereach", detail.get("space_reach"))
+        typed_string(node, "specialattacks", detail.get("special_attacks"))
         for tag, key in (
-            ("fort", "fort"),
-            ("ref", "ref"),
-            ("will", "will"),
-            ("atk", "attack"),
-            ("fullatk", "full_attack"),
-        ):
-            val = detail.get(key)
-            if val:
-                typed_string(node, tag, str(val))
-
-        for ability, key in (
             ("strength", "str"),
             ("dexterity", "dex"),
             ("constitution", "con"),
@@ -66,9 +85,16 @@ def convert_monsters(
             ("wisdom", "wis"),
             ("charisma", "cha"),
         ):
-            val = detail.get(key)
-            if val not in (None, ""):
-                typed_string(node, ability, str(val))
+            _number(node, tag, detail.get(key))
+        typed_string(node, "babgrp", detail.get("babgrp"))
+        typed_string(node, "feats", detail.get("feats"))
+        typed_string(node, "skills", detail.get("skills"))
+        typed_string(node, "languages", detail.get("languages"))
+        typed_string(node, "advancement", detail.get("advancement"))
+        typed_string(node, "leveladjustment", detail.get("level_adjustment"))
+        typed_string(node, "environment", detail.get("environment"))
+        typed_string(node, "organization", detail.get("organization"))
+        typed_string(node, "treasure", detail.get("treasure"))
 
         desc = detail.get("description_html") or ""
         if detail.get("stat_line") and detail["stat_line"] not in desc:
@@ -79,6 +105,10 @@ def convert_monsters(
         elif detail.get("stat_line"):
             text_el = typed_formattedtext(node, "text", wrap_paragraph(detail["stat_line"]))
             set_formatted_inner(text_el, prepare_formatted_html(wrap_paragraph(detail["stat_line"])))
+
+        locked = ET.SubElement(node, "locked")
+        locked.set("type", "number")
+        locked.text = "1"
 
         report.add_written("monsters")
 

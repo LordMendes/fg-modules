@@ -1,0 +1,1022 @@
+[
+  {
+    "slug": "banisher-of-light-hpg",
+    "name": "Banisher of Light",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 32,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "combat agents of the Holy Light."
+    },
+    "type": "General",
+    "description_html": "<p>combat agents of the Holy Light.</p>",
+    "description_text": "combat agents of the Holy Light.",
+    "benefit_html": "You cast spells that target priests or paladins of the Holy Light at +2 caster level. Only spells with a target of one or more creatures gain this bonus; for instance, area spells which include priests or paladins of the Holy Light in their area of effect do not gain the benefit of this feat. If a spell targets more than one creature, the caster level increase only applies if all selected targets are priests or paladins of the Holy Light.",
+    "benefit_text": "You cast spells that target priests or paladins of the Holy Light at +2 caster level. Only spells with a target of one or more creatures gain this bonus; for instance, area spells which include priests or paladins of the Holy Light in their area of effect do not gain the benefit of this feat. If a spell targets more than one creature, the caster level increase only applies if all selected targets are priests or paladins of the Holy Light.",
+    "prerequisite_html": "<p>Penitent of Shadow (see below), caster level 3rd.</p>",
+    "prerequisite_text": "Penitent of Shadow (see below), caster level 3rd.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "blood-ritualist-hpg",
+    "name": "Blood Ritualist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 32,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You have learned the art of sacrificing animals to appease hungry spirits."
+    },
+    "type": "General",
+    "description_html": "<p>You have learned the art of sacrificing animals to appease hungry spirits.</p>",
+    "description_text": "You have learned the art of sacrificing animals to appease hungry spirits.",
+    "benefit_html": "Once per day, you may sacrifice an animal in a ritual that requires 10 uninterrupted minutes and a DC 15 Knowledge (religion) check. If you succeed, you may re-roll any one die (or dice) roll in the next 24 hours. You declare use of this ability after you have rolled the die (or dice) but before you learn the consequences of your roll. You must reroll all the dice involved in the roll.",
+    "benefit_text": "Once per day, you may sacrifice an animal in a ritual that requires 10 uninterrupted minutes and a DC 15 Knowledge (religion) check. If you succeed, you may re-roll any one die (or dice) roll in the next 24 hours. You declare use of this ability after you have rolled the die (or dice) but before you learn the consequences of your roll. You must reroll all the dice involved in the roll.",
+    "prerequisite_html": "<p>Knowledge (religion) 3 ranks, troll.</p>",
+    "prerequisite_text": "Knowledge (religion) 3 ranks, troll.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "cannibalize-hpg",
+    "name": "Cannibalize",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 32,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Forsaken are undead, and thus are unable to heal without magical aid. Studying ghouls and abominations, some Forsaken mimic their ability to devour flesh to restore their own. Hist"
+    },
+    "type": "General",
+    "description_html": "<p>Forsaken are undead, and thus are unable to heal without magical aid. Studying ghouls and abominations, some Forsaken mimic their ability to devour flesh to restore their own. Historically, trolls are cannibals, and have learned to consume flesh to accelerate their own healing.</p>",
+    "description_text": "Forsaken are undead, and thus are unable to heal without magical aid. Studying ghouls and abominations, some Forsaken mimic their ability to devour flesh to restore their own. Historically, trolls are cannibals, and have learned to consume flesh to accelerate their own healing.",
+    "benefit_html": "wounds. If you spend a full round cannibalizing a corpse, you regain 1 hit point per your character level at the end of the round. The corpse cannot be more than one day old. A typical Medium corpse has enough meat to feed you for 10 rounds; after this time, the corpse is stripped of flesh. a good or intelligent creature is an evil act.",
+    "benefit_text": "wounds. If you spend a full round cannibalizing a corpse, you regain 1 hit point per your character level at the end of the round. The corpse cannot be more than one day old. A typical Medium corpse has enough meat to feed you for 10 rounds; after this time, the corpse is stripped of flesh. a good or intelligent creature is an evil act.",
+    "prerequisite_html": "<p>Forsaken or troll.</p>",
+    "prerequisite_text": "Forsaken or troll.",
+    "special_html": "<p>A ca nnibalized corpse is cannibalize a corpse for at least 3 rounds, raise dead is no longer effective on it, though resurrection and true resurrection function normally. Cannibalized corpses can be raised as zombies (if they still possess some flesh) or skeletons. The healing from this feat stacks with the fast healing ability.</p>",
+    "special_text": "A ca nnibalized corpse is cannibalize a corpse for at least 3 rounds, raise dead is no longer effective on it, though resurrection and true resurrection function normally. Cannibalized corpses can be raised as zombies (if they still possess some flesh) or skeletons. The healing from this feat stacks with the fast healing ability.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "craft-totem-hpg",
+    "name": "Craft Totem",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Item Creation",
+      "description_snippet": "You can create permanent totems."
+    },
+    "type": "Item Creation",
+    "description_html": "<p>You can create permanent totems.</p>",
+    "description_text": "You can create permanent totems.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Caster level 3rd. Be nefit: You can create a permanent wooden totem of any totem spell you know. Crafting a totem takes 1 day for each 1,000 gp in its base price. When you create a totem, you set the caster level, which must be sufficient to cast the spell in question and no higher than your own caster level. The base price of a totem is (its spell level x its caster level x 75 gp). To craft a totem, you must spend 1/25 of this base price in experience points and use up raw materials costing 1/2 of this base price. When you craft a totem, you make any choices that you would normally make when casting the spell. Any totem that stores a spell with a costly material component or an experience point cost also carries a commensurate cost. In addition to the costs derived from the base price, you must also expend the material component or pay the experience points when creating the totem. A totem is a small wooden object, usually painted with fearsome voodoo designs. The magic in the totem is inert until someone plants it in the ground (a standard action that provokes attacks of opportunity). At that point, the totem's magic activates, just as if you had cast the spell. The magical effect stops when the spell's duration expires. The totem can be used only once.</p>",
+    "prerequisite_text": "Caster level 3rd. Be nefit: You can create a permanent wooden totem of any totem spell you know. Crafting a totem takes 1 day for each 1,000 gp in its base price. When you create a totem, you set the caster level, which must be sufficient to cast the spell in question and no higher than your own caster level. The base price of a totem is (its spell level x its caster level x 75 gp). To craft a totem, you must spend 1/25 of this base price in experience points and use up raw materials costing 1/2 of this base price. When you craft a totem, you make any choices that you would normally make when casting the spell. Any totem that stores a spell with a costly material component or an experience point cost also carries a commensurate cost. In addition to the costs derived from the base price, you must also expend the material component or pay the experience points when creating the totem. A totem is a small wooden object, usually painted with fearsome voodoo designs. The magic in the totem is inert until someone plants it in the ground (a standard action that provokes attacks of opportunity). At that point, the totem's magic activates, just as if you had cast the spell. The magical effect stops when the spell's duration expires. The totem can be used only once.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "double-totem-hpg",
+    "name": "Double Totem",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "You can combine two totems into one."
+    },
+    "type": "Totemic",
+    "description_html": "<p>You can combine two totems into one.</p>",
+    "description_text": "You can combine two totems into one.",
+    "benefit_html": "You can cast two totem spells into a single totem. The result is a single totem that provides the abilities and effects of both spells. The resulting totem has the physical statistics of the higher-level totem, with no additional hit points, hardness, or other abilities. casting the spell with the longest casting time. You use two spell slots (one per spell imbued in the totem). If the double casting is interrupted, you lose both slots. If the double totem is destroyed, both effects end. This feat cannot be combined with T otemic Protection (see below).",
+    "benefit_text": "You can cast two totem spells into a single totem. The result is a single totem that provides the abilities and effects of both spells. The resulting totem has the physical statistics of the higher-level totem, with no additional hit points, hardness, or other abilities. casting the spell with the longest casting time. You use two spell slots (one per spell imbued in the totem). If the double casting is interrupted, you lose both slots. If the double totem is destroyed, both effects end. This feat cannot be combined with T otemic Protection (see below).",
+    "prerequisite_html": "<p>At least 3 other totemic feats, ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "At least 3 other totemic feats, ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "enduring-totems-hpg",
+    "name": "Enduring Totems",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "Y our totems last longer."
+    },
+    "type": "Totemic",
+    "description_html": "<p>Y our totems last longer.</p>",
+    "description_text": "Y our totems last longer.",
+    "benefit_html": "duration.",
+    "benefit_text": "duration.",
+    "prerequisite_html": "<p>Extend Spell, ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "Extend Spell, ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "evasive-totems-hpg",
+    "name": "Evasive Totems",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "Your totems can twist, jump and dodge in place."
+    },
+    "type": "Totemic",
+    "description_html": "<p>Your totems can twist, jump and dodge in place.</p>",
+    "description_text": "Your totems can twist, jump and dodge in place.",
+    "benefit_html": "T otems you create have a +2 dodge bonus to AC and are permitted to make Reflex saving throws at your base Reflex bonus. Furthermore, if the totem succeeds at a Reflex save against a spell or spell-like effect that permits such a save, it takes no damage, as if it possesses the evasion ability.",
+    "benefit_text": "T otems you create have a +2 dodge bonus to AC and are permitted to make Reflex saving throws at your base Reflex bonus. Furthermore, if the totem succeeds at a Reflex save against a spell or spell-like effect that permits such a save, it takes no damage, as if it possesses the evasion ability.",
+    "prerequisite_html": "<p>Ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "Ability to cast at least one totem spell.",
+    "special_html": "<p>This feat can be selected multiple times. Each time, the dodge bonus to totem AC increases by +2, and the totem receives a +2 bonus on Reflex saves. If you take this feat twice, totems you create have improved evasion, which means that they take no damage from an attack that allows a Reflex saving throw for half damage if they make their Reflex saves, and only half damage if they fail.</p>",
+    "special_text": "This feat can be selected multiple times. Each time, the dodge bonus to totem AC increases by +2, and the totem receives a +2 bonus on Reflex saves. If you take this feat twice, totems you create have improved evasion, which means that they take no damage from an attack that allows a Reflex saving throw for half damage if they make their Reflex saves, and only half damage if they fail.",
+    "normal_html": "<p>T otems have a base AC of 7. As immobile objects, they cannot make Reflex saves.</p>",
+    "normal_text": "T otems have a base AC of 7. As immobile objects, they cannot make Reflex saves."
+  },
+  {
+    "slug": "extra-hexes-hpg",
+    "name": "Extra Hexes",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can perform extra hex chants per day."
+    },
+    "type": "General",
+    "description_html": "<p>You can perform extra hex chants per day.</p>",
+    "description_text": "You can perform extra hex chants per day.",
+    "benefit_html": "per day.",
+    "benefit_text": "per day.",
+    "prerequisite_html": "<p>Hex chant class feature.</p>",
+    "prerequisite_text": "Hex chant class feature.",
+    "special_html": "<p>You can take this feat multiple times. Each time, you gain an additional two hex chants per day .</p>",
+    "special_text": "You can take this feat multiple times. Each time, you gain an additional two hex chants per day .",
+    "normal_html": "<p>Hexers can perform one hex chant per day per hex er level.</p>",
+    "normal_text": "Hexers can perform one hex chant per day per hex er level."
+  },
+  {
+    "slug": "extra-sting-hpg",
+    "name": "Extra Sting",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are especially adept at using your supernatural stings."
+    },
+    "type": "General",
+    "description_html": "<p>You are especially adept at using your supernatural stings.</p>",
+    "description_text": "You are especially adept at using your supernatural stings.",
+    "benefit_html": "You can use your sting class feature one extra time per day.",
+    "benefit_text": "You can use your sting class feature one extra time per day.",
+    "prerequisite_html": "<p>Sting class feature.</p>",
+    "prerequisite_text": "Sting class feature.",
+    "special_html": "<p>You can take this feat more than once. Its effects stack .</p>",
+    "special_text": "You can take this feat more than once. Its effects stack .",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "fetish-spell-hpg",
+    "name": "Fetish Spell",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 33,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "You can use totems to increase the power of your spells."
+    },
+    "type": "Metamagic",
+    "description_html": "<p>You can use totems to increase the power of your spells.</p>",
+    "description_text": "You can use totems to increase the power of your spells.",
+    "benefit_html": "described in More Magic & Mayhem). You plant the totem in the ground and the effect radiates from the totem. You can use this feat only with a spell that has a duration longer than 1 round and that has a radius area, such as detect scrying, silence, vampiric aura or war drums. Y our totem feats affect the fetish spell just as they do other totems. spell uses up a spell slot the same level as the spell's actual level.",
+    "benefit_text": "described in More Magic & Mayhem). You plant the totem in the ground and the effect radiates from the totem. You can use this feat only with a spell that has a duration longer than 1 round and that has a radius area, such as detect scrying, silence, vampiric aura or war drums. Y our totem feats affect the fetish spell just as they do other totems. spell uses up a spell slot the same level as the spell's actual level.",
+    "prerequisite_html": "<p>Ability to cast three totem spells.</p>",
+    "prerequisite_text": "Ability to cast three totem spells.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "follower-of-the-ancestors-hpg",
+    "name": "Follower of the Ancestors",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 34,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "the shamanistic traditions of the tauren and can tap into the spiritual strength of your ancestors."
+    },
+    "type": "General",
+    "description_html": "<p>the shamanistic traditions of the tauren and can tap into the spiritual strength of your ancestors.</p>",
+    "description_text": "the shamanistic traditions of the tauren and can tap into the spiritual strength of your ancestors.",
+    "benefit_html": "You gain a +2 bonus on melee attack rolls and a +4 bonus on melee damage rolls when making a backstab against a priest or paladin of the Holy Light.",
+    "benefit_text": "You gain a +2 bonus on melee attack rolls and a +4 bonus on melee damage rolls when making a backstab against a priest or paladin of the Holy Light.",
+    "prerequisite_html": "<p>Penitent of Shadow (see below), backstab +2d6, membership in the lightslayers.</p>",
+    "prerequisite_text": "Penitent of Shadow (see below), backstab +2d6, membership in the lightslayers.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "mental-stamina-hpg",
+    "name": "Mental Stamina",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our force of will allows you to overcome your physical restrictions."
+    },
+    "type": "General",
+    "description_html": "<p>Y our force of will allows you to overcome your physical restrictions.</p>",
+    "description_text": "Y our force of will allows you to overcome your physical restrictions.",
+    "benefit_html": "You use your Charisma for everything that normally uses Stamina. For example, you use your Charisma bonus to determine how long you rage (if you are a barbarian) and add your Charisma bonus to your base Fortitude saving throw. Anything that affects Stamina instead affects your Charisma (such as an amulet of health or a poison that deals Stamina damage).",
+    "benefit_text": "You use your Charisma for everything that normally uses Stamina. For example, you use your Charisma bonus to determine how long you rage (if you are a barbarian) and add your Charisma bonus to your base Fortitude saving throw. Anything that affects Stamina instead affects your Charisma (such as an amulet of health or a poison that deals Stamina damage).",
+    "prerequisite_html": "<p>Mind Over Matter (see below), you must be an undead creature.</p>",
+    "prerequisite_text": "Mind Over Matter (see below), you must be an undead creature.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "mind-over-matter-hpg",
+    "name": "Mind Over Matter",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our force of will toughens your body."
+    },
+    "type": "General",
+    "description_html": "<p>Y our force of will toughens your body.</p>",
+    "description_text": "Y our force of will toughens your body.",
+    "benefit_html": "Add your Charisma bonus to each of your current Hit Dice and to all future Hit Dice. In effect, you use your Charisma instead of your (non-existent) Stamina to determine bonus hit points.",
+    "benefit_text": "Add your Charisma bonus to each of your current Hit Dice and to all future Hit Dice. In effect, you use your Charisma instead of your (non-existent) Stamina to determine bonus hit points.",
+    "prerequisite_html": "<p>You must be an undead creature.</p>",
+    "prerequisite_text": "You must be an undead creature.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "hex-mastery-hpg",
+    "name": "Hex Mastery",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our hexes are particularly difficult to resist."
+    },
+    "type": "General",
+    "description_html": "<p>Y our hexes are particularly difficult to resist.</p>",
+    "description_text": "Y our hexes are particularly difficult to resist.",
+    "benefit_html": "saving throw DC is increased by +2, and you gain a +2 bonus on checks made to penetrate the opponent's spell resistance with the hex.",
+    "benefit_text": "saving throw DC is increased by +2, and you gain a +2 bonus on checks made to penetrate the opponent's spell resistance with the hex.",
+    "prerequisite_html": "<p>Hex chant class feature.</p>",
+    "prerequisite_text": "Hex chant class feature.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "penetrating-totems-hpg",
+    "name": "Penetrating Totems",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "overcoming an opponent's defenses."
+    },
+    "type": "Totemic",
+    "description_html": "<p>overcoming an opponent's defenses.</p>",
+    "description_text": "overcoming an opponent's defenses.",
+    "benefit_html": "The save DC to resist the effects of your totems is +1 point higher. Furthermore, when you attempt to penetrate an opponent's spell resistance with one of your totems, you receive a +2 bonus. These benefits stack with similar bonuses, such as the Spell Penetration feat.",
+    "benefit_text": "The save DC to resist the effects of your totems is +1 point higher. Furthermore, when you attempt to penetrate an opponent's spell resistance with one of your totems, you receive a +2 bonus. These benefits stack with similar bonuses, such as the Spell Penetration feat.",
+    "prerequisite_html": "<p>Ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "Ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "penitent-of-shadow-hpg",
+    "name": "Penitent of Shadow",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are a faithful servant of the Cult of Forgotten Shadow."
+    },
+    "type": "General",
+    "description_html": "<p>You are a faithful servant of the Cult of Forgotten Shadow.</p>",
+    "description_text": "You are a faithful servant of the Cult of Forgotten Shadow.",
+    "benefit_html": "You gain a +4 bonus on saving throws made against spells cast by priests or paladins of the Holy Light and on all holy light spells (described in More Magic & Mayhem).",
+    "benefit_text": "You gain a +4 bonus on saving throws made against spells cast by priests or paladins of the Holy Light and on all holy light spells (described in More Magic & Mayhem).",
+    "prerequisite_html": "<p>Forsaken.</p>",
+    "prerequisite_text": "Forsaken.",
+    "special_html": "<p>You must join the Cult of the Forgotten Shadow, agree to uphold its tenets, and tithe 25 gp to the church before taking this feat. The GM may choose to substitute a different task or tithe in lieu of the 25 gp.</p>",
+    "special_text": "You must join the Cult of the Forgotten Shadow, agree to uphold its tenets, and tithe 25 gp to the church before taking this feat. The GM may choose to substitute a different task or tithe in lieu of the 25 gp.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "reawakened-taste-hpg",
+    "name": "Reawakened Taste",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Over the years you have developed a sense of taste."
+    },
+    "type": "General",
+    "description_html": "<p>Over the years you have developed a sense of taste.</p>",
+    "description_text": "Over the years you have developed a sense of taste.",
+    "benefit_html": "Due to your undead nature, your sense of taste seems particularly sensitive and allows you to distinguish tiny variations among herbs. Y our keen sense allows you to brew potions more efficiently with no waste of ingredients. The base cost for you to brew a potion is (spell level + caster level + 40 gp).",
+    "benefit_text": "Due to your undead nature, your sense of taste seems particularly sensitive and allows you to distinguish tiny variations among herbs. Y our keen sense allows you to brew potions more efficiently with no waste of ingredients. The base cost for you to brew a potion is (spell level + caster level + 40 gp).",
+    "prerequisite_html": "<p>Brew P otion, you must be an undead creature.</p>",
+    "prerequisite_text": "Brew P otion, you must be an undead creature.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>The base cost to brew a potion is (spell level + caster level + 50 gp).</p>",
+    "normal_text": "The base cost to brew a potion is (spell level + caster level + 50 gp)."
+  },
+  {
+    "slug": "ritual-of-summoning-hpg",
+    "name": "Ritual of Summoning",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Item Creation",
+      "description_snippet": "In battle, undead rarely engage in physical construction. Their acolytes simply summon structures via a process known as the ritual of summoning."
+    },
+    "type": "Item Creation",
+    "description_html": "<p>In battle, undead rarely engage in physical construction. Their acolytes simply summon structures via a process known as the ritual of summoning.</p>",
+    "description_text": "In battle, undead rarely engage in physical construction. Their acolytes simply summon structures via a process known as the ritual of summoning.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Caster level 3rd, ability to cast divine spells. Be nefits: To perform the ritual of summoning, you must choose a blighted location (such as an area affected by the withering blight spell) large enough to contain the building, or create the area yourself through demolition/deforesting. To start the ritual, you must spend 1d4 full-round actions chanting. If you are disturbed during this period, you must make a Concentration check as if you were casting a 5th-level spell. After this time, you make a DC 20 Knowledge (arcana) check. If successful, a summoning gate (a large glowing circle with four massive bone spurs arching over it) appears with its nearest edge up to 10 feet away from you. You then place the m oney for the building (1/3 its market price) near the circle. The coins vanish in green flame, and the building begins to rise. On average, it takes 1 minute per 1,000 gold pieces for the summoning to complete. You may use this feat to unsummon a summoned building. Doing so takes a full round action and you must be within 10 feet of the building. The building disappears, and a summoning gate returns 1/3 the original investment in gold pieces (it reappears in a flash of green flame). If another character summoned the building, you must make a caster level check (DC 11 + the caster level of the character who summoned it) to unsummon the building. If you fail, you cannot try again for 24 hours.</p>",
+    "prerequisite_text": "Caster level 3rd, ability to cast divine spells. Be nefits: To perform the ritual of summoning, you must choose a blighted location (such as an area affected by the withering blight spell) large enough to contain the building, or create the area yourself through demolition/deforesting. To start the ritual, you must spend 1d4 full-round actions chanting. If you are disturbed during this period, you must make a Concentration check as if you were casting a 5th-level spell. After this time, you make a DC 20 Knowledge (arcana) check. If successful, a summoning gate (a large glowing circle with four massive bone spurs arching over it) appears with its nearest edge up to 10 feet away from you. You then place the m oney for the building (1/3 its market price) near the circle. The coins vanish in green flame, and the building begins to rise. On average, it takes 1 minute per 1,000 gold pieces for the summoning to complete. You may use this feat to unsummon a summoned building. Doing so takes a full round action and you must be within 10 feet of the building. The building disappears, and a summoning gate returns 1/3 the original investment in gold pieces (it reappears in a flash of green flame). If another character summoned the building, you must make a caster level check (DC 11 + the caster level of the character who summoned it) to unsummon the building. If you fail, you cannot try again for 24 hours.",
+    "special_html": "<p>The summoning gate has an AC of 4, hardness of 10, and 100 hit points. If destroyed, the money is wasted and the building is not summoned.</p>",
+    "special_text": "The summoning gate has an AC of 4, hardness of 10, and 100 hit points. If destroyed, the money is wasted and the building is not summoned.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "shamanistic-inspiration-hpg",
+    "name": "Shamanistic Inspiration",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our connection to the spirits allows you to have an inkling of what the future holds."
+    },
+    "type": "General",
+    "description_html": "<p>Y our connection to the spirits allows you to have an inkling of what the future holds.</p>",
+    "description_text": "Y our connection to the spirits allows you to have an inkling of what the future holds.",
+    "benefit_html": "Once per day, as a free action, you may channel the spirit of a predator and gain a +4 sacred bonus on grapple checks. This bonus lasts for 1d6 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "benefit_text": "Once per day, as a free action, you may channel the spirit of a predator and gain a +4 sacred bonus on grapple checks. This bonus lasts for 1d6 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "prerequisite_html": "<p>Spt 11.</p>",
+    "prerequisite_text": "Spt 11.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "speaker-of-the-hoof-hpg",
+    "name": "Speaker of the Hoof",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Through meditation and training, you have learned to speak with the spirits of grazing animals."
+    },
+    "type": "General",
+    "description_html": "<p>Through meditation and training, you have learned to speak with the spirits of grazing animals.</p>",
+    "description_text": "Through meditation and training, you have learned to speak with the spirits of grazing animals.",
+    "benefit_html": "channel the spirit of a grazing animal and gain a +10- foot enhancement bonus to all of your movement modes. This bonus lasts for 1d6 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "benefit_text": "channel the spirit of a grazing animal and gain a +10- foot enhancement bonus to all of your movement modes. This bonus lasts for 1d6 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "prerequisite_html": "<p>Spt 11.</p>",
+    "prerequisite_text": "Spt 11.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "speaker-of-the-seed-hpg",
+    "name": "Speaker of the Seed",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "have learned to speak with the spirits of plants."
+    },
+    "type": "General",
+    "description_html": "<p>have learned to speak with the spirits of plants.</p>",
+    "description_text": "have learned to speak with the spirits of plants.",
+    "benefit_html": "Once per day, as a free action, you may channel the spirit of a tree and gain some of a plant's resistances. When an enemy scores a critical hit or backstab on you, you have a 50% chance of negating the critical hit or backstab damage; the enemy rolls normal damage instead. You must be aware of the attack to use this ability. This resistance lasts for 1d4 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "benefit_text": "Once per day, as a free action, you may channel the spirit of a tree and gain some of a plant's resistances. When an enemy scores a critical hit or backstab on you, you have a 50% chance of negating the critical hit or backstab damage; the enemy rolls normal damage instead. You must be aware of the attack to use this ability. This resistance lasts for 1d4 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "prerequisite_html": "<p>Spt 13, either Speaker of the Fang or Speaker of the Hoof (see above).</p>",
+    "prerequisite_text": "Spt 13, either Speaker of the Fang or Speaker of the Hoof (see above).",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "speaker-of-the-sky-hpg",
+    "name": "Speaker of the Sky",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "have learned to speak with the spirits of natural objects, such as rocks, water and the sky."
+    },
+    "type": "General",
+    "description_html": "<p>have learned to speak with the spirits of natural objects, such as rocks, water and the sky.</p>",
+    "description_text": "have learned to speak with the spirits of natural objects, such as rocks, water and the sky.",
+    "benefit_html": "Once per day, as a free action, you may channel the spirit of natural objects and gain resistance to the elements. You gain resistance 10 against acid, cold, electricity or fire. You select the type of energy resistance upon activating this ability. The resistance lasts for 1d4 rounds, +1 round per your Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "benefit_text": "Once per day, as a free action, you may channel the spirit of natural objects and gain resistance to the elements. You gain resistance 10 against acid, cold, electricity or fire. You select the type of energy resistance upon activating this ability. The resistance lasts for 1d4 rounds, +1 round per your Spirit modifier (minimum 1 round). This is a supernatural ability.",
+    "prerequisite_html": "<p>Spt 13, either Speaker of the Fang or Speaker of the Hoof (see above).</p>",
+    "prerequisite_text": "Spt 13, either Speaker of the Fang or Speaker of the Hoof (see above).",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "tame-vermin-hpg",
+    "name": "Tame Vermin",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You have a rapport with giant insects, arachnids and other vermin, allowing you to take them as companions."
+    },
+    "type": "General",
+    "description_html": "<p>You have a rapport with giant insects, arachnids and other vermin, allowing you to take them as companions.</p>",
+    "description_text": "You have a rapport with giant insects, arachnids and other vermin, allowing you to take them as companions.",
+    "benefit_html": "You can use augury as a spell-like ability once per day.",
+    "benefit_text": "You can use augury as a spell-like ability once per day.",
+    "prerequisite_html": "<p>Spt 15, Follower of the T otem, orc or tauren or character level 8+.</p>",
+    "prerequisite_text": "Spt 15, Follower of the T otem, orc or tauren or character level 8+.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "skittering-totems-hpg",
+    "name": "Skittering Totems",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "Y our totems have the ability to move."
+    },
+    "type": "Totemic",
+    "description_html": "<p>Y our totems have the ability to move.</p>",
+    "description_text": "Y our totems have the ability to move.",
+    "benefit_html": "act on your turn, before you do. You command the totem which direction to move if you can see it, otherwise it does not move.",
+    "benefit_text": "act on your turn, before you do. You command the totem which direction to move if you can see it, otherwise it does not move.",
+    "prerequisite_html": "<p>T otem Throwing (see below), ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "T otem Throwing (see below), ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>T otems cannot move.</p>",
+    "normal_text": "T otems cannot move."
+  },
+  {
+    "slug": "snake-dancer-hpg",
+    "name": "Snake Dancer",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You know the ritualized snake dance of your tribe."
+    },
+    "type": "General",
+    "description_html": "<p>You know the ritualized snake dance of your tribe.</p>",
+    "description_text": "You know the ritualized snake dance of your tribe.",
+    "benefit_html": "Y our skill at the fast, flexible, sinuous moves of the snake dance grants you speed and sure footing in combat. You gain a +1 bonus on Tumble checks. You can try to tumble past or through enemies at full speed by accepting a -5 penalty on your Tumble check.",
+    "benefit_text": "Y our skill at the fast, flexible, sinuous moves of the snake dance grants you speed and sure footing in combat. You gain a +1 bonus on Tumble checks. You can try to tumble past or through enemies at full speed by accepting a -5 penalty on your Tumble check.",
+    "prerequisite_html": "<p>Perform (dance) 5 ranks, Tumble 5 ranks, troll.</p>",
+    "prerequisite_text": "Perform (dance) 5 ranks, Tumble 5 ranks, troll.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Accelerated tumbling imposes a -10 penalty on the T umble check.</p>",
+    "normal_text": "Accelerated tumbling imposes a -10 penalty on the T umble check."
+  },
+  {
+    "slug": "solid-totems-hpg",
+    "name": "Solid Totems",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "Y our totems are exceptionally resistant to damage."
+    },
+    "type": "Totemic",
+    "description_html": "<p>Y our totems are exceptionally resistant to damage.</p>",
+    "description_text": "Y our totems are exceptionally resistant to damage.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Ability to cast at least one totem spell. Be nefit: T otems you create have 1 additional point of hardness for every two caster levels and double their normal hit points. Thus, for example, a totem created by a 13th-level shaman would have hardness 11 and 52 hit points.</p>",
+    "prerequisite_text": "Ability to cast at least one totem spell. Be nefit: T otems you create have 1 additional point of hardness for every two caster levels and double their normal hit points. Thus, for example, a totem created by a 13th-level shaman would have hardness 11 and 52 hit points.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>T otems normally have hardness 5 and 2 hit points per caster level.</p>",
+    "normal_text": "T otems normally have hardness 5 and 2 hit points per caster level."
+  },
+  {
+    "slug": "speaker-of-the-earth-mother-hpg",
+    "name": "Speaker of the Earth Mother",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Through meditation and expert training, you have learned to speak with the Earth Mother."
+    },
+    "type": "General",
+    "description_html": "<p>Through meditation and expert training, you have learned to speak with the Earth Mother.</p>",
+    "description_text": "Through meditation and expert training, you have learned to speak with the Earth Mother.",
+    "benefit_html": "Once per day as a free action, you may channel the spirit of the Earth Mother . You gain a +8 sacred bonus on Strength checks and Strength-based ability checks; a +4 stability bonus to resist bull rush, overrun and trip attempts; and you gain damage reduction 5/adamantine. This transformation lasts for 1d4 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability .",
+    "benefit_text": "Once per day as a free action, you may channel the spirit of the Earth Mother . You gain a +8 sacred bonus on Strength checks and Strength-based ability checks; a +4 stability bonus to resist bull rush, overrun and trip attempts; and you gain damage reduction 5/adamantine. This transformation lasts for 1d4 rounds, +1 round per point of Spirit modifier (minimum 1 round). This is a supernatural ability .",
+    "prerequisite_html": "<p>Spt 17, either Speaker of the Seed or Speaker of the Sky (see below), and either Speaker of the Fang of Speaker of the Hoof (see below).</p>",
+    "prerequisite_text": "Spt 17, either Speaker of the Seed or Speaker of the Sky (see below), and either Speaker of the Fang of Speaker of the Hoof (see below).",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "speaker-of-the-fang-hpg",
+    "name": "Speaker of the Fang",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Through meditation and training, you have learned to speak with the spirits of predatory animals."
+    },
+    "type": "General",
+    "description_html": "<p>Through meditation and training, you have learned to speak with the spirits of predatory animals.</p>",
+    "description_text": "Through meditation and training, you have learned to speak with the spirits of predatory animals.",
+    "benefit_html": "You can tame vermin just as you can tame animals. You take a -4 penalty on your Handle Animal check to do so.",
+    "benefit_text": "You can tame vermin just as you can tame animals. You take a -4 penalty on your Handle Animal check to do so.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "totem-expansion-hpg",
+    "name": "Totem Expansion",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "You are adept at creating larger and more effective totems."
+    },
+    "type": "Totemic",
+    "description_html": "<p>You are adept at creating larger and more effective totems.</p>",
+    "description_text": "You are adept at creating larger and more effective totems.",
+    "benefit_html": "+10 feet.",
+    "benefit_text": "+10 feet.",
+    "prerequisite_html": "<p>Ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "Ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "totem-throwing-hpg",
+    "name": "Totem Throwing",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "from yourself."
+    },
+    "type": "Totemic",
+    "description_html": "<p>from yourself.</p>",
+    "description_text": "from yourself.",
+    "benefit_html": "When you cast a totem spell, you can throw the totem a short distance away. To do this, you target a specific grid intersection as though throwing a splash weapon (see World of Warcraft RPG, Chapter 12: Combat, \"Throw Splash Weapon\"). If the attack misses, the attack deviates like other splash weapons, but not more than 1 square. Thrown totems have a range increment of 5 feet.",
+    "benefit_text": "When you cast a totem spell, you can throw the totem a short distance away. To do this, you target a specific grid intersection as though throwing a splash weapon (see World of Warcraft RPG, Chapter 12: Combat, \"Throw Splash Weapon\"). If the attack misses, the attack deviates like other splash weapons, but not more than 1 square. Thrown totems have a range increment of 5 feet.",
+    "prerequisite_html": "<p>At least one other totemic feat, ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "At least one other totemic feat, ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>T otems may only be created at a grid intersection at one of the corners of your square.</p>",
+    "normal_text": "T otems may only be created at a grid intersection at one of the corners of your square."
+  },
+  {
+    "slug": "totemic-protection-hpg",
+    "name": "Totemic Protection",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Totemic",
+      "description_snippet": "You can protect your totems with a defensive spell applied at the time of casting."
+    },
+    "type": "Totemic",
+    "description_html": "<p>You can protect your totems with a defensive spell applied at the time of casting.</p>",
+    "description_text": "You can protect your totems with a defensive spell applied at the time of casting.",
+    "benefit_html": "When you cast a totem spell, you can simultaneously cast an abjuration or illusion spell on the totem. The defensive spell must be of a level equal to or less than the totem spell. Casting the spell takes as much time as casting the spell with the longest casting time. The defensive spell must function on objects, such as invisibility. When cast in this way, the defensive spell affects only the totem, even if it would normally affect multiple items or creatures, or an area. You use two spell slots (one per spell imbued in the totem). If the double casting is interrupted, you lose both slots.",
+    "benefit_text": "When you cast a totem spell, you can simultaneously cast an abjuration or illusion spell on the totem. The defensive spell must be of a level equal to or less than the totem spell. Casting the spell takes as much time as casting the spell with the longest casting time. The defensive spell must function on objects, such as invisibility. When cast in this way, the defensive spell affects only the totem, even if it would normally affect multiple items or creatures, or an area. You use two spell slots (one per spell imbued in the totem). If the double casting is interrupted, you lose both slots.",
+    "prerequisite_html": "<p>Caster level 3rd, at least one totemic feat and at least one metamagic feat, ability to cast at least one totem spell.</p>",
+    "prerequisite_text": "Caster level 3rd, at least one totemic feat and at least one metamagic feat, ability to cast at least one totem spell.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "twin-weapon-mastery-hpg",
+    "name": "Twin Weapon Mastery",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "battle axe, with which you have already taken the Weapon Focus feat. You have learned how to use that weapon in each hand with ease."
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>battle axe, with which you have already taken the Weapon Focus feat. You have learned how to use that weapon in each hand with ease.</p>",
+    "description_text": "battle axe, with which you have already taken the Weapon Focus feat. You have learned how to use that weapon in each hand with ease.",
+    "benefit_html": "When wielding your selected weapon in each hand, you may treat the off-hand weapon as a light weapon for the purposes of fighting with two weapons.",
+    "benefit_text": "When wielding your selected weapon in each hand, you may treat the off-hand weapon as a light weapon for the purposes of fighting with two weapons.",
+    "prerequisite_html": "<p>Agy 15, proficiency with selected weapon, T wo-Weapon Fighting, Weapon Focus with selected weapon.</p>",
+    "prerequisite_text": "Agy 15, proficiency with selected weapon, T wo-Weapon Fighting, Weapon Focus with selected weapon.",
+    "special_html": "<p>You may take this feat multiple times. Each time, it applies to a new type of weapon.</p>",
+    "special_text": "You may take this feat multiple times. Each time, it applies to a new type of weapon.",
+    "normal_html": "<p>You suffer a -4 penalty on attack rolls when wielding a one-handed weapon in each hand if you have the T wo-Weapon Fighting feat.</p>",
+    "normal_text": "You suffer a -4 penalty on attack rolls when wielding a one-handed weapon in each hand if you have the T wo-Weapon Fighting feat."
+  },
+  {
+    "slug": "undead-soul-hpg",
+    "name": "Undead Soul",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Your body is undead… and so is your soul, corrupted and changed to such a degree that it belongs to your new body now, rather than your old one."
+    },
+    "type": "General",
+    "description_html": "<p>Your body is undead… and so is your soul, corrupted and changed to such a degree that it belongs to your new body now, rather than your old one.</p>",
+    "description_text": "Your body is undead… and so is your soul, corrupted and changed to such a degree that it belongs to your new body now, rather than your old one.",
+    "benefit_html": "Raise dead and reincarnate work normally on you. If you are 1st level and subject to raise dead or a similar effect, you lose a point of Charisma instead of Stamina. Resurrection, true resurrection and similar effects restore you to your undead life rather than to the being you were before you became undead.",
+    "benefit_text": "Raise dead and reincarnate work normally on you. If you are 1st level and subject to raise dead or a similar effect, you lose a point of Charisma instead of Stamina. Resurrection, true resurrection and similar effects restore you to your undead life rather than to the being you were before you became undead.",
+    "prerequisite_html": "<p>You must be an undead creature.</p>",
+    "prerequisite_text": "You must be an undead creature.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "vision-quest-hpg",
+    "name": "Vision Quest",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You embarked on a vision quest and came to terms with your inner nature. You possess a core of strength now, a quiet understanding of your spirit and its place in the spirit world."
+    },
+    "type": "General",
+    "description_html": "<p>You embarked on a vision quest and came to terms with your inner nature. You possess a core of strength now, a quiet understanding of your spirit and its place in the spirit world.</p>",
+    "description_text": "You embarked on a vision quest and came to terms with your inner nature. You possess a core of strength now, a quiet understanding of your spirit and its place in the spirit world.",
+    "benefit_html": "You gain a +2 bonus on Concentration checks and a +1 sacred bonus on saves against enchantment spells.",
+    "benefit_text": "You gain a +2 bonus on Concentration checks and a +1 sacred bonus on saves against enchantment spells.",
+    "prerequisite_html": "<p>You must have successfully completed a vision quest (see Chapter 4: Magic and Faith, \"Faiths of the Horde,\" Spirit Guidance, Vision Quests).</p>",
+    "prerequisite_text": "You must have successfully completed a vision quest (see Chapter 4: Magic and Faith, \"Faiths of the Horde,\" Spirit Guidance, Vision Quests).",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  }
+]

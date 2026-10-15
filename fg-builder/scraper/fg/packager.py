@@ -40,6 +40,7 @@ def build_and_package_module(
     skip_no_detail: bool = True,
     *,
     spell_actions: bool = True,
+    module_name: str | None = None,
 ) -> BuildReport:
     """Build to a temp folder, zip contents, and write a .mod file."""
     from .builder import build_module
@@ -56,6 +57,7 @@ def build_and_package_module(
             author,
             skip_no_detail,
             spell_actions=spell_actions,
+            module_name=module_name,
         )
         if not package_module(staging, mod_path):
             raise RuntimeError(f"failed to package {mod_path}")

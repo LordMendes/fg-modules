@@ -1,0 +1,1822 @@
+[
+  {
+    "slug": "inscriber-mmm",
+    "name": "Inscriber",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 7,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "6",
+      "skill_points": "2",
+      "prestige_level": ""
+    },
+    "hit_die": "d6",
+    "skill_points": "2 + Int",
+    "class_skills": [
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null,
+        "ability": "Con"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Craft (trade skill)",
+        "slug": "craft-trade-skill",
+        "url": "/skills/craft-trade-skill",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Decipher Script",
+        "slug": "decipher-script",
+        "url": "/skills/decipher-script",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (all skills, taken individually)",
+        "slug": "knowledge-all-skills-taken-individually",
+        "url": "/skills/knowledge-all-skills-taken-individually",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Speak Language",
+        "slug": "speak-language",
+        "url": "/skills/speak-language",
+        "id": null,
+        "ability": null
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Spot",
+        "slug": "spot",
+        "url": "/skills/spot",
+        "id": null,
+        "ability": "Wis"
+      }
+    ],
+    "description_html": "<p>Inscriber is an arcanist path. It uses the arcanist hit die, class skills, base attack bonus, and saves, and adds the features below.</p><p>Inscribers are arcanists who have discovered the strange arts of rune-casting: a technique for channeling the arcane energy inherent in the world without the risk of arcane corruption. The inscriber is not a runemaster, for he pursues the arcane knowledge and spellcasting techniques of all arcanists; he seeks to add the powers of runes to his repertoire, as well. Runemasters look upon inscribers with some measure of hesitation, for they are proof that there is a connection between the \"pure\" arts of rune- casting and the more vulgar magics of mage, warlock and necromancer. In the meantime, inscribers seek out runemasters to teach them new runes, as well as written works that describe the</p><p><strong>Additional Class Skill:</strong> Spot (Spt).</p><p><strong>Arcana:</strong> Inscribers gain the following arcana abilities:</p><p><strong>Inscribe Runes:</strong> An inscriber has the ability to create and empower runes. Unlike the runemaster, he does not learn whole patterns; instead, an inscriber may prepare individual runes as though they were arcane spells. He keeps runes in his spellbook, just like other arcane spells. Like other arcanists, the inscriber gains one free spell of his specialty per level; the inscriber chooses these spells from the runes he knows. At the beginning of every day, when the inscriber prepares his spells, he may attune himself to a rune pattern from which he has prepared at least one rune (see Chapter 2: Enchantments, Runes and Brews, \"Rune Patterns\" for the benefits of attunement).</p><p><strong>Lesser Runic Mysteries:</strong> The arcanist can cast any 0, 1st or 2nd-level arcanist spell as a rune instead of a normal spell. When he prepares spells, he must make the choice to prepare each spell as a rune or as a spell. See the \" Arcane Spells as Runes\" sidebar for details.</p><p><strong>Runic Mysteries:</strong> The arcanist can cast any 3rd, 4th or 5th-level arcanist spell as a rune instead of a normal spell. When he prepares spells, he must make the choice to prepare each spell as a rune or as a spell. See the \" Arcane Spells as Runes\" sidebar for details.</p><p><strong>Runic Attunement:</strong> The inscriber gains Runic Attunement as a bonus feat. (This feat is found with other, new rune feats at the end of this chapter.)</p><p><strong>Greater Runic Mysteries:</strong> The arcanist can cast any 6th, 7th or 8th-level arcanist spell as a rune instead of a normal spell. When he prepares spells, he must make the choice to prepare each spell as a rune or as a spell. See the \" Arcane Spells as Runes\" sidebar for details.</p><p>Arcane Spells as Runes Inscribers learn, through the exploration of the runic mysteries, to cast certain arcanist spells as runes. This change has the following effects on such spells: • The spell must be empowered into a rune, as runes are. The inscriber does this by creating spontaneous, scribed or permanent runes (see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" for details). • The spell's components change. Runes do not have verbal components, and have somatic components only if the original spell had them. All runes have the material/focus component, even if the spell does not - however, if the original spell possesses a material or focus component, casting that spell as a rune changes the nature of that material or focus to the runes themselves (as with other runes). The only exception is with material components (but not focuses) with a gold piece cost; such components must still be supplied. • The spell's range remains the same, unless the inscriber casts it as a spontaneous rune, in which case the range is touch. • See Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" Destroying Runes for details on destroying runes. • The following arcanist spells become marks: 0-level: detect magic, read magic, resistance ; 1st-level: charm person, comprehend languages, disguise self, mana shield, protection from evil, shadow meld; 2nd-level: detect thoughts, invisibility, mirror image, reduce person*, resist energy, see invisibility, touch of idiocy ; 3rd-level: clairaudience/ clairvoyance, dispel magic (targeted), gaseous form, hold person, nondetection, suggestion, tongues ; 4th-level: charm monster, confusion, dimension door, dimensional anchor, geas (lesser), invisibility (greater), locate creature, resilient sphere, stoneskin; 5th-level: break enchantment, dismissal, dominate person, hold monster, sending, telepathic bond ; 6th-level: dispel magic (greater) (targeted), geas/quest, true seeing; 7th-level: insanity, scrying (greater), spell turning; 8th-level: sending, discern location, protection from spells. * See Chapter 3: Power Overwhelming. • The following arcanist spells become glyphs: 1st-level: identify; 3rd-level: nondetection; 5th-level: passwall; 6th-level: legend lore. • The following arcanist spells become sigils: 0-level: ghost sound, silent image ; 1st-level: alarm; 3rd-level: dispel magic (area), major image ; 4th-level: detect scrying, globe of invulnerability (lesser), phantasmal killer, reduce person (mass)*, solid fog ; 5th-level: persistent image, wall of force ; 6th-level: antimagic field, dispel magic (greater) (area), suggestion (mass); 7th-level: banishment, hold person (mass), invisibility (mass), plane shift; 8th-level: telekinetic sphere. * See Chapter 3: Power Overwhelming. • Arcanist spells not on the above lists cannot be cast as runes. Spells from other path lists cannot be turned into runes, either. The GM must determine what spells (if any) from the arcanist list that are not in the World of Warcraft RPG core rulebook may be turned into runes.</p>",
+    "description_text": "Inscriber is an arcanist path. It uses the arcanist hit die, class skills, base attack bonus, and saves, and adds the features below. Inscribers are arcanists who have discovered the strange arts of rune-casting: a technique for channeling the arcane energy inherent in the world without the risk of arcane corruption. The inscriber is not a runemaster, for he pursues the arcane knowledge and spellcasting techniques of all arcanists; he seeks to add the powers of runes to his repertoire, as well. Runemasters look upon inscribers with some measure of hesitation, for they are proof that there is a connection between the \"pure\" arts of rune- casting and the more vulgar magics of mage, warlock and necromancer. In the meantime, inscribers seek out runemasters to teach them new runes, as well as written works that describe the Additional Class Skill: Spot (Spt). Arcana: Inscribers gain the following arcana abilities: Inscribe Runes: An inscriber has the ability to create and empower runes. Unlike the runemaster, he does not learn whole patterns; instead, an inscriber may prepare individual runes as though they were arcane spells. He keeps runes in his spellbook, just like other arcane spells. Like other arcanists, the inscriber gains one free spell of his specialty per level; the inscriber chooses these spells from the runes he knows. At the beginning of every day, when the inscriber prepares his spells, he may attune himself to a rune pattern from which he has prepared at least one rune (see Chapter 2: Enchantments, Runes and Brews, \"Rune Patterns\" for the benefits of attunement). Lesser Runic Mysteries: The arcanist can cast any 0, 1st or 2nd-level arcanist spell as a rune instead of a normal spell. When he prepares spells, he must make the choice to prepare each spell as a rune or as a spell. See the \" Arcane Spells as Runes\" sidebar for details. Runic Mysteries: The arcanist can cast any 3rd, 4th or 5th-level arcanist spell as a rune instead of a normal spell. When he prepares spells, he must make the choice to prepare each spell as a rune or as a spell. See the \" Arcane Spells as Runes\" sidebar for details. Runic Attunement: The inscriber gains Runic Attunement as a bonus feat. (This feat is found with other, new rune feats at the end of this chapter.) Greater Runic Mysteries: The arcanist can cast any 6th, 7th or 8th-level arcanist spell as a rune instead of a normal spell. When he prepares spells, he must make the choice to prepare each spell as a rune or as a spell. See the \" Arcane Spells as Runes\" sidebar for details. Arcane Spells as Runes Inscribers learn, through the exploration of the runic mysteries, to cast certain arcanist spells as runes. This change has the following effects on such spells: • The spell must be empowered into a rune, as runes are. The inscriber does this by creating spontaneous, scribed or permanent runes (see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" for details). • The spell's components change. Runes do not have verbal components, and have somatic components only if the original spell had them. All runes have the material/focus component, even if the spell does not - however, if the original spell possesses a material or focus component, casting that spell as a rune changes the nature of that material or focus to the runes themselves (as with other runes). The only exception is with material components (but not focuses) with a gold piece cost; such components must still be supplied. • The spell's range remains the same, unless the inscriber casts it as a spontaneous rune, in which case the range is touch. • See Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" Destroying Runes for details on destroying runes. • The following arcanist spells become marks: 0-level: detect magic, read magic, resistance ; 1st-level: charm person, comprehend languages, disguise self, mana shield, protection from evil, shadow meld; 2nd-level: detect thoughts, invisibility, mirror image, reduce person*, resist energy, see invisibility, touch of idiocy ; 3rd-level: clairaudience/ clairvoyance, dispel magic (targeted), gaseous form, hold person, nondetection, suggestion, tongues ; 4th-level: charm monster, confusion, dimension door, dimensional anchor, geas (lesser), invisibility (greater), locate creature, resilient sphere, stoneskin; 5th-level: break enchantment, dismissal, dominate person, hold monster, sending, telepathic bond ; 6th-level: dispel magic (greater) (targeted), geas/quest, true seeing; 7th-level: insanity, scrying (greater), spell turning; 8th-level: sending, discern location, protection from spells. * See Chapter 3: Power Overwhelming. • The following arcanist spells become glyphs: 1st-level: identify; 3rd-level: nondetection; 5th-level: passwall; 6th-level: legend lore. • The following arcanist spells become sigils: 0-level: ghost sound, silent image ; 1st-level: alarm; 3rd-level: dispel magic (area), major image ; 4th-level: detect scrying, globe of invulnerability (lesser), phantasmal killer, reduce person (mass)*, solid fog ; 5th-level: persistent image, wall of force ; 6th-level: antimagic field, dispel magic (greater) (area), suggestion (mass); 7th-level: banishment, hold person (mass), invisibility (mass), plane shift; 8th-level: telekinetic sphere. * See Chapter 3: Power Overwhelming. • Arcanist spells not on the above lists cannot be cast as runes. Spells from other path lists cannot be turned into runes, either. The GM must determine what spells (if any) from the arcanist list that are not in the World of Warcraft RPG core rulebook may be turned into runes.",
+    "requirements_html": null,
+    "requirements_text": null,
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+0",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Scribe Scroll, arcana, Inscribe Runes"
+      },
+      {
+        "level": 2,
+        "bab": "+1",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+3",
+        "special": "-"
+      },
+      {
+        "level": 3,
+        "bab": "+1",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+3",
+        "special": "-"
+      },
+      {
+        "level": 4,
+        "bab": "+2",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Arcana, Lesser Runic Mysteries"
+      },
+      {
+        "level": 5,
+        "bab": "+2",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 6,
+        "bab": "+3",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+5",
+        "special": "-"
+      },
+      {
+        "level": 7,
+        "bab": "+3",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+5",
+        "special": "-"
+      },
+      {
+        "level": 8,
+        "bab": "+4",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+6",
+        "special": "Arcana, Runic Mysteries"
+      },
+      {
+        "level": 9,
+        "bab": "+4",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+6",
+        "special": "-"
+      },
+      {
+        "level": 10,
+        "bab": "+5",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+7",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 11,
+        "bab": "+5",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+7",
+        "special": "-"
+      },
+      {
+        "level": 12,
+        "bab": "+6/+1",
+        "fort": "+4",
+        "ref": "+4",
+        "will": "+8",
+        "special": "Arcana, Runic Attunement"
+      },
+      {
+        "level": 13,
+        "bab": "+6/+1",
+        "fort": "+4",
+        "ref": "+4",
+        "will": "+8",
+        "special": "-"
+      },
+      {
+        "level": 14,
+        "bab": "+7/+2",
+        "fort": "+4",
+        "ref": "+4",
+        "will": "+9",
+        "special": "-"
+      },
+      {
+        "level": 15,
+        "bab": "+7/+2",
+        "fort": "+5",
+        "ref": "+5",
+        "will": "+9",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 16,
+        "bab": "+8/+3",
+        "fort": "+5",
+        "ref": "+5",
+        "will": "+10",
+        "special": "Arcana, Greater Runic Mysteries"
+      },
+      {
+        "level": 17,
+        "bab": "+8/+3",
+        "fort": "+5",
+        "ref": "+5",
+        "will": "+10",
+        "special": "-"
+      },
+      {
+        "level": 18,
+        "bab": "+9/+4",
+        "fort": "+6",
+        "ref": "+6",
+        "will": "+11",
+        "special": "-"
+      },
+      {
+        "level": 19,
+        "bab": "+9/+4",
+        "fort": "+6",
+        "ref": "+6",
+        "will": "+11",
+        "special": "-"
+      },
+      {
+        "level": 20,
+        "bab": "+10/+5",
+        "fort": "+6",
+        "ref": "+6",
+        "will": "+12",
+        "special": "Bonus feat"
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1</td><td>+0</td><td>+0</td><td>+0</td><td>+2</td><td>Scribe Scroll, arcana, Inscribe Runes</td></tr><tr><td>2</td><td>+1</td><td>+0</td><td>+0</td><td>+3</td><td>-</td></tr><tr><td>3</td><td>+1</td><td>+1</td><td>+1</td><td>+3</td><td>-</td></tr><tr><td>4</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td><td>Arcana, Lesser Runic Mysteries</td></tr><tr><td>5</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td><td>Bonus feat</td></tr><tr><td>6</td><td>+3</td><td>+2</td><td>+2</td><td>+5</td><td>-</td></tr><tr><td>7</td><td>+3</td><td>+2</td><td>+2</td><td>+5</td><td>-</td></tr><tr><td>8</td><td>+4</td><td>+2</td><td>+2</td><td>+6</td><td>Arcana, Runic Mysteries</td></tr><tr><td>9</td><td>+4</td><td>+3</td><td>+3</td><td>+6</td><td>-</td></tr><tr><td>10</td><td>+5</td><td>+3</td><td>+3</td><td>+7</td><td>Bonus feat</td></tr><tr><td>11</td><td>+5</td><td>+3</td><td>+3</td><td>+7</td><td>-</td></tr><tr><td>12</td><td>+6/+1</td><td>+4</td><td>+4</td><td>+8</td><td>Arcana, Runic Attunement</td></tr><tr><td>13</td><td>+6/+1</td><td>+4</td><td>+4</td><td>+8</td><td>-</td></tr><tr><td>14</td><td>+7/+2</td><td>+4</td><td>+4</td><td>+9</td><td>-</td></tr><tr><td>15</td><td>+7/+2</td><td>+5</td><td>+5</td><td>+9</td><td>Bonus feat</td></tr><tr><td>16</td><td>+8/+3</td><td>+5</td><td>+5</td><td>+10</td><td>Arcana, Greater Runic Mysteries</td></tr><tr><td>17</td><td>+8/+3</td><td>+5</td><td>+5</td><td>+10</td><td>-</td></tr><tr><td>18</td><td>+9/+4</td><td>+6</td><td>+6</td><td>+11</td><td>-</td></tr><tr><td>19</td><td>+9/+4</td><td>+6</td><td>+6</td><td>+11</td><td>-</td></tr><tr><td>20</td><td>+10/+5</td><td>+6</td><td>+6</td><td>+12</td><td>Bonus feat</td></tr></tbody></table>",
+    "advancement_text": "1 +0 +0 +0 +2 Scribe Scroll, arcana, Inscribe Runes 2 +1 +0 +0 +3 - 3 +1 +1 +1 +3 - 4 +2 +1 +1 +4 Arcana, Lesser Runic Mysteries 5 +2 +1 +1 +4 Bonus feat 6 +3 +2 +2 +5 - 7 +3 +2 +2 +5 - 8 +4 +2 +2 +6 Arcana, Runic Mysteries 9 +4 +3 +3 +6 - 10 +5 +3 +3 +7 Bonus feat 11 +5 +3 +3 +7 - 12 +6/+1 +4 +4 +8 Arcana, Runic Attunement 13 +6/+1 +4 +4 +8 - 14 +7/+2 +4 +4 +9 - 15 +7/+2 +5 +5 +9 Bonus feat 16 +8/+3 +5 +5 +10 Arcana, Greater Runic Mysteries 17 +8/+3 +5 +5 +10 - 18 +9/+4 +6 +6 +11 - 19 +9/+4 +6 +6 +11 - 20 +10/+5 +6 +6 +12 Bonus feat"
+  },
+  {
+    "slug": "witch-doctor-mmm",
+    "name": "Witch Doctor",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 9,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": ""
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [
+      {
+        "name": "Bluff",
+        "slug": "bluff",
+        "url": "/skills/bluff",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null,
+        "ability": "Con"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Craft (trade skill)",
+        "slug": "craft-trade-skill",
+        "url": "/skills/craft-trade-skill",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Diplomacy",
+        "slug": "diplomacy",
+        "url": "/skills/diplomacy",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Heal",
+        "slug": "heal",
+        "url": "/skills/heal",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (religion)",
+        "slug": "knowledge-religion",
+        "url": "/skills/knowledge-religion",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (the planes)",
+        "slug": "knowledge-the-planes",
+        "url": "/skills/knowledge-the-planes",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Listen",
+        "slug": "listen",
+        "url": "/skills/listen",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Speak Language",
+        "slug": "speak-language",
+        "url": "/skills/speak-language",
+        "id": null,
+        "ability": null
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Intimidate",
+        "slug": "intimidate",
+        "url": "/skills/intimidate",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Perform",
+        "slug": "perform",
+        "url": "/skills/perform",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Survival",
+        "slug": "survival",
+        "url": "/skills/survival",
+        "id": null,
+        "ability": "Wis"
+      }
+    ],
+    "description_html": "<p>Witch Doctor is a healer path. It uses the healer hit die, class skills, base attack bonus, and saves, and adds the features below.</p><p>The witch doctor is an alchemical master, skilled at not simply brewing potions and alchemical goods, but at awakening the spirits of the ingredients that go into her goods. A witch doctor at work can be unsettling, for she croons and chants to the herbs and animal parts that go into her brews, shaking a rattle to awaken them from their slumber, and sometimes even bursting into dance to appease them and make them favor her. Races: The arts of the witch doctor originated with the trolls, and they make up the vast majority of those who practice these arts. Some of these witch doctors have agreed to take on the occasional non-troll apprentice, usually from among the orcs. Alignment: The powers</p><p><strong>Additional Class Skills:</strong> Intimidate (Cha), Perform (Cha), and Survival (Spt). Witch doctors receive a +2 bonus on Craft (alchemy) and Profession (herbalist) checks. Spontaneous Casting: Good-aligned witch doctors can spontaneously cast cure spells, while evil- aligned witch doctors can spontaneously cast inflict spells. Neutral witch doctors must choose either cure or inflict spells at 1st level (those who turn undead cast cure spells, those who rebuke undead cast inflict spells), and the choice cannot be reversed later.</p><p><strong>Turn or Rebuke:</strong> Good-aligned witch doctors turn or destroy undead, while evil-aligned witch doctors rebuke, command or bolster undead. Neutral witch doctors must choose to turn or rebuke undead, and the choice cannot be reversed later; this choice affects whether they spontaneously cast cure or inflict spells.</p><p><strong>Domains:</strong> Witch doctors have access to the Healing and Spirits domains.</p><p><strong>Inspirations:</strong> Witch doctors gain the following inspiration abilities:</p><p><strong>Witch Doctor's Brews:</strong> The witch doctor gains Journeyman Alchemist as a bonus feat. Additionally, she gains access to basic mojo techniques. (See the \"Mojo\" sidebar for details.)</p><p><strong>Juju Potion:</strong> The witch doctor gains the ability to brew potions that grant the benefits of metamagic feats. These are potions created with the Brew Potion feat, and the witch doctor must possess the metamagic feat to be instilled into the potion or must HEALER PATH: WITCH DOCTOR have the help of someone who does. Drinking the potion means that the next spell the imbiber casts has the effect of that metamagic feat, with no increase in spell slot level. A juju potion's effects last for one hour or until the drinker casts a spell. Juju potions radiate magic of no specific school; the aura strength depends on the feat, as shown below. The cost for creating such a potion is based on the number of spell levels the feat in question increases a spell. Spell Levels GP Cost XP Cost Aura Strength 1 100 5 Faint 2 200 10 Faint 3 400 20 Moderate 4 800 40 Moderate A single juju potion can be brewed with multiple feats attached, but the gold piece (gp) and experience point (XP) cost of every feat after the first is doubled when determining the final cost.</p><p><strong>Mojo:</strong> The witch doctor gains access to the intermediate mojo techniques, though she must still meet the prerequisites to use them. (See the \"Mojo\" sidebar for details.)</p><p><strong>Potion Master:</strong> The witch doctor reduces the gp and XP costs to create potions and alchemical items by 25%. This discount is applied after the final base price for the brew (including mojo) is figured. For example, a witch doctor crafting a potion of bloodlust (market price 750 gp) normally pays 375 gp and 30 XP to create it. A witch doctor with the potion master inspiration reduces this cost to 282 gp and 23 XP .</p><p><strong>Big Mojo:</strong> The witch doctor gains access to advanced mojo techniques, though she must still meet the prerequisites to use them. (See the \"Mojo\" sidebar for details.)</p><p>Witch Doctor Spell List The witch doctor spell list is identical to the shaman spell list. Mojo Mojo is a set of specialized techniques for brewing potions and alchemical compounds. It is not simply knowledge that allows the creation of mojo - the witch doctor awakens the spirits of her ingredients, encouraging them to unleash their true power in the creation of the concoction. There are three types of mojo: basic, intermediate and advanced. Each type has two creation statistics - an increase in cost (applied to both potions and alchemical brews; this increase affects the base price of the item, and therefore increases a potion's XP cost as well) and a DC increase (for the purpose of creating alchemical brews). Note that it is possible for a skilled witch doctor to add multiple mojo techniques to a given concoction. In order to do so, however, she must possess intermediate mojo to combine two mojo techniques in a single brew, and advanced mojo for three or more. Gold piece costs for these are simply added together; percentage increases are applied after other costs and one at a time to the base cost, with the lowest percentage applied first, then the second to the resultant cost, and so forth. For example, an 8th-level witch doctor with intermediate mojo is crafting a potion of bloodlust with berserker mojo and bambe mojo. The potion's base price is 750 gp. Adding berserker mojo increases this price by 200, making in 950 gp. Bambe mojo increases the cost by 50%, boosting it to 1,425 gp. To create the potion, the witch doctor pays half this amount in raw materials (712 gp and 5 sp) and 1/25 this amount in XP (57 XP). The end result is two potions (thanks to bambe mojo) that grant their imbiber the effects of bloodlust and the berserker mojo benefits. Basic Mojo • Berserker Mojo: The witch doctor can add this mojo to any potion or alchemical brew that grants bonuses to a physical ability (Strength, Agility or Stamina). While the potion is active, the first time the character enters combat, he enters a rage (identical to that of a barbarian; see WoW RPG, Chapter 3: Classes). This effect happens only once, even if the character enters combat multiple times while under the effect of this brew. Price: +200 gp; DC: +5. • Clay Mojo: Oils (both magic and alchemical) can be prepared with the clay mojo, imbedding the oils in a special clay that includes a variety of strange herbs. This clay can coat a weapon, and the oil activates only when the clay is moistened with blood or ichor. Such a clay is tough and hard to scrape away when dry; generally speaking, only the touch of blood and the subsequent activation of the oil's properties cause it to scrape away. The clay may be activated anytime within a week of its application; after that point, it loses its potency. Price: +100 gp; DC: +3.</p>",
+    "description_text": "Witch Doctor is a healer path. It uses the healer hit die, class skills, base attack bonus, and saves, and adds the features below. The witch doctor is an alchemical master, skilled at not simply brewing potions and alchemical goods, but at awakening the spirits of the ingredients that go into her goods. A witch doctor at work can be unsettling, for she croons and chants to the herbs and animal parts that go into her brews, shaking a rattle to awaken them from their slumber, and sometimes even bursting into dance to appease them and make them favor her. Races: The arts of the witch doctor originated with the trolls, and they make up the vast majority of those who practice these arts. Some of these witch doctors have agreed to take on the occasional non-troll apprentice, usually from among the orcs. Alignment: The powers Additional Class Skills: Intimidate (Cha), Perform (Cha), and Survival (Spt). Witch doctors receive a +2 bonus on Craft (alchemy) and Profession (herbalist) checks. Spontaneous Casting: Good-aligned witch doctors can spontaneously cast cure spells, while evil- aligned witch doctors can spontaneously cast inflict spells. Neutral witch doctors must choose either cure or inflict spells at 1st level (those who turn undead cast cure spells, those who rebuke undead cast inflict spells), and the choice cannot be reversed later. Turn or Rebuke: Good-aligned witch doctors turn or destroy undead, while evil-aligned witch doctors rebuke, command or bolster undead. Neutral witch doctors must choose to turn or rebuke undead, and the choice cannot be reversed later; this choice affects whether they spontaneously cast cure or inflict spells. Domains: Witch doctors have access to the Healing and Spirits domains. Inspirations: Witch doctors gain the following inspiration abilities: Witch Doctor's Brews: The witch doctor gains Journeyman Alchemist as a bonus feat. Additionally, she gains access to basic mojo techniques. (See the \"Mojo\" sidebar for details.) Juju Potion: The witch doctor gains the ability to brew potions that grant the benefits of metamagic feats. These are potions created with the Brew Potion feat, and the witch doctor must possess the metamagic feat to be instilled into the potion or must HEALER PATH: WITCH DOCTOR have the help of someone who does. Drinking the potion means that the next spell the imbiber casts has the effect of that metamagic feat, with no increase in spell slot level. A juju potion's effects last for one hour or until the drinker casts a spell. Juju potions radiate magic of no specific school; the aura strength depends on the feat, as shown below. The cost for creating such a potion is based on the number of spell levels the feat in question increases a spell. Spell Levels GP Cost XP Cost Aura Strength 1 100 5 Faint 2 200 10 Faint 3 400 20 Moderate 4 800 40 Moderate A single juju potion can be brewed with multiple feats attached, but the gold piece (gp) and experience point (XP) cost of every feat after the first is doubled when determining the final cost. Mojo: The witch doctor gains access to the intermediate mojo techniques, though she must still meet the prerequisites to use them. (See the \"Mojo\" sidebar for details.) Potion Master: The witch doctor reduces the gp and XP costs to create potions and alchemical items by 25%. This discount is applied after the final base price for the brew (including mojo) is figured. For example, a witch doctor crafting a potion of bloodlust (market price 750 gp) normally pays 375 gp and 30 XP to create it. A witch doctor with the potion master inspiration reduces this cost to 282 gp and 23 XP . Big Mojo: The witch doctor gains access to advanced mojo techniques, though she must still meet the prerequisites to use them. (See the \"Mojo\" sidebar for details.) Witch Doctor Spell List The witch doctor spell list is identical to the shaman spell list. Mojo Mojo is a set of specialized techniques for brewing potions and alchemical compounds. It is not simply knowledge that allows the creation of mojo - the witch doctor awakens the spirits of her ingredients, encouraging them to unleash their true power in the creation of the concoction. There are three types of mojo: basic, intermediate and advanced. Each type has two creation statistics - an increase in cost (applied to both potions and alchemical brews; this increase affects the base price of the item, and therefore increases a potion's XP cost as well) and a DC increase (for the purpose of creating alchemical brews). Note that it is possible for a skilled witch doctor to add multiple mojo techniques to a given concoction. In order to do so, however, she must possess intermediate mojo to combine two mojo techniques in a single brew, and advanced mojo for three or more. Gold piece costs for these are simply added together; percentage increases are applied after other costs and one at a time to the base cost, with the lowest percentage applied first, then the second to the resultant cost, and so forth. For example, an 8th-level witch doctor with intermediate mojo is crafting a potion of bloodlust with berserker mojo and bambe mojo. The potion's base price is 750 gp. Adding berserker mojo increases this price by 200, making in 950 gp. Bambe mojo increases the cost by 50%, boosting it to 1,425 gp. To create the potion, the witch doctor pays half this amount in raw materials (712 gp and 5 sp) and 1/25 this amount in XP (57 XP). The end result is two potions (thanks to bambe mojo) that grant their imbiber the effects of bloodlust and the berserker mojo benefits. Basic Mojo • Berserker Mojo: The witch doctor can add this mojo to any potion or alchemical brew that grants bonuses to a physical ability (Strength, Agility or Stamina). While the potion is active, the first time the character enters combat, he enters a rage (identical to that of a barbarian; see WoW RPG, Chapter 3: Classes). This effect happens only once, even if the character enters combat multiple times while under the effect of this brew. Price: +200 gp; DC: +5. • Clay Mojo: Oils (both magic and alchemical) can be prepared with the clay mojo, imbedding the oils in a special clay that includes a variety of strange herbs. This clay can coat a weapon, and the oil activates only when the clay is moistened with blood or ichor. Such a clay is tough and hard to scrape away when dry; generally speaking, only the touch of blood and the subsequent activation of the oil's properties cause it to scrape away. The clay may be activated anytime within a week of its application; after that point, it loses its potency. Price: +100 gp; DC: +3.",
+    "requirements_html": null,
+    "requirements_text": null,
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+0",
+        "fort": "+2",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Brew Potion, inspiration, Witch Doctor's Brews"
+      },
+      {
+        "level": 2,
+        "bab": "+1",
+        "fort": "+3",
+        "ref": "+0",
+        "will": "+3",
+        "special": "-"
+      },
+      {
+        "level": 3,
+        "bab": "+2",
+        "fort": "+3",
+        "ref": "+1",
+        "will": "+3",
+        "special": "-"
+      },
+      {
+        "level": 4,
+        "bab": "+3",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Inspiration, Juju Potion"
+      },
+      {
+        "level": 5,
+        "bab": "+3",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 6,
+        "bab": "+4",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+5",
+        "special": "-"
+      },
+      {
+        "level": 7,
+        "bab": "+5",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+5",
+        "special": "-"
+      },
+      {
+        "level": 8,
+        "bab": "+6/+1",
+        "fort": "+6",
+        "ref": "+2",
+        "will": "+6",
+        "special": "Inspiration, Mojo"
+      },
+      {
+        "level": 9,
+        "bab": "+6/+1",
+        "fort": "+6",
+        "ref": "+3",
+        "will": "+6",
+        "special": "-"
+      },
+      {
+        "level": 10,
+        "bab": "+7/+2",
+        "fort": "+7",
+        "ref": "+3",
+        "will": "+7",
+        "special": "Bonus feat, first domain (greater)"
+      },
+      {
+        "level": 11,
+        "bab": "+8/+3",
+        "fort": "+7",
+        "ref": "+3",
+        "will": "+7",
+        "special": "-"
+      },
+      {
+        "level": 12,
+        "bab": "+9/+4",
+        "fort": "+8",
+        "ref": "+4",
+        "will": "+8",
+        "special": "Inspiration, Potion Master"
+      },
+      {
+        "level": 13,
+        "bab": "+9/+4",
+        "fort": "+8",
+        "ref": "+4",
+        "will": "+8",
+        "special": "-"
+      },
+      {
+        "level": 14,
+        "bab": "+10/+5",
+        "fort": "+9",
+        "ref": "+4",
+        "will": "+9",
+        "special": "-"
+      },
+      {
+        "level": 15,
+        "bab": "+11/+6/+1",
+        "fort": "+9",
+        "ref": "+5",
+        "will": "+9",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 16,
+        "bab": "+12/+7/+2",
+        "fort": "+10",
+        "ref": "+5",
+        "will": "+10",
+        "special": "Inspiration, Big Mojo"
+      },
+      {
+        "level": 17,
+        "bab": "+12/+7/+2",
+        "fort": "+10",
+        "ref": "+5",
+        "will": "+10",
+        "special": "-"
+      },
+      {
+        "level": 18,
+        "bab": "+13/+8/+3",
+        "fort": "+11",
+        "ref": "+6",
+        "will": "+11",
+        "special": "-"
+      },
+      {
+        "level": 19,
+        "bab": "+14/+9/+4",
+        "fort": "+11",
+        "ref": "+6",
+        "will": "+11",
+        "special": "-"
+      },
+      {
+        "level": 20,
+        "bab": "+15/+10/+5",
+        "fort": "+12",
+        "ref": "+6",
+        "will": "+12",
+        "special": "Bonus feat, second domain (greater)"
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Brew Potion, inspiration, Witch Doctor's Brews</td></tr><tr><td>2</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>-</td></tr><tr><td>3</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>-</td></tr><tr><td>4</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Inspiration, Juju Potion</td></tr><tr><td>5</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Bonus feat</td></tr><tr><td>6</td><td>+4</td><td>+5</td><td>+2</td><td>+5</td><td>-</td></tr><tr><td>7</td><td>+5</td><td>+5</td><td>+2</td><td>+5</td><td>-</td></tr><tr><td>8</td><td>+6/+1</td><td>+6</td><td>+2</td><td>+6</td><td>Inspiration, Mojo</td></tr><tr><td>9</td><td>+6/+1</td><td>+6</td><td>+3</td><td>+6</td><td>-</td></tr><tr><td>10</td><td>+7/+2</td><td>+7</td><td>+3</td><td>+7</td><td>Bonus feat, first domain (greater)</td></tr><tr><td>11</td><td>+8/+3</td><td>+7</td><td>+3</td><td>+7</td><td>-</td></tr><tr><td>12</td><td>+9/+4</td><td>+8</td><td>+4</td><td>+8</td><td>Inspiration, Potion Master</td></tr><tr><td>13</td><td>+9/+4</td><td>+8</td><td>+4</td><td>+8</td><td>-</td></tr><tr><td>14</td><td>+10/+5</td><td>+9</td><td>+4</td><td>+9</td><td>-</td></tr><tr><td>15</td><td>+11/+6/+1</td><td>+9</td><td>+5</td><td>+9</td><td>Bonus feat</td></tr><tr><td>16</td><td>+12/+7/+2</td><td>+10</td><td>+5</td><td>+10</td><td>Inspiration, Big Mojo</td></tr><tr><td>17</td><td>+12/+7/+2</td><td>+10</td><td>+5</td><td>+10</td><td>-</td></tr><tr><td>18</td><td>+13/+8/+3</td><td>+11</td><td>+6</td><td>+11</td><td>-</td></tr><tr><td>19</td><td>+14/+9/+4</td><td>+11</td><td>+6</td><td>+11</td><td>-</td></tr><tr><td>20</td><td>+15/+10/+5</td><td>+12</td><td>+6</td><td>+12</td><td>Bonus feat, second domain (greater)</td></tr></tbody></table>",
+    "advancement_text": "1 +0 +2 +0 +2 Brew Potion, inspiration, Witch Doctor's Brews 2 +1 +3 +0 +3 - 3 +2 +3 +1 +3 - 4 +3 +4 +1 +4 Inspiration, Juju Potion 5 +3 +4 +1 +4 Bonus feat 6 +4 +5 +2 +5 - 7 +5 +5 +2 +5 - 8 +6/+1 +6 +2 +6 Inspiration, Mojo 9 +6/+1 +6 +3 +6 - 10 +7/+2 +7 +3 +7 Bonus feat, first domain (greater) 11 +8/+3 +7 +3 +7 - 12 +9/+4 +8 +4 +8 Inspiration, Potion Master 13 +9/+4 +8 +4 +8 - 14 +10/+5 +9 +4 +9 - 15 +11/+6/+1 +9 +5 +9 Bonus feat 16 +12/+7/+2 +10 +5 +10 Inspiration, Big Mojo 17 +12/+7/+2 +10 +5 +10 - 18 +13/+8/+3 +11 +6 +11 - 19 +14/+9/+4 +11 +6 +11 - 20 +15/+10/+5 +12 +6 +12 Bonus feat, second domain (greater)"
+  },
+  {
+    "slug": "runemaster-mmm",
+    "name": "Runemaster",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 11,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "8",
+      "skill_points": "4",
+      "prestige_level": ""
+    },
+    "hit_die": "d8",
+    "skill_points": "4 + Int",
+    "class_skills": [
+      {
+        "name": "Balance",
+        "slug": "balance",
+        "url": "/skills/balance",
+        "id": null,
+        "ability": "Dex"
+      },
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null,
+        "ability": "Con"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Decipher Script",
+        "slug": "decipher-script",
+        "url": "/skills/decipher-script",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Jump",
+        "slug": "jump",
+        "url": "/skills/jump",
+        "id": null,
+        "ability": "Str"
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (nature)",
+        "slug": "knowledge-nature",
+        "url": "/skills/knowledge-nature",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Search",
+        "slug": "search",
+        "url": "/skills/search",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Survival",
+        "slug": "survival",
+        "url": "/skills/survival",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Spot",
+        "slug": "spot",
+        "url": "/skills/spot",
+        "id": null,
+        "ability": "Wis"
+      }
+    ],
+    "description_html": "<p>The runemaster is a mystic who sees the power and importance of ley lines. Moreover, those who study runes understand that these are not simply symbols of power - they are power. The runemaster seeks to become one with the land, but not in the fashion of druids. Rather, the runemaster desires to become a microcosm of the land, seeking to overlay his body with runes in the same fashion that the land itself is overlaid with patterns of ley lines. Most runemasters are heavily tattooed with runic patterns - not simply the unique ones that form the basis for rune families, but the so-called \"simple runes\" as well. Simple runes mimic patterns of ley energy that appear, again and again, in the</p><p><strong>Weapon and Armor Proficiency:</strong> Runemasters are proficient with simple weapons, but not with any type of armor or shield. Armor of any type interferes with a runemaster's movements, which can cause his empowerments with somatic components to fail. Funds: 2d4 x 10 gp. Runic Magic: A runemaster has the ability to scribe and empower runes, as described in \"The Runic Art\" section of These runes are drawn from the rune pattern lists also found in Chapter 2. A runemaster does not prepare spells the way other arcane spellcasters do. Rather, a runemaster has a certain number of rune patterns that he simply knows, and he may empower any rune within those patterns by expending the appropriate level rune slot. A beginning runemaster knows three rune patterns. To scribe and empower a rune, the runemaster must have a Spirit score equal to at least 10 + the rune level. The DC for a saving throw against a runemaster's rune is 10 + the rune level + the runemaster's Spirit modifier. Like other spellcasters, a runemaster can empower only a certain number of runes of each rune level per day. (Empowering a rune is much like casting a spell.) His base daily rune slot allotment is given on Table 1-2: Runemaster Rune Slots Per Day. In addition, he receives bonus rune slots per day if he has a high Spirit score, just as though they were spell slots. To renew his runes, the runemaster must rest for 8 hours and then meditate for a number of minutes equal to the total rune slots to be regained. During this time, a runemaster may change his attunement to a rune pattern by spending an additional 10 minutes per pattern attunement changed. (See below.) Enruned Fists: The runemaster bears simple runes (see below) on his knuckles. Medium runemasters deal 1d6 points of nonlethal damage with their unarmed strikes, while Small runemasters deal 1d4 points of nonlethal damage. (These runes do not count against the runemaster's allotment of simple runes given below.)</p><p><strong>Runic Attunement (Ex):</strong> A runemaster is capable of attuning himself to a single rune pattern that he knows, gaining special benefits and powers for doing so, as described under each rune pattern in Chapter 2. After he has rested and recovered rune slots, a runemaster may change the rune pattern to which he is attuned.</p><p><strong>Simple Rune (Ex):</strong> The runes that make up the runic patterns are powerful and unique, based upon patterns of ley-line energy found nowhere else in all of Azeroth. These are not the only such patterns in nature, however. There are patterns that are not unique, but are found over and over in certain dynamic situations in nature. These repeating patterns are the basis for simple runes: sets of runes that only runemasters may use. Simple runes are tattooed to the skin of the runemaster. It isn't enough that the pattern be there - rather, the runemaster must understand how his own energy is like that of the ley line energy of the world around him, so that he can empower the pattern instinctively. Simple runes flicker with suppressed energy until the runemaster needs their power, then they blaze with brilliant potency. Characters can detect simple runes just as they can other runes (see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" Detecting Runes). Simple runes radiate faint magic of no specific school. A runemaster begins with a single simple rune. As his understanding of the runes grows, he can add others. At 4th level and every three levels thereafter (7th, 10th, 13th, 16th and 19th level), the runemaster gains another simple rune. He must spend one hour per simple rune he already has, including the new one, in a tattooing ritual to gain the new runes (thus the ritual to gain his fourth simple rune takes 4 hours). Some of the runes have prerequisites, such as other simple runes or level requirements. All simple runes grant extraordinary abilities. • Rune of Flowing Water: The pattern of swift water flowing over a streambed, the rune of flowing water speeds the movements of the runemaster. When taking the full attack action, he may make an extra unarmed attack at his highest base attack bonus, but all of his attacks that round take a -2 penalty. • Rune of Glowing Coals: The pattern that heated coals make in the air above them, the rune of glowing coals grants the runemaster +1 bonus on damage rolls with his unarmed attacks. This rune may be taken more than once, and its effects stack. ≠• Rune of Leaping Sparks: The pattern left in the air by the passage of sparks from a fire, the rune of leaping sparks lightens the body and aids the jumps of a runemaster, granting him a +10 bonus on Jump checks. In addition, his height no longer limits his vertical distance. • Rune of the Mangroves: The pattern of mangrove roots in brackish swamp water, the rune of the mangroves grants the runemaster immunity to non-magical poisons and diseases. Prerequisite: 5th level. • Rune of the Oaks: The pattern of rings that develop within the trunk of an oak as it ages, the rune of the oaks grants the runemaster a +1 natural armor bonus to AC. This rune may be taken more than once, and its effects stack. • Rune of Perfect Steel: The pattern that the energy flowing through perfectly-crafted steel creates, the rune of perfect steel is tattooed to the back of a runemaster's hands, allowing him to deal lethal or nonlethal damage with his unarmed attacks without penalty. (He makes the choice each time he attacks.) • Rune of Pounding Surf: The pattern of the eternal waves pounding the shore, the rune of pounding surf allows a runemaster attacking with the rune of flowing water to make two additional attacks, rather than one. Prerequisites: 11th level, rune of flowing water. • Rune of Raging Flames: The pattern flame leaves in the wake of grasslands fire, the rune of raging flames grants the runemaster +10 feet to his base land speed. This rune may be taken more than once, and its effects stack. • Rune of Sighing Winds: The pattern of winds through the branches of trees, the rune of sighing winds grants the runemaster a +1 dodge bonus to AC. This bonus is lost if the runemaster is denied his Agility bonus to AC. This rune may be taken up to three times; each time it is taken, the bonus doubles (to +2 the second time it is taken, and +4 the third time). • Rune of Starlight: The pattern that results from heavy starlight upon rock, the rune of starlight allows the runemaster to foresee those attacks that are aimed at him, allowing him to add his Spirit bonus to his AC, as long as he is unencumbered and unarmored. These bonuses apply even against touch attacks, or when the runemaster is caught flat-footed. He loses this bonus when immobilized or helpless, when he wears any armor, when he carries a shield or when he carries a medium or heavy load. • Rune of Thundering Waterfalls: The pattern of swift water over a cliff, the rune of thundering waterfalls reduces the penalty on attacks made with the rune of flowing water to +0 (instead of -2). Prerequisites: 5th level, rune of flowing water.</p><p><strong>Hastened Empowerment (Ex):</strong> A runemaster may empower a rune that is scribed or tattooed as a permanent mark on his body as a move action. The rune's normal empowerment time must be a standard action, and he may only do this a number of times per day equal to half his level in the runemaster class. Empowering a rune in this way still provokes attacks of opportunity. (See Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" for more information on marks and empowering runes.)</p><p><strong>Runic Sense (Su):</strong> At 2nd level, the runemaster can sense the presence of runes in his vicinity. The runemaster can use detect magic at will, though this effect only detects runes of a level equal to or lower than the runes that he can cast. The runemaster gains a +2 bonus on Spot checks to notice runes of a higher level.</p>\n<p><strong>Runic Dispelling (Ex):</strong> At 3rd level, the runemaster may infuse another rune with some of his own power, overloading its empowerment and destroying it. He must make a Spellcraft check (DC 10 + level of the rune). If this check succeeds, he may touch the rune, expend a rune slot of at least equal level, and make a caster level check (DC = 11 + the level of the caster who created the rune). Dispelling a rune in this way is a standard action that provokes attacks of opportunity. The rune itself remains behind, unless it was spontaneously scribed, and can be empowered again.</p>\n<p><strong>Rune Feat:</strong> At 5th level and every 5 levels thereafter (10th, 15th and 20th), the runemaster gets a bonus feat chosen from the rune feats later in this chapter. He must meet all the prerequisites for his bonus feat.</p>\n<p><strong>Additional Pattern:</strong> At 6th, 12th and 18th level, the runemaster gains Additional Pattern as a bonus feat.</p>\n<p><strong>Runic Attunement:</strong> At 8th and 16th level, the runemaster gains Runic Attunement as a bonus feat.</p>",
+    "description_text": "The runemaster is a mystic who sees the power and importance of ley lines. Moreover, those who study runes understand that these are not simply symbols of power - they are power. The runemaster seeks to become one with the land, but not in the fashion of druids. Rather, the runemaster desires to become a microcosm of the land, seeking to overlay his body with runes in the same fashion that the land itself is overlaid with patterns of ley lines. Most runemasters are heavily tattooed with runic patterns - not simply the unique ones that form the basis for rune families, but the so-called \"simple runes\" as well. Simple runes mimic patterns of ley energy that appear, again and again, in the Weapon and Armor Proficiency: Runemasters are proficient with simple weapons, but not with any type of armor or shield. Armor of any type interferes with a runemaster's movements, which can cause his empowerments with somatic components to fail. Funds: 2d4 x 10 gp. Runic Magic: A runemaster has the ability to scribe and empower runes, as described in \"The Runic Art\" section of These runes are drawn from the rune pattern lists also found in Chapter 2. A runemaster does not prepare spells the way other arcane spellcasters do. Rather, a runemaster has a certain number of rune patterns that he simply knows, and he may empower any rune within those patterns by expending the appropriate level rune slot. A beginning runemaster knows three rune patterns. To scribe and empower a rune, the runemaster must have a Spirit score equal to at least 10 + the rune level. The DC for a saving throw against a runemaster's rune is 10 + the rune level + the runemaster's Spirit modifier. Like other spellcasters, a runemaster can empower only a certain number of runes of each rune level per day. (Empowering a rune is much like casting a spell.) His base daily rune slot allotment is given on Table 1-2: Runemaster Rune Slots Per Day. In addition, he receives bonus rune slots per day if he has a high Spirit score, just as though they were spell slots. To renew his runes, the runemaster must rest for 8 hours and then meditate for a number of minutes equal to the total rune slots to be regained. During this time, a runemaster may change his attunement to a rune pattern by spending an additional 10 minutes per pattern attunement changed. (See below.) Enruned Fists: The runemaster bears simple runes (see below) on his knuckles. Medium runemasters deal 1d6 points of nonlethal damage with their unarmed strikes, while Small runemasters deal 1d4 points of nonlethal damage. (These runes do not count against the runemaster's allotment of simple runes given below.) Runic Attunement (Ex): A runemaster is capable of attuning himself to a single rune pattern that he knows, gaining special benefits and powers for doing so, as described under each rune pattern in Chapter 2. After he has rested and recovered rune slots, a runemaster may change the rune pattern to which he is attuned. Simple Rune (Ex): The runes that make up the runic patterns are powerful and unique, based upon patterns of ley-line energy found nowhere else in all of Azeroth. These are not the only such patterns in nature, however. There are patterns that are not unique, but are found over and over in certain dynamic situations in nature. These repeating patterns are the basis for simple runes: sets of runes that only runemasters may use. Simple runes are tattooed to the skin of the runemaster. It isn't enough that the pattern be there - rather, the runemaster must understand how his own energy is like that of the ley line energy of the world around him, so that he can empower the pattern instinctively. Simple runes flicker with suppressed energy until the runemaster needs their power, then they blaze with brilliant potency. Characters can detect simple runes just as they can other runes (see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" Detecting Runes). Simple runes radiate faint magic of no specific school. A runemaster begins with a single simple rune. As his understanding of the runes grows, he can add others. At 4th level and every three levels thereafter (7th, 10th, 13th, 16th and 19th level), the runemaster gains another simple rune. He must spend one hour per simple rune he already has, including the new one, in a tattooing ritual to gain the new runes (thus the ritual to gain his fourth simple rune takes 4 hours). Some of the runes have prerequisites, such as other simple runes or level requirements. All simple runes grant extraordinary abilities. • Rune of Flowing Water: The pattern of swift water flowing over a streambed, the rune of flowing water speeds the movements of the runemaster. When taking the full attack action, he may make an extra unarmed attack at his highest base attack bonus, but all of his attacks that round take a -2 penalty. • Rune of Glowing Coals: The pattern that heated coals make in the air above them, the rune of glowing coals grants the runemaster +1 bonus on damage rolls with his unarmed attacks. This rune may be taken more than once, and its effects stack. ≠• Rune of Leaping Sparks: The pattern left in the air by the passage of sparks from a fire, the rune of leaping sparks lightens the body and aids the jumps of a runemaster, granting him a +10 bonus on Jump checks. In addition, his height no longer limits his vertical distance. • Rune of the Mangroves: The pattern of mangrove roots in brackish swamp water, the rune of the mangroves grants the runemaster immunity to non-magical poisons and diseases. Prerequisite: 5th level. • Rune of the Oaks: The pattern of rings that develop within the trunk of an oak as it ages, the rune of the oaks grants the runemaster a +1 natural armor bonus to AC. This rune may be taken more than once, and its effects stack. • Rune of Perfect Steel: The pattern that the energy flowing through perfectly-crafted steel creates, the rune of perfect steel is tattooed to the back of a runemaster's hands, allowing him to deal lethal or nonlethal damage with his unarmed attacks without penalty. (He makes the choice each time he attacks.) • Rune of Pounding Surf: The pattern of the eternal waves pounding the shore, the rune of pounding surf allows a runemaster attacking with the rune of flowing water to make two additional attacks, rather than one. Prerequisites: 11th level, rune of flowing water. • Rune of Raging Flames: The pattern flame leaves in the wake of grasslands fire, the rune of raging flames grants the runemaster +10 feet to his base land speed. This rune may be taken more than once, and its effects stack. • Rune of Sighing Winds: The pattern of winds through the branches of trees, the rune of sighing winds grants the runemaster a +1 dodge bonus to AC. This bonus is lost if the runemaster is denied his Agility bonus to AC. This rune may be taken up to three times; each time it is taken, the bonus doubles (to +2 the second time it is taken, and +4 the third time). • Rune of Starlight: The pattern that results from heavy starlight upon rock, the rune of starlight allows the runemaster to foresee those attacks that are aimed at him, allowing him to add his Spirit bonus to his AC, as long as he is unencumbered and unarmored. These bonuses apply even against touch attacks, or when the runemaster is caught flat-footed. He loses this bonus when immobilized or helpless, when he wears any armor, when he carries a shield or when he carries a medium or heavy load. • Rune of Thundering Waterfalls: The pattern of swift water over a cliff, the rune of thundering waterfalls reduces the penalty on attacks made with the rune of flowing water to +0 (instead of -2). Prerequisites: 5th level, rune of flowing water. Hastened Empowerment (Ex): A runemaster may empower a rune that is scribed or tattooed as a permanent mark on his body as a move action. The rune's normal empowerment time must be a standard action, and he may only do this a number of times per day equal to half his level in the runemaster class. Empowering a rune in this way still provokes attacks of opportunity. (See Chapter 2: Enchantments, Runes and Brews, \"The Runic Art,\" for more information on marks and empowering runes.) Runic Sense (Su): At 2nd level, the runemaster can sense the presence of runes in his vicinity. The runemaster can use detect magic at will, though this effect only detects runes of a level equal to or lower than the runes that he can cast. The runemaster gains a +2 bonus on Spot checks to notice runes of a higher level. Runic Dispelling (Ex): At 3rd level, the runemaster may infuse another rune with some of his own power, overloading its empowerment and destroying it. He must make a Spellcraft check (DC 10 + level of the rune). If this check succeeds, he may touch the rune, expend a rune slot of at least equal level, and make a caster level check (DC = 11 + the level of the caster who created the rune). Dispelling a rune in this way is a standard action that provokes attacks of opportunity. The rune itself remains behind, unless it was spontaneously scribed, and can be empowered again. Rune Feat: At 5th level and every 5 levels thereafter (10th, 15th and 20th), the runemaster gets a bonus feat chosen from the rune feats later in this chapter. He must meet all the prerequisites for his bonus feat. Additional Pattern: At 6th, 12th and 18th level, the runemaster gains Additional Pattern as a bonus feat. Runic Attunement: At 8th and 16th level, the runemaster gains Runic Attunement as a bonus feat.",
+    "requirements_html": null,
+    "requirements_text": null,
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+0",
+        "fort": "+2",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Enruned fists, runic attunement, runic magic, simple rune",
+        "spells_per_day": [
+          "3",
+          "1",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 2,
+        "bab": "+1",
+        "fort": "+3",
+        "ref": "+0",
+        "will": "+3",
+        "special": "Hastened empowerment, runic sense",
+        "spells_per_day": [
+          "4",
+          "2",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 3,
+        "bab": "+2",
+        "fort": "+3",
+        "ref": "+1",
+        "will": "+3",
+        "special": "Runic dispelling",
+        "spells_per_day": [
+          "4",
+          "2",
+          "1",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 4,
+        "bab": "+3",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Simple rune",
+        "spells_per_day": [
+          "4",
+          "3",
+          "2",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 5,
+        "bab": "+3",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Rune feat",
+        "spells_per_day": [
+          "4",
+          "3",
+          "2",
+          "1",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 6,
+        "bab": "+4",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Additional pattern",
+        "spells_per_day": [
+          "4",
+          "3",
+          "3",
+          "2",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 7,
+        "bab": "+5",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Simple rune",
+        "spells_per_day": [
+          "4",
+          "4",
+          "3",
+          "2",
+          "1",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 8,
+        "bab": "+6/+1",
+        "fort": "+6",
+        "ref": "+2",
+        "will": "+6",
+        "special": "Runic attunement",
+        "spells_per_day": [
+          "4",
+          "4",
+          "3",
+          "3",
+          "2",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 9,
+        "bab": "+6/+1",
+        "fort": "+6",
+        "ref": "+3",
+        "will": "+6",
+        "special": "-",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "3",
+          "2",
+          "1",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 10,
+        "bab": "+7/+2",
+        "fort": "+7",
+        "ref": "+3",
+        "will": "+7",
+        "special": "Rune feat, simple rune",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "3",
+          "3",
+          "2",
+          "-",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 11,
+        "bab": "+8/+3",
+        "fort": "+7",
+        "ref": "+3",
+        "will": "+7",
+        "special": "-",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "2",
+          "1",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 12,
+        "bab": "+9/+4",
+        "fort": "+8",
+        "ref": "+4",
+        "will": "+8",
+        "special": "Additional pattern",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "3",
+          "2",
+          "-",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 13,
+        "bab": "+9/+4",
+        "fort": "+8",
+        "ref": "+4",
+        "will": "+8",
+        "special": "Simple rune",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "2",
+          "1",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 14,
+        "bab": "+10/+5",
+        "fort": "+9",
+        "ref": "+4",
+        "will": "+9",
+        "special": "-",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "3",
+          "2",
+          "-",
+          "-"
+        ]
+      },
+      {
+        "level": 15,
+        "bab": "+11/+6/+1",
+        "fort": "+9",
+        "ref": "+5",
+        "will": "+9",
+        "special": "Rune feat",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "2",
+          "1",
+          "-"
+        ]
+      },
+      {
+        "level": 16,
+        "bab": "+12/+7/+2",
+        "fort": "+10",
+        "ref": "+5",
+        "will": "+10",
+        "special": "Runic attunement, simple rune",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "3",
+          "2",
+          "-"
+        ]
+      },
+      {
+        "level": 17,
+        "bab": "+12/+7/+2",
+        "fort": "+10",
+        "ref": "+5",
+        "will": "+10",
+        "special": "-",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "2",
+          "1"
+        ]
+      },
+      {
+        "level": 18,
+        "bab": "+13/+8/+3",
+        "fort": "+11",
+        "ref": "+6",
+        "will": "+11",
+        "special": "Additional pattern",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "3",
+          "2"
+        ]
+      },
+      {
+        "level": 19,
+        "bab": "+14/+9/+4",
+        "fort": "+11",
+        "ref": "+6",
+        "will": "+11",
+        "special": "Simple rune",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "3",
+          "3"
+        ]
+      },
+      {
+        "level": 20,
+        "bab": "+15/+10/+5",
+        "fort": "+12",
+        "ref": "+6",
+        "will": "+12",
+        "special": "Rune feat",
+        "spells_per_day": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ]
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead><tbody><tr><td>1</td><td>+0</td><td>+2</td><td>+0</td><td>+2</td><td>Enruned fists, runic attunement, runic magic, simple rune</td><td>3</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>2</td><td>+1</td><td>+3</td><td>+0</td><td>+3</td><td>Hastened empowerment, runic sense</td><td>4</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>3</td><td>+2</td><td>+3</td><td>+1</td><td>+3</td><td>Runic dispelling</td><td>4</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>4</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Simple rune</td><td>4</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>5</td><td>+3</td><td>+4</td><td>+1</td><td>+4</td><td>Rune feat</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>6</td><td>+4</td><td>+5</td><td>+2</td><td>+5</td><td>Additional pattern</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>7</td><td>+5</td><td>+5</td><td>+2</td><td>+5</td><td>Simple rune</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>8</td><td>+6/+1</td><td>+6</td><td>+2</td><td>+6</td><td>Runic attunement</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>9</td><td>+6/+1</td><td>+6</td><td>+3</td><td>+6</td><td>-</td><td>4</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>10</td><td>+7/+2</td><td>+7</td><td>+3</td><td>+7</td><td>Rune feat, simple rune</td><td>4</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>11</td><td>+8/+3</td><td>+7</td><td>+3</td><td>+7</td><td>-</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td></tr><tr><td>12</td><td>+9/+4</td><td>+8</td><td>+4</td><td>+8</td><td>Additional pattern</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td><td>-</td></tr><tr><td>13</td><td>+9/+4</td><td>+8</td><td>+4</td><td>+8</td><td>Simple rune</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td><td>-</td></tr><tr><td>14</td><td>+10/+5</td><td>+9</td><td>+4</td><td>+9</td><td>-</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td><td>-</td></tr><tr><td>15</td><td>+11/+6/+1</td><td>+9</td><td>+5</td><td>+9</td><td>Rune feat</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td><td>-</td></tr><tr><td>16</td><td>+12/+7/+2</td><td>+10</td><td>+5</td><td>+10</td><td>Runic attunement, simple rune</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>-</td></tr><tr><td>17</td><td>+12/+7/+2</td><td>+10</td><td>+5</td><td>+10</td><td>-</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>2</td><td>1</td></tr><tr><td>18</td><td>+13/+8/+3</td><td>+11</td><td>+6</td><td>+11</td><td>Additional pattern</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td></tr><tr><td>19</td><td>+14/+9/+4</td><td>+11</td><td>+6</td><td>+11</td><td>Simple rune</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>3</td></tr><tr><td>20</td><td>+15/+10/+5</td><td>+12</td><td>+6</td><td>+12</td><td>Rune feat</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td></tr></tbody></table>",
+    "advancement_text": "1 +0 +2 +0 +2 Enruned fists, runic attunement, runic magic, simple rune 3 1 - - - - - - - - 2 +1 +3 +0 +3 Hastened empowerment, runic sense 4 2 - - - - - - - - 3 +2 +3 +1 +3 Runic dispelling 4 2 1 - - - - - - - 4 +3 +4 +1 +4 Simple rune 4 3 2 - - - - - - - 5 +3 +4 +1 +4 Rune feat 4 3 2 1 - - - - - - 6 +4 +5 +2 +5 Additional pattern 4 3 3 2 - - - - - - 7 +5 +5 +2 +5 Simple rune 4 4 3 2 1 - - - - - 8 +6/+1 +6 +2 +6 Runic attunement 4 4 3 3 2 - - - - - 9 +6/+1 +6 +3 +6 - 4 4 4 3 2 1 - - - - 10 +7/+2 +7 +3 +7 Rune feat, simple rune 4 4 4 3 3 2 - - - - 11 +8/+3 +7 +3 +7 - 4 4 4 4 3 2 1 - - - 12 +9/+4 +8 +4 +8 Additional pattern 4 4 4 4 3 3 2 - - - 13 +9/+4 +8 +4 +8 Simple rune 4 4 4 4 4 3 2 1 - - 14 +10/+5 +9 +4 +9 - 4 4 4 4 4 3 3 2 - - 15 +11/+6/+1 +9 +5 +9 Rune feat 4 4 4 4 4 4 3 2 1 - 16 +12/+7/+2 +10 +5 +10 Runic attunement, simple rune 4 4 4 4 4 4 3 3 2 - 17 +12/+7/+2 +10 +5 +10 - 4 4 4 4 4 4 4 3 2 1 18 +13/+8/+3 +11 +6 +11 Additional pattern 4 4 4 4 4 4 4 3 3 2 19 +14/+9/+4 +11 +6 +11 Simple rune 4 4 4 4 4 4 4 4 3 3 20 +15/+10/+5 +12 +6 +12 Rune feat 4 4 4 4 4 4 4 4 4 4"
+  },
+  {
+    "slug": "argent-dawn-templar-mmm",
+    "name": "Argent Dawn Templar",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 15,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "8",
+      "skill_points": "",
+      "prestige_level": "10"
+    },
+    "hit_die": "d8",
+    "skill_points": "",
+    "class_skills": [
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null,
+        "ability": "Con"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Craft (trade skill)",
+        "slug": "craft-trade-skill",
+        "url": "/skills/craft-trade-skill",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Diplomacy",
+        "slug": "diplomacy",
+        "url": "/skills/diplomacy",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Handle Animal",
+        "slug": "handle-animal",
+        "url": "/skills/handle-animal",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Heal",
+        "slug": "heal",
+        "url": "/skills/heal",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (military tactics)",
+        "slug": "knowledge-military-tactics",
+        "url": "/skills/knowledge-military-tactics",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (nobility",
+        "slug": "knowledge-nobility",
+        "url": "/skills/knowledge-nobility",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "royalty)",
+        "slug": "royalty",
+        "url": "/skills/royalty",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (the planes)",
+        "slug": "knowledge-the-planes",
+        "url": "/skills/knowledge-the-planes",
+        "id": null,
+        "ability": ""
+      },
+      {
+        "name": "Knowledge (religion)",
+        "slug": "knowledge-religion",
+        "url": "/skills/knowledge-religion",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Profession (military commander)",
+        "slug": "profession-military-commander",
+        "url": "/skills/profession-military-commander",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Ride",
+        "slug": "ride",
+        "url": "/skills/ride",
+        "id": null,
+        "ability": "Dex"
+      },
+      {
+        "name": "Sense Motive",
+        "slug": "sense-motive",
+        "url": "/skills/sense-motive",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Survival",
+        "slug": "survival",
+        "url": "/skills/survival",
+        "id": null,
+        "ability": "Wis"
+      }
+    ],
+    "description_html": "<p>Argent Dawn Templars, often called simply templars, are devoted followers of the Holy Light who have chosen to cast away the traditions of the past to find the best ways possible to fight the growing forces of darkness in the world. Like paladins, Argent Dawn Templars often oppose demons and undead, but templars learn to use the Holy Light to strike against other forms of evil with equal potency. To aid in the seemingly impossible struggles against the Scourge and the Burning Legion, the templars study all forms of combat; and they find powerful and unique uses for the Holy Light. These unique abilities carry a price, however: As an Argent Dawn Templar delves deeper into studies of the</p><p><strong>Weapon and Armor Proficiency:</strong> An Argent Dawn Templars gains no additional weapon or armor proficiencies. Spell Slots per Day: Every time the Argent Dawn Templar gains a level beyond 1st, she gains new spell slots per day as if she had also gained a level in the divine spellcasting class in which she could cast 2nd-level spells before she added the Argent Dawn Templar level. She does not gain any other benefit a character of that class would have gained. If she had more than one divine spellcasting class in which she could cast 2nd-level divine spells before she became an Argent Dawn Templar, she must decide to which class she adds each level of Argent Dawn Templar for the purpose of determining spell slots per day. Holy Mastery: An Argent Dawn Templar gains the opportunity to select a special ability from among those described below. Purchasing many of these abilities requires the permanent sacrifice of class features or armor proficiencies totaling a certain level. Each armor proficiency sacrificed (heavy, medium or light) counts as a 1st-level class feature for this purpose. The templar does not need to sacrifice armor proficiencies in order; she could, for example, sacrifice Armor Proficiency (light), then Armor Proficiency (heavy), and retain proficiency in medium armor. Once the character sacrifices such proficiency, she cannot regain it by any means (by multiclassing or by taking feats, for instance). Other (non-armor proficiency) class features count as class features of the class level at which the templar gained them. For example, a paladin/Argent Dawn Templar can purchase holy shock (which costs 10 levels) by sacrificing fist of justice (a 7th-level paladin class feature) and divine health (a 3rd-level paladin class feature). A healer/Argent Dawn Templar could purchase the same ability by sacrificing a greater domain (a 10th-level healer class feature).</p><p><strong>Banishing Strike (Su):</strong> Once per day, the Argent Dawn Templar may declare a banishing strike against an undead or demon with a normal melee attack. On a successful hit, the target must make a Will save (DC 10 + templar's level + templar's Spirit modifier) or be banished instantly from Azeroth to the Twisting Nether. If the templar misses with her banishing strike, the strike has no effect but is still used up for that day. Learning this ability requires the sacrifice of a total of 6 levels of class features or armor proficiencies. The templar may take this feature more than once; each time she takes it, she can use banishing strike one additional time per day. Blessed Revelation: Learning this ability gives the Argent Dawn Templar one spell slot per day of one level greater than the highest level she could previously cast. The templar's Spirit bonus grants her extra spells of this level normally. For example, a 14th-level paladin/2nd- level Argent Dawn Templar with 18 Spirit would gain one 5th-level spell slot, since she previously was able to cast spells of up to 4th level; she gains no bonus spell slots - her Spirit score is not high enough. If the templar is already able to cast 9th-level spells, this ability grants her an additional 9th-level spell slot. Learning this feature requires the permanent loss of -2 points of Stamina. The character may gain a distinguishing mark to represent this loss, as determined by the Game Master (GM). Examples of distinctive marks are runic tattoos, glowing eyes (usually a metallic color), or the loss of all hair on the body. The templar can take this feature more than once.</p><p><strong>Divine Shield (Su):</strong> The Argent Dawn Templar can create a barrier of holy power around herself once per week as a free action. This effect makes the templar invulnerable to hit point and ability damage, disease, energy drain, paralysis, poison, and all other offensive spells and effects for 3 rounds. Using divine shield expends all the templar's remaining spell slots. The templar can use this feature even if she has no spell slots left. Learning this feature requires the sacrifice of a total of 4 levels of class abilities or armor proficiencies.</p><p><strong>Holy Power (Ex):</strong> This ability increases the Argent Dawn Templar's effective caster level by +1 for the purposes of determining level-dependent spell variables, such as damage or range, and caster level checks. In addition, the templar's effective level increases by +1 for the holy strike ability (see below). Learning this ability requires the sacrifice of any armor proficiency or class feature of 1st level or above. The templar may take this feature more than once, and its effects stack.</p><p><strong>Holy Shock (Su):</strong> The Argent Dawn Templar gains the ability to change divine spell energy into holy lightning, manifesting it as a blast of silvery light. The bolt is a ranged touch attack with long range (400 feet + 40 feet/ level of Argent Dawn Templar) that deals 1d6 points of holy damage per level of the spell slot used to create the effect, +1d6 per Argent Dawn Templar level. Using holy shock is a standard action that does not provoke an attack of opportunity. Learning this ability requires the sacrifice of a total of 10 levels of class features or armor proficiencies.</p><p><strong>Sacred Spells (Ex):</strong> The Argent Dawn Templar's studies of the Holy Light allow her to adapt any offensive spell Table 1-3: The Argent Dawn Templar (Tmp) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special Spells 1st +1 +0 +0 +2 Holy mastery, holy strike - 2nd +2 +0 +0 +3 - +1 level of existing divine spellcaster class 3rd +3 +1 +1 +3 Holy mastery +1 level of existing divine spellcaster class 4th +4 +1 +1 +4 - +1 level of existing divine spellcaster class 5th +5 +1 +1 +4 Holy mastery +1 level of existing divine spellcaster class 6th +6 +2 +2 +5 - +1 level of existing divine spellcaster class 7th +7 +2 +2 +5 Holy mastery +1 level of existing divine spellcaster class 8th +8 +2 +2 +6 - +1 level of existing divine spellcaster class 9th +9 +3 +3 +6 Holy mastery +1 level of existing divine spellcaster class 10th +10 +3 +3 +7 Argent strike +1 level of existing divine spellcaster class</p>",
+    "description_text": "Argent Dawn Templars, often called simply templars, are devoted followers of the Holy Light who have chosen to cast away the traditions of the past to find the best ways possible to fight the growing forces of darkness in the world. Like paladins, Argent Dawn Templars often oppose demons and undead, but templars learn to use the Holy Light to strike against other forms of evil with equal potency. To aid in the seemingly impossible struggles against the Scourge and the Burning Legion, the templars study all forms of combat; and they find powerful and unique uses for the Holy Light. These unique abilities carry a price, however: As an Argent Dawn Templar delves deeper into studies of the Weapon and Armor Proficiency: An Argent Dawn Templars gains no additional weapon or armor proficiencies. Spell Slots per Day: Every time the Argent Dawn Templar gains a level beyond 1st, she gains new spell slots per day as if she had also gained a level in the divine spellcasting class in which she could cast 2nd-level spells before she added the Argent Dawn Templar level. She does not gain any other benefit a character of that class would have gained. If she had more than one divine spellcasting class in which she could cast 2nd-level divine spells before she became an Argent Dawn Templar, she must decide to which class she adds each level of Argent Dawn Templar for the purpose of determining spell slots per day. Holy Mastery: An Argent Dawn Templar gains the opportunity to select a special ability from among those described below. Purchasing many of these abilities requires the permanent sacrifice of class features or armor proficiencies totaling a certain level. Each armor proficiency sacrificed (heavy, medium or light) counts as a 1st-level class feature for this purpose. The templar does not need to sacrifice armor proficiencies in order; she could, for example, sacrifice Armor Proficiency (light), then Armor Proficiency (heavy), and retain proficiency in medium armor. Once the character sacrifices such proficiency, she cannot regain it by any means (by multiclassing or by taking feats, for instance). Other (non-armor proficiency) class features count as class features of the class level at which the templar gained them. For example, a paladin/Argent Dawn Templar can purchase holy shock (which costs 10 levels) by sacrificing fist of justice (a 7th-level paladin class feature) and divine health (a 3rd-level paladin class feature). A healer/Argent Dawn Templar could purchase the same ability by sacrificing a greater domain (a 10th-level healer class feature). Banishing Strike (Su): Once per day, the Argent Dawn Templar may declare a banishing strike against an undead or demon with a normal melee attack. On a successful hit, the target must make a Will save (DC 10 + templar's level + templar's Spirit modifier) or be banished instantly from Azeroth to the Twisting Nether. If the templar misses with her banishing strike, the strike has no effect but is still used up for that day. Learning this ability requires the sacrifice of a total of 6 levels of class features or armor proficiencies. The templar may take this feature more than once; each time she takes it, she can use banishing strike one additional time per day. Blessed Revelation: Learning this ability gives the Argent Dawn Templar one spell slot per day of one level greater than the highest level she could previously cast. The templar's Spirit bonus grants her extra spells of this level normally. For example, a 14th-level paladin/2nd- level Argent Dawn Templar with 18 Spirit would gain one 5th-level spell slot, since she previously was able to cast spells of up to 4th level; she gains no bonus spell slots - her Spirit score is not high enough. If the templar is already able to cast 9th-level spells, this ability grants her an additional 9th-level spell slot. Learning this feature requires the permanent loss of -2 points of Stamina. The character may gain a distinguishing mark to represent this loss, as determined by the Game Master (GM). Examples of distinctive marks are runic tattoos, glowing eyes (usually a metallic color), or the loss of all hair on the body. The templar can take this feature more than once. Divine Shield (Su): The Argent Dawn Templar can create a barrier of holy power around herself once per week as a free action. This effect makes the templar invulnerable to hit point and ability damage, disease, energy drain, paralysis, poison, and all other offensive spells and effects for 3 rounds. Using divine shield expends all the templar's remaining spell slots. The templar can use this feature even if she has no spell slots left. Learning this feature requires the sacrifice of a total of 4 levels of class abilities or armor proficiencies. Holy Power (Ex): This ability increases the Argent Dawn Templar's effective caster level by +1 for the purposes of determining level-dependent spell variables, such as damage or range, and caster level checks. In addition, the templar's effective level increases by +1 for the holy strike ability (see below). Learning this ability requires the sacrifice of any armor proficiency or class feature of 1st level or above. The templar may take this feature more than once, and its effects stack. Holy Shock (Su): The Argent Dawn Templar gains the ability to change divine spell energy into holy lightning, manifesting it as a blast of silvery light. The bolt is a ranged touch attack with long range (400 feet + 40 feet/ level of Argent Dawn Templar) that deals 1d6 points of holy damage per level of the spell slot used to create the effect, +1d6 per Argent Dawn Templar level. Using holy shock is a standard action that does not provoke an attack of opportunity. Learning this ability requires the sacrifice of a total of 10 levels of class features or armor proficiencies. Sacred Spells (Ex): The Argent Dawn Templar's studies of the Holy Light allow her to adapt any offensive spell Table 1-3: The Argent Dawn Templar (Tmp) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special Spells 1st +1 +0 +0 +2 Holy mastery, holy strike - 2nd +2 +0 +0 +3 - +1 level of existing divine spellcaster class 3rd +3 +1 +1 +3 Holy mastery +1 level of existing divine spellcaster class 4th +4 +1 +1 +4 - +1 level of existing divine spellcaster class 5th +5 +1 +1 +4 Holy mastery +1 level of existing divine spellcaster class 6th +6 +2 +2 +5 - +1 level of existing divine spellcaster class 7th +7 +2 +2 +5 Holy mastery +1 level of existing divine spellcaster class 8th +8 +2 +2 +6 - +1 level of existing divine spellcaster class 9th +9 +3 +3 +6 Holy mastery +1 level of existing divine spellcaster class 10th +10 +3 +3 +7 Argent strike +1 level of existing divine spellcaster class",
+    "requirements_html": "<p>Race: Any. Alignment: Any good. Affiliation: Any, but usually Alliance. Base Attack Bonus: +7. Skills: Diplomacy 10 ranks, Knowledge (religion) 9 ranks, Knowledge (arcana) 5 ranks. Feats: Magic Energy Control. Spellcasting: Ability to cast 2nd-level divine spells. Special: High-ranking Argent Dawn Templars initiate all new members, typically after the aspirant completes a difficult quest or achieves a considerable goal. The Argent Dawn's leaders study and train potentials carefully before they accept them into this elite section of the Argent Dawn.</p>",
+    "requirements_text": "Race: Any. Alignment: Any good. Affiliation: Any, but usually Alliance. Base Attack Bonus: +7. Skills: Diplomacy 10 ranks, Knowledge (religion) 9 ranks, Knowledge (arcana) 5 ranks. Feats: Magic Energy Control. Spellcasting: Ability to cast 2nd-level divine spells. Special: High-ranking Argent Dawn Templars initiate all new members, typically after the aspirant completes a difficult quest or achieves a considerable goal. The Argent Dawn's leaders study and train potentials carefully before they accept them into this elite section of the Argent Dawn.",
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+1",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Holy mastery, holy strike -"
+      },
+      {
+        "level": 2,
+        "bab": "+2",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+3",
+        "special": "- +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 3,
+        "bab": "+3",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+3",
+        "special": "Holy mastery +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 4,
+        "bab": "+4",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "- +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 5,
+        "bab": "+5",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Holy mastery +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 6,
+        "bab": "+6",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+5",
+        "special": "- +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 7,
+        "bab": "+7",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Holy mastery +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 8,
+        "bab": "+8",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+6",
+        "special": "- +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 9,
+        "bab": "+9",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+6",
+        "special": "Holy mastery +1 level of existing divine spellcaster class"
+      },
+      {
+        "level": 10,
+        "bab": "+10",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+7",
+        "special": "Argent strike +1 level of existing divine spellcaster class"
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1</td><td>+1</td><td>+0</td><td>+0</td><td>+2</td><td>Holy mastery, holy strike -</td></tr><tr><td>2</td><td>+2</td><td>+0</td><td>+0</td><td>+3</td><td>- +1 level of existing divine spellcaster class</td></tr><tr><td>3</td><td>+3</td><td>+1</td><td>+1</td><td>+3</td><td>Holy mastery +1 level of existing divine spellcaster class</td></tr><tr><td>4</td><td>+4</td><td>+1</td><td>+1</td><td>+4</td><td>- +1 level of existing divine spellcaster class</td></tr><tr><td>5</td><td>+5</td><td>+1</td><td>+1</td><td>+4</td><td>Holy mastery +1 level of existing divine spellcaster class</td></tr><tr><td>6</td><td>+6</td><td>+2</td><td>+2</td><td>+5</td><td>- +1 level of existing divine spellcaster class</td></tr><tr><td>7</td><td>+7</td><td>+2</td><td>+2</td><td>+5</td><td>Holy mastery +1 level of existing divine spellcaster class</td></tr><tr><td>8</td><td>+8</td><td>+2</td><td>+2</td><td>+6</td><td>- +1 level of existing divine spellcaster class</td></tr><tr><td>9</td><td>+9</td><td>+3</td><td>+3</td><td>+6</td><td>Holy mastery +1 level of existing divine spellcaster class</td></tr><tr><td>10</td><td>+10</td><td>+3</td><td>+3</td><td>+7</td><td>Argent strike +1 level of existing divine spellcaster class</td></tr></tbody></table>",
+    "advancement_text": "1 +1 +0 +0 +2 Holy mastery, holy strike - 2 +2 +0 +0 +3 - +1 level of existing divine spellcaster class 3 +3 +1 +1 +3 Holy mastery +1 level of existing divine spellcaster class 4 +4 +1 +1 +4 - +1 level of existing divine spellcaster class 5 +5 +1 +1 +4 Holy mastery +1 level of existing divine spellcaster class 6 +6 +2 +2 +5 - +1 level of existing divine spellcaster class 7 +7 +2 +2 +5 Holy mastery +1 level of existing divine spellcaster class 8 +8 +2 +2 +6 - +1 level of existing divine spellcaster class 9 +9 +3 +3 +6 Holy mastery +1 level of existing divine spellcaster class 10 +10 +3 +3 +7 Argent strike +1 level of existing divine spellcaster class"
+  },
+  {
+    "slug": "enchanter-mmm",
+    "name": "Enchanter",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 18,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "6",
+      "skill_points": "",
+      "prestige_level": "10"
+    },
+    "hit_die": "d6",
+    "skill_points": "",
+    "class_skills": [
+      {
+        "name": "Appraise",
+        "slug": "appraise",
+        "url": "/skills/appraise",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null,
+        "ability": "Con"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Decipher Script",
+        "slug": "decipher-script",
+        "url": "/skills/decipher-script",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Speak Language",
+        "slug": "speak-language",
+        "url": "/skills/speak-language",
+        "id": null,
+        "ability": null
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null,
+        "ability": "Int"
+      }
+    ],
+    "description_html": "<p>The creation of a magic item is a difficult and time-consuming procedure that is mentally and physically draining. The craftsperson must put a little of himself into every magically empowered item he produces, leaving him ever so slightly diminished from his efforts. Some have sought an alternative to this method: the path of the enchanter. Enchanters learn secret ways to seize the arcane or divine power imbued within every magic item, drawing it into themselves as the item is destroyed. They then redirect this raw energy into an existing item through the use of mystical formulas only they can hope to understand. The refocused magic provides the object with new abilities, above and beyond</p><p><strong>Weapon and Armor Proficiency:</strong> An enchanter gains no additional weapon or armor proficiencies. Spell Slots per Day: Every time the enchanter gains a level beyond 1st, he gains new spells slots per day as if he had also gained a level in the spellcasting class he had before he added the enchanter level. He does not gain any other benefit a character of that class would have gained. If he had more than one spellcasting class before he became an enchanter, he must decide to which class he adds each level of enchanter for the purpose of determining spell slots per day.</p><p><strong>Disenchanting (Ex):</strong> Through experimentation with arcane energies, the enchanter learns to destroy magic items and seize the raw power within them, drawing that energy into himself for use in performing enchantments. Items destroyed must be of a type other than scrolls or potions - the energies within those items are too random and ephemeral to be of much use in the enchanter's craft. Breaking an item to absorb its power is a process referred to as \"disenchanting\" the item. The act requires the item's sundering in a controlled manner while the enchanter recites arcane rituals and mentally prepares his body to contain the mystical energy. Even so, he can perform the act fairly quickly, even in remote environments. The enchanter requires a full minute of undisturbed activity, which concludes with the destruction of the item - usually with a blow from a heavy or sharp object. If the item cannot be broken (say, if it is made of adamantine, or is an artifact) it cannot be disenchanted. Many enchanters carry adamantine hammers with them for use on particularly stubborn objects. Disenchanting an item allows the enchanter to recover its experience point value in the form of enchantment points. The enchanter gains a number of enchantment points equal to the number of experience points the item's creator spent to create the item. The enchanter keeps track of his enchantment point total separately from his experience points; and when he performs an enchantment, he draws from his enchantment point total. He can also draw directly from his own body, converting experience points into enchantment points at a rate of 2 XP per 1 EP . He cannot reverse this process, and when creating an enchantment, only half the item's enchantment point cost (or less) can come from experience points converted in this manner. An enchanter can also employ enchantment points in the normal crafting of magic items, but he must employ 2 EP for every 1 XP . He may not convert enchantment PRESTIGE CLASSES: ENCHANTER points into true experience points for the purpose of gaining levels, nor may he convert enchantment points into experience points to cast spells or for other uses. An enchanter's enchantment point pool remains until he uses it, even if he advances in level, is subject to energy drain, or dies and is returned to life.</p><p><strong>Enchanting (Ex):</strong> Each level, enchanters learn new enchantments. An enchantment defines a means whereby an enchanter can direct stored magical energies into an existing object to give it a new power. Such powers are general in nature, and often quite limited. However, enchantment bonuses are all unnamed: they stack with all other bonuses, and with all existing abilities a magic item possesses. Note, however, that a given item may have only one enchantment at a time. The item need not be magic or have any other special properties, such as being masterwork. Even a lowly walking stick can have a greater clarity enchantment. An enchanter uses research and experimentation to learn new enchantments at the rate shown on Table 1-5: Enchantments Learned by Level. The enchanter is assumed to undertake this research and experimentation during downtimes, and so he gains the benefits automatically as he advances in level. The enchanter can also learn additional enchantments if he engages in the appropriate research. An enchanter can even invent new enchantments. The GM must carefully adjudicate both procedures. Enchantments come in four levels of difficulty: journeyman, expert, artisan and master. As he advances in level, an enchanter learns one or more new enchantments as listed on Table 1-5: Enchantments Learned by Level. Some enchantments also have prerequisites listed in their descriptions. Prior to learning a new enchantment, the enchanter must meet all prerequisites at least one level before he learns it. After all, an enchanter must have time to build his knowledge Table 1-4: The Enchanter (Enc) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special Spells 1st +0 +0 +0 +2 Disenchanting, enchanting, identify enchantment 2nd +1 +0 +0 +3 +1 level of existing spellcaster class 3rd +1 +1 +1 +4 +1 level of existing spellcaster class 4th +2 +1 +1 +5 +1 level of existing spellcaster class 5th +2 +1 +1 +6 +1 level of existing spellcaster class 6th +3 +2 +2 +7 +1 level of existing spellcaster class 7th +3 +2 +2 +8 +1 level of existing spellcaster class 8th +4 +2 +2 +9 +1 level of existing spellcaster class 9th +4 +3 +3 +10 +1 level of existing spellcaster class 10th +5 +3 +3 +11 +1 level of existing spellcaster class Table 1-5: Enchantments Learned by Level Level Journeyman Expert Artisan Master 1st 2 - - - 2nd 4 1 - - 3rd 6 3 - - 4th 8 5 1 - 5th 10 6 2 - 6th 12 7 3 - 7th 14 8 4 1 8th 16 9 5 2 9th 18 10 6 3 10th 20 12 8 4</p>",
+    "description_text": "The creation of a magic item is a difficult and time-consuming procedure that is mentally and physically draining. The craftsperson must put a little of himself into every magically empowered item he produces, leaving him ever so slightly diminished from his efforts. Some have sought an alternative to this method: the path of the enchanter. Enchanters learn secret ways to seize the arcane or divine power imbued within every magic item, drawing it into themselves as the item is destroyed. They then redirect this raw energy into an existing item through the use of mystical formulas only they can hope to understand. The refocused magic provides the object with new abilities, above and beyond Weapon and Armor Proficiency: An enchanter gains no additional weapon or armor proficiencies. Spell Slots per Day: Every time the enchanter gains a level beyond 1st, he gains new spells slots per day as if he had also gained a level in the spellcasting class he had before he added the enchanter level. He does not gain any other benefit a character of that class would have gained. If he had more than one spellcasting class before he became an enchanter, he must decide to which class he adds each level of enchanter for the purpose of determining spell slots per day. Disenchanting (Ex): Through experimentation with arcane energies, the enchanter learns to destroy magic items and seize the raw power within them, drawing that energy into himself for use in performing enchantments. Items destroyed must be of a type other than scrolls or potions - the energies within those items are too random and ephemeral to be of much use in the enchanter's craft. Breaking an item to absorb its power is a process referred to as \"disenchanting\" the item. The act requires the item's sundering in a controlled manner while the enchanter recites arcane rituals and mentally prepares his body to contain the mystical energy. Even so, he can perform the act fairly quickly, even in remote environments. The enchanter requires a full minute of undisturbed activity, which concludes with the destruction of the item - usually with a blow from a heavy or sharp object. If the item cannot be broken (say, if it is made of adamantine, or is an artifact) it cannot be disenchanted. Many enchanters carry adamantine hammers with them for use on particularly stubborn objects. Disenchanting an item allows the enchanter to recover its experience point value in the form of enchantment points. The enchanter gains a number of enchantment points equal to the number of experience points the item's creator spent to create the item. The enchanter keeps track of his enchantment point total separately from his experience points; and when he performs an enchantment, he draws from his enchantment point total. He can also draw directly from his own body, converting experience points into enchantment points at a rate of 2 XP per 1 EP . He cannot reverse this process, and when creating an enchantment, only half the item's enchantment point cost (or less) can come from experience points converted in this manner. An enchanter can also employ enchantment points in the normal crafting of magic items, but he must employ 2 EP for every 1 XP . He may not convert enchantment PRESTIGE CLASSES: ENCHANTER points into true experience points for the purpose of gaining levels, nor may he convert enchantment points into experience points to cast spells or for other uses. An enchanter's enchantment point pool remains until he uses it, even if he advances in level, is subject to energy drain, or dies and is returned to life. Enchanting (Ex): Each level, enchanters learn new enchantments. An enchantment defines a means whereby an enchanter can direct stored magical energies into an existing object to give it a new power. Such powers are general in nature, and often quite limited. However, enchantment bonuses are all unnamed: they stack with all other bonuses, and with all existing abilities a magic item possesses. Note, however, that a given item may have only one enchantment at a time. The item need not be magic or have any other special properties, such as being masterwork. Even a lowly walking stick can have a greater clarity enchantment. An enchanter uses research and experimentation to learn new enchantments at the rate shown on Table 1-5: Enchantments Learned by Level. The enchanter is assumed to undertake this research and experimentation during downtimes, and so he gains the benefits automatically as he advances in level. The enchanter can also learn additional enchantments if he engages in the appropriate research. An enchanter can even invent new enchantments. The GM must carefully adjudicate both procedures. Enchantments come in four levels of difficulty: journeyman, expert, artisan and master. As he advances in level, an enchanter learns one or more new enchantments as listed on Table 1-5: Enchantments Learned by Level. Some enchantments also have prerequisites listed in their descriptions. Prior to learning a new enchantment, the enchanter must meet all prerequisites at least one level before he learns it. After all, an enchanter must have time to build his knowledge Table 1-4: The Enchanter (Enc) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special Spells 1st +0 +0 +0 +2 Disenchanting, enchanting, identify enchantment 2nd +1 +0 +0 +3 +1 level of existing spellcaster class 3rd +1 +1 +1 +4 +1 level of existing spellcaster class 4th +2 +1 +1 +5 +1 level of existing spellcaster class 5th +2 +1 +1 +6 +1 level of existing spellcaster class 6th +3 +2 +2 +7 +1 level of existing spellcaster class 7th +3 +2 +2 +8 +1 level of existing spellcaster class 8th +4 +2 +2 +9 +1 level of existing spellcaster class 9th +4 +3 +3 +10 +1 level of existing spellcaster class 10th +5 +3 +3 +11 +1 level of existing spellcaster class Table 1-5: Enchantments Learned by Level Level Journeyman Expert Artisan Master 1st 2 - - - 2nd 4 1 - - 3rd 6 3 - - 4th 8 5 1 - 5th 10 6 2 - 6th 12 7 3 - 7th 14 8 4 1 8th 16 9 5 2 9th 18 10 6 3 10th 20 12 8 4",
+    "requirements_html": "<p>Alignment: Any non-lawful. An enchanter must be willing to destroy in order to create. Skills: Craft (alchemy) 6 ranks, Spellcraft 8 ranks. Feats: At least one item creation feat other than Brew Potion or Scribe Scroll. Spellcasting: Ability to cast 1st-level arcane or divine spells. Special: The character must have crafted at least three magic items other than scrolls or potions and then destroyed them through experimentation. The character receives no enchantment points (EP) for this (they are lost in the learning process). The items destroyed must equal or exceed a total of 500 XP in value.</p>",
+    "requirements_text": "Alignment: Any non-lawful. An enchanter must be willing to destroy in order to create. Skills: Craft (alchemy) 6 ranks, Spellcraft 8 ranks. Feats: At least one item creation feat other than Brew Potion or Scribe Scroll. Spellcasting: Ability to cast 1st-level arcane or divine spells. Special: The character must have crafted at least three magic items other than scrolls or potions and then destroyed them through experimentation. The character receives no enchantment points (EP) for this (they are lost in the learning process). The items destroyed must equal or exceed a total of 500 XP in value.",
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+0",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Disenchanting, enchanting, identify enchantment"
+      },
+      {
+        "level": 2,
+        "bab": "+1",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+3",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 3,
+        "bab": "+1",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 4,
+        "bab": "+2",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+5",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 5,
+        "bab": "+2",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+6",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 6,
+        "bab": "+3",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+7",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 7,
+        "bab": "+3",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+8",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 8,
+        "bab": "+4",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+9",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 9,
+        "bab": "+4",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+10",
+        "special": "+1 level of existing"
+      },
+      {
+        "level": 10,
+        "bab": "+5",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+11",
+        "special": "+1 level of existing"
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1</td><td>+0</td><td>+0</td><td>+0</td><td>+2</td><td>Disenchanting, enchanting, identify enchantment</td></tr><tr><td>2</td><td>+1</td><td>+0</td><td>+0</td><td>+3</td><td>+1 level of existing</td></tr><tr><td>3</td><td>+1</td><td>+1</td><td>+1</td><td>+4</td><td>+1 level of existing</td></tr><tr><td>4</td><td>+2</td><td>+1</td><td>+1</td><td>+5</td><td>+1 level of existing</td></tr><tr><td>5</td><td>+2</td><td>+1</td><td>+1</td><td>+6</td><td>+1 level of existing</td></tr><tr><td>6</td><td>+3</td><td>+2</td><td>+2</td><td>+7</td><td>+1 level of existing</td></tr><tr><td>7</td><td>+3</td><td>+2</td><td>+2</td><td>+8</td><td>+1 level of existing</td></tr><tr><td>8</td><td>+4</td><td>+2</td><td>+2</td><td>+9</td><td>+1 level of existing</td></tr><tr><td>9</td><td>+4</td><td>+3</td><td>+3</td><td>+10</td><td>+1 level of existing</td></tr><tr><td>10</td><td>+5</td><td>+3</td><td>+3</td><td>+11</td><td>+1 level of existing</td></tr></tbody></table>",
+    "advancement_text": "1 +0 +0 +0 +2 Disenchanting, enchanting, identify enchantment 2 +1 +0 +0 +3 +1 level of existing 3 +1 +1 +1 +4 +1 level of existing 4 +2 +1 +1 +5 +1 level of existing 5 +2 +1 +1 +6 +1 level of existing 6 +3 +2 +2 +7 +1 level of existing 7 +3 +2 +2 +8 +1 level of existing 8 +4 +2 +2 +9 +1 level of existing 9 +4 +3 +3 +10 +1 level of existing 10 +5 +3 +3 +11 +1 level of existing"
+  },
+  {
+    "slug": "ley-walker-mmm",
+    "name": "Ley Walker",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 21,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "6",
+      "skill_points": "",
+      "prestige_level": "10"
+    },
+    "hit_die": "d6",
+    "skill_points": "",
+    "class_skills": [
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null,
+        "ability": "Con"
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Heal",
+        "slug": "heal",
+        "url": "/skills/heal",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Knowledge (arcana,)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (nature)",
+        "slug": "knowledge-nature",
+        "url": "/skills/knowledge-nature",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Knowledge (religion)",
+        "slug": "knowledge-religion",
+        "url": "/skills/knowledge-religion",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null,
+        "ability": "Int"
+      }
+    ],
+    "description_html": "<p>It is an occult truth, known to all who study the ways of magic and spellcraft, that great lines of power crisscross the lands of Azeroth. These lines of magic are often harnessed for mighty magical purposes, from the creation of moonwells to (some say) the powerful glowing dome in Dalaran. It is simply assumed that those with power eventually must seek out one of these sites. But those who study the mysteries of the ley lines discover something more. Certainly, there are lines of power that run across the land in a select few areas, but these are not the only lines - simply the most obvious. If these are thick, corded ropes of power, there are also tiny, web-thin threads that run between</p><p><strong>Weapon and Armor Proficiency:</strong> The ley walker gains no additional weapon or armor proficiencies. Spell Slots per Day: Every time the ley walker gains a level, she gains new spell slots per day as if she had also gained a level in the spellcasting class she had before she added the ley walker level. She does not gain any other benefit a character of that class would have gained. If she had more than one spellcasting class before she became a ley walker, she must decide to which class she adds each level of ley walker for the purpose of determining spell slots per day.</p><p><strong>Ley Line Attunement (Su):</strong> The ley walker's attunement to the raw magical energies of the world grants her certain abilities not available to other spellcasters. Rather than paying for metamagic augmentation with her own powers, she may draw upon the power of the world to make the sacrifice of magical energy on her behalf. The ley walker may ignore 1 level of spell level increase demanded by a metamagic feat when drawing upon this attunement. If this reduces the overall spell level increase to 0, the spell uses up a normal-level spell slot; also, if it would normally take longer than a standard action to cast (because it is a spontaneous spell, for example), it instead takes only a standard action. For instance, Rohah, a tauren shaman/ley walker has ley line attunement 1, and casts a 4th-level spell augmented by Empower Spell. Instead of casting it as a 6th-level spell (as Empower Spell increases the effective level by +2), he casts it as a 5th-level spell. If he used Enlarge Spell with this ability instead, the spell would not take a higher-level spell slot. Each day, the ley walker may cast a number of spells augmented in this manner equal to her Intellect or Spirit bonus (whichever is greater). At 4th level, the ley walker reduces the spell level cost by -2, at 7th level she reduces it by -3, and finally she reduces it by -4 at 10th level. (The level of the spell itself is never reduced, only the spell level increase levied by metamagic feats.) Ley Line Manifestations: At 2nd level, the ley walker may choose one of the following abilities, provided she meets the Spellcraft rank prerequisite for the ability. She may choose another ley line manifestation at 5th and 8th level.</p><p><strong>Ley Healing (Su):</strong> The ley walker, as a standard action, may draw the power of the ley lines into herself, allowing them to knit her body closed. For a number of rounds equal to her level in this prestige class, the ley walker gains fast healing 5. The ley walker may do this a number of times per day equal to her Charisma bonus (minimum 1). Prerequisite: Spellcraft 10 ranks.</p><p><strong>Ley Investment (Su):</strong> The ley walker is able to cast a spell with a duration longer than instantaneous and tap part of its energy into the ley lines of the world. The ley walker takes 2 points of Stamina damage for each week that she wishes the spell to persist, but the spell's effect is stationary; thus, it must be a spell that is cast upon a creature, object or area. If cast upon a creature or object and the creature or object moves more than 10 feet from the place where the spell was cast on it, the investment is broken. The Stamina damage heals naturally (and can be healed magically). This ability may be done any number of times per day, though it requires a Spellcraft check (DC 15 + twice the level of the spell). If the check fails, the ley walker takes the Stamina damage and casts the spell with its normal duration. For example, invisibility has a duration longer than instantaneous, so a ley walker can cast the spell with ley investment. He casts the spell on a treasure chest and wishes it to remain invisible for two weeks; thus, he takes 4 points of Stamina damage. The invisibility spell's duration changes to two weeks. Prerequisite: Spellcraft 13 ranks.</p><p><strong>Ley Spell (Ex):</strong> The ley walker is able to infuse the power of the ley lines into her spells. She may cast any spell that deals hit point damage as a ley spell; doing so changes the casting time of that spell to 1 round and requires a Spellcraft check (DC 15 + the level of the spell). Half of the damage the spell deals is nonspecific energy, thereby circumventing immunities and energy resistances. If the Spellcraft check fails, the ley walker casts the spell normally. The ley walker may use this ability any number of times per day. Prerequisite: Spellcraft 10 ranks.</p><p><strong>Ley Walking (Sp):</strong> The ley walker is able to rapidly traverse the ley lines that connect every place in the world. She can spontaneously cast dimension door by sacrificing a 4th-level spell slot or teleport by sacrificing a 5th-level spell slot. These spontaneous spells have casting times of 1 round, and doing so requires a Spellcraft check (DC 20 for dimension door, or DC 25 for teleport). If the Spellcraft check fails, the ley walker expends the spell slot with no effect. Prerequisite: Spellcraft 13 ranks.</p><p><strong>Ley Weaving (Su):</strong> The ley walker may snatch up the threads of ley line energy and affix them to herself or an ally within 30 feet, allowing magical energy to strike the threads and flow away. This grants the target spell resistance of 18 + the ley walker's levels in this prestige class; however, this spell resistance applies to all magic (the target cannot suppress it). This effect may be dispelled at any time by either the target or the ley walker. Ley weaving is a standard action that does not provoke attacks of opportunity, and the ley walker can perform it a number of times per day equal to her Spirit modifier (minimum 1). The spell resistance lasts for 10 minutes per ley walker level. Prerequisite: Spellcraft 13 ranks. Bonus feat: At 3rd level, the ley walker gains a metamagic feat as a bonus feat. She gains another at 6th and 9th level, as well. She must meet all the prerequisites for her bonus feats. Table 1-6: The Ley Walker (Ley) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special Spells 1st +0 +0 +0 +2 Ley line attunement 1 +1 level of existing class 2nd +1 +0 +0 +3 Ley line manifestation +1 level of existing class 3rd +1 +1 +1 +3 Bonus feat +1 level of existing class 4th +2 +1 +1 +4 Ley line attunement 2 +1 level of existing class 5th +2 +1 +1 +4 Ley line manifestation +1 level of existing class 6th +3 +2 +2 +5 Bonus feat +1 level of existing class 7th +3 +2 +2 +5 Ley line attunement 3 +1 level of existing class 8th +4 +2 +2 +6 Ley line manifestation +1 level of existing class 9th +4 +3 +3 +6 Bonus feat +1 level of existing class 10th +5 +3 +3 +7 Ley line attunement 4 +1 level of existing class</p>",
+    "description_text": "It is an occult truth, known to all who study the ways of magic and spellcraft, that great lines of power crisscross the lands of Azeroth. These lines of magic are often harnessed for mighty magical purposes, from the creation of moonwells to (some say) the powerful glowing dome in Dalaran. It is simply assumed that those with power eventually must seek out one of these sites. But those who study the mysteries of the ley lines discover something more. Certainly, there are lines of power that run across the land in a select few areas, but these are not the only lines - simply the most obvious. If these are thick, corded ropes of power, there are also tiny, web-thin threads that run between Weapon and Armor Proficiency: The ley walker gains no additional weapon or armor proficiencies. Spell Slots per Day: Every time the ley walker gains a level, she gains new spell slots per day as if she had also gained a level in the spellcasting class she had before she added the ley walker level. She does not gain any other benefit a character of that class would have gained. If she had more than one spellcasting class before she became a ley walker, she must decide to which class she adds each level of ley walker for the purpose of determining spell slots per day. Ley Line Attunement (Su): The ley walker's attunement to the raw magical energies of the world grants her certain abilities not available to other spellcasters. Rather than paying for metamagic augmentation with her own powers, she may draw upon the power of the world to make the sacrifice of magical energy on her behalf. The ley walker may ignore 1 level of spell level increase demanded by a metamagic feat when drawing upon this attunement. If this reduces the overall spell level increase to 0, the spell uses up a normal-level spell slot; also, if it would normally take longer than a standard action to cast (because it is a spontaneous spell, for example), it instead takes only a standard action. For instance, Rohah, a tauren shaman/ley walker has ley line attunement 1, and casts a 4th-level spell augmented by Empower Spell. Instead of casting it as a 6th-level spell (as Empower Spell increases the effective level by +2), he casts it as a 5th-level spell. If he used Enlarge Spell with this ability instead, the spell would not take a higher-level spell slot. Each day, the ley walker may cast a number of spells augmented in this manner equal to her Intellect or Spirit bonus (whichever is greater). At 4th level, the ley walker reduces the spell level cost by -2, at 7th level she reduces it by -3, and finally she reduces it by -4 at 10th level. (The level of the spell itself is never reduced, only the spell level increase levied by metamagic feats.) Ley Line Manifestations: At 2nd level, the ley walker may choose one of the following abilities, provided she meets the Spellcraft rank prerequisite for the ability. She may choose another ley line manifestation at 5th and 8th level. Ley Healing (Su): The ley walker, as a standard action, may draw the power of the ley lines into herself, allowing them to knit her body closed. For a number of rounds equal to her level in this prestige class, the ley walker gains fast healing 5. The ley walker may do this a number of times per day equal to her Charisma bonus (minimum 1). Prerequisite: Spellcraft 10 ranks. Ley Investment (Su): The ley walker is able to cast a spell with a duration longer than instantaneous and tap part of its energy into the ley lines of the world. The ley walker takes 2 points of Stamina damage for each week that she wishes the spell to persist, but the spell's effect is stationary; thus, it must be a spell that is cast upon a creature, object or area. If cast upon a creature or object and the creature or object moves more than 10 feet from the place where the spell was cast on it, the investment is broken. The Stamina damage heals naturally (and can be healed magically). This ability may be done any number of times per day, though it requires a Spellcraft check (DC 15 + twice the level of the spell). If the check fails, the ley walker takes the Stamina damage and casts the spell with its normal duration. For example, invisibility has a duration longer than instantaneous, so a ley walker can cast the spell with ley investment. He casts the spell on a treasure chest and wishes it to remain invisible for two weeks; thus, he takes 4 points of Stamina damage. The invisibility spell's duration changes to two weeks. Prerequisite: Spellcraft 13 ranks. Ley Spell (Ex): The ley walker is able to infuse the power of the ley lines into her spells. She may cast any spell that deals hit point damage as a ley spell; doing so changes the casting time of that spell to 1 round and requires a Spellcraft check (DC 15 + the level of the spell). Half of the damage the spell deals is nonspecific energy, thereby circumventing immunities and energy resistances. If the Spellcraft check fails, the ley walker casts the spell normally. The ley walker may use this ability any number of times per day. Prerequisite: Spellcraft 10 ranks. Ley Walking (Sp): The ley walker is able to rapidly traverse the ley lines that connect every place in the world. She can spontaneously cast dimension door by sacrificing a 4th-level spell slot or teleport by sacrificing a 5th-level spell slot. These spontaneous spells have casting times of 1 round, and doing so requires a Spellcraft check (DC 20 for dimension door, or DC 25 for teleport). If the Spellcraft check fails, the ley walker expends the spell slot with no effect. Prerequisite: Spellcraft 13 ranks. Ley Weaving (Su): The ley walker may snatch up the threads of ley line energy and affix them to herself or an ally within 30 feet, allowing magical energy to strike the threads and flow away. This grants the target spell resistance of 18 + the ley walker's levels in this prestige class; however, this spell resistance applies to all magic (the target cannot suppress it). This effect may be dispelled at any time by either the target or the ley walker. Ley weaving is a standard action that does not provoke attacks of opportunity, and the ley walker can perform it a number of times per day equal to her Spirit modifier (minimum 1). The spell resistance lasts for 10 minutes per ley walker level. Prerequisite: Spellcraft 13 ranks. Bonus feat: At 3rd level, the ley walker gains a metamagic feat as a bonus feat. She gains another at 6th and 9th level, as well. She must meet all the prerequisites for her bonus feats. Table 1-6: The Ley Walker (Ley) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special Spells 1st +0 +0 +0 +2 Ley line attunement 1 +1 level of existing class 2nd +1 +0 +0 +3 Ley line manifestation +1 level of existing class 3rd +1 +1 +1 +3 Bonus feat +1 level of existing class 4th +2 +1 +1 +4 Ley line attunement 2 +1 level of existing class 5th +2 +1 +1 +4 Ley line manifestation +1 level of existing class 6th +3 +2 +2 +5 Bonus feat +1 level of existing class 7th +3 +2 +2 +5 Ley line attunement 3 +1 level of existing class 8th +4 +2 +2 +6 Ley line manifestation +1 level of existing class 9th +4 +3 +3 +6 Bonus feat +1 level of existing class 10th +5 +3 +3 +7 Ley line attunement 4 +1 level of existing class",
+    "requirements_html": "<p>Affiliation: Any. Skills: Spellcraft 8 ranks. Feats: Two metamagic feats. Spellcasting: Must be able to cast 3rd-level spells or runes.</p>",
+    "requirements_text": "Affiliation: Any. Skills: Spellcraft 8 ranks. Feats: Two metamagic feats. Spellcasting: Must be able to cast 3rd-level spells or runes.",
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+0",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Ley line attunement 1 +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 2,
+        "bab": "+1",
+        "fort": "+0",
+        "ref": "+0",
+        "will": "+3",
+        "special": "Ley line manifestation +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 3,
+        "bab": "+1",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+3",
+        "special": "Bonus feat +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 4,
+        "bab": "+2",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Ley line attunement 2 +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 5,
+        "bab": "+2",
+        "fort": "+1",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Ley line manifestation +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 6,
+        "bab": "+3",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Bonus feat +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 7,
+        "bab": "+3",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Ley line attunement 3 +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 8,
+        "bab": "+4",
+        "fort": "+2",
+        "ref": "+2",
+        "will": "+6",
+        "special": "Ley line manifestation +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 9,
+        "bab": "+4",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+6",
+        "special": "Bonus feat +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      },
+      {
+        "level": 10,
+        "bab": "+5",
+        "fort": "+3",
+        "ref": "+3",
+        "will": "+7",
+        "special": "Ley line attunement 4 +1 level of existing class",
+        "spellcasting": "+1 level of existing class"
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th><th>Spells</th></tr></thead><tbody><tr><td>1</td><td>+0</td><td>+0</td><td>+0</td><td>+2</td><td>Ley line attunement 1 +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>2</td><td>+1</td><td>+0</td><td>+0</td><td>+3</td><td>Ley line manifestation +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>3</td><td>+1</td><td>+1</td><td>+1</td><td>+3</td><td>Bonus feat +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>4</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td><td>Ley line attunement 2 +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>5</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td><td>Ley line manifestation +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>6</td><td>+3</td><td>+2</td><td>+2</td><td>+5</td><td>Bonus feat +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>7</td><td>+3</td><td>+2</td><td>+2</td><td>+5</td><td>Ley line attunement 3 +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>8</td><td>+4</td><td>+2</td><td>+2</td><td>+6</td><td>Ley line manifestation +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>9</td><td>+4</td><td>+3</td><td>+3</td><td>+6</td><td>Bonus feat +1 level of existing class</td><td>+1 level of existing class</td></tr><tr><td>10</td><td>+5</td><td>+3</td><td>+3</td><td>+7</td><td>Ley line attunement 4 +1 level of existing class</td><td>+1 level of existing class</td></tr></tbody></table>",
+    "advancement_text": "1 +0 +0 +0 +2 Ley line attunement 1 +1 level of existing class 2 +1 +0 +0 +3 Ley line manifestation +1 level of existing class 3 +1 +1 +1 +3 Bonus feat +1 level of existing class 4 +2 +1 +1 +4 Ley line attunement 2 +1 level of existing class 5 +2 +1 +1 +4 Ley line manifestation +1 level of existing class 6 +3 +2 +2 +5 Bonus feat +1 level of existing class 7 +3 +2 +2 +5 Ley line attunement 3 +1 level of existing class 8 +4 +2 +2 +6 Ley line manifestation +1 level of existing class 9 +4 +3 +3 +6 Bonus feat +1 level of existing class 10 +5 +3 +3 +7 Ley line attunement 4 +1 level of existing class"
+  },
+  {
+    "slug": "steam-warrior-mmm",
+    "name": "Steam Warrior",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 24,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "hit_die": "6",
+      "skill_points": "",
+      "prestige_level": "10"
+    },
+    "hit_die": "d6",
+    "skill_points": "",
+    "class_skills": [
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Disable Device",
+        "slug": "disable-device",
+        "url": "/skills/disable-device",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Gather Information",
+        "slug": "gather-information",
+        "url": "/skills/gather-information",
+        "id": null,
+        "ability": "Cha"
+      },
+      {
+        "name": "Knowledge (engineering)",
+        "slug": "knowledge-engineering",
+        "url": "/skills/knowledge-engineering",
+        "id": null,
+        "ability": "Int"
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null,
+        "ability": "Wis"
+      },
+      {
+        "name": "Use Rope",
+        "slug": "use-rope",
+        "url": "/skills/use-rope",
+        "id": null,
+        "ability": "Dex"
+      },
+      {
+        "name": "Use Technological Device",
+        "slug": "use-technological-device",
+        "url": "/skills/use-technological-device",
+        "id": null,
+        "ability": "Int"
+      }
+    ],
+    "description_html": "<p>Some were born to steam, gifted with the measures of mechanics and systems, and possessed with an unquenchable thirst for invention. Among those inventors are individuals who push their creations to the limits of technology, testing them in battle, and relying on them for their survival. These are the steam warriors. Some might crudely explain that steam warriors are mechanics who trudge from place to place in phlogiston- powered armor. Ask a steam warrior what his calling is, and he'll tell you of the thrill of battle, the sound of metal clashing against monster scales, and the surge of adrenaline as a whirring blade slices through metal, flesh or bone. To a steam warrior, life is more</p><p><strong>Weapon and Armor Proficiency:</strong> Steam warriors gain proficiency with simple weapons and light armor.</p><p><strong>Tinker's Touch (Ex):</strong> The hero's steam warrior levels count as tinker levels when calculating the maximum Technological Limit (TL) of any technological device he builds. (See WoW RPG, Chapter 11: Technological Devices.)</p><p><strong>Armor Bond (Ex):</strong> At 2nd level, a steam warrior gains a competence bonus on Use Technological Device checks when applied to a suit of steam armor to which he has bonded. He gains the same bonus on attack rolls with the steam armor's melee and ranged weapons. This bonus is +1 at 2nd level, and increases by +1 every two levels thereafter (+2 at 4th level, +3 at 6th level, +4 at 8th level, and +5 at 10th level). To bond with a suit of steam armor, the steam warrior must have operated it for at least one month. Minor Table 1-7: The Steam Warrior (Stm) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special 1st +0 +2 +0 +0 Tinker's touch 2nd +1 +3 +0 +0 Armor bond (+1) 3rd +2 +3 +1 +1 Improve armor 4th +3 +4 +1 +1 Armor bond (+2) 5th +3 +4 +1 +1 Bonus feat 6th +4 +5 +2 +2 Armor bond (+3) 7th +5 +5 +2 +2 Combat feat 8th +6 +6 +2 +2 Armor bond (+4) 9th +6 +6 +3 +3 Advance armor 10th +7 +7 +3 +3 Armor bond (+5), bonus feat</p>",
+    "description_text": "Some were born to steam, gifted with the measures of mechanics and systems, and possessed with an unquenchable thirst for invention. Among those inventors are individuals who push their creations to the limits of technology, testing them in battle, and relying on them for their survival. These are the steam warriors. Some might crudely explain that steam warriors are mechanics who trudge from place to place in phlogiston- powered armor. Ask a steam warrior what his calling is, and he'll tell you of the thrill of battle, the sound of metal clashing against monster scales, and the surge of adrenaline as a whirring blade slices through metal, flesh or bone. To a steam warrior, life is more Weapon and Armor Proficiency: Steam warriors gain proficiency with simple weapons and light armor. Tinker's Touch (Ex): The hero's steam warrior levels count as tinker levels when calculating the maximum Technological Limit (TL) of any technological device he builds. (See WoW RPG, Chapter 11: Technological Devices.) Armor Bond (Ex): At 2nd level, a steam warrior gains a competence bonus on Use Technological Device checks when applied to a suit of steam armor to which he has bonded. He gains the same bonus on attack rolls with the steam armor's melee and ranged weapons. This bonus is +1 at 2nd level, and increases by +1 every two levels thereafter (+2 at 4th level, +3 at 6th level, +4 at 8th level, and +5 at 10th level). To bond with a suit of steam armor, the steam warrior must have operated it for at least one month. Minor Table 1-7: The Steam Warrior (Stm) Class Level Base Attack Bonus Fort Save Ref Save Will Save Special 1st +0 +2 +0 +0 Tinker's touch 2nd +1 +3 +0 +0 Armor bond (+1) 3rd +2 +3 +1 +1 Improve armor 4th +3 +4 +1 +1 Armor bond (+2) 5th +3 +4 +1 +1 Bonus feat 6th +4 +5 +2 +2 Armor bond (+3) 7th +5 +5 +2 +2 Combat feat 8th +6 +6 +2 +2 Armor bond (+4) 9th +6 +6 +3 +3 Advance armor 10th +7 +7 +3 +3 Armor bond (+5), bonus feat",
+    "requirements_html": "<p>Affiliation: Any. Skills: Craft (technological device) 8 ranks, Use Technological Device 8 ranks. Feat: Vehicle Proficiency (steam armor). (See \"Feats,\" below.) Special: A character must have a suit of steam armor upon gaining his first level in as a steam warrior - whether he buys or builds the armor is up to him.</p>",
+    "requirements_text": "Affiliation: Any. Skills: Craft (technological device) 8 ranks, Use Technological Device 8 ranks. Feat: Vehicle Proficiency (steam armor). (See \"Feats,\" below.) Special: A character must have a suit of steam armor upon gaining his first level in as a steam warrior - whether he buys or builds the armor is up to him.",
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+0",
+        "fort": "+2",
+        "ref": "+0",
+        "will": "+0",
+        "special": "Tinker's touch"
+      },
+      {
+        "level": 2,
+        "bab": "+1",
+        "fort": "+3",
+        "ref": "+0",
+        "will": "+0",
+        "special": "Armor bond (+1)"
+      },
+      {
+        "level": 3,
+        "bab": "+2",
+        "fort": "+3",
+        "ref": "+1",
+        "will": "+1",
+        "special": "Improve armor"
+      },
+      {
+        "level": 4,
+        "bab": "+3",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+1",
+        "special": "Armor bond (+2)"
+      },
+      {
+        "level": 5,
+        "bab": "+3",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+1",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 6,
+        "bab": "+4",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+2",
+        "special": "Armor bond (+3)"
+      },
+      {
+        "level": 7,
+        "bab": "+5",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+2",
+        "special": "Combat feat"
+      },
+      {
+        "level": 8,
+        "bab": "+6",
+        "fort": "+6",
+        "ref": "+2",
+        "will": "+2",
+        "special": "Armor bond (+4)"
+      },
+      {
+        "level": 9,
+        "bab": "+6",
+        "fort": "+6",
+        "ref": "+3",
+        "will": "+3",
+        "special": "Advance armor"
+      },
+      {
+        "level": 10,
+        "bab": "+7",
+        "fort": "+7",
+        "ref": "+3",
+        "will": "+3",
+        "special": "Armor bond (+5), bonus feat"
+      }
+    ],
+    "advancement_html": "<table><thead><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th><th>Special</th></tr></thead><tbody><tr><td>1</td><td>+0</td><td>+2</td><td>+0</td><td>+0</td><td>Tinker's touch</td></tr><tr><td>2</td><td>+1</td><td>+3</td><td>+0</td><td>+0</td><td>Armor bond (+1)</td></tr><tr><td>3</td><td>+2</td><td>+3</td><td>+1</td><td>+1</td><td>Improve armor</td></tr><tr><td>4</td><td>+3</td><td>+4</td><td>+1</td><td>+1</td><td>Armor bond (+2)</td></tr><tr><td>5</td><td>+3</td><td>+4</td><td>+1</td><td>+1</td><td>Bonus feat</td></tr><tr><td>6</td><td>+4</td><td>+5</td><td>+2</td><td>+2</td><td>Armor bond (+3)</td></tr><tr><td>7</td><td>+5</td><td>+5</td><td>+2</td><td>+2</td><td>Combat feat</td></tr><tr><td>8</td><td>+6</td><td>+6</td><td>+2</td><td>+2</td><td>Armor bond (+4)</td></tr><tr><td>9</td><td>+6</td><td>+6</td><td>+3</td><td>+3</td><td>Advance armor</td></tr><tr><td>10</td><td>+7</td><td>+7</td><td>+3</td><td>+3</td><td>Armor bond (+5), bonus feat</td></tr></tbody></table>",
+    "advancement_text": "1 +0 +2 +0 +0 Tinker's touch 2 +1 +3 +0 +0 Armor bond (+1) 3 +2 +3 +1 +1 Improve armor 4 +3 +4 +1 +1 Armor bond (+2) 5 +3 +4 +1 +1 Bonus feat 6 +4 +5 +2 +2 Armor bond (+3) 7 +5 +5 +2 +2 Combat feat 8 +6 +6 +2 +2 Armor bond (+4) 9 +6 +6 +3 +3 Advance armor 10 +7 +7 +3 +3 Armor bond (+5), bonus feat"
+  }
+]

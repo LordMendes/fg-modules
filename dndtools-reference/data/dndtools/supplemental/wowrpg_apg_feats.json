@@ -1,0 +1,1082 @@
+[
+  {
+    "slug": "awesome-blow-apg",
+    "name": "Awesome Blow",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our blows can send small creatures flying."
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>Y our blows can send small creatures flying.</p>",
+    "description_text": "Y our blows can send small creatures flying.",
+    "benefit_html": "As a standard action, you may choose to subtract 4 from your melee attack roll and deliver an awesome blow . If you hit a corporeal opponent smaller than yourself with an awesome blow , your opponent must make a Reflex save (DC = damage dealt) or be knocked flying 10 feet in a direction of your choice, and fall prone. You can push the opponent only in a straight line, and the opponent can't move closer to you than the square it started in. If an obstacle prevents the completion of the opponent's move, the opponent and the obstacle each take 1d6 points of damage, and the opponent stops in the space adjacent to the obstacle.",
+    "benefit_text": "As a standard action, you may choose to subtract 4 from your melee attack roll and deliver an awesome blow . If you hit a corporeal opponent smaller than yourself with an awesome blow , your opponent must make a Reflex save (DC = damage dealt) or be knocked flying 10 feet in a direction of your choice, and fall prone. You can push the opponent only in a straight line, and the opponent can't move closer to you than the square it started in. If an obstacle prevents the completion of the opponent's move, the opponent and the obstacle each take 1d6 points of damage, and the opponent stops in the space adjacent to the obstacle.",
+    "prerequisite_html": "<p>Str 25, Improved Bull Rush, Power A ttack, size Large or larger.</p>",
+    "prerequisite_text": "Str 25, Improved Bull Rush, Power A ttack, size Large or larger.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "bond-with-the-land-apg",
+    "name": "Bond With the Land",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You have a bond with your home; you draw strength from the land and the knowledge that you are responsible for it."
+    },
+    "type": "General",
+    "description_html": "<p>You have a bond with your home; you draw strength from the land and the knowledge that you are responsible for it.</p>",
+    "description_text": "You have a bond with your home; you draw strength from the land and the knowledge that you are responsible for it.",
+    "benefit_html": "When you are on your home ground (your home and the property immediately surrounding it, up to a distance of 1 mile), you gain a +1 morale bonus on attack rolls and a +2 morale bonus on damage rolls. Also, you heal at three times the normal rate when you are at your home (i.e., you recover your character level x 3 hit points per night of rest).",
+    "benefit_text": "When you are on your home ground (your home and the property immediately surrounding it, up to a distance of 1 mile), you gain a +1 morale bonus on attack rolls and a +2 morale bonus on damage rolls. Also, you heal at three times the normal rate when you are at your home (i.e., you recover your character level x 3 hit points per night of rest).",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "chaos-energy-master-apg",
+    "name": "Chaos Energy Master",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 35,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "After a great deal of experimentation, you have become an expert in manipulating chaos energy in technological devices."
+    },
+    "type": "Technology",
+    "description_html": "<p>After a great deal of experimentation, you have become an expert in manipulating chaos energy in technological devices.</p>",
+    "description_text": "After a great deal of experimentation, you have become an expert in manipulating chaos energy in technological devices.",
+    "benefit_html": "The community in which you live temporarily receives one bonus community feat. You must have lived in the community for at least one month, you must maintain a home there, and you must visit the community at least once every three months. The community may gain only one additional feat at a time (multiple community leaders cannot provide multiple feats). Provided that you qualify in the skill listed on the chart below , you may choose any feat from the following list: Skill Community Feat Profession: Military Commander Basic Fortifications Profession (sailor) Safe Harbor (requires a port) If you leave the community, fail to maintain your home, or fail to visit the community at least once every 90 days, it loses the feat.",
+    "benefit_text": "The community in which you live temporarily receives one bonus community feat. You must have lived in the community for at least one month, you must maintain a home there, and you must visit the community at least once every three months. The community may gain only one additional feat at a time (multiple community leaders cannot provide multiple feats). Provided that you qualify in the skill listed on the chart below , you may choose any feat from the following list: Skill Community Feat Profession: Military Commander Basic Fortifications Profession (sailor) Safe Harbor (requires a port) If you leave the community, fail to maintain your home, or fail to visit the community at least once every 90 days, it loses the feat.",
+    "prerequisite_html": "<p>12 ranks in the appropriate skill (see below).</p>",
+    "prerequisite_text": "12 ranks in the appropriate skill (see below).",
+    "special_html": "<p>You may take this feat multiple times. Each time it applies to a different community .</p>",
+    "special_text": "You may take this feat multiple times. Each time it applies to a different community .",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "craggy-exterior-apg",
+    "name": "Craggy Exterior",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our hide is rough and knobby. Creatures that strike it the wrong way have shivers shoot up their spines."
+    },
+    "type": "General",
+    "description_html": "<p>Y our hide is rough and knobby. Creatures that strike it the wrong way have shivers shoot up their spines.</p>",
+    "description_text": "Y our hide is rough and knobby. Creatures that strike it the wrong way have shivers shoot up their spines.",
+    "benefit_html": "Whenever an opponent attacks you in melee and rolls a natural 1 on the attack roll, he must make a Fortitude save (DC 10 + 1/2 your Hit Dice or level + your Stamina modifier) or be dazed for 1 round.",
+    "benefit_text": "Whenever an opponent attacks you in melee and rolls a natural 1 on the attack roll, he must make a Fortitude save (DC 10 + 1/2 your Hit Dice or level + your Stamina modifier) or be dazed for 1 round.",
+    "prerequisite_html": "<p>Natural armor bonus +10. In addition, your hide must be able to be \"craggy\" - it must be composed of stone, bark or the like, not simply layers of muscle. Check with your GM before taking this feat.</p>",
+    "prerequisite_text": "Natural armor bonus +10. In addition, your hide must be able to be \"craggy\" - it must be composed of stone, bark or the like, not simply layers of muscle. Check with your GM before taking this feat.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "dance-spell-apg",
+    "name": "Dance Spell",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "The dances of the elves are renowned for their near magical beauty and sensuality. This night elf technique allows a caster replace a spell component with a dance. Rumors say that "
+    },
+    "type": "Metamagic",
+    "description_html": "<p>The dances of the elves are renowned for their near magical beauty and sensuality. This night elf technique allows a caster replace a spell component with a dance. Rumors say that jungle trolls achieve similar results with snakelike movements.</p>",
+    "description_text": "The dances of the elves are renowned for their near magical beauty and sensuality. This night elf technique allows a caster replace a spell component with a dance. Rumors say that jungle trolls achieve similar results with snakelike movements.",
+    "benefit_html": "For spells with a casting time of 1 standard action, you may substitute a dance for a verbal or a material component. The casting time increases to 1 full round. Make a Perform (dance) check; the DC is 10 + twice the spell's level. If successful, the spell functions normally; if unsuccessful, the spell fails. You gain a +4 bonus on Concentration checks to maintain concentration on the spell when you use this feat. Y ou cannot use this feat with spells with a casting time longer than one standard action, or with a material component with a monetary value greater than 10 gold pieces.",
+    "benefit_text": "For spells with a casting time of 1 standard action, you may substitute a dance for a verbal or a material component. The casting time increases to 1 full round. Make a Perform (dance) check; the DC is 10 + twice the spell's level. If successful, the spell functions normally; if unsuccessful, the spell fails. You gain a +4 bonus on Concentration checks to maintain concentration on the spell when you use this feat. Y ou cannot use this feat with spells with a casting time longer than one standard action, or with a material component with a monetary value greater than 10 gold pieces.",
+    "prerequisite_html": "<p>Agy 13, Perform (dance) 6 ranks, -level arcane spells.</p>",
+    "prerequisite_text": "Agy 13, Perform (dance) 6 ranks, -level arcane spells.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "doctor-apg",
+    "name": "Doctor",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are an extremely capable healer."
+    },
+    "type": "General",
+    "description_html": "<p>You are an extremely capable healer.</p>",
+    "description_text": "You are an extremely capable healer.",
+    "benefit_html": "wounds) your effective caster level increases by +1.",
+    "benefit_text": "wounds) your effective caster level increases by +1.",
+    "prerequisite_html": "<p>Ability to cast 2nd-level spells.</p>",
+    "prerequisite_text": "Ability to cast 2nd-level spells.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "empower-spell-like-ability-apg",
+    "name": "Empower Spell-Like Ability",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can use a spell-like ability with greater power."
+    },
+    "type": "General",
+    "description_html": "<p>You can use a spell-like ability with greater power.</p>",
+    "description_text": "You can use a spell-like ability with greater power.",
+    "benefit_html": "Choose one of your spell-like abilities, subject to the restrictions below. You can use that ability as an empowered spell-like ability three times per day (or less, if the ability is normally usable only once or twice per day). you use an empowered spell-like ability, all variable, numeric effects of the spell-like ability are increased by one-half. Saving throws and opposed rolls are not affected. Spell-like abilities without random variables are not affected. Y ou can select only a spell-like ability duplicating a spell with a level less than or equal to half your caster level (round down) -2. For a summary, see the table in the description of the Quicken Spell-Like Ability feat, below.",
+    "benefit_text": "Choose one of your spell-like abilities, subject to the restrictions below. You can use that ability as an empowered spell-like ability three times per day (or less, if the ability is normally usable only once or twice per day). you use an empowered spell-like ability, all variable, numeric effects of the spell-like ability are increased by one-half. Saving throws and opposed rolls are not affected. Spell-like abilities without random variables are not affected. Y ou can select only a spell-like ability duplicating a spell with a level less than or equal to half your caster level (round down) -2. For a summary, see the table in the description of the Quicken Spell-Like Ability feat, below.",
+    "prerequisite_html": "<p>Spell-like ability at caster level 6th or higher .</p>",
+    "prerequisite_text": "Spell-like ability at caster level 6th or higher .",
+    "special_html": "<p>You can take this feat multiple times. Each time you take it, you apply it to a different one of your spell-like abilities.</p>",
+    "special_text": "You can take this feat multiple times. Each time you take it, you apply it to a different one of your spell-like abilities.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "emulate-another-apg",
+    "name": "Emulate Another",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You have studied another race so closely that you gain their benefits."
+    },
+    "type": "General",
+    "description_html": "<p>You have studied another race so closely that you gain their benefits.</p>",
+    "description_text": "You have studied another race so closely that you gain their benefits.",
+    "benefit_html": "Select another race. You gain one of the racial traits that a member of that race gains as a 1st- level character, such low-light vision, stonecunning or weapon familiarity. You cannot gain bonuses to ability scores or on skill checks with this feat. Also, the GM can rule that you cannot emulate certain characteristics, like a naga's amphibious nature. (A half-elf with the powerful build ability is also difficult to envision.)",
+    "benefit_text": "Select another race. You gain one of the racial traits that a member of that race gains as a 1st- level character, such low-light vision, stonecunning or weapon familiarity. You cannot gain bonuses to ability scores or on skill checks with this feat. Also, the GM can rule that you cannot emulate certain characteristics, like a naga's amphibious nature. (A half-elf with the powerful build ability is also difficult to envision.)",
+    "prerequisite_html": "<p>1st-level character, half-breed (commonly half -elf, half-ogre or half-orc).</p>",
+    "prerequisite_text": "1st-level character, half-breed (commonly half -elf, half-ogre or half-orc).",
+    "special_html": "<p>You can take this feat only as a 1st-level character.</p>",
+    "special_text": "You can take this feat only as a 1st-level character.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "extend-spell-like-ability-apg",
+    "name": "Extend Spell-Like Ability",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 36,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can use a spell-like ability with greater duration than normal."
+    },
+    "type": "General",
+    "description_html": "<p>You can use a spell-like ability with greater duration than normal.</p>",
+    "description_text": "You can use a spell-like ability with greater duration than normal.",
+    "benefit_html": "When attempting a Craft (technological device) check for any item considered a gnomish specialty device, you receive a +2 bonus on the check. Furthermore, the price of such an item is reduced by 10% and it takes 25% less time to create due to your familiarity with the design. Note that these bonuses only apply to well-known items (i.e., those that appear in published W orld of Warcraft RPG books), as well as variants or upgrades of those devices. An item is considered a gnomish specialty device if \"gnomish\" appears in its name, or if so noted in its description.",
+    "benefit_text": "When attempting a Craft (technological device) check for any item considered a gnomish specialty device, you receive a +2 bonus on the check. Furthermore, the price of such an item is reduced by 10% and it takes 25% less time to create due to your familiarity with the design. Note that these bonuses only apply to well-known items (i.e., those that appear in published W orld of Warcraft RPG books), as well as variants or upgrades of those devices. An item is considered a gnomish specialty device if \"gnomish\" appears in its name, or if so noted in its description.",
+    "prerequisite_html": "<p>Spell-like ability at caster level 4th or higher .</p>",
+    "prerequisite_text": "Spell-like ability at caster level 4th or higher .",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "goblin-engineering-specialist-apg",
+    "name": "Goblin Engineering Specialist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "You have studied many of the unique characteristics of goblin technology and are now an expert in its creation."
+    },
+    "type": "Technology",
+    "description_html": "<p>You have studied many of the unique characteristics of goblin technology and are now an expert in its creation.</p>",
+    "description_text": "You have studied many of the unique characteristics of goblin technology and are now an expert in its creation.",
+    "benefit_html": "When attempting a Craft (technological device) check for any item considered a goblin specialty device, you receive a +2 bonus on your check. Furthermore, the price of such an item is reduced by 25% and it takes 10% less time to create due to your knowledge of secret goblin cost-cutting techniques. Note that these bonuses only apply to well-known items (i.e., those that appear in published W orld of Warcraft RPG books), as well as variants or upgrades of those devices. An item is considered a goblin specialty device if \"goblin\" appears in its name, or if so noted in its description.",
+    "benefit_text": "When attempting a Craft (technological device) check for any item considered a goblin specialty device, you receive a +2 bonus on your check. Furthermore, the price of such an item is reduced by 25% and it takes 10% less time to create due to your knowledge of secret goblin cost-cutting techniques. Note that these bonuses only apply to well-known items (i.e., those that appear in published W orld of Warcraft RPG books), as well as variants or upgrades of those devices. An item is considered a goblin specialty device if \"goblin\" appears in its name, or if so noted in its description.",
+    "prerequisite_html": "<p>Craft (technological device) 12 ranks. Additionally , you must have either crafted at least 10 goblin technological items, or have been trained in their construction by a master goblin engineer . The GM may rule that the special training is required before any goblin technological items can be crafted (see Chapter 5: T echnology for details).</p>",
+    "prerequisite_text": "Craft (technological device) 12 ranks. Additionally , you must have either crafted at least 10 goblin technological items, or have been trained in their construction by a master goblin engineer . The GM may rule that the special training is required before any goblin technological items can be crafted (see Chapter 5: T echnology for details).",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "greater-dance-spell-apg",
+    "name": "Greater Dance Spell",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "You are especially adept at the night elf techniques of mystic dance. In addition to imparting greater power to your spells, your friends are sure to enjoy the show."
+    },
+    "type": "Metamagic",
+    "description_html": "<p>You are especially adept at the night elf techniques of mystic dance. In addition to imparting greater power to your spells, your friends are sure to enjoy the show.</p>",
+    "description_text": "You are especially adept at the night elf techniques of mystic dance. In addition to imparting greater power to your spells, your friends are sure to enjoy the show.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Agy 15, Dance Spell (see above), level spells. B enefit: After you successfully cast a spell using the Dance Spell feat, the DCs of all further spells you cast while dancing increase. If you use Dance Spell to cast a spell in the next round, its save DC increases by +1; if you cast another in the next round, its DC increases by +2, and any spell cast after that receives a +3 bonus (the maximum) to its DC, until you do not cast a spell with Dance Spell in a</p>",
+    "prerequisite_text": "Agy 15, Dance Spell (see above), level spells. B enefit: After you successfully cast a spell using the Dance Spell feat, the DCs of all further spells you cast while dancing increase. If you use Dance Spell to cast a spell in the next round, its save DC increases by +1; if you cast another in the next round, its DC increases by +2, and any spell cast after that receives a +3 bonus (the maximum) to its DC, until you do not cast a spell with Dance Spell in a",
+    "special_html": "<p>You can take this feat multiple times. Each time you take it, you apply it to a different one of your spell-like abilities.</p>",
+    "special_text": "You can take this feat multiple times. Each time you take it, you apply it to a different one of your spell-like abilities.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "extreme-abilities-apg",
+    "name": "Extreme Abilities",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "the positive and the negative - of your race are more pronounced in you."
+    },
+    "type": "General",
+    "description_html": "<p>the positive and the negative - of your race are more pronounced in you.</p>",
+    "description_text": "the positive and the negative - of your race are more pronounced in you.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>1st level character, racial bonus to one ability, racial penalty to one ability. Benefits: Choose one ability to which you have a racial bonus and one to which you have a racial penalty. Y our racial bonus increases by +2 and your racial penalty increases by -2. (For example, an Ironforge dwarf who takes this feat gains a total +4 bonus to Stamina and a -4 penalty to Charisma.) However, if you choose to increase your racial bonus to Strength or Agility and increase your racial penalty to Charisma, you gain only a +1 additional bonus on Strength or Agility but take the full -2 additional penalty to Charisma.</p>",
+    "prerequisite_text": "1st level character, racial bonus to one ability, racial penalty to one ability. Benefits: Choose one ability to which you have a racial bonus and one to which you have a racial penalty. Y our racial bonus increases by +2 and your racial penalty increases by -2. (For example, an Ironforge dwarf who takes this feat gains a total +4 bonus to Stamina and a -4 penalty to Charisma.) However, if you choose to increase your racial bonus to Strength or Agility and increase your racial penalty to Charisma, you gain only a +1 additional bonus on Strength or Agility but take the full -2 additional penalty to Charisma.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Most races have a +2 racial bonus to one ability and a -2 racial penalty to one or two abilities.</p>",
+    "normal_text": "Most races have a +2 racial bonus to one ability and a -2 racial penalty to one or two abilities."
+  },
+  {
+    "slug": "feign-death-apg",
+    "name": "Feign Death",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can trick an enemy into believing that she has slain you."
+    },
+    "type": "General",
+    "description_html": "<p>You can trick an enemy into believing that she has slain you.</p>",
+    "description_text": "You can trick an enemy into believing that she has slain you.",
+    "benefit_html": "When you play dead, you gain a +6 bonus on your Bluff check.",
+    "benefit_text": "When you play dead, you gain a +6 bonus on your Bluff check.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Any character can play dead, which requires a Bluff check opposed by the targets' Sense Motive checks. The GM may reasonably apply circumstance penalties based on a variety of conditions.</p>",
+    "normal_text": "Any character can play dead, which requires a Bluff check opposed by the targets' Sense Motive checks. The GM may reasonably apply circumstance penalties based on a variety of conditions."
+  },
+  {
+    "slug": "focused-repair-apg",
+    "name": "Focused Repair",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "You eliminate all outside distractions when repairing an item."
+    },
+    "type": "Technology",
+    "description_html": "<p>You eliminate all outside distractions when repairing an item.</p>",
+    "description_text": "You eliminate all outside distractions when repairing an item.",
+    "benefit_html": "your ranks in Concentration as a bonus on your Craft (technological device) checks.",
+    "benefit_text": "your ranks in Concentration as a bonus on your Craft (technological device) checks.",
+    "prerequisite_html": "<p>Concentration 1 rank, Craft (technological device) 6 ranks, Use T echnological Device 4 ranks.</p>",
+    "prerequisite_text": "Concentration 1 rank, Craft (technological device) 6 ranks, Use T echnological Device 4 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "gnomish-engineering-specialist-apg",
+    "name": "Gnomish Engineering Specialist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 37,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "You have studied many of the unique characteristics of gnomish technology and are now an expert in its creation."
+    },
+    "type": "Technology",
+    "description_html": "<p>You have studied many of the unique characteristics of gnomish technology and are now an expert in its creation.</p>",
+    "description_text": "You have studied many of the unique characteristics of gnomish technology and are now an expert in its creation.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Craft (technological device) 12 ranks. A dditionally, you must have either crafted at least 10</p>",
+    "prerequisite_text": "Craft (technological device) 12 ranks. A dditionally, you must have either crafted at least 10",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "improved-stonecunning-apg",
+    "name": "Improved Stonecunning",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our innate stonecunning talent is better than other members of your race."
+    },
+    "type": "General",
+    "description_html": "<p>Y our innate stonecunning talent is better than other members of your race.</p>",
+    "description_text": "Y our innate stonecunning talent is better than other members of your race.",
+    "benefit_html": "Y our racial bonus on checks to notice unusual stonework increases to +8.",
+    "benefit_text": "Y our racial bonus on checks to notice unusual stonework increases to +8.",
+    "prerequisite_html": "<p>Stonecunning . (Ironforge dwarves possess this trait, for example.)</p>",
+    "prerequisite_text": "Stonecunning . (Ironforge dwarves possess this trait, for example.)",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Stonecunning grants a +2 racial bonus on checks to notice unusual stonework.</p>",
+    "normal_text": "Stonecunning grants a +2 racial bonus on checks to notice unusual stonework."
+  },
+  {
+    "slug": "improved-stoneflesh-apg",
+    "name": "Improved Stoneflesh",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our stoneflesh is more powerful than normal, and you can activate it more often."
+    },
+    "type": "General",
+    "description_html": "<p>Y our stoneflesh is more powerful than normal, and you can activate it more often.</p>",
+    "description_text": "Y our stoneflesh is more powerful than normal, and you can activate it more often.",
+    "benefit_html": "You can use your stoneflesh ability one additional time per day. Also, the natural armor bonus that your stoneflesh provides doubles.",
+    "benefit_text": "You can use your stoneflesh ability one additional time per day. Also, the natural armor bonus that your stoneflesh provides doubles.",
+    "prerequisite_html": "<p>Knowledge (religion) 3 ranks, stoneflesh ability.</p>",
+    "prerequisite_text": "Knowledge (religion) 3 ranks, stoneflesh ability.",
+    "special_html": "<p>You can take this feat more than once. Its effects stack. Remember that two doublings equal a tripling, and so forth.</p>",
+    "special_text": "You can take this feat more than once. Its effects stack. Remember that two doublings equal a tripling, and so forth.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "ironforge-axe-rip-apg",
+    "name": "Ironforge Axe Rip",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Using a technique which originated at the war colleges of Ironforge, you may slowly and painfully pull an axe out of a target, inflicting additional damage."
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>Using a technique which originated at the war colleges of Ironforge, you may slowly and painfully pull an axe out of a target, inflicting additional damage.</p>",
+    "description_text": "Using a technique which originated at the war colleges of Ironforge, you may slowly and painfully pull an axe out of a target, inflicting additional damage.",
+    "benefit_html": "When you successfully hit a target with an axe, you may use a move action to dislodge your axe brutally, dealing additional damage equal to 1d4 + the weapon's enhancement bonus + half your Strength bonus. You can use this feat only once per round.",
+    "benefit_text": "When you successfully hit a target with an axe, you may use a move action to dislodge your axe brutally, dealing additional damage equal to 1d4 + the weapon's enhancement bonus + half your Strength bonus. You can use this feat only once per round.",
+    "prerequisite_html": "<p>Weapon Focus (any axe), Weapon e), base attack bonus +8.</p>",
+    "prerequisite_text": "Weapon Focus (any axe), Weapon e), base attack bonus +8.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "limited-arcane-ability-apg",
+    "name": "Limited Arcane Ability",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Drawing upon your high elf heritage, you can cast a few spells."
+    },
+    "type": "General",
+    "description_html": "<p>Drawing upon your high elf heritage, you can cast a few spells.</p>",
+    "description_text": "Drawing upon your high elf heritage, you can cast a few spells.",
+    "benefit_html": "Select one 0-level spell from the arcanist spell list. You can use this spell twice per day as a spell- like ability as a 1st-level caster.",
+    "benefit_text": "Select one 0-level spell from the arcanist spell list. You can use this spell twice per day as a spell- like ability as a 1st-level caster.",
+    "prerequisite_html": "<p>Int 10, half-elf.</p>",
+    "prerequisite_text": "Int 10, half-elf.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "lion-assault-apg",
+    "name": "Lion Assault",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "A technique mastered by an elite order of knights from Stormwind, this attack throws caution to the wind. If you practice the Lion Assault, you open grievous wounds on your own bod"
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>A technique mastered by an elite order of knights from Stormwind, this attack throws caution to the wind. If you practice the Lion Assault, you open grievous wounds on your own body , but discover that the pain strengthens your attacks. round. In addition, your bonus on Concentration checks when using Dance Spell increases to +6.</p>",
+    "description_text": "A technique mastered by an elite order of knights from Stormwind, this attack throws caution to the wind. If you practice the Lion Assault, you open grievous wounds on your own body , but discover that the pain strengthens your attacks. round. In addition, your bonus on Concentration checks when using Dance Spell increases to +6.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "improved-darkvision-apg",
+    "name": "Improved Darkvision",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can see in the dark farther than normal."
+    },
+    "type": "General",
+    "description_html": "<p>You can see in the dark farther than normal.</p>",
+    "description_text": "You can see in the dark farther than normal.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Darkvision. range of your darkvision increases by +60 feet.</p>",
+    "prerequisite_text": "Darkvision. range of your darkvision increases by +60 feet.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "improved-lightning-reload-apg",
+    "name": "Improved Lightning Reload",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can reload firearms with almost supernatural speed."
+    },
+    "type": "General",
+    "description_html": "<p>You can reload firearms with almost supernatural speed.</p>",
+    "description_text": "You can reload firearms with almost supernatural speed.",
+    "benefit_html": "The speed with which you can reload firearms improves. You can reload a firearm that normally takes a move action as a free action, a firearm that takes a standard action to reload as a move action, a firearm that takes a full-round action to reload as a standard action, and a firearm that takes more than 1 round to reload in half the normal time. feat stacks with Lighting Reload. So, if you have both feats, you can reload a flintlock pistol (normally a standard action) as a free action.",
+    "benefit_text": "The speed with which you can reload firearms improves. You can reload a firearm that normally takes a move action as a free action, a firearm that takes a standard action to reload as a move action, a firearm that takes a full-round action to reload as a standard action, and a firearm that takes more than 1 round to reload in half the normal time. feat stacks with Lighting Reload. So, if you have both feats, you can reload a flintlock pistol (normally a standard action) as a free action.",
+    "prerequisite_html": "<p>Base attack bonus +6, Lightning Reload, Quick Draw, Agy 13.</p>",
+    "prerequisite_text": "Base attack bonus +6, Lightning Reload, Quick Draw, Agy 13.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "improved-shadowmeld-apg",
+    "name": "Improved Shadowmeld",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are one with the night - while moving slowly."
+    },
+    "type": "General",
+    "description_html": "<p>You are one with the night - while moving slowly.</p>",
+    "description_text": "You are one with the night - while moving slowly.",
+    "benefit_html": "Y our shadowmeld bonus applies if you move up to one-quarter your normal speed.",
+    "benefit_text": "Y our shadowmeld bonus applies if you move up to one-quarter your normal speed.",
+    "prerequisite_html": "<p>Shadowmeld. (Some night elves possess this trait, for e xample.)</p>",
+    "prerequisite_text": "Shadowmeld. (Some night elves possess this trait, for e xample.)",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "improved-stability-apg",
+    "name": "Improved Stability",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 38,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are more stable than other members of your race."
+    },
+    "type": "General",
+    "description_html": "<p>You are more stable than other members of your race.</p>",
+    "description_text": "You are more stable than other members of your race.",
+    "benefit_html": "As a swift action, you may deal damage to yourself by sheer force of will, and use the pain to provide bonuses to your damage rolls. For every 1d6 points of damage you deal to yourself, you gain a +1 morale bonus on your next attack roll and, if you hit, a +2 morale bonus on the damage roll. Damage reduction (and anything else) cannot prevent the damage you deal to yourself. You can use this ability only once per round, and the maximum damage you can deal to yourself depends on your character level. At 5th level and below you can deal 1d6 points of damage; at 6th level 2d6; at 11th level 3d6; and at 16th 4d6.",
+    "benefit_text": "As a swift action, you may deal damage to yourself by sheer force of will, and use the pain to provide bonuses to your damage rolls. For every 1d6 points of damage you deal to yourself, you gain a +1 morale bonus on your next attack roll and, if you hit, a +2 morale bonus on the damage roll. Damage reduction (and anything else) cannot prevent the damage you deal to yourself. You can use this ability only once per round, and the maximum damage you can deal to yourself depends on your character level. At 5th level and below you can deal 1d6 points of damage; at 6th level 2d6; at 11th level 3d6; and at 16th 4d6.",
+    "prerequisite_html": "<p>Power Attack, base attack bonus +4.</p>",
+    "prerequisite_text": "Power Attack, base attack bonus +4.",
+    "special_html": "<p>You can take this feat more than once. Each time you do, your bonus to resist being bull rushed or tripped increases by +4 (whether standing firmly on the ground or not), and you gain a +1 bonus on Fortitude saves.</p>",
+    "special_text": "You can take this feat more than once. Each time you do, your bonus to resist being bull rushed or tripped increases by +4 (whether standing firmly on the ground or not), and you gain a +1 bonus on Fortitude saves.",
+    "normal_html": "<p>Stability grants a +4 bonus and does not apply when you are not standing firmly on the ground.</p>",
+    "normal_text": "Stability grants a +4 bonus and does not apply when you are not standing firmly on the ground."
+  },
+  {
+    "slug": "low-light-vision-development-apg",
+    "name": "Low-Light Vision Development",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 39,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Y our low-light vision develops such acuity that you can see in complete darkness."
+    },
+    "type": "General",
+    "description_html": "<p>Y our low-light vision develops such acuity that you can see in complete darkness.</p>",
+    "description_text": "Y our low-light vision develops such acuity that you can see in complete darkness.",
+    "benefit_html": "Y ou gain darkvision out to a distance of 30 feet in addition to your low-light vision. Like other forms of darkvision, this vision is black and white only.",
+    "benefit_text": "Y ou gain darkvision out to a distance of 30 feet in addition to your low-light vision. Like other forms of darkvision, this vision is black and white only.",
+    "prerequisite_html": "<p>Low-light vision.</p>",
+    "prerequisite_text": "Low-light vision.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Characters with low-light vision cannot see in total darkness.</p>",
+    "normal_text": "Characters with low-light vision cannot see in total darkness."
+  },
+  {
+    "slug": "mechanical-affinity-apg",
+    "name": "Mechanical Affinity",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 39,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "You have a natural knack for studying mechanical items at their core, learning how they fit together just so."
+    },
+    "type": "Technology",
+    "description_html": "<p>You have a natural knack for studying mechanical items at their core, learning how they fit together just so.</p>",
+    "description_text": "You have a natural knack for studying mechanical items at their core, learning how they fit together just so.",
+    "benefit_html": "While dealing with a non-magical trap or a device with a TS of 5 or less, you gain a +4 bonus on Disable Device and Open Lock checks. You gain a +2 bonus on Search checks to find traps.",
+    "benefit_text": "While dealing with a non-magical trap or a device with a TS of 5 or less, you gain a +4 bonus on Disable Device and Open Lock checks. You gain a +2 bonus on Search checks to find traps.",
+    "prerequisite_html": "<p>Disable Device 2 ranks, Open Lock 2 ranks.</p>",
+    "prerequisite_text": "Disable Device 2 ranks, Open Lock 2 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "mount-bond-apg",
+    "name": "Mount Bond",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 39,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You have a special bond with your mount. This feat is common among Wildhammer dwarves, who form spiritual ties with their gryphons."
+    },
+    "type": "General",
+    "description_html": "<p>You have a special bond with your mount. This feat is common among Wildhammer dwarves, who form spiritual ties with their gryphons.</p>",
+    "description_text": "You have a special bond with your mount. This feat is common among Wildhammer dwarves, who form spiritual ties with their gryphons.",
+    "benefit_html": "Choose one specific mount to be your bonded mount. You must ride this mount for at least two weeks before gaining the benefits of bonding. While you are riding the mount, you gain a +2 bonus on Ride checks, and the mount gains a +1 morale bonus on attack and damage rolls. Y ou can break the bond with your mount in order to bond with another mount, but you must spend two weeks without a bonded mount before forming a bond with a new mount. Thus, you must spend four weeks in between mounts (two weeks without a mount, then two weeks bonding to a new mount).",
+    "benefit_text": "Choose one specific mount to be your bonded mount. You must ride this mount for at least two weeks before gaining the benefits of bonding. While you are riding the mount, you gain a +2 bonus on Ride checks, and the mount gains a +1 morale bonus on attack and damage rolls. Y ou can break the bond with your mount in order to bond with another mount, but you must spend two weeks without a bonded mount before forming a bond with a new mount. Thus, you must spend four weeks in between mounts (two weeks without a mount, then two weeks bonding to a new mount).",
+    "prerequisite_html": "<p>Handle Animal 8 ranks, Ride 8 ranks.</p>",
+    "prerequisite_text": "Handle Animal 8 ranks, Ride 8 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "like-ability-apg",
+    "name": "Like Ability",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 39,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "like ability almost instantly. S pell-like ability at caster level 10th or higher."
+    },
+    "type": "General",
+    "description_html": "<p>like ability almost instantly. S pell-like ability at caster level 10th or higher.</p>",
+    "description_text": "like ability almost instantly. S pell-like ability at caster level 10th or higher.",
+    "benefit_html": "Choose one of your spell-like abilities, subject to the restrictions described below. You can use that ability as a quickened spell-like ability three times per day (or less, if the ability is normally usable only once or twice per day). action that does not provoke an attack of opportunity. You can perform another action - including the use of another spell-like ability - in the same round that you use a quickened spell-like ability. You may use only one quickened spell-like ability per round. (See More Magic & Mayhem, Chapter 3: Power Overwhelming, for a description of swift actions.) Y ou can select only a spell-like ability duplicating a spell with a level less than or equal to half your caster level (round down) -4. For a summary, see the table on the next page. In addition, a spell-like ability that duplicates a spell with a casting time greater than 1 full round cannot be quickened.",
+    "benefit_text": "Choose one of your spell-like abilities, subject to the restrictions described below. You can use that ability as a quickened spell-like ability three times per day (or less, if the ability is normally usable only once or twice per day). action that does not provoke an attack of opportunity. You can perform another action - including the use of another spell-like ability - in the same round that you use a quickened spell-like ability. You may use only one quickened spell-like ability per round. (See More Magic & Mayhem, Chapter 3: Power Overwhelming, for a description of swift actions.) Y ou can select only a spell-like ability duplicating a spell with a level less than or equal to half your caster level (round down) -4. For a summary, see the table on the next page. In addition, a spell-like ability that duplicates a spell with a casting time greater than 1 full round cannot be quickened.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "<p>You can take this feat multiple times. Each time you take it, you apply it to a different one of your spell-like abilities.</p>",
+    "special_text": "You can take this feat multiple times. Each time you take it, you apply it to a different one of your spell-like abilities.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "racial-pride-apg",
+    "name": "Racial Pride",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 40,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "battle. Night elf power!"
+    },
+    "type": "General",
+    "description_html": "<p>battle. Night elf power!</p>",
+    "description_text": "battle. Night elf power!",
+    "benefit_html": "If you are adjacent to two allies of your race, you gain a +2 morale bonus on melee attack rolls. However, when attacking a member of your own race, not only can you not receive this bonus, you also take a -1 penalty on attack rolls.",
+    "benefit_text": "If you are adjacent to two allies of your race, you gain a +2 morale bonus on melee attack rolls. However, when attacking a member of your own race, not only can you not receive this bonus, you also take a -1 penalty on attack rolls.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "racial-unity-apg",
+    "name": "Racial Unity",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 40,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "when member races combine their strengths."
+    },
+    "type": "General",
+    "description_html": "<p>when member races combine their strengths.</p>",
+    "description_text": "when member races combine their strengths.",
+    "benefit_html": "When you are adjacent to at least two allies of races other than your own and other than each other, you gain a +2 morale bonus on melee damage rolls.",
+    "benefit_text": "When you are adjacent to at least two allies of races other than your own and other than each other, you gain a +2 morale bonus on melee damage rolls.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "racial-weapon-focus-apg",
+    "name": "Racial Weapon Focus",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 40,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are especially proficient with your traditional racial weapons."
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>You are especially proficient with your traditional racial weapons.</p>",
+    "description_text": "You are especially proficient with your traditional racial weapons.",
+    "benefit_html": "You gain Weapon Focus with all weapons with which you have weapon familiarity. with those weapons. Even if you gain the Weapon Focus feat with these weapons, the bonuses from Weapon Focus and Racial Weapon Focus don't stack. However, you can use Racial Weapon Focus as a prerequisite for any feat (or prestige class, or anything else) that requires Weapon Focus.",
+    "benefit_text": "You gain Weapon Focus with all weapons with which you have weapon familiarity. with those weapons. Even if you gain the Weapon Focus feat with these weapons, the bonuses from Weapon Focus and Racial Weapon Focus don't stack. However, you can use Racial Weapon Focus as a prerequisite for any feat (or prestige class, or anything else) that requires Weapon Focus.",
+    "prerequisite_html": "<p>Weapon familiarity, proficiency with all weapons with which you have weapon familiarity.</p>",
+    "prerequisite_text": "Weapon familiarity, proficiency with all weapons with which you have weapon familiarity.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "racial-weapon-specialization-apg",
+    "name": "Racial Weapon Specialization",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 40,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "with your traditional racial weapons."
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>with your traditional racial weapons.</p>",
+    "description_text": "with your traditional racial weapons.",
+    "benefit_html": "You gain Weapon Specialization with all weapons with which you have weapon familiarity. with those weapons. Even if you gain the Weapon Specialization feat with these weapons, the bonuses from Weapon don't stack. However, you can use Racial Weapon Specialization as a prerequisite for any feat (or prestige class, or anything else) that requires Weapon Specialization.",
+    "benefit_text": "You gain Weapon Specialization with all weapons with which you have weapon familiarity. with those weapons. Even if you gain the Weapon Specialization feat with these weapons, the bonuses from Weapon don't stack. However, you can use Racial Weapon Specialization as a prerequisite for any feat (or prestige class, or anything else) that requires Weapon Specialization.",
+    "prerequisite_html": "<p>Racial Weapon Focus, warrior level 4th, weapon familiarity, proficiency with all weapons with which you have weapon familiarity.</p>",
+    "prerequisite_text": "Racial Weapon Focus, warrior level 4th, weapon familiarity, proficiency with all weapons with which you have weapon familiarity.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "racially-skilled-apg",
+    "name": "Racially Skilled",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 40,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "naturally competent even more adroitly than normal."
+    },
+    "type": "General",
+    "description_html": "<p>naturally competent even more adroitly than normal.</p>",
+    "description_text": "naturally competent even more adroitly than normal.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": "<p>Two skills with a +2 racial bonus. Benefits: Choose two skills in which you have at least a +2 racial bonus. You gain an additional +3 bonus on checks with these skills.</p>",
+    "prerequisite_text": "Two skills with a +2 racial bonus. Benefits: Choose two skills in which you have at least a +2 racial bonus. You gain an additional +3 bonus on checks with these skills.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Characters can take the Skilled feat to gain a +2 bonus on two skills of their choice.</p>",
+    "normal_text": "Characters can take the Skilled feat to gain a +2 bonus on two skills of their choice."
+  },
+  {
+    "slug": "shot-in-the-dark-apg",
+    "name": "Shot in the Dark",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 40,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You can fight at range without being able to see your foes. P rerequisites: Blind-Fight, Point Blank Shot, Precise Shot, Listen 8 ranks."
+    },
+    "type": "General, Warrior",
+    "description_html": "<p>You can fight at range without being able to see your foes. P rerequisites: Blind-Fight, Point Blank Shot, Precise Shot, Listen 8 ranks.</p>",
+    "description_text": "You can fight at range without being able to see your foes. P rerequisites: Blind-Fight, Point Blank Shot, Precise Shot, Listen 8 ranks.",
+    "benefit_html": "When you use a ranged attack against an opponent up to 30 feet away, every time you miss because of concealment, you can reroll your miss chance one time to see if you actually hit. An invisible attacker gets no advantages related to hitting you at range. That is, you don't lose your Dexterity bonus to Armor Class, and the to Empower to Extend to Quicken 0 4th 2nd 8th 1st 6th 4th 10th 2nd 8th 6th 12th 3rd 10th 8th 14th 4th 12th 10th 16th 5th 14th 12th 18th 6th 16th 14th 20th 7th 18th 16th - 8th 20th 18th - 9th - 20th - &%!43 \u0014\u0011 \u0013\u0001CPOVT\u0001GPS\u0001CFJOH\u0001 /PSNBM\u001b\u0001 3FHVMBS\u0001 BUUBDL\u0001 SPMM\u0001 NPEJGJFST\u0001 GPS\u0001 \u0001BOE\u0001ZPV\u0001",
+    "benefit_text": "When you use a ranged attack against an opponent up to 30 feet away, every time you miss because of concealment, you can reroll your miss chance one time to see if you actually hit. An invisible attacker gets no advantages related to hitting you at range. That is, you don't lose your Dexterity bonus to Armor Class, and the to Empower to Extend to Quicken 0 4th 2nd 8th 1st 6th 4th 10th 2nd 8th 6th 12th 3rd 10th 8th 14th 4th 12th 10th 16th 5th 14th 12th 18th 6th 16th 14th 20th 7th 18th 16th - 8th 20th 18th - 9th - 20th - &%!43 \u0014\u0011 \u0013\u0001CPOVT\u0001GPS\u0001CFJOH\u0001 /PSNBM\u001b\u0001 3FHVMBS\u0001 BUUBDL\u0001 SPMM\u0001 NPEJGJFST\u0001 GPS\u0001 \u0001BOE\u0001ZPV\u0001",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "wakeful-nature-apg",
+    "name": "Wakeful Nature",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 41,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": ":PVS\u0001 CPEZ\u0001 CPVODFT\u0001 CBDL\u0001 GSPN\u0001 GBUJHVF\u0001 GBTUFS\u0001 UIBO\u0001 1SFSFRVJTJUF\u001b\u00014UB\u0001\u0012\u0014\u000f #FOFGJU\u001b\u0001:PV\u0001OFFE\u0001POMZ\u0001\u0015\u0001IPVST\u0001PG\u0001TMFFQ\u0001JOTUFBE\u0001 \u0001BOE\u0001 UP\u0001 PWFSDPNF\u0001 GBUJHVF\u0001 BOE\u0001 TJNJMBS\u0001 DPOEJUJPOT"
+    },
+    "type": "General",
+    "description_html": "<p>:PVS\u0001 CPEZ\u0001 CPVODFT\u0001 CBDL\u0001 GSPN\u0001 GBUJHVF\u0001 GBTUFS\u0001 UIBO\u0001 1SFSFRVJTJUF\u001b\u00014UB\u0001\u0012\u0014\u000f #FOFGJU\u001b\u0001:PV\u0001OFFE\u0001POMZ\u0001\u0015\u0001IPVST\u0001PG\u0001TMFFQ\u0001JOTUFBE\u0001 \u0001BOE\u0001 UP\u0001 PWFSDPNF\u0001 GBUJHVF\u0001 BOE\u0001 TJNJMBS\u0001 DPOEJUJPOT\u000f\u0001 :PV\u0001 \u0015\u0001CPOVT\u0001PO\u0001BOZ\u0001DIFDL\u0001UP\u0001BWPJE\u0001CFDPNJOH\u0001</p>",
+    "description_text": ":PVS\u0001 CPEZ\u0001 CPVODFT\u0001 CBDL\u0001 GSPN\u0001 GBUJHVF\u0001 GBTUFS\u0001 UIBO\u0001 1SFSFRVJTJUF\u001b\u00014UB\u0001\u0012\u0014\u000f #FOFGJU\u001b\u0001:PV\u0001OFFE\u0001POMZ\u0001\u0015\u0001IPVST\u0001PG\u0001TMFFQ\u0001JOTUFBE\u0001 \u0001BOE\u0001 UP\u0001 PWFSDPNF\u0001 GBUJHVF\u0001 BOE\u0001 TJNJMBS\u0001 DPOEJUJPOT\u000f\u0001 :PV\u0001 \u0015\u0001CPOVT\u0001PO\u0001BOZ\u0001DIFDL\u0001UP\u0001BWPJE\u0001CFDPNJOH\u0001",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "wild-dance-spell-apg",
+    "name": "Wild Dance Spell",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Alliance Player's Guide",
+      "abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "page": 41,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "APG",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": ":PV\u0001DBO\u0001EBODF\u0001MJLF\u0001B\u0001EFSWJTI \u0001FOUFSJOH\u0001B\u0001USBODF\u0001UIBU\u0001 1SFSFRVJTJUFT\u001b\u0001 \"HZ\u0001 \u0012\u0018 \u0001 1FSGPSN\u0001 EBODF \u0001 \u0012\u0018\u0001 SBOLT \u0001 %BODF\u00014QFMM\u0001 TFF\u0001BCPWF \u0001%PEHF \u0001(SFBUFS\u0001%BODF\u00014QFMM\u0001 \u0001BCJMJUZ\u0001UP\u0001DBTU\u0001\u0016U"
+    },
+    "type": "General",
+    "description_html": "<p>:PV\u0001DBO\u0001EBODF\u0001MJLF\u0001B\u0001EFSWJTI \u0001FOUFSJOH\u0001B\u0001USBODF\u0001UIBU\u0001 1SFSFRVJTJUFT\u001b\u0001 \"HZ\u0001 \u0012\u0018 \u0001 1FSGPSN\u0001 EBODF \u0001 \u0012\u0018\u0001 SBOLT \u0001 %BODF\u00014QFMM\u0001 TFF\u0001BCPWF \u0001%PEHF \u0001(SFBUFS\u0001%BODF\u00014QFMM\u0001 \u0001BCJMJUZ\u0001UP\u0001DBTU\u0001\u0016UI\u000eMFWFM\u0001TQFMMT\u000f\u0001 #FOFmU\u001b\u00018IJMF\u0001ZPV\u0001DBTU\u0001B\u0001TQFMM\u0001XJUI\u0001UIF\u0001%BODF\u00014QFMM\u0001 \u0001ZPV\u0001HBJO\u0001EBNBHF\u0001SFEVDUJPO\u0001\u0014\u0010\u000f\u0001*G\u0001ZPV\u0001DBTU\u0001B\u0001TQFMM\u0001 \u0001UIF\u0001EBNBHF\u0001 \u0012\u000f\u0001*U\u0001DPOUJOVFT\u0001UP\u0001JODSFBTF\u0001CZ\u0001 \u0012\u0001 FBDI\u0001SPVOE\u0001ZPV\u0001DBTU\u0001B\u0001TQFMM\u0001VTJOH\u0001UIF\u0001%BODF\u00014QFMM\u0001GFBU \u0001UP\u0001 B\u0001NBYJNVN\u0001PG\u0001\u0019\u0010\u000f\u0001:PVS\u0001EBNBHF\u0001SFEVDUJPO\u0001DPOUJOVFT\u0001UP\u0001 JODSFBTF\u0001VOUJM\u0001ZPV\u0001EP\u0001OPU\u0001DBTU\u0001B\u0001TQFMM\u0001XJUI\u0001%BODF\u00014QFMM\u0001 \u0001ZPVS\u0001CPOVT\u0001PO\u0001$PODFOUSBUJPO\u0001 \u0019\u000f\u0001:PV\u0001 DPOUJOVF\u0001UP\u0001HBJO\u0001BMM\u0001UIF\u0001CPOVTFT\u0001PG\u0001%BODF\u00014QFMM\u0001BT\u0001XFMM\u000f s000616_p1_118.indd 41s000616_p1_118.indd 41 4/15/06 2:38:04 PM4/15/06 2:38:04 PM This chapter includes many new prestige classes. These classes are particularly appropriate for members of the Alliance and/or the Alliance's specific races; however, any character who meets the prerequisites can take a prestige class, even members of the Horde. goblins also find the path of the ace irresistible, plying their madness-enhanced skills while piloting upgraded war zeppelins and other aeronautical nightmares. At least one notable goblin ace spreads fear in the airways of Kalimdor via an intricate rocket pack strapped to his back and several mounted weapons (see the \"Lords of the Sky - Notable Aces\" sidebar). Most goblin aces, unfortunately, turn into deadly aerial pirates for Ratchet. These buccaneers of the air inspire terror over caravans, keeping guards near the east coast of Kalimdor looking to the sky. Whether mercenary or enlisted, the ace attempts to stretch and break the boundaries of his skills, seeking other aces to prove that he, alone, is the greatest pilot ever . This tendency forces many an ace to travel the world in his vehicle, stopping only in bars to brag about his exploits, or repair shops to correct the inevitable wear and tear he puts his machine through. Many aces hold personal contests or issue proclamations of talent; and more than one city hosts fairs where aces of different generations, races and talent come together in epic contests of skill. Adventuring provides aces with \"exercise,\" a chance to hone their skills and possibly earn some money to upgrade their crafts. Most aces take advantage of a special technological device (see the portable vehicular transformer in Chapter 5: T echnology) or a spell or magic item to bring their vehicles with them. Some even cobble together tank treads or other devices, grounding their vehicles to go underground. Jinxo cowered in the back of her cage whenever the orcs came to visit her. She figured the best way of going about her incarceration was to pretend to be as frightened as possible. Granted, she was terrified of the hulking things, but she knew she could escape at any time. lock to her cage was pitiful; she could pick it with a strong twig. But once picked, she had no idea where she would go, or if she could outrun her captors. She had to get a weapon. were part of a caravan, moving. No windows lined her compartment, so she had no idea in which direction they were moving. She bided her time and carefully inventoried the interior of the wagon. She could likely cobble together a small bomb with the junk in the wagon. But she would need gunpowder. It was difficult to work without tools at first, but she had nothing else to do with her time, and it kept her busy. The caravan kept moving. One morning she heard what seemed to be the sounds of a town around her. It was easy to figure out now: Gadgetzan. The orcs spoke to a goblin outside the caravan, apparently dealing to sell her. She was to be a slave to a goblin. She began to smile, cradling her bomb to her chest. This was going to be easy. Description: The saying goes: Any tinker can pilot a vehicle, but only the truly gifted can be the vehicle. The thrill of high-flying combat sings to a particularly few foolhardy types, who forgo all worldly pursuits to become one with their vehicles, flying barons of destruction. These few brave and exemplary souls are known as aces. An ace is a master of the wheel, a vehicular expert with no equal. The thrill of the dive-bomb - the rush of wind past his goggled face, the roar of the phlogiston engines beneath him, these are the things that give life meaning to aces. While the ace is a master of any vehicle he can get his hands on, the ace is truly free only while in the air . Throughout his training, the ace gains sharp wits and quick hands, and even outside of the cockpit he is always on the verge of moving. Every action is graceful, every word sharp and cocky , and his eyes forever look toward the horizon. For the flyboys of the world, every day is a new experience, and every moment on the ground is wasted when one could be soaring in the heavens. Aces in the W orld: By large, aces are members of the Alliance. Gnomes and Ironforge dwarves create some of the slickest, meanest aerial machines Azeroth has ever known, and in all three wars they proved their mettle again and again. Aces proved their worth in the Third W ar , where they dished aerial death to the enemies of Stormwind and Lordaeron from atop their steam-powered vessels; many aces claim that, without them, the end of the war would have been quite different. In times of relative peace, the Alliance aces still fly sorties when needed, and often enlist as guards escorting cargo over aerial pathways.</p>",
+    "description_text": ":PV\u0001DBO\u0001EBODF\u0001MJLF\u0001B\u0001EFSWJTI \u0001FOUFSJOH\u0001B\u0001USBODF\u0001UIBU\u0001 1SFSFRVJTJUFT\u001b\u0001 \"HZ\u0001 \u0012\u0018 \u0001 1FSGPSN\u0001 EBODF \u0001 \u0012\u0018\u0001 SBOLT \u0001 %BODF\u00014QFMM\u0001 TFF\u0001BCPWF \u0001%PEHF \u0001(SFBUFS\u0001%BODF\u00014QFMM\u0001 \u0001BCJMJUZ\u0001UP\u0001DBTU\u0001\u0016UI\u000eMFWFM\u0001TQFMMT\u000f\u0001 #FOFmU\u001b\u00018IJMF\u0001ZPV\u0001DBTU\u0001B\u0001TQFMM\u0001XJUI\u0001UIF\u0001%BODF\u00014QFMM\u0001 \u0001ZPV\u0001HBJO\u0001EBNBHF\u0001SFEVDUJPO\u0001\u0014\u0010\u000f\u0001*G\u0001ZPV\u0001DBTU\u0001B\u0001TQFMM\u0001 \u0001UIF\u0001EBNBHF\u0001 \u0012\u000f\u0001*U\u0001DPOUJOVFT\u0001UP\u0001JODSFBTF\u0001CZ\u0001 \u0012\u0001 FBDI\u0001SPVOE\u0001ZPV\u0001DBTU\u0001B\u0001TQFMM\u0001VTJOH\u0001UIF\u0001%BODF\u00014QFMM\u0001GFBU \u0001UP\u0001 B\u0001NBYJNVN\u0001PG\u0001\u0019\u0010\u000f\u0001:PVS\u0001EBNBHF\u0001SFEVDUJPO\u0001DPOUJOVFT\u0001UP\u0001 JODSFBTF\u0001VOUJM\u0001ZPV\u0001EP\u0001OPU\u0001DBTU\u0001B\u0001TQFMM\u0001XJUI\u0001%BODF\u00014QFMM\u0001 \u0001ZPVS\u0001CPOVT\u0001PO\u0001$PODFOUSBUJPO\u0001 \u0019\u000f\u0001:PV\u0001 DPOUJOVF\u0001UP\u0001HBJO\u0001BMM\u0001UIF\u0001CPOVTFT\u0001PG\u0001%BODF\u00014QFMM\u0001BT\u0001XFMM\u000f s000616_p1_118.indd 41s000616_p1_118.indd 41 4/15/06 2:38:04 PM4/15/06 2:38:04 PM This chapter includes many new prestige classes. These classes are particularly appropriate for members of the Alliance and/or the Alliance's specific races; however, any character who meets the prerequisites can take a prestige class, even members of the Horde. goblins also find the path of the ace irresistible, plying their madness-enhanced skills while piloting upgraded war zeppelins and other aeronautical nightmares. At least one notable goblin ace spreads fear in the airways of Kalimdor via an intricate rocket pack strapped to his back and several mounted weapons (see the \"Lords of the Sky - Notable Aces\" sidebar). Most goblin aces, unfortunately, turn into deadly aerial pirates for Ratchet. These buccaneers of the air inspire terror over caravans, keeping guards near the east coast of Kalimdor looking to the sky. Whether mercenary or enlisted, the ace attempts to stretch and break the boundaries of his skills, seeking other aces to prove that he, alone, is the greatest pilot ever . This tendency forces many an ace to travel the world in his vehicle, stopping only in bars to brag about his exploits, or repair shops to correct the inevitable wear and tear he puts his machine through. Many aces hold personal contests or issue proclamations of talent; and more than one city hosts fairs where aces of different generations, races and talent come together in epic contests of skill. Adventuring provides aces with \"exercise,\" a chance to hone their skills and possibly earn some money to upgrade their crafts. Most aces take advantage of a special technological device (see the portable vehicular transformer in Chapter 5: T echnology) or a spell or magic item to bring their vehicles with them. Some even cobble together tank treads or other devices, grounding their vehicles to go underground. Jinxo cowered in the back of her cage whenever the orcs came to visit her. She figured the best way of going about her incarceration was to pretend to be as frightened as possible. Granted, she was terrified of the hulking things, but she knew she could escape at any time. lock to her cage was pitiful; she could pick it with a strong twig. But once picked, she had no idea where she would go, or if she could outrun her captors. She had to get a weapon. were part of a caravan, moving. No windows lined her compartment, so she had no idea in which direction they were moving. She bided her time and carefully inventoried the interior of the wagon. She could likely cobble together a small bomb with the junk in the wagon. But she would need gunpowder. It was difficult to work without tools at first, but she had nothing else to do with her time, and it kept her busy. The caravan kept moving. One morning she heard what seemed to be the sounds of a town around her. It was easy to figure out now: Gadgetzan. The orcs spoke to a goblin outside the caravan, apparently dealing to sell her. She was to be a slave to a goblin. She began to smile, cradling her bomb to her chest. This was going to be easy. Description: The saying goes: Any tinker can pilot a vehicle, but only the truly gifted can be the vehicle. The thrill of high-flying combat sings to a particularly few foolhardy types, who forgo all worldly pursuits to become one with their vehicles, flying barons of destruction. These few brave and exemplary souls are known as aces. An ace is a master of the wheel, a vehicular expert with no equal. The thrill of the dive-bomb - the rush of wind past his goggled face, the roar of the phlogiston engines beneath him, these are the things that give life meaning to aces. While the ace is a master of any vehicle he can get his hands on, the ace is truly free only while in the air . Throughout his training, the ace gains sharp wits and quick hands, and even outside of the cockpit he is always on the verge of moving. Every action is graceful, every word sharp and cocky , and his eyes forever look toward the horizon. For the flyboys of the world, every day is a new experience, and every moment on the ground is wasted when one could be soaring in the heavens. Aces in the W orld: By large, aces are members of the Alliance. Gnomes and Ironforge dwarves create some of the slickest, meanest aerial machines Azeroth has ever known, and in all three wars they proved their mettle again and again. Aces proved their worth in the Third W ar , where they dished aerial death to the enemies of Stormwind and Lordaeron from atop their steam-powered vessels; many aces claim that, without them, the end of the war would have been quite different. In times of relative peace, the Alliance aces still fly sorties when needed, and often enlist as guards escorting cargo over aerial pathways.",
+    "benefit_html": "",
+    "benefit_text": "",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  }
+]

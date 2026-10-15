@@ -12,7 +12,13 @@ import {
 
 const DATA_DIR = resolve(__dirname, "../../data/dndtools");
 const OUTPUT_FILE = join(DATA_DIR, ".index", "class_type_map.json");
-const SUPPLEMENTAL_CLASS_FILES = ["warcraft_rpg_classes.json"] as const;
+const SUPPLEMENTAL_CLASS_FILES = [
+  "warcraft_rpg_classes.json",
+  "wowrpg_core_classes.json",
+  "wowrpg_apg_classes.json",
+  "wowrpg_hpg_classes.json",
+  "wowrpg_mmm_classes.json",
+] as const;
 
 type ClassRecord = { slug: string } & ClassTypeInput;
 

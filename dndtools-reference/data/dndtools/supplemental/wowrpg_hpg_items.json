@@ -1,0 +1,326 @@
+[
+  {
+    "slug": "granite-plate-hpg",
+    "name": "Granite Plate",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "9,750 gp"
+    },
+    "price": "9,750 gp",
+    "caster_level": "7th",
+    "aura": "Strong warrior",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: Clever tauren craftsmanship makes this suit of stone half plate light and flexible enough for a strong warrior to wear. Thin stone plates overlap over a leather suit, providing protection without hampering movement. The wealthy sometimes embellish suits of granite plate with rough gems embedded in the stone plates. While tauren originally designed granite plate, its use spreads to other races as well. Powers: This +2 half plate weighs 75 pounds and has an armor check penalty of -7, but grants its wearer damage reduction 2/-. In addition, anyone wearing granite armor who also has the War Stomp feat gains a +1 to the War Stomp save DC. Moderate transmutation; CL 7th; Craft Magic Arms and Armor, mark of the wild; Price 9,750 gp; Cost 5,250 gp + 360 XP . Thunder Lizard Hide</p>",
+    "description_text": "Description: Clever tauren craftsmanship makes this suit of stone half plate light and flexible enough for a strong warrior to wear. Thin stone plates overlap over a leather suit, providing protection without hampering movement. The wealthy sometimes embellish suits of granite plate with rough gems embedded in the stone plates. While tauren originally designed granite plate, its use spreads to other races as well. Powers: This +2 half plate weighs 75 pounds and has an armor check penalty of -7, but grants its wearer damage reduction 2/-. In addition, anyone wearing granite armor who also has the War Stomp feat gains a +1 to the War Stomp save DC. Moderate transmutation; CL 7th; Craft Magic Arms and Armor, mark of the wild; Price 9,750 gp; Cost 5,250 gp + 360 XP . Thunder Lizard Hide"
+  },
+  {
+    "slug": "thunder-lizard-hide-hpg",
+    "name": "Thunder Lizard Hide",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "47,665 gp"
+    },
+    "price": "47,665 gp",
+    "caster_level": "7th",
+    "aura": "Moderate abjuration",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: Crafters make these suits of thick hide armor from the skins of the thunder lizards that roam the Barrens. Each suit looks heavy and cumbersome, but once a character dons the armor he finds it is no more difficult to wear than regular hide. Thunder lizard tail- spikes adorn the armor's shoulder plates, and a black lightning bolt emblazons the breastplate. Powers: Thunder lizard hide is a suit of +2 hide armor of improved electricity resistance. In addition, the wearer gains a +4 bonus to resist bull rush, overrun and trip attempts. Moderate abjuration; CL 7th; Craft Magic Arms and Armor, bull's strength, resist energy; Price 47,665 gp; Cost 23,915 gp + 1,900 XP . Wild Mantle</p>",
+    "description_text": "Description: Crafters make these suits of thick hide armor from the skins of the thunder lizards that roam the Barrens. Each suit looks heavy and cumbersome, but once a character dons the armor he finds it is no more difficult to wear than regular hide. Thunder lizard tail- spikes adorn the armor's shoulder plates, and a black lightning bolt emblazons the breastplate. Powers: Thunder lizard hide is a suit of +2 hide armor of improved electricity resistance. In addition, the wearer gains a +4 bonus to resist bull rush, overrun and trip attempts. Moderate abjuration; CL 7th; Craft Magic Arms and Armor, bull's strength, resist energy; Price 47,665 gp; Cost 23,915 gp + 1,900 XP . Wild Mantle"
+  },
+  {
+    "slug": "wild-mantle-hpg",
+    "name": "Wild Mantle",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 109,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "17,415 gp (eagle or owl)"
+    },
+    "price": "17,415 gp (eagle or owl)",
+    "caster_level": "9th",
+    "aura": "Moderate conjuration",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: This hide is crafted from some great natural beast, such as a wolf or bear, including the head, which forms a hood where the wearer sees through the animal's eyes. The mantle protects its bearer, but it seems to be alive as well, wishing to attack its bearer's enemies. Powers: This +2 hide armor allows the wearer to use summon nature's ally three times per day to summon an animal of type from which the mantle is made. The mantle may be made from the following animals: apes, bears (black, grizzly or polar), eagles, lions, owls, tigers, giant wolves (see Chapter 9), rhinoceroses, or wolverines. This armor is also a beast armor of the type the hide is from, granting a +2 bonus to two abilities. See More Magic &amp; Mayhem for more on beast armors. Moderate conjuration; CL 9th; Craft W ondrous Item, summon nature's ally I (eagle or owl), II (black bear, giant wolf, or wolverine), III (ape or lion), IV (grizzly bear or tiger), or V (polar bear or rhinoceros); Price 17,415 gp (eagle or owl); 22,415 gp (black bear, giant wolf, wolverine); 34,915 gp (ape or lion); 51,165 gp (grizzly bear or tiger); 72,415 gp (polar bear or rhinoceros); Cost 8,790 gp + 690 XP (eagle or owl); 11,290 gp + 890 XP (black bear, giant wolf, or wolverine); 17,540 gp + 1,390 XP (ape or lion); 25,655 gp + 2,040 XP (grizzly bear or tiger); 36,290 gp + 2,890 XP (polar bear or rhinoceros). Magic Weapon Special Properties Entropic</p>",
+    "description_text": "Description: This hide is crafted from some great natural beast, such as a wolf or bear, including the head, which forms a hood where the wearer sees through the animal's eyes. The mantle protects its bearer, but it seems to be alive as well, wishing to attack its bearer's enemies. Powers: This +2 hide armor allows the wearer to use summon nature's ally three times per day to summon an animal of type from which the mantle is made. The mantle may be made from the following animals: apes, bears (black, grizzly or polar), eagles, lions, owls, tigers, giant wolves (see Chapter 9), rhinoceroses, or wolverines. This armor is also a beast armor of the type the hide is from, granting a +2 bonus to two abilities. See More Magic & Mayhem for more on beast armors. Moderate conjuration; CL 9th; Craft W ondrous Item, summon nature's ally I (eagle or owl), II (black bear, giant wolf, or wolverine), III (ape or lion), IV (grizzly bear or tiger), or V (polar bear or rhinoceros); Price 17,415 gp (eagle or owl); 22,415 gp (black bear, giant wolf, wolverine); 34,915 gp (ape or lion); 51,165 gp (grizzly bear or tiger); 72,415 gp (polar bear or rhinoceros); Cost 8,790 gp + 690 XP (eagle or owl); 11,290 gp + 890 XP (black bear, giant wolf, or wolverine); 17,540 gp + 1,390 XP (ape or lion); 25,655 gp + 2,040 XP (grizzly bear or tiger); 36,290 gp + 2,890 XP (polar bear or rhinoceros). Magic Weapon Special Properties Entropic"
+  },
+  {
+    "slug": "entropic-hpg",
+    "name": "Entropic",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "+1 bonus"
+    },
+    "price": "+1 bonus",
+    "caster_level": "7th",
+    "aura": "Moderate evocation",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: The Horde designed entropic weapons years ago in order to fight heavily armored Alliance knights. Some entropic weapons still survive from the first orc invasions, and orc warlocks remember the techniques used to craft these items. Entropic weapons look pitted, rusted or warped, though they function normally. Powers: Any time the wielder of an entropic weapon strikes an armored opponent, the opponent's armor temporarily loses 1 point of its armor bonus. On a critical hit, the armor loses 2 points of its armor bonus. An entropic weapon cannot reduce a suit of armor's armor bonus to below zero; nor can it remove enhancement bonuses or magic abilities, or affect natural armor. Armor regains its lost points of armor bonus at a rate of 1 point every 10 minutes. This property can be placed only on melee weapons. Moderate evocation; CL 7th; Craft Magic Arms and Armor, orb of annihilation; Price +1 bonus. Hexing</p>",
+    "description_text": "Description: The Horde designed entropic weapons years ago in order to fight heavily armored Alliance knights. Some entropic weapons still survive from the first orc invasions, and orc warlocks remember the techniques used to craft these items. Entropic weapons look pitted, rusted or warped, though they function normally. Powers: Any time the wielder of an entropic weapon strikes an armored opponent, the opponent's armor temporarily loses 1 point of its armor bonus. On a critical hit, the armor loses 2 points of its armor bonus. An entropic weapon cannot reduce a suit of armor's armor bonus to below zero; nor can it remove enhancement bonuses or magic abilities, or affect natural armor. Armor regains its lost points of armor bonus at a rate of 1 point every 10 minutes. This property can be placed only on melee weapons. Moderate evocation; CL 7th; Craft Magic Arms and Armor, orb of annihilation; Price +1 bonus. Hexing"
+  },
+  {
+    "slug": "hexing-hpg",
+    "name": "Hexing",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "+6,000 gp"
+    },
+    "price": "+6,000 gp",
+    "caster_level": "3rd",
+    "aura": "Faint necromancy",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: T roll witch doctors often craft hexing weapons for their tribes, and these weapons have since fallen into the hands of other Horde races. The Forsaken seem particularly fond of hexing weapons. A hexing weapon is often painted with bloody runes and staring eyes. Powers: Anyone struck by a hexing weapon must make a DC 12 Will save or take a -2 penalty on attack rolls against the wielder and a -2 penalty on saving throws against spells cast by the wielder. This is a mind- affecting fear effect. This property can be placed only on melee weapons. Faint necromancy; CL 3rd; Craft Magic Arms and Armor, doom; Price +6,000 gp; Cost +3,000 gp, + 240 XP . Specific Magic Weapons Boulder Sling</p>",
+    "description_text": "Description: T roll witch doctors often craft hexing weapons for their tribes, and these weapons have since fallen into the hands of other Horde races. The Forsaken seem particularly fond of hexing weapons. A hexing weapon is often painted with bloody runes and staring eyes. Powers: Anyone struck by a hexing weapon must make a DC 12 Will save or take a -2 penalty on attack rolls against the wielder and a -2 penalty on saving throws against spells cast by the wielder. This is a mind- affecting fear effect. This property can be placed only on melee weapons. Faint necromancy; CL 3rd; Craft Magic Arms and Armor, doom; Price +6,000 gp; Cost +3,000 gp, + 240 XP . Specific Magic Weapons Boulder Sling"
+  },
+  {
+    "slug": "boulder-sling-hpg",
+    "name": "Boulder Sling",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "86,750"
+    },
+    "price": "86,750",
+    "caster_level": "12th",
+    "aura": "Strong evocation",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: Orcs developed this powerful weapon for use in large battles. Stitched red and silver runes adorn the dark brown leather sling. Orc soldiers sometimes carried matching leather pouches to carry sling stones, though the pouches are not necessary for the enchantment to function. Powers: The boulder sling is a +4 distance sling. Three times a day, its wielder can utter a command word to activate the sling's special property. On its next attack, the boulder sling's sling stone expands in midair to become a giant boulder. The sling's wielder makes an attack roll as normal. On a successful hit, the boulder strikes its target and any creatures within 5 feet of the target for 10d6 points of bludgeoning damage. Creatures within 5 feet can make DC 14 Reflex saves for half damage. If the target is Large or larger, the boulder does not deal damage to adjacent creatures. Strong evocation; CL 12th; Craft Magic Arms and Armor, shockwave; Price 86,750; Cost 43,375 gp + 3,350 XP . Horn Axe</p>",
+    "description_text": "Description: Orcs developed this powerful weapon for use in large battles. Stitched red and silver runes adorn the dark brown leather sling. Orc soldiers sometimes carried matching leather pouches to carry sling stones, though the pouches are not necessary for the enchantment to function. Powers: The boulder sling is a +4 distance sling. Three times a day, its wielder can utter a command word to activate the sling's special property. On its next attack, the boulder sling's sling stone expands in midair to become a giant boulder. The sling's wielder makes an attack roll as normal. On a successful hit, the boulder strikes its target and any creatures within 5 feet of the target for 10d6 points of bludgeoning damage. Creatures within 5 feet can make DC 14 Reflex saves for half damage. If the target is Large or larger, the boulder does not deal damage to adjacent creatures. Strong evocation; CL 12th; Craft Magic Arms and Armor, shockwave; Price 86,750; Cost 43,375 gp + 3,350 XP . Horn Axe"
+  },
+  {
+    "slug": "horn-axe-hpg",
+    "name": "Horn Axe",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 110,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "Entropic +1 bonus Hexing +6,000 gp Hammer of Life 8,840 gp Lightning hammer 19,300 S pear of Hungry Ghosts 24,305 gp Scourgecrusher 32,308 gp Withered Bow 41,700 Horn Axe 42,310 gp Boulder Sling 84,050 The horn axe changes owners frequently"
+    },
+    "price": "Entropic +1 bonus Hexing +6,000 gp Hammer of Life 8,840 gp Lightning hammer 19,300 S pear of Hungry Ghosts 24,305 gp Scourgecrusher 32,308 gp Withered Bow 41,700 Horn Axe 42,310 gp Boulder Sling 84,050 The horn axe changes owners frequently",
+    "caster_level": "9th",
+    "aura": "Moderate conjuration",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: Cenarius, protector of the wilds, fell in battle against Grom Hellscream years ago. The night elves whisper that Cenarius only sleeps, and that one day he will reawaken and join the world again. According to rumor, Grom sliced off one of Cenarius's antlers during the battle. A fragment of antler surfaced a year later as the razor-sharp edge of a fearsome battleaxe. Knotted black wood forms the axe's haft, and dull gray iron that holds no reflection forms the axe head. Y ellow horn the shade of old bone makes up the axe's edge. Table 4-2: New Magic Weapons Item Price Entropic +1 bonus Hexing +6,000 gp Hammer of Life 8,840 gp Lightning hammer 19,300 S pear of Hungry Ghosts 24,305 gp Scourgecrusher 32,308 gp Withered Bow 41,700 Horn Axe 42,310 gp Boulder Sling 84,050 The horn axe changes owners frequently. Rumors regularly surface that Illidan the Betrayer seeks the horn axe or another fragment of antler so that he can construct his own axe. Powers: The horn axe is a +3 elf bane battleaxe. In addition, the wielder of the horn axe can turn (but not destroy) night elves as a healer of half his character level turns undead. Moderate conjuration; CL 9th; Craft Magic Arms and Armor, cause fear, summon monster I; Price 42,310 gp; Cost 21,310 gp + 1,680 XP . Hammer of Life</p>",
+    "description_text": "Description: Cenarius, protector of the wilds, fell in battle against Grom Hellscream years ago. The night elves whisper that Cenarius only sleeps, and that one day he will reawaken and join the world again. According to rumor, Grom sliced off one of Cenarius's antlers during the battle. A fragment of antler surfaced a year later as the razor-sharp edge of a fearsome battleaxe. Knotted black wood forms the axe's haft, and dull gray iron that holds no reflection forms the axe head. Y ellow horn the shade of old bone makes up the axe's edge. Table 4-2: New Magic Weapons Item Price Entropic +1 bonus Hexing +6,000 gp Hammer of Life 8,840 gp Lightning hammer 19,300 S pear of Hungry Ghosts 24,305 gp Scourgecrusher 32,308 gp Withered Bow 41,700 Horn Axe 42,310 gp Boulder Sling 84,050 The horn axe changes owners frequently. Rumors regularly surface that Illidan the Betrayer seeks the horn axe or another fragment of antler so that he can construct his own axe. Powers: The horn axe is a +3 elf bane battleaxe. In addition, the wielder of the horn axe can turn (but not destroy) night elves as a healer of half his character level turns undead. Moderate conjuration; CL 9th; Craft Magic Arms and Armor, cause fear, summon monster I; Price 42,310 gp; Cost 21,310 gp + 1,680 XP . Hammer of Life"
+  },
+  {
+    "slug": "hammer-of-life-hpg",
+    "name": "Hammer of Life",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "8,840 gp"
+    },
+    "price": "8,840 gp",
+    "caster_level": "8th",
+    "aura": "Moderate evocation",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: Tauren revere nature and, when hunting, they treat their prey with respect. A tauren who requires a powerful weapon sometimes embarks on a complex quest to create a hammer of life. A h ammer of life is a weapon that embodies a tauren's respect for nature. The tauren spends three days in the wild, meditating and communing with her ancestral spirits. At the end of this time, the tauren scouts the area and hunts the first animal she sees. Upon killing her quarry , the tauren brings its carcass back to her tribe. There, the tribe's shaman assists her in crafting a hammer of life. No part of the tauren's prey goes to waste. The animal's bones form the hammer's haft; its organs, stitched into a skin bag, make the hammer head. Sinew and strips of animal hide bind the hammer together, and the animal's teeth and claws adorn the weapon. The shaman calls upon the Earth Mother to bless the hammer and its wielder, and at the end of the crafting, the hammer morphs into a more aesthetically pleasing form. Its haft appears carved of pale wood, and its head of white stone. Anyone gripping the hammer, however, always feels smooth, cold bone under his hand, and the hammer seems to pulse with life. To anyone but the creator, a hammer of life feels unsettling. Powers: A hammer of life is a +1 greathammer of nature's bite. Anyone carrying the hammer of life gains a +4 bonus on Survival checks made to track an animal of the same type engraved on the hammer's head, and a +2 bonus on Handle Animal checks made to handle an animal of the same type engraved on the hammer's head. This represents the animal spirit's acceptance of the crafter's respect for nature and the reverence with which she hunts. Even when a hammer of life changes owners, its bonuses remain embedded in the item. Moderate evocation; CL 8th; Craft Magic Arms and Armor, acid splash, animal friendship; Price 8,840 gp; Cost 4,590 gp + 340 xp. Lightning hammer</p>",
+    "description_text": "Description: Tauren revere nature and, when hunting, they treat their prey with respect. A tauren who requires a powerful weapon sometimes embarks on a complex quest to create a hammer of life. A h ammer of life is a weapon that embodies a tauren's respect for nature. The tauren spends three days in the wild, meditating and communing with her ancestral spirits. At the end of this time, the tauren scouts the area and hunts the first animal she sees. Upon killing her quarry , the tauren brings its carcass back to her tribe. There, the tribe's shaman assists her in crafting a hammer of life. No part of the tauren's prey goes to waste. The animal's bones form the hammer's haft; its organs, stitched into a skin bag, make the hammer head. Sinew and strips of animal hide bind the hammer together, and the animal's teeth and claws adorn the weapon. The shaman calls upon the Earth Mother to bless the hammer and its wielder, and at the end of the crafting, the hammer morphs into a more aesthetically pleasing form. Its haft appears carved of pale wood, and its head of white stone. Anyone gripping the hammer, however, always feels smooth, cold bone under his hand, and the hammer seems to pulse with life. To anyone but the creator, a hammer of life feels unsettling. Powers: A hammer of life is a +1 greathammer of nature's bite. Anyone carrying the hammer of life gains a +4 bonus on Survival checks made to track an animal of the same type engraved on the hammer's head, and a +2 bonus on Handle Animal checks made to handle an animal of the same type engraved on the hammer's head. This represents the animal spirit's acceptance of the crafter's respect for nature and the reverence with which she hunts. Even when a hammer of life changes owners, its bonuses remain embedded in the item. Moderate evocation; CL 8th; Craft Magic Arms and Armor, acid splash, animal friendship; Price 8,840 gp; Cost 4,590 gp + 340 xp. Lightning hammer"
+  },
+  {
+    "slug": "lightning-hammer-hpg",
+    "name": "Lightning hammer",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 111,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "19,300 gp"
+    },
+    "price": "19,300 gp",
+    "caster_level": "11th",
+    "aura": "Moderate evocation",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: Orc shaman crafted these enchanted hammers in tribute to the warchief, Thrall. T ribal warriors who perform deeds of exceptional skill and bravery sometimes receive a lightning hammer as a reward. Each lightning hammer is a throwing hammer no longer than an orc's forearm. A fist-sized copper hammer head tops a black wooden haft wrapped with copper wire. Shaman sometimes string colored beads or small tokens on the wire, to represent the tribe's colors or the great deeds of the warrior who now carries the weapon. Powers: A lightning hammer is a +1 returning club of shock. Upon striking a target, a lightning hammer releases Nalock was a week from Thunder Bluff when the quilboars found him. The tauren had been lost in his own thoughts, and hadn't noticed the quilboar pack until they were on him. The first quilboar to charge caught Nalock's greathammer in the temple. The hammer smashed into the quilboar with brutal force and dropped it. The other three quilboars charged, squealing and grunting like pigs. Nalock reversed his grip and smashed his hammer into a quilboar's chest. The creature wheezed and fell back. The other two quilboars slashed Nalock with their spears. With a roar, Nalock whirled in a tight circle. He slammed his hammer into one quilboar's bristly snout, dropping it, and clipped the other on the cheek. The two living quilboars pressed the attack. He was bleeding badly, and wondered if he would live through this battle. \"Serasa, aid me now!\" he shouted. His hammer seemed to take on a mind of its own. With lightning-quick strikes Nalock bludgeoned one quilboar into unconsciousness. The last one fled. Nalock chased the squealing creature and felled it with one blow. Hours later, Nalock struggled toward his tribe. He'd eaten all his provisions the day before and had planned on hunting today. In his injured state, though, Nalock feared predators would find him before he found prey. Nalock halted and sat on the ground. He laid the hammer on his knees. Its smooth grip felt comfortable in his hand, and the bloodstained stone head bore an engraved gazelle. \"Serasa,\" he whispered. He traced the carving with one finger. In his mind he pictured the gazelle's fleet stride, the chase she'd given him before falling to his blade. He'd honored her sacrifice with this weapon. The engraved gazelle moved under his hand. She twisted her head and Nalock followed her gaze. He saw the fresh gazelle tracks nearby. Small and uneven - a wounded stray. \"Thank you, kind spirit,\" Nalock whispered. Then he stood and went to hunt. a burst of electricity that arcs from person to person. All creatures within 20 feet of a target struck by a lightning hammer, including the wielder, take the same amount of electricity damage as the target, unless they make DC 14 Reflex saves to avoid the discharge. Moderate evocation; CL 11th; Craft Magic Arms and Armor, chain lightning, fly; Price 19,300 gp; Cost 9,800 gp + 760 XP . Scourgecrusher</p>",
+    "description_text": "Description: Orc shaman crafted these enchanted hammers in tribute to the warchief, Thrall. T ribal warriors who perform deeds of exceptional skill and bravery sometimes receive a lightning hammer as a reward. Each lightning hammer is a throwing hammer no longer than an orc's forearm. A fist-sized copper hammer head tops a black wooden haft wrapped with copper wire. Shaman sometimes string colored beads or small tokens on the wire, to represent the tribe's colors or the great deeds of the warrior who now carries the weapon. Powers: A lightning hammer is a +1 returning club of shock. Upon striking a target, a lightning hammer releases Nalock was a week from Thunder Bluff when the quilboars found him. The tauren had been lost in his own thoughts, and hadn't noticed the quilboar pack until they were on him. The first quilboar to charge caught Nalock's greathammer in the temple. The hammer smashed into the quilboar with brutal force and dropped it. The other three quilboars charged, squealing and grunting like pigs. Nalock reversed his grip and smashed his hammer into a quilboar's chest. The creature wheezed and fell back. The other two quilboars slashed Nalock with their spears. With a roar, Nalock whirled in a tight circle. He slammed his hammer into one quilboar's bristly snout, dropping it, and clipped the other on the cheek. The two living quilboars pressed the attack. He was bleeding badly, and wondered if he would live through this battle. \"Serasa, aid me now!\" he shouted. His hammer seemed to take on a mind of its own. With lightning-quick strikes Nalock bludgeoned one quilboar into unconsciousness. The last one fled. Nalock chased the squealing creature and felled it with one blow. Hours later, Nalock struggled toward his tribe. He'd eaten all his provisions the day before and had planned on hunting today. In his injured state, though, Nalock feared predators would find him before he found prey. Nalock halted and sat on the ground. He laid the hammer on his knees. Its smooth grip felt comfortable in his hand, and the bloodstained stone head bore an engraved gazelle. \"Serasa,\" he whispered. He traced the carving with one finger. In his mind he pictured the gazelle's fleet stride, the chase she'd given him before falling to his blade. He'd honored her sacrifice with this weapon. The engraved gazelle moved under his hand. She twisted her head and Nalock followed her gaze. He saw the fresh gazelle tracks nearby. Small and uneven - a wounded stray. \"Thank you, kind spirit,\" Nalock whispered. Then he stood and went to hunt. a burst of electricity that arcs from person to person. All creatures within 20 feet of a target struck by a lightning hammer, including the wielder, take the same amount of electricity damage as the target, unless they make DC 14 Reflex saves to avoid the discharge. Moderate evocation; CL 11th; Craft Magic Arms and Armor, chain lightning, fly; Price 19,300 gp; Cost 9,800 gp + 760 XP . Scourgecrusher"
+  },
+  {
+    "slug": "scourgecrusher-hpg",
+    "name": "Scourgecrusher",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "32,308 gp"
+    },
+    "price": "32,308 gp",
+    "caster_level": "14th",
+    "aura": "Strong conjuration",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: The Forsak en mourn their condition, but still hold themselves above the mindless undead of the Scourge. To the Forsaken, the fate of the mindless armies of the Lich King is a cruel one indeed. They feel compassion for their enslaved and, while they cannot liberate all mindless undead, they can at least grant them a swift death. Forsak en artificers developed the Scourgecrusher for use in mass combats. These powerful weapons proved most effective against the Scourge, while mitigating the risk of accidentally destroying Forsaken comrades in the confusion of battle. A scourgecrusher appears as a morningstar made of cobalt blue metal and studded with silver spikes. Silver metal wrapped with strips of black leather forms the morningstar's haft. Powers: A scourgecrusher is a +2 disruption morningstar. The disruption effect affects only mindless undead, forcing them to make a DC 14 Will save or be destroyed. In addition, a scourgecrusher deals an extra +2d6 points of damage to mindless creatures. (Any creature without an Intellect score is mindless). Strong conjuration; CL 14th; Craft Magic Arms and Armor, heal, summon undead I; Price 32,308 gp; Cost 16,308 gp + 1,280 xp. Spear of Hungry Ghosts</p>",
+    "description_text": "Description: The Forsak en mourn their condition, but still hold themselves above the mindless undead of the Scourge. To the Forsaken, the fate of the mindless armies of the Lich King is a cruel one indeed. They feel compassion for their enslaved and, while they cannot liberate all mindless undead, they can at least grant them a swift death. Forsak en artificers developed the Scourgecrusher for use in mass combats. These powerful weapons proved most effective against the Scourge, while mitigating the risk of accidentally destroying Forsaken comrades in the confusion of battle. A scourgecrusher appears as a morningstar made of cobalt blue metal and studded with silver spikes. Silver metal wrapped with strips of black leather forms the morningstar's haft. Powers: A scourgecrusher is a +2 disruption morningstar. The disruption effect affects only mindless undead, forcing them to make a DC 14 Will save or be destroyed. In addition, a scourgecrusher deals an extra +2d6 points of damage to mindless creatures. (Any creature without an Intellect score is mindless). Strong conjuration; CL 14th; Craft Magic Arms and Armor, heal, summon undead I; Price 32,308 gp; Cost 16,308 gp + 1,280 xp. Spear of Hungry Ghosts"
+  },
+  {
+    "slug": "spear-of-hungry-ghosts-hpg",
+    "name": "Spear of Hungry Ghosts",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 112,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "24,305 gp"
+    },
+    "price": "24,305 gp",
+    "caster_level": "10th",
+    "aura": "Moderate necromancy",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: A troll witch doctor named Zul'iste crafted the first spear of hungry ghosts shortly after the Darkspear tribe joined with Thrall. Zul'iste designed a weapon to attract malicious spirits to the Horde's enemies. The spear of hungry ghosts is a longspear with a thin, fle xible haft made of cherry-red wood. The steel spear- point seems to reflect the red tint of the weapon, as if years of use have stained the steel with blood. A long string of red, blue and yellow beads wraps around the spear's length. Powers: A spear of hungry ghosts functions as a +1 longspear . Three times per day, on command, the spear of hungry ghosts transforms into a +1 vicious longspear of wounding. Thus, with every strike, the wielder deals +2d6 points of damage and 1 point of Stamina damage to his opponent, as vengeful spirits suck blood from the newly opened wound. The wielder also takes 1d6 points of damage himself, as a blood offering to the spirits aiding him. Creatures immune to critical hits are immune to the Stamina damage. The spear's transformation lasts for 10 minutes. Moderate necromancy; CL 10th; Craft Magic Arms and Armor, enervation, greater magic weapon; Price 24,305 gp; Cost 12,305 gp + 960 xp. Withered Bow</p>",
+    "description_text": "Description: A troll witch doctor named Zul'iste crafted the first spear of hungry ghosts shortly after the Darkspear tribe joined with Thrall. Zul'iste designed a weapon to attract malicious spirits to the Horde's enemies. The spear of hungry ghosts is a longspear with a thin, fle xible haft made of cherry-red wood. The steel spear- point seems to reflect the red tint of the weapon, as if years of use have stained the steel with blood. A long string of red, blue and yellow beads wraps around the spear's length. Powers: A spear of hungry ghosts functions as a +1 longspear . Three times per day, on command, the spear of hungry ghosts transforms into a +1 vicious longspear of wounding. Thus, with every strike, the wielder deals +2d6 points of damage and 1 point of Stamina damage to his opponent, as vengeful spirits suck blood from the newly opened wound. The wielder also takes 1d6 points of damage himself, as a blood offering to the spirits aiding him. Creatures immune to critical hits are immune to the Stamina damage. The spear's transformation lasts for 10 minutes. Moderate necromancy; CL 10th; Craft Magic Arms and Armor, enervation, greater magic weapon; Price 24,305 gp; Cost 12,305 gp + 960 xp. Withered Bow"
+  },
+  {
+    "slug": "withered-bow-hpg",
+    "name": "Withered Bow",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 113,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "type": "Magic Weapon",
+      "price": "41,700 gp"
+    },
+    "price": "41,700 gp",
+    "caster_level": "11th",
+    "aura": "Moderate necromancy",
+    "activation": "",
+    "weight": "",
+    "slot": "Weapon",
+    "description_html": "<p>Description: The night elves craft living bows from the trees of their ancient forests. After the war, some of these bows ended up in Forsaken hands, where they underwent a radical change. The unholy energy that animated the Forsaken interacted strangely with the bows, and the living wood withered, dried and died. Now some Forsaken craft these bows deliberately. These bows appear as ash-gray curves of warped and twisted wood. Powers: A withered bow functions as a +2 corrupting composite longbow (+3 Strength bonus). On a critical hit, a withered bow bestows one negative level. The negative level vanishes after 11 hours. Moderate necromancy; CL 11th; Craft Magic Arms and Armor, enervation, shadow strike, creator must be evil; Price 41,700 gp; Cost 21,200 gp + 1,640 XP . Mystic Sites Some areas possess special qualities by virtue of their locations or events that occurred within the area. The W orld T ree Nordrassil, for instance, is a mystic site, as are healing fountains. Adventurers may stumble upon a mystic site in their travels and find that the location imbues them with strange powers. Mystic sites are rare and powerful locations; creating mystic sites is beyond the ken of mortal spellcasters. Some scholars believe that with time and effort, mortals could one day unlock the secret of creating mystic sites, but none have done so thus far. A number of characteristics describe mystic sites. Appearance: The first section, in italics, contains read-aloud text for the GM to relay to the players. Legends: This section includes legends about the mystic site and rumors of its history, plus any relevant Knowledge DCs. Destruction: This section reveals how a mystic site might be destroyed. Powers: This section details the powers a mystic site imbues and how characters unlock these powers. Aura: The last line of a mystic site's entry reveals its magical aura. GP Equivalent: While mystic sites cannot be bought or sold, this value allows a GM to compare the abilities a mystic site grants to other magic items. He can then determine whether or not the mystic site is appropriate for characters of the heroes' current level. For example, gaining the benefits of a green witch hut is about the same as gaining a 5,000-gp magic item. Bones of the Earth Mother Enormous, bone-white columns of rock jut out from the earth. The columns stretch into the air and curve like giant ribs. All around the columns stretches a hundred feet of black soil that looks rich and loamy, though no plants grow in the area.</p>",
+    "description_text": "Description: The night elves craft living bows from the trees of their ancient forests. After the war, some of these bows ended up in Forsaken hands, where they underwent a radical change. The unholy energy that animated the Forsaken interacted strangely with the bows, and the living wood withered, dried and died. Now some Forsaken craft these bows deliberately. These bows appear as ash-gray curves of warped and twisted wood. Powers: A withered bow functions as a +2 corrupting composite longbow (+3 Strength bonus). On a critical hit, a withered bow bestows one negative level. The negative level vanishes after 11 hours. Moderate necromancy; CL 11th; Craft Magic Arms and Armor, enervation, shadow strike, creator must be evil; Price 41,700 gp; Cost 21,200 gp + 1,640 XP . Mystic Sites Some areas possess special qualities by virtue of their locations or events that occurred within the area. The W orld T ree Nordrassil, for instance, is a mystic site, as are healing fountains. Adventurers may stumble upon a mystic site in their travels and find that the location imbues them with strange powers. Mystic sites are rare and powerful locations; creating mystic sites is beyond the ken of mortal spellcasters. Some scholars believe that with time and effort, mortals could one day unlock the secret of creating mystic sites, but none have done so thus far. A number of characteristics describe mystic sites. Appearance: The first section, in italics, contains read-aloud text for the GM to relay to the players. Legends: This section includes legends about the mystic site and rumors of its history, plus any relevant Knowledge DCs. Destruction: This section reveals how a mystic site might be destroyed. Powers: This section details the powers a mystic site imbues and how characters unlock these powers. Aura: The last line of a mystic site's entry reveals its magical aura. GP Equivalent: While mystic sites cannot be bought or sold, this value allows a GM to compare the abilities a mystic site grants to other magic items. He can then determine whether or not the mystic site is appropriate for characters of the heroes' current level. For example, gaining the benefits of a green witch hut is about the same as gaining a 5,000-gp magic item. Bones of the Earth Mother Enormous, bone-white columns of rock jut out from the earth. The columns stretch into the air and curve like giant ribs. All around the columns stretches a hundred feet of black soil that looks rich and loamy, though no plants grow in the area."
+  }
+]

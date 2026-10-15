@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="quest_main" merge="join">
+		<script>
+			function onLockModeChanged(bReadOnly)
+				if super.onLockModeChanged then
+					super.onLockModeChanged(bReadOnly);
+				end
+				WindowManager.callSafeControlsSetLockMode(self, { "type", "level", "xp", }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<label_column name="type_label" insertbefore="description_header">
+				<static textres="quest_label_type" />
+			</label_column>
+			<button_stringcycler_column name="type" insertbefore="description_header">
+				<parameters>
+					<defaultlabelres>quest_label_typeminor</defaultlabelres>
+					<labelsres>quest_label_typemajor</labelsres>
+					<values>Major</values>
+				</parameters>		
+			</button_stringcycler_column>
+
+			<label_column name="level_label" insertbefore="description_header">
+				<static textres="level" />
+			</label_column>
+			<number_column name="level" insertbefore="description_header" />
+
+			<label_column_right name="xp_label" insertbefore="description_header">
+				<anchored to="level" />
+				<static textres="quest_label_xp" />
+			</label_column_right>
+			<number_column_right name="xp" insertbefore="description_header">
+				<anchored to="level" />
+			</number_column_right>
+		</sheetdata>
+	</windowclass>
+</root>

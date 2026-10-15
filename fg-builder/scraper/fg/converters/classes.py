@@ -293,10 +293,17 @@ def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
         return ""
     has_saves = any(r.get("bab") for r in rows)
     has_spellcasting = any(r.get("spellcasting") for r in rows)
+    slot_len = 0
+    for row in rows:
+        slots = row.get("spells_per_day")
+        if isinstance(slots, list) and len(slots) > slot_len:
+            slot_len = len(slots)
     if has_saves:
         headers = ["Level", "BAB", "Fort", "Ref", "Will", "Special"]
         if has_spellcasting:
             headers.append("Spellcasting")
+        if slot_len:
+            headers.extend(str(i) for i in range(slot_len))
     else:
         headers = ["Level", "Special"]
 
@@ -320,6 +327,10 @@ def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
             )
             if has_spellcasting:
                 parts.append(f"<td>{row.get('spellcasting', '')}</td>")
+            if slot_len:
+                slots = row.get("spells_per_day") or []
+                for i in range(slot_len):
+                    parts.append(f"<td>{slots[i] if i < len(slots) else '-'}</td>")
         else:
             parts.extend(
                 [
@@ -404,6 +415,11 @@ def convert_classes(
             typed_string(node, "classtype", "prestige")
         else:
             typed_string(node, "classtype", "base")
+
+        if detail.get("race"):
+            typed_string(node, "race", detail.get("race"))
+        if detail.get("levelmax") not in (None, "", 0):
+            typed_number(node, "levelmax", int(detail["levelmax"]))
 
         typed_string(node, "hitdie", detail.get("hit_die", ""))
         typed_string(node, "bab", detail.get("bab", ""))

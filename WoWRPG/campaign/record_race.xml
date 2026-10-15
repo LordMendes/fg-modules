@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referencerace" copy="record_window_tabbed">
+		<tab>
+			<name>notes</name>
+			<resource>tab_main</resource>
+			<class>record_content_text</class>
+			<embed />
+		</tab>
+		<tab merge="add">
+			<name>main</name>
+			<resource>tab_other</resource>
+			<class>referencerace_main</class>
+			<embed />
+		</tab>
+	</windowclass>
+	<windowclass name="referencerace_header" copy="record_header" />
+
+	<windowclass name="referencerace_main">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				WindowManager.callSafeControlsSetLockMode(self, { "traits_iadd", }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+			
+			<header_content_framed_headersimple name="traits_header">
+				<static textres="race_header_traits"/>
+			</header_content_framed_headersimple>
+			<button_iadd name="traits_iadd">
+				<anchored to="traits_header" position="righthigh" offset="-20,0" />
+				<target>traits</target>
+			</button_iadd>
+			<list_content_top name="traits">
+				<datasource>.racialtraits</datasource>
+				<class>ref_racial_trait</class>
+			</list_content_top>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_racial_trait">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				WindowManager.callSafeControlsSetLockMode(self, { "name", "idelete" }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<button_listitem_idelete_left name="idelete" />
+			<link_listitem_left name="link">
+				<class>referenceracialtrait</class>
+			</link_listitem_left>
+
+			<string_listitem_center name="name">
+				<empty textres="library_recordtype_empty_racialtrait" />
+				<font>sheetlabel</font>
+			</string_listitem_center>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="referenceracialtrait" copy="record_window_text" />
+	<windowclass name="referenceracialtrait_header" copy="record_header">
+		<name_emptyres>library_recordtype_empty_racialtrait</name_emptyres>
+	</windowclass>
+</root>

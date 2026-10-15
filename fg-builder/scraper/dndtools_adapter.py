@@ -25,6 +25,11 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Races of Faerûn": ("Rac", "races-of-faerun"),
     "Forgotten Realms Campaign Setting": ("FRCS", "forgotten-realms-campaign-setting"),
     "Warcraft The Roleplaying Game": ("WRPG", "warcraft-the-roleplaying-game"),
+    "World of Warcraft The Roleplaying Game": ("WoW", "world-of-warcraft-the-roleplaying-game"),
+    "Alliance Player's Guide": ("APG", "alliance-players-guide"),
+    "Horde Player's Guide": ("HPG", "horde-players-guide"),
+    "More Magic and Mayhem": ("MMM", "more-magic-and-mayhem"),
+    "Monster Guide": ("MG", "monster-guide"),
 }
 
 CATEGORY_FILES: dict[str, str] = {
@@ -40,14 +45,37 @@ CATEGORY_FILES: dict[str, str] = {
     "psionics": "psionics.json",
 }
 
-# Supplemental WRPG JSON files live under data/dndtools/supplemental/.
-SUPPLEMENTAL_FILES: dict[str, str] = {
-    "classes": "warcraft_rpg_classes.json",
-    "feats": "warcraft_rpg_feats.json",
-    "spells": "warcraft_rpg_spells.json",
-    "items": "warcraft_rpg_items.json",
-    "equipment": "warcraft_rpg_equipment.json",
-    "races": "warcraft_rpg_races.json",
+# Supplemental JSON files live under data/dndtools/supplemental/.
+SUPPLEMENTAL_FILES: dict[str, list[str]] = {
+    "classes": [
+        "warcraft_rpg_classes.json",
+        "wowrpg_core_classes.json",
+        "wowrpg_apg_classes.json",
+        "wowrpg_hpg_classes.json",
+        "wowrpg_mmm_classes.json",
+    ],
+    "feats": [
+        "warcraft_rpg_feats.json",
+        "wowrpg_core_feats.json",
+        "wowrpg_apg_feats.json",
+        "wowrpg_hpg_feats.json",
+        "wowrpg_mmm_feats.json",
+    ],
+    "spells": ["warcraft_rpg_spells.json", "wowrpg_mmm_spells.json"],
+    "items": ["warcraft_rpg_items.json", "wowrpg_mmm_items.json", "wowrpg_hpg_items.json"],
+    "equipment": [
+        "warcraft_rpg_equipment.json",
+        "wowrpg_core_equipment.json",
+        "wowrpg_mmm_equipment.json",
+        "wowrpg_hpg_equipment.json",
+    ],
+    "races": [
+        "warcraft_rpg_races.json",
+        "wowrpg_core_races.json",
+        "wowrpg_apg_races.json",
+        "wowrpg_hpg_races.json",
+    ],
+    "monsters": ["wowrpg_mg_monsters.json"],
 }
 
 FG_CATEGORY_MAP: dict[str, str] = {
@@ -82,21 +110,19 @@ def load_category(category: str) -> list[dict[str, Any]]:
         data = json.loads(path.read_text(encoding="utf-8"))
         records = data if isinstance(data, list) else data.get("records", [])
 
-    # Merge WRPG supplemental files (and any future supplemental sources).
-    supp_name = SUPPLEMENTAL_FILES.get(category)
-    if supp_name:
+    # Merge supplemental files. Later books are filtered by source abbrev.
+    seen = {(r.get("slug") or r.get("name") or id(r)) for r in records}
+    for supp_name in SUPPLEMENTAL_FILES.get(category, []):
         supp_path = DNDTOOLS_ROOT / "supplemental" / supp_name
-        if supp_path.exists():
-            supp_data = json.loads(supp_path.read_text(encoding="utf-8"))
-            supp_records = (
-                supp_data if isinstance(supp_data, list) else supp_data.get("records", [])
-            )
-            seen = {(r.get("slug") or r.get("name") or id(r)) for r in records}
-            for rec in supp_records:
-                key = rec.get("slug") or rec.get("name") or id(rec)
-                if key not in seen:
-                    records.append(rec)
-                    seen.add(key)
+        if not supp_path.exists():
+            continue
+        supp_data = json.loads(supp_path.read_text(encoding="utf-8"))
+        supp_records = supp_data if isinstance(supp_data, list) else supp_data.get("records", [])
+        for rec in supp_records:
+            key = rec.get("slug") or rec.get("name") or id(rec)
+            if key not in seen:
+                records.append(rec)
+                seen.add(key)
     return records
 
 
@@ -526,24 +552,35 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         advancement = parse_advancement_html(advancement_html)
 
     index = record.get("index") or {}
-    prestige = bool(str(index.get("prestige_level") or "").strip()) or bool(
-        record.get("requirements_html") or record.get("requirements_text")
+    is_racial = bool(index.get("racial_class") or record.get("race") or record.get("levelmax"))
+    prestige = (not is_racial) and (
+        bool(str(index.get("prestige_level") or "").strip())
+        or bool(record.get("requirements_html") or record.get("requirements_text"))
     )
-    intro, notes, class_features = _split_class_description(
-        record.get("description_html") or "",
-        advancement,
-    )
+    prebuilt_features = record.get("class_features") if is_racial else None
+    if isinstance(prebuilt_features, list) and prebuilt_features:
+        intro, notes, _ignored = _split_class_description(
+            record.get("description_html") or "",
+            advancement,
+        )
+        class_features = [dict(feat) for feat in prebuilt_features]
+        overlay: dict[str, Any] = {}
+    else:
+        intro, notes, class_features = _split_class_description(
+            record.get("description_html") or "",
+            advancement,
+        )
 
-    advancement, class_features, overlay = _overlay_phb_clone(
-        record, advancement, class_features
-    )
-    if overlay.get("advancement_html"):
-        advancement_html = overlay["advancement_html"]
+        advancement, class_features, overlay = _overlay_phb_clone(
+            record, advancement, class_features
+        )
+        if overlay.get("advancement_html"):
+            advancement_html = overlay["advancement_html"]
 
-    # Emit Spells per Day rows for prestige +1 caster advancement columns.
-    from scraper.parsers.classes import _merge_advancement_features
+        # Emit Spells per Day rows for prestige +1 caster advancement columns.
+        from scraper.parsers.classes import _merge_advancement_features
 
-    class_features = _merge_advancement_features(class_features, advancement)
+        class_features = _merge_advancement_features(class_features, advancement)
 
     # Expand WRPG spell-hook shorthand in feature text.
     for feat in class_features:
@@ -653,6 +690,17 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     ranks = re.search(r"(\d+)", str(detail.get("skill_points") or ""))
     if ranks:
         detail["skill_ranks"] = int(ranks.group(1))
+    race_name = record.get("race") or index.get("race") or ""
+    levelmax = record.get("levelmax") or index.get("levelmax")
+    if levelmax not in (None, ""):
+        try:
+            detail["levelmax"] = int(levelmax)
+        except (TypeError, ValueError):
+            detail["levelmax"] = 3
+    if race_name:
+        detail["race"] = str(race_name)
+    if is_racial:
+        detail["class_type"] = "base"
     return {
         "id": record.get("id"),
         "slug": record.get("slug", ""),
@@ -660,7 +708,12 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "source_url": record.get("source_url", ""),
         "book_slug": book_slug,
         "category": "classes",
-        "index": {"is_prestige": prestige},
+        "index": {
+            "is_prestige": prestige,
+            "racial_class": is_racial,
+            "race": race_name or None,
+            "levelmax": detail.get("levelmax"),
+        },
         "detail": detail,
     }
 
@@ -751,6 +804,7 @@ def convert_spell(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "title": record.get("name", ""),
         "school": school,
         "level": _spell_level_string(record.get("classes")),
+        "classes": list(record.get("classes") or []),
         "casting_time": record.get("casting_time") or "",
         "range": record.get("range") or "",
         "target": record.get("target") or "",
@@ -779,6 +833,15 @@ def convert_spell(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     }
 
 
+def _apply_malfunction(detail: dict[str, Any], info: dict[str, Any]) -> None:
+    if info.get("mr"):
+        detail["mr"] = info["mr"]
+    if info.get("malfunction"):
+        detail["malfunction"] = info["malfunction"]
+    if info.get("mrtable"):
+        detail["mrtable"] = info["mrtable"]
+
+
 def convert_item(record: dict[str, Any], book_slug: str, *, mundane: bool = False) -> dict[str, Any]:
     index = record.get("index") or {}
     detail = {
@@ -799,20 +862,58 @@ def convert_item(record: dict[str, Any], book_slug: str, *, mundane: bool = Fals
         detail["slot"] = kind.title()
         # Help FG type inference for WRPG weapons/armor.
         if kind == "weapon" or record.get("damage_m"):
+            from scraper.wrpg_support import fg_weapon_fields
+
             detail["item_type"] = "Weapon"
-        elif kind == "armor":
+            weapon = fg_weapon_fields(record)
+            detail["name"] = weapon["name"]
+            detail["price"] = weapon["cost"] or detail.get("price") or ""
+            detail["subtype"] = weapon["subtype"]
+            detail["damage"] = weapon["damage"]
+            detail["damagetype"] = weapon["damagetype"]
+            detail["critical"] = weapon["critical"] or "x2"
+            detail["range"] = weapon["range"]
+            detail["properties"] = weapon["properties"]
+            if weapon.get("mr"):
+                detail["mr"] = weapon["mr"]
+            if weapon.get("malfunction"):
+                detail["malfunction"] = weapon["malfunction"]
+            if weapon.get("mrtable"):
+                detail["mrtable"] = weapon["mrtable"]
+            small = str(record.get("damage_s") or "").strip()
+            if small and small != weapon["damage"]:
+                note = f"<p>Small creature damage: {small}.</p>"
+                detail["description_html"] = (detail.get("description_html") or "") + note
+        elif kind in {"armor", "shield"}:
+            from scraper.wrpg_support import fg_armor_fields
+
             detail["item_type"] = "Armor"
-        if record.get("damage_m"):
-            detail["description_html"] = (
-                (detail.get("description_html") or "")
-                + f"<p><b>Damage:</b> {record['damage_m']}; "
-                f"<b>Critical:</b> {record.get('critical', '')}; "
-                f"<b>Handed:</b> {record.get('handed', '')}</p>"
-            )
+            detail.update(fg_armor_fields(record))
+        else:
+            from scraper.wrpg_support import fg_goods_subtype, fg_malfunction_fields
+
+            # Ammunition and other gear stay out of the weapon attack list.
+            detail["item_type"] = "Goods and Services"
+            detail["subtype"] = fg_goods_subtype(str(record.get("category") or ""))
+            _apply_malfunction(detail, fg_malfunction_fields(record))
+    else:
+        from scraper.wrpg_support import fg_magic_weapon_fields, fg_malfunction_fields
+
+        magic = fg_magic_weapon_fields(detail.get("description_html") or "")
+        if magic:
+            detail["item_type"] = "Weapon"
+            detail["subtype"] = magic["subtype"]
+            detail["damage"] = magic["damage"]
+            detail["damagetype"] = magic["damagetype"]
+            detail["critical"] = magic["critical"]
+            detail["range"] = magic["range"]
+            detail["properties"] = magic["properties"]
+            detail["bonus"] = magic["bonus"]
+        _apply_malfunction(detail, fg_malfunction_fields(record))
     return {
         "id": record.get("id"),
         "slug": record.get("slug", ""),
-        "name": record.get("name", ""),
+        "name": detail.get("name") or record.get("name", ""),
         "source_url": record.get("source_url", ""),
         "book_slug": book_slug,
         "category": "items",
@@ -832,10 +933,11 @@ def convert_race(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "description_text": record.get("description_text") or "",
         "raw_sections": [],
     }
-    # Build FG racial trait automation for WRPG (and any record with bullet traits).
-    if (record.get("index") or {}).get("source_abbrev") == "WRPG" or (
-        record.get("source") or {}
-    ).get("abbrev") == "WRPG":
+    # Build FG racial trait automation. WoW RPG ability names are mapped in build_race_fg.
+    abbrev = (record.get("index") or {}).get("source_abbrev") or (record.get("source") or {}).get(
+        "abbrev"
+    )
+    if abbrev in {"WRPG", "WoW", "APG", "HPG"}:
         detail["fg"] = build_race_fg(record)
     return {
         "id": record.get("id"),
@@ -849,27 +951,51 @@ def convert_race(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     }
 
 
+def _present(record: dict[str, Any], key: str) -> Any:
+    if key not in record or record[key] is None:
+        return ""
+    return record[key]
+
+
 def convert_monster(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
+    index = record.get("index") or {}
     detail = {
-        "cr": record.get("challenge_rating") or (record.get("index") or {}).get("cr") or "",
+        "cr": _present(record, "challenge_rating") or index.get("cr") or "",
         "ac": record.get("armor_class") or "",
-        "hp": record.get("hit_points") or "",
-        "hd": record.get("hit_dice") or (record.get("index") or {}).get("hd") or "",
-        "fort": record.get("fortitude") or "",
-        "ref": record.get("reflex") or "",
-        "will": record.get("will") or "",
-        "str": record.get("str") or "",
-        "dex": record.get("dex") or "",
-        "con": record.get("con") or "",
-        "int": record.get("int") or "",
-        "wis": record.get("wis") or "",
-        "cha": record.get("cha") or "",
+        "hp": _present(record, "hit_points"),
+        "hd": record.get("hit_dice") or index.get("hd") or "",
+        "init": _present(record, "initiative"),
+        "fort": _present(record, "fortitude"),
+        "ref": _present(record, "reflex"),
+        "will": _present(record, "will"),
+        "str": _present(record, "str"),
+        "dex": _present(record, "dex"),
+        "con": _present(record, "con"),
+        "int": _present(record, "int"),
+        "wis": _present(record, "wis"),
+        "cha": _present(record, "cha"),
         "attack": record.get("attack") or "",
         "full_attack": record.get("full_attack") or "",
+        "special_attacks": record.get("special_attacks") or "",
+        "special_qualities": record.get("special_qualities") or "",
+        "speed": record.get("speed") or "",
+        "space_reach": record.get("space_reach") or "",
+        "babgrp": record.get("base_attack_grapple") or "",
+        "feats": record.get("feats") or "",
+        "skills": record.get("skills") or "",
+        "senses": record.get("senses") or "",
+        "languages": record.get("languages") or "",
+        "alignment": record.get("alignment") or "",
+        "environment": record.get("environment") or "",
+        "organization": record.get("organization") or "",
+        "treasure": record.get("treasure") or "",
+        "advancement": record.get("advancement") or "",
+        "level_adjustment": record.get("level_adjustment") or "",
+        "creature_type": record.get("creature_type") or index.get("type") or "",
         "special_abilities": record.get("special_abilities") or [],
         "description_html": record.get("description_html") or record.get("flavor_html") or "",
         "stat_line": record.get("stat_line") or "",
-        "type": record.get("type") or (record.get("index") or {}).get("type") or "",
+        "type": record.get("creature_type") or record.get("type") or index.get("type") or "",
     }
     return {
         "id": record.get("id"),
@@ -878,7 +1004,7 @@ def convert_monster(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "source_url": record.get("source_url", ""),
         "book_slug": book_slug,
         "category": "monsters",
-        "index": record.get("index") or {},
+        "index": index,
         "detail": detail,
     }
 

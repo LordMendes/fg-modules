@@ -1,12 +1,19 @@
 .venv/
-.cursor/
 node_modules/
 3.5E/
+3.5E-basicrules/
+
+# Cursor local state; keep project skills versioned for agents
+.cursor/*
+!.cursor/skills/
+!.cursor/skills/**
 
 # WRPG book-data scratch (PDF page renders, one-off check scripts)
 .tmp-wrpg/
+WoWRPG/
+wowrpg-basicrules/
 
-# Local book scan (not source of truth; keep out of the repo)
-warcraft-the-roleplaying-game-compressed.pdf
+# Local book scans (not source of truth; keep out of the repo)
+*.pdf
 
 # Project-specific ignores live in fg-builder/.gitignore and dndtools-reference/.gitignore

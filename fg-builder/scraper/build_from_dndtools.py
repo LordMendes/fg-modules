@@ -14,6 +14,15 @@ from scraper.fg.builder import EmptyModuleError
 from scraper.fg.loader import ALL_CATEGORIES
 from scraper.fg.packager import build_and_package_module
 
+# Fantasy Grounds module names for WoW RPG books.
+WOW_MODULE_ABBREVS = {"WRPG", "WoW", "APG", "HPG", "MMM", "MG"}
+
+
+def module_display_name(title: str, abbrev: str) -> str:
+    if abbrev in WOW_MODULE_ABBREVS:
+        return f"WOWRPG - {title}"
+    return title
+
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -92,7 +101,8 @@ def main(argv: list[str] | None = None) -> int:
         counts = build_scraped_book(title, abbrev, slug, scraped_dir)
         print(f"  staged: {counts}")
 
-        mod_path = args.output_dir / f"{title}.mod"
+        display = module_display_name(title, abbrev)
+        mod_path = args.output_dir / f"{display}.mod"
         try:
             report = build_and_package_module(
                 scraped_dir=scraped_dir,
@@ -101,6 +111,7 @@ def main(argv: list[str] | None = None) -> int:
                 author=args.author,
                 skip_no_detail=False,
                 spell_actions=not args.no_spell_actions,
+                module_name=display,
             )
         except EmptyModuleError as exc:
             print(f"  skipped: {exc}", file=sys.stderr)

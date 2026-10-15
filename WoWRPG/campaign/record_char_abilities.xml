@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_abilities">
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				local tFields = { "feats_iadd", "specialabilities_iadd", "proficiencies_iadd", "traits_iadd", };
+				WindowManager.callSafeControlsSetLockMode(self, tFields, bReadOnly);
+			end
+			function onDrop(x, y, draginfo)
+				return handleDrop(draginfo, nil);
+			end
+			function handleDrop(draginfo, nodeTargetList)
+				if draginfo.isType("shortcut") then
+					local sClass, sRecord = draginfo.getShortcutData();
+					if StringManager.contains({"referencefeat", "referenceclassability", "referenceracialtrait"}, sClass) then
+						CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord, nodeTargetList);
+						return true;
+					end
+				end
+			end
+		</script>
+		<sheetdata>
+			<frame_char name="featframe">
+				<anchored position="insidetopleft">
+					<right anchor="center" />
+					<bottom anchor="center" offset="60" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="featframe" />
+				<static textres="char_label_feats" />
+			</label_frametop>
+			<list_charabilities name="feats">
+				<anchored to="featframe" />
+				<datasource>.featlist</datasource>
+				<class>char_ability_feat</class>
+			</list_charabilities>
+			<scrollbar>
+				<anchored to="feats" />
+				<target>feats</target>
+			</scrollbar>
+			<button_iadd name="feats_iadd">
+				<anchored to="feats" position="aboveright" offset="5,5" />
+				<target>feats</target>
+			</button_iadd>
+
+			<frame_char name="specialabilityframe">
+				<anchored position="insidetopright">
+					<left anchor="center" />
+					<bottom anchor="center" offset="60" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="specialabilityframe" />
+				<static textres="char_label_sa" />
+			</label_frametop>
+			<list_charabilities name="specialabilities">
+				<anchored to="specialabilityframe" />
+				<datasource>.specialabilitylist</datasource>
+				<class>char_ability_class</class>
+			</list_charabilities>
+			<scrollbar>
+				<anchored to="specialabilities" />
+				<target>specialabilities</target>
+			</scrollbar>
+			<button_iadd name="specialabilities_iadd">
+				<anchored to="specialabilities" position="aboveright" offset="5,5" />
+				<target>specialabilities</target>
+			</button_iadd>
+
+			<frame_char name="proficiencyframe">
+				<anchored position="insidebottomleft">
+					<right anchor="center" />
+					<top anchor="center" offset="60" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="proficiencyframe" />
+				<static textres="char_label_proficiencies" />
+			</label_frametop>
+			<list_charabilities name="proficiencies">
+				<anchored to="proficiencyframe" />
+				<datasource>.proficiencylist</datasource>
+				<class>char_ability_proficiency</class>
+			</list_charabilities>
+			<scrollbar>
+				<anchored to="proficiencies" />
+				<target>proficiencies</target>
+			</scrollbar>
+			<button_iadd name="proficiencies_iadd">
+				<anchored to="proficiencies" position="aboveright" offset="5,5" />
+				<target>proficiencies</target>
+			</button_iadd>
+
+			<frame_char name="traitframe">
+				<anchored position="insidebottomright">
+					<left anchor="center" />
+					<top anchor="center" offset="60" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="traitframe" />
+				<static textres="char_label_traits" />
+			</label_frametop>
+			<list_charabilities name="traits">
+				<anchored to="traitframe" />
+				<datasource>.traitlist</datasource>
+				<class>char_ability_race</class>
+			</list_charabilities>
+			<scrollbar>
+				<anchored to="traits" />
+				<target>traits</target>
+			</scrollbar>
+			<button_iadd name="traits_iadd">
+				<anchored to="traits" position="aboveright" offset="5,5" />
+				<target>traits</target>
+			</button_iadd>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_ability_entry">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				WindowManager.callSafeControlsSetLockMode(self, { "name", "idelete", }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<button_listitem_idelete_left name="idelete" />
+			<linkc_listitem_left name="shortcut" />
+
+			<string_listitem_center_underline name="name">
+				<delaykeyupdate />
+			</string_listitem_center_underline>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="char_ability_feat" copy="char_ability_entry">
+		<sheetdata>
+			<linkc_listitem_left name="shortcut">
+				<class>referencefeat</class>
+			</linkc_listitem_left>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="char_ability_class" copy="char_ability_entry">
+		<sheetdata>
+			<linkc_listitem_left name="shortcut">
+				<class>referenceclassability</class>
+			</linkc_listitem_left>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="char_ability_race" copy="char_ability_entry">
+		<sheetdata>
+			<linkc_listitem_left name="shortcut">
+				<class>referenceracialtrait</class>
+			</linkc_listitem_left>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="char_ability_proficiency" copy="char_ability_entry">
+		<sheetdata>
+			<linkc_listitem_left name="shortcut">
+				<class>referenceproficiency</class>
+			</linkc_listitem_left>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="referenceproficiency" copy="record_window_text" />
+	<windowclass name="referenceproficiency_header" copy="record_header">
+		<name_emptyres>library_recordtype_empty_proficiency</name_emptyres>
+	</windowclass>
+</root>

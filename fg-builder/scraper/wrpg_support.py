@@ -24,8 +24,9 @@ CORE_CLONE_SLUGS: dict[str, tuple[str, str]] = {
 COSMOLOGY_SPELL_SLUG = "warcraft-cosmology-wrpg"
 
 _ABILITY_RE = re.compile(
-    r"([+\-\u2212\u2013]\d+)\s+(Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma|"
-    r"Str|Dex|Con|Int|Wis|Cha)\b",
+    r"([+\-\u2212\u2013]\s*\d+)\s+(Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma|"
+    r"Agility|Stamina|Intellect|Spirit|"
+    r"Str|Dex|Con|Int|Wis|Cha|Agy|Sta|Spt)\b",
     re.I,
 )
 _ABILITY_KEY = {
@@ -33,17 +34,24 @@ _ABILITY_KEY = {
     "str": "str",
     "dexterity": "dex",
     "dex": "dex",
+    "agility": "dex",
+    "agy": "dex",
     "constitution": "con",
     "con": "con",
+    "stamina": "con",
+    "sta": "con",
     "intelligence": "int",
     "int": "int",
+    "intellect": "int",
     "wisdom": "wis",
     "wis": "wis",
+    "spirit": "wis",
+    "spt": "wis",
     "charisma": "cha",
     "cha": "cha",
 }
-_SPEED_RE = re.compile(r"(?:base land speed|land speed|speed)\s*(?:of\s*)?(\d+)\s*ft", re.I)
-_DARKVISION_RE = re.compile(r"darkvision\s*(\d+)\s*ft", re.I)
+_SPEED_RE = re.compile(r"(?:base land speed|land speed|speed)\s*(?:of\s*|is\s*)?(\d+)\s*ft", re.I)
+_DARKVISION_RE = re.compile(r"darkvision\b(?:[^.]{0,80}?)(\d+)\s*(?:ft\.?|feet)", re.I)
 _FAVORED_RE = re.compile(r"Favored Class:\s*([^.<]+)", re.I)
 _AUTO_LANG_RE = re.compile(r"Automatic Languages?:\s*([^.]+?)(?:\.|$)", re.I)
 _BONUS_LANG_RE = re.compile(r"Bonus(?: Languages?)?:\s*([^.]+?)(?:\.|$)", re.I)
@@ -131,7 +139,7 @@ def parse_ability_scores(text: str) -> dict[str, int]:
     for match in _ABILITY_RE.finditer(text or ""):
         key = _ABILITY_KEY.get(match.group(2).lower())
         if key:
-            raw = match.group(1).replace("\u2212", "-").replace("\u2013", "-")
+            raw = match.group(1).replace("\u2212", "-").replace("\u2013", "-").replace(" ", "")
             scores[key] = scores.get(key, 0) + int(raw)
     return scores
 
@@ -533,3 +541,356 @@ def spell_actions_for_wrpg(slug: str) -> list[dict[str, Any]] | None:
     if slug == COSMOLOGY_SPELL_SLUG:
         return None
     return WRPG_SPELL_ACTION_OVERRIDES.get(slug)
+
+
+# Fantasy Grounds 3.5E item weapons. Subtype must contain "melee", "ranged",
+# or "firearm". "two-handed" in the subtype applies 1.5x Strength. "double"
+# in properties splits the slash-separated damage dice into two weapon heads.
+_WEAPON_PROFICIENCY: dict[str, tuple[str, str]] = {
+    "gauntlet": ("Simple", "light"),
+    "dagger": ("Simple", "light"),
+    "gauntlet spiked": ("Simple", "light"),
+    "mace light": ("Simple", "light"),
+    "sickle": ("Simple", "light"),
+    "club": ("Simple", "light"),
+    "mace heavy": ("Simple", "one-handed"),
+    "morningstar": ("Simple", "one-handed"),
+    "shortspear": ("Simple", "one-handed"),
+    "longspear": ("Simple", "two-handed"),
+    "quarterstaff": ("Simple", "two-handed"),
+    "spear": ("Simple", "two-handed"),
+    "crossbow heavy": ("Simple", "ranged"),
+    "crossbow light": ("Simple", "ranged"),
+    "dart": ("Simple", "ranged"),
+    "javelin": ("Simple", "ranged"),
+    "sling": ("Simple", "ranged"),
+    "axe throwing": ("Martial", "light"),
+    "handaxe": ("Martial", "light"),
+    "kukri": ("Martial", "light"),
+    "pick light": ("Martial", "light"),
+    "battleaxe": ("Martial", "one-handed"),
+    "bayonet miniature": ("Martial", "one-handed"),
+    "flail": ("Martial", "one-handed"),
+    "longsword": ("Martial", "one-handed"),
+    "pick heavy": ("Martial", "one-handed"),
+    "scimitar": ("Martial", "one-handed"),
+    "shield heavy": ("Martial", "one-handed"),
+    "trident": ("Martial", "one-handed"),
+    "warblade": ("Martial", "one-handed"),
+    "warhammer": ("Martial", "one-handed"),
+    "bayonet": ("Martial", "two-handed"),
+    "falchion": ("Martial", "two-handed"),
+    "flail heavy": ("Martial", "two-handed"),
+    "glaive": ("Martial", "two-handed"),
+    "greataxe": ("Martial", "two-handed"),
+    "greatclub": ("Martial", "two-handed"),
+    "greathammer": ("Martial", "two-handed"),
+    "greatsword": ("Martial", "two-handed"),
+    "halberd": ("Martial", "two-handed"),
+    "lance": ("Martial", "two-handed"),
+    "scythe": ("Martial", "two-handed"),
+    "longbow": ("Martial", "ranged"),
+    "longbow composite": ("Martial", "ranged"),
+    "shortbow": ("Martial", "ranged"),
+    "shortbow composite": ("Martial", "ranged"),
+    "claws of attack orc": ("Exotic", "one-handed"),
+    "moonglaive": ("Exotic", "one-handed"),
+    "hammer dwarven battle": ("Exotic", "one-handed"),
+    "hammer dwarven tossing": ("Exotic", "one-handed"),
+    "moon sword": ("Exotic", "one-handed"),
+    "waraxe dwarven": ("Exotic", "one-handed"),
+    "warglaive": ("Exotic", "one-handed"),
+    "chain spiked": ("Exotic", "two-handed"),
+    "halberd tauren": ("Exotic", "two-handed"),
+    "sword two-bladed": ("Exotic", "two-handed"),
+    "totem tauren": ("Exotic", "two-handed"),
+    "crossbow hand": ("Exotic", "ranged"),
+    "flintlock pistol": ("Exotic", "firearm"),
+    "long rifle": ("Exotic", "firearm"),
+    "blunderbuss": ("Exotic", "firearm"),
+    "mortar": ("Exotic", "firearm"),
+}
+_DAMAGE_WORDS = {
+    "p": "piercing",
+    "s": "slashing",
+    "b": "bludgeoning",
+    "piercing": "piercing",
+    "slashing": "slashing",
+    "bludgeoning": "bludgeoning",
+}
+# Properties column in 3.5E Basic Rules: empty, Double, Reach, or Special.
+_REACH_KEYS = {
+    "longspear",
+    "glaive",
+    "guisarme",
+    "lance",
+    "ranseur",
+    "whip",
+    "chain spiked",
+}
+_GOODS_SUBTYPE = {
+    "adventuring gear": "Adventuring Gear",
+    "ammunition": "Ammunition",
+    "special material": "Special Substances And Items",
+    "alchemy": "Special Substances And Items",
+    "technological device": "Tools And Skill Kits",
+    "rune pattern": "Spellcasting And Services",
+}
+_BASE_WEAPON_STATS = {
+    "longsword": {
+        "damage": "1d8",
+        "critical": "19-20/x2",
+        "damagetype": "Slashing",
+        "subtype": "Martial One-Handed Melee",
+        "range": 0,
+        "properties": "",
+    },
+    "warhammer": {
+        "damage": "1d8",
+        "critical": "x3",
+        "damagetype": "Bludgeoning",
+        "subtype": "Martial One-Handed Melee",
+        "range": 0,
+        "properties": "",
+    },
+}
+_TRAILING_COST_RE = re.compile(r"^(?P<name>.+?)\s+(?P<cost>\d[\d,]*)\s*gp$", re.I)
+_SUBTYPE_BY_GRIP = {
+    "light": "{prof} Light Melee",
+    "one-handed": "{prof} One-Handed Melee",
+    "two-handed": "{prof} Two-Handed Melee",
+    "ranged": "{prof} Ranged",
+    "firearm": "{prof} Firearm",
+}
+
+
+def weapon_lookup_key(name: str) -> str:
+    """Normalize a weapon name so table order and glued prices still match."""
+    cleaned = _TRAILING_COST_RE.sub(r"\g<name>", (name or "").strip())
+    cleaned = cleaned.lower().replace(",", " ")
+    return re.sub(r"\s+", " ", cleaned).strip()
+
+
+def clean_weapon_name_and_cost(name: str, cost: str) -> tuple[str, str]:
+    match = _TRAILING_COST_RE.match((name or "").strip())
+    if not match:
+        return (name or "").strip(), (cost or "").strip()
+    cleaned = match.group("name").strip(" ,")
+    parsed = f"{match.group('cost')} gp"
+    if (cost or "").strip() in {"", "-"}:
+        return cleaned, parsed
+    return cleaned, cost.strip()
+
+
+def _weapon_grip(record: dict[str, Any], key: str) -> tuple[str, str]:
+    known = _WEAPON_PROFICIENCY.get(key)
+    if known:
+        return known
+    category = str(record.get("category") or "martial").strip().lower()
+    prof = category.title() if category in {"simple", "martial", "exotic"} else "Martial"
+    handed = str(record.get("handed") or "").lower()
+    if any(word in key for word in ("pistol", "rifle", "firearm", "gun")):
+        grip = "firearm"
+    elif handed == "ranged":
+        grip = "ranged"
+    elif handed in {"2h", "two-handed"}:
+        grip = "two-handed"
+    else:
+        grip = "one-handed"
+    return prof, grip
+
+
+def fg_damage_type(raw: str) -> str:
+    """Title-case the first word, matching 3.5E Basic Rules (Piercing or slashing)."""
+    text = (raw or "").strip().lower()
+    if not text:
+        return ""
+    words: list[str] = []
+    for token in re.split(r"(\s+and\s+|\s+or\s+|[,/])", text):
+        piece = token.strip()
+        if not piece:
+            continue
+        if piece in {"and", "or", ",", "/"}:
+            conj = "or" if piece == "or" else "and"
+            if words and words[-1] not in {"and", "or"}:
+                words.append(conj)
+            continue
+        word = _DAMAGE_WORDS.get(piece, "")
+        if word and (not words or words[-1] != word):
+            words.append(word)
+    if not words:
+        return ""
+    words[0] = words[0][:1].upper() + words[0][1:]
+    return " ".join(words)
+
+
+def _signed_int(value: Any) -> int:
+    if isinstance(value, bool):
+        return int(value)
+    if isinstance(value, (int, float)):
+        return int(value)
+    match = re.search(r"-?\d+", str(value or ""))
+    return int(match.group()) if match else 0
+
+
+def fg_critical(raw: str) -> str:
+    text = (raw or "").replace("\u00d7", "x").replace("\u2013", "-").replace("\u2014", "-")
+    return re.sub(r"[xX]", "x", text).strip()
+
+
+def fg_range_feet(raw: str) -> int:
+    text = (raw or "").strip()
+    if not text or text == "-":
+        return 0
+    match = re.search(r"\d+", text)
+    return int(match.group()) if match else 0
+
+
+# Core Rules Table 9-2 printed MR for firearms without description text.
+_FIREARM_MR: dict[str, int] = {
+    "flintlock pistol": 1,
+    "long rifle": 1,
+    "blunderbuss": 1,
+    "mortar": 1,
+}
+
+_MR_RE = re.compile(r"\bMR\s*(\d+)\b", re.I)
+_MALFUNCTION_TEXT_RE = re.compile(
+    r"\bMalfunction:\s*(.+?)(?=\s+(?:Hardness|HR)\b|\s+W\s*eight\b|\s+MR\s+\d|\s+TS\b|\s+Price\b|$)",
+    re.I,
+)
+# Chosen effects from Table 11-3. A matching name is stored as the chat message.
+# Devices with MR and no chosen effect roll the table instead.
+_MALFUNCTION_EFFECTS: dict[str, str] = {
+    "function lock": "Function lock: For 2d6 rounds, the device repeats the action taken when it malfunctioned. Weapons keep firing and their direction cannot be altered; vehicles keep moving in the same direction at the same speed. Loaded ammunition or fuel is consumed or destroyed.",
+    "mangled": "Mangled: The device can be repaired, but its market value is halved. If it suffers this effect twice, it must be replaced.",
+    "leaky": "Leaky: The device needs a daily application of some substance (lubricant, phlogiston, or the like) or it ceases to function.",
+    "total failure": "Total failure: The device fails, and so do all its add-ons. They must be repaired individually.",
+    "inhibited function": "Inhibited function: Once the device is repaired, its Time Factor is doubled.",
+    "degradation": "Degradation: After repair, one feature (randomly determined) is decreased as if its Technology Score were 1 lower (minimum 0).",
+    "balky": "Balky: The device's Maneuverability Rating decreases by 1.",
+    "pieces everywhere": "Pieces everywhere: The device falls apart. Craft (technological device) checks to repair it have their DCs increased by +4.",
+    "awkward operation": "Awkward operation: After repair, skill checks and attack rolls made with the device take a -2 circumstance penalty.",
+    "backfire": "Backfire: All weapons on the device backfire, dealing their damage to the operator.",
+    "frangible": "Frangible: The device can be repaired, but its Malfunction Rating increases by +1.",
+    "kickback": "Kickback: The device deals 3d6 points of damage to its operator.",
+    "bulky": "Bulky: Repair costs increase as if the market price were 25% higher. After repair, the device is one size larger, its weight doubles, and its speed decreases by 20 mph (if applicable).",
+    "critical component": "Critical component: A critical component is destroyed. The device cannot be repaired until a component worth at least 10% of its market value is replaced.",
+    "self-destructive": "Self-destructive: After repair, the device takes 1 point of damage each time it is successfully operated. Hardness does not protect against this damage.",
+    "noisemaker": "Noisemaker: The device emits a loud noise audible within 60 feet, and keeps doing so while operating after it is repaired.",
+    "fused function": "Fused function: The device cannot be upgraded, and repair checks have their DCs increased by +3.",
+    "fragile": "Fragile: The device's maximum hit points are halved.",
+    "pain machine": "Pain machine: The device deals 1d6 points of damage to its operator each time it is used.",
+    "phlogiston explosion": "Phlogiston explosion: The boiler explodes, dealing (Technology Score)d6 slashing and fire damage to all creatures within 15 feet. Repair checks have their DCs increased by +6.",
+}
+MR_TABLE_NAME = "Malfunction Effects"
+
+
+def _record_plain_text(record: dict[str, Any]) -> str:
+    text = " ".join(
+        str(record.get(key) or "")
+        for key in ("description_text", "description_html", "description")
+    )
+    text = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def fg_malfunction_fields(record: dict[str, Any], *, name: str = "") -> dict[str, Any]:
+    """MR number, chosen malfunction message, and table name to roll."""
+    text = _record_plain_text(record)
+    match = _MR_RE.search(text)
+    if match:
+        mr = int(match.group(1))
+    else:
+        key = weapon_lookup_key(name or record.get("name") or "")
+        mr = int(_FIREARM_MR.get(key, 0) or 0)
+
+    effect = ""
+    found = _MALFUNCTION_TEXT_RE.search(text)
+    if found:
+        raw = re.sub(r"\s+", " ", found.group(1)).strip(" .;")
+        effect = _MALFUNCTION_EFFECTS.get(raw.lower(), raw)
+
+    mrtable = ""
+    if mr > 0 and not effect:
+        mrtable = MR_TABLE_NAME
+    return {"mr": mr, "malfunction": effect, "mrtable": mrtable}
+
+
+def fg_malfunction_rate(record: dict[str, Any], *, name: str = "") -> int:
+    """Return printed or table MR for a weapon or technological device."""
+    return int(fg_malfunction_fields(record, name=name)["mr"])
+
+
+def fg_weapon_fields(record: dict[str, Any]) -> dict[str, Any]:
+    """Map a mundane weapon record onto the 3.5E item weapon fields."""
+    name, cost = clean_weapon_name_and_cost(
+        record.get("name") or "",
+        record.get("cost") or record.get("price") or "",
+    )
+    key = weapon_lookup_key(name)
+    prof, grip = _weapon_grip(record, key)
+    damage = str(record.get("damage_m") or "").strip()
+    properties: list[str] = []
+    if "/" in damage and grip not in {"ranged", "firearm"}:
+        properties.append("Double")
+    if key in _REACH_KEYS:
+        properties.append("Reach")
+    malfunction = fg_malfunction_fields(record, name=name)
+    return {
+        "name": name,
+        "cost": cost,
+        "subtype": _SUBTYPE_BY_GRIP[grip].format(prof=prof),
+        "damage": damage,
+        "damagetype": fg_damage_type(str(record.get("damage_type") or "")),
+        "critical": fg_critical(str(record.get("critical") or "")),
+        "range": fg_range_feet(str(record.get("range_increment") or "")),
+        "properties": ", ".join(properties),
+        "mr": malfunction["mr"],
+        "malfunction": malfunction["malfunction"],
+        "mrtable": malfunction["mrtable"],
+    }
+
+
+def fg_armor_fields(record: dict[str, Any]) -> dict[str, Any]:
+    """Map a mundane armor or shield onto the 3.5E Basic Rules armor fields."""
+    kind = str(record.get("kind") or "").lower()
+    category = str(record.get("category") or "").strip().lower()
+    if kind == "shield" or "shield" in category:
+        subtype = "Shield"
+    elif category in {"light", "medium", "heavy"}:
+        subtype = category.title()
+    else:
+        subtype = "Extras"
+    return {
+        "subtype": subtype,
+        "ac": _signed_int(record.get("ac_bonus")),
+        "maxstatbonus": _signed_int(record.get("max_dex")),
+        "checkpenalty": _signed_int(record.get("armor_check_penalty")),
+        "spellfailure": _signed_int(record.get("arcane_spell_failure")),
+        "speed30": _signed_int(record.get("speed_30")),
+        "speed20": _signed_int(record.get("speed_20")),
+        "properties": "",
+    }
+
+
+def fg_goods_subtype(category: str) -> str:
+    key = (category or "").strip().lower()
+    if key in _GOODS_SUBTYPE:
+        return _GOODS_SUBTYPE[key]
+    if not key:
+        return "Adventuring Gear"
+    return key.title()
+
+
+def fg_magic_weapon_fields(html: str) -> dict[str, Any] | None:
+    """Fill combat fields when a magic item is a named weapon, such as +1 longsword."""
+    text = re.sub(r"<[^>]+>", " ", html or "")
+    text = re.sub(r"\s+", " ", text)
+    names = "|".join(sorted(_BASE_WEAPON_STATS, key=len, reverse=True))
+    match = re.search(rf"\+(\d+)\s+(?:[A-Za-z]+\s+){{0,3}}({names})\b", text, re.I)
+    if not match:
+        return None
+    stats = dict(_BASE_WEAPON_STATS[match.group(2).lower()])
+    stats["bonus"] = int(match.group(1))
+    return stats

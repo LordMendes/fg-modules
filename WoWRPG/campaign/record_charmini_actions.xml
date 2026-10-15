@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheetmini_actions">
+		<minisheet />
+		<script file="campaign/scripts/char_actions.lua" />
+		<sheetdata>
+			<frame_char name="actionframe">
+				<anchored position="over" />
+			</frame_char>
+
+			<label_frametop name="label_weapon">
+				<anchored to="actionframe" />
+				<static textres="char_label_weapons" />
+			</label_frametop>
+
+			<list_charweapon name="weaponlist">
+				<anchored>
+					<top offset="30" />
+					<left offset="10" />
+					<right offset="-10" />
+				</anchored>
+				<class>charmini_weapon</class>
+				<minisheet />
+			</list_charweapon>
+			
+			<genericcontrol name="divider">
+				<anchored to="weaponlist" position="below" offset="0,5" height="3" />
+				<frame name="separatorline" />
+				<disabled />
+			</genericcontrol>
+
+			<label name="spellclasslist_label">
+				<anchored>
+					<top parent="divider" anchor="bottom" offset="5" />
+					<left />
+					<right />
+				</anchored>
+				<center />
+				<static textres="char_label_spells" />
+			</label>
+
+			<list_spellclass name="spellclasslist">
+				<anchored>
+					<top parent="spellclasslist_label" anchor="bottom" offset="5" />
+					<left offset="10" />
+					<right offset="-10" />
+				</anchored>
+				<class>spell_class_mini</class>
+				<noscroll />
+				<readonly />
+				<minisheet />
+			</list_spellclass>
+			
+			<button_expand name="expand">
+				<anchored to="spellclasslist" position="aboveleft" offset="15,10" width="12" height="12" />
+				<target>spellclasslist,levels,spells</target>
+				<togglelevel>2</togglelevel>
+			</button_expand>
+			<button_collapse name="collapse">
+				<anchored to="expand" position="righthigh" offset="10,0" width="12" height="12" />
+				<target>spellclasslist,levels,spells</target>
+				<togglelevel>2</togglelevel>
+			</button_collapse>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="charmini_weapon" copy="char_weapon">
+		<minisheet />
+	</windowclass>
+</root>

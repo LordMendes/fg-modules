@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Common -->
+	<icon name="button_skillcr" file="graphics/buttons/button_skillcr.png" />
+	<icon name="button_skillcr_down" file="graphics/buttons/button_skillcr_down.png" />
+	<icon name="button_skillkn" file="graphics/buttons/button_skillkn.png" />
+	<icon name="button_skillkn_down" file="graphics/buttons/button_skillkn_down.png" />
+	<icon name="button_skillpe" file="graphics/buttons/button_skillpe.png" />
+	<icon name="button_skillpe_down" file="graphics/buttons/button_skillpe_down.png" />
+	<icon name="button_skillpr" file="graphics/buttons/button_skillpr.png" />
+	<icon name="button_skillpr_down" file="graphics/buttons/button_skillpr_down.png" />
+	
+	<!-- Spells -->
+	<icon name="caster_prep" file="graphics/icons/caster_prep.png" />
+	<icon name="caster_points" file="graphics/icons/caster_points.png" />
+	<icon name="caster_spontaneous" file="graphics/icons/caster_spontaneous.png" />
+
+	<!-- Character Sheet -->
+	<icon name="char_weapon_melee" file="graphics/icons/char_weapon_melee.png" />
+	<icon name="char_weapon_ranged" file="graphics/icons/char_weapon_ranged.png" />
+	<icon name="char_weapon_cm" file="graphics/icons/char_weapon_cm.png" />
+	<icon name="char_quicklist" file="graphics/icons/char_quicklist.png" />
+	<icon name="char_armorcheck" file="graphics/icons/char_armorcheck.png" />
+</root>

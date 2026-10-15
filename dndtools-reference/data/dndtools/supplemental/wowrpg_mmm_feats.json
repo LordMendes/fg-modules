@@ -1,0 +1,542 @@
+[
+  {
+    "slug": "additional-pattern-mmm",
+    "name": "Additional Pattern",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 26,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Rune",
+      "description_snippet": "Those runemasters who apply themselves to seeking understanding of runes are able exceed their normal limits."
+    },
+    "type": "Rune",
+    "description_html": "<p>Those runemasters who apply themselves to seeking understanding of runes are able exceed their normal limits.</p>",
+    "description_text": "Those runemasters who apply themselves to seeking understanding of runes are able exceed their normal limits.",
+    "benefit_html": "You learn an additional runic pattern.",
+    "benefit_text": "You learn an additional runic pattern.",
+    "prerequisite_html": "<p>Intellect 13, runemaster 3rd level; you must find a mentor to teach you the pattern.</p>",
+    "prerequisite_text": "Intellect 13, runemaster 3rd level; you must find a mentor to teach you the pattern.",
+    "special_html": "<p>You can take this feat any number of times. Each time, it applies to a new rune pattern.</p>",
+    "special_text": "You can take this feat any number of times. Each time, it applies to a new rune pattern.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "alchemical-specialty-mmm",
+    "name": "Alchemical Specialty",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 26,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Alchemy",
+      "description_snippet": "Some alchemists focus on certain kinds of alchemical preparations, specializing in their creation."
+    },
+    "type": "Alchemy",
+    "description_html": "<p>Some alchemists focus on certain kinds of alchemical preparations, specializing in their creation.</p>",
+    "description_text": "Some alchemists focus on certain kinds of alchemical preparations, specializing in their creation.",
+    "benefit_html": "Choose one of the four kinds of alchemical preparation: philter, draught, alchemical oil or transmutation. You gain a +3 bonus on Craft (alchemy) checks when creating or otherwise dealing with those kinds of alchemical products. Additionally, the base cost for creating those products is reduced by 25%.",
+    "benefit_text": "Choose one of the four kinds of alchemical preparation: philter, draught, alchemical oil or transmutation. You gain a +3 bonus on Craft (alchemy) checks when creating or otherwise dealing with those kinds of alchemical products. Additionally, the base cost for creating those products is reduced by 25%.",
+    "prerequisite_html": "<p>Journeyman Alchemist, Craft (alchemy) 6 ranks.</p>",
+    "prerequisite_text": "Journeyman Alchemist, Craft (alchemy) 6 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "alchemists-constitution-mmm",
+    "name": "Alchemist's Constitution",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 26,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "constitutions, allowing them to more quickly assimilate the power of alchemical draughts."
+    },
+    "type": "General",
+    "description_html": "<p>constitutions, allowing them to more quickly assimilate the power of alchemical draughts.</p>",
+    "description_text": "constitutions, allowing them to more quickly assimilate the power of alchemical draughts.",
+    "benefit_html": "You need only wait 15 minutes between taking draughts (see Chapter 2: Enchantments, Runes and Brews).",
+    "benefit_text": "You need only wait 15 minutes between taking draughts (see Chapter 2: Enchantments, Runes and Brews).",
+    "prerequisite_html": "<p>Sta 13.</p>",
+    "prerequisite_text": "Sta 13.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Characters must normally wait an hour between taking draughts.</p>",
+    "normal_text": "Characters must normally wait an hour between taking draughts."
+  },
+  {
+    "slug": "artisan-alchemist-mmm",
+    "name": "Artisan Alchemist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 26,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Alchemy",
+      "description_snippet": "indeed. He is capable of creating impressively powerful substances that can heal, protect and destroy. So intense is his mastery of alchemical distillation of magic from the mundan"
+    },
+    "type": "Alchemy",
+    "description_html": "<p>indeed. He is capable of creating impressively powerful substances that can heal, protect and destroy. So intense is his mastery of alchemical distillation of magic from the mundane, that his creations radiate a slight magic aura (faint, no specific school).</p>",
+    "description_text": "indeed. He is capable of creating impressively powerful substances that can heal, protect and destroy. So intense is his mastery of alchemical distillation of magic from the mundane, that his creations radiate a slight magic aura (faint, no specific school).",
+    "benefit_html": "You may create artisan-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "benefit_text": "You may create artisan-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "prerequisite_html": "<p>Expert Alchemist, Journeyman Alchemist, Craft (alchemy) 10 ranks.</p>",
+    "prerequisite_text": "Expert Alchemist, Journeyman Alchemist, Craft (alchemy) 10 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "craft-tech-mod-mmm",
+    "name": "Craft Tech-Mod",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "You can create tech-mods, which are technological enhancements to normal devices."
+    },
+    "type": "Technology",
+    "description_html": "<p>You can create tech-mods, which are technological enhancements to normal devices.</p>",
+    "description_text": "You can create tech-mods, which are technological enhancements to normal devices.",
+    "benefit_html": "You can craft tech-mod items. See Chapter 5: Things That Go Boom in the Night, \"Tech-Mods,\" for more information.",
+    "benefit_text": "You can craft tech-mod items. See Chapter 5: Things That Go Boom in the Night, \"Tech-Mods,\" for more information.",
+    "prerequisite_html": "<p>Craft (technological device) 4 ranks.</p>",
+    "prerequisite_text": "Craft (technological device) 4 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "expert-alchemist-mmm",
+    "name": "Expert Alchemist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Alchemy",
+      "description_snippet": "The expert alchemist has unlocked some of the great secrets of alchemy, tapping into the techniques for creating more powerful mixtures."
+    },
+    "type": "Alchemy",
+    "description_html": "<p>The expert alchemist has unlocked some of the great secrets of alchemy, tapping into the techniques for creating more powerful mixtures.</p>",
+    "description_text": "The expert alchemist has unlocked some of the great secrets of alchemy, tapping into the techniques for creating more powerful mixtures.",
+    "benefit_html": "You may create expert-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "benefit_text": "You may create expert-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "prerequisite_html": "<p>Journeyman Alchemist, Craft (alchemy) 7 ranks.</p>",
+    "prerequisite_text": "Journeyman Alchemist, Craft (alchemy) 7 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "feedback-mmm",
+    "name": "Feedback",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You convert destroyed spells into raw magical energy that rips into your opponent in a savage backlash."
+    },
+    "type": "General",
+    "description_html": "<p>You convert destroyed spells into raw magical energy that rips into your opponent in a savage backlash.</p>",
+    "description_text": "You convert destroyed spells into raw magical energy that rips into your opponent in a savage backlash.",
+    "benefit_html": "When you destroy an enemy's spell slot with the Spellbreaker feat, the spell is converted into raw magical energy that damages the opponent. The opponent takes 1d4 points of damage per spell level destroyed. This damage is in addition to the damage your attack deals. Spell resistance does not prevent this damage.",
+    "benefit_text": "When you destroy an enemy's spell slot with the Spellbreaker feat, the spell is converted into raw magical energy that damages the opponent. The opponent takes 1d4 points of damage per spell level destroyed. This damage is in addition to the damage your attack deals. Spell resistance does not prevent this damage.",
+    "prerequisite_html": "<p>Spellbreaker, base attack bonus +8, Spellcraft 4 ranks.</p>",
+    "prerequisite_text": "Spellbreaker, base attack bonus +8, Spellcraft 4 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "greater-spell-specialization-mmm",
+    "name": "Greater Spell Specialization",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "Your mastery with a single spell is unmatched."
+    },
+    "type": "General",
+    "description_html": "<p>Your mastery with a single spell is unmatched.</p>",
+    "description_text": "Your mastery with a single spell is unmatched.",
+    "benefit_html": "Choose a spell with which you have Spell Specialization and that belongs to a school in which you have Spell Focus and Greater Spell Focus. Your caster level is 4 levels higher when casting that spell. This change affects all variables associated with caster level, including level-dependent variables (such as range or damage), and dispel and spell penetration checks. In addition, when you prepare that spell with a metamagic feat, it takes up a spell slot two levels lower than normal, to a minimum of its normal level. For example, if Leanine Starborn takes Greater Spell Specialization and chooses frost nova (a 3rd-level spell), she can prepare a maximized frost nova as a 4th-level spell, an empowered frost nova as a 3rd-level spell and so on. The benefits of this feat do not stack with the benefits of Spell Specialization.",
+    "benefit_text": "Choose a spell with which you have Spell Specialization and that belongs to a school in which you have Spell Focus and Greater Spell Focus. Your caster level is 4 levels higher when casting that spell. This change affects all variables associated with caster level, including level-dependent variables (such as range or damage), and dispel and spell penetration checks. In addition, when you prepare that spell with a metamagic feat, it takes up a spell slot two levels lower than normal, to a minimum of its normal level. For example, if Leanine Starborn takes Greater Spell Specialization and chooses frost nova (a 3rd-level spell), she can prepare a maximized frost nova as a 4th-level spell, an empowered frost nova as a 3rd-level spell and so on. The benefits of this feat do not stack with the benefits of Spell Specialization.",
+    "prerequisite_html": "<p>Greater Spell Focus, Spell Focus, Spell Specialization, caster level 12th.</p>",
+    "prerequisite_text": "Greater Spell Focus, Spell Focus, Spell Specialization, caster level 12th.",
+    "special_html": "<p>You may take this feat multiple times. Its effects do not stack. Each time it applies to a different spell.</p>",
+    "special_text": "You may take this feat multiple times. Its effects do not stack. Each time it applies to a different spell.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "journeyman-alchemist-mmm",
+    "name": "Journeyman Alchemist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Alchemy",
+      "description_snippet": "The journeyman alchemist, though quite a step above the common alchemist, is still an apprentice in the art of distilling down the mundane herbs and materials of the world until sh"
+    },
+    "type": "Alchemy",
+    "description_html": "<p>The journeyman alchemist, though quite a step above the common alchemist, is still an apprentice in the art of distilling down the mundane herbs and materials of the world until she has concentrated their innate magical power.</p>",
+    "description_text": "The journeyman alchemist, though quite a step above the common alchemist, is still an apprentice in the art of distilling down the mundane herbs and materials of the world until she has concentrated their innate magical power.",
+    "benefit_html": "You may create journeyman-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "benefit_text": "You may create journeyman-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "prerequisite_html": "<p>Craft (alchemy) 4 ranks.</p>",
+    "prerequisite_text": "Craft (alchemy) 4 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "master-alchemist-mmm",
+    "name": "Master Alchemist",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Alchemy",
+      "description_snippet": "A powerhouse of alchemical lore, the master alchemist wields great power. Within his knowledge is the distillation of incredibly advanced power from mundane (though often rare) obj"
+    },
+    "type": "Alchemy",
+    "description_html": "<p>A powerhouse of alchemical lore, the master alchemist wields great power. Within his knowledge is the distillation of incredibly advanced power from mundane (though often rare) objects, and the miraculous transmutation of one material into another.</p>",
+    "description_text": "A powerhouse of alchemical lore, the master alchemist wields great power. Within his knowledge is the distillation of incredibly advanced power from mundane (though often rare) objects, and the miraculous transmutation of one material into another.",
+    "benefit_html": "You may create master-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "benefit_text": "You may create master-level alchemical products (see Chapter 2: Enchantments, Runes and Brews).",
+    "prerequisite_html": "<p>Artisan Alchemist, Expert Alchemist, Journeyman Alchemist, Craft (alchemy) 16 ranks.</p>",
+    "prerequisite_text": "Artisan Alchemist, Expert Alchemist, Journeyman Alchemist, Craft (alchemy) 16 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "material-secret-mmm",
+    "name": "Material Secret",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "special materials."
+    },
+    "type": "General",
+    "description_html": "<p>special materials.</p>",
+    "description_text": "special materials.",
+    "benefit_html": "When you select this feat, choose two materials from the following list: bloodstone ore, brightwood, dark iron, elementium, lightforge iron, and truesilver. You do not take a penalty when working with those materials. (See Chapter 4: So Shiny!, \"Special Materials,\" for more information about these substances.)",
+    "benefit_text": "When you select this feat, choose two materials from the following list: bloodstone ore, brightwood, dark iron, elementium, lightforge iron, and truesilver. You do not take a penalty when working with those materials. (See Chapter 4: So Shiny!, \"Special Materials,\" for more information about these substances.)",
+    "prerequisite_html": "<p>Craft (armorsmithing, blacksmithing or weaponsmithing) 4 ranks.</p>",
+    "prerequisite_text": "Craft (armorsmithing, blacksmithing or weaponsmithing) 4 ranks.",
+    "special_html": "<p>You can take this feat more than once. Each time, it applies to two different materials.</p>",
+    "special_text": "You can take this feat more than once. Each time, it applies to two different materials.",
+    "normal_html": "<p>A character without this feat takes a -5 penalty on Craft checks when working with these materials.</p>",
+    "normal_text": "A character without this feat takes a -5 penalty on Craft checks when working with these materials."
+  },
+  {
+    "slug": "quiescent-rune-mmm",
+    "name": "Quiescent Rune",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 27,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Metamagic",
+      "description_snippet": "A rune-caster may subtly empower runes, keeping the magic within them slumbering until the time comes to awaken them."
+    },
+    "type": "Metamagic, Rune",
+    "description_html": "<p>A rune-caster may subtly empower runes, keeping the magic within them slumbering until the time comes to awaken them.</p>",
+    "description_text": "A rune-caster may subtly empower runes, keeping the magic within them slumbering until the time comes to awaken them.",
+    "benefit_html": "When a quiescent rune is empowered, the rune's magic does not take effect right away. Instead, the magic is simply stored in the rune, awaiting activation FEATS by one who is given the correct word (a command word set during the empowering of the rune). At any time within the period of quiescence, a character (who need not be the rune-caster) may touch the rune and speak the command word (a move action); at this time, the rune takes effect. Its duration begins on the moment it is activated. The quiescent rune remains slumbering for 1 minute per caster level; if it is not activated within this time period, it activates on its own, with normal effects. Only a scribed or permanent rune may be empowered as a quiescent rune, and empowering a rune as a quiescent rune takes up a rune slot one level higher than normal.",
+    "benefit_text": "When a quiescent rune is empowered, the rune's magic does not take effect right away. Instead, the magic is simply stored in the rune, awaiting activation FEATS by one who is given the correct word (a command word set during the empowering of the rune). At any time within the period of quiescence, a character (who need not be the rune-caster) may touch the rune and speak the command word (a move action); at this time, the rune takes effect. Its duration begins on the moment it is activated. The quiescent rune remains slumbering for 1 minute per caster level; if it is not activated within this time period, it activates on its own, with normal effects. Only a scribed or permanent rune may be empowered as a quiescent rune, and empowering a rune as a quiescent rune takes up a rune slot one level higher than normal.",
+    "prerequisite_html": "<p>Ability to cast 2nd-level runes.</p>",
+    "prerequisite_text": "Ability to cast 2nd-level runes.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>Runes take effect as soon as they are empowered.</p>",
+    "normal_text": "Runes take effect as soon as they are empowered."
+  },
+  {
+    "slug": "runic-attunement-mmm",
+    "name": "Runic Attunement",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Rune",
+      "description_snippet": "powers of multiple rune patterns."
+    },
+    "type": "Rune",
+    "description_html": "<p>powers of multiple rune patterns.</p>",
+    "description_text": "powers of multiple rune patterns.",
+    "benefit_html": "You can attune one more rune pattern per day than normal.",
+    "benefit_text": "You can attune one more rune pattern per day than normal.",
+    "prerequisite_html": "<p>The ability to attune to a rune pattern.</p>",
+    "prerequisite_text": "The ability to attune to a rune pattern.",
+    "special_html": "<p>You can take this feat more than once. Its effects stack.</p>",
+    "special_text": "You can take this feat more than once. Its effects stack.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "searing-rune-mmm",
+    "name": "Searing Rune",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Rune",
+      "description_snippet": "creation of their spontaneous runes is enough to sear the rune into the surface being inscribed, using some of their life force to do so. On creatures, a seared rune appears as a d"
+    },
+    "type": "Rune",
+    "description_html": "<p>creation of their spontaneous runes is enough to sear the rune into the surface being inscribed, using some of their life force to do so. On creatures, a seared rune appears as a dark black mark that wears away in time; on objects, it seems to be burnt into the surface of the item, though only temporarily.</p>",
+    "description_text": "creation of their spontaneous runes is enough to sear the rune into the surface being inscribed, using some of their life force to do so. On creatures, a seared rune appears as a dark black mark that wears away in time; on objects, it seems to be burnt into the surface of the item, though only temporarily.",
+    "benefit_html": "When you empower a spontaneous rune, you have the option of sacrificing 1 hit point per level of the rune being empowered. If you do so, the rune appears as normal for a spontaneous rune (and still uses a material component to do so), but it immediately imprints itself onto the creature or object being inscribed. From that point on, the rune is treated as a scribed, rather than spontaneous, rune.",
+    "benefit_text": "When you empower a spontaneous rune, you have the option of sacrificing 1 hit point per level of the rune being empowered. If you do so, the rune appears as normal for a spontaneous rune (and still uses a material component to do so), but it immediately imprints itself onto the creature or object being inscribed. From that point on, the rune is treated as a scribed, rather than spontaneous, rune.",
+    "prerequisite_html": "<p>The ability to empower spontaneous runes.</p>",
+    "prerequisite_text": "The ability to empower spontaneous runes.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": "<p>In order to gain the benefits of a scribed rune, the rune-caster must spend time scribing it with special materials (for more details see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art\").</p>",
+    "normal_text": "In order to gain the benefits of a scribed rune, the rune-caster must spend time scribing it with special materials (for more details see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art\")."
+  },
+  {
+    "slug": "spell-specialization-mmm",
+    "name": "Spell Specialization",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "You are especially adept with a single spell."
+    },
+    "type": "General",
+    "description_html": "<p>You are especially adept with a single spell.</p>",
+    "description_text": "You are especially adept with a single spell.",
+    "benefit_html": "Choose one spell that belongs to a school in which you have Spell Focus. Your caster level is 2 levels higher when casting that spell. This change affects all variables associated with caster level, including level- dependent variables (such as range or damage), and dispel and spell penetration checks. In addition, when you prepare that spell with a metamagic feat, it takes up a spell slot one level lower than normal, to a minimum of its normal level. For example, if Leanine Starborn takes Spell Specialization and chooses frost nova (a 3rd-level spell), she can prepare a maximized frost nova as a 5th-level spell, a silent frost nova as a 3rd-level spell, and so on.",
+    "benefit_text": "Choose one spell that belongs to a school in which you have Spell Focus. Your caster level is 2 levels higher when casting that spell. This change affects all variables associated with caster level, including level- dependent variables (such as range or damage), and dispel and spell penetration checks. In addition, when you prepare that spell with a metamagic feat, it takes up a spell slot one level lower than normal, to a minimum of its normal level. For example, if Leanine Starborn takes Spell Specialization and chooses frost nova (a 3rd-level spell), she can prepare a maximized frost nova as a 5th-level spell, a silent frost nova as a 3rd-level spell, and so on.",
+    "prerequisite_html": "<p>Spell Focus, caster level 4th.</p>",
+    "prerequisite_text": "Spell Focus, caster level 4th.",
+    "special_html": "<p>You may take this feat multiple times. Its effects do not stack. Each time it applies to a different spell.</p>",
+    "special_text": "You may take this feat multiple times. Its effects do not stack. Each time it applies to a different spell.",
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "spellbreaker-mmm",
+    "name": "Spellbreaker",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "General",
+      "description_snippet": "The powers of the spellbreaker are terrifying to those with knowledge of magic, for their blows shatter the mana from a spellcaster's body."
+    },
+    "type": "General",
+    "description_html": "<p>The powers of the spellbreaker are terrifying to those with knowledge of magic, for their blows shatter the mana from a spellcaster's body.</p>",
+    "description_text": "The powers of the spellbreaker are terrifying to those with knowledge of magic, for their blows shatter the mana from a spellcaster's body.",
+    "benefit_html": "As a standard action, you may make a spellbreaker strike. Make a normal melee attack. If you hit and deal damage, you destroy one of the target's highest-level spell (or rune) slots. The slot is expended, as if the victim had used it to cast a spell. You cannot destroy a spell slot of a higher level than you have ranks in Spellcraft; you destroy the highest spell slot possible if your ranks in Spellcraft are lower than the target's highest-level spell slot.",
+    "benefit_text": "As a standard action, you may make a spellbreaker strike. Make a normal melee attack. If you hit and deal damage, you destroy one of the target's highest-level spell (or rune) slots. The slot is expended, as if the victim had used it to cast a spell. You cannot destroy a spell slot of a higher level than you have ranks in Spellcraft; you destroy the highest spell slot possible if your ranks in Spellcraft are lower than the target's highest-level spell slot.",
+    "prerequisite_html": "<p>Base attack bonus +4, Spellcraft 2 ranks.</p>",
+    "prerequisite_text": "Base attack bonus +4, Spellcraft 2 ranks.",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "strike-smith-mmm",
+    "name": "Strike-Smith",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Rune",
+      "description_snippet": "Though the runes from the pattern of striking are normally inscribed on creatures, a rune-caster skilled in the working of metal can empower a striking rune as a glyph upon a weapo"
+    },
+    "type": "Rune, Metamagic",
+    "description_html": "<p>Though the runes from the pattern of striking are normally inscribed on creatures, a rune-caster skilled in the working of metal can empower a striking rune as a glyph upon a weapon, rather than a mark upon a creature. This feat is most often found among dwarven rune-casters.</p>",
+    "description_text": "Though the runes from the pattern of striking are normally inscribed on creatures, a rune-caster skilled in the working of metal can empower a striking rune as a glyph upon a weapon, rather than a mark upon a creature. This feat is most often found among dwarven rune-casters.",
+    "benefit_html": "When creating a rune from the Striking pattern, you may elect to create it as a glyph, rather than a mark. However, doing so requires the use of a rune slot of one level higher than normal.",
+    "benefit_text": "When creating a rune from the Striking pattern, you may elect to create it as a glyph, rather than a mark. However, doing so requires the use of a rune slot of one level higher than normal.",
+    "prerequisite_html": "<p>Craft (armorsmithing, blacksmithing or weaponsmithing) 4 ranks, the ability to empower runes from the Striking pattern (see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art\").</p>",
+    "prerequisite_text": "Craft (armorsmithing, blacksmithing or weaponsmithing) 4 ranks, the ability to empower runes from the Striking pattern (see Chapter 2: Enchantments, Runes and Brews, \"The Runic Art\").",
+    "special_html": null,
+    "special_text": null,
+    "normal_html": null,
+    "normal_text": null
+  },
+  {
+    "slug": "vehicle-proficiency-steam-armor-mmm",
+    "name": "Vehicle Proficiency (Steam Armor)",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "More Magic and Mayhem",
+      "abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "page": 28,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "MMM",
+      "edition": "WoW RPG (3.5)",
+      "type": "Technology",
+      "description_snippet": "You are familiar with and can operate phlogiston- powered steam armor."
+    },
+    "type": "Technology",
+    "description_html": "<p>You are familiar with and can operate phlogiston- powered steam armor.</p>",
+    "description_text": "You are familiar with and can operate phlogiston- powered steam armor.",
+    "benefit_html": "Steam armor is a specialty of the Vehicle Proficiency feat (joining land, air and water vehicles). You may operate a suit of steam armor by making a Use Technological Device check.",
+    "benefit_text": "Steam armor is a specialty of the Vehicle Proficiency feat (joining land, air and water vehicles). You may operate a suit of steam armor by making a Use Technological Device check.",
+    "prerequisite_html": null,
+    "prerequisite_text": null,
+    "special_html": "<p>You can take the Vehicle Proficiency feat multiple times. Each time, it applies to a different specialty. Tinkers can select Vehicle Proficiency as one of their tinker bonus feats.</p>",
+    "special_text": "You can take the Vehicle Proficiency feat multiple times. Each time, it applies to a different specialty. Tinkers can select Vehicle Proficiency as one of their tinker bonus feats.",
+    "normal_html": "<p>A character who operates a vehicle without the appropriate proficiency takes a -4 penalty on her Use Technological Device check.</p>",
+    "normal_text": "A character who operates a vehicle without the appropriate proficiency takes a -4 penalty on her Use Technological Device check."
+  }
+]

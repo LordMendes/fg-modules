@@ -27,17 +27,35 @@ const SUPPLEMENTAL_FEAT_FILES = [
   "realmshelps_flaws.json",
   "dandwiki_flaws.json",
   "warcraft_rpg_feats.json",
+  "wowrpg_core_feats.json",
+  "wowrpg_apg_feats.json",
+  "wowrpg_hpg_feats.json",
+  "wowrpg_mmm_feats.json",
 ] as const;
 const SUPPLEMENTAL_EQUIPMENT_FILES = [
   "realmshelps_weapons.json",
   "realmshelps_armor.json",
   "realmshelps_goods.json",
   "warcraft_rpg_equipment.json",
+  "wowrpg_core_equipment.json",
+  "wowrpg_mmm_equipment.json",
+  "wowrpg_hpg_equipment.json",
 ] as const;
-const SUPPLEMENTAL_RACE_FILES = ["warcraft_rpg_races.json"] as const;
-const SUPPLEMENTAL_CLASS_FILES = ["warcraft_rpg_classes.json"] as const;
-const SUPPLEMENTAL_ITEM_FILES = ["warcraft_rpg_items.json"] as const;
-const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json"] as const;
+const SUPPLEMENTAL_RACE_FILES = [
+  "warcraft_rpg_races.json",
+  "wowrpg_core_races.json",
+  "wowrpg_apg_races.json",
+  "wowrpg_hpg_races.json",
+] as const;
+const SUPPLEMENTAL_CLASS_FILES = [
+  "warcraft_rpg_classes.json",
+  "wowrpg_core_classes.json",
+  "wowrpg_apg_classes.json",
+  "wowrpg_hpg_classes.json",
+  "wowrpg_mmm_classes.json",
+] as const;
+const SUPPLEMENTAL_ITEM_FILES = ["warcraft_rpg_items.json", "wowrpg_mmm_items.json", "wowrpg_hpg_items.json"] as const;
+const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json", "wowrpg_mmm_spells.json"] as const;
 const SPELL_CLASS_LINK_OVERLAY_FILE = "warcraft_rpg_spell_class_links.json";
 const BATCH_SIZE = 500;
 

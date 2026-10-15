@@ -253,5 +253,5 @@ def write_definition(path: Any, title: str, author: str) -> None:
     typed_string(root, "name", title)
     typed_string(root, "category", "Rules")
     typed_string(root, "author", author)
-    typed_string(root, "ruleset", "3.5E")
+    typed_string(root, "ruleset", "WoWRPG")
     write_xml(root, Path(path) / "definition.xml", clear_after=False)

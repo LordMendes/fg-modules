@@ -1,0 +1,478 @@
+[
+  {
+    "slug": "bloodspike-hpg",
+    "name": "Bloodspike",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 122,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "2 gp",
+      "weight": "Weapon (two-handed) +2 Holy Blade Weapon (slashing) +1 Retracting Sheath Weapon (slashing) +1 Scaldjets Armor (medium or heavy) +2 Shifting Scales Armor (heavy) +2 Springpads Armor (light) +1 Spur Coil Weapon (melee) +1 Totem Wings Weapon (tauren totem) +1 Powers: Any piercing weapon can employ this tech- mod. When the weapon penetrates an opponent's flesh, the compact, caltrop-like tip expands, driving its tiny spikes into the surrounding tissue. The wound continues to bleed, dealing 1 point of damage every round until the spike is removed. T aking it out requires a standard action and a DC 15 Heal check"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "2 gp",
+    "weight": "Weapon (two-handed) +2 Holy Blade Weapon (slashing) +1 Retracting Sheath Weapon (slashing) +1 Scaldjets Armor (medium or heavy) +2 Shifting Scales Armor (heavy) +2 Springpads Armor (light) +1 Spur Coil Weapon (melee) +1 Totem Wings Weapon (tauren totem) +1 Powers: Any piercing weapon can employ this tech- mod. When the weapon penetrates an opponent's flesh, the compact, caltrop-like tip expands, driving its tiny spikes into the surrounding tissue. The wound continues to bleed, dealing 1 point of damage every round until the spike is removed. T aking it out requires a standard action and a DC 15 Heal check",
+    "description_html": "<p>Description: This orcish tech-mod consists of a small, spring-assisted cluster of spikes that resembles a tiny caltrop. When combined with the tip of a specially modified piercing weapon, the bloodspike breaks off inside a foe's body, tearing and rending the flesh long after the initial attack. Table 5-1: New Tech-Mods Bonus Item Type Equivalent Bloodspike Weapon (piercing) +1 Doubleslammer Weapon (tauren totem) +1 Floating Counterweight Weapon (two-handed) +2 Holy Blade Weapon (slashing) +1 Retracting Sheath Weapon (slashing) +1 Scaldjets Armor (medium or heavy) +2 Shifting Scales Armor (heavy) +2 Springpads Armor (light) +1 Spur Coil Weapon (melee) +1 Totem Wings Weapon (tauren totem) +1 Powers: Any piercing weapon can employ this tech- mod. When the weapon penetrates an opponent's flesh, the compact, caltrop-like tip expands, driving its tiny spikes into the surrounding tissue. The wound continues to bleed, dealing 1 point of damage every round until the spike is removed. T aking it out requires a standard action and a DC 15 Heal check; failure means the character removes the spike, but the impaled creature takes 1d3 points of damage in the process. A bloodspike has no effect on creatures that are immune to critical hits. A weapon can have only one spike tip at a time. Once the bloodspike is imbedded in a foe, another can be attached to the weapon as a standard action that provokes an attack of opportunity. Craft (weaponsmithing) 10 ranks, Craft (technological device) 10 ranks, Craft T ech-Mod; Bonus Equivalent +1. A spike tip costs 2 gp. Doubleslammer</p>",
+    "description_text": "Description: This orcish tech-mod consists of a small, spring-assisted cluster of spikes that resembles a tiny caltrop. When combined with the tip of a specially modified piercing weapon, the bloodspike breaks off inside a foe's body, tearing and rending the flesh long after the initial attack. Table 5-1: New Tech-Mods Bonus Item Type Equivalent Bloodspike Weapon (piercing) +1 Doubleslammer Weapon (tauren totem) +1 Floating Counterweight Weapon (two-handed) +2 Holy Blade Weapon (slashing) +1 Retracting Sheath Weapon (slashing) +1 Scaldjets Armor (medium or heavy) +2 Shifting Scales Armor (heavy) +2 Springpads Armor (light) +1 Spur Coil Weapon (melee) +1 Totem Wings Weapon (tauren totem) +1 Powers: Any piercing weapon can employ this tech- mod. When the weapon penetrates an opponent's flesh, the compact, caltrop-like tip expands, driving its tiny spikes into the surrounding tissue. The wound continues to bleed, dealing 1 point of damage every round until the spike is removed. T aking it out requires a standard action and a DC 15 Heal check; failure means the character removes the spike, but the impaled creature takes 1d3 points of damage in the process. A bloodspike has no effect on creatures that are immune to critical hits. A weapon can have only one spike tip at a time. Once the bloodspike is imbedded in a foe, another can be attached to the weapon as a standard action that provokes an attack of opportunity. Craft (weaponsmithing) 10 ranks, Craft (technological device) 10 ranks, Craft T ech-Mod; Bonus Equivalent +1. A spike tip costs 2 gp. Doubleslammer"
+  },
+  {
+    "slug": "aura-concealment-suit-hpg",
+    "name": "Aura Concealment Suit",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 125,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "750 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "750 gp",
+    "weight": "-",
+    "description_html": "<p>Description: Developed by Forsaken scientists, this outfit consists of a thin sheet of ribbon-like, translucent material that completely covers the body. A phlogiston generator, hooked to the fibers, produces a kind of static that conceals magical auras on the wearer. Operation: An aura concealment suit occupies the same equipment slot that a suit of armor uses, but provides no physical protection. When the generator is switched on with a DC 15 Use T echnological Device check, the translucent material takes on a faint bluish glow . While the suit functions, anyone observing the wearer's magical auras (with detect magic or a similar ability) can detect the number of auras present on his person, including those of his magic items, but can't identify their strength or school of magic. The suit's field interacts with the auras of magic items the wearer holds, so it masks them as well as those it covers. Fuel: One vial of liquid phlogiston powers this device for 4 hours of continuous operation. Hardness 5; 10 hp; Size Medium; W eight 5 lb.; MR 1; TS 5; Craft DC 25; Price 750 gp. The crafter must be able to cast detect magic to create this item, or get someone else to cast it for him. Dart Grenade</p>",
+    "description_text": "Description: Developed by Forsaken scientists, this outfit consists of a thin sheet of ribbon-like, translucent material that completely covers the body. A phlogiston generator, hooked to the fibers, produces a kind of static that conceals magical auras on the wearer. Operation: An aura concealment suit occupies the same equipment slot that a suit of armor uses, but provides no physical protection. When the generator is switched on with a DC 15 Use T echnological Device check, the translucent material takes on a faint bluish glow . While the suit functions, anyone observing the wearer's magical auras (with detect magic or a similar ability) can detect the number of auras present on his person, including those of his magic items, but can't identify their strength or school of magic. The suit's field interacts with the auras of magic items the wearer holds, so it masks them as well as those it covers. Fuel: One vial of liquid phlogiston powers this device for 4 hours of continuous operation. Hardness 5; 10 hp; Size Medium; W eight 5 lb.; MR 1; TS 5; Craft DC 25; Price 750 gp. The crafter must be able to cast detect magic to create this item, or get someone else to cast it for him. Dart Grenade"
+  },
+  {
+    "slug": "dart-grenade-hpg",
+    "name": "Dart Grenade",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 126,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "65 gp plus 4 doses of poison",
+      "weight": "Aura Concealment Suit 1 750 gp 5 lb. Dart Grenade 1 65 gp + poison 2 lb. Dispel Prevention Suit 1 960 gp 8 lb. Enemy Detector 2 788 gp 600 lb. Energy Polarizer 1 1,440 gp 8 lb. Lung-Crusher 1 120 gp 5 lb. Mobile Hut 1 3,400 gp 8,000 lb. Necromantic Amplifier 1 2,000 gp 4 lb. Poison Extractor 1 250 gp 1/2 lb. Portable Wall 3 648 gp 200 lb. Repeating Drums 2 1,620 gp 25 lb. Retract-O-Arm, Spelltouch 2 280 gp 14 lb. Spearflinger 1 640 gp 5 lb. Spellgun 2 750 gp + 500 gp in gems 2 lb. Swampwalker Shoes 1 750 gp per pair 2 lb. each Thunderstomper 1 560 gp 10 lb. Porcupine Harness 1 1,135 gp 29 lb. Dart grenades must be prepared with poison in advance. Virtually any type of contact or injected poison can be used. Applying this poison to all the darts uses up 4 doses and takes 10 minutes. Malfunction: The grenade explodes in the wielder's hand. She automatically fails the Reflex save against damage, but is permitted a save against whatever poison is on the darts. Hardness 3"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "65 gp plus 4 doses of poison",
+    "weight": "Aura Concealment Suit 1 750 gp 5 lb. Dart Grenade 1 65 gp + poison 2 lb. Dispel Prevention Suit 1 960 gp 8 lb. Enemy Detector 2 788 gp 600 lb. Energy Polarizer 1 1,440 gp 8 lb. Lung-Crusher 1 120 gp 5 lb. Mobile Hut 1 3,400 gp 8,000 lb. Necromantic Amplifier 1 2,000 gp 4 lb. Poison Extractor 1 250 gp 1/2 lb. Portable Wall 3 648 gp 200 lb. Repeating Drums 2 1,620 gp 25 lb. Retract-O-Arm, Spelltouch 2 280 gp 14 lb. Spearflinger 1 640 gp 5 lb. Spellgun 2 750 gp + 500 gp in gems 2 lb. Swampwalker Shoes 1 750 gp per pair 2 lb. each Thunderstomper 1 560 gp 10 lb. Porcupine Harness 1 1,135 gp 29 lb. Dart grenades must be prepared with poison in advance. Virtually any type of contact or injected poison can be used. Applying this poison to all the darts uses up 4 doses and takes 10 minutes. Malfunction: The grenade explodes in the wielder's hand. She automatically fails the Reflex save against damage, but is permitted a save against whatever poison is on the darts. Hardness 3",
+    "description_html": "<p>Description: A weapon of troll manufacture, the dart grenade employs explosive swamp gas to propel poison-tipped darts outward at high speeds. Operation: A dart grenade is thrown like any similar splash weapon. Activating the grenade before throwing it is a free action that requires a DC 10 Use T echnological Device check. (Note that the device can malfunction on both this check and on the attack roll.) When the bomb lands, it bursts apart, dealing 1d6 points of piercing damage to all creatures within 20 feet; a DC 15 Reflex save negates the damage. The darts' poison affects anyone who takes at least 1 point of damage; they are permitted a save versus poison as specified in that poison's rules. Table 5-2: New Technological Devices Item MR Cost Weight Aura Concealment Suit 1 750 gp 5 lb. Dart Grenade 1 65 gp + poison 2 lb. Dispel Prevention Suit 1 960 gp 8 lb. Enemy Detector 2 788 gp 600 lb. Energy Polarizer 1 1,440 gp 8 lb. Lung-Crusher 1 120 gp 5 lb. Mobile Hut 1 3,400 gp 8,000 lb. Necromantic Amplifier 1 2,000 gp 4 lb. Poison Extractor 1 250 gp 1/2 lb. Portable Wall 3 648 gp 200 lb. Repeating Drums 2 1,620 gp 25 lb. Retract-O-Arm, Spelltouch 2 280 gp 14 lb. Spearflinger 1 640 gp 5 lb. Spellgun 2 750 gp + 500 gp in gems 2 lb. Swampwalker Shoes 1 750 gp per pair 2 lb. each Thunderstomper 1 560 gp 10 lb. Porcupine Harness 1 1,135 gp 29 lb. Dart grenades must be prepared with poison in advance. Virtually any type of contact or injected poison can be used. Applying this poison to all the darts uses up 4 doses and takes 10 minutes. Malfunction: The grenade explodes in the wielder's hand. She automatically fails the Reflex save against damage, but is permitted a save against whatever poison is on the darts. Hardness 3; 5 hp; Size Tiny; W eight 2 lb.; MR 1; TS 6; Craft DC 16; Price 65 gp plus 4 doses of poison. Dispel Prevention Suit</p>",
+    "description_text": "Description: A weapon of troll manufacture, the dart grenade employs explosive swamp gas to propel poison-tipped darts outward at high speeds. Operation: A dart grenade is thrown like any similar splash weapon. Activating the grenade before throwing it is a free action that requires a DC 10 Use T echnological Device check. (Note that the device can malfunction on both this check and on the attack roll.) When the bomb lands, it bursts apart, dealing 1d6 points of piercing damage to all creatures within 20 feet; a DC 15 Reflex save negates the damage. The darts' poison affects anyone who takes at least 1 point of damage; they are permitted a save versus poison as specified in that poison's rules. Table 5-2: New Technological Devices Item MR Cost Weight Aura Concealment Suit 1 750 gp 5 lb. Dart Grenade 1 65 gp + poison 2 lb. Dispel Prevention Suit 1 960 gp 8 lb. Enemy Detector 2 788 gp 600 lb. Energy Polarizer 1 1,440 gp 8 lb. Lung-Crusher 1 120 gp 5 lb. Mobile Hut 1 3,400 gp 8,000 lb. Necromantic Amplifier 1 2,000 gp 4 lb. Poison Extractor 1 250 gp 1/2 lb. Portable Wall 3 648 gp 200 lb. Repeating Drums 2 1,620 gp 25 lb. Retract-O-Arm, Spelltouch 2 280 gp 14 lb. Spearflinger 1 640 gp 5 lb. Spellgun 2 750 gp + 500 gp in gems 2 lb. Swampwalker Shoes 1 750 gp per pair 2 lb. each Thunderstomper 1 560 gp 10 lb. Porcupine Harness 1 1,135 gp 29 lb. Dart grenades must be prepared with poison in advance. Virtually any type of contact or injected poison can be used. Applying this poison to all the darts uses up 4 doses and takes 10 minutes. Malfunction: The grenade explodes in the wielder's hand. She automatically fails the Reflex save against damage, but is permitted a save against whatever poison is on the darts. Hardness 3; 5 hp; Size Tiny; W eight 2 lb.; MR 1; TS 6; Craft DC 16; Price 65 gp plus 4 doses of poison. Dispel Prevention Suit"
+  },
+  {
+    "slug": "dispel-prevention-suit-hpg",
+    "name": "Dispel Prevention Suit",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 127,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "960 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "960 gp",
+    "weight": "-",
+    "description_html": "<p>Description: This device looks much like an aura concealment suit - a series of translucent fibers wrapped around the body like a robe. The dispel prevention suit, however, is a smoky charcoal color until activated. When switched on, it glows with a deep ruby light. Forsaken scientists developed this item to make their personal protective spells harder to remove. Operation: A dispel prevention suit occupies the wearer's armor slot, although it provides no physical protection. Activating the suit requires a DC 15 Use T echnological Device check and provokes attacks of opportunity. Once switched on, spells on the wearer are treated as two levels higher for purposes of resisting dispel magic. This applies only to spells that are in place when the suit is activated. Spells cast later receive no benefit. A fter the dispel prevention suit is deactivated, it must cool down for 1 minute before it can be used again. Fuel: A dispel prevention suit requires 1 vial of liquid phlogiston for every 10 minutes of continuous operation. Malfunction: The stabilizing energy implodes, producing an area dispel magic effect (caster level 10) centered on the wearer. Hardness 5; 10 hp; Size Medium; W eight 8 lb.; MR 1; TS 6; Craft DC 26; Price 960 gp. The crafter must be able to cast dispel magic to create this item, or get someone else to cast it for him. Enemy Detector</p>",
+    "description_text": "Description: This device looks much like an aura concealment suit - a series of translucent fibers wrapped around the body like a robe. The dispel prevention suit, however, is a smoky charcoal color until activated. When switched on, it glows with a deep ruby light. Forsaken scientists developed this item to make their personal protective spells harder to remove. Operation: A dispel prevention suit occupies the wearer's armor slot, although it provides no physical protection. Activating the suit requires a DC 15 Use T echnological Device check and provokes attacks of opportunity. Once switched on, spells on the wearer are treated as two levels higher for purposes of resisting dispel magic. This applies only to spells that are in place when the suit is activated. Spells cast later receive no benefit. A fter the dispel prevention suit is deactivated, it must cool down for 1 minute before it can be used again. Fuel: A dispel prevention suit requires 1 vial of liquid phlogiston for every 10 minutes of continuous operation. Malfunction: The stabilizing energy implodes, producing an area dispel magic effect (caster level 10) centered on the wearer. Hardness 5; 10 hp; Size Medium; W eight 8 lb.; MR 1; TS 6; Craft DC 26; Price 960 gp. The crafter must be able to cast dispel magic to create this item, or get someone else to cast it for him. Enemy Detector"
+  },
+  {
+    "slug": "enemy-detector-hpg",
+    "name": "Enemy Detector",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 127,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "788 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "788 gp",
+    "weight": "-",
+    "description_html": "<p>Description: This massive tauren device looks vaguely spider-like. Eight thin legs expand outward from a central platform. The legs end in flat discs that amplify vibrations on the ground. When not in use, the legs fold up against the platform, but the machine is still exceptionally huge and bulky. Operation: Activating the enemy detector requires 5 rounds and a DC 20 Use T echnological Device check. The legs are extended outward and placed carefully on smooth, flat surfaces, and vibration-sensing devices are connected to the central platform. When fully operational, the device occupies a 15-foot area. All squares other than the central one must be smooth, level and free of obstructions. In many cases, the user may need to clear some of these squares, extending the device's activation time. Note that if the device is already fully extended and set up, switching it on is only a full-round action. All stages of activation provoke attacks of opportunity . Once the enemy detector is activated, the operator must stand on the central platform, hands and feet planted firmly on the vibration-amplifying pads. While doing this, he possesses the tremorsense ability (see the Monster Guide, Chapter 5: Monster T ypes, Subtypes and Abilities, \"T remorsense\") to a range of 60 feet. This applies to ground vibrations only, not aquatic ones. However, if the operator takes any action other than a free action, he loses this ability until he remains still again for one complete round. Fuel: An enemy detector uses 1 vial of liquid phlogiston for every 8 hours of continuous operation. Hardness 5; 40 hp; Size Medium (deactivated) or Huge (activated); W eight 600 lb.; MR 2; TS 3; Craft DC 38; Price 788 gp. Energy Polarizer</p>",
+    "description_text": "Description: This massive tauren device looks vaguely spider-like. Eight thin legs expand outward from a central platform. The legs end in flat discs that amplify vibrations on the ground. When not in use, the legs fold up against the platform, but the machine is still exceptionally huge and bulky. Operation: Activating the enemy detector requires 5 rounds and a DC 20 Use T echnological Device check. The legs are extended outward and placed carefully on smooth, flat surfaces, and vibration-sensing devices are connected to the central platform. When fully operational, the device occupies a 15-foot area. All squares other than the central one must be smooth, level and free of obstructions. In many cases, the user may need to clear some of these squares, extending the device's activation time. Note that if the device is already fully extended and set up, switching it on is only a full-round action. All stages of activation provoke attacks of opportunity . Once the enemy detector is activated, the operator must stand on the central platform, hands and feet planted firmly on the vibration-amplifying pads. While doing this, he possesses the tremorsense ability (see the Monster Guide, Chapter 5: Monster T ypes, Subtypes and Abilities, \"T remorsense\") to a range of 60 feet. This applies to ground vibrations only, not aquatic ones. However, if the operator takes any action other than a free action, he loses this ability until he remains still again for one complete round. Fuel: An enemy detector uses 1 vial of liquid phlogiston for every 8 hours of continuous operation. Hardness 5; 40 hp; Size Medium (deactivated) or Huge (activated); W eight 600 lb.; MR 2; TS 3; Craft DC 38; Price 788 gp. Energy Polarizer"
+  },
+  {
+    "slug": "energy-polarizer-hpg",
+    "name": "Energy Polarizer",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 127,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "1,440 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "1,440 gp",
+    "weight": "-",
+    "description_html": "<p>Description: Being intelligent undead, the Forsaken fully understand the limitations and vulnerabilities associated with unlife. One of these disadvantages is that they can be turned, rebuked or even commanded by powerful positive or negative energy forces. Naturally, the Forsaken are always on the lookout for ways to limit or negate this vulnerability. T echnology provides one way. A series of spinning metal coils emplaced within a shield creates a screen that dampens positive or negative energy directed at the wearer. Operation: An energy polarizer is held like a shield, occupying the owner's shield slot, but provides no armor bonus and doesn't interfere with spellcasting. Switching on the polarizer provokes attacks of opportunity and requires a DC 15 Use T echnological Device check. While the device is functioning, the owner has turn resistance 4. Fuel: An energy polarizer requires 1 vial of phlogiston for every 10 minutes of continuous use. Hardness 3; 5 hp; Size Tiny; W eight 8 lb.; MR 1; TS 8; Craft DC 28; Price 1,440 gp. Lung-Crusher</p>",
+    "description_text": "Description: Being intelligent undead, the Forsaken fully understand the limitations and vulnerabilities associated with unlife. One of these disadvantages is that they can be turned, rebuked or even commanded by powerful positive or negative energy forces. Naturally, the Forsaken are always on the lookout for ways to limit or negate this vulnerability. T echnology provides one way. A series of spinning metal coils emplaced within a shield creates a screen that dampens positive or negative energy directed at the wearer. Operation: An energy polarizer is held like a shield, occupying the owner's shield slot, but provides no armor bonus and doesn't interfere with spellcasting. Switching on the polarizer provokes attacks of opportunity and requires a DC 15 Use T echnological Device check. While the device is functioning, the owner has turn resistance 4. Fuel: An energy polarizer requires 1 vial of phlogiston for every 10 minutes of continuous use. Hardness 3; 5 hp; Size Tiny; W eight 8 lb.; MR 1; TS 8; Craft DC 28; Price 1,440 gp. Lung-Crusher"
+  },
+  {
+    "slug": "lung-crusher-hpg",
+    "name": "Lung-Crusher",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 127,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "120 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "120 gp",
+    "weight": "-",
+    "description_html": "<p>Description: Developed for orcs by orcs, the lung- crusher is a thick bladder strapped across the wearer's chest. When the owner squeezes the sides of this device, it contracts across the diaphragm, forcing all the air out of the wearer's lungs in a swift, powerful motion. Operation: Activating this device requires the user to push in and up with her chest muscles while pressing down on a command stud; the combined action requires a DC 15 Use T echnological Device check. If activated in concert with a shout feat, the shout is particularly loud, deep and penetrating, lasting 1 extra round and extending to a range of 40 feet. The obvious drawback here is that the shout can't be used in concert with an attack on the same round (because activating the device is a standard action). After the lung-crusher contracts, it must slowly refill with air over a period of 1 minute. It cannot be used during this period. Fuel: The lung-crusher uses a vial of liquid phlogiston that provides enough power for 20 uses. Malfunction: The device activates unexpectedly, crushing the wearer's lungs when she isn't ready for it. In effect, the wind is knocked out of her. She must make a DC 14 Fortitude save or be stunned for 1 round. If she makes the save, she is dazed for 1 round. Hardness 1; 5 hp; Size Tiny; W eight 5 lb.; MR 1; TS 3; Craft DC 13; Price 120 gp. Mobile Hut</p>",
+    "description_text": "Description: Developed for orcs by orcs, the lung- crusher is a thick bladder strapped across the wearer's chest. When the owner squeezes the sides of this device, it contracts across the diaphragm, forcing all the air out of the wearer's lungs in a swift, powerful motion. Operation: Activating this device requires the user to push in and up with her chest muscles while pressing down on a command stud; the combined action requires a DC 15 Use T echnological Device check. If activated in concert with a shout feat, the shout is particularly loud, deep and penetrating, lasting 1 extra round and extending to a range of 40 feet. The obvious drawback here is that the shout can't be used in concert with an attack on the same round (because activating the device is a standard action). After the lung-crusher contracts, it must slowly refill with air over a period of 1 minute. It cannot be used during this period. Fuel: The lung-crusher uses a vial of liquid phlogiston that provides enough power for 20 uses. Malfunction: The device activates unexpectedly, crushing the wearer's lungs when she isn't ready for it. In effect, the wind is knocked out of her. She must make a DC 14 Fortitude save or be stunned for 1 round. If she makes the save, she is dazed for 1 round. Hardness 1; 5 hp; Size Tiny; W eight 5 lb.; MR 1; TS 3; Craft DC 13; Price 120 gp. Mobile Hut"
+  },
+  {
+    "slug": "mobile-hut-hpg",
+    "name": "Mobile Hut",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 128,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "3,400 gp",
+      "weight": "of a mobile hut requires solid footing - mud or sand causes the hut to sink, where it becomes trapped. Mobile huts have a main entrance door (5 feet wide) on one wall and 3 open windows on the others. Individuals fighting from these windows have partial cover. The mobile hut is not intended for combat use. Fuel: A mobile hut uses 1 vial of liquid phlogiston for every 1,000 feet it moves. Hardness 5"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "3,400 gp",
+    "weight": "of a mobile hut requires solid footing - mud or sand causes the hut to sink, where it becomes trapped. Mobile huts have a main entrance door (5 feet wide) on one wall and 3 open windows on the others. Individuals fighting from these windows have partial cover. The mobile hut is not intended for combat use. Fuel: A mobile hut uses 1 vial of liquid phlogiston for every 1,000 feet it moves. Hardness 5",
+    "description_html": "<p>Description: One of the most impressive tauren inventions to date, this is a mobile home. When immobile, it appears to be a simple hut capable of housing 4 Medium creatures comfortably, or up to 8 in crowded conditions. However, when the controls are activated, the hut rises up on stilt-like legs and lurches forward, trundling slowly but surely across the ground. Operation: A series of levers attached near the entrance allows the operator to control the mobile hut. Once brought up to speed, the hut lumbers along in a straight line, continuing along that course without any further instructions. Unlike a creature, a mobile hut has a specific movement speed and direction that remain constant unless changed. Giving any other commands requires a standard action that provokes attacks of opportunity, as well as a DC 15 Use T echnological Device check. If the pilot fails this check, the hut continues to move in the direction and speed it was previously moving. As the hut is ungainly, it doesn't maneuver as well as other devices; the following commands apply to the hut instead of the normal rules for vehicle maneuvers. The hut accepts the following commands: Activate: When activated (a DC 20 Use T echnological Device check), the hut's internal engine grinds to life. Legs beneath the hut extend, lifting it 10 feet into the air. The hut takes 2 rounds to completely activate. Speed Up: This tells the hut to accelerate. A hut can increase its speed by +5 or +10 feet per round to a maximum of 40 feet per round. A \"speed up\" command must be given each round (the hut does not continue accelerating to its maximum speed automatically). If the hut moves faster than 20 feet per round, it cannot turn. Slow Down: The hut slows by -5 or -10 feet per round. A \"slow down\" command must be given each round. If a hut reaches a speed of 0, it stops moving and awaits further commands; it does not automatically deactivate. Stop: The hut stops moving. If it is moving at a speed of 10 feet per round or less when this command is delivered, there are no ill effects. Otherwise, passengers inside must make Balance checks (DC equal to the hut's speed - 10) or fall prone. If a passenger falls, he takes 1d6 points of nonlethal damage for every 5 feet of speed above 10. If a hut stops moving via this command, it does not automatically deactivate. T urn Left/T urn Right: The hut changes direction by up to 90 degrees. A hut cannot turn if moving faster than 20 feet per round. Deactivate: This command can only be given if the hut is not moving. When deactivated, the hut settles onto the ground, legs folding up underneath to an idle position. Once deactivated, a mobile hut enters a cooldown stage and cannot be restarted for 1 hour. A mobile hut can carry up to 8 Medium creatures and gear totaling up to 2,000 pounds. Mobile huts cannot cross through rough or rocky terrain. They can ford shallow water (no more than 10 feet deep) if the ground beneath is relatively stable. The great weight of a mobile hut requires solid footing - mud or sand causes the hut to sink, where it becomes trapped. Mobile huts have a main entrance door (5 feet wide) on one wall and 3 open windows on the others. Individuals fighting from these windows have partial cover. The mobile hut is not intended for combat use. Fuel: A mobile hut uses 1 vial of liquid phlogiston for every 1,000 feet it moves. Hardness 5; 200 hp; Size Gargantuan; W eight 8,000 lb.; MR 1; TS 10; Craft DC 30; Price 3,400 gp. Necromantic Amplifier</p>",
+    "description_text": "Description: One of the most impressive tauren inventions to date, this is a mobile home. When immobile, it appears to be a simple hut capable of housing 4 Medium creatures comfortably, or up to 8 in crowded conditions. However, when the controls are activated, the hut rises up on stilt-like legs and lurches forward, trundling slowly but surely across the ground. Operation: A series of levers attached near the entrance allows the operator to control the mobile hut. Once brought up to speed, the hut lumbers along in a straight line, continuing along that course without any further instructions. Unlike a creature, a mobile hut has a specific movement speed and direction that remain constant unless changed. Giving any other commands requires a standard action that provokes attacks of opportunity, as well as a DC 15 Use T echnological Device check. If the pilot fails this check, the hut continues to move in the direction and speed it was previously moving. As the hut is ungainly, it doesn't maneuver as well as other devices; the following commands apply to the hut instead of the normal rules for vehicle maneuvers. The hut accepts the following commands: Activate: When activated (a DC 20 Use T echnological Device check), the hut's internal engine grinds to life. Legs beneath the hut extend, lifting it 10 feet into the air. The hut takes 2 rounds to completely activate. Speed Up: This tells the hut to accelerate. A hut can increase its speed by +5 or +10 feet per round to a maximum of 40 feet per round. A \"speed up\" command must be given each round (the hut does not continue accelerating to its maximum speed automatically). If the hut moves faster than 20 feet per round, it cannot turn. Slow Down: The hut slows by -5 or -10 feet per round. A \"slow down\" command must be given each round. If a hut reaches a speed of 0, it stops moving and awaits further commands; it does not automatically deactivate. Stop: The hut stops moving. If it is moving at a speed of 10 feet per round or less when this command is delivered, there are no ill effects. Otherwise, passengers inside must make Balance checks (DC equal to the hut's speed - 10) or fall prone. If a passenger falls, he takes 1d6 points of nonlethal damage for every 5 feet of speed above 10. If a hut stops moving via this command, it does not automatically deactivate. T urn Left/T urn Right: The hut changes direction by up to 90 degrees. A hut cannot turn if moving faster than 20 feet per round. Deactivate: This command can only be given if the hut is not moving. When deactivated, the hut settles onto the ground, legs folding up underneath to an idle position. Once deactivated, a mobile hut enters a cooldown stage and cannot be restarted for 1 hour. A mobile hut can carry up to 8 Medium creatures and gear totaling up to 2,000 pounds. Mobile huts cannot cross through rough or rocky terrain. They can ford shallow water (no more than 10 feet deep) if the ground beneath is relatively stable. The great weight of a mobile hut requires solid footing - mud or sand causes the hut to sink, where it becomes trapped. Mobile huts have a main entrance door (5 feet wide) on one wall and 3 open windows on the others. Individuals fighting from these windows have partial cover. The mobile hut is not intended for combat use. Fuel: A mobile hut uses 1 vial of liquid phlogiston for every 1,000 feet it moves. Hardness 5; 200 hp; Size Gargantuan; W eight 8,000 lb.; MR 1; TS 10; Craft DC 30; Price 3,400 gp. Necromantic Amplifier"
+  },
+  {
+    "slug": "necromantic-amplifier-hpg",
+    "name": "Necromantic Amplifier",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 128,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "2,000 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "2,000 gp",
+    "weight": "-",
+    "description_html": "<p>Description: While some Forsaken study technology for its own sake, others seek to use science to improve and enhance their arcane power. The necromantic amplifier is an outgrowth of research along these lines. The device consists of a series of implants attached under the skin, connected to each other with a web of coils and wires. The implants can be painful, but the Forsaken don't mind. Operation: Implanting the necromantic amplifier's components requires 1 hour. The subject takes 3 points of damage that cannot be reduced or healed without removing the implants. Only an undead creature can benefit from a necromantic amplifier. Once installed, activating or deactivating the amplifier requires the wearer to make a DC 20 Use T echnological Device check. The coils deliver an increase in negative energy, providing a font of power the user can draw from when casting spells from the necromancy school. Any such spell is cast at +1 caster level and adds +1 to its saving throw DC. However, there is a downside. The additional negative energy makes the wearer more vulnerable to positive energy attacks. Spells that deal damage through the use of positive energy (such as cure light wounds) deal one- quarter more damage to an undead creature wearing an active necromantic amplifier. Fuel: A necromantic amplifier requires 1 vial of liquid phlogiston for every 5 minutes of continuous use. Malfunction: The energy flow short-circuits, dealing 1d6 points of electricity damage every round until deactivated. Hardness 1; 5 hp; Size Tiny; W eight 4 lb.; MR 1; TS 10; Craft DC 30; Price 2,000 gp. Poison Extractor</p>",
+    "description_text": "Description: While some Forsaken study technology for its own sake, others seek to use science to improve and enhance their arcane power. The necromantic amplifier is an outgrowth of research along these lines. The device consists of a series of implants attached under the skin, connected to each other with a web of coils and wires. The implants can be painful, but the Forsaken don't mind. Operation: Implanting the necromantic amplifier's components requires 1 hour. The subject takes 3 points of damage that cannot be reduced or healed without removing the implants. Only an undead creature can benefit from a necromantic amplifier. Once installed, activating or deactivating the amplifier requires the wearer to make a DC 20 Use T echnological Device check. The coils deliver an increase in negative energy, providing a font of power the user can draw from when casting spells from the necromancy school. Any such spell is cast at +1 caster level and adds +1 to its saving throw DC. However, there is a downside. The additional negative energy makes the wearer more vulnerable to positive energy attacks. Spells that deal damage through the use of positive energy (such as cure light wounds) deal one- quarter more damage to an undead creature wearing an active necromantic amplifier. Fuel: A necromantic amplifier requires 1 vial of liquid phlogiston for every 5 minutes of continuous use. Malfunction: The energy flow short-circuits, dealing 1d6 points of electricity damage every round until deactivated. Hardness 1; 5 hp; Size Tiny; W eight 4 lb.; MR 1; TS 10; Craft DC 30; Price 2,000 gp. Poison Extractor"
+  },
+  {
+    "slug": "poison-extractor-hpg",
+    "name": "Poison Extractor",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 128,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "250 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "250 gp",
+    "weight": "-",
+    "description_html": "<p>Description: Jungle trolls are no strangers to poison. A vast number of native creatures use poison to kill or Cursing under his breath, Gungh sloshed his way through the sweltering, squishy marsh. With his left hand he wiped the perspiration from his brow. In his right hand he clutched a spiked mace, the only weapon he had left that wasn't sheathed in rust. Four weeks now. A month, stuck in this hellish jungle, surrounded by buzzing insects and chattering monkeys. Everything looked the same as it had the previous day. Nothing but thick undergrowth, brackish water, dangling vines and rain. Every day, without fail, the rains came and went. Gungh couldn't remember the last time he was dry. He couldn't even remember what dryness felt like. Gungh tramped along, splashing through a series of foul-smelling pools. Colorful, triangle-shaped flowers as tall as his shoulders barred his way. Swearing, Gungh pushed his way through, certain he had come this way before. The jungle couldn't be this endless. He knew he was lost, but there was nothing to do but continue on. He stepped through the flowers onto the fringe of a small pond, next to the bole of a moss-covered tree. Suddenly, a sharp pain bit into his shoulder. He slapped at it with his free hand, thinking this was just another insect bite, and was surprised to find a snake's head firmly attached. Instantly Gungh grabbed the snake and jerked its fangs free from his flesh. With an angry curse he crushed the viper's head into pulp. Throwing the reptile's twitching corpse away, he inspected the wound. To his dismay, the flesh there was already turning purple. Gungh felt woozy. He sank to his knees, squeezing at the twin holes in his skin, amazed at how numb the injury was. T wo ruby-red drops of blood appeared and quivered. He heard a voice. Or was it his imagination? \"Stay still, warrior. W oothi will help.\" Gungh was already sinking onto the ground. In his swimming vision, he caught sight of a blue-skinned troll, dressed in ragged animal skins. Jewelry festooned with pearl-white teeth hung from numerous piercings in his ears, nose and eyelids. Gungh thought briefly of challenging this savage-looking creature, but his arm no longer seemed to work. In fact, he wasn't even sure where his mace was anymore. W oothi reached into a large sack and withdrew an oval-shaped, brown pad with something akin to a toothy mouth visible on one side. Gungh imagined he should protest as the troll pressed these teeth against his wound. W oothi squeezed once, hard, and searing pain shot through Gungh's arm. The agony faded quickly, but the troll continued squeezing. After a moment, the strange device pulled away. Blood flowed freely now from Gungh's torn flesh, but the purple color was already fading. \"You will survive, warrior.\" The troll put the brown device away. \"Now, W oothi wearies of watching you walk in circles. When you recover, follow and I will show you the path.\" incapacitate prey. Though trolls are tough, the jungle can be tougher, and even a brief encounter with a poisonous beast can leave a troll weakened or dying - assuming he survives at all. To counter this threat, a troll engineer developed a device capable of swiftly extracting poison from any wound. Operation: The poison extractor is a leather case containing hollow teeth attached to a suction-inducing bladder. Using it requires a DC 15 Use T echnological Device check; the user receives a +2 synergy bonus on this check if he has at least 5 ranks in Heal. Using this device provokes an attack of opportunity. If placed against a wound and vigorously squeezed, the device withdraws toxic substances from the body . However , the teeth deal 1d3 points of damage in the process, bypassing all damage reduction (if the poison extractor is unable to penetrate the skin, it provides no benefit). If used within 1 round of the poison's application, the extractor permits a second saving throw. If this save succeeds, the extractor halves the initial damage (or reduces the duration of a special effect, such as sleep or paralysis, by 50%), and eliminates any secondary damage or effects. If used more than 1 round after the poison's application but before the poison's secondary damage, the extractor allows the creature to make two Fortitude saving throws against the secondary damage and choose the higher. If used as part of a Heal check made to treat poison, the poison extractor provides a +4 bonus on the check. A poison extractor works only against poisons that enter the body through wounds. The device has no effect on inhaled or ingested toxins. Fuel: The poison extractor uses no fuel. Malfunction: The device deals double normal damage (i.e., 2d3 points) but provides no benefit. Hardness 1; 3 hp; Size Diminutive; W eight 1/2 lb.; MR 1; TS 5; Craft DC 15; Price 250 gp. Portable Wall</p>",
+    "description_text": "Description: Jungle trolls are no strangers to poison. A vast number of native creatures use poison to kill or Cursing under his breath, Gungh sloshed his way through the sweltering, squishy marsh. With his left hand he wiped the perspiration from his brow. In his right hand he clutched a spiked mace, the only weapon he had left that wasn't sheathed in rust. Four weeks now. A month, stuck in this hellish jungle, surrounded by buzzing insects and chattering monkeys. Everything looked the same as it had the previous day. Nothing but thick undergrowth, brackish water, dangling vines and rain. Every day, without fail, the rains came and went. Gungh couldn't remember the last time he was dry. He couldn't even remember what dryness felt like. Gungh tramped along, splashing through a series of foul-smelling pools. Colorful, triangle-shaped flowers as tall as his shoulders barred his way. Swearing, Gungh pushed his way through, certain he had come this way before. The jungle couldn't be this endless. He knew he was lost, but there was nothing to do but continue on. He stepped through the flowers onto the fringe of a small pond, next to the bole of a moss-covered tree. Suddenly, a sharp pain bit into his shoulder. He slapped at it with his free hand, thinking this was just another insect bite, and was surprised to find a snake's head firmly attached. Instantly Gungh grabbed the snake and jerked its fangs free from his flesh. With an angry curse he crushed the viper's head into pulp. Throwing the reptile's twitching corpse away, he inspected the wound. To his dismay, the flesh there was already turning purple. Gungh felt woozy. He sank to his knees, squeezing at the twin holes in his skin, amazed at how numb the injury was. T wo ruby-red drops of blood appeared and quivered. He heard a voice. Or was it his imagination? \"Stay still, warrior. W oothi will help.\" Gungh was already sinking onto the ground. In his swimming vision, he caught sight of a blue-skinned troll, dressed in ragged animal skins. Jewelry festooned with pearl-white teeth hung from numerous piercings in his ears, nose and eyelids. Gungh thought briefly of challenging this savage-looking creature, but his arm no longer seemed to work. In fact, he wasn't even sure where his mace was anymore. W oothi reached into a large sack and withdrew an oval-shaped, brown pad with something akin to a toothy mouth visible on one side. Gungh imagined he should protest as the troll pressed these teeth against his wound. W oothi squeezed once, hard, and searing pain shot through Gungh's arm. The agony faded quickly, but the troll continued squeezing. After a moment, the strange device pulled away. Blood flowed freely now from Gungh's torn flesh, but the purple color was already fading. \"You will survive, warrior.\" The troll put the brown device away. \"Now, W oothi wearies of watching you walk in circles. When you recover, follow and I will show you the path.\" incapacitate prey. Though trolls are tough, the jungle can be tougher, and even a brief encounter with a poisonous beast can leave a troll weakened or dying - assuming he survives at all. To counter this threat, a troll engineer developed a device capable of swiftly extracting poison from any wound. Operation: The poison extractor is a leather case containing hollow teeth attached to a suction-inducing bladder. Using it requires a DC 15 Use T echnological Device check; the user receives a +2 synergy bonus on this check if he has at least 5 ranks in Heal. Using this device provokes an attack of opportunity. If placed against a wound and vigorously squeezed, the device withdraws toxic substances from the body . However , the teeth deal 1d3 points of damage in the process, bypassing all damage reduction (if the poison extractor is unable to penetrate the skin, it provides no benefit). If used within 1 round of the poison's application, the extractor permits a second saving throw. If this save succeeds, the extractor halves the initial damage (or reduces the duration of a special effect, such as sleep or paralysis, by 50%), and eliminates any secondary damage or effects. If used more than 1 round after the poison's application but before the poison's secondary damage, the extractor allows the creature to make two Fortitude saving throws against the secondary damage and choose the higher. If used as part of a Heal check made to treat poison, the poison extractor provides a +4 bonus on the check. A poison extractor works only against poisons that enter the body through wounds. The device has no effect on inhaled or ingested toxins. Fuel: The poison extractor uses no fuel. Malfunction: The device deals double normal damage (i.e., 2d3 points) but provides no benefit. Hardness 1; 3 hp; Size Diminutive; W eight 1/2 lb.; MR 1; TS 5; Craft DC 15; Price 250 gp. Portable Wall"
+  },
+  {
+    "slug": "portable-wall-hpg",
+    "name": "Portable Wall",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 129,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "650 gp",
+      "weight": "against it gains a +2 bonus on this check. If the wall falls, it deals 3d6 points of bludgeoning damage to anyone it lands on in a 10-foot square area"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "650 gp",
+    "weight": "against it gains a +2 bonus on this check. If the wall falls, it deals 3d6 points of bludgeoning damage to anyone it lands on in a 10-foot square area",
+    "description_html": "<p>Description: Living on open plains brings with it numerous dangers. Campsites are open, allowing potential enemies and creatures to creep up and strike from any direction. To provide additional cover, tauren engineers developed the portable wall - a collapsible barrier that protects against incursions from anything but a very determined foe. When carried, a portable wall is about the size of a large, bulky suitcase. When opened, it expands into a 10-foot high, 10-foot wide flat metal barrier on a heavy iron base. The wall is about a foot wide and provides total cover to anyone on the opposite side. Operation: A portable wall takes 2 full rounds to unfold, or 5 full rounds to put away. Either action requires a DC 20 Use T echnological Device check and provokes attacks of opportunity. When unfolded, it occupies 2 adjacent non-diagonal squares. The wall is 10 feet high and blocks line of sight and provides cover just like any other wall or similar formation. The wall is tough, but can be knocked over with a DC 20 Strength check. A Medium or larger creature that charges the wall and throws its weight against it gains a +2 bonus on this check. If the wall falls, it deals 3d6 points of bludgeoning damage to anyone it lands on in a 10-foot square area; though creatures can make Reflex saves (DC equals the result of the Strength check) to negate the damage. A creature who makes this save moves to the closest available square the fallen wall does not occupy; if this square is occupied, the creature falls prone in it. A creature who fails its Reflex save falls prone and is pinned by the wall. It has full cover, but can take no actions except trying to escape, which requires a DC 15 Strength or Escape Artist check. Fuel: A portable wall requires no fuel. Hardness 10; 100 hp (25 hp per 5-foot-by-5-foot section); Size Small (folded) or Large (unfolded); W eight 200 lb.; MR 3; TS 12; Craft DC 22; Price 650 gp. Repeating Drums</p>",
+    "description_text": "Description: Living on open plains brings with it numerous dangers. Campsites are open, allowing potential enemies and creatures to creep up and strike from any direction. To provide additional cover, tauren engineers developed the portable wall - a collapsible barrier that protects against incursions from anything but a very determined foe. When carried, a portable wall is about the size of a large, bulky suitcase. When opened, it expands into a 10-foot high, 10-foot wide flat metal barrier on a heavy iron base. The wall is about a foot wide and provides total cover to anyone on the opposite side. Operation: A portable wall takes 2 full rounds to unfold, or 5 full rounds to put away. Either action requires a DC 20 Use T echnological Device check and provokes attacks of opportunity. When unfolded, it occupies 2 adjacent non-diagonal squares. The wall is 10 feet high and blocks line of sight and provides cover just like any other wall or similar formation. The wall is tough, but can be knocked over with a DC 20 Strength check. A Medium or larger creature that charges the wall and throws its weight against it gains a +2 bonus on this check. If the wall falls, it deals 3d6 points of bludgeoning damage to anyone it lands on in a 10-foot square area; though creatures can make Reflex saves (DC equals the result of the Strength check) to negate the damage. A creature who makes this save moves to the closest available square the fallen wall does not occupy; if this square is occupied, the creature falls prone in it. A creature who fails its Reflex save falls prone and is pinned by the wall. It has full cover, but can take no actions except trying to escape, which requires a DC 15 Strength or Escape Artist check. Fuel: A portable wall requires no fuel. Hardness 10; 100 hp (25 hp per 5-foot-by-5-foot section); Size Small (folded) or Large (unfolded); W eight 200 lb.; MR 3; TS 12; Craft DC 22; Price 650 gp. Repeating Drums"
+  },
+  {
+    "slug": "repeating-drums-hpg",
+    "name": "Repeating Drums",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 130,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "1,620 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "1,620 gp",
+    "weight": "-",
+    "description_html": "<p>Description: Orc and troll inventors designed this device to free up war drummers in combat. The repeating drums consist of a set of mechanical arms that loosely attach to the drummer's arms. The mechanical limbs attach to a surprisingly complex movement-recording machine located in a sealed compartment underneath the drum set. Operation: To use this item, the operator sits down to play the drums and braces the arms adjacent to his own. He then activates the device by clamping down with his feet, locking himself in place. All of this requires a DC 15 Use T echnological Device check and provokes an attack of opportunity. The owner then starts playing, using the Drums of Courage feat for at least 1 round. While he plays, mechanical servos and gears inside the drum's base analyze and record his movements and sounds. At the conclusion of this period, the operator passes the drumsticks to the device's arms (a standard action that doesn't provoke attacks of opportunity). The repeating drums then play themselves, continuing the effect of the Drums of Courage feat for up to 10 minutes. The machine's arm action is precise, and is vulnerable to damage. If the device takes even 1 hit point of damage (after hardness), the drumbeats are altered and no longer provide any benefit. If the device hasn't been destroyed, the operator can reset the drums by starting the startup procedure from scratch. Fuel: Repeating drums use 1 vial of liquid phlogiston for every 10 minutes of continuous use. The fuel compartment is located inside the sealed gearbox, however, so additional phlogiston cannot be added without shutting off the machine. Refueling takes 1 minute. Hardness 5; 20 hp; Size Medium; W eight 25 lb.; MR 2; TS 6; Craft DC 36; Price 1,620 gp. Retract-O-Arm, Spelltouch</p>",
+    "description_text": "Description: Orc and troll inventors designed this device to free up war drummers in combat. The repeating drums consist of a set of mechanical arms that loosely attach to the drummer's arms. The mechanical limbs attach to a surprisingly complex movement-recording machine located in a sealed compartment underneath the drum set. Operation: To use this item, the operator sits down to play the drums and braces the arms adjacent to his own. He then activates the device by clamping down with his feet, locking himself in place. All of this requires a DC 15 Use T echnological Device check and provokes an attack of opportunity. The owner then starts playing, using the Drums of Courage feat for at least 1 round. While he plays, mechanical servos and gears inside the drum's base analyze and record his movements and sounds. At the conclusion of this period, the operator passes the drumsticks to the device's arms (a standard action that doesn't provoke attacks of opportunity). The repeating drums then play themselves, continuing the effect of the Drums of Courage feat for up to 10 minutes. The machine's arm action is precise, and is vulnerable to damage. If the device takes even 1 hit point of damage (after hardness), the drumbeats are altered and no longer provide any benefit. If the device hasn't been destroyed, the operator can reset the drums by starting the startup procedure from scratch. Fuel: Repeating drums use 1 vial of liquid phlogiston for every 10 minutes of continuous use. The fuel compartment is located inside the sealed gearbox, however, so additional phlogiston cannot be added without shutting off the machine. Refueling takes 1 minute. Hardness 5; 20 hp; Size Medium; W eight 25 lb.; MR 2; TS 6; Craft DC 36; Price 1,620 gp. Retract-O-Arm, Spelltouch"
+  },
+  {
+    "slug": "retract-o-arm-spelltouch-hpg",
+    "name": "Retract-O-Arm, Spelltouch",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 130,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "280 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "280 gp",
+    "weight": "-",
+    "description_html": "<p>Description: Originally designed by gnomes to perform dangerous machine adjustments without risking one's fingers, the retract-o-arm was later adopted for spellcasting use by Forsaken tinker/arcanists. The arm resembles a short staff slung underneath the forearm. When the hand is twisted in a certain way, a rod telescopes outward and then snaps back into place. Operation: This device is used as part of a spellcasting action. Using the retract-o-arm requires a DC 20 Use T echnological Device check. If successful, the arm allows the wearer to deliver a melee touch attack on a target up to 20 feet away. The user takes a -4 penalty on the attack roll due to the ungainliness of the arm. After the attack, the arm immediately retracts without any special action on the wearer's part. If the touch attack misses and the caster holds the spell, the arm can be employed again in the following round, but each activation requires a separate Use T echnological Device check. When the arm extends, it provokes attacks of opportunity when it exits threatened squares. Spelltouch retract-o-arms must include fragments of the owner's flesh, taken from his own body and woven into the device's framework. This bodily connection is what permits a touch attack to succeed at a distance. Fuel: A spelltouch retract-o-arm requires 1 vial of liquid phlogiston for each 20 attacks it makes. Malfunction: The device doesn't work and the spell is lost. Hardness 5; 15 hp; Size Tiny; W eight 14 lb.; MR 2; TS 3; Craft DC 14; Price 280 gp. Spearflinger</p>",
+    "description_text": "Description: Originally designed by gnomes to perform dangerous machine adjustments without risking one's fingers, the retract-o-arm was later adopted for spellcasting use by Forsaken tinker/arcanists. The arm resembles a short staff slung underneath the forearm. When the hand is twisted in a certain way, a rod telescopes outward and then snaps back into place. Operation: This device is used as part of a spellcasting action. Using the retract-o-arm requires a DC 20 Use T echnological Device check. If successful, the arm allows the wearer to deliver a melee touch attack on a target up to 20 feet away. The user takes a -4 penalty on the attack roll due to the ungainliness of the arm. After the attack, the arm immediately retracts without any special action on the wearer's part. If the touch attack misses and the caster holds the spell, the arm can be employed again in the following round, but each activation requires a separate Use T echnological Device check. When the arm extends, it provokes attacks of opportunity when it exits threatened squares. Spelltouch retract-o-arms must include fragments of the owner's flesh, taken from his own body and woven into the device's framework. This bodily connection is what permits a touch attack to succeed at a distance. Fuel: A spelltouch retract-o-arm requires 1 vial of liquid phlogiston for each 20 attacks it makes. Malfunction: The device doesn't work and the spell is lost. Hardness 5; 15 hp; Size Tiny; W eight 14 lb.; MR 2; TS 3; Craft DC 14; Price 280 gp. Spearflinger"
+  },
+  {
+    "slug": "spearflinger-hpg",
+    "name": "Spearflinger",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 130,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "640 gp",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "640 gp",
+    "weight": "-",
+    "description_html": "<p>Description: This is one of the more practical technological items developed by the jungle trolls. A spearflinger is an arm-like assistant, like a giant atlatl: a flexible wooden shaft with a connecting slot for a spear or javelin. When the wielder loads the flinger with a spear, he can throw the weapon with a consistent degree of strength and accuracy. Operation: Loading a javelin or spear into a spearflinger is similar to loading a light crossbow (i.e., it is a move action that provokes attacks of opportunity). Putting the weapon properly in place requires a DC 12 Use T echnological Device check. The wielder then swings the spearflinger as a standard action. A mechanical assist kicks in, doubling the weapon's range increment and throwing the javelin or spear as if the wielder had a Strength score of 18 (regardless of his actual Strength score). Fuel: A spearflinger uses one vial of liquid phlogiston that provides enough power for 25 throws. Hardness 5; 10 hp; Size Small; W eight 5 lb.; MR 1; TS 8; Craft DC 18; Price 640 gp. Spellgun</p>",
+    "description_text": "Description: This is one of the more practical technological items developed by the jungle trolls. A spearflinger is an arm-like assistant, like a giant atlatl: a flexible wooden shaft with a connecting slot for a spear or javelin. When the wielder loads the flinger with a spear, he can throw the weapon with a consistent degree of strength and accuracy. Operation: Loading a javelin or spear into a spearflinger is similar to loading a light crossbow (i.e., it is a move action that provokes attacks of opportunity). Putting the weapon properly in place requires a DC 12 Use T echnological Device check. The wielder then swings the spearflinger as a standard action. A mechanical assist kicks in, doubling the weapon's range increment and throwing the javelin or spear as if the wielder had a Strength score of 18 (regardless of his actual Strength score). Fuel: A spearflinger uses one vial of liquid phlogiston that provides enough power for 25 throws. Hardness 5; 10 hp; Size Small; W eight 5 lb.; MR 1; TS 8; Craft DC 18; Price 640 gp. Spellgun"
+  },
+  {
+    "slug": "spellgun-hpg",
+    "name": "Spellgun",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 131,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "750 gp plus 500 gp in low- quality faceted gems",
+      "weight": "-"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "750 gp plus 500 gp in low- quality faceted gems",
+    "weight": "-",
+    "description_html": "<p>Description: A spellgun is a hand-held device that focuses rays down a specially treated crystalline barrel. V arious roughly faceted gems line the interior of the tube, collecting and focusing rays along its length. Forsaken scientists originally designed this item to improve the polar ray spell, but it has since been enhanced to work with any kind of ray . Operation: If a spellgun is held in the hand, it can be used as a free action when the wielder casts any ray spell. This requires a Use T echnological Device check; the DC is 12 + the spell's level. If the device functions properly, the ray's range increases by one-half and its threat range doubles. This latter benefit does not stack with similar effects such as the Improved Critical (ray) feat. Fuel: A spellgun is a passive device that requires no fuel to operate. Malfunction: The spell fails and is wasted. Hardness 1; 3 hp; Size Diminutive; W eight 2 lb.; MR 2; TS 5; Craft DC 25; Price 750 gp plus 500 gp in low- quality faceted gems. Swampwalker Shoes</p>",
+    "description_text": "Description: A spellgun is a hand-held device that focuses rays down a specially treated crystalline barrel. V arious roughly faceted gems line the interior of the tube, collecting and focusing rays along its length. Forsaken scientists originally designed this item to improve the polar ray spell, but it has since been enhanced to work with any kind of ray . Operation: If a spellgun is held in the hand, it can be used as a free action when the wielder casts any ray spell. This requires a Use T echnological Device check; the DC is 12 + the spell's level. If the device functions properly, the ray's range increases by one-half and its threat range doubles. This latter benefit does not stack with similar effects such as the Improved Critical (ray) feat. Fuel: A spellgun is a passive device that requires no fuel to operate. Malfunction: The spell fails and is wasted. Hardness 1; 3 hp; Size Diminutive; W eight 2 lb.; MR 2; TS 5; Craft DC 25; Price 750 gp plus 500 gp in low- quality faceted gems. Swampwalker Shoes"
+  },
+  {
+    "slug": "swampwalker-shoes-hpg",
+    "name": "Swampwalker Shoes",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 131,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "750 gp per pair",
+      "weight": "2 lb. (each)"
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "750 gp per pair",
+    "weight": "2 lb. (each)",
+    "description_html": "<p>Description: Many tribes of jungle trolls live in or near swamps, marshes and other natural wetlands. Moving through these watery areas can be perilous. In addition to underwater pitfalls, the swamps are home to numerous dangerous creatures, insects and diseases, many of which dwell unseen under the water. Just moving through hip-deep water is a slow, tedious process. Swampwalker shoes, a recent troll invention, provide relief from these problems, allowing the wearer to move along the surface of the water. When activated, the soles of these leather boots swell into wide, disc-shaped platforms that let their owner walk on liquid. Operation: Activating these boots provokes an attack of opportunity and requires a DC 15 Use T echnological Device check. Once their balloon- like soles deploy, the swampwalker shoes reduce the wearer's land movement speed by one-half. However, she can walk on water at her normal movement speed, although moving any farther than her base movement requires a Balance check in each extra water square she enters. The DC of this check is 10 for the first such square, plus +2 per additional square. Thus, if the owner normally has a base movement speed of 30, but takes a double move, she would make six Balance checks, the first at DC 10, the second DC 12, then DC 14, and so on. Swampwalker shoes work correctly only on calm water. If the water is flowing or choppy, the wearer must make a Balance check for every step she takes. The DC of this check varies depending on how rough the water is. A slowly moving stream, for example, might require a DC 10 check, while stormy seas require DC 30 or more. If the wearer falls, the shoes make swimming difficult, imposing a -5 penalty on Swim checks. Furthermore, standing back up on the surface of the water is a considerable challenge. To stand, the wearer must take a full-round action and make a DC 15 Balance check. This DC increases appropriately in flowing or rough water. Fuel: Swampwalker shoes use a single vial of liquid phlogiston for 1 hour of continuous operation. Hardness 3; 5 hp (each shoe); Size Tiny; Weight 2 lb. (each); MR 1; TS 5; Craft DC 25; Price 750 gp per pair. Thunderstomper</p>",
+    "description_text": "Description: Many tribes of jungle trolls live in or near swamps, marshes and other natural wetlands. Moving through these watery areas can be perilous. In addition to underwater pitfalls, the swamps are home to numerous dangerous creatures, insects and diseases, many of which dwell unseen under the water. Just moving through hip-deep water is a slow, tedious process. Swampwalker shoes, a recent troll invention, provide relief from these problems, allowing the wearer to move along the surface of the water. When activated, the soles of these leather boots swell into wide, disc-shaped platforms that let their owner walk on liquid. Operation: Activating these boots provokes an attack of opportunity and requires a DC 15 Use T echnological Device check. Once their balloon- like soles deploy, the swampwalker shoes reduce the wearer's land movement speed by one-half. However, she can walk on water at her normal movement speed, although moving any farther than her base movement requires a Balance check in each extra water square she enters. The DC of this check is 10 for the first such square, plus +2 per additional square. Thus, if the owner normally has a base movement speed of 30, but takes a double move, she would make six Balance checks, the first at DC 10, the second DC 12, then DC 14, and so on. Swampwalker shoes work correctly only on calm water. If the water is flowing or choppy, the wearer must make a Balance check for every step she takes. The DC of this check varies depending on how rough the water is. A slowly moving stream, for example, might require a DC 10 check, while stormy seas require DC 30 or more. If the wearer falls, the shoes make swimming difficult, imposing a -5 penalty on Swim checks. Furthermore, standing back up on the surface of the water is a considerable challenge. To stand, the wearer must take a full-round action and make a DC 15 Balance check. This DC increases appropriately in flowing or rough water. Fuel: Swampwalker shoes use a single vial of liquid phlogiston for 1 hour of continuous operation. Hardness 3; 5 hp (each shoe); Size Tiny; Weight 2 lb. (each); MR 1; TS 5; Craft DC 25; Price 750 gp per pair. Thunderstomper"
+  },
+  {
+    "slug": "thunderstomper-hpg",
+    "name": "Thunderstomper",
+    "source_url": null,
+    "scraped_at": "2026-10-02T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: Horde Player's Guide",
+      "abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "page": 131,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "HPG",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "technological device",
+      "stats": "",
+      "cost": "1,135 gp",
+      "weight": "29 lb."
+    },
+    "kind": "good",
+    "category": "technological device",
+    "cost": "1,135 gp",
+    "weight": "29 lb.",
+    "description_html": "<p>Description: Goblin engineers developed this device to improve and enhance their tauren clients' stomping ability. The thunderstomper is a set of mechanical pistons connected to a tauren's powerful legs, increasing their strength when driven downward into the ground. Operation: Activating or deactivating the thunderstomper provokes attacks of opportunity and leather armor. The harness has the same armor statistics, including armor bonus and arcane spell failure chance, with the exception of weight. A porcupine harness is considered light armor. Fuel: The porcupine harness uses 1 vial of phlogiston for up to 20 minutes of continuous use. Malfunction: The quills do not activate and some pierce the wearer's flesh, dealing 1d6 points of piercing damage. Hardness 5; 10 hp; Size Small; Weight 29 lb.; MR 1; T S 3; Craft DC 23; Price 1,135 gp. requires a DC 15 Use T echnological Device check. Once turned on, the device provides its benefits automatically whenever the user makes a war stomp (using the War Stomp feat) with his legs. The DC of the Balance check to resist a thunderstomper- assisted war stomp increases by +4. However, while the device is active, it reduces the wearer's land speed by -5 feet. Fuel: A thunderstomper requires 1 vial of liquid phlogiston for up to 1 hour of continuous operation. Every time the wearer makes a war stomp, this counts as 5 minutes against this time. Hardness 5; 10 hp; Size Small; Weight 10 lb.; MR 1; TS 4; Craft DC 24; Price 560 gp. Porcupine Harness</p>",
+    "description_text": "Description: Goblin engineers developed this device to improve and enhance their tauren clients' stomping ability. The thunderstomper is a set of mechanical pistons connected to a tauren's powerful legs, increasing their strength when driven downward into the ground. Operation: Activating or deactivating the thunderstomper provokes attacks of opportunity and leather armor. The harness has the same armor statistics, including armor bonus and arcane spell failure chance, with the exception of weight. A porcupine harness is considered light armor. Fuel: The porcupine harness uses 1 vial of phlogiston for up to 20 minutes of continuous use. Malfunction: The quills do not activate and some pierce the wearer's flesh, dealing 1d6 points of piercing damage. Hardness 5; 10 hp; Size Small; Weight 29 lb.; MR 1; T S 3; Craft DC 23; Price 1,135 gp. requires a DC 15 Use T echnological Device check. Once turned on, the device provides its benefits automatically whenever the user makes a war stomp (using the War Stomp feat) with his legs. The DC of the Balance check to resist a thunderstomper- assisted war stomp increases by +4. However, while the device is active, it reduces the wearer's land speed by -5 feet. Fuel: A thunderstomper requires 1 vial of liquid phlogiston for up to 1 hour of continuous operation. Every time the wearer makes a war stomp, this counts as 5 minutes against this time. Hardness 5; 10 hp; Size Small; Weight 10 lb.; MR 1; TS 4; Craft DC 24; Price 560 gp. Porcupine Harness"
+  }
+]
