@@ -81,10 +81,10 @@ function applyStandaloneConfig(appDir: string): void {
 
 async function main() {
   // Import campaign WS modules before Next patches require().
-  const { requireRedisUrlInProduction, closeCampaignRedis } = await import(
+  const { warnIfRedisUrlMissingInProduction, closeCampaignRedis } = await import(
     "./src/lib/campaign/liveRedis"
   );
-  requireRedisUrlInProduction();
+  warnIfRedisUrlMissingInProduction();
 
   const { createCampaignWebSocket, isCampaignWsPath } = await import(
     "./src/lib/campaign/liveWsServer"

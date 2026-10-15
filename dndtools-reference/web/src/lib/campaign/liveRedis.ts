@@ -1,19 +1,35 @@
 import Redis from "ioredis";
 import { reportError } from "@/lib/monitoring/report";
+import { createLogThrottle } from "@/lib/server/log-throttle";
 
 const globalForRedis = globalThis as typeof globalThis & {
   __campaignRedis?: Redis;
   __campaignRedisSub?: Redis;
 };
 
+/** ioredis emits an error on every reconnect attempt. One line per window is enough. */
+const REDIS_LOG_WINDOW_MS = 30_000;
+const redisLogThrottle = createLogThrottle(REDIS_LOG_WINDOW_MS);
+
+function logRedisError(label: string, message: string): void {
+  if (redisLogThrottle.shouldLog(`${label}:${message}`)) {
+    console.error(`[redis] ${label}:`, message);
+  }
+}
+
 export function getRedisUrl(): string {
   return process.env.REDIS_URL?.trim() || "redis://127.0.0.1:6379";
 }
 
-export function requireRedisUrlInProduction(): void {
+/**
+ * Warns when production has no REDIS_URL. Throwing here would take the whole
+ * site down over one optional feature, so the site keeps serving and live
+ * sync reports its own errors.
+ */
+export function warnIfRedisUrlMissingInProduction(): void {
   if (process.env.NODE_ENV === "production" && !process.env.REDIS_URL?.trim()) {
-    throw new Error(
-      "REDIS_URL is required in production for campaign live sync",
+    console.warn(
+      "[redis] REDIS_URL is not set. Campaign live sync will fail until it is configured.",
     );
   }
 }
@@ -29,12 +45,12 @@ export function getRedis(): Redis {
       },
     });
     client.on("error", (err) => {
-      console.error("[redis] command client:", err.message);
+      logRedisError("command client", err.message);
       reportError(err, { source: "redis", dedupeKey: "redis:command" });
     });
     globalForRedis.__campaignRedis = client;
     void client.connect().catch((err) => {
-      console.error("[redis] connect failed:", err.message);
+      logRedisError("connect failed", err.message);
       reportError(err, { source: "redis", dedupeKey: "redis:connect" });
     });
   }
@@ -53,12 +69,12 @@ export function getRedisSubscriber(): Redis {
       },
     });
     client.on("error", (err) => {
-      console.error("[redis] subscriber:", err.message);
+      logRedisError("subscriber", err.message);
       reportError(err, { source: "redis", dedupeKey: "redis:subscriber" });
     });
     globalForRedis.__campaignRedisSub = client;
     void client.connect().catch((err) => {
-      console.error("[redis] subscriber connect failed:", err.message);
+      logRedisError("subscriber connect failed", err.message);
       reportError(err, {
         source: "redis",
         dedupeKey: "redis:subscriber-connect",

@@ -8,7 +8,7 @@ import { config as loadEnv } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import {
-  requireRedisUrlInProduction,
+  warnIfRedisUrlMissingInProduction,
 } from "../src/lib/campaign/liveRedis";
 import {
   createCampaignWebSocket,
@@ -37,7 +37,7 @@ function redactDbUrl(url: string | undefined): string {
 }
 
 function main() {
-  requireRedisUrlInProduction();
+  warnIfRedisUrlMissingInProduction();
   console.log("[ws] database", redactDbUrl(process.env.DATABASE_URL));
 
   const hostname = process.env.HOSTNAME || "0.0.0.0";
