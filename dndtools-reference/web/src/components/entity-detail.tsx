@@ -189,7 +189,7 @@ export function EntityDetailView({
         <>
           <p className="class-spell-list-cta">
             <Link href={`/classes/${entity.slug}/spells`}>
-              View full spell list (all levels, crawlable index)
+              View full spell list (all levels)
             </Link>
           </p>
           <ClassSpellList classSlug={entity.slug} levels={entity.spellLevels} />

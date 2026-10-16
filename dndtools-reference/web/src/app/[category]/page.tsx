@@ -176,7 +176,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       {!hasActiveFilters(filters) && !hasQueryParams(rawParams) ? (
         <div className="catalog-hub-nav">
           <p className="catalog-hub-nav-label">
-            Browse all entries by letter (crawlable index):
+            Browse all entries by letter:
           </p>
           <CatalogLetterNav category={categoryKey} />
         </div>
