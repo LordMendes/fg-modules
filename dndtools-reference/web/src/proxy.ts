@@ -2,12 +2,21 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { AUTH_COOKIE_NAME } from "@/lib/auth/session";
 import { canonicalEntityPath } from "@/lib/classic-links";
+import { unknownServerActionResponse } from "@/lib/server-action-ids";
 
 // The session nonce is no longer minted here. Pages stay static, and the
 // browser fetches the nonce from POST /session (see BootstrapProvider).
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (request.method === "POST") {
+    const actionId = request.headers.get("next-action");
+    if (actionId) {
+      const unknown = unknownServerActionResponse(actionId);
+      if (unknown) return unknown;
+    }
+  }
 
   const canonical = canonicalEntityPath(pathname);
   if (canonical) {
