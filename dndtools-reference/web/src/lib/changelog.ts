@@ -7,6 +7,12 @@ export type ChangelogEntry = {
 /** Site feature releases (not per-scrape data imports). */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: "2026-10-15",
+    title: "Quick answers and clearer category pages",
+    summary:
+      "Entry pages show quick answers and citation data for search and AI tools, category hubs describe their contents, and campaign tables are kept out of search results.",
+  },
+  {
     date: "2026-09-23",
     title: "PC Planner Fantasy Grounds export",
     summary:

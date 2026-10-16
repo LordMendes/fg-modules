@@ -3,7 +3,7 @@ import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-bu
 import { SaveToListButton } from "@/components/save-to-list-button";
 import type { CategoryKey } from "@/lib/categories";
 import type { EntityDetail } from "@/lib/entities";
-import { buildEntityLead } from "@/lib/entity-lead";
+import { buildEntityFaqs, buildEntityLead } from "@/lib/entity-lead";
 import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
@@ -26,6 +26,7 @@ export function EntityDetailView({
 }) {
   const fields = Object.entries(entity.fields).filter(([, v]) => v);
   const lead = buildEntityLead(category, entity);
+  const faqs = buildEntityFaqs(category, entity);
 
   return (
     <article className="entity-detail">
@@ -83,6 +84,18 @@ export function EntityDetailView({
       </header>
 
       {lead ? <p className="entity-lead">{lead}</p> : null}
+
+      {faqs.length > 0 ? (
+        <section className="tool-explainer entity-quick-answers" aria-labelledby="entity-quick-answers-heading">
+          <h2 id="entity-quick-answers-heading">Quick answers</h2>
+          {faqs.map((faq) => (
+            <article key={faq.question}>
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
+            </article>
+          ))}
+        </section>
+      ) : null}
 
       {entity.sections && entity.sections.length > 0 && (
         <>

@@ -2,7 +2,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
 import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
-import { getCategoryFilterOptions, getCategoryCounts, listEntities } from "@/lib/entities";
+import {
+  getCategoryFilterOptions,
+  getCategoryCounts,
+  getCategorySourceCount,
+  listEntities,
+} from "@/lib/entities";
 import {
   hasActiveFilters,
   isFlawsFeatFilter,
@@ -22,6 +27,7 @@ import { JsonLd, absoluteBreadcrumbJsonLd, collectionPageJsonLd } from "@/compon
 import {
   absoluteUrl,
   buildCategoryHubDescription,
+  buildCategoryHubIntro,
   buildPageMetadata,
   hasQueryParams,
 } from "@/lib/seo";
@@ -47,11 +53,15 @@ export async function generateMetadata({ params, searchParams }: Props) {
   const label = resolvePageTitle(categoryKey, filters);
   const counts = await getCategoryCounts();
   const count = counts[categoryKey];
+  const noindex = hasQueryParams(rawParams);
+  const description = noindex
+    ? buildCategoryHubDescription(label, count)
+    : buildCategoryHubIntro(categoryKey, count, await getCategorySourceCount(categoryKey));
   return buildPageMetadata({
     title: label,
-    description: buildCategoryHubDescription(label, count),
+    description,
     path: `/${category}`,
-    noindex: hasQueryParams(rawParams),
+    noindex,
   });
 }
 
@@ -81,7 +91,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const flawsView = categoryKey === "feats" && isFlawsFeatFilter(filters);
   const pageTitle = resolvePageTitle(categoryKey, filters);
   const categoryCount = counts[categoryKey];
-  const hubDescription = buildCategoryHubDescription(pageTitle, categoryCount);
+  const hubIntro = buildCategoryHubIntro(categoryKey, categoryCount, filterOptions.sources.length);
   const selectedSourceName =
     filters.sources.length === 1
       ? (filterOptions.sources.find((s) => s.value === filters.sources[0])?.label ??
@@ -111,7 +121,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   }
 
   const pageIntro =
-    categoryKey === "equipment" && !hasActiveFilters(filters)
+    categoryKey === "equipment" && !hasActiveFilters(filters) && equipmentView !== "all"
       ? equipmentPageIntro(equipmentView)
       : flawsView
         ? "Character flaws from Unearthed Arcana and other sources."
@@ -119,7 +129,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           ? sourceLabel
             ? `Filtered results${filters.sources.length === 1 ? ` from ${sourceLabel}` : ` across ${sourceLabel}`}.`
             : "Filtered results for this category."
-          : `Browse and search the complete ${getCategoryLabel(category).toLowerCase()} compendium.`;
+          : hubIntro;
 
   return (
     <>
@@ -130,7 +140,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             ? [
                 collectionPageJsonLd({
                   name: pageTitle,
-                  description: hubDescription,
+                  description: hubIntro,
                   url: absoluteUrl(`/${category}`),
                   numberOfItems: categoryCount,
                 }),

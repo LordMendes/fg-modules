@@ -14,6 +14,7 @@ export const metadata = buildPageMetadata({
   title: TOOL_NAME,
   description: TOOL_DESCRIPTION,
   path: TOOL_PATH,
+  noindex: true,
 });
 
 export default function CampaignPage() {

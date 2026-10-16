@@ -185,10 +185,15 @@ function buildEntityDescriptionFallback(
   );
 }
 
+/**
+ * `lead` is the visible summary from buildEntityLead. It is used as the
+ * description when the entry has no body text, so the snippet matches the page.
+ */
 export function buildEntityMetadata(
   entity: EntityMetaInput,
   category: CategoryKey,
   slug: string,
+  lead?: string | null,
 ): Metadata {
   const singular = CATEGORY_SINGULAR[category];
   const title = `${entity.name} (D&D 3.5 ${singular})`;
@@ -198,7 +203,9 @@ export function buildEntityMetadata(
           ? `${entity.descriptionText} D&D 3.5 reference from ${entity.source.abbrev}.`
           : entity.descriptionText,
       )
-    : buildEntityDescriptionFallback(entity, category);
+    : lead
+      ? truncateMetaDescription(lead)
+      : buildEntityDescriptionFallback(entity, category);
 
   return buildPageMetadata({
     title,
@@ -214,6 +221,34 @@ export function buildCategoryHubDescription(
   count: number,
 ): string {
   return `Browse ${count.toLocaleString("en-US")} ${label.toLowerCase()} from every D&D 3.5 sourcebook.`;
+}
+
+/** One factual sentence per category, shown above the unfiltered hub list. */
+const CATEGORY_HUB_BLURB: Record<CategoryKey, string> = {
+  spells: "Arcane and divine spells with school, level, range, duration, and the classes that can cast them.",
+  feats: "Feats from D&D 3.5 sourcebooks, with feat type, benefits, and prerequisites.",
+  monsters: "Creatures from D&D 3.5 sourcebooks, with challenge rating, size, type, and hit dice.",
+  classes: "Character classes from D&D 3.5 sourcebooks, with hit die, skill points, and spellcasting.",
+  skills: "Skills from D&D 3.5 sourcebooks, with key ability and whether training is required.",
+  races: "Player races from D&D 3.5 sourcebooks, with size, type, and level adjustment.",
+  items: "Magic items from D&D 3.5 sourcebooks, with item type, market price, and caster level.",
+  equipment: "Weapons, armor, shields, and adventuring gear from D&D 3.5 sourcebooks, with cost and weight.",
+  domains: "Cleric domains from D&D 3.5 sourcebooks, with domain type and the spells each domain lists.",
+  deities: "Deities from D&D 3.5 sourcebooks, with alignment and pantheon.",
+  psionics: "Psionic powers from D&D 3.5 sourcebooks, with discipline, power point cost, and classes.",
+  templates: "Creature templates from D&D 3.5 sourcebooks, with CR change and level adjustment.",
+  rules: "Game rules from D&D 3.5 sourcebooks, grouped by category and subcategory.",
+};
+
+/** Visible intro and meta description for the unfiltered category hub. */
+export function buildCategoryHubIntro(
+  category: CategoryKey,
+  count: number,
+  sourceCount: number,
+): string {
+  const entries = `${count.toLocaleString("en-US")} ${count === 1 ? "entry" : "entries"}`;
+  const books = `${sourceCount} ${sourceCount === 1 ? "sourcebook" : "sourcebooks"}`;
+  return `${CATEGORY_HUB_BLURB[category]} Includes ${entries} from ${books}.`;
 }
 
 /** True when the request has any non-empty query string values. */

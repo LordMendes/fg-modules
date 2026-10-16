@@ -15,6 +15,9 @@ import { siteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
+/** Campaign tables need login and are noindex, so they stay out of the sitemap. */
+const SITEMAP_TOOLS = TOOLS.filter((tool) => tool.key !== "campaign");
+
 export async function generateSitemaps() {
   return Array.from({ length: SITEMAP_COUNT }, (_, id) => ({ id }));
 }
@@ -27,9 +30,10 @@ export default async function sitemap(props: {
   const now = new Date();
 
   if (id === HUB_SITEMAP_ID) {
+    // Hub pages have no real modification date, so lastModified is omitted
+    // instead of stamping every URL with the request time.
     const categoryUrls = CATEGORIES.map((c) => ({
       url: `${base}/${c.key}`,
-      lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.8,
     }));
@@ -37,74 +41,62 @@ export default async function sitemap(props: {
     return [
       {
         url: base,
-        lastModified: now,
         changeFrequency: "weekly",
         priority: 1,
       },
       {
         url: `${base}/sources`,
-        lastModified: now,
         changeFrequency: "weekly",
         priority: 0.7,
       },
       {
         url: `${base}/tools`,
-        lastModified: now,
         changeFrequency: "weekly",
         priority: 0.7,
       },
       {
         url: `${base}/stores/goods`,
-        lastModified: now,
         changeFrequency: "weekly",
         priority: 0.7,
       },
-      ...TOOLS.map((tool) => ({
+      ...SITEMAP_TOOLS.map((tool) => ({
         url: `${base}${tool.href}`,
-        lastModified: now,
         changeFrequency: "weekly" as const,
         priority: 0.6,
       })),
       {
         url: `${base}/search`,
-        lastModified: now,
         changeFrequency: "monthly",
         priority: 0.3,
       },
       {
         url: `${base}/privacy`,
-        lastModified: now,
         changeFrequency: "monthly",
         priority: 0.4,
       },
       {
         url: `${base}/about`,
-        lastModified: now,
         changeFrequency: "monthly",
         priority: 0.5,
       },
       {
         url: `${base}/changelog`,
-        lastModified: now,
         changeFrequency: "monthly",
         priority: 0.4,
       },
       {
         url: `${base}/catalog`,
-        lastModified: now,
         changeFrequency: "weekly",
         priority: 0.7,
       },
       ...CATEGORIES.flatMap((category) => [
         {
           url: `${base}/catalog/${category.key}`,
-          lastModified: now,
           changeFrequency: "weekly" as const,
           priority: 0.6,
         },
         ...CATALOG_LETTERS.map((letter) => ({
           url: `${base}${catalogLetterHref(category.key, letter)}`,
-          lastModified: now,
           changeFrequency: "monthly" as const,
           priority: 0.5,
         })),

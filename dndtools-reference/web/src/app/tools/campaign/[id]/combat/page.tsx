@@ -11,6 +11,7 @@ export async function generateMetadata({ params }: PageProps) {
     title: "Combat tracker",
     description: "Campaign combat tracker pop-out with shared dice.",
     path: `/tools/campaign/${id}/combat`,
+    noindex: true,
   });
 }
 

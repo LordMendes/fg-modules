@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import {
   buildEntityMetadata,
   buildCategoryHubDescription,
+  buildCategoryHubIntro,
   hasQueryParams,
   truncateMetaDescription,
 } from "./seo";
@@ -86,6 +87,47 @@ describe("buildCategoryHubDescription", () => {
   it("includes formatted count and label", () => {
     const desc = buildCategoryHubDescription("Spells", 2847);
     assert.match(desc, /2,847 spells/);
+  });
+});
+
+describe("buildCategoryHubIntro", () => {
+  it("states the category blurb, entry count, and sourcebook count", () => {
+    const intro = buildCategoryHubIntro("spells", 2847, 22);
+    assert.match(intro, /^Arcane and divine spells/);
+    assert.match(intro, /Includes 2,847 entries from 22 sourcebooks\.$/);
+  });
+
+  it("uses singular nouns for one entry and one sourcebook", () => {
+    assert.match(buildCategoryHubIntro("deities", 1, 1), /Includes 1 entry from 1 sourcebook\.$/);
+  });
+
+  it("stays within the meta description length for every category", () => {
+    const categories = [
+      "spells", "feats", "monsters", "classes", "skills", "races", "items",
+      "equipment", "domains", "deities", "psionics", "templates", "rules",
+    ] as const;
+    for (const category of categories) {
+      assert.ok(buildCategoryHubIntro(category, 99999, 99).length <= 160, category);
+    }
+  });
+});
+
+describe("buildEntityMetadata with lead", () => {
+  it("uses the lead as description when there is no body text", () => {
+    const lead = "Goblin is a D&D 3.5 monster from MM. CR 1/3.";
+    const meta = buildEntityMetadata(
+      {
+        name: "Goblin",
+        descriptionText: null,
+        statLine: null,
+        source: { abbrev: "MM" },
+        fields: { "Challenge Rating": "1/3" },
+      },
+      "monsters",
+      "goblin",
+      lead,
+    );
+    assert.equal(meta.description, lead);
   });
 });
 

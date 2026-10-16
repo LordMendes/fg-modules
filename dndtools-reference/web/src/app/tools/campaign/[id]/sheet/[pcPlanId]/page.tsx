@@ -11,6 +11,7 @@ export async function generateMetadata({ params }: PageProps) {
     title: "Character sheet",
     description: "Campaign character sheet pop-out with shared dice.",
     path: `/tools/campaign/${id}/sheet/${pcPlanId}`,
+    noindex: true,
   });
 }
 

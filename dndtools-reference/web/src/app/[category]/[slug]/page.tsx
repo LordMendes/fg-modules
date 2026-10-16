@@ -3,7 +3,8 @@ import Link from "next/link";
 import { isCategoryKey, getCategoryLabel } from "@/lib/categories";
 import { getEntityDetail } from "@/lib/entities";
 import { EntityDetailView } from "@/components/entity-detail";
-import { JsonLd, absoluteBreadcrumbJsonLd } from "@/components/json-ld";
+import { JsonLd, absoluteBreadcrumbJsonLd, entityJsonLd, faqPageJsonLd } from "@/components/json-ld";
+import { buildEntityFaqs, buildEntityKeyFacts, buildEntityLead } from "@/lib/entity-lead";
 import { absoluteUrl, buildEntityMetadata, truncateMetaDescription } from "@/lib/seo";
 import type { CategoryKey } from "@/lib/categories";
 
@@ -26,7 +27,8 @@ export async function generateMetadata({ params }: Props) {
   if (!isCategoryKey(category)) return {};
   const entity = await getEntityDetail(category as CategoryKey, slug);
   if (!entity) return {};
-  return buildEntityMetadata(entity, category as CategoryKey, slug);
+  const lead = buildEntityLead(category as CategoryKey, entity);
+  return buildEntityMetadata(entity, category as CategoryKey, slug, lead);
 }
 
 export default async function EntityDetailPage({ params }: Props) {
@@ -37,9 +39,13 @@ export default async function EntityDetailPage({ params }: Props) {
   if (!entity) notFound();
 
   const label = getCategoryLabel(category);
+  const categoryKey = category as CategoryKey;
+  const lead = buildEntityLead(categoryKey, entity);
+  const faqs = buildEntityFaqs(categoryKey, entity);
   const description =
     truncateMetaDescription(
       entity.descriptionText ??
+        lead ??
         `${entity.name}: ${label} reference for D&D 3.5 Edition.`,
       300,
     );
@@ -56,18 +62,17 @@ export default async function EntityDetailPage({ params }: Props) {
             ],
             absoluteUrl,
           ),
-          {
-            "@context": "https://schema.org",
-            "@type": "DefinedTerm",
+          ...entityJsonLd({
             name: entity.name,
             description,
             url: absoluteUrl(`/${category}/${slug}`),
-            inDefinedTermSet: {
-              "@type": "DefinedTermSet",
-              name: label,
-              url: absoluteUrl(`/${category}`),
-            },
-          },
+            termSetName: label,
+            termSetUrl: absoluteUrl(`/${category}`),
+            properties: buildEntityKeyFacts(categoryKey, entity),
+            source: entity.source,
+            dateModified: entity.updatedAt ?? null,
+          }),
+          ...(faqs.length > 0 ? [faqPageJsonLd(faqs)] : []),
         ]}
       />
       <nav className="breadcrumb" aria-label="Breadcrumb">

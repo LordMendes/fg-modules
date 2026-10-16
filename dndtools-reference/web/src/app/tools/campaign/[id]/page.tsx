@@ -11,6 +11,7 @@ export async function generateMetadata({ params }: PageProps) {
     title: "Campaign table",
     description: "Shared campaign table with characters and dice.",
     path: `/tools/campaign/${id}`,
+    noindex: true,
   });
 }
 

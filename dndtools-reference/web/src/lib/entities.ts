@@ -2105,6 +2105,20 @@ const EMPTY_CATEGORY_COUNTS: Record<CategoryKey, number> = {
 };
 
 
+/** Distinct sourcebook abbreviations that contain at least one entry in the category. */
+export async function getCategorySourceCount(category: CategoryKey): Promise<number> {
+  try {
+    const rows = await prisma.source.findMany({
+      where: { [category]: { some: {} } },
+      select: { abbrev: true },
+    });
+    return new Set(rows.map((row) => row.abbrev).filter(Boolean)).size;
+  } catch (error) {
+    if (isUnavailableDatabaseError(error)) return 0;
+    throw error;
+  }
+}
+
 /** Live entity totals per category for hub UI. */
 export async function getCategoryCounts(): Promise<Record<CategoryKey, number>> {
   try {

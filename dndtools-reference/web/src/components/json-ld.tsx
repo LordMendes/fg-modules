@@ -166,3 +166,65 @@ export function toolPageJsonLd(
     ...(faqs.length > 0 ? [faqPageJsonLd(faqs)] : []),
   ];
 }
+
+type EntityJsonLdInput = {
+  name: string;
+  description: string;
+  url: string;
+  termSetName: string;
+  termSetUrl: string;
+  properties: { name: string; value: string }[];
+  source: { name: string; abbrev: string | null; page: number | null };
+  dateModified?: string | null;
+};
+
+/**
+ * DefinedTerm for the entry plus a WebPage that carries dateModified and the
+ * source citation. schema.org defines dateModified and citation on CreativeWork,
+ * so they sit on the page node rather than on the term.
+ */
+export function entityJsonLd(input: EntityJsonLdInput): Record<string, unknown>[] {
+  const termId = `${input.url}#term`;
+  const term: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "@id": termId,
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inDefinedTermSet: {
+      "@type": "DefinedTermSet",
+      name: input.termSetName,
+      url: input.termSetUrl,
+    },
+    ...(input.properties.length > 0
+      ? {
+          additionalProperty: input.properties.map((property) => ({
+            "@type": "PropertyValue",
+            name: property.name,
+            value: property.value,
+          })),
+        }
+      : {}),
+  };
+
+  const citation: Record<string, unknown> = {
+    "@type": "CreativeWork",
+    name: input.source.name,
+    ...(input.source.abbrev ? { alternateName: input.source.abbrev } : {}),
+    ...(input.source.page ? { pagination: String(input.source.page) } : {}),
+  };
+
+  const page: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": input.url,
+    url: input.url,
+    name: input.name,
+    mainEntity: { "@id": termId },
+    citation,
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+  };
+
+  return [term, page];
+}
