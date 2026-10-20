@@ -22,6 +22,11 @@ const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN?.trim() ?? "";
 const sentryRelease = getRelease();
 const configuredSentryUrl = process.env.SENTRY_URL?.trim();
 const sentryUrl = sentryUploadUrl(configuredSentryUrl);
+// sentry-cli reads SENTRY_URL from the environment. Coolify passes http://,
+// while the auth token is bound to https://, so the upload is refused.
+if (sentryUrl) {
+  process.env.SENTRY_URL = sentryUrl;
+}
 if (
   sentryUrl &&
   configuredSentryUrl &&
@@ -31,6 +36,9 @@ if (
     `[sentry] SENTRY_URL is ${configuredSentryUrl}. Source map upload will use ${sentryUrl}.`,
   );
 }
+
+/** Set in the Docker build. The Coolify host cannot spare a second webpack process. */
+const lowMemoryBuild = process.env.NEXT_BUILD_LOW_MEMORY === "1";
 
 /**
  * Security headers for Lighthouse Best Practices (CSP, clickjacking, COOP, HSTS).
@@ -73,12 +81,18 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "16mb",
     },
-    // Drops webpack's retained module cache during `next build`. The Coolify
-    // host SIGKILLs an uncapped compile (exit 137).
     webpackMemoryOptimizations: true,
-    // Sentry adds a webpack hook, which turns the default build worker off.
-    // The worker keeps the compile out of the main process heap.
-    webpackBuildWorker: true,
+    // The Docker build sets NEXT_BUILD_LOW_MEMORY. A webpack worker is a second
+    // Node process, and that worker was SIGKILLed on the Coolify host.
+    webpackBuildWorker: lowMemoryBuild ? false : true,
+    ...(lowMemoryBuild ? { cpus: 1 } : {}),
+  },
+  webpack: (config, { dev }) => {
+    if (lowMemoryBuild && !dev) {
+      config.parallelism = 1;
+      config.cache = false;
+    }
+    return config;
   },
   turbopack: {
     root: monorepoRoot,
@@ -131,7 +145,9 @@ export default withSentryConfig(nextConfig, {
   telemetry: false,
   ...(sentryRelease ? { release: { name: sentryRelease } } : {}),
   sourcemaps: {
-    disable: !sentryAuthToken,
+    // The Docker build skips maps. Sentry's devtool setting keeps the client
+    // compile in memory, and that compile is what the host SIGKILLs.
+    disable: lowMemoryBuild || !sentryAuthToken,
   },
   // A GlitchTip outage or a bad build-time URL must not fail the image build.
   errorHandler(error) {

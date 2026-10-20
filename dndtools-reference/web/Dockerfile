@@ -41,8 +41,10 @@ ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
-# Uncapped V8 grows until the kernel SIGKILLs `next build` (exit 137).
-ENV NODE_OPTIONS="--max-old-space-size=2048"
+# One Node process. A webpack worker plus a 2048 MB heap was still SIGKILLed:
+# both processes inherit the cap, and native memory sits on top of the heap.
+ENV NODE_OPTIONS="--max-old-space-size=1536"
+ENV NEXT_BUILD_LOW_MEMORY=1
 RUN pnpm --filter @fg-modules/web build
 RUN node /app/web/scripts/stage-runtime-packages.mjs
 
