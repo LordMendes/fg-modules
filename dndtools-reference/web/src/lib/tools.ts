@@ -219,7 +219,7 @@ export const TOOLS = [
     icon: "🚪",
     href: "/tools/five-room-dungeon",
     description:
-      "Build a five-room dungeon: entrance, puzzle, setback, climax, and reward.",
+      "Build a five-room dungeon with a map: entrance, puzzle, setback, climax, and reward.",
     source: "Site tables",
     group: "adventures",
   },

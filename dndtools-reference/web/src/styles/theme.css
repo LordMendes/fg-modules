@@ -17327,22 +17327,33 @@ html.dice-secret-cursor * {
   gap: 1rem;
 }
 
-.inn-gen-seed-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0.65rem;
+.inn-gen .tool-field {
+  min-width: 0;
+  flex: none;
 }
 
-.inn-gen-seed-field {
-  flex: 1 1 10rem;
-  min-width: 8rem;
+.inn-gen .tool-label {
+  line-height: 1.2;
+}
+
+.inn-gen .tool-input {
+  width: 100%;
+  height: 2.375rem;
+  min-height: 2.375rem;
+  padding: 0 0.75rem;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 .inn-gen-fields {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
   gap: 0.75rem 1rem;
+  align-items: end;
+}
+
+.inn-gen-use {
+  height: 2.375rem;
 }
 
 .inn-gen-actions {
@@ -17353,6 +17364,7 @@ html.dice-secret-cursor * {
 }
 
 .inn-gen-copy-status {
+  min-width: 4.5rem;
   font-size: 0.9rem;
   color: var(--text-muted);
 }
@@ -17360,77 +17372,185 @@ html.dice-secret-cursor * {
 .inn-gen-results {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
-
-.inn-gen-name-row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.inn-gen-name-btn {
-  font-size: 1.35rem;
-  font-weight: 600;
-  padding: 0.35rem 0.65rem;
-}
-
-.inn-gen-block {
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  background: var(--surface-raised);
 }
 
 .inn-gen-block-header {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  column-gap: 0.75rem;
+  min-height: 2.375rem;
+  margin: 0 0 0.45rem;
 }
 
 .inn-gen-block-header h2 {
   margin: 0;
   font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.inn-gen-reroll {
+  min-width: 6.75rem;
+  justify-content: center;
+}
+
+.inn-gen-title {
+  margin-bottom: 0.2rem;
+}
+
+.inn-gen-name-btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.inn-gen-name-btn:hover:not(:disabled) {
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.inn-gen-name-btn:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+}
+
+.inn-gen-name-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.inn-gen-meta,
+.inn-gen-block p,
+.inn-gen-empty {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.inn-gen-meta {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.inn-gen-empty {
+  color: var(--text-muted);
+}
+
+.inn-gen-block {
+  margin-top: 0.85rem;
+  padding: 0.85rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
 }
 
 .inn-gen-menu-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
 
+.inn-gen-price-col {
+  width: 5.5rem;
+}
+
 .inn-gen-menu-table th,
 .inn-gen-menu-table td {
-  padding: 0.35rem 0.5rem;
+  padding: 0.4rem 0;
   text-align: left;
+  vertical-align: baseline;
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.inn-gen-menu-table th {
+.inn-gen-menu-table tbody:last-child tr:last-child td {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.inn-gen-menu-head th {
+  padding-bottom: 0.3rem;
+  font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--text-muted);
 }
 
-.inn-gen-drinks-heading {
-  margin: 0.85rem 0 0.35rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+.inn-gen-menu-table tbody + tbody .inn-gen-menu-head th {
+  padding-top: 0.95rem;
+}
+
+.inn-gen-price {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.inn-gen-menu-table .inn-gen-price,
+.inn-gen-menu-head th:last-child {
+  padding-left: 1rem;
+  text-align: right;
 }
 
 .inn-gen-list {
+  list-style: none;
   margin: 0;
-  padding-left: 1.25rem;
+  padding: 0;
+}
+
+.inn-gen-list li {
   display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  line-height: 1.45;
+}
+
+.inn-gen-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 .inn-gen-unreliable {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-style: italic;
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--accent-burgundy) 45%, var(--border-color));
+  border-radius: 999px;
+  color: var(--accent-burgundy);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .inn-gen-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .inn-gen-use,
+  .inn-gen-actions .tool-btn {
+    width: 100%;
+  }
+
+  .inn-gen-reroll {
+    min-width: 0;
+  }
 }
 
 .demographics {
@@ -18331,6 +18451,26 @@ html.dice-secret-cursor * {
   font-size: 0.92rem;
 }
 
+.five-room-map-wrap {
+  overflow: auto;
+  border: 1px solid #c4a882;
+  border-radius: var(--radius-md);
+  background: #f6f0e2;
+  padding: 0.35rem;
+}
+
+.five-room-map-host {
+  line-height: 0;
+}
+
+.five-room-map-host .dungeon-gen-map {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  background: #f6f0e2;
+}
+
 .world-gen {
   display: flex;
   flex-direction: column;
@@ -18995,7 +19135,7 @@ html.dice-secret-cursor * {
   overflow: auto;
   border: 1px solid #c4a882;
   border-radius: var(--radius-md);
-  background: #000000;
+  background: #f6f0e2;
   padding: 0.75rem;
 }
 
@@ -19007,7 +19147,7 @@ html.dice-secret-cursor * {
   width: 100%;
   max-width: 1100px;
   height: auto;
-  background: #000000;
+  background: #f6f0e2;
 }
 
 .dungeon-gen-legend {
@@ -19342,6 +19482,7 @@ html.dice-secret-cursor * {
   }
 
   .dungeon-gen-map-wrap,
+  .five-room-map-wrap,
   .world-gen-map-wrap,
   .town-gen-map-wrap {
     overflow: visible;

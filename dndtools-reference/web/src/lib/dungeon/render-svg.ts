@@ -1,3 +1,4 @@
+import { createSeededRng } from "@/lib/random-spellbook/seeded-rng";
 import type {
   DoorVariant,
   DungeonDraft,
@@ -11,21 +12,81 @@ const CELL_PX = 16;
 
 export type DungeonSvgOptions = {
   playerMap?: boolean;
+  legend?: boolean;
 };
 
 const MAP_STYLE = `
-.dungeon-gen-stone { fill: #000000; }
 .dungeon-gen-floor { fill: #f6f0e2; stroke: none; }
 .dungeon-gen-room-fill { fill: #f6f0e2; stroke: none; }
 .dungeon-gen-wall-line { stroke: #1c1612; stroke-width: 1.7; stroke-linecap: square; stroke-linejoin: miter; fill: none; }
 .dungeon-gen-shape-wall { stroke: #1c1612; stroke-width: 1.9; stroke-linejoin: miter; fill: none; }
 .dungeon-gen-grid-line { stroke: rgba(28, 22, 18, 0.22); stroke-width: 0.45; fill: none; }
 .dungeon-gen-room-label { fill: #1c1612; font-family: Georgia, "Times New Roman", serif; font-weight: 700; }
-.dungeon-gen-caption { fill: #f6f0e2; font-family: Georgia, "Times New Roman", serif; font-size: 11px; }
+.dungeon-gen-caption { fill: #1c1612; font-family: Georgia, "Times New Roman", serif; font-size: 11px; }
 `.trim();
 
 const MARK_INK = "#1c1612";
 const MARK_PAPER = "#f6f0e2";
+const STONE_TILE = 72;
+
+function stoneHatchDefs(): string {
+  const rng = createSeededRng(0x51a7e);
+  const buckets = new Map<string, string[]>();
+  for (let i = 0; i < 520; i++) {
+    const x = rng.next() * STONE_TILE;
+    const y = rng.next() * STONE_TILE;
+    const angle = rng.next() * Math.PI * 2;
+    const len = 3.6 + rng.next() * 5.4;
+    const bend = (rng.next() - 0.5) * 0.4;
+    const points = [
+      { x, y },
+      {
+        x: x + Math.cos(angle) * len * 0.5,
+        y: y + Math.sin(angle) * len * 0.5,
+      },
+      {
+        x: x + Math.cos(angle + bend) * len,
+        y: y + Math.sin(angle + bend) * len,
+      },
+    ];
+    const width = rng.next() < 0.25 ? "0.85" : "0.62";
+    const commands = buckets.get(width) ?? [];
+    for (const ox of [-STONE_TILE, 0, STONE_TILE]) {
+      for (const oy of [-STONE_TILE, 0, STONE_TILE]) {
+        let minX = Infinity;
+        let maxX = -Infinity;
+        let minY = Infinity;
+        let maxY = -Infinity;
+        const draw: string[] = [];
+        points.forEach((point, index) => {
+          const px = point.x + ox;
+          const py = point.y + oy;
+          minX = Math.min(minX, px);
+          maxX = Math.max(maxX, px);
+          minY = Math.min(minY, py);
+          maxY = Math.max(maxY, py);
+          draw.push(
+            `${index === 0 ? "M" : "L"}${px.toFixed(1)} ${py.toFixed(1)}`,
+          );
+        });
+        if (maxX < 0 || minX > STONE_TILE || maxY < 0 || minY > STONE_TILE) {
+          continue;
+        }
+        commands.push(draw.join(""));
+      }
+    }
+    buckets.set(width, commands);
+  }
+  const strokes = [...buckets.entries()]
+    .map(
+      ([width, commands]) =>
+        `<path d="${commands.join("")}" fill="none" stroke="#141414" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round"/>`,
+    )
+    .join("");
+  return `<defs><pattern id="dungeon-stone-hatch" width="${STONE_TILE}" height="${STONE_TILE}" patternUnits="userSpaceOnUse"><rect width="${STONE_TILE}" height="${STONE_TILE}" fill="${MARK_PAPER}"/>${strokes}</pattern></defs>`;
+}
+
+const STONE_DEFS = stoneHatchDefs();
 
 function doorCaps(dashed = false): string {
   if (dashed) {
@@ -119,7 +180,7 @@ export const DUNGEON_LEGEND_ITEMS: { label: string; svg: string }[] = [
   },
   {
     label: "Wall",
-    svg: `<svg class="dungeon-gen-legend-icon" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#000000" /></svg>`,
+    svg: `<svg class="dungeon-gen-legend-icon" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#f6f0e2"/><g fill="none" stroke="#141414" stroke-width="0.7" stroke-linecap="round"><line x1="1" y1="3" x2="6" y2="1"/><line x1="3" y1="6" x2="8" y2="3"/><line x1="1" y1="9" x2="6" y2="12"/><line x1="7" y1="8" x2="12" y2="5"/><line x1="9" y1="2" x2="15" y2="6"/><line x1="5" y1="11" x2="10" y2="14"/><line x1="10" y1="10" x2="15" y2="13"/><line x1="2" y1="13" x2="5" y2="15"/><line x1="8" y1="1" x2="12" y2="3"/><line x1="11" y1="8" x2="15" y2="9"/></g></svg>`,
   },
   { label: "Archway", svg: legendSvg(doorSymbol("open")) },
   { label: "Portcullis", svg: legendSvg(doorSymbol("portcullis")) },
@@ -165,9 +226,8 @@ function cellCenter(
 
 function roomLabels(draft: DungeonDraft, playerMap: boolean): string {
   if (playerMap) return "";
-  const numbered = [...draft.rooms].sort((a, b) => a.y - b.y || a.x - b.x);
-  return numbered
-    .map((room, index) => labelForRoom(room, index + 1, draft.grid))
+  return draft.rooms
+    .map((room) => labelForRoom(room, room.index + 1, draft.grid))
     .join("");
 }
 
@@ -549,7 +609,7 @@ function contentBounds(
   if (!found) {
     return { x: 0, y: 0, width: CELL_PX * 4, height: CELL_PX * 4 };
   }
-  const pad = 14;
+  const pad = 22;
   return {
     x: minX - pad,
     y: minY - pad,
@@ -558,19 +618,55 @@ function contentBounds(
   };
 }
 
+const MAP_LEGEND = [
+  { label: "Door", mark: () => doorSymbol("closed") },
+  { label: "Archway", mark: () => doorSymbol("open") },
+  { label: "Stairs up", mark: () => stairSymbol(true) },
+  { label: "Stairs down", mark: () => stairSymbol(false) },
+] as const;
+
+function mapLegend(originX: number, y: number, width: number): string {
+  const icon = 16;
+  const labelGap = 5;
+  const itemGap = 18;
+  const charWidth = 6.15;
+  const widths = MAP_LEGEND.map(
+    (item) => icon + labelGap + item.label.length * charWidth,
+  );
+  const total =
+    widths.reduce((sum, itemWidth) => sum + itemWidth, 0) +
+    itemGap * (widths.length - 1);
+  let cursor = originX + Math.max(8, (width - total) / 2);
+  return MAP_LEGEND.map((item, index) => {
+    const x = cursor;
+    cursor += widths[index]! + itemGap;
+    return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><g transform="translate(0 -8)">${item.mark()}</g><text class="dungeon-gen-caption" x="${icon + labelGap}" y="4">${item.label}</text></g>`;
+  }).join("");
+}
+
 export function buildDungeonSvg(
   draft: DungeonDraft,
   options: DungeonSvgOptions = {},
 ): string {
   const playerMap = options.playerMap === true;
+  const showLegend = options.legend === true;
   const hex = draft.grid === "hex" || draft.grid === "verthex";
   const bounds = contentBounds(draft, playerMap);
-  const caption = 20;
+  const caption = showLegend ? 54 : 22;
   const body = hex ? hexMap(draft, playerMap) : squareMap(draft, playerMap);
-  const scale = `<text class="dungeon-gen-caption" x="${(bounds.x + bounds.width / 2).toFixed(1)}" y="${(bounds.y + bounds.height + 14).toFixed(1)}" text-anchor="middle">1 square = 10 feet</text>`;
+  const x = bounds.x.toFixed(1);
+  const y = bounds.y.toFixed(1);
   const viewW = bounds.width.toFixed(1);
+  const captionY = bounds.y + bounds.height;
+  const scale = `<text class="dungeon-gen-caption" x="${(bounds.x + bounds.width / 2).toFixed(1)}" y="${(captionY + 14).toFixed(1)}" text-anchor="middle">1 square = 10 feet</text>`;
+  const legend = showLegend
+    ? mapLegend(bounds.x, captionY + 38, bounds.width)
+    : "";
   const viewH = (bounds.height + caption).toFixed(1);
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bounds.x.toFixed(1)} ${bounds.y.toFixed(1)} ${viewW} ${viewH}" class="dungeon-gen-map" data-grid="${draft.grid}" role="img" aria-label="Dungeon map"><style>${MAP_STYLE}</style><rect class="dungeon-gen-stone" x="${bounds.x.toFixed(1)}" y="${bounds.y.toFixed(1)}" width="${viewW}" height="${viewH}" />${body}${roomLabels(draft, playerMap)}${scale}</svg>`;
+  const frame =
+    `<rect fill="url(#dungeon-stone-hatch)" x="${x}" y="${y}" width="${viewW}" height="${bounds.height.toFixed(1)}" />` +
+    `<rect fill="${MARK_PAPER}" x="${x}" y="${captionY.toFixed(1)}" width="${viewW}" height="${caption}" />`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${x} ${y} ${viewW} ${viewH}" class="dungeon-gen-map" data-grid="${draft.grid}" role="img" aria-label="Dungeon map"><style>${MAP_STYLE}</style>${STONE_DEFS}${frame}${body}${roomLabels(draft, playerMap)}${scale}${legend}</svg>`;
 }
 
 export function formatDungeonKeyPlain(draft: DungeonDraft): string {

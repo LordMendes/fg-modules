@@ -1,3 +1,5 @@
+import type { DungeonDraft } from "@/lib/dungeon/types";
+
 export const FIVE_ROOM_MOTIFS = [
   "none",
   "abandoned",
@@ -55,6 +57,7 @@ export type FiveRoomResult = {
   seed: number;
   premise: string;
   rooms: FiveRoomRoom[];
+  map: DungeonDraft;
 };
 
 export type FiveRoomGenerateExtras = {

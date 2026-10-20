@@ -20,6 +20,7 @@ import type {
   FiveRoomRoleIndex,
   FiveRoomRoom,
 } from "./types";
+import { buildFiveRoomMap } from "./map";
 import { FIVE_ROOM_ROLE_LABELS } from "./types";
 
 function roomRng(seed: number, roomIndex: FiveRoomRoleIndex): SeededRng {
@@ -192,14 +193,16 @@ export function generateFiveRoomDungeon(
     const index = i as FiveRoomRoleIndex;
     rooms.push(ROOM_BUILDERS[index](input, extras, reframeEntrance));
   }
+  const name = rollDungeonName(input.nameSeed);
   return {
-    name: rollDungeonName(input.nameSeed),
+    name,
     motif: input.motif,
     level: input.level,
     partySize: input.partySize,
     seed: input.seed,
     premise: rollPremise(input),
     rooms,
+    map: buildFiveRoomMap(input.seed, name, input.level),
   };
 }
 

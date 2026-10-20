@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Copy } from "lucide-react";
+import { Copy, Download } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -15,6 +15,7 @@ import {
   rerollFiveRoomName,
   rollFiveRoomDungeon,
 } from "@/actions/five-room-dungeon";
+import { buildDungeonSvg } from "@/lib/dungeon/render-svg";
 import {
   DEFAULT_FIVE_ROOM_INPUT,
   FIVE_ROOM_MOTIFS,
@@ -177,6 +178,23 @@ export function FiveRoomDungeon() {
     window.setTimeout(() => setCopyStatus(null), 2000);
   }
 
+  function downloadMap() {
+    if (!result) return;
+    const svg = buildDungeonSvg(result.map, { legend: true });
+    const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${result.name.replace(/\s+/g, "-").toLowerCase() || "five-room-dungeon"}.svg`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const svgMarkup = useMemo(
+    () => (result ? buildDungeonSvg(result.map, { legend: true }) : ""),
+    [result],
+  );
+
   return (
     <div className="five-room">
       <div className="five-room-form">
@@ -296,9 +314,24 @@ export function FiveRoomDungeon() {
               <Copy size={16} aria-hidden="true" />
               Copy
             </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn-secondary"
+              onClick={downloadMap}
+            >
+              <Download size={16} aria-hidden="true" />
+              Download SVG
+            </button>
             {copyStatus ? (
               <span className="five-room-copy-status">{copyStatus}</span>
             ) : null}
+          </div>
+
+          <div className="five-room-map-wrap">
+            <div
+              className="five-room-map-host"
+              dangerouslySetInnerHTML={{ __html: svgMarkup }}
+            />
           </div>
 
           <ol className="five-room-list">

@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
+import { allRoomsReachable } from "@/lib/dungeon/generate";
+import { buildDungeonSvg } from "@/lib/dungeon/render-svg";
 import { createSeededRng } from "@/lib/random-spellbook/seeded-rng";
 import {
   generateFiveRoomDungeon,
@@ -93,5 +95,56 @@ describe("five room dungeon generator", () => {
       createSeededRng(base.seed + 1).pickInt(1, 1000),
       createSeededRng(base.seed + 3).pickInt(1, 1000),
     );
+  });
+
+  it("draws a connected five-room map from the seed", () => {
+    for (let seed = 1; seed <= 24; seed++) {
+      const result = generateFiveRoomDungeon(
+        {
+          motif: "none",
+          level: 1,
+          partySize: 4,
+          seed,
+          nameSeed: seed,
+        },
+        createSeededRng(seed),
+      );
+      assert.equal(result.map.rooms.length, 5);
+      assert.deepEqual(
+        result.map.rooms.map((room) => room.index).sort((a, b) => a - b),
+        [0, 1, 2, 3, 4],
+      );
+      assert.equal(allRoomsReachable(result.map), true);
+      const stairs = result.map.cells
+        .flat()
+        .filter((cell) => cell.type === "stairs-up" || cell.type === "stairs-down");
+      assert.ok(stairs.length >= 1);
+    }
+
+    const input = {
+      motif: "cold" as const,
+      level: 2,
+      partySize: 4,
+      seed: 18,
+      nameSeed: 4,
+    };
+    const first = generateFiveRoomDungeon(input, createSeededRng(1));
+    const second = generateFiveRoomDungeon(input, createSeededRng(2));
+    const other = generateFiveRoomDungeon(
+      { ...input, seed: 19 },
+      createSeededRng(3),
+    );
+    assert.deepEqual(first.map.rooms, second.map.rooms);
+    assert.notDeepEqual(first.map.rooms, other.map.rooms);
+    const svg = buildDungeonSvg(first.map, { legend: true });
+    assert.match(svg, /dungeon-stone-hatch/);
+    assert.match(svg, /url\(#dungeon-stone-hatch\)/);
+    assert.match(svg, />Door</);
+    assert.match(svg, />Archway</);
+    assert.match(svg, />Stairs up</);
+    assert.match(svg, />Stairs down</);
+    for (const number of [1, 2, 3, 4, 5]) {
+      assert.match(svg, new RegExp(`>${number}</text>`));
+    }
   });
 });

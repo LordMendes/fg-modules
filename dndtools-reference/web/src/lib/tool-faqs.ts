@@ -336,7 +336,7 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
     {
       question: "Can I reproduce the same five rooms?",
       answer:
-        "Yes. Keep the seed, motif, and level the same. Motif, level, and seed sync to the URL. Reroll room changes only that room by bumping its room seed offset while the base seed stays fixed.",
+        "Yes. Keep the seed, motif, and level the same. The map and the five room texts come from that seed. Motif, level, and seed sync to the URL. Reroll room changes only that room's text. The map stays with the base seed.",
     },
   ],
   "name-generator": [

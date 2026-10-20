@@ -11,7 +11,7 @@ const faqs = getToolFaqs("five-room-dungeon");
 const TOOL_PATH = "/tools/five-room-dungeon";
 const TOOL_NAME = "Five Room Dungeon";
 const TOOL_DESCRIPTION =
-  "Build a five-room dungeon: entrance, puzzle, setback, climax, and reward.";
+  "Build a five-room dungeon with a map: entrance, puzzle, setback, climax, and reward.";
 
 export const metadata = buildPageMetadata({
   title: TOOL_NAME,
@@ -49,9 +49,10 @@ export default function FiveRoomDungeonPage() {
       <div className="page-header">
         <h1>Five Room Dungeon</h1>
         <p>
-          Sketch a complete five-room delve with a motif, keyed challenges, and
-          a revelation in the last room. Set level and party size for treasure
-          and encounter hints, then share a seed to reproduce the same layout.
+          Sketch a complete five-room delve with a seeded map, a motif, keyed
+          challenges, and a revelation in the last room. Set level and party
+          size for treasure and encounter hints, then share a seed to reproduce
+          the same map and rooms.
         </p>
       </div>
 
