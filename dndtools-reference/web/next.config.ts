@@ -85,7 +85,9 @@ const nextConfig: NextConfig = {
     // The Docker build sets NEXT_BUILD_LOW_MEMORY. A webpack worker is a second
     // Node process, and that worker was SIGKILLed on the Coolify host.
     webpackBuildWorker: lowMemoryBuild ? false : true,
-    ...(lowMemoryBuild ? { cpus: 1 } : {}),
+    ...(lowMemoryBuild
+      ? { cpus: 1, staticGenerationMaxConcurrency: 1 }
+      : {}),
   },
   webpack: (config, { dev }) => {
     if (lowMemoryBuild && !dev) {

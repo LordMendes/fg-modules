@@ -41,9 +41,10 @@ ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
-# One Node process. A webpack worker plus a 2048 MB heap was still SIGKILLed:
-# both processes inherit the cap, and native memory sits on top of the heap.
-ENV NODE_OPTIONS="--max-old-space-size=1536"
+# 4 GB VPS: Coolify, Postgres, and Redis stay up during the build, so this
+# compile only gets about 1 GB. A larger heap makes the kernel kill those
+# services. Webpack native memory sits on top of this cap.
+ENV NODE_OPTIONS="--max-old-space-size=1024"
 ENV NEXT_BUILD_LOW_MEMORY=1
 RUN pnpm --filter @fg-modules/web build
 RUN node /app/web/scripts/stage-runtime-packages.mjs
