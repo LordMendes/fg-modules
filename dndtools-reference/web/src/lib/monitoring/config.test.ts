@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { afterEach, describe, it } from "node:test";
-import { dsnIngestOrigin, getDsn, getEnvironment, getRelease } from "./config";
+import {
+  dsnIngestOrigin,
+  getDsn,
+  getEnvironment,
+  getRelease,
+  sentryUploadUrl,
+} from "./config";
 
 const envKeys = [
   "NEXT_PUBLIC_SENTRY_DSN",
@@ -78,6 +84,44 @@ describe("monitoring config", () => {
 
       process.env.SENTRY_RELEASE = "app@1.0.0";
       assert.equal(getRelease(), "app@1.0.0");
+    });
+  });
+
+  describe("sentryUploadUrl", () => {
+    it("upgrades public http hosts to https", () => {
+      assert.equal(
+        sentryUploadUrl("http://tracker.example.com"),
+        "https://tracker.example.com",
+      );
+      assert.equal(
+        sentryUploadUrl("http://tracker.example.com:80/"),
+        "https://tracker.example.com",
+      );
+    });
+
+    it("keeps https, localhost, and docker hosts", () => {
+      assert.equal(
+        sentryUploadUrl("https://tracker.example.com"),
+        "https://tracker.example.com",
+      );
+      assert.equal(
+        sentryUploadUrl("http://localhost:9999"),
+        "http://localhost:9999",
+      );
+      assert.equal(
+        sentryUploadUrl("http://glitchtip:8000"),
+        "http://glitchtip:8000",
+      );
+      assert.equal(
+        sentryUploadUrl("http://10.0.1.9:8000"),
+        "http://10.0.1.9:8000",
+      );
+    });
+
+    it("returns undefined when unset or invalid", () => {
+      assert.equal(sentryUploadUrl(undefined), undefined);
+      assert.equal(sentryUploadUrl("  "), undefined);
+      assert.equal(sentryUploadUrl("not-a-url"), undefined);
     });
   });
 

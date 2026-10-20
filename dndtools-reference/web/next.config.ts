@@ -1,7 +1,11 @@
 import path from "path";
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs/config";
-import { dsnIngestOrigin, getRelease } from "./src/lib/monitoring/config";
+import {
+  dsnIngestOrigin,
+  getRelease,
+  sentryUploadUrl,
+} from "./src/lib/monitoring/config";
 
 const monorepoRoot = path.join(__dirname, "..");
 const isDev = process.env.NODE_ENV === "development";
@@ -16,6 +20,17 @@ const sentryIngestOrigin = process.env.NEXT_PUBLIC_SENTRY_DSN
   : undefined;
 const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN?.trim() ?? "";
 const sentryRelease = getRelease();
+const configuredSentryUrl = process.env.SENTRY_URL?.trim();
+const sentryUrl = sentryUploadUrl(configuredSentryUrl);
+if (
+  sentryUrl &&
+  configuredSentryUrl &&
+  sentryUrl !== configuredSentryUrl.replace(/\/$/, "")
+) {
+  console.warn(
+    `[sentry] SENTRY_URL is ${configuredSentryUrl}. Source map upload will use ${sentryUrl}.`,
+  );
+}
 
 /**
  * Security headers for Lighthouse Best Practices (CSP, clickjacking, COOP, HSTS).
@@ -103,7 +118,7 @@ const nextConfig: NextConfig = {
 };
 
 export default withSentryConfig(nextConfig, {
-  sentryUrl: process.env.SENTRY_URL,
+  sentryUrl,
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   authToken: sentryAuthToken || undefined,
@@ -111,6 +126,12 @@ export default withSentryConfig(nextConfig, {
   ...(sentryRelease ? { release: { name: sentryRelease } } : {}),
   sourcemaps: {
     disable: !sentryAuthToken,
+  },
+  // A GlitchTip outage or a bad build-time URL must not fail the image build.
+  errorHandler(error) {
+    console.warn(
+      `[sentry] Source map upload failed. The production build will continue. ${error.message}`,
+    );
   },
   suppressOnRouterTransitionStartWarning: true,
 });

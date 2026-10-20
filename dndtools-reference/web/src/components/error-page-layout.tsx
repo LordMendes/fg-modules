@@ -65,7 +65,5 @@ export const NOT_FOUND_ILLUSTRATION: ErrorPageIllustration = {
 export const SERVER_ERROR_ILLUSTRATION: ErrorPageIllustration = {
   src: "/errors/server-error.jpg",
   alt: "Lightning strike over a dark stormy landscape",
-  creditLabel: "Fabien Berne",
-  creditHref: "https://unsplash.com/photos/Rtd3eENsZts",
   fit: "cover",
 };

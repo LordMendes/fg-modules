@@ -30,6 +30,48 @@ export function getRelease(): string | undefined {
   return undefined;
 }
 
+function isPublicHttpHost(hostname: string): boolean {
+  if (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    hostname.endsWith(".local")
+  ) {
+    return false;
+  }
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)) {
+    return false;
+  }
+  return hostname.includes(".");
+}
+
+/**
+ * Base URL passed to the Sentry bundler plugin for source map upload.
+ * Public http hosts are upgraded to https. sentry-cli refuses the upload
+ * when the scheme does not match the host stored in the auth token.
+ */
+export function sentryUploadUrl(raw?: string): string | undefined {
+  const trimmed = raw?.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+  try {
+    const url = new URL(trimmed);
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return undefined;
+    }
+    if (url.protocol === "http:" && isPublicHttpHost(url.hostname)) {
+      url.protocol = "https:";
+      if (url.port === "80") {
+        url.port = "";
+      }
+    }
+    return url.origin;
+  } catch {
+    return undefined;
+  }
+}
+
 export function dsnIngestOrigin(dsn?: string): string | undefined {
   if (!dsn) {
     return undefined;
