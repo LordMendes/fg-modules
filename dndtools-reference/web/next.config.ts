@@ -72,6 +72,11 @@ const nextConfig: NextConfig = {
   },
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
+  typescript: {
+    // The 4 GB build compiles, then `tsc` aborts at the 1024 MB heap cap.
+    // Typecheck stays on for local `next build`.
+    ignoreBuildErrors: lowMemoryBuild,
+  },
   // Native addon. scripts/stage-runtime-packages.mjs copies the musl build
   // into the runner image. Next's file tracer does not follow that pnpm path.
   serverExternalPackages: ["sharp"],
