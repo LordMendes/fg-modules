@@ -41,6 +41,8 @@ ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
+# Uncapped V8 grows until the kernel SIGKILLs `next build` (exit 137).
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN pnpm --filter @fg-modules/web build
 RUN node /app/web/scripts/stage-runtime-packages.mjs
 

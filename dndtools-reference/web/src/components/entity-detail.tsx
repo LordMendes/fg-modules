@@ -3,11 +3,42 @@ import { AddToEncounterButton } from "@/components/encounter/add-to-encounter-bu
 import { SaveToListButton } from "@/components/save-to-list-button";
 import type { CategoryKey } from "@/lib/categories";
 import type { EntityDetail } from "@/lib/entities";
-import { buildEntityFaqs, buildEntityLead } from "@/lib/entity-lead";
+import { buildEntityFaqs, buildEntityLead, type EntityFaq } from "@/lib/entity-lead";
 import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
 import { SortableHtmlTables } from "@/components/sortable-html-tables";
+
+/** These entries lead with the rules text. Quick answers stay at the bottom. */
+const QUICK_ANSWERS_AT_END = new Set<CategoryKey>(["feats", "classes", "spells"]);
+
+function EntityQuickAnswers({
+  faqs,
+  subdued = false,
+}: {
+  faqs: EntityFaq[];
+  subdued?: boolean;
+}) {
+  if (faqs.length === 0) return null;
+  return (
+    <section
+      className={
+        subdued
+          ? "entity-quick-answers entity-quick-answers-footer"
+          : "tool-explainer entity-quick-answers"
+      }
+      aria-labelledby="entity-quick-answers-heading"
+    >
+      <h2 id="entity-quick-answers-heading">Quick answers</h2>
+      {faqs.map((faq) => (
+        <article key={faq.question}>
+          <h3>{faq.question}</h3>
+          <p>{faq.answer}</p>
+        </article>
+      ))}
+    </section>
+  );
+}
 
 function formatAdvancementHtml(html: string): string {
   const withClass = html.replace(
@@ -27,6 +58,7 @@ export function EntityDetailView({
   const fields = Object.entries(entity.fields).filter(([, v]) => v);
   const lead = buildEntityLead(category, entity);
   const faqs = buildEntityFaqs(category, entity);
+  const quickAnswersAtEnd = QUICK_ANSWERS_AT_END.has(category);
 
   return (
     <article className="entity-detail">
@@ -85,17 +117,7 @@ export function EntityDetailView({
 
       {lead ? <p className="entity-lead">{lead}</p> : null}
 
-      {faqs.length > 0 ? (
-        <section className="tool-explainer entity-quick-answers" aria-labelledby="entity-quick-answers-heading">
-          <h2 id="entity-quick-answers-heading">Quick answers</h2>
-          {faqs.map((faq) => (
-            <article key={faq.question}>
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
-            </article>
-          ))}
-        </section>
-      ) : null}
+      {quickAnswersAtEnd ? null : <EntityQuickAnswers faqs={faqs} />}
 
       {entity.sections && entity.sections.length > 0 && (
         <>
@@ -240,6 +262,8 @@ export function EntityDetailView({
           dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.descriptionHtml) }}
         />
       )}
+
+      {quickAnswersAtEnd ? <EntityQuickAnswers faqs={faqs} subdued /> : null}
     </article>
   );
 }

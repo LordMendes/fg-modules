@@ -73,6 +73,12 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "16mb",
     },
+    // Drops webpack's retained module cache during `next build`. The Coolify
+    // host SIGKILLs an uncapped compile (exit 137).
+    webpackMemoryOptimizations: true,
+    // Sentry adds a webpack hook, which turns the default build worker off.
+    // The worker keeps the compile out of the main process heap.
+    webpackBuildWorker: true,
   },
   turbopack: {
     root: monorepoRoot,

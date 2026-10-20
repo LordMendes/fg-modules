@@ -1442,6 +1442,38 @@ body {
   color: var(--text-secondary, #c8c0b8);
 }
 
+/* Appendix under the rules text: smaller type, muted, after the entry body. */
+.entity-quick-answers-footer {
+  margin: 2.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
+  max-width: 70ch;
+}
+
+.entity-quick-answers-footer h2 {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.entity-quick-answers-footer h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0.85rem 0 0.2rem;
+  color: var(--text-secondary, #c8c0b8);
+}
+
+.entity-quick-answers-footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
 .tool-license-footer {
   margin: 2rem 0 0;
   padding-top: 1rem;
