@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { TemplateConflictModal } from "@/components/tools/npc-conflict-modal";
+import { RandomNameButton } from "@/components/tools/random-name-button";
 import {
   NpcSheetPreview,
   type SheetTab,
@@ -63,23 +64,38 @@ function TextField({
   value,
   onChange,
   wide,
+  trailing,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
   wide?: boolean;
+  trailing?: ReactNode;
 }) {
   return (
     <div className={wide ? "tool-field tool-field-wide" : "tool-field"}>
       <Label htmlFor={id}>{label}</Label>
-      <input
-        id={id}
-        type="text"
-        className="tool-input"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      {trailing ? (
+        <div className="name-roll-row">
+          <input
+            id={id}
+            type="text"
+            className="tool-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          {trailing}
+        </div>
+      ) : (
+        <input
+          id={id}
+          type="text"
+          className="tool-input"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      )}
     </div>
   );
 }
@@ -566,6 +582,16 @@ export function NpcCreator() {
                 })
               }
               wide
+              trailing={
+                <RandomNameButton
+                  raceHint={state.identity.creatureTypeTag}
+                  onPick={(name) =>
+                    patch((s) => {
+                      s.identity.name = name;
+                    })
+                  }
+                />
+              }
             />
             <TextField
               id="npc-align"

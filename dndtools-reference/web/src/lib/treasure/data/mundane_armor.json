@@ -1,0 +1,23 @@
+{
+  "main": [
+    {"from": 1, "to": 12, "result": "Chain shirt (100 gp)", "equipment_slug": "chainshirt"},
+    {"from": 13, "to": 18, "result": "Masterwork studded leather (175 gp)", "equipment_slug": "studdedleather"},
+    {"from": 19, "to": 26, "result": "Breastplate (200 gp)", "equipment_slug": "breastplate"},
+    {"from": 27, "to": 34, "result": "Banded mail (250 gp)", "equipment_slug": "bandedmail"},
+    {"from": 35, "to": 54, "result": "Half-plate (600 gp)", "equipment_slug": "halfplate"},
+    {"from": 55, "to": 80, "result": "Full plate (1,500 gp)", "equipment_slug": "fullplate"},
+    {"from": 81, "to": 90, "result": "Darkwood", "subtable": "darkwood"},
+    {"from": 91, "to": 100, "result": "Masterwork shield", "subtable": "masterwork_shield"}
+  ],
+  "darkwood": [
+    {"from": 1, "to": 50, "result": "Buckler (205 gp)", "equipment_slug": "buckler"},
+    {"from": 51, "to": 100, "result": "Shield (257 gp)", "equipment_slug": "woodenshield"}
+  ],
+  "masterwork_shield": [
+    {"from": 1, "to": 17, "result": "Buckler (165 gp)", "equipment_slug": "buckler"},
+    {"from": 18, "to": 40, "result": "Light wooden shield (153 gp)", "equipment_slug": "woodenshield"},
+    {"from": 41, "to": 60, "result": "Light steel shield (159 gp)", "equipment_slug": "steelshield"},
+    {"from": 61, "to": 83, "result": "Heavy wooden shield (157 gp)", "equipment_slug": "woodenshield"},
+    {"from": 84, "to": 100, "result": "Heavy steel shield (170 gp)", "equipment_slug": "steelshield"}
+  ]
+}

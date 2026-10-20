@@ -60,6 +60,16 @@
   --fx-force: var(--accent-violet);
   --fx-negative: #8844aa;
   --fx-positive: var(--accent-gold);
+  --surface: var(--bg-secondary);
+  --surface-raised: var(--bg-card);
+  --surface-1: var(--bg-elevated);
+  --text: var(--text-primary);
+  --accent: var(--accent-gold);
+  --success: var(--combat-band-healthy);
+  --warning: var(--accent-gold);
+  --border-subtle: var(--border-color);
+  --radius-sm: 4px;
+  --radius-md: 8px;
 }
 
 .dark {
@@ -122,6 +132,16 @@
   --fx-force: var(--accent-violet);
   --fx-negative: #aa66cc;
   --fx-positive: var(--accent-gold);
+  --surface: var(--bg-secondary);
+  --surface-raised: var(--bg-card);
+  --surface-1: var(--bg-elevated);
+  --text: var(--text-primary);
+  --accent: var(--accent-gold);
+  --success: var(--combat-band-healthy);
+  --warning: var(--accent-gold);
+  --border-subtle: var(--border-color);
+  --radius-sm: 4px;
+  --radius-md: 8px;
 }
 
 @theme inline {
@@ -907,6 +927,26 @@ body {
 .home-search-all:hover {
   background: var(--bg-secondary);
   color: var(--link-hover);
+}
+
+.tools-directory {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tools-directory .tools-directory-search {
+  max-width: 28rem;
+  flex: none;
+}
+
+.tools-directory-group .browse-section-header {
+  margin-bottom: 1rem;
+}
+
+.tools-directory-empty {
+  margin: 0;
+  color: var(--text-muted);
 }
 
 .category-grid {
@@ -3766,6 +3806,79 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 
 .turn-undead-calculator {
   margin-top: 1rem;
+}
+
+.power-attack {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.power-attack-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem;
+}
+
+.power-attack-note {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.power-attack-dice-pair {
+  display: grid;
+  grid-template-columns: minmax(5rem, 1fr) minmax(6rem, 1.2fr);
+  gap: 0.5rem;
+}
+
+.power-attack-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.power-attack-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.power-attack-table-wrap {
+  overflow-x: auto;
+}
+
+.power-attack-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.power-attack-table th,
+.power-attack-table td {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.power-attack-table thead th {
+  background: var(--bg-card);
+  font-weight: 600;
+}
+
+.power-attack-table tbody th {
+  text-align: left;
+  font-weight: 500;
+  background: var(--bg-card);
+}
+
+.power-attack-opt {
+  background: color-mix(in srgb, var(--accent-gold) 22%, transparent);
+  font-weight: 600;
 }
 
 .damage-statistic-calculator {
@@ -16732,6 +16845,2323 @@ html.dice-secret-cursor * {
 
 .campaign-map-toolbar-daylight input[type="range"] {
   width: 4rem;
+}
+
+/* Treasure Generator */
+.treasure-gen {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.treasure-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.treasure-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.treasure-gen-seed-field {
+  min-width: 10rem;
+}
+
+.treasure-gen-table-wrap {
+  overflow-x: auto;
+}
+
+.treasure-gen-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.treasure-gen-table th,
+.treasure-gen-table td {
+  padding: 0.35rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.treasure-gen-table th {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.treasure-gen-table .tool-input {
+  min-width: 5.5rem;
+}
+
+.treasure-gen-remove {
+  padding: 0.35rem 0.5rem;
+}
+
+.treasure-gen-options,
+.treasure-gen-magic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.treasure-gen-check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.treasure-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.treasure-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.treasure-gen-results-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.treasure-gen-copy-status {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.treasure-gen-card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 8px);
+  padding: 1rem;
+  background: var(--bg-secondary, var(--bg-primary));
+}
+
+.treasure-gen-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.treasure-gen-card-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.treasure-gen-list {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.treasure-gen-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+}
+
+.treasure-gen-secondary {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.encounter-gen {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.encounter-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.encounter-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.encounter-gen-seed-field {
+  min-width: 10rem;
+}
+
+.encounter-gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.encounter-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.encounter-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.encounter-gen-results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.encounter-gen-heading {
+  margin: 0;
+  font-size: 1.15rem;
+  flex: 1 1 auto;
+}
+
+.encounter-gen-copy-status {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.encounter-gen-groups {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.encounter-gen-groups li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-secondary, var(--bg-primary));
+}
+
+.encounter-gen-group-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.encounter-gen-secondary {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.encounter-gen-treasure {
+  font-size: 0.92rem;
+}
+
+.encounter-gen-readouts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.encounter-gen-xp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.65rem 1rem;
+  margin: 0.25rem 0;
+}
+
+.encounter-gen-empty {
+  color: var(--text-muted);
+}
+
+.weather-gen {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.weather-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.weather-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.weather-gen-seed-field {
+  min-width: 10rem;
+}
+
+.weather-gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.weather-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.weather-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.weather-gen-results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.weather-gen-summary {
+  margin: 0;
+  flex: 1 1 auto;
+  font-size: 0.95rem;
+}
+
+.weather-gen-copy-status {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.weather-gen-table-wrap {
+  overflow-x: auto;
+}
+
+.weather-gen-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.weather-gen-table th,
+.weather-gen-table td {
+  padding: 0.4rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.weather-gen-table th {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weather-gen-table td {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weather-gen-odd {
+  background: var(--bg-secondary, var(--bg-primary));
+}
+
+.weather-gen-super td:first-child + td {
+  font-style: italic;
+  color: var(--weather-super-accent, var(--accent-color, var(--link-color)));
+}
+
+.weather-gen-secondary {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.magic-shop {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.magic-shop-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.magic-shop-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.magic-shop-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.magic-shop-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.magic-shop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.magic-shop-copy-status {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.magic-shop-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.magic-shop-name-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.magic-shop-name-btn {
+  font-size: 1.35rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+}
+
+.magic-shop-block {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.magic-shop-block-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.magic-shop-block-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.magic-shop-item-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.magic-shop-item-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+}
+
+.magic-shop-item-price {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.magic-shop-error {
+  color: var(--danger, #b42318);
+}
+
+.magic-shop-empty {
+  color: var(--text-muted);
+}
+
+.inn-gen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.inn-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inn-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.inn-gen-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.inn-gen-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.inn-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inn-gen-copy-status {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.inn-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inn-gen-name-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inn-gen-name-btn {
+  font-size: 1.35rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+}
+
+.inn-gen-block {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.inn-gen-block-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.inn-gen-block-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.inn-gen-menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.inn-gen-menu-table th,
+.inn-gen-menu-table td {
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.inn-gen-menu-table th {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.inn-gen-drinks-heading {
+  margin: 0.85rem 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.inn-gen-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.inn-gen-unreliable {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.demographics {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.demographics-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.demographics-seed-field {
+  min-width: 10rem;
+}
+
+.demographics-card {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--bg-card, var(--bg-primary));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.demographics-card h2 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.demographics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.demographics-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+}
+
+.demographics-lead {
+  margin: 0;
+}
+
+.demographics-pop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.demographics-pop-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-right: 0.25rem;
+}
+
+.demographics-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.demographics-copy-status {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.demographics-link-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--link-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+
+.demographics-subsection h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.demographics-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.demographics-table-wrap {
+  overflow-x: auto;
+}
+
+.demographics-table,
+.demographics-class-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.demographics-table th,
+.demographics-table td,
+.demographics-class-table th,
+.demographics-class-table td {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.demographics-class-table thead th,
+.demographics-class-table tbody th {
+  background: var(--bg-card, var(--bg-primary));
+  font-weight: 600;
+}
+
+.demographics-class-table tbody th {
+  font-weight: 500;
+}
+
+.demographics-class-table td {
+  text-align: center;
+}
+
+.demographics-class-empty {
+  color: var(--text-muted);
+}
+
+.demographics-disclosure {
+  margin-top: 0.5rem;
+}
+
+.name-gen {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.name-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.name-gen-mode {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.name-gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.name-gen-markov {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.name-gen-textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.name-gen-seed-field {
+  min-width: 10rem;
+}
+
+.name-gen-grid .name-gen-surname {
+  align-self: end;
+  padding-bottom: 0.35rem;
+}
+
+.name-roll-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.name-roll-row .tool-input,
+.name-roll-row .pc-sheet-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.name-roll-btn {
+  flex: 0 0 auto;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  min-width: 2.25rem;
+  padding: 0;
+  color: var(--accent-gold);
+}
+
+.name-roll-row:focus-within .name-roll-btn {
+  display: inline-flex;
+}
+
+.name-roll-btn:hover,
+.name-roll-btn:focus-visible {
+  color: var(--text-primary);
+}
+
+.name-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.name-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.name-gen-results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.name-gen-copy-status {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.name-gen-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.name-gen-name {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  width: 100%;
+}
+
+.name-gen-name:hover,
+.name-gen-name:focus-visible {
+  background: var(--bg-secondary, var(--bg-primary));
+  outline: 2px solid var(--focus-ring, var(--link-color));
+  outline-offset: 2px;
+}
+
+.name-gen-error {
+  color: var(--danger, #b42318);
+  margin: 0;
+}
+
+.name-gen-note {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.adventure-gen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.adventure-gen-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.adventure-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.adventure-gen-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.adventure-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adventure-gen-copy-status {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.adventure-gen-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.adventure-gen-row {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.adventure-gen-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.adventure-gen-body {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.calendar-gen {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.calendar-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.calendar-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.calendar-gen-seed-field {
+  min-width: 10rem;
+}
+
+.calendar-gen-grid-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.calendar-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.calendar-gen-import-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.calendar-gen-import-error {
+  margin: 0;
+  color: var(--danger, #b42318);
+}
+
+.calendar-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.calendar-gen-results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.calendar-gen-year-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-gen-year-label {
+  font-weight: 600;
+}
+
+.calendar-gen-copy-status,
+.calendar-gen-note {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.calendar-gen-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.calendar-gen-weekdays,
+.calendar-gen-grid {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.calendar-gen-weekday {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.calendar-gen-month-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.calendar-gen-day {
+  min-height: 2.75rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary, var(--bg-primary));
+  border-radius: var(--radius-sm, 4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.15rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.calendar-gen-day--pad {
+  visibility: hidden;
+  pointer-events: none;
+  border-color: transparent;
+  background: transparent;
+}
+
+.calendar-gen-day--holiday {
+  background: var(--bg-primary);
+}
+
+.calendar-gen-day--noted {
+  box-shadow: inset 0 0 0 1px var(--text-muted);
+}
+
+.calendar-gen-day--selected {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 1px;
+}
+
+.calendar-gen-day-num {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.calendar-gen-day-tag {
+  font-size: 0.65rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.calendar-gen-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.calendar-gen-day-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.calendar-gen-day-line {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary, var(--bg-primary));
+  border-radius: var(--radius-sm, 4px);
+  padding: 0.5rem 0.65rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.calendar-gen-day-line--selected {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 1px;
+}
+
+.calendar-gen-day-line-sub,
+.calendar-gen-day-line-note,
+.calendar-gen-day-line-moons {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.calendar-gen-moon {
+  margin-right: 0.5rem;
+}
+
+.calendar-gen-text {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary, var(--bg-primary));
+  border-radius: var(--radius-sm, 4px);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9rem;
+}
+
+.calendar-gen-note-form {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.calendar-gen-note-form-label {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.calendar-gen-note-textarea {
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.calendar-gen-note-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.five-room {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.five-room-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.five-room-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.five-room-name-btn {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.five-room-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.five-room-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.five-room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+}
+
+.five-room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.five-room-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.five-room-results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.five-room-summary {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.five-room-summary-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 650;
+}
+
+.five-room-premise {
+  margin: 0.35rem 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.five-room-copy-status {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.five-room-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.five-room-room {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  padding: 1rem;
+  background: var(--bg-secondary, var(--bg-primary));
+}
+
+.five-room-room-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.five-room-room-title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.five-room-room-body p {
+  margin: 0 0 0.55rem;
+  line-height: 1.55;
+}
+
+.five-room-room-body p:last-child {
+  margin-bottom: 0;
+}
+
+.five-room-room-link {
+  margin: 0.5rem 0 0;
+  font-size: 0.92rem;
+}
+
+.world-gen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  --world-gen-sea-fill: #3d6f8f;
+  --world-gen-lowland-fill: #cbb98a;
+  --world-gen-mountain-fill: #6e5344;
+  --world-gen-ice-fill: #e7eef2;
+  --world-gen-river-fill: #4a8eab;
+  --world-gen-paper-fill: #f3ead2;
+  --world-gen-coast-stroke: #2c2416;
+  --world-gen-grid-stroke: rgba(44, 36, 22, 0.28);
+  --world-gen-river-stroke: #24596e;
+  --world-gen-mark-fill: #2c1810;
+  --world-gen-mark-stroke: #2c1810;
+}
+
+.world-gen[data-style="antique"] {
+  --world-gen-sea-fill: #7f9aa8;
+  --world-gen-lowland-fill: #e2c98a;
+  --world-gen-mountain-fill: #8a6232;
+  --world-gen-ice-fill: #f7f1e4;
+  --world-gen-paper-fill: #f6edd6;
+  --world-gen-river-fill: #6f8f9c;
+  --world-gen-river-stroke: #3e5c68;
+}
+
+.world-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.world-gen-form > .tool-field {
+  flex: none;
+}
+
+.world-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.world-gen-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.world-gen-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.75rem;
+}
+
+.world-gen-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.world-gen-check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.world-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.world-gen-actions .tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.world-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.world-gen-map-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--world-gen-paper-fill);
+}
+
+.world-gen-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 1100px;
+  background: var(--world-gen-paper-fill);
+}
+
+.world-gen-paper {
+  fill: var(--world-gen-paper-fill);
+}
+
+.world-gen-sea {
+  fill: var(--world-gen-sea-fill);
+}
+
+.world-gen-lowland {
+  fill: var(--world-gen-lowland-fill);
+}
+
+.world-gen-mountain {
+  fill: var(--world-gen-mountain-fill);
+}
+
+.world-gen-ice {
+  fill: var(--world-gen-ice-fill);
+}
+
+.world-gen-river-fill {
+  fill: var(--world-gen-river-fill);
+}
+
+.world-gen-coast {
+  stroke: var(--world-gen-coast-stroke);
+  stroke-width: 0.9;
+}
+
+.world-gen-grid {
+  stroke: var(--world-gen-grid-stroke);
+  stroke-width: 0.35;
+}
+
+.world-gen-river-line {
+  stroke: var(--world-gen-river-stroke);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.world-gen-mountain-mark {
+  fill: var(--world-gen-mark-fill);
+  opacity: 0.85;
+}
+
+.world-gen-city {
+  fill: var(--world-gen-mark-fill);
+}
+
+.world-gen-ruin {
+  stroke: var(--world-gen-mark-stroke);
+}
+
+.world-gen-capital {
+  fill: #7b2d26;
+}
+
+.world-gen-title {
+  fill: #1c1612;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.world-gen-label-capital,
+.world-gen-label-city {
+  fill: #1c1612;
+  font-size: 4px;
+}
+
+.world-gen-label-capital {
+  font-weight: 600;
+}
+
+.world-gen-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.world-gen-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.world-gen-legend-swatch {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.world-gen-legend-swatch.world-gen-sea {
+  background: var(--world-gen-sea-fill);
+}
+
+.world-gen-legend-swatch.world-gen-lowland {
+  background: var(--world-gen-lowland-fill);
+}
+
+.world-gen-legend-swatch.world-gen-mountain {
+  background: var(--world-gen-mountain-fill);
+}
+
+.world-gen-legend-swatch.world-gen-ice {
+  background: var(--world-gen-ice-fill);
+}
+
+.world-gen-legend-capital {
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  background: #7b2d26;
+}
+
+.world-gen-legend-city {
+  border-radius: 50%;
+  background: var(--world-gen-mark-fill);
+}
+
+.world-gen-legend-ruin {
+  border-radius: 50%;
+  border: 2px solid var(--world-gen-mark-stroke);
+  background: transparent;
+}
+
+.fractal-world {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fractal-world-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fractal-world-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.fractal-world-seed-field {
+  flex: 1 1 8rem;
+  min-width: 6rem;
+}
+
+.fractal-world-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.75rem;
+}
+
+.fractal-world-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fractal-world-actions .tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.fractal-world-results {
+  display: flex;
+  justify-content: center;
+}
+
+.fractal-world-canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  background: var(--surface-1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.town-gen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.town-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.town-gen-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.town-gen-name-field {
+  flex: 1 1 12rem;
+}
+
+.town-gen-name-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.town-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.town-gen-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.town-gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+}
+
+.town-gen-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.town-gen-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.town-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.town-gen-actions .tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.town-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.town-gen-summary {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.town-gen-map-wrap {
+  border: 1px solid #c4a882;
+  border-radius: var(--radius-sm, 4px);
+  background: #e7efe4;
+  overflow: auto;
+  padding: 0.5rem;
+}
+
+.town-gen-map-wrap svg.town-gen-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.town-gen-map .town-gen-ground {
+  opacity: 1;
+}
+
+.town-gen-map .town-gen-arctic {
+  fill: #d5e3ea;
+}
+
+.town-gen-map .town-gen-desert {
+  fill: #e2c27a;
+}
+
+.town-gen-map .town-gen-forest {
+  fill: #6d8f5b;
+}
+
+.town-gen-map .town-gen-grassland {
+  fill: #b7c98a;
+}
+
+.town-gen-map .town-gen-mountain {
+  fill: #8d7564;
+}
+
+.town-gen-map .town-gen-subterranean {
+  fill: #5c5348;
+}
+
+.town-gen-map .town-gen-water {
+  fill: #3d7ea6;
+}
+
+.town-gen-map .town-gen-island-fill {
+  opacity: 0.95;
+}
+
+.town-gen-map .town-gen-river {
+  stroke: #2f6d88;
+  opacity: 1;
+}
+
+.town-gen-map .town-gen-road {
+  stroke: #c4a574;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.town-gen-map .town-gen-district {
+  fill: none;
+  stroke: color-mix(in srgb, var(--border-color) 80%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  opacity: 0.7;
+}
+
+.town-gen-map .town-gen-building {
+  fill: #3a2a22;
+  stroke: #1c1612;
+  stroke-width: 1;
+}
+
+.town-gen-map .town-gen-market {
+  fill: color-mix(in srgb, var(--accent-gold) 22%, var(--bg-card));
+  stroke: var(--border-ornament);
+  stroke-width: 1.5;
+}
+
+.town-gen-map .town-gen-wall {
+  stroke: color-mix(in srgb, var(--text-primary) 65%, var(--border-color));
+  stroke-width: 3;
+}
+
+.town-gen-map .town-gen-wall-palisade {
+  stroke-width: 2.5;
+}
+
+.town-gen-map .town-gen-gate {
+  fill: color-mix(in srgb, var(--accent-burgundy) 35%, var(--bg-card));
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.town-gen-map .town-gen-bridge {
+  fill: color-mix(in srgb, var(--text-muted) 40%, var(--bg-elevated));
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.town-gen-map .town-gen-label {
+  fill: #1c1612;
+  font-size: 11px;
+  font-family: Georgia, "Times New Roman", serif;
+  pointer-events: none;
+}
+
+.town-gen-table-wrap {
+  overflow-x: auto;
+}
+
+.town-gen-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.town-gen-table th,
+.town-gen-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.town-gen-table th {
+  background: var(--bg-secondary, var(--bg-primary));
+  font-weight: 600;
+}
+
+.treasure-map {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.treasure-map-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.treasure-map-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.treasure-map-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.treasure-map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+}
+
+.treasure-map-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.treasure-map-actions .tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.treasure-map-output {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.treasure-map-svg {
+  max-width: 100%;
+  height: auto;
+  color: #1c1612;
+  background: #d7e4ea;
+  border: 1px solid #c4a882;
+  border-radius: var(--radius-md, 6px);
+}
+
+.treasure-map-sea {
+  fill: #d7e4ea;
+}
+
+.treasure-map-paper {
+  fill: #f6f0e2;
+}
+
+.treasure-map-coast {
+  fill: #f4e7c8;
+}
+
+.treasure-map-clues {
+  margin: 0;
+  padding-left: 1.25rem;
+  line-height: 1.55;
+}
+
+.treasure-map-clues li + li {
+  margin-top: 0.5rem;
+}
+
+@media print {
+  .treasure-map-print {
+    display: none !important;
+  }
+
+  .treasure-map-svg {
+    border: none;
+    break-inside: avoid;
+  }
+}
+
+.dungeon-gen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dungeon-gen-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 799px) {
+  .dungeon-gen-results {
+    order: -1;
+  }
+}
+
+@media (min-width: 800px) {
+  .dungeon-gen-layout {
+    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.dungeon-gen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dungeon-gen-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.dungeon-gen-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.dungeon-gen-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.dungeon-gen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dungeon-gen-copy-status,
+.dungeon-gen-dim-note {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.dungeon-gen-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.dungeon-gen-title {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.dungeon-gen-map-wrap {
+  overflow: auto;
+  border: 1px solid #c4a882;
+  border-radius: var(--radius-md);
+  background: #000000;
+  padding: 0.75rem;
+}
+
+.dungeon-gen-map-host {
+  line-height: 0;
+}
+
+.dungeon-gen-map {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  background: #000000;
+}
+
+.dungeon-gen-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.95rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+}
+
+.dungeon-gen-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dungeon-gen-legend-icon-host {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.dungeon-gen-legend-icon {
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  flex: 0 0 auto;
+  display: block;
+  background: #f6f0e2;
+}
+
+.dungeon-gen-cell-floor {
+  fill: #f6f0e2;
+}
+
+.dungeon-gen-cell-wall {
+  fill: #1c1612;
+}
+
+.dungeon-gen-cell-door {
+  fill: #c4922a;
+  stroke: #1c1612;
+  stroke-width: 0.7;
+}
+
+.dungeon-gen-cell-stairs-up,
+.dungeon-gen-cell-stairs-down {
+  fill: #7b2d26;
+}
+
+.dungeon-gen-room-label {
+  fill: #1c1612;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.dungeon-gen-key-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dungeon-gen-key {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.5;
+}
+
+.dungeon-gen-key li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.dungeon-gen-room-heading {
+  margin: 0;
+  font-size: 1.05rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.dungeon-gen-room-kind {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.dungeon-gen-room-size,
+.dungeon-gen-room-detail,
+.dungeon-gen-door-note {
+  margin: 0.3rem 0 0;
+}
+
+.dungeon-gen-player-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+}
+
+.dungeon-gen-door-note {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.random-tables {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.random-tables-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.random-tables-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.random-tables-seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+}
+
+.random-tables-seed-field {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.random-tables-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.random-tables-copy-status {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.random-tables-results {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.random-tables-card {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.random-tables-card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.random-tables-dl {
+  margin: 0;
+  display: grid;
+  gap: 0.35rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.random-tables-dl div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.random-tables-dl dt {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.random-tables-dl dd {
+  margin: 0;
+}
+
+.random-tables-npc-text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.random-tables-spell-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.random-tables-muted {
+  color: var(--text-muted);
+}
+
+.random-tables-error {
+  color: var(--danger, #b42318);
+}
+
+.random-tables-empty {
+  color: var(--text-muted);
+}
+
+.treasure-gen-form,
+.encounter-gen-form,
+.magic-shop-form,
+.weather-gen-form,
+.name-gen-form,
+.calendar-gen-form,
+.inn-gen-form,
+.five-room-form,
+.adventure-gen-controls,
+.world-gen-form,
+.fractal-world-form,
+.town-gen-form,
+.dungeon-gen-form,
+.random-tables-form,
+.treasure-map-form,
+.power-attack-fields {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.treasure-gen-results,
+.encounter-gen-results,
+.weather-gen-results,
+.name-gen-results,
+.calendar-gen-results,
+.inn-gen-results,
+.world-gen-results,
+.town-gen-results,
+.dungeon-gen-results,
+.five-room-results,
+.magic-shop-results {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.fractal-world-canvas {
+  border: 1px solid var(--border-color);
+  background: #f3ead2;
+}
+
+.name-gen-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.5rem;
+}
+
+.name-gen-name {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+
+@media print {
+  body:has(.dungeon-gen, .treasure-map, .world-gen, .town-gen, .fractal-world) .site-header,
+  body:has(.dungeon-gen, .treasure-map, .world-gen, .town-gen, .fractal-world) .site-footer,
+  body:has(.dungeon-gen, .treasure-map, .world-gen, .town-gen, .fractal-world) .breadcrumb,
+  body:has(.dungeon-gen, .treasure-map, .world-gen, .town-gen, .fractal-world) .page-header,
+  body:has(.dungeon-gen, .treasure-map, .world-gen, .town-gen, .fractal-world) .tool-explainer,
+  body:has(.dungeon-gen) .dungeon-gen-no-print,
+  body:has(.world-gen) .world-gen-form,
+  body:has(.town-gen) .town-gen-form,
+  body:has(.fractal-world) .fractal-world-form,
+  .treasure-map-print {
+    display: none !important;
+  }
+
+  body:has(.dungeon-gen, .treasure-map, .world-gen, .town-gen) {
+    background: #fff !important;
+    color: #1c1612 !important;
+  }
+
+  body:has(.dungeon-gen) .dungeon-gen-layout {
+    display: block !important;
+  }
+
+  body:has(.dungeon-gen) .dungeon-gen-results,
+  body:has(.dungeon-gen) .dungeon-gen-title,
+  body:has(.dungeon-gen) .dungeon-gen-key,
+  body:has(.dungeon-gen) .dungeon-gen-door-note,
+  body:has(.treasure-map) .treasure-map-clues,
+  body:has(.world-gen) .world-gen-results,
+  body:has(.town-gen) .town-gen-results {
+    background: #fff !important;
+    color: #1c1612 !important;
+    border: none;
+  }
+
+  .dungeon-gen-map-wrap,
+  .world-gen-map-wrap,
+  .town-gen-map-wrap {
+    overflow: visible;
+    border: none;
+    break-inside: avoid;
+  }
+
+  .dungeon-gen-map,
+  .treasure-map-svg,
+  .world-gen-map,
+  .town-gen-map,
+  .fractal-world-canvas {
+    width: 100%;
+    max-width: 100%;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .dungeon-gen-key {
+    break-before: page;
+  }
 }
 
 

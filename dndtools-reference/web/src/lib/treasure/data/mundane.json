@@ -1,0 +1,266 @@
+{
+  "root": [
+    {
+      "from": 1,
+      "to": 17,
+      "result": "Alchemical item",
+      "section": "alchemical"
+    },
+    {
+      "from": 18,
+      "to": 50,
+      "result": "Armor",
+      "section": "armor"
+    },
+    {
+      "from": 51,
+      "to": 83,
+      "result": "Weapons",
+      "section": "weapons"
+    },
+    {
+      "from": 84,
+      "to": 100,
+      "result": "Tools and gear",
+      "section": "tools"
+    }
+  ],
+  "alchemical": [
+    {
+      "from": 1,
+      "to": 12,
+      "result": "Alchemist\u2019s fire (1d4 flasks, 20 gp each)"
+    },
+    {
+      "from": 13,
+      "to": 24,
+      "result": "Acid (2d4 flasks, 10 gp each)"
+    },
+    {
+      "from": 25,
+      "to": 36,
+      "result": "Smokesticks (1d4 sticks, 20 gp each)"
+    },
+    {
+      "from": 37,
+      "to": 48,
+      "result": "Holy water (1d4 flasks, 25 gp each)"
+    },
+    {
+      "from": 49,
+      "to": 62,
+      "result": "Antitoxin (1d4 doses, 50 gp each)"
+    },
+    {
+      "from": 63,
+      "to": 74,
+      "result": "Everburning torch"
+    },
+    {
+      "from": 75,
+      "to": 88,
+      "result": "Tanglefoot bags (1d4 bags, 50 gp each)"
+    },
+    {
+      "from": 89,
+      "to": 100,
+      "result": "Thunderstones (1d4 stones, 30 gp each)"
+    }
+  ],
+  "armor": [
+    {
+      "from": 1,
+      "to": 12,
+      "result": "Chain shirt (100 gp)"
+    },
+    {
+      "from": 13,
+      "to": 18,
+      "result": "Masterwork studded leather (175 gp)"
+    },
+    {
+      "from": 19,
+      "to": 26,
+      "result": "Breastplate (200 gp)"
+    },
+    {
+      "from": 27,
+      "to": 34,
+      "result": "Banded mail (250 gp)"
+    },
+    {
+      "from": 35,
+      "to": 54,
+      "result": "Half-plate (600 gp)"
+    },
+    {
+      "from": 55,
+      "to": 80,
+      "result": "Full plate (1,500 gp)"
+    },
+    {
+      "from": 81,
+      "to": 90,
+      "result": "Darkwood"
+    },
+    {
+      "from": 1,
+      "to": 50,
+      "result": "Buckler (205 gp)"
+    },
+    {
+      "from": 51,
+      "to": 100,
+      "result": "Shield (257 gp)"
+    },
+    {
+      "from": 91,
+      "to": 100,
+      "result": "Masterwork shield"
+    },
+    {
+      "from": 1,
+      "to": 17,
+      "result": "Buckler (165 gp)"
+    },
+    {
+      "from": 18,
+      "to": 40,
+      "result": "Light wooden shield (153 gp)"
+    },
+    {
+      "from": 41,
+      "to": 60,
+      "result": "Light steel shield (159 gp)"
+    },
+    {
+      "from": 61,
+      "to": 83,
+      "result": "Heavy wooden shield (157 gp)"
+    },
+    {
+      "from": 84,
+      "to": 100,
+      "result": "Heavy steel shield (170 gp)"
+    }
+  ],
+  "weapons": [
+    {
+      "from": 1,
+      "to": 50,
+      "result": "Masterwork common melee weapon"
+    },
+    {
+      "from": 51,
+      "to": 70,
+      "result": "Masterwork uncommon weapon"
+    },
+    {
+      "from": 71,
+      "to": 100,
+      "result": "Masterwork common ranged weapon"
+    }
+  ],
+  "tools": [
+    {
+      "from": 1,
+      "to": 3,
+      "result": "Backpack, empty (2 gp)"
+    },
+    {
+      "from": 4,
+      "to": 6,
+      "result": "Crowbar (2 gp)"
+    },
+    {
+      "from": 7,
+      "to": 11,
+      "result": "Lantern, bullseye (12 gp)"
+    },
+    {
+      "from": 12,
+      "to": 16,
+      "result": "Lock, simple (20 gp)"
+    },
+    {
+      "from": 17,
+      "to": 21,
+      "result": "Lock, average (40 gp)"
+    },
+    {
+      "from": 22,
+      "to": 28,
+      "result": "Lock, good (80 gp)"
+    },
+    {
+      "from": 29,
+      "to": 35,
+      "result": "Lock, superior (150 gp)"
+    },
+    {
+      "from": 36,
+      "to": 40,
+      "result": "Manacles, masterwork (50 gp)"
+    },
+    {
+      "from": 41,
+      "to": 43,
+      "result": "Mirror, small steel (10 gp)"
+    },
+    {
+      "from": 44,
+      "to": 46,
+      "result": "Rope, silk (50 ft.) (10 gp)"
+    },
+    {
+      "from": 47,
+      "to": 53,
+      "result": "Spyglass (1,000 gp)"
+    },
+    {
+      "from": 54,
+      "to": 58,
+      "result": "Artisan\u2019s tools, masterwork (55 gp)"
+    },
+    {
+      "from": 59,
+      "to": 63,
+      "result": "Climber\u2019s kit (80 gp)"
+    },
+    {
+      "from": 64,
+      "to": 68,
+      "result": "Disguise kit (50 gp)"
+    },
+    {
+      "from": 69,
+      "to": 73,
+      "result": "Healer\u2019s kit (50 gp)"
+    },
+    {
+      "from": 74,
+      "to": 77,
+      "result": "Holy symbol, silver (25 gp)"
+    },
+    {
+      "from": 78,
+      "to": 81,
+      "result": "Hourglass (25 gp)"
+    },
+    {
+      "from": 82,
+      "to": 88,
+      "result": "Magnifying glass (100 gp)"
+    },
+    {
+      "from": 89,
+      "to": 95,
+      "result": "Musical instrument, masterwork (100 gp)"
+    },
+    {
+      "from": 96,
+      "to": 100,
+      "result": "Thieves\u2019 tools, masterwork (50 gp)"
+    }
+  ]
+}

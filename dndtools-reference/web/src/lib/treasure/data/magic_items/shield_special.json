@@ -1,0 +1,428 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        20
+      ],
+      "medium": [
+        1,
+        10
+      ],
+      "major": [
+        1,
+        5
+      ],
+      "label": "Arrow catching",
+      "price": "+1 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": [
+        21,
+        40
+      ],
+      "medium": [
+        11,
+        20
+      ],
+      "major": [
+        6,
+        8
+      ],
+      "label": "Bashing",
+      "price": "+1 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": [
+        41,
+        50
+      ],
+      "medium": [
+        21,
+        25
+      ],
+      "major": [
+        9,
+        10
+      ],
+      "label": "Blinding",
+      "price": "+1 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": [
+        51,
+        75
+      ],
+      "medium": [
+        26,
+        40
+      ],
+      "major": [
+        11,
+        15
+      ],
+      "label": "Fortification, light",
+      "price": "+1 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": [
+        76,
+        92
+      ],
+      "medium": [
+        41,
+        50
+      ],
+      "major": [
+        16,
+        20
+      ],
+      "label": "Arrow deflection",
+      "price": "+2 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": [
+        93,
+        97
+      ],
+      "medium": [
+        51,
+        57
+      ],
+      "major": [
+        21,
+        25
+      ],
+      "label": "Animated",
+      "price": "+2 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": [
+        98,
+        99
+      ],
+      "medium": [
+        58,
+        59
+      ],
+      "major": null,
+      "label": "Spell resistance (13)",
+      "price": "+2 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        60,
+        63
+      ],
+      "major": [
+        26,
+        28
+      ],
+      "label": "Acid resistance",
+      "price": "+18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        64,
+        67
+      ],
+      "major": [
+        29,
+        31
+      ],
+      "label": "Cold resistance",
+      "price": "+18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        68,
+        71
+      ],
+      "major": [
+        32,
+        34
+      ],
+      "label": "Electricity resistance",
+      "price": "+18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        72,
+        75
+      ],
+      "major": [
+        35,
+        37
+      ],
+      "label": "Fire resistance",
+      "price": "+18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        76,
+        79
+      ],
+      "major": [
+        38,
+        40
+      ],
+      "label": "Sonic resistance",
+      "price": "+18,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        80,
+        85
+      ],
+      "major": [
+        41,
+        46
+      ],
+      "label": "Ghost touch",
+      "price": "+3 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        86,
+        95
+      ],
+      "major": [
+        47,
+        56
+      ],
+      "label": "Fortification, moderate",
+      "price": "+3 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        98
+      ],
+      "major": [
+        57,
+        58
+      ],
+      "label": "Spell resistance (15)",
+      "price": "+3 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        99,
+        99
+      ],
+      "major": [
+        59,
+        59
+      ],
+      "label": "Wild",
+      "price": "+3 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        60,
+        64
+      ],
+      "label": "Acid resistance, improved",
+      "price": "+42,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        65,
+        69
+      ],
+      "label": "Cold resistance, improved",
+      "price": "+42,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        70,
+        74
+      ],
+      "label": "Electricity resistance, improved",
+      "price": "+42,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        75,
+        79
+      ],
+      "label": "Fire resistance, improved",
+      "price": "+42,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        80,
+        84
+      ],
+      "label": "Sonic resistance, improved",
+      "price": "+42,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        85,
+        86
+      ],
+      "label": "Spell resistance (17)",
+      "price": "+4 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        87,
+        87
+      ],
+      "label": "Undead controlling",
+      "price": "+49,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        88,
+        91
+      ],
+      "label": "Fortification, heavy",
+      "price": "+5 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        92,
+        93
+      ],
+      "label": "Reflecting",
+      "price": "+5 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        94,
+        94
+      ],
+      "label": "Spell resistance (19)",
+      "price": "+5 bonus1",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        95,
+        95
+      ],
+      "label": "Acid resistance, greater",
+      "price": "+66,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        96,
+        96
+      ],
+      "label": "Cold resistance, greater",
+      "price": "+66,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        97,
+        97
+      ],
+      "label": "Electricity resistance, greater",
+      "price": "+66,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        98,
+        98
+      ],
+      "label": "Fire resistance, greater",
+      "price": "+66,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        99,
+        99
+      ],
+      "label": "Sonic resistance, greater",
+      "price": "+66,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        100,
+        100
+      ],
+      "medium": [
+        100,
+        100
+      ],
+      "major": [
+        100,
+        100
+      ],
+      "label": "Roll twice again2",
+      "price": "-",
+      "action": "roll_twice"
+    }
+  ]
+}

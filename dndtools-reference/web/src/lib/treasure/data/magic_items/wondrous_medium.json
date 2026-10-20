@@ -1,0 +1,1004 @@
+{
+  "rows": [
+    {
+      "d_pct": [
+        1,
+        1
+      ],
+      "label": "Amulet of natural armor +2",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        2,
+        2
+      ],
+      "label": "Golem manual, flesh",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        3,
+        3
+      ],
+      "label": "Hand of glory",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        4,
+        4
+      ],
+      "label": "Ioun stone, deep red sphere",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        5,
+        5
+      ],
+      "label": "Ioun stone, incandescent blue sphere",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        6,
+        6
+      ],
+      "label": "Ioun stone, pale blue rhomboid",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        7,
+        7
+      ],
+      "label": "Ioun stone, pink and green sphere",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        8,
+        8
+      ],
+      "label": "Ioun stone, pink rhomboid",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        9,
+        9
+      ],
+      "label": "Ioun stone, scarlet and blue sphere",
+      "price": "8,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        10,
+        10
+      ],
+      "label": "Deck of illusions",
+      "price": "8,100 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        11,
+        11
+      ],
+      "label": "Necklace of fireballs type VI",
+      "price": "8,100 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        12,
+        12
+      ],
+      "label": "Candle of invocation",
+      "price": "8,400 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        13,
+        13
+      ],
+      "label": "Robe of blending",
+      "price": "8,400 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        14,
+        14
+      ],
+      "label": "Bag of tricks, rust",
+      "price": "8,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        15,
+        15
+      ],
+      "label": "Necklace of fireballs type VII",
+      "price": "8,700 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        16,
+        16
+      ],
+      "label": "Bracers of armor +3",
+      "price": "9,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        17,
+        17
+      ],
+      "label": "Cloak of resistance +3",
+      "price": "9,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        18,
+        18
+      ],
+      "label": "Decanter of endless water",
+      "price": "9,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        19,
+        19
+      ],
+      "label": "Necklace of adaptation",
+      "price": "9,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        20,
+        20
+      ],
+      "label": "Pearl of power, 3rd-level spell",
+      "price": "9,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        21,
+        21
+      ],
+      "label": "Figurine of wondrous power, serpentine owl",
+      "price": "9,100 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        22,
+        22
+      ],
+      "label": "Strand of prayer beads, lesser",
+      "price": "9,600 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        23,
+        23
+      ],
+      "label": "Bag of holding type IV",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        24,
+        24
+      ],
+      "label": "Belt of physical might +2",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        25,
+        25
+      ],
+      "label": "Figurine of wondrous power, bronze griffon",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        26,
+        26
+      ],
+      "label": "Figurine of wondrous power, ebony fly",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        27,
+        27
+      ],
+      "label": "Glove of storing",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        28,
+        28
+      ],
+      "label": "Headband of mental prowess +2",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        29,
+        29
+      ],
+      "label": "Ioun stone, dark blue rhomboid",
+      "price": "10,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        30,
+        30
+      ],
+      "label": "Cape of the mountebank",
+      "price": "10,800 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        31,
+        31
+      ],
+      "label": "Phylactery of negative channeling",
+      "price": "11,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        32,
+        32
+      ],
+      "label": "Phylactery of positive channeling",
+      "price": "11,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        33,
+        33
+      ],
+      "label": "Gauntlet of rust",
+      "price": "11,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        34,
+        34
+      ],
+      "label": "Boots of speed",
+      "price": "12,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        35,
+        35
+      ],
+      "label": "Goggles of night",
+      "price": "12,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        36,
+        36
+      ],
+      "label": "Golem manual, clay",
+      "price": "12,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        37,
+        37
+      ],
+      "label": "Medallion of thoughts",
+      "price": "12,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        38,
+        38
+      ],
+      "label": "Blessed book",
+      "price": "12,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        39,
+        39
+      ],
+      "label": "Gem of brightness",
+      "price": "13,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        40,
+        40
+      ],
+      "label": "Lyre of building",
+      "price": "13,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        41,
+        41
+      ],
+      "label": "Robe, Monk's",
+      "price": "13,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        42,
+        42
+      ],
+      "label": "Cloak of arachnida",
+      "price": "14,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        43,
+        43
+      ],
+      "label": "Belt of dwarvenkind",
+      "price": "14,900 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        44,
+        44
+      ],
+      "label": "Periapt of wound closure",
+      "price": "15,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        45,
+        45
+      ],
+      "label": "Pearl of the sirines",
+      "price": "15,300 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        46,
+        46
+      ],
+      "label": "Figurine of wondrous power, onyx dog",
+      "price": "15,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        47,
+        47
+      ],
+      "label": "Amulet of mighty fists +2",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        48,
+        48
+      ],
+      "label": "Bag of tricks, tan",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        49,
+        49
+      ],
+      "label": "Belt of giant strength +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        50,
+        50
+      ],
+      "label": "Belt of incredible dexterity +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        51,
+        51
+      ],
+      "label": "Belt of mighty constitution +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        52,
+        52
+      ],
+      "label": "Belt of physical perfection +2",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        53,
+        53
+      ],
+      "label": "Boots, winged",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        54,
+        54
+      ],
+      "label": "Bracers of armor +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        55,
+        55
+      ],
+      "label": "Cloak of resistance +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        56,
+        56
+      ],
+      "label": "Headband of alluring charisma +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        57,
+        57
+      ],
+      "label": "Headband of inspired wisdom +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        58,
+        58
+      ],
+      "label": "Headband of mental superiority +2",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        59,
+        59
+      ],
+      "label": "Headband of vast intelligence +4",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        60,
+        60
+      ],
+      "label": "Pearl of power, 4th-level spell",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        61,
+        61
+      ],
+      "label": "Scabbard of keen edges",
+      "price": "16,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        62,
+        62
+      ],
+      "label": "Figurine of wondrous power, golden lions",
+      "price": "16,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        63,
+        63
+      ],
+      "label": "Chime of interruption",
+      "price": "16,800 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        64,
+        64
+      ],
+      "label": "Broom of flying",
+      "price": "17,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        65,
+        65
+      ],
+      "label": "Figurine of wondrous power, marble elephant",
+      "price": "17,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        66,
+        66
+      ],
+      "label": "Amulet of natural armor +3",
+      "price": "18,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        67,
+        67
+      ],
+      "label": "Ioun stone, iridescent spindle",
+      "price": "18,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        68,
+        68
+      ],
+      "label": "Bracelet of friends",
+      "price": "19,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        69,
+        69
+      ],
+      "label": "Carpet of flying, 5 ft. by 5 ft.",
+      "price": "20,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        70,
+        70
+      ],
+      "label": "Horn of blasting",
+      "price": "20,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        71,
+        71
+      ],
+      "label": "Ioun stone, pale lavender ellipsoid",
+      "price": "20,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        72,
+        72
+      ],
+      "label": "Ioun stone, pearly white spindle",
+      "price": "20,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        73,
+        73
+      ],
+      "label": "Portable hole",
+      "price": "20,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        74,
+        74
+      ],
+      "label": "Stone of good luck (luckstone)",
+      "price": "20,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        75,
+        75
+      ],
+      "label": "Figurine of wondrous power, ivory goats",
+      "price": "21,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        76,
+        76
+      ],
+      "label": "Rope of entanglement",
+      "price": "21,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        77,
+        77
+      ],
+      "label": "Golem manual, stone",
+      "price": "22,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        78,
+        78
+      ],
+      "label": "Mask of the skull",
+      "price": "22,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        79,
+        79
+      ],
+      "label": "Mattock of the titans",
+      "price": "23,348 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        80,
+        80
+      ],
+      "label": "Crown of blasting, major",
+      "price": "23,760 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        81,
+        81
+      ],
+      "label": "Cloak of displacement, minor",
+      "price": "24,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        82,
+        82
+      ],
+      "label": "Helm of underwater action",
+      "price": "24,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        83,
+        83
+      ],
+      "label": "Bracers of archery, greater",
+      "price": "25,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        84,
+        84
+      ],
+      "label": "Bracers of armor +5",
+      "price": "25,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        85,
+        85
+      ],
+      "label": "Cloak of resistance +5",
+      "price": "25,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        86,
+        86
+      ],
+      "label": "Eyes of doom",
+      "price": "25,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        87,
+        87
+      ],
+      "label": "Pearl of power, 5th-level spell",
+      "price": "25,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        88,
+        88
+      ],
+      "label": "Maul of the titans",
+      "price": "25,305 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        89,
+        89
+      ],
+      "label": "Cloak of the bat",
+      "price": "26,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        90,
+        90
+      ],
+      "label": "Iron bands of binding",
+      "price": "26,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        91,
+        91
+      ],
+      "label": "Cube of frost resistance",
+      "price": "27,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        92,
+        92
+      ],
+      "label": "Helm of telepathy",
+      "price": "27,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        93,
+        93
+      ],
+      "label": "Periapt of proof against poison",
+      "price": "27,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        94,
+        94
+      ],
+      "label": "Robe of scintillating colors",
+      "price": "27,000 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        95,
+        95
+      ],
+      "label": "Manual of bodily health +1",
+      "price": "27,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        96,
+        96
+      ],
+      "label": "Manual of gainful exercise +1",
+      "price": "27,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        97,
+        97
+      ],
+      "label": "Manual of quickness in action +1",
+      "price": "27,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        98,
+        98
+      ],
+      "label": "Tome of clear thought +1",
+      "price": "27,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        99,
+        99
+      ],
+      "label": "Tome of leadership and influence +1",
+      "price": "27,500 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        100,
+        100
+      ],
+      "label": "Tome of understanding +1",
+      "price": "27,500 gp",
+      "action": "item",
+      "target": null
+    }
+  ]
+}

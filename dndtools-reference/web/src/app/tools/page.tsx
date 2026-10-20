@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { ToolExplainer } from "@/components/tool-explainer";
-import { TOOLS } from "@/lib/tools";
+import { ToolsDirectory } from "@/components/tools-directory";
 import { JsonLd, absoluteBreadcrumbJsonLd, faqPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 import { TOOLS_PAGE_FAQS } from "@/lib/tool-faqs";
@@ -35,24 +34,7 @@ export default function ToolsPage() {
         </p>
       </div>
 
-      <section className="category-grid" aria-labelledby="tools-list-heading">
-        <h2 id="tools-list-heading" className="sr-only">
-          Available tools
-        </h2>
-        {TOOLS.map((tool) => (
-          <Link key={tool.key} href={tool.href} className="category-card">
-            <div className="icon">{tool.icon}</div>
-            <h3>
-              {tool.label}
-              {"badge" in tool && tool.badge ? (
-                <span className="tool-badge">{tool.badge}</span>
-              ) : null}
-            </h3>
-            <span className="count">{tool.source}</span>
-            <p className="tool-card-desc">{tool.description}</p>
-          </Link>
-        ))}
-      </section>
+      <ToolsDirectory />
       <ToolExplainer faqs={TOOLS_PAGE_FAQS} />
     </>
   );

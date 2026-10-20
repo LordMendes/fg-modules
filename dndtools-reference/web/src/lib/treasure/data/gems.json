@@ -1,0 +1,44 @@
+[
+  {
+    "from": 1,
+    "to": 25,
+    "value": "4d4 gp",
+    "average": "10 gp",
+    "examples": "Banded, eye, or moss agate; azurite; blue quartz; hematite; lapis lazuli; malachite; obsidian; rhodochrosite; tiger eye turquoise; freshwater (irregular) pearl"
+  },
+  {
+    "from": 26,
+    "to": 50,
+    "value": "2d4 \u00d7 10 gp",
+    "average": "50 gp",
+    "examples": "Bloodstone; carnelian; chalcedony; chrysoprase; citrine; iolite, jasper; moonstone; onyx; peridot; rock crystal (clear quartz); sard; sardonyx; rose, smoky, or star rose quartz; zircon"
+  },
+  {
+    "from": 51,
+    "to": 70,
+    "value": "4d4 \u00d7 10 gp",
+    "average": "100 gp",
+    "examples": "Amber; amethyst; chrysoberyl; coral; red or brown-green garnet; jade; jet; white, golden, pink, or silver pearl; red spinel, red-brown or deep green spinel; tourmaline"
+  },
+  {
+    "from": 71,
+    "to": 90,
+    "value": "2d4 \u00d7 100 gp",
+    "average": "500 gp",
+    "examples": "Alexandrite; aquamarine; violet garnet; black pearl; deep blue spinel; golden yellow topaz"
+  },
+  {
+    "from": 91,
+    "to": 99,
+    "value": "4d4 \u00d7 100 gp",
+    "average": "1,000 gp",
+    "examples": "Emerald; white, black, or fire opal; blue sapphire; fiery yellow or rich purple corundum; blue or black star sapphire; star ruby"
+  },
+  {
+    "from": 100,
+    "to": 100,
+    "value": "2d4 \u00d7 1,000 gp",
+    "average": "5,000 gp",
+    "examples": "Clearest bright green emerald; blue-white, canary, pink, brown, or blue diamond; jacinth"
+  }
+]

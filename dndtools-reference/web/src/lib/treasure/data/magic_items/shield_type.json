@@ -1,0 +1,64 @@
+{
+  "rows": [
+    {
+      "d_pct": [
+        1,
+        10
+      ],
+      "label": "Buckler",
+      "price": "+165 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        11,
+        15
+      ],
+      "label": "Shield, light, wooden",
+      "price": "+153 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        16,
+        20
+      ],
+      "label": "Shield, light, steel",
+      "price": "+159 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        21,
+        30
+      ],
+      "label": "Shield, heavy, wooden",
+      "price": "+157 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        31,
+        95
+      ],
+      "label": "Shield, heavy, steel",
+      "price": "+170 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        96,
+        100
+      ],
+      "label": "Shield, tower",
+      "price": "+180 gp",
+      "action": "item",
+      "target": null
+    }
+  ]
+}

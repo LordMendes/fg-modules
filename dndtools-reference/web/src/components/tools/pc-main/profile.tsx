@@ -5,6 +5,7 @@ import { PcImageDialog } from "@/components/tools/pc-image-dialog";
 import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcMainRaceAlignmentFields } from "@/components/tools/pc-main/race-alignment";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
+import { RandomNameButton } from "@/components/tools/random-name-button";
 import { totalCharacterLevel } from "@/lib/pc-planner/skillPoints";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
@@ -27,7 +28,7 @@ export function PcMainProfile({
   patch: PatchFn;
   planId?: string | null;
   readOnly?: boolean;
-  onNameBlur: () => void;
+  onNameBlur: (name?: string) => void;
 }) {
   const classSummary = formatClassSummary(state.identity.classLevels);
   const [imagesDialogOpen, setImagesDialogOpen] = useState(false);
@@ -77,19 +78,34 @@ export function PcMainProfile({
           </>
         ) : null}
         <div className="pc-main-header-text">
-          <input
-            type="text"
-            className="pc-sheet-input pc-sheet-input--title npc-sheet-name"
-            value={state.identity.name}
-            placeholder="Character name"
-            aria-label="Character name"
-            onChange={(e) =>
-              patch((s) => {
-                s.identity.name = e.target.value;
-              })
-            }
-            onBlur={onNameBlur}
-          />
+          <div className="name-roll-row">
+            <input
+              type="text"
+              className="pc-sheet-input pc-sheet-input--title npc-sheet-name"
+              value={state.identity.name}
+              placeholder="Character name"
+              aria-label="Character name"
+              readOnly={readOnly}
+              onChange={(e) =>
+                patch((s) => {
+                  s.identity.name = e.target.value;
+                })
+              }
+              onBlur={() => onNameBlur()}
+            />
+            {readOnly ? null : (
+              <RandomNameButton
+                raceHint={state.identity.race}
+                genderHint={state.identity.gender}
+                onPick={(name) => {
+                  patch((s) => {
+                    s.identity.name = name;
+                  });
+                  onNameBlur(name);
+                }}
+              />
+            )}
+          </div>
           {classSummary ? <p className="pc-main-class-summary">{classSummary}</p> : null}
         </div>
       </div>

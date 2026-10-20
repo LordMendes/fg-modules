@@ -603,9 +603,9 @@ function PcPlannerBody() {
             patch={patch}
             sheetTab={sheetTab}
             onTabChange={setSheetTab}
-            onNameBlur={() => {
+            onNameBlur={(name) => {
               if (!planId) return;
-              void renamePcPlan(planId, state.identity.name || "Unnamed");
+              void renamePcPlan(planId, name ?? (state.identity.name || "Unnamed"));
             }}
             activeSpellClassIndex={activeSpellClassIndex}
             onSpellClassIndexChange={setActiveSpellClassIndex}

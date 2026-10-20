@@ -1,0 +1,384 @@
+{
+  "rows": [
+    {
+      "d_pct": [
+        1,
+        3
+      ],
+      "label": "Axe, orc double2",
+      "price": "+660 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        4,
+        7
+      ],
+      "label": "Battleaxe",
+      "price": "+310 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        8,
+        10
+      ],
+      "label": "Chain, spiked",
+      "price": "+325 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        11,
+        12
+      ],
+      "label": "Club",
+      "price": "+300 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        13,
+        16
+      ],
+      "label": "Crossbow, hand",
+      "price": "+400 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        17,
+        19
+      ],
+      "label": "Crossbow, repeating",
+      "price": "+550 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        20,
+        21
+      ],
+      "label": "Dagger, punching",
+      "price": "+302 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        22,
+        23
+      ],
+      "label": "Falchion",
+      "price": "+375 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        24,
+        26
+      ],
+      "label": "Flail, dire2",
+      "price": "+690 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        27,
+        31
+      ],
+      "label": "Flail, heavy",
+      "price": "+315 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        32,
+        35
+      ],
+      "label": "Flail, light",
+      "price": "+308 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        36,
+        37
+      ],
+      "label": "Gauntlet",
+      "price": "+302 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        38,
+        39
+      ],
+      "label": "Gauntlet, spiked",
+      "price": "+305 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        40,
+        41
+      ],
+      "label": "Glaive",
+      "price": "+308 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        42,
+        43
+      ],
+      "label": "Greatclub",
+      "price": "+305 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        44,
+        45
+      ],
+      "label": "Guisarme",
+      "price": "+309 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        46,
+        48
+      ],
+      "label": "Halberd",
+      "price": "+310 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        49,
+        51
+      ],
+      "label": "Spear",
+      "price": "+301 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        52,
+        54
+      ],
+      "label": "Hammer, gnome hooked2",
+      "price": "+620 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        55,
+        56
+      ],
+      "label": "Hammer, light",
+      "price": "+301 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        57,
+        58
+      ],
+      "label": "Handaxe",
+      "price": "+306 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        59,
+        61
+      ],
+      "label": "Kukri",
+      "price": "+308 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        62,
+        64
+      ],
+      "label": "Lance",
+      "price": "+310 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        65,
+        67
+      ],
+      "label": "Longspear",
+      "price": "+305 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        68,
+        70
+      ],
+      "label": "Morningstar",
+      "price": "+308 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        71,
+        72
+      ],
+      "label": "Net",
+      "price": "+320 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        73,
+        74
+      ],
+      "label": "Pick, heavy",
+      "price": "+308 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        75,
+        76
+      ],
+      "label": "Pick, light",
+      "price": "+304 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        77,
+        78
+      ],
+      "label": "Ranseur",
+      "price": "+310 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        79,
+        80
+      ],
+      "label": "Sap",
+      "price": "+301 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        81,
+        82
+      ],
+      "label": "Scythe",
+      "price": "+318 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        83,
+        84
+      ],
+      "label": "Shuriken",
+      "price": "+301 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        85,
+        86
+      ],
+      "label": "Sickle",
+      "price": "+306 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        87,
+        89
+      ],
+      "label": "Sword, two-bladed2",
+      "price": "+700 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        90,
+        91
+      ],
+      "label": "Trident",
+      "price": "+315 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        92,
+        94
+      ],
+      "label": "Urgrosh, dwarven2",
+      "price": "+650 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        95,
+        97
+      ],
+      "label": "Warhammer",
+      "price": "+312 gp",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        98,
+        100
+      ],
+      "label": "Whip",
+      "price": "+301 gp",
+      "action": "item",
+      "target": null
+    }
+  ]
+}

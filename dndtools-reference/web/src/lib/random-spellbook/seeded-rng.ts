@@ -44,3 +44,11 @@ export function createSeededRng(seed: number): SeededRng {
 
   return { next, pick, pickInt, shuffle, sample };
 }
+
+/** Next seed for a Generate click. Same options, new roll. */
+export function advanceGeneratorSeed(current: number): number {
+  if (!Number.isFinite(current)) return 1;
+  const next = Math.trunc(current) + 1;
+  if (next < 1 || next > 999_999_999) return 1;
+  return next;
+}

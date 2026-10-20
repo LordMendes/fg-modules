@@ -1,0 +1,154 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        50
+      ],
+      "medium": [
+        1,
+        25
+      ],
+      "major": null,
+      "label": "Mithral shirt",
+      "price": "1,100 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        51,
+        80
+      ],
+      "medium": [
+        26,
+        45
+      ],
+      "major": null,
+      "label": "Dragonhide plate",
+      "price": "3,300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        81,
+        100
+      ],
+      "medium": [
+        46,
+        57
+      ],
+      "major": null,
+      "label": "Elven chain",
+      "price": "4,150 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        58,
+        67
+      ],
+      "major": null,
+      "label": "Rhino hide",
+      "price": "5,165 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        68,
+        82
+      ],
+      "major": [
+        1,
+        10
+      ],
+      "label": "Adamantine breastplate",
+      "price": "10,200 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        83,
+        97
+      ],
+      "major": [
+        11,
+        20
+      ],
+      "label": "Dwarven plate",
+      "price": "16,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        98,
+        100
+      ],
+      "major": [
+        21,
+        32
+      ],
+      "label": "Banded mail of luck",
+      "price": "18,900 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        33,
+        50
+      ],
+      "label": "Celestial armor",
+      "price": "22,400 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        51,
+        60
+      ],
+      "label": "Plate armor of the deep",
+      "price": "24,650 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        61,
+        75
+      ],
+      "label": "Breastplate of command",
+      "price": "25,400 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        76,
+        90
+      ],
+      "label": "Mithral full plate of speed",
+      "price": "26,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        91,
+        100
+      ],
+      "label": "Demon armor",
+      "price": "52,260 gp",
+      "action": "item"
+    }
+  ]
+}

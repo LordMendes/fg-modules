@@ -1,0 +1,34 @@
+{
+  "rows": [
+    {
+      "d_pct": [
+        1,
+        70
+      ],
+      "label": "Common melee weapon",
+      "price": "",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        71,
+        80
+      ],
+      "label": "Uncommon weapon",
+      "price": "",
+      "action": "item",
+      "target": null
+    },
+    {
+      "d_pct": [
+        81,
+        100
+      ],
+      "label": "Common ranged weapon",
+      "price": "",
+      "action": "item",
+      "target": null
+    }
+  ]
+}

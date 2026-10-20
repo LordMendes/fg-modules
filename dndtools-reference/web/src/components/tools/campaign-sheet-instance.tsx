@@ -318,9 +318,9 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
         patch={patch}
         sheetTab={sheetTab}
         onTabChange={setSheetTab}
-        onNameBlur={() => {
+        onNameBlur={(name) => {
           if (!plan.canEdit || !state) return;
-          void renamePcPlan(plan.id, state.identity.name, shortcut);
+          void renamePcPlan(plan.id, name ?? state.identity.name, shortcut);
         }}
         activeSpellClassIndex={activeSpellClassIndex}
         onSpellClassIndexChange={setActiveSpellClassIndex}

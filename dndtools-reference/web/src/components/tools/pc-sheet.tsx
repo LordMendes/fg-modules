@@ -61,7 +61,7 @@ export type PcSheetProps = {
   patch: (fn: (draft: PcPlanState) => void) => void;
   sheetTab: PcSheetTab;
   onTabChange: (tab: PcSheetTab) => void;
-  onNameBlur: () => void;
+  onNameBlur: (name?: string) => void;
   activeSpellClassIndex: number;
   onSpellClassIndexChange: (index: number) => void;
   compendium: PcCompendiumBundle | null;

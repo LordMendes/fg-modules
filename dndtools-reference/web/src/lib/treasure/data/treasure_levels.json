@@ -1,0 +1,1349 @@
+{
+  "1": [
+    {
+      "coin_range": [
+        1,
+        14
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        90
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        71
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        15,
+        29
+      ],
+      "coins": "1d6 \u00d7 1,000 cp",
+      "goods_range": [
+        91,
+        95
+      ],
+      "goods": "1 gem",
+      "items_range": [
+        72,
+        95
+      ],
+      "items": "1 mundane"
+    },
+    {
+      "coin_range": [
+        30,
+        52
+      ],
+      "coins": "1d8 \u00d7 100 sp",
+      "goods_range": [
+        96,
+        100
+      ],
+      "goods": "1 art",
+      "items_range": [
+        96,
+        100
+      ],
+      "items": "1 minor"
+    },
+    {
+      "coin_range": [
+        53,
+        95
+      ],
+      "coins": "2d8 \u00d7 10 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "1d4 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "2": [
+    {
+      "coin_range": [
+        1,
+        13
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        81
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        49
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        14,
+        23
+      ],
+      "coins": "1d10 \u00d7 1,000 cp",
+      "goods_range": [
+        82,
+        95
+      ],
+      "goods": "1d3 gems",
+      "items_range": [
+        50,
+        85
+      ],
+      "items": "1 mundane"
+    },
+    {
+      "coin_range": [
+        24,
+        43
+      ],
+      "coins": "2d10 \u00d7 100 sp",
+      "goods_range": [
+        96,
+        100
+      ],
+      "goods": "1d3 art",
+      "items_range": [
+        86,
+        100
+      ],
+      "items": "1 minor"
+    },
+    {
+      "coin_range": [
+        44,
+        95
+      ],
+      "coins": "4d10 \u00d7 10 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "2d8 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "3": [
+    {
+      "coin_range": [
+        1,
+        11
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        77
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        49
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        12,
+        21
+      ],
+      "coins": "2d10 \u00d7 1,000 cp",
+      "goods_range": [
+        78,
+        95
+      ],
+      "goods": "1d3 gems",
+      "items_range": [
+        50,
+        79
+      ],
+      "items": "1d3 mundane"
+    },
+    {
+      "coin_range": [
+        22,
+        41
+      ],
+      "coins": "4d8 \u00d7 100 sp",
+      "goods_range": [
+        96,
+        100
+      ],
+      "goods": "1d3 art",
+      "items_range": [
+        80,
+        100
+      ],
+      "items": "1 minor"
+    },
+    {
+      "coin_range": [
+        42,
+        95
+      ],
+      "coins": "1d4 \u00d7 100 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "1d10 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "4": [
+    {
+      "coin_range": [
+        1,
+        11
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        70
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        42
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        12,
+        21
+      ],
+      "coins": "3d10 \u00d7 1,000 cp",
+      "goods_range": [
+        71,
+        95
+      ],
+      "goods": "1d4 gems",
+      "items_range": [
+        43,
+        62
+      ],
+      "items": "1d4 mundane"
+    },
+    {
+      "coin_range": [
+        22,
+        41
+      ],
+      "coins": "4d12 \u00d7 1,000 sp",
+      "goods_range": [
+        96,
+        100
+      ],
+      "goods": "1d3 art",
+      "items_range": [
+        63,
+        100
+      ],
+      "items": "1 minor"
+    },
+    {
+      "coin_range": [
+        42,
+        95
+      ],
+      "coins": "1d6 \u00d7 100 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "1d8 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "5": [
+    {
+      "coin_range": [
+        1,
+        10
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        60
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        57
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        11,
+        19
+      ],
+      "coins": "1d4 \u00d7 10,000 cp",
+      "goods_range": [
+        61,
+        95
+      ],
+      "goods": "1d4 gems",
+      "items_range": [
+        58,
+        67
+      ],
+      "items": "1d4 mundane"
+    },
+    {
+      "coin_range": [
+        20,
+        38
+      ],
+      "coins": "1d6 \u00d7 1,000 sp",
+      "goods_range": [
+        96,
+        100
+      ],
+      "goods": "1d4 art",
+      "items_range": [
+        68,
+        100
+      ],
+      "items": "1d3 minor"
+    },
+    {
+      "coin_range": [
+        39,
+        95
+      ],
+      "coins": "1d8 \u00d7 100 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "1d10 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "6": [
+    {
+      "coin_range": [
+        1,
+        10
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        56
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        54
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        11,
+        18
+      ],
+      "coins": "1d6 \u00d7 10,000 cp",
+      "goods_range": [
+        57,
+        92
+      ],
+      "goods": "1d4 gems",
+      "items_range": [
+        55,
+        59
+      ],
+      "items": "1d4 mundane"
+    },
+    {
+      "coin_range": [
+        19,
+        37
+      ],
+      "coins": "1d8 \u00d7 1,000 sp",
+      "goods_range": [
+        93,
+        100
+      ],
+      "goods": "1d4 art",
+      "items_range": [
+        60,
+        99
+      ],
+      "items": "1d3 minor"
+    },
+    {
+      "coin_range": [
+        38,
+        95
+      ],
+      "coins": "1d10 \u00d7 100 gp",
+      "goods_range": [
+        100,
+        100
+      ],
+      "goods": "1 medium",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "1d12 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "7": [
+    {
+      "coin_range": [
+        1,
+        11
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        48
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        51
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        12,
+        18
+      ],
+      "coins": "1d10 \u00d7 10,000 cp",
+      "goods_range": [
+        49,
+        88
+      ],
+      "goods": "1d4 gems",
+      "items_range": [
+        52,
+        97
+      ],
+      "items": "1d3 minor"
+    },
+    {
+      "coin_range": [
+        19,
+        35
+      ],
+      "coins": "1d12 \u00d7 1,000 sp",
+      "goods_range": [
+        89,
+        100
+      ],
+      "goods": "1d4 art",
+      "items_range": [
+        98,
+        100
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        36,
+        93
+      ],
+      "coins": "2d6 \u00d7 100 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        94,
+        100
+      ],
+      "coins": "3d4 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "8": [
+    {
+      "coin_range": [
+        1,
+        10
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        45
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        48
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        11,
+        15
+      ],
+      "coins": "1d12 \u00d7 10,000 cp",
+      "goods_range": [
+        46,
+        85
+      ],
+      "goods": "1d6 gems",
+      "items_range": [
+        49,
+        96
+      ],
+      "items": "1d4 minor"
+    },
+    {
+      "coin_range": [
+        16,
+        29
+      ],
+      "coins": "2d6 \u00d7 1,000 sp",
+      "goods_range": [
+        86,
+        100
+      ],
+      "goods": "1d4 art",
+      "items_range": [
+        97,
+        100
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        30,
+        87
+      ],
+      "coins": "2d8 \u00d7 100 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        88,
+        100
+      ],
+      "coins": "3d6 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "9": [
+    {
+      "coin_range": [
+        1,
+        10
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        40
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        43
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        11,
+        15
+      ],
+      "coins": "2d6 \u00d7 10,000 cp",
+      "goods_range": [
+        41,
+        80
+      ],
+      "goods": "1d8 gems",
+      "items_range": [
+        44,
+        91
+      ],
+      "items": "1d4 minor"
+    },
+    {
+      "coin_range": [
+        16,
+        29
+      ],
+      "coins": "2d8 \u00d7 1,000 sp",
+      "goods_range": [
+        81,
+        100
+      ],
+      "goods": "1d4 art",
+      "items_range": [
+        92,
+        100
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        30,
+        85
+      ],
+      "coins": "5d4 \u00d7 100 gp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    },
+    {
+      "coin_range": [
+        86,
+        100
+      ],
+      "coins": "2d12 \u00d7 10 pp",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "10": [
+    {
+      "coin_range": [
+        1,
+        10
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        35
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        40
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        11,
+        24
+      ],
+      "coins": "2d10 \u00d7 1,000 sp",
+      "goods_range": [
+        36,
+        79
+      ],
+      "goods": "1d8 gems",
+      "items_range": [
+        41,
+        88
+      ],
+      "items": "1d4 minor"
+    },
+    {
+      "coin_range": [
+        25,
+        79
+      ],
+      "coins": "6d4 \u00d7 100 gp",
+      "goods_range": [
+        80,
+        100
+      ],
+      "goods": "1d6 art",
+      "items_range": [
+        89,
+        99
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        80,
+        100
+      ],
+      "coins": "5d6 \u00d7 10 pp",
+      "goods_range": [
+        100,
+        100
+      ],
+      "goods": "1 major",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "11": [
+    {
+      "coin_range": [
+        1,
+        8
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        24
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        31
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        9,
+        14
+      ],
+      "coins": "3d10 \u00d7 1,000 sp",
+      "goods_range": [
+        25,
+        74
+      ],
+      "goods": "1d10 gems",
+      "items_range": [
+        32,
+        84
+      ],
+      "items": "1d4 minor"
+    },
+    {
+      "coin_range": [
+        15,
+        75
+      ],
+      "coins": "4d8 \u00d7 100 gp",
+      "goods_range": [
+        75,
+        100
+      ],
+      "goods": "1d6 art",
+      "items_range": [
+        85,
+        98
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        76,
+        100
+      ],
+      "coins": "4d10 \u00d7 10 pp",
+      "goods_range": [
+        99,
+        100
+      ],
+      "goods": "1 major",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "12": [
+    {
+      "coin_range": [
+        1,
+        8
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        17
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        27
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        9,
+        14
+      ],
+      "coins": "3d12 \u00d7 1,000 sp",
+      "goods_range": [
+        18,
+        70
+      ],
+      "goods": "1d10 gems",
+      "items_range": [
+        28,
+        82
+      ],
+      "items": "1d6 minor"
+    },
+    {
+      "coin_range": [
+        15,
+        75
+      ],
+      "coins": "1d4 \u00d7 1,000 gp",
+      "goods_range": [
+        71,
+        100
+      ],
+      "goods": "1d8 art",
+      "items_range": [
+        83,
+        97
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        76,
+        100
+      ],
+      "coins": "1d4 \u00d7 100 pp",
+      "goods_range": [
+        98,
+        100
+      ],
+      "goods": "1 major",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "13": [
+    {
+      "coin_range": [
+        1,
+        8
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        11
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        19
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        9,
+        75
+      ],
+      "coins": "1d4 \u00d7 1,000 gp",
+      "goods_range": [
+        12,
+        66
+      ],
+      "goods": "1d12 gems",
+      "items_range": [
+        20,
+        73
+      ],
+      "items": "1d6 minor"
+    },
+    {
+      "coin_range": [
+        76,
+        100
+      ],
+      "coins": "1d10 \u00d7 100 pp",
+      "goods_range": [
+        67,
+        100
+      ],
+      "goods": "1d10 art",
+      "items_range": [
+        74,
+        95
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        96,
+        100
+      ],
+      "coins": "1 major",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "14": [
+    {
+      "coin_range": [
+        1,
+        8
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        11
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        19
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        9,
+        75
+      ],
+      "coins": "1d6 \u00d7 1,000 gp",
+      "goods_range": [
+        12,
+        66
+      ],
+      "goods": "2d8 gems",
+      "items_range": [
+        20,
+        58
+      ],
+      "items": "1d6 minor"
+    },
+    {
+      "coin_range": [
+        76,
+        100
+      ],
+      "coins": "1d12 \u00d7 100 pp",
+      "goods_range": [
+        67,
+        100
+      ],
+      "goods": "2d6 art",
+      "items_range": [
+        59,
+        92
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        93,
+        100
+      ],
+      "coins": "1 major",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "15": [
+    {
+      "coin_range": [
+        1,
+        3
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        9
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        11
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        4,
+        74
+      ],
+      "coins": "1d8 \u00d7 1,000 gp",
+      "goods_range": [
+        10,
+        65
+      ],
+      "goods": "2d10 gems",
+      "items_range": [
+        12,
+        46
+      ],
+      "items": "1d10 minor"
+    },
+    {
+      "coin_range": [
+        75,
+        100
+      ],
+      "coins": "3d4 \u00d7 100 pp",
+      "goods_range": [
+        66,
+        100
+      ],
+      "goods": "2d8 art",
+      "items_range": [
+        47,
+        90
+      ],
+      "items": "1 medium"
+    },
+    {
+      "coin_range": [
+        91,
+        100
+      ],
+      "coins": "1 major",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "16": [
+    {
+      "coin_range": [
+        1,
+        3
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        7
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        40
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        4,
+        74
+      ],
+      "coins": "1d12 \u00d7 1,000 gp",
+      "goods_range": [
+        8,
+        64
+      ],
+      "goods": "4d6 gems",
+      "items_range": [
+        41,
+        46
+      ],
+      "items": "1d10 minor"
+    },
+    {
+      "coin_range": [
+        75,
+        100
+      ],
+      "coins": "3d4 \u00d7 100 pp",
+      "goods_range": [
+        65,
+        100
+      ],
+      "goods": "2d10 art",
+      "items_range": [
+        47,
+        90
+      ],
+      "items": "1d3 medium"
+    },
+    {
+      "coin_range": [
+        91,
+        100
+      ],
+      "coins": "1 major",
+      "goods_range": null,
+      "goods": "",
+      "items_range": null,
+      "items": ""
+    }
+  ],
+  "17": [
+    {
+      "coin_range": [
+        1,
+        3
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        4
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        33
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        4,
+        68
+      ],
+      "coins": "3d4 \u00d7 1,000 gp",
+      "goods_range": [
+        5,
+        63
+      ],
+      "goods": "4d8 gems",
+      "items_range": [
+        34,
+        83
+      ],
+      "items": "1d3 medium"
+    },
+    {
+      "coin_range": [
+        69,
+        100
+      ],
+      "coins": "2d10 \u00d7 100 pp",
+      "goods_range": [
+        64,
+        100
+      ],
+      "goods": "3d8 art",
+      "items_range": [
+        84,
+        100
+      ],
+      "items": "1 major"
+    }
+  ],
+  "18": [
+    {
+      "coin_range": [
+        1,
+        2
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        4
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        24
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        3,
+        65
+      ],
+      "coins": "3d6 \u00d7 1,000 gp",
+      "goods_range": [
+        5,
+        54
+      ],
+      "goods": "3d12 gems",
+      "items_range": [
+        25,
+        80
+      ],
+      "items": "1d4 medium"
+    },
+    {
+      "coin_range": [
+        66,
+        100
+      ],
+      "coins": "5d4 \u00d7 100 pp",
+      "goods_range": [
+        55,
+        100
+      ],
+      "goods": "3d10 art",
+      "items_range": [
+        81,
+        100
+      ],
+      "items": "1 major"
+    }
+  ],
+  "19": [
+    {
+      "coin_range": [
+        1,
+        2
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        3
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        4
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        3,
+        65
+      ],
+      "coins": "3d8 \u00d7 1,000 gp",
+      "goods_range": [
+        4,
+        50
+      ],
+      "goods": "6d6 gems",
+      "items_range": [
+        5,
+        70
+      ],
+      "items": "1d4 medium"
+    },
+    {
+      "coin_range": [
+        66,
+        100
+      ],
+      "coins": "3d10 \u00d7 100 pp",
+      "goods_range": [
+        51,
+        100
+      ],
+      "goods": "6d6 art",
+      "items_range": [
+        71,
+        100
+      ],
+      "items": "1 major"
+    }
+  ],
+  "20": [
+    {
+      "coin_range": [
+        1,
+        2
+      ],
+      "coins": "\u2014",
+      "goods_range": [
+        1,
+        2
+      ],
+      "goods": "\u2014",
+      "items_range": [
+        1,
+        25
+      ],
+      "items": "\u2014"
+    },
+    {
+      "coin_range": [
+        3,
+        65
+      ],
+      "coins": "4d8 \u00d7 1,000 gp",
+      "goods_range": [
+        3,
+        38
+      ],
+      "goods": "4d10 gems",
+      "items_range": [
+        26,
+        65
+      ],
+      "items": "1d4 medium"
+    },
+    {
+      "coin_range": [
+        66,
+        100
+      ],
+      "coins": "4d10 \u00d7 100 pp",
+      "goods_range": [
+        39,
+        100
+      ],
+      "goods": "7d6 art",
+      "items_range": [
+        66,
+        100
+      ],
+      "items": "1d3 major"
+    }
+  ]
+}

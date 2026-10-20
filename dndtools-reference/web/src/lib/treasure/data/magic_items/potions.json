@@ -1,0 +1,1118 @@
+{
+  "rows": [
+    {
+      "minor": [
+        1,
+        10
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Cure light wounds (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        11,
+        13
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Endure elements (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        14,
+        15
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Hide from animals (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        16,
+        17
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Hide from undead (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        18,
+        19
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Jump (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        20,
+        22
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Mage armor (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        23,
+        25
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Magic fang (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        26,
+        26
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Magic stone (oil)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        27,
+        29
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Magic weapon (oil)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        30,
+        30
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Pass without trace (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        31,
+        32
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Protection from (alignment) (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        33,
+        34
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Remove fear (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        35,
+        35
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Sanctuary (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        36,
+        38
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Shield of faith +2 (potion)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        39,
+        39
+      ],
+      "medium": null,
+      "major": null,
+      "label": "Shillelagh (oil)",
+      "price": "50 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        40,
+        41
+      ],
+      "medium": [
+        1,
+        2
+      ],
+      "major": null,
+      "label": "Bless weapon (oil)",
+      "price": "100 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        42,
+        44
+      ],
+      "medium": [
+        3,
+        4
+      ],
+      "major": null,
+      "label": "Enlarge person (potion)",
+      "price": "250 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        45,
+        45
+      ],
+      "medium": [
+        5,
+        5
+      ],
+      "major": null,
+      "label": "Reduce person (potion)",
+      "price": "250 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        46,
+        47
+      ],
+      "medium": [
+        6,
+        6
+      ],
+      "major": null,
+      "label": "Aid (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        48,
+        50
+      ],
+      "medium": [
+        7,
+        7
+      ],
+      "major": null,
+      "label": "Barkskin +2 (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        51,
+        53
+      ],
+      "medium": [
+        8,
+        10
+      ],
+      "major": null,
+      "label": "Bear\u2019s endurance (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        54,
+        56
+      ],
+      "medium": [
+        11,
+        13
+      ],
+      "major": [
+        1,
+        2
+      ],
+      "label": "Blur (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        57,
+        59
+      ],
+      "medium": [
+        14,
+        16
+      ],
+      "major": null,
+      "label": "Bull\u2019s strength (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        60,
+        62
+      ],
+      "medium": [
+        17,
+        19
+      ],
+      "major": null,
+      "label": "Cat\u2019s grace (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        63,
+        67
+      ],
+      "medium": [
+        20,
+        27
+      ],
+      "major": [
+        3,
+        7
+      ],
+      "label": "Cure moderate wounds (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        68,
+        68
+      ],
+      "medium": [
+        28,
+        28
+      ],
+      "major": null,
+      "label": "Darkness (oil)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        69,
+        71
+      ],
+      "medium": [
+        29,
+        30
+      ],
+      "major": [
+        8,
+        9
+      ],
+      "label": "Darkvision (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        72,
+        74
+      ],
+      "medium": [
+        31,
+        31
+      ],
+      "major": null,
+      "label": "Delay poison (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        75,
+        76
+      ],
+      "medium": [
+        32,
+        33
+      ],
+      "major": null,
+      "label": "Eagle\u2019s splendor (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        77,
+        78
+      ],
+      "medium": [
+        34,
+        35
+      ],
+      "major": null,
+      "label": "Fox\u2019s cunning (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        79,
+        81
+      ],
+      "medium": [
+        36,
+        37
+      ],
+      "major": [
+        10,
+        11
+      ],
+      "label": "Invisibility (potion or oil)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        82,
+        84
+      ],
+      "medium": [
+        38,
+        38
+      ],
+      "major": [
+        12,
+        12
+      ],
+      "label": "Lesser restoration (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        85,
+        86
+      ],
+      "medium": [
+        39,
+        39
+      ],
+      "major": null,
+      "label": "Levitate (potion or oil)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        87,
+        87
+      ],
+      "medium": [
+        40,
+        40
+      ],
+      "major": null,
+      "label": "Misdirection (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        88,
+        89
+      ],
+      "medium": [
+        41,
+        42
+      ],
+      "major": null,
+      "label": "Owl\u2019s wisdom (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        90,
+        91
+      ],
+      "medium": [
+        43,
+        43
+      ],
+      "major": null,
+      "label": "Protection from arrows 10/magic (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        92,
+        93
+      ],
+      "medium": [
+        44,
+        44
+      ],
+      "major": [
+        13,
+        13
+      ],
+      "label": "Remove paralysis (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        94,
+        96
+      ],
+      "medium": [
+        45,
+        46
+      ],
+      "major": null,
+      "label": "Resist energy (type) 10 (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        97,
+        97
+      ],
+      "medium": [
+        47,
+        48
+      ],
+      "major": [
+        14,
+        14
+      ],
+      "label": "Shield of faith +3 (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        98,
+        99
+      ],
+      "medium": [
+        49,
+        49
+      ],
+      "major": null,
+      "label": "Spider climb (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": [
+        100,
+        100
+      ],
+      "medium": [
+        50,
+        50
+      ],
+      "major": [
+        15,
+        15
+      ],
+      "label": "Undetectable alignment (potion)",
+      "price": "300 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        51,
+        51
+      ],
+      "major": [
+        16,
+        16
+      ],
+      "label": "Barkskin +3 (potion)",
+      "price": "600 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        52,
+        52
+      ],
+      "major": [
+        17,
+        18
+      ],
+      "label": "Shield of faith +4 (potion)",
+      "price": "600 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        53,
+        55
+      ],
+      "major": [
+        19,
+        20
+      ],
+      "label": "Resist energy (type) 20 (potion)",
+      "price": "700 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        56,
+        60
+      ],
+      "major": [
+        21,
+        28
+      ],
+      "label": "Cure serious wounds (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        61,
+        61
+      ],
+      "major": [
+        29,
+        29
+      ],
+      "label": "Daylight (oil)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        62,
+        64
+      ],
+      "major": [
+        30,
+        32
+      ],
+      "label": "Displacement (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        65,
+        65
+      ],
+      "major": [
+        33,
+        33
+      ],
+      "label": "Flame arrow (oil)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        66,
+        68
+      ],
+      "major": [
+        34,
+        38
+      ],
+      "label": "Fly (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        69,
+        69
+      ],
+      "major": [
+        39,
+        39
+      ],
+      "label": "Gaseous form (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        70,
+        71
+      ],
+      "major": null,
+      "label": "Greater magic fang +1 (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        72,
+        73
+      ],
+      "major": null,
+      "label": "Greater magic weapon +1 (oil)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        74,
+        75
+      ],
+      "major": [
+        40,
+        41
+      ],
+      "label": "Haste (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        76,
+        78
+      ],
+      "major": [
+        42,
+        44
+      ],
+      "label": "Heroism (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        79,
+        80
+      ],
+      "major": [
+        45,
+        46
+      ],
+      "label": "Keen edge (oil)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        81,
+        81
+      ],
+      "major": [
+        47,
+        47
+      ],
+      "label": "Magic circle against (alignment) (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        82,
+        83
+      ],
+      "major": null,
+      "label": "Magic vestment +1 (oil)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        84,
+        86
+      ],
+      "major": [
+        48,
+        50
+      ],
+      "label": "Neutralize poison (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        87,
+        88
+      ],
+      "major": [
+        51,
+        52
+      ],
+      "label": "Nondetection (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        89,
+        91
+      ],
+      "major": [
+        53,
+        54
+      ],
+      "label": "Protection from energy (type) (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        92,
+        93
+      ],
+      "major": [
+        55,
+        55
+      ],
+      "label": "Rage (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        94,
+        94
+      ],
+      "major": [
+        56,
+        56
+      ],
+      "label": "Remove blindness/deafness (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        95,
+        95
+      ],
+      "major": [
+        57,
+        57
+      ],
+      "label": "Remove curse (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        96
+      ],
+      "major": [
+        58,
+        58
+      ],
+      "label": "Remove disease (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        97,
+        97
+      ],
+      "major": [
+        59,
+        59
+      ],
+      "label": "Tongues (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        98,
+        99
+      ],
+      "major": [
+        60,
+        60
+      ],
+      "label": "Water breathing (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        100,
+        100
+      ],
+      "major": [
+        61,
+        61
+      ],
+      "label": "Water walk (potion)",
+      "price": "750 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        62,
+        63
+      ],
+      "label": "Barkskin +4 (potion)",
+      "price": "900 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        64,
+        64
+      ],
+      "label": "Shield of faith +5 (potion)",
+      "price": "900 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        65,
+        65
+      ],
+      "label": "Good hope (potion)",
+      "price": "1,050 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        66,
+        68
+      ],
+      "label": "Resist energy (type) 30 (potion)",
+      "price": "1,100 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        69,
+        69
+      ],
+      "label": "Barkskin +5 (potion)",
+      "price": "1,200 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        70,
+        73
+      ],
+      "label": "Greater magic fang +2 (potion)",
+      "price": "1,200 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        74,
+        77
+      ],
+      "label": "Greater magic weapon +2 (oil)",
+      "price": "1,200 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        78,
+        81
+      ],
+      "label": "Magic vestment +2 (oil)",
+      "price": "1,200 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        82,
+        82
+      ],
+      "label": "Protection from arrows 15/magic (potion)",
+      "price": "1,500 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        83,
+        85
+      ],
+      "label": "Greater magic fang +3 (potion)",
+      "price": "1,800 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        86,
+        88
+      ],
+      "label": "Greater magic weapon +3 (oil)",
+      "price": "1,800 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        89,
+        91
+      ],
+      "label": "Magic vestment +3 (oil)",
+      "price": "1,800 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        92,
+        93
+      ],
+      "label": "Greater magic fang +4 (potion)",
+      "price": "2,400 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        94,
+        95
+      ],
+      "label": "Greater magic weapon +4 (oil)",
+      "price": "2,400 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        96,
+        97
+      ],
+      "label": "Magic vestment +4 (oil)",
+      "price": "2,400 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        98,
+        98
+      ],
+      "label": "Greater magic fang +5 (potion)",
+      "price": "3,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        99,
+        99
+      ],
+      "label": "Greater magic weapon +5 (oil)",
+      "price": "3,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        100,
+        100
+      ],
+      "label": "Magic vestment +5 (oil)",
+      "price": "3,000 gp",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Physical Description: Rings have no appreciable weight. Although exceptions exist that are crafted from glass or bone, the vast majority of rings are forged from metal\u2014usually precious metals such as gold, silver, and platinum. A ring has AC 13, 2 hit points, hardness 10, and a break DC of 25.",
+      "price": "Activation: Usually, a ring\u2019s ability is activated by a command word (a standard action that does not provoke attacks of opportunity) or it works continually. Some rings have exceptional activation methods, according to their descriptions.",
+      "action": "item"
+    }
+  ]
+}

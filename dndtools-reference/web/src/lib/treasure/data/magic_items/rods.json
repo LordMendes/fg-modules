@@ -1,0 +1,676 @@
+{
+  "rows": [
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "3,000 gp",
+      "price": "08\u201314",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "3,000 gp",
+      "price": "15\u201321",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "3,000 gp",
+      "price": "22\u201328",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "5,000 gp",
+      "price": "29\u201335",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "9,000 gp",
+      "price": "36\u201342",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "10,500 gp",
+      "price": "43\u201353",
+      "action": "item"
+    },
+    {
+      "minor": [
+        1,
+        4
+      ],
+      "medium": null,
+      "major": null,
+      "label": "11,000 gp",
+      "price": "54\u201357",
+      "action": "item"
+    },
+    {
+      "minor": [
+        5,
+        6
+      ],
+      "medium": null,
+      "major": null,
+      "label": "11,000 gp",
+      "price": "58\u201361",
+      "action": "item"
+    },
+    {
+      "minor": [
+        7,
+        8
+      ],
+      "medium": null,
+      "major": null,
+      "label": "11,000 gp",
+      "price": "62\u201365",
+      "action": "item"
+    },
+    {
+      "minor": [
+        9,
+        10
+      ],
+      "medium": null,
+      "major": null,
+      "label": "11,000 gp",
+      "price": "66\u201371",
+      "action": "item"
+    },
+    {
+      "minor": [
+        11,
+        14
+      ],
+      "medium": null,
+      "major": null,
+      "label": "12,000 gp",
+      "price": "72\u201379",
+      "action": "item"
+    },
+    {
+      "minor": [
+        15,
+        18
+      ],
+      "medium": null,
+      "major": null,
+      "label": "13,000 gp",
+      "price": "80\u201383",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "14,000 gp",
+      "price": "84\u201389",
+      "action": "item"
+    },
+    {
+      "minor": [
+        19,
+        21
+      ],
+      "medium": null,
+      "major": null,
+      "label": "15,000 gp",
+      "price": "90\u201397",
+      "action": "item"
+    },
+    {
+      "minor": [
+        22,
+        25
+      ],
+      "medium": null,
+      "major": null,
+      "label": "19,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        26,
+        30
+      ],
+      "medium": null,
+      "major": null,
+      "label": "23,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        31,
+        36
+      ],
+      "medium": null,
+      "major": null,
+      "label": "24,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        37,
+        42
+      ],
+      "medium": null,
+      "major": null,
+      "label": "24,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        43,
+        48
+      ],
+      "medium": null,
+      "major": null,
+      "label": "24,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        49,
+        53
+      ],
+      "medium": null,
+      "major": null,
+      "label": "25,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        54,
+        58
+      ],
+      "medium": null,
+      "major": null,
+      "label": "25,000 gp",
+      "price": "98\u201399",
+      "action": "item"
+    },
+    {
+      "minor": [
+        59,
+        64
+      ],
+      "medium": null,
+      "major": null,
+      "label": "32,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        65,
+        69
+      ],
+      "medium": null,
+      "major": null,
+      "label": "33,000 gp",
+      "price": "100",
+      "action": "item"
+    },
+    {
+      "minor": [
+        70,
+        73
+      ],
+      "medium": null,
+      "major": null,
+      "label": "35,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        74,
+        77
+      ],
+      "medium": null,
+      "major": null,
+      "label": "37,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        78,
+        80
+      ],
+      "medium": null,
+      "major": null,
+      "label": "50,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        81,
+        84
+      ],
+      "medium": null,
+      "major": null,
+      "label": "50,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        85,
+        86
+      ],
+      "medium": null,
+      "major": null,
+      "label": "54,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        87,
+        88
+      ],
+      "medium": null,
+      "major": null,
+      "label": "60,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        89,
+        90
+      ],
+      "medium": null,
+      "major": null,
+      "label": "61,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        91,
+        92
+      ],
+      "medium": null,
+      "major": null,
+      "label": "70,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        93,
+        94
+      ],
+      "medium": null,
+      "major": null,
+      "label": "73,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        95,
+        96
+      ],
+      "medium": null,
+      "major": null,
+      "label": "75,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        97,
+        98
+      ],
+      "medium": null,
+      "major": null,
+      "label": "85,000 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        99,
+        99
+      ],
+      "medium": null,
+      "major": null,
+      "label": "121,500 gp",
+      "price": "\u2014",
+      "action": "item"
+    },
+    {
+      "minor": [
+        100,
+        100
+      ],
+      "medium": null,
+      "major": null,
+      "label": "170,000 gp",
+      "price": "| Market Price |",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Although all rods are generally scepterlike, their configurations and abilities run the magical gamut. Standard rods are described below.",
+      "price": "Absorption: This rod acts as a magnet, drawing spells or spell-like abilities into itself. The magic absorbed must be a single-target spell or a ray directed at either the character possessing the rod or her gear. The rod then nullifies the spell\u2019s effect and stores its potential until the wielder releases this energy in the form of spells of her own. She can instantly detect a spell\u2019s level as the rod absorbs that spell\u2019s energy. Absorption requires no action on the part of the user if the rod is in hand at the time.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "To determine the absorption potential remaining in a newly found rod, roll d% and divide the result by 2. Then roll d% again: On a result of 71\u2013100, half the levels already absorbed by the rod are still stored within.",
+      "price": "Strong abjuration; CL 15th;Craft Rod, spell turning; Price 50,000 gp.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Moderate abjuration, divination, enchantment, and evocation; CL 11th; Craft Rod, alarm, detect chaos, detect evil, detect good, detect law, detect magic, discern lies, light, see invisibility, prayer, animate objects; Price 85,000 gp.",
+      "price": "Cancellation: This dreaded rod is a bane to magic items, for its touch drains an item of all magical properties. The item touched must make a DC 23 Will save to prevent the rod from draining it. If a creature is holding it at the time, then the item can use the holder\u2019s Will save bonus in place of its own if the holder\u2019s is better. In such cases, contact is made by making a melee touch attack roll. Upon draining an item, the rod itself becomes brittle and cannot be used again. Drained items are only restorable by wish or miracle. (If a sphere of annihilation and a rod of cancellation negate each other, nothing can restore either of them.)",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Moderate divination; CL 10th; Craft Rod, true seeing; Price 23,500 gp.",
+      "price": "Flailing: Upon the command of its possessor, the rod activates, changing from a normal-seeming rod to a +3 dire flail. The dire flail is a double weapon, which means that each of the weapon\u2019s heads can be used to attack. The wielder can gain an extra attack (with the second head) at the cost of making all attacks at a \u20132 penalty (as if she had the Two-Weapon Fighting feat).",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Moderate enchantment; CL 9th; Craft Rod, Craft Magic Arms and Armor, bless; Price 50,000 gp.",
+      "price": "Flame Extinguishing: This rod can extinguish Medium or smaller nonmagical fires with simply a touch (a standard action). For the rod to be effective against other sorts of fires, the wielder must expend 1 or more of the rod\u2019s charges.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "If the device is used upon a fire creature (a melee touch attack), it deals 6d6 points of damage to the creature. This use requires 3 charges.",
+      "price": "A rod of flame extinguishing has 10 charges when found. Spent charges are renewed every day, so that a wielder can expend up to 10 charges in any 24-hour period.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Moderate transmutation; CL 10th; Craft Rod, levitate; Price 5,000 gp.",
+      "price": "Lordly Might: This rod has functions that are spell-like, and it can also be used as a magic weapon of various sorts. It also has several more mundane uses. The rod of lordly might is metal, thicker than other rods, with a flanged ball at one end and six studlike buttons along its length. (Pushing any of the rod\u2019s buttons is equivalent to drawing a weapon.) It weighs 10 pounds.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "\u2022 Fear upon all enemies viewing it, if the wielder so desires (10-foot maximum range, Will DC 16 partial). Invoking this power is a standard action.",
+      "price": "\u2022 Deal 2d4 hit points of damage to an opponent on a successful touch attack (Will DC 17 half ) and cure the wielder of a like amount of damage. The wielder must choose to use this power before attacking, as with hold person.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "\u2022 When button 1 is pushed, the rod becomes a +1 flaming longsword. A blade springs from the ball, with the ball itself becoming the sword\u2019s hilt. The weapon lengthens to an overall length of 4 feet.",
+      "price": "\u2022 When button 2 is pushed, the rod becomes a +4 battleaxe. A wide blade springs forth at the ball, and the whole lengthens to 4 feet.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "\u2022 Climbing pole/ladder. When button 4 is pushed, a spike that can anchor in granite is extruded from the ball, while the other end sprouts three sharp hooks. The rod lengthens to anywhere between 5 and 50 feet in a single round, stopping when button 4 is pushed again. Horizontal bars three inches long fold out from the sides, 1 foot apart, in staggered progression. The rod is firmly held by the spike and hooks and can bear up to 4,000 pounds. The wielder can retract the pole by pushing button 5.",
+      "price": "\u2022 The ladder function can be used to force open doors. The wielder plants the rod\u2019s base 30 feet or less from the portal to be forced and in line with it, then pushes button 4. The force exerted has a Strength modifier of +12.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Metal and Mineral Detection: This rod pulses in the wielder\u2019s hand and points to the largest mass of metal within 30 feet. However, the wielder can concentrate on a specific metal or mineral. If the specific mineral is within 30 feet, the rod points to any places it is located, and the rod wielder knows the approximate quantity as well. If more than one deposit of the specified metal or mineral is within range, the rod points to the largest cache first. Each operation requires a full-round action.",
+      "price": "Moderate divination; CL 9th; Craft Rod, locate object; Price 10,500 gp.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Lesser and Greater Metamagic Rods: Normal metamagic rods can be used with spells of 6th level or lower. Lesser rods can be used with spells of 3rd level or lower, while greater rods can be used with spells of 9th level or lower.",
+      "price": "Metamagic, Empower: The wielder can cast up to three spells per day that are empowered as though using the Empower Spell feat.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Strong (no school); CL 17th; Craft Rod, Enlarge Spell; Price 3,000 gp (lesser), 11,000 gp (normal), 24,500 gp (greater).",
+      "price": "Metamagic, Extend: The wielder can cast up to three spells per day that are extended as though using the Extend Spell feat.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Strong (no school); CL 17th; Craft Rod, Maximize Spell feat; Price 14,000 gp (lesser), 54,000 gp (normal), 121,500 gp (greater).",
+      "price": "Metamagic, Quicken: The wielder can cast up to three spells per day that are quickened as though using the Quicken Spell feat.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Strong (no school); CL 17th; Craft Rod, Silent Spell; Price 3,000 gp (lesser), 11,000 gp (normal), 24,500 gp (greater).",
+      "price": "Negation: This device negates the spell or spell-like function or functions of magic items. The wielder points the rod at the magic item, and a pale gray beam shoots forth to touch the target device, attacking as a ray (a ranged touch attack). The ray functions as a greater dispel magic spell, except it only affects magic items. To negate instantaneous effects from an item, the rod wielder needs to have used a ready action. The dispel check uses the rod\u2019s caster level (15th). The target item gets no saving throw, although the rod can\u2019t negate artifacts (even minor artifacts). The rod can function three times per day.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Moderate transmutation; CL 10th; Craft Rod, Craft Magic Arms and Armor, baleful polymorph, creator must be good; Price 13,000 gp.",
+      "price": "Rulership: This rod looks like a royal scepter worth at least 5,000 gp in materials and workmanship alone. The wielder can command the obedience and fealty of creatures within 120 feet when she activates the device (a standard action). Creatures totaling 300 Hit Dice can be ruled, but creatures with Intelligence scores of 12 or higher are entitled to a DC 16 Will save to negate the effect. Ruled creatures obey the wielder as if she were their absolute sovereign. Still, if the wielder gives a command that is contrary to the nature of the creatures commanded, the magic is broken. The rod can be used for 500 total minutes before crumbling to dust. This duration need not be continuous.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "In this pocket paradise, creatures don\u2019t age, and natural healing take place at twice the normal rate. Fresh water and food (fruits and vegetables only) are in abundance. The climate is comfortable for all creatures involved.",
+      "price": "Activating the rod (a standard action) causes the wielder and all creatures touching the rod to be transported instantaneously to the paradise. Members of large groups can hold hands or otherwise maintain physical contact, allowing all connected creatures in a circle or a chain to be affected by the rod. Unwilling creatures get a DC 17 Will save to negate the effect. If such a creature succeeds on its save, other creatures beyond that point in a chain can still be affected by the rod.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Splendor: The possessor of this rod gains a +4 enhancement bonus to her Charisma score for as long as she holds or carries the item. Once per day, the rod creates and garbs her in clothing of the finest fabrics, plus adornments of furs and jewels.",
+      "price": "Apparel created by the magic of the rod remains in existence for 12 hours. However, if the possessor attempts to sell or give away any part of it, to use it for a spell component, or the like, all the apparel immediately disappears. The same applies if any of it is forcibly taken from her.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Strong conjuration and transmutation; CL 12th; Craft Rod, eagle\u2019s splendor, fabricate, major creation; Price 25,000 gp.",
+      "price": "Thunder and Lightning: Constructed of iron set with silver rivets, this rod has the properties of a +2 light mace. Its other magical powers are as follows.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "\u2022 Thunderclap: Once per day as a standard action, the wielder can cause the rod to give out a deafening noise, just as a shout spell (Fortitude DC 16 partial, 2d6 points of sonic damage, target deafened for 2d6 rounds).",
+      "price": "\u2022 Lightning Stroke: Once per day as a standard action, the wielder can cause the rod to shoot out a 5-foot-wide lightning bolt (9d6 points of electricity damage, Reflex DC 16 half ) to a range of 200 feet.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Viper: This rod strikes as a +2 heavy mace. Once per day, upon command, the head of the rod becomes that of an actual serpent for 10 minutes. During this period, any successful strike with the rod deals its usual damage and also poisons the creature hit. The poison deals 1d10 points of Constitution damage immediately (Fortitude DC 14 negates) and another 1d10 points of Constitution damage 1 minute later (Fortitude DC 14 negates). The rod only functions if its possessor is evil.",
+      "price": "Moderate necromancy; CL 10th; Craft Rod, Craft Magic Arms and Armor, poison, creator must be evil; Price 19,000 gp.",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "Wonder: A rod of wonder is a strange and unpredictable device that randomly generates any number of weird effects each time it is used. (Activating the rod is a standard action.) Typical powers of the rod include the following.",
+      "price": "d%",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        1,
+        5
+      ],
+      "major": null,
+      "label": "Slow creature pointed at for 10 rounds (Will DC 15 negates).",
+      "price": "06\u201310",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        11,
+        15
+      ],
+      "major": null,
+      "label": "Deludes wielder for 1 round into believing the rod functions as indicated by a second die roll (no save).",
+      "price": "16\u201320",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        21,
+        25
+      ],
+      "major": null,
+      "label": "Wielder learns target\u2019s surface thoughts (as with detect thoughts) for 1d4 rounds (no save).",
+      "price": "26\u201330",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        31,
+        33
+      ],
+      "major": null,
+      "label": "Heavy rain falls for 1 round in 60-ft. radius centered on rod wielder.",
+      "price": "34\u201336",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        37,
+        46
+      ],
+      "major": null,
+      "label": "Lightning bolt (70 ft. long, 5 ft. wide), 6d6 damage (Reflex DC 15 half).",
+      "price": "47\u201349",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        50,
+        53
+      ],
+      "major": null,
+      "label": "Enlarge person if within 60 ft. of rod (Fortitude DC 13 negates).",
+      "price": "54\u201358",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        59,
+        62
+      ],
+      "major": null,
+      "label": "Grass grows in 160-sq.-ft. area before the rod, or grass existing there grows to ten times normal size.",
+      "price": "63\u201365",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        66,
+        69
+      ],
+      "major": null,
+      "label": "Reduce wielder to 1/12 height (no save).",
+      "price": "70\u201379",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        80,
+        84
+      ],
+      "major": null,
+      "label": "Invisibility covers rod wielder.",
+      "price": "85\u201387",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        88,
+        90
+      ],
+      "major": null,
+      "label": "10\u201340 gems, value 1 gp each, shoot forth in a 30-ft.-long stream. Each gem deals 1 point of damage to any creature in its path: Roll 5d4 for the number of hits and divide them among the available targets.",
+      "price": "91\u201395",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        97
+      ],
+      "major": null,
+      "label": "Wielder (50% chance) or target (50% chance) turns permanently blue, green, or purple (no save).",
+      "price": "98\u2013100",
+      "action": "item"
+    }
+  ]
+}

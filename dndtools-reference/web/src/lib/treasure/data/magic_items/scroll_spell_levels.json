@@ -1,0 +1,134 @@
+{
+  "rows": [
+    {
+      "minor": null,
+      "medium": null,
+      "major": null,
+      "label": "---",
+      "price": "---",
+      "action": "item"
+    },
+    {
+      "minor": [
+        1,
+        5
+      ],
+      "medium": null,
+      "major": null,
+      "label": "0",
+      "price": "1st",
+      "action": "item"
+    },
+    {
+      "minor": [
+        6,
+        50
+      ],
+      "medium": null,
+      "major": null,
+      "label": "1st",
+      "price": "1st",
+      "action": "item"
+    },
+    {
+      "minor": [
+        51,
+        95
+      ],
+      "medium": [
+        1,
+        5
+      ],
+      "major": null,
+      "label": "2nd",
+      "price": "3rd",
+      "action": "item"
+    },
+    {
+      "minor": [
+        96,
+        100
+      ],
+      "medium": [
+        6,
+        65
+      ],
+      "major": null,
+      "label": "3rd",
+      "price": "5th",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        66,
+        95
+      ],
+      "major": [
+        1,
+        5
+      ],
+      "label": "4th",
+      "price": "7th",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": [
+        96,
+        100
+      ],
+      "major": [
+        6,
+        50
+      ],
+      "label": "5th",
+      "price": "9th",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        51,
+        70
+      ],
+      "label": "6th",
+      "price": "11th",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        71,
+        85
+      ],
+      "label": "7th",
+      "price": "13th",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        86,
+        95
+      ],
+      "label": "8th",
+      "price": "15th",
+      "action": "item"
+    },
+    {
+      "minor": null,
+      "medium": null,
+      "major": [
+        95,
+        100
+      ],
+      "label": "9th",
+      "price": "17th",
+      "action": "item"
+    }
+  ]
+}
