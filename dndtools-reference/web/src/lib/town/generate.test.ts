@@ -76,6 +76,23 @@ describe("town generator map features", () => {
     assert.equal(result.labels, false);
     assert.equal(result.svgDraft.labels, false);
     assert.ok(!result.svg.includes("town-gen-district-label"));
+    assert.ok(!result.svg.includes("town-gen-map-title"));
     assert.ok(result.svg.includes("<title"));
+  });
+
+  it("draws a cellular town inside a ring wall", () => {
+    const rng = createSeededRng(4);
+    const result = generateTown(
+      baseInput({ size: "small-town", walled: true, river: true, labels: true }),
+      rng,
+    );
+    const blocks = result.svg.match(/town-gen-block/g) ?? [];
+    assert.ok(blocks.length >= 8);
+    assert.ok(result.svg.includes("town-gen-terrain"));
+    assert.ok(result.svg.includes("town-gen-wall"));
+    assert.ok(!result.svg.includes("<circle class=\"town-gen-wall"));
+    assert.ok(result.svg.includes("town-gen-tower"));
+    assert.ok(result.svg.includes("town-gen-map-title"));
+    assert.ok(result.profile.population.startsWith("Approximately"));
   });
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, RefreshCw } from "lucide-react";
+import { Download, Printer } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -63,7 +63,7 @@ const TOPOGRAPHY_LABELS: Record<TownTopography, string> = {
 };
 
 const RACE_LABELS: Record<TownRace, string> = {
-  any: "Any",
+  any: "Any race",
   human: "Human",
   dwarf: "Dwarf",
   elf: "Elf",
@@ -117,6 +117,9 @@ export function TownGenerator() {
   const [labels, setLabels] = useState(
     parseBool(searchParams.get("labels"), DEFAULT_TOWN_INPUT.labels),
   );
+  const [normalizeCells, setNormalizeCells] = useState(
+    parseBool(searchParams.get("norm"), false),
+  );
   const [race, setRace] = useState<TownRace>(
     parseEnum(searchParams.get("race"), TOWN_RACES, DEFAULT_TOWN_INPUT.race),
   );
@@ -136,6 +139,7 @@ export function TownGenerator() {
       size,
       walled,
       labels,
+      normalizeCells,
       race,
       culture,
     }),
@@ -144,6 +148,7 @@ export function TownGenerator() {
       environment,
       labels,
       name,
+      normalizeCells,
       race,
       river,
       size,
@@ -163,6 +168,7 @@ export function TownGenerator() {
       params.set("size", nextInput.size);
       params.set("walled", nextInput.walled ? "1" : "0");
       params.set("labels", nextInput.labels ? "1" : "0");
+      params.set("norm", nextInput.normalizeCells ? "1" : "0");
       params.set("race", nextInput.race);
       params.set("culture", nextInput.culture);
       if (nextInput.name.trim()) params.set("name", nextInput.name.trim());
@@ -183,16 +189,37 @@ export function TownGenerator() {
     [syncUrl],
   );
 
+  const seedRef = useRef(seed);
+  seedRef.current = seed;
+  const inputRef = useRef(input);
+  inputRef.current = input;
+  const generateRef = useRef(runGenerate);
+  generateRef.current = runGenerate;
+
   useEffect(() => {
     if (mounted.current) return;
     mounted.current = true;
     runGenerate(seed, input);
   }, [input, runGenerate, seed]);
 
+  const optionsReady = useRef(false);
   useEffect(() => {
-    if (walledTouched.current) return;
-    setWalled(defaultWalledForSize(size));
-  }, [size]);
+    if (!optionsReady.current) {
+      optionsReady.current = true;
+      return;
+    }
+    generateRef.current(seedRef.current, inputRef.current);
+  }, [
+    culture,
+    environment,
+    labels,
+    normalizeCells,
+    race,
+    river,
+    size,
+    topography,
+    walled,
+  ]);
 
   function handleGenerate() {
     const nextSeed = advanceGeneratorSeed(seed);
@@ -202,11 +229,21 @@ export function TownGenerator() {
 
   function handleRerollName() {
     const rng = createSeededRng(seed + 9001);
-    setName(rollTownName(rng, race, culture, ""));
+    const nextName = rollTownName(rng, race, culture, "");
+    setName(nextName);
+    runGenerate(seed, { ...input, name: nextName });
+  }
+
+  function handleNameBlur() {
+    runGenerate(seed, input);
   }
 
   function handleUseSeed() {
     runGenerate(seed, input);
+  }
+
+  function handlePrint() {
+    window.print();
   }
 
   function handleDownloadSvg() {
@@ -223,165 +260,166 @@ export function TownGenerator() {
   return (
     <div className="town-gen">
       <div className="town-gen-form">
-        <div className="town-gen-name-row">
-          <div className="tool-field town-gen-name-field">
-            <Label htmlFor="town-gen-name">Town name</Label>
-            <input
-              id="town-gen-name"
-              className="tool-input"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              autoComplete="off"
-            />
-          </div>
-          <button
-            type="button"
-            className="tool-btn tool-btn--ghost town-gen-name-btn"
-            onClick={handleRerollName}
-          >
-            <RefreshCw size={16} aria-hidden="true" />
-            Reroll name
-          </button>
-        </div>
-
-        <div className="town-gen-seed-row">
-          <div className="tool-field town-gen-seed-field">
-            <Label htmlFor="town-gen-seed">Seed</Label>
-            <input
-              id="town-gen-seed"
-              className="tool-input"
-              inputMode="numeric"
-              value={seed}
-              onChange={(event) => {
-                const parsed = Number.parseInt(event.target.value, 10);
-                setSeed(Number.isNaN(parsed) ? 1 : parsed);
-              }}
-            />
-          </div>
-          <button
-            type="button"
-            className="tool-btn tool-btn-secondary"
-            onClick={handleUseSeed}
-          >
-            Use this seed
-          </button>
-        </div>
-
-        <div className="town-gen-grid">
-          <div className="tool-field">
-            <Label htmlFor="town-gen-environment">Environment</Label>
-            <select
-              id="town-gen-environment"
-              className="tool-input"
-              value={environment}
-              onChange={(event) =>
-                setEnvironment(event.target.value as TownEnvironment)
-              }
+        <div className="town-gen-name-block">
+          <Label htmlFor="town-gen-name">Town name</Label>
+          <input
+            id="town-gen-name"
+            className="tool-input"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            onBlur={handleNameBlur}
+            autoComplete="off"
+          />
+          <div className="town-gen-name-actions">
+            <button
+              type="button"
+              className="tool-btn tool-btn-secondary"
+              onClick={handleRerollName}
             >
-              {TOWN_ENVIRONMENTS.map((value) => (
-                <option key={value} value={value}>
-                  {ENVIRONMENT_LABELS[value]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="tool-field">
-            <Label htmlFor="town-gen-topography">Topography</Label>
-            <select
-              id="town-gen-topography"
-              className="tool-input"
-              value={subterranean ? "inland" : topography}
-              disabled={subterranean}
-              onChange={(event) =>
-                setTopography(event.target.value as TownTopography)
-              }
-            >
-              {TOWN_TOPOGRAPHIES.map((value) => (
-                <option key={value} value={value}>
-                  {TOPOGRAPHY_LABELS[value]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="tool-field">
-            <Label htmlFor="town-gen-size">Size</Label>
-            <select
-              id="town-gen-size"
-              className="tool-input"
-              value={size}
-              onChange={(event) => setSize(event.target.value as TownSize)}
-            >
-              {TOWN_SIZES.map((value) => (
-                <option key={value} value={value}>
-                  {TOWN_SIZE_LABELS[value]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="tool-field">
-            <Label htmlFor="town-gen-race">Race</Label>
-            <select
-              id="town-gen-race"
-              className="tool-input"
-              value={race}
-              onChange={(event) => setRace(event.target.value as TownRace)}
-            >
-              {TOWN_RACES.map((value) => (
-                <option key={value} value={value}>
-                  {RACE_LABELS[value]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="tool-field">
-            <Label htmlFor="town-gen-culture">Culture</Label>
-            <select
-              id="town-gen-culture"
-              className="tool-input"
-              value={culture}
-              onChange={(event) => setCulture(event.target.value)}
-            >
-              {cultureOptions.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              Random name
+            </button>
           </div>
         </div>
 
-        <div className="town-gen-checks">
-          <label className="town-gen-check">
-            <input
-              type="checkbox"
-              checked={river}
-              onChange={(event) => setRiver(event.target.checked)}
-            />
-            <span>River</span>
-          </label>
-          <label className="town-gen-check">
-            <input
-              type="checkbox"
-              checked={walled}
-              onChange={(event) => {
-                walledTouched.current = true;
-                setWalled(event.target.checked);
-              }}
-            />
-            <span>Walled</span>
-          </label>
-          <label className="town-gen-check">
-            <input
-              type="checkbox"
-              checked={labels}
-              onChange={(event) => setLabels(event.target.checked)}
-            />
-            <span>Labels</span>
-          </label>
+        <div className="town-gen-panels">
+          <div className="town-gen-panel">
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-environment">Environment</Label>
+              <select
+                id="town-gen-environment"
+                className="tool-input"
+                value={environment}
+                onChange={(event) =>
+                  setEnvironment(event.target.value as TownEnvironment)
+                }
+              >
+                {TOWN_ENVIRONMENTS.map((value) => (
+                  <option key={value} value={value}>
+                    {ENVIRONMENT_LABELS[value]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-topography">Topography</Label>
+              <select
+                id="town-gen-topography"
+                className="tool-input"
+                value={subterranean ? "inland" : topography}
+                disabled={subterranean}
+                onChange={(event) =>
+                  setTopography(event.target.value as TownTopography)
+                }
+              >
+                {TOWN_TOPOGRAPHIES.map((value) => (
+                  <option key={value} value={value}>
+                    {TOPOGRAPHY_LABELS[value]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-river">River</Label>
+              <input
+                id="town-gen-river"
+                className="town-gen-box"
+                type="checkbox"
+                checked={river}
+                onChange={(event) => setRiver(event.target.checked)}
+              />
+            </div>
+          </div>
+
+          <div className="town-gen-panel">
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-size">Town size</Label>
+              <select
+                id="town-gen-size"
+                className="tool-input"
+                value={size}
+                onChange={(event) => {
+                  const next = event.target.value as TownSize;
+                  setSize(next);
+                  if (!walledTouched.current) setWalled(defaultWalledForSize(next));
+                }}
+              >
+                {TOWN_SIZES.map((value) => (
+                  <option key={value} value={value}>
+                    {TOWN_SIZE_LABELS[value]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-walled">Walled</Label>
+              <input
+                id="town-gen-walled"
+                className="town-gen-box"
+                type="checkbox"
+                checked={walled}
+                onChange={(event) => {
+                  walledTouched.current = true;
+                  setWalled(event.target.checked);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="town-gen-panel">
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-normalize">Normalize cells</Label>
+              <input
+                id="town-gen-normalize"
+                className="town-gen-box"
+                type="checkbox"
+                checked={normalizeCells}
+                onChange={(event) => setNormalizeCells(event.target.checked)}
+              />
+            </div>
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-labels">Label map</Label>
+              <input
+                id="town-gen-labels"
+                className="town-gen-box"
+                type="checkbox"
+                checked={labels}
+                onChange={(event) => setLabels(event.target.checked)}
+              />
+            </div>
+          </div>
+
+          <div className="town-gen-panel">
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-race">Race</Label>
+              <select
+                id="town-gen-race"
+                className="tool-input"
+                value={race}
+                onChange={(event) => setRace(event.target.value as TownRace)}
+              >
+                {TOWN_RACES.map((value) => (
+                  <option key={value} value={value}>
+                    {RACE_LABELS[value]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="town-gen-line">
+              <Label htmlFor="town-gen-culture">Culture</Label>
+              <select
+                id="town-gen-culture"
+                className="tool-input"
+                value={culture}
+                onChange={(event) => setCulture(event.target.value)}
+              >
+                {cultureOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.id === "default" ? "Default culture" : option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="town-gen-actions">
@@ -402,44 +440,94 @@ export function TownGenerator() {
             <Download size={16} aria-hidden="true" />
             Download SVG
           </button>
+          <button
+            type="button"
+            className="tool-btn tool-btn-secondary"
+            disabled={!result}
+            onClick={handlePrint}
+          >
+            <Printer size={16} aria-hidden="true" />
+            Print
+          </button>
+        </div>
+
+        <div className="town-gen-seed-row">
+          <Label htmlFor="town-gen-seed">Seed</Label>
+          <input
+            id="town-gen-seed"
+            className="tool-input"
+            inputMode="numeric"
+            value={seed}
+            onChange={(event) => {
+              const parsed = Number.parseInt(event.target.value, 10);
+              setSeed(Number.isNaN(parsed) ? 1 : parsed);
+            }}
+          />
+          <button
+            type="button"
+            className="tool-btn tool-btn-secondary"
+            onClick={handleUseSeed}
+          >
+            Use this seed
+          </button>
         </div>
       </div>
 
       {result ? (
         <div className="town-gen-results">
-          <p className="town-gen-summary">
-            {result.name} · {TOWN_SIZE_LABELS[result.size]} ·{" "}
-            {result.wallDescription}
-          </p>
           <div
             className="town-gen-map-wrap"
             dangerouslySetInnerHTML={{ __html: result.svg }}
           />
-          <div className="town-gen-table-wrap">
-            <table className="town-gen-table">
-              <thead>
-                <tr>
-                  <th scope="col">District</th>
-                  <th scope="col">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {result.marketName ? (
+          <div className="town-gen-readout">
+            {result.labels ? null : (
+              <h2 className="town-gen-place-name">{result.name}</h2>
+            )}
+            <h3>Population</h3>
+            <ul>
+              <li>{result.profile.population}</li>
+            </ul>
+            <h3>Government</h3>
+            <ul>
+              <li>{result.profile.government}</li>
+            </ul>
+            <h3>Notable places</h3>
+            <ul>
+              {result.profile.notable.map((line, index) => (
+                <li key={`${index}-${line}`}>{line}</li>
+              ))}
+            </ul>
+            <h3>Defenses</h3>
+            <ul>
+              <li>{result.wallDescription}</li>
+            </ul>
+            <h3>Gazetteer</h3>
+            <div className="town-gen-table-wrap">
+              <table className="town-gen-table">
+                <thead>
                   <tr>
-                    <td>{result.marketName}</td>
-                    <td>Market</td>
+                    <th scope="col">District</th>
+                    <th scope="col">Notes</th>
                   </tr>
-                ) : null}
-                {result.districts.map((row) => (
-                  <tr key={row.index}>
-                    <td>
-                      {row.index}. {row.name}
-                    </td>
-                    <td>{row.notes}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {result.marketName ? (
+                    <tr>
+                      <td>{result.marketName}</td>
+                      <td>Market</td>
+                    </tr>
+                  ) : null}
+                  {result.districts.map((row) => (
+                    <tr key={row.index}>
+                      <td>
+                        {row.index}. {row.name}
+                      </td>
+                      <td>{row.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       ) : null}

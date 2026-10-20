@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { DungeonGenerator } from "@/components/tools/dungeon-generator";
 import { ToolExplainer } from "@/components/tool-explainer";
+import { ToolLicenseFooter } from "@/components/tool-license-footer";
 import { JsonLd, toolPageJsonLd } from "@/components/json-ld";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 import { getToolFaqs } from "@/lib/tool-faqs";
@@ -60,6 +61,7 @@ export default function DungeonGeneratorPage() {
         <DungeonGenerator />
       </Suspense>
       <ToolExplainer faqs={faqs} />
+      <ToolLicenseFooter toolKey="dungeon-generator" />
     </>
   );
 }

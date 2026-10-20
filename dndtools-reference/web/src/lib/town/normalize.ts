@@ -2,6 +2,7 @@ import type { TownEnvironment, TownInput, TownTopography } from "./types";
 
 export type NormalizedTownInput = TownInput & {
   effectiveTopography: TownTopography;
+  normalizeCells: boolean;
 };
 
 export function normalizeTownTopography(
@@ -22,5 +23,6 @@ export function normalizeTownInput(input: TownInput): NormalizedTownInput {
   return {
     ...input,
     effectiveTopography,
+    normalizeCells: input.normalizeCells === true,
   };
 }

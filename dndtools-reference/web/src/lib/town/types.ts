@@ -28,6 +28,7 @@ export type TownInput = {
   size: TownSize;
   walled: boolean;
   labels: boolean;
+  normalizeCells?: boolean;
   race: TownRace;
   culture: string;
 };
@@ -54,6 +55,7 @@ export type TownBuildingRect = {
   y: number;
   w: number;
   h: number;
+  shade?: number;
 };
 
 export type TownDistrictLayout = {
@@ -99,6 +101,11 @@ export type TownResult = {
   hasWater: boolean;
   svg: string;
   svgDraft: TownSvgDraft;
+  profile: {
+    population: string;
+    government: string;
+    notable: string[];
+  };
 };
 
 export const TOWN_VIEW_SIZE = 900;

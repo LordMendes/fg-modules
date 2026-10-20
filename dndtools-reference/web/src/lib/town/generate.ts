@@ -2,6 +2,7 @@ import type { SeededRng } from "@/lib/random-spellbook/seeded-rng";
 import { buildLayout } from "./geometry";
 import { normalizeTownInput } from "./normalize";
 import { rollDistrictName, rollTownName } from "./names";
+import { buildTownProfile } from "./profile";
 import { districtNotes, renderTownSvg } from "./svg";
 import {
   BUILDING_TYPES,
@@ -57,6 +58,7 @@ export function generateTown(input: TownInput, rng: SeededRng): TownResult {
     hasMarket,
     normalized.effectiveTopography,
     normalized.river,
+    normalized.normalizeCells,
     rng,
     (index) => {
       const name = rollDistrictName(
@@ -86,6 +88,15 @@ export function generateTown(input: TownInput, rng: SeededRng): TownResult {
     notes: districtNotes(row.buildingType),
   }));
 
+  const profile = buildTownProfile(
+    townName,
+    normalized.size,
+    normalized.race,
+    districts,
+    layout.marketBounds !== null,
+    rng,
+  );
+
   return {
     name: townName,
     culture: normalized.culture,
@@ -106,5 +117,6 @@ export function generateTown(input: TownInput, rng: SeededRng): TownResult {
     hasWater: draft.hasWater,
     svg,
     svgDraft: draft,
+    profile,
   };
 }

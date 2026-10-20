@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
+import { TOOL_LICENSES } from "./tool-licenses";
 import {
   filterTools,
+  getTool,
   groupTools,
   TOOL_GROUPS,
   TOOLS,
@@ -34,6 +36,12 @@ describe("tools catalog", () => {
 
     const empty = filterTools("xyzzy-not-a-tool");
     assert.deepEqual(empty, []);
+  });
+
+  it("license notices point at catalog tools", () => {
+    for (const key of Object.keys(TOOL_LICENSES)) {
+      assert.ok(getTool(key), `license notice for unknown tool ${key}`);
+    }
   });
 
   it("hides empty groups after a search", () => {

@@ -54,6 +54,14 @@ export default function AboutPage() {
             Dungeons &amp; Dragons, D&amp;D, and related marks are trademarks of
             Wizards of the Coast LLC.
           </p>
+          <p>
+            A few generators adapt published source from{" "}
+            <a href="https://donjon.bin.sh/code/" rel="noopener noreferrer">
+              drow&apos;s code library
+            </a>
+            . Each of those tool pages carries the license notice that package
+            requires.
+          </p>
         </section>
 
         <section className="privacy-section">
