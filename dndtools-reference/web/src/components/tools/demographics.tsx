@@ -1,7 +1,15 @@
 "use client";
 
 import { Copy, RefreshCw } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type ReactNode,
+} from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createSeededRng } from "@/lib/random-spellbook/seeded-rng";
 import {
@@ -23,13 +31,68 @@ function Label({
   children,
 }: {
   htmlFor?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <label htmlFor={htmlFor} className="tool-label">
       {children}
     </label>
   );
+}
+
+function Stat({
+  label,
+  value,
+}: {
+  label: string;
+  value: ReactNode;
+}) {
+  return (
+    <div className="demographics-stat">
+      <span className="demographics-stat-label">{label}</span>
+      <span className="demographics-stat-value">{value}</span>
+    </div>
+  );
+}
+
+function titleCase(value: string): string {
+  if (!value) return value;
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function useDraftNumber(value: number, onCommit: (next: number) => void) {
+  const [draft, setDraft] = useState(String(value));
+  const fromField = useRef(false);
+
+  useEffect(() => {
+    if (fromField.current) {
+      fromField.current = false;
+      return;
+    }
+    setDraft(String(value));
+  }, [value]);
+
+  const commit = (next: number) => {
+    if (next === value) return;
+    fromField.current = true;
+    onCommit(next);
+  };
+
+  return {
+    value: draft,
+    onBlur: () => {
+      const parsed = Number.parseInt(draft, 10);
+      const next = Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
+      setDraft(String(next));
+      commit(next);
+    },
+    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+      const raw = event.target.value;
+      if (raw !== "" && !/^\d+$/.test(raw)) return;
+      setDraft(raw);
+      commit(raw === "" ? 0 : Number.parseInt(raw, 10));
+    },
+  };
 }
 
 const DENSITY_KEYS = Object.keys(DENSITY_LABELS) as DensityKey[];
@@ -70,6 +133,19 @@ export function DemographicsCalculator() {
   const [townPopulation, setTownPopulation] = useState(8000);
   const [racialMix, setRacialMix] = useState<RacialMixMode>("mixed");
   const [primaryRace, setPrimaryRace] = useState<PrimaryRace>("Human");
+  const [townPulse, setTownPulse] = useState(false);
+
+  const townPopRef = useRef<HTMLInputElement>(null);
+  const pulseTimer = useRef<number | null>(null);
+  const areaField = useDraftNumber(areaSqMi, setAreaSqMi);
+  const ageField = useDraftNumber(ageYears, setAgeYears);
+  const townPopField = useDraftNumber(townPopulation, setTownPopulation);
+
+  useEffect(() => {
+    return () => {
+      if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
+    };
+  }, []);
 
   const syncSeedToUrl = useCallback(
     (nextSeed: number) => {
@@ -79,6 +155,8 @@ export function DemographicsCalculator() {
     },
     [pathname, router, searchParams],
   );
+
+  const seedDraftValid = /^-?\d+$/.test(seedDraft.trim());
 
   const applySeed = useCallback(() => {
     const next = Number.parseInt(seedDraft, 10);
@@ -90,6 +168,17 @@ export function DemographicsCalculator() {
     setAgeYears(defaults.ageYears);
     setRandomSalt(0);
   }, [seedDraft, syncSeedToUrl]);
+
+  const setTownFromPreset = useCallback((next: number) => {
+    setTownPopulation(Math.max(0, next));
+    setTownPulse(true);
+    if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
+    pulseTimer.current = window.setTimeout(() => {
+      setTownPulse(false);
+      pulseTimer.current = null;
+    }, 900);
+    townPopRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, []);
 
   const kingdomResult = useMemo(() => {
     const rng = createSeededRng(seed);
@@ -153,38 +242,58 @@ export function DemographicsCalculator() {
 
   const rollTownPop = () => {
     const rng = createSeededRng((seed + randomSalt * 9973 + 17) >>> 0);
-    setTownPopulation(rollTownPopulation(rng));
+    setTownFromPreset(rollTownPopulation(rng));
   };
 
   const rollVillagePop = () => {
     const rng = createSeededRng((seed + randomSalt * 9973 + 31) >>> 0);
-    setTownPopulation(rollVillagePopulation(rng));
+    setTownFromPreset(rollVillagePopulation(rng));
   };
+
+  const mixTotal = townResult.racialLines.reduce(
+    (sum, line) => sum + line.percent,
+    0,
+  );
 
   return (
     <div className="demographics">
-      <div className="demographics-seed-row">
-        <div className="tool-field demographics-seed-field">
-          <Label htmlFor="demographics-seed">Seed</Label>
-          <input
-            id="demographics-seed"
-            className="tool-input"
-            type="number"
-            value={seedDraft}
-            onChange={(e) => setSeedDraft(e.target.value)}
-          />
+      <div className="demographics-toolbar">
+        <div className="demographics-seed-row">
+          <div className="tool-field demographics-seed-field">
+            <Label htmlFor="demographics-seed">Seed</Label>
+            <input
+              id="demographics-seed"
+              className="tool-input"
+              type="number"
+              value={seedDraft}
+              onChange={(e) => setSeedDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") applySeed();
+              }}
+            />
+          </div>
+          <button
+            type="button"
+            className="tool-btn tool-btn--ghost"
+            onClick={applySeed}
+            disabled={!seedDraftValid}
+          >
+            Apply seed
+          </button>
         </div>
-        <button
-          type="button"
-          className="tool-btn tool-btn-secondary"
-          onClick={applySeed}
-        >
-          Use this seed
-        </button>
+        <p className="demographics-hint">
+          Applying a seed rerolls kingdom area and age, and resets the town&apos;s
+          random tables.
+        </p>
       </div>
 
       <section className="demographics-card" aria-labelledby="demographics-kingdom-heading">
-        <h2 id="demographics-kingdom-heading">Kingdom</h2>
+        <h2 id="demographics-kingdom-heading">
+          Kingdom
+          {kingdomName.trim() ? (
+            <span className="demographics-card-name">{kingdomName.trim()}</span>
+          ) : null}
+        </h2>
         <div className="demographics-grid">
           <div className="tool-field">
             <Label htmlFor="demographics-kingdom-name">Kingdom name</Label>
@@ -197,20 +306,19 @@ export function DemographicsCalculator() {
             />
           </div>
           <div className="tool-field">
-            <Label htmlFor="demographics-area">Area (square miles)</Label>
+            <Label htmlFor="demographics-area">Area (sq mi)</Label>
             <input
               id="demographics-area"
               className="tool-input"
-              type="number"
+              inputMode="numeric"
               min={0}
-              value={areaSqMi}
-              onChange={(e) =>
-                setAreaSqMi(Number.parseInt(e.target.value, 10) || 0)
-              }
+              value={areaField.value}
+              onChange={areaField.onChange}
+              onBlur={areaField.onBlur}
             />
           </div>
           <div className="tool-field">
-            <Label htmlFor="demographics-density">Density (people per square mile)</Label>
+            <Label htmlFor="demographics-density">Density</Label>
             <select
               id="demographics-density"
               className="tool-input"
@@ -229,90 +337,137 @@ export function DemographicsCalculator() {
             <input
               id="demographics-age"
               className="tool-input"
-              type="number"
+              inputMode="numeric"
               min={0}
-              value={ageYears}
-              onChange={(e) =>
-                setAgeYears(Number.parseInt(e.target.value, 10) || 0)
-              }
+              value={ageField.value}
+              onChange={ageField.onChange}
+              onBlur={ageField.onBlur}
             />
           </div>
         </div>
 
-        <div className="demographics-results">
-          <p className="demographics-lead">
-            Population{" "}
-            <strong>{formatInteger(kingdomResult.population)}</strong>. Cultivated
-            land {formatPercent(kingdomResult.cultivatedFraction)} (
-            {formatInteger(kingdomResult.cultivatedSqMi)} sq mi), wilderness{" "}
-            {formatPercent(kingdomResult.wildernessFraction)} (
-            {formatInteger(kingdomResult.wildernessSqMi)} sq mi).
-          </p>
-          <p>
-            Largest settlement:{" "}
-            <button
-              type="button"
-              className="demographics-link-btn"
-              onClick={() =>
-                setTownPopulation(kingdomResult.largestSettlementPop)
-              }
-            >
-              {formatInteger(kingdomResult.largestSettlementPop)}
-            </button>{" "}
-            ({kingdomResult.largestSettlementLabel}). Second settlement{" "}
-            {formatInteger(kingdomResult.secondSettlementPop)}.
-            {kingdomResult.extraCityCount > 0
-              ? ` ${kingdomResult.extraCityCount} additional cities.`
-              : null}{" "}
-            {kingdomResult.townsOfNoteNote}
-          </p>
-          <p>
-            Castles: {formatInteger(kingdomResult.castlesActive)} active (
-            {formatInteger(kingdomResult.castlesActiveWilderness)} wilderness,{" "}
-            {formatInteger(kingdomResult.castlesActiveSettled)} settled),{" "}
-            {formatInteger(kingdomResult.castlesRuined)} ruined (
-            {formatInteger(kingdomResult.castlesRuinedWilderness)} wilderness,{" "}
-            {formatInteger(kingdomResult.castlesRuinedSettled)} settled).
-          </p>
+        <div className="demographics-stats">
+          <Stat
+            label="Population"
+            value={formatInteger(kingdomResult.population)}
+          />
+          <Stat
+            label="Cultivated"
+            value={`${formatPercent(kingdomResult.cultivatedFraction)} · ${formatInteger(kingdomResult.cultivatedSqMi)} sq mi`}
+          />
+          <Stat
+            label="Wilderness"
+            value={`${formatPercent(kingdomResult.wildernessFraction)} · ${formatInteger(kingdomResult.wildernessSqMi)} sq mi`}
+          />
         </div>
 
-        <div className="demographics-pop-actions">
-          <span className="demographics-pop-label">Town population presets</span>
-          <button
-            type="button"
-            className="tool-btn tool-btn-secondary"
-            onClick={() =>
-              setTownPopulation(kingdomResult.largestSettlementPop)
-            }
-          >
-            Largest settlement
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn-secondary"
-            onClick={() => setTownPopulation(8000)}
-          >
-            City (8000)
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn-secondary"
-            onClick={rollTownPop}
-          >
-            Random town
-          </button>
-          <button
-            type="button"
-            className="tool-btn tool-btn-secondary"
-            onClick={rollVillagePop}
-          >
-            Random village
-          </button>
+        <div className="demographics-split">
+          <div>
+            <h3>Settlements</h3>
+            <dl className="demographics-facts">
+              <div>
+                <dt>Largest</dt>
+                <dd>
+                  {formatInteger(kingdomResult.largestSettlementPop)}{" "}
+                  <span className="demographics-muted">
+                    {kingdomResult.largestSettlementLabel}
+                  </span>
+                </dd>
+              </div>
+              <div>
+                <dt>Second</dt>
+                <dd>{formatInteger(kingdomResult.secondSettlementPop)}</dd>
+              </div>
+              {kingdomResult.extraCityCount > 0 ? (
+                <div>
+                  <dt>More cities</dt>
+                  <dd>{formatInteger(kingdomResult.extraCityCount)}</dd>
+                </div>
+              ) : null}
+            </dl>
+            <p className="demographics-hint">{kingdomResult.townsOfNoteNote}</p>
+          </div>
+          <div>
+            <h3>Castles</h3>
+            <table className="demographics-castle-table">
+              <thead>
+                <tr>
+                  <th scope="col">Condition</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Wilderness</th>
+                  <th scope="col">Settled</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Active</th>
+                  <td>{formatInteger(kingdomResult.castlesActive)}</td>
+                  <td>{formatInteger(kingdomResult.castlesActiveWilderness)}</td>
+                  <td>{formatInteger(kingdomResult.castlesActiveSettled)}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Ruined</th>
+                  <td>{formatInteger(kingdomResult.castlesRuined)}</td>
+                  <td>{formatInteger(kingdomResult.castlesRuinedWilderness)}</td>
+                  <td>{formatInteger(kingdomResult.castlesRuinedSettled)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="demographics-bridge">
+          <div>
+            <h3>Set town population</h3>
+            <p className="demographics-hint">
+              These fill the town calculator. It is currently{" "}
+              {formatInteger(townPopulation)} people.
+            </p>
+          </div>
+          <div className="demographics-pop-buttons">
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              aria-pressed={townPopulation === kingdomResult.largestSettlementPop}
+              onClick={() =>
+                setTownFromPreset(kingdomResult.largestSettlementPop)
+              }
+            >
+              Largest ({formatInteger(kingdomResult.largestSettlementPop)})
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              aria-pressed={townPopulation === 8000}
+              onClick={() => setTownFromPreset(8000)}
+            >
+              City (8,000)
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              onClick={rollTownPop}
+            >
+              Random town
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost"
+              onClick={rollVillagePop}
+            >
+              Random village
+            </button>
+          </div>
         </div>
       </section>
 
       <section className="demographics-card" aria-labelledby="demographics-town-heading">
-        <h2 id="demographics-town-heading">Town</h2>
+        <h2 id="demographics-town-heading">
+          Town
+          {townName.trim() ? (
+            <span className="demographics-card-name">{townName.trim()}</span>
+          ) : null}
+        </h2>
         <div className="demographics-grid">
           <div className="tool-field">
             <Label htmlFor="demographics-town-name">Town name</Label>
@@ -327,14 +482,18 @@ export function DemographicsCalculator() {
           <div className="tool-field">
             <Label htmlFor="demographics-town-pop">Population</Label>
             <input
+              ref={townPopRef}
               id="demographics-town-pop"
-              className="tool-input"
-              type="number"
-              min={0}
-              value={townPopulation}
-              onChange={(e) =>
-                setTownPopulation(Number.parseInt(e.target.value, 10) || 0)
+              className={
+                townPulse
+                  ? "tool-input demographics-input-pulse"
+                  : "tool-input"
               }
+              inputMode="numeric"
+              min={0}
+              value={townPopField.value}
+              onChange={townPopField.onChange}
+              onBlur={townPopField.onBlur}
             />
           </div>
           <div className="tool-field">
@@ -360,6 +519,11 @@ export function DemographicsCalculator() {
               value={primaryRace}
               onChange={(e) => setPrimaryRace(e.target.value as PrimaryRace)}
               disabled={racialMix !== "isolated"}
+              aria-describedby={
+                racialMix === "isolated"
+                  ? undefined
+                  : "demographics-primary-race-hint"
+              }
             >
               {PRIMARY_RACES.map((race) => (
                 <option key={race} value={race}>
@@ -369,6 +533,12 @@ export function DemographicsCalculator() {
             </select>
           </div>
         </div>
+        {racialMix !== "isolated" ? (
+          <p id="demographics-primary-race-hint" className="demographics-hint">
+            Primary race applies to isolated communities. Mixed and integrated
+            communities use a fixed racial order.
+          </p>
+        ) : null}
 
         <div className="demographics-actions">
           <button
@@ -377,29 +547,63 @@ export function DemographicsCalculator() {
             onClick={rerollRandom}
           >
             <RefreshCw size={16} aria-hidden />
-            Reroll
+            Reroll tables
           </button>
           <button
             type="button"
-            className="tool-btn tool-btn-secondary"
+            className="tool-btn tool-btn--ghost"
             onClick={copySummary}
           >
             <Copy size={16} aria-hidden />
-            Copy
+            Copy summary
           </button>
-          {copyStatus ? (
-            <span className="demographics-copy-status">{copyStatus}</span>
-          ) : null}
+          <span className="demographics-copy-status" aria-live="polite">
+            {copyStatus}
+          </span>
         </div>
+        <p className="demographics-hint">
+          Reroll refreshes power centers, businesses, and class levels. Kingdom
+          area and age stay until you apply a new seed.
+        </p>
 
         <div className="demographics-results">
-          <p className="demographics-lead">
-            A {townResult.communityLabel} of {formatInteger(townPopulation)} people
-            ({townResult.sizeLabel}). Community gp limit{" "}
-            {formatInteger(townResult.gpLimit)} gp; estimated ready cash{" "}
-            {formatInteger(townResult.readyCash)} gp.
+          <div className="demographics-stats">
+            <Stat label="Population" value={formatInteger(townPopulation)} />
+            <Stat
+              label="Settlement"
+              value={titleCase(townResult.communityLabel)}
+            />
+            <Stat label="DMG size" value={townResult.sizeLabel} />
+            <Stat
+              label="GP limit"
+              value={`${formatInteger(townResult.gpLimit)} gp`}
+            />
+            <Stat
+              label="Ready cash"
+              value={`${formatInteger(townResult.readyCash)} gp`}
+            />
+          </div>
+          <p className="demographics-hint">
+            Settlement is village, town, or city by population. DMG size sets
+            the gp limit and NPC modifiers.
           </p>
-          <p>{townResult.racialMixText}</p>
+
+          <div className="demographics-subsection">
+            <h3>Racial mix</h3>
+            <div className="demographics-mix-bar" aria-hidden="true">
+              {townResult.racialLines.map((line) => (
+                <span
+                  key={line.race}
+                  style={{
+                    width: `${mixTotal > 0 ? (line.percent / mixTotal) * 100 : 0}%`,
+                  }}
+                  title={`${line.percent}% ${line.label}`}
+                />
+              ))}
+            </div>
+            <p>{townResult.racialMixText}</p>
+          </div>
+
           <div className="demographics-subsection">
             <h3>Power centers</h3>
             <ul className="demographics-list">
@@ -410,32 +614,33 @@ export function DemographicsCalculator() {
           </div>
           <div className="demographics-subsection">
             <h3>Staff</h3>
-            <p>
-              Nobles {formatInteger(townResult.staff.nobles)}, guards{" "}
-              {formatInteger(townResult.staff.guards)}, advocates{" "}
-              {formatInteger(townResult.staff.advocates)}, clergy{" "}
-              {formatInteger(townResult.staff.clergy)}, priests{" "}
-              {formatInteger(townResult.staff.priests)}.
-            </p>
+            <div className="demographics-stats demographics-stats--compact">
+              <Stat label="Nobles" value={formatInteger(townResult.staff.nobles)} />
+              <Stat label="Guards" value={formatInteger(townResult.staff.guards)} />
+              <Stat
+                label="Advocates"
+                value={formatInteger(townResult.staff.advocates)}
+              />
+              <Stat label="Clergy" value={formatInteger(townResult.staff.clergy)} />
+              <Stat label="Priests" value={formatInteger(townResult.staff.priests)} />
+            </div>
           </div>
           <div className="demographics-subsection">
             <h3>Businesses</h3>
-            <table className="demographics-table">
-              <thead>
-                <tr>
-                  <th scope="col">Trade</th>
-                  <th scope="col">Count</th>
-                </tr>
-              </thead>
-              <tbody>
+            {visibleBusinesses.length === 0 ? (
+              <p className="demographics-hint">
+                No businesses at this population.
+              </p>
+            ) : (
+              <ul className="demographics-trades">
                 {visibleBusinesses.map((row) => (
-                  <tr key={row.trade}>
-                    <td>{row.trade}</td>
-                    <td>{formatInteger(row.count)}</td>
-                  </tr>
+                  <li key={row.trade}>
+                    <span>{row.trade}</span>
+                    <strong>{formatInteger(row.count)}</strong>
+                  </li>
                 ))}
-              </tbody>
-            </table>
+              </ul>
+            )}
             <button
               type="button"
               className="tool-btn tool-btn--ghost demographics-disclosure"
@@ -445,11 +650,16 @@ export function DemographicsCalculator() {
               {showEmptyTrades ? "Hide empty trades" : "Show empty trades"}
             </button>
           </div>
-          {classRows.length > 0 ? (
-            <div className="demographics-subsection">
-              <h3>Classes by level</h3>
+          <div className="demographics-subsection">
+            <h3>Classes by level</h3>
+            {classRows.length === 0 ? (
+              <p className="demographics-hint">No NPCs at this population.</p>
+            ) : (
               <div className="demographics-table-wrap">
                 <table className="demographics-class-table">
+                  <caption className="sr-only">
+                    NPC count for each class at levels 1 through 20
+                  </caption>
                   <thead>
                     <tr>
                       <th scope="col">Class</th>
@@ -470,7 +680,9 @@ export function DemographicsCalculator() {
                             <td
                               key={level}
                               className={
-                                count ? undefined : "demographics-class-empty"
+                                count
+                                  ? "demographics-class-filled"
+                                  : "demographics-class-empty"
                               }
                             >
                               {count ? formatInteger(count) : ""}
@@ -482,8 +694,8 @@ export function DemographicsCalculator() {
                   </tbody>
                 </table>
               </div>
-            </div>
-          ) : null}
+            )}
+          </div>
         </div>
       </section>
     </div>

@@ -7,6 +7,7 @@ import {
   computeKingdomPopulation,
   computeReadyCash,
   rollClassHighestLevel,
+  rollKingdomDefaults,
   splitCastleWilderness,
   walkClassLevelsForTest,
 } from "./index";
@@ -14,6 +15,15 @@ import {
 describe("demographics kingdom population", () => {
   it("computes population from area and density", () => {
     assert.equal(computeKingdomPopulation(100, "average"), 8000);
+  });
+
+  it("rolls kingdom area and age from 2d100 multipliers", () => {
+    const rng = createSeededRng(1);
+    const defaults = rollKingdomDefaults(rng);
+    assert.ok(defaults.areaSqMi >= 2000 && defaults.areaSqMi <= 200000);
+    assert.equal(defaults.areaSqMi % 1000, 0);
+    assert.ok(defaults.ageYears >= 20 && defaults.ageYears <= 2000);
+    assert.equal(defaults.ageYears % 10, 0);
   });
 });
 

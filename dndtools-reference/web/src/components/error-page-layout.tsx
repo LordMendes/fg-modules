@@ -34,22 +34,10 @@ export function ErrorPageLayout({
           src={illustration.src}
           alt={illustration.alt}
           width={1600}
-          height={900}
+          height={950}
           loading="eager"
           decoding="async"
         />
-        {illustration.creditLabel && illustration.creditHref ? (
-          <p className="error-page-credit">
-            Photo by{" "}
-            <a href={illustration.creditHref} rel="noopener noreferrer">
-              {illustration.creditLabel}
-            </a>{" "}
-            on{" "}
-            <a href="https://unsplash.com/license" rel="noopener noreferrer">
-              Unsplash
-            </a>
-          </p>
-        ) : null}
       </div>
       <div className="error-page-body page-header">
         <p className="error-page-code" aria-hidden="true">

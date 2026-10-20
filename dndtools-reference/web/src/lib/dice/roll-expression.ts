@@ -43,6 +43,7 @@ function normalizeExpression(expr: string): string {
   return expr
     .replace(/\u2014/g, "")
     .replace(/\u00d7/g, "x")
+    .replace(/\*/g, "x")
     .replace(/,/g, "")
     .replace(/\s+/g, " ")
     .trim();
