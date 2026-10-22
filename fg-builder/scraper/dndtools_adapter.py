@@ -24,6 +24,7 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Red Hand of Doom": ("RH", "red-hand-of-doom"),
     "Races of Faerûn": ("Rac", "races-of-faerun"),
     "Forgotten Realms Campaign Setting": ("FRCS", "forgotten-realms-campaign-setting"),
+    "Dungeon Master's Guide": ("DMG", "dungeon-masters-guide"),
     "Warcraft The Roleplaying Game": ("WRPG", "warcraft-the-roleplaying-game"),
     "World of Warcraft The Roleplaying Game": ("WoW", "world-of-warcraft-the-roleplaying-game"),
     "Alliance Player's Guide": ("APG", "alliance-players-guide"),
@@ -181,10 +182,35 @@ _LEVEL_IN_TEXT_RE = re.compile(
     r"(\d+)(?:st|nd|rd|th)\s+level\b",
     re.I,
 )
+_REQ_LABELS = (
+    "Alignment|Base Attack Bonus|Base Save Bonus|Weapon Proficiency|"
+    "Spellcasting|Spells|Skills|Feats|Special|Race|Languages|Language|Region"
+)
 _REQ_LABEL_RE = re.compile(
-    r"^(Alignment|Skills|Feats|Spells|Special|Base Attack Bonus|Base Save Bonus)\s*:?\s*(.*)$",
+    rf"^({_REQ_LABELS})\s*:?\s*(.*)$",
     re.I | re.S,
 )
+_REQ_LABEL_SPLIT_RE = re.compile(
+    rf"(?=(?:{_REQ_LABELS})\s*:)",
+    re.I,
+)
+_CORE_PROGRESSION: dict[str, tuple[str, str, str, str]] = {
+    # name -> bab, fort, ref, will. Used when an epic class continues a core class.
+    "Barbarian": ("Fast", "Good", "Bad", "Bad"),
+    "Bard": ("Medium", "Bad", "Good", "Good"),
+    "Cleric": ("Medium", "Good", "Bad", "Good"),
+    "Druid": ("Medium", "Good", "Bad", "Good"),
+    "Fighter": ("Fast", "Good", "Bad", "Bad"),
+    "Monk": ("Medium", "Good", "Good", "Good"),
+    "Paladin": ("Fast", "Good", "Bad", "Good"),
+    "Ranger": ("Fast", "Good", "Good", "Bad"),
+    "Rogue": ("Medium", "Bad", "Good", "Bad"),
+    "Sorcerer": ("Slow", "Bad", "Bad", "Good"),
+    "Wizard": ("Slow", "Bad", "Bad", "Good"),
+}
+_CLASS_TYPE_MAP: dict[str, str] | None = None
+_BARE_BONUS_RE = re.compile(r"^[+-]?\d+$")
+_FEATURE_MARKUP_RE = re.compile(r"\((?:Ex|Su|Sp|Ps)\)\s*$", re.I)
 
 
 def _infer_save_progression(advancement: list[dict[str, Any]], key: str) -> str:
@@ -222,11 +248,11 @@ def _infer_bab(advancement: list[dict[str, Any]]) -> str:
         return ""
 
 
-def _skill_ability(name: str) -> str:
+def _skill_ability(name: str) -> str | None:
     if name in _SKILL_ABILITY:
         return _SKILL_ABILITY[name]
     base = name.split("(", 1)[0].strip()
-    return _SKILL_ABILITY.get(base, "None")
+    return _SKILL_ABILITY.get(base)
 
 
 def _class_skills_string(record: dict[str, Any]) -> str:
@@ -239,6 +265,9 @@ def _class_skills_string(record: dict[str, Any]) -> str:
         if not name:
             continue
         ability = (skill.get("ability") or "").strip() or _skill_ability(name)
+        if not ability:
+            # Later books leak skills such as Truespeak onto the Expert list.
+            continue
         parts.append(f"{name} ({ability})")
     return ", ".join(parts)
 
@@ -256,6 +285,7 @@ def _parse_requirements_structured(record: dict[str, Any]) -> dict[str, Any]:
         "special": "",
         "base_attack_bonus": "",
         "base_save_bonus": "",
+        "other": [],
         "text": "",
         "html": "",
     }
@@ -281,6 +311,7 @@ def _parse_requirements_structured(record: dict[str, Any]) -> dict[str, Any]:
                 current_value = []
                 return
             value = re.sub(r"\s+,", ",", " ".join(current_value)).strip(" ,")
+            value = value.lstrip(":").strip()
             value = re.sub(r"\s{2,}", " ", value)
             value = re.sub(r"(ranks)\s+([A-Z])", r"\1, \2", value)
             chunks.append(f"{current_label}: {value}" if value else current_label)
@@ -307,17 +338,17 @@ def _parse_requirements_structured(record: dict[str, Any]) -> dict[str, Any]:
                 structured["base_attack_bonus"] = value
             elif key == "base save bonus":
                 structured["base_save_bonus"] = value
+            else:
+                structured["other"].append(
+                    f"{current_label}: {value}" if value else current_label
+                )
             current_label = ""
             current_value = []
 
         chunks: list[str] = []
         for token in tokens:
             # Mid-token labels: "Will +5. Spells: Able to..."
-            parts = re.split(
-                r"(?=(?:Alignment|Skills|Feats|Spells|Special|Base Attack Bonus|Base Save Bonus)\s*:)",
-                token,
-                flags=re.I,
-            )
+            parts = _REQ_LABEL_SPLIT_RE.split(token)
             for part in parts:
                 part = part.strip(" ,")
                 if not part:
@@ -330,6 +361,8 @@ def _parse_requirements_structured(record: dict[str, Any]) -> dict[str, Any]:
                         current_value.append(match.group(2).strip())
                 elif current_label:
                     current_value.append(part)
+                elif chunks and not _REQ_LABEL_RE.match(chunks[-1]):
+                    chunks[-1] = f"{chunks[-1]} {part}"
                 else:
                     chunks.append(part)
         _flush()
@@ -355,6 +388,39 @@ def _feature_level(name: str, text: str, advancement: list[dict[str, Any]]) -> i
             except (TypeError, ValueError):
                 return 1
     return 1
+
+
+def _paragraph_feature(child: Any, advancement: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Return a class feature when a paragraph starts with a feature label."""
+    if getattr(child, "name", None) != "p":
+        return None
+    label_el = None
+    for node in getattr(child, "children", []):
+        if getattr(node, "name", None) in ("strong", "b", "em"):
+            label_el = node
+            break
+        if isinstance(node, str) and node.strip():
+            return None
+    if label_el is None:
+        return None
+    label = label_el.get_text(strip=True)
+    # Italic lead-ins are feature names only when they carry an ability type.
+    if label_el.name == "em" and not _FEATURE_MARKUP_RE.search(label):
+        return None
+    match = _FEATURE_STRONG_RE.match(label)
+    if not match or label.lower().startswith(("hit die", "skill points")):
+        return None
+    name = match.group(1).strip().rstrip(":")
+    if not name or len(name) > 80:
+        return None
+    text = child.get_text(" ", strip=True)
+    return {
+        "level": _feature_level(name, text, advancement),
+        "name": name,
+        "type": (match.group(2) or "").strip(),
+        "text_html": str(child),
+        "text": text,
+    }
 
 
 def _split_class_description(
@@ -422,32 +488,25 @@ def _split_class_description(
             }
             continue
 
+        feature = _paragraph_feature(child, advancement)
+        if feature:
+            # Keep a heading section open, but do not swallow the next feature into it.
+            seen_feature = True
+            features.append(feature)
+            feature_parts.append(html)
+            continue
+
         if pending_h4 is not None:
             pending_bits.append(html)
             continue
 
-        strong = child.find("strong") if hasattr(child, "find") else None
-        if strong and child.name == "p":
-            label = strong.get_text(strip=True)
-            match = _FEATURE_STRONG_RE.match(label)
-            if match and not label.lower().startswith(("hit die", "skill points")):
-                seen_feature = True
-                name = match.group(1).strip().rstrip(":")
-                feat_type = (match.group(2) or "").strip()
-                features.append(
-                    {
-                        "level": _feature_level(name, text, advancement),
-                        "name": name,
-                        "type": feat_type,
-                        "text_html": html,
-                        "text": text,
-                    }
-                )
-                feature_parts.append(html)
-                continue
-
         if seen_feature:
             feature_parts.append(html)
+            # Paragraphs after a feature label belong to that feature (spell
+            # ability text, for example) until the next labeled feature.
+            if features and getattr(child, "name", None) == "p":
+                features[-1]["text_html"] = (features[-1].get("text_html") or "") + html
+                features[-1]["text"] = f"{features[-1].get('text') or ''} {text}".strip()
         else:
             if re.match(r"(?i)^hit die:|^skill points:", text):
                 continue
@@ -540,6 +599,109 @@ def _overlay_phb_clone(
     return advancement, class_features, extras
 
 
+def _mapped_class_type(slug: str) -> str:
+    global _CLASS_TYPE_MAP
+    if _CLASS_TYPE_MAP is None:
+        path = DNDTOOLS_ROOT / ".index" / "class_type_map.json"
+        if path.exists():
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+            _CLASS_TYPE_MAP = loaded if isinstance(loaded, dict) else {}
+        else:
+            _CLASS_TYPE_MAP = {}
+    mapped = _CLASS_TYPE_MAP.get(slug) or ""
+    return mapped if mapped in ("base", "prestige") else ""
+
+
+def _should_replace_advancement(
+    rows: list[dict[str, Any]],
+    parsed: list[dict[str, Any]],
+) -> bool:
+    """Prefer the HTML table when the stored rows dropped BAB or shifted columns."""
+    if not parsed or not any(row.get("bab") for row in parsed):
+        return False
+    if not rows or not any(row.get("bab") for row in rows):
+        return True
+    first = rows[0]
+    special = str(first.get("special") or "").strip()
+    spellcasting = str(first.get("spellcasting") or "").strip()
+    parsed_special = str(parsed[0].get("special") or "").strip()
+    # AC-bonus column stored as Special, and the real Special stored as spellcasting.
+    if (
+        _BARE_BONUS_RE.match(special)
+        and spellcasting
+        and "level of existing" not in spellcasting.lower()
+        and parsed_special
+        and not _BARE_BONUS_RE.match(parsed_special)
+    ):
+        return True
+    return False
+
+
+def _is_epic_record(record: dict[str, Any], advancement: list[dict[str, Any]]) -> bool:
+    if (record.get("name") or "").startswith("Epic "):
+        return True
+    levels = [int(row.get("level") or 0) for row in advancement if row.get("level")]
+    return bool(levels) and min(levels) >= 21
+
+
+def _primary_bonus(progression: str, level: int) -> int:
+    if progression == "Fast":
+        return level
+    if progression == "Medium":
+        return (level * 3) // 4
+    return level // 2
+
+
+def _save_bonus(kind: str, level: int) -> int:
+    if kind == "Good":
+        return 2 + level // 2
+    return level // 3
+
+
+def _core_progression(class_name: str) -> tuple[str, str, str, str] | None:
+    # The core table is authoritative. Scraped PH rows can shift a save column
+    # and would mark a good Will as Bad (paladin).
+    known = _CORE_PROGRESSION.get(class_name)
+    if known:
+        return known
+    core = _load_ph_class(class_name)
+    if not core:
+        return None
+    rows = list(core.get("advancement") or [])
+    if not rows:
+        return None
+    progression = (
+        _infer_bab(rows),
+        _infer_save_progression(rows, "fort"),
+        _infer_save_progression(rows, "ref"),
+        _infer_save_progression(rows, "will"),
+    )
+    if not all(progression):
+        return None
+    return progression
+
+
+def _apply_epic_progression(
+    advancement: list[dict[str, Any]],
+    progression: tuple[str, str, str, str],
+) -> None:
+    """Replace 3.0-style epic bonus columns with continued 3.5 class BAB and saves."""
+    bab, fort, ref, will = progression
+    if not all((bab, fort, ref, will)):
+        return
+    for row in advancement:
+        try:
+            level = int(row.get("level") or 0)
+        except (TypeError, ValueError):
+            continue
+        if level < 1:
+            continue
+        row["bab"] = f"+{_primary_bonus(bab, level)}"
+        row["fort"] = f"+{_save_bonus(fort, level)}"
+        row["ref"] = f"+{_save_bonus(ref, level)}"
+        row["will"] = f"+{_save_bonus(will, level)}"
+
+
 def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     from scraper.wrpg_support import (
         expand_wrpg_spell_hook_text,
@@ -548,15 +710,34 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
 
     advancement = list(record.get("advancement") or [])
     advancement_html = record.get("advancement_html") or ""
-    if not advancement and advancement_html and "<table" in advancement_html.lower():
-        advancement = parse_advancement_html(advancement_html)
+    parsed_html: list[dict[str, Any]] = []
+    if advancement_html and "<table" in advancement_html.lower():
+        parsed_html = parse_advancement_html(advancement_html)
+    if _should_replace_advancement(advancement, parsed_html) or (
+        not advancement and parsed_html
+    ):
+        advancement = parsed_html
 
     index = record.get("index") or {}
     is_racial = bool(index.get("racial_class") or record.get("race") or record.get("levelmax"))
-    prestige = (not is_racial) and (
-        bool(str(index.get("prestige_level") or "").strip())
-        or bool(record.get("requirements_html") or record.get("requirements_text"))
-    )
+    is_epic = _is_epic_record(record, advancement)
+    epic_progression = None
+    if is_epic:
+        base_name = (record.get("name") or "").removeprefix("Epic ").strip()
+        epic_progression = _core_progression(base_name)
+        if epic_progression and not all(epic_progression):
+            epic_progression = None
+        if epic_progression:
+            _apply_epic_progression(advancement, epic_progression)
+    mapped_type = "" if is_racial else _mapped_class_type(record.get("slug") or "")
+    if mapped_type:
+        prestige = mapped_type == "prestige"
+    else:
+        prestige = (not is_racial) and (not is_epic) and (
+            bool(str(index.get("prestige_level") or "").strip())
+            or bool(record.get("requirements_html") or record.get("requirements_text"))
+            or bool(str(record.get("min_bab_req") or "").strip())
+        )
     prebuilt_features = record.get("class_features") if is_racial else None
     if isinstance(prebuilt_features, list) and prebuilt_features:
         intro, notes, _ignored = _split_class_description(
@@ -608,7 +789,16 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "druid-of-the-wild-wrpg": "Wisdom",
         "warlock-wrpg": "Charisma",
     }
-    ability = ability_by_slug.get(slug)
+    ability = ability_by_slug.get(slug) or {
+        "Adept": "Wisdom",
+        "Epic Bard": "Charisma",
+        "Epic Cleric": "Wisdom",
+        "Epic Druid": "Wisdom",
+        "Epic Paladin": "Wisdom",
+        "Epic Ranger": "Wisdom",
+        "Epic Sorcerer": "Charisma",
+        "Epic Wizard": "Intelligence",
+    }.get(record.get("name") or "")
     if ability:
         hook = (
             f"To cast a spell, a character must have a {ability} score equal to "
@@ -680,10 +870,10 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "advancement_html": advancement_html,
         "class_skills": _class_skills_string(skills_record),
         "class_features": class_features,
-        "bab": _infer_bab(advancement),
-        "fort": _infer_save_progression(advancement, "fort"),
-        "ref": _infer_save_progression(advancement, "ref"),
-        "will": _infer_save_progression(advancement, "will"),
+        "bab": epic_progression[0] if epic_progression else _infer_bab(advancement),
+        "fort": epic_progression[1] if epic_progression else _infer_save_progression(advancement, "fort"),
+        "ref": epic_progression[2] if epic_progression else _infer_save_progression(advancement, "ref"),
+        "will": epic_progression[3] if epic_progression else _infer_save_progression(advancement, "will"),
     }
     if detail["hit_die"] and not str(detail["hit_die"]).startswith("d"):
         detail["hit_die"] = f"d{detail['hit_die']}"

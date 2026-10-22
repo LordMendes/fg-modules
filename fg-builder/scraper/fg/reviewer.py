@@ -54,7 +54,6 @@ TYPED_SCALAR_TAGS = frozenset(
         "classskills",
         "aura",
         "cost",
-        "cl",
         "author",
         "category",
         "ruleset",
@@ -219,6 +218,9 @@ def _check_typed_nodes(
 ) -> None:
     for child in node:
         if child.tag in TYPED_SCALAR_TAGS:
+            # Spell range is a string. Weapon range increment is a number.
+            if child.tag == "range" and child.get("type") == "number":
+                continue
             if child.get("type") != "string":
                 report.add(
                     ReviewIssue(

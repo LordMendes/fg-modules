@@ -275,7 +275,10 @@ Categories: feats=3, skills=8, spells=16
 
 Categories: classes=32, feats=15, items=246, rules=142, spells=1
 
-- 
+- **2026-10-21:** classes reviewed for the FG module. Feats, items, rules, and the spell were not signed off, so this source stays open.
+- **Classes:** 32 records. NPC advancement JSON was missing BAB and saves (the HTML tables are complete). Epic attack and save columns were one shared bonus table, not continued 3.5 progressions. Duelist `requirements_html` was null; filled from the SRD entry (BAB +6, Perform 3 ranks, Tumble 5 ranks, Dodge, Mobility, Weapon Finesse).
+- **Verdict:** classes OK. Full source review still open.
+- Site: `/sources/DMG` 
 
 ### Player's Handbook v.3.5 (`PH`)
 

@@ -4,7 +4,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 
 **How to use:** Change `- [ ]` to `- [x]` when you finish reviewing a module.
 
-**Progress:** 13 / 17 reviewed
+**Progress:** 14 / 18 reviewed
 
 ---
 
@@ -23,6 +23,7 @@ Manual review tracker for Fantasy Grounds `.mod` rulebooks in `fg-builder`.
 | - [x] | Complete Divine | `modules/Complete Divine.mod` | [complete-divine.md](reviews/v3/complete-divine.md) |
 | - [x] | Complete Mage | `modules/Complete Mage.mod` | [complete-mage.md](reviews/v3/complete-mage.md) |
 | - [x] | Complete Warrior | `modules/Complete Warrior.mod` | [complete-warrior.md](reviews/v3/complete-warrior.md) |
+| - [x] | Dungeon Master's Guide | `modules/Dungeon Master's Guide.mod` | [dungeon-master-s-guide.md](reviews/v3/dungeon-master-s-guide.md) |
 | - [ ] | Libris Mortis: The Book of Undead | `reviews/v1-staging/Libris Mortis The Book of Undead.mod` | [libris-mortis-the-book-of-undead.md](reviews/v1-staging/libris-mortis-the-book-of-undead.md) |
 | - [x] | Player's Handbook II | `modules/Player's Handbook II.mod` | [player-s-handbook-ii.md](reviews/v3/player-s-handbook-ii.md) |
 | - [x] | Red Hand of Doom | `modules/Red Hand of Doom.mod` | [red-hand-of-doom.md](reviews/v3/red-hand-of-doom.md) |
@@ -99,6 +100,15 @@ Categories touched: classes=23, feats=51, spells=39, races=23, domains=5
 - **2026-08-24:** regenerated from dndtools JSON — see [v3 report](reviews/v3/complete-warrior.md)
 - **Verdict:** Refactored with warnings (0 errors, 148 warnings)
 - Categories: classes=41, feats=95, spells=8, items=2, domains=5
+
+### Dungeon Master's Guide
+
+Categories touched: classes=32, feats=15, spells=1, items=247
+
+- **2026-10-21:** built from dndtools JSON and class-reviewed — see [dungeon-masters-guide.md](dungeon-masters-guide.md) and [v3 report](reviews/v3/dungeon-master-s-guide.md)
+- **Verdict:** OK (0 errors, 0 warnings; class audit clean)
+- Classes: 5 NPC, 16 prestige, 11 epic. NPC BAB/saves rebuilt from the HTML tables. Epic BAB/saves follow the core class. Duelist requirements restored. Feature tabs filled, including italic labels and sections that used to be swallowed by headings.
+- Items/feats/spells: packaged from web JSON. Item `cl` and weapon `range` numbers are valid. They are not spell-string fields.
 
 ### Libris Mortis: The Book of Undead
 

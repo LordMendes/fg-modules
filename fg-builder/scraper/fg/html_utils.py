@@ -177,6 +177,15 @@ def structured_requirements_to_html(req: dict[str, Any], *, indent: bool = False
         lines.append(f"<b>Spells:</b> {_clean_req_value(req['spells'])}")
     if req.get("special"):
         lines.append(f"<b>Special:</b> {_clean_req_value(req['special'])}")
+    for extra in req.get("other") or []:
+        extra_text = _clean_req_value(str(extra))
+        if not extra_text:
+            continue
+        label, sep, value = extra_text.partition(":")
+        if sep and value.strip():
+            lines.append(f"<b>{label.strip()}:</b> {value.strip()}")
+        else:
+            lines.append(extra_text)
     return _requirements_html_from_lines(lines, indent=indent)
 
 

@@ -17,6 +17,7 @@ MODULES = [
     "Complete Champion",
     "Player's Handbook II",
     "Warcraft The Roleplaying Game",
+    "Dungeon Master's Guide",
 ]
 
 VALID_SAVES = {"Good", "Bad"}

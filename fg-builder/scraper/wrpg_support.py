@@ -88,6 +88,8 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
         return []
 
     headers = [c.get_text(" ", strip=True).lower() for c in rows_el[0].find_all(["th", "td"])]
+    column_keys = [_advancement_header_key(header) for header in headers]
+    named = any(key in {"bab", "fort", "ref", "will"} for key in column_keys)
     special_idx = next((i for i, h in enumerate(headers) if "special" in h), 5)
     rows: list[dict[str, Any]] = []
     for tr in rows_el[1:]:
@@ -99,7 +101,36 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
         if not match:
             continue
         row: dict[str, Any] = {"level": int(match.group(1))}
-        if len(cells) >= 6:
+        if named:
+            slots: list[str] = []
+            unlabeled: list[str] = []
+            special_at = next(
+                (i for i, key in enumerate(column_keys) if key == "special"),
+                None,
+            )
+            for index, key in enumerate(column_keys):
+                if index >= len(cells) or key == "level":
+                    continue
+                value = cells[index]
+                if key == "slot":
+                    slots.append(value)
+                elif key == "":
+                    if special_at is not None and index > special_at:
+                        unlabeled.append(value)
+                elif key == "spellcasting":
+                    row["spellcasting"] = value
+                else:
+                    row[key] = value
+            if slots:
+                row["spells_per_day"] = slots
+            elif len(unlabeled) == 1:
+                _apply_spellcasting_cell(row, unlabeled[0])
+                if "spellcasting" not in row and unlabeled[0]:
+                    row["spells_per_day"] = unlabeled
+            elif unlabeled:
+                row["spells_per_day"] = unlabeled
+            _apply_spellcasting_cell(row, row.get("spellcasting") or "")
+        elif len(cells) >= 6:
             row["bab"] = cells[1]
             row["fort"] = cells[2]
             row["ref"] = cells[3]
@@ -109,28 +140,86 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
             if extra:
                 row["spells_per_day"] = extra
                 if len(extra) == 1:
-                    cell = (extra[0] or "").strip()
-                    bump = _WRPG_CASTER_BUMP_RE.match(cell)
-                    if bump:
-                        # Normalize WRPG "+1 divine/+1 arcane" to FG prestige phrasing.
-                        kind = bump.group(1).lower()
-                        row["spellcasting"] = (
-                            f"+1 level of existing {kind} spellcasting class"
-                        )
-                    elif "level" in cell.lower():
-                        row["spellcasting"] = cell
+                    _apply_spellcasting_cell(row, extra[0])
         else:
             row["special"] = cells[-1]
         rows.append(row)
     return rows
 
 
+def _advancement_header_key(header: str) -> str:
+    """Map a table header to an advancement field."""
+    h = re.sub(r"\s+", " ", header or "").strip().lower()
+    if h in {"level", "lvl", "class level"}:
+        return "level"
+    if h == "bab" or "attack" in h or h.startswith("base attack"):
+        return "bab"
+    if h.startswith("fort"):
+        return "fort"
+    if h.startswith("ref"):
+        return "ref"
+    if h.startswith("will"):
+        return "will"
+    if "special" in h:
+        return "special"
+    if "ac" in h and "bonus" in h:
+        return "ac_bonus"
+    if re.fullmatch(r"\d+(?:st|nd|rd|th)?", h):
+        return "slot"
+    if "spell" in h:
+        return "spellcasting"
+    return ""
+
+
+def _apply_spellcasting_cell(row: dict[str, Any], cell: str) -> None:
+    cell = (cell or "").strip()
+    if not cell:
+        return
+    bump = _WRPG_CASTER_BUMP_RE.match(cell)
+    if bump:
+        kind = bump.group(1).lower()
+        row["spellcasting"] = f"+1 level of existing {kind} spellcasting class"
+    elif "level" in cell.lower():
+        row["spellcasting"] = cell
+
+
+_STANDARD_ADVANCEMENT_HEADER = re.compile(
+    r"^(?:level|lvl|class level|bab|fort(?:itude)?(?: save)?|"
+    r"ref(?:lex)?(?: save)?|will(?: save)?|special)$",
+    re.I,
+)
+
+
+def advancement_html_has_extra_columns(html: str) -> bool:
+    """True when the table has columns a rebuilt Level/BAB/saves/Special table would drop."""
+    if not html or "<table" not in html.lower():
+        return False
+    soup = BeautifulSoup(html, "lxml")
+    table = soup.find("table")
+    header_row = table.find("tr") if table else None
+    if not header_row:
+        return False
+    for cell in header_row.find_all(["th", "td"]):
+        header = cell.get_text(" ", strip=True)
+        if not header:
+            continue
+        if _STANDARD_ADVANCEMENT_HEADER.match(header):
+            continue
+        if _advancement_header_key(header) == "bab":
+            continue
+        return True
+    return False
+
+
 def prefer_rich_advancement_html(detail: dict[str, Any]) -> bool:
     original = detail.get("advancement_html") or ""
     if advancement_table_column_count(original) > 7:
         return True
+    if advancement_html_has_extra_columns(original):
+        return True
     return any(
-        isinstance(r, dict) and r.get("spells_per_day") for r in (detail.get("advancement") or [])
+        isinstance(r, dict) and (r.get("spells_per_day") or r.get("ac_bonus"))
+        for r in (detail.get("advancement") or [])
     )
 
 

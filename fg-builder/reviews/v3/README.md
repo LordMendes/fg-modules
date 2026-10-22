@@ -1,6 +1,6 @@
 # FG Module Compatibility Review — v1
 
-Generated: 2026-09-15 03:58 UTC
+Generated: 2026-10-21 03:37 UTC
 
 Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `skills/` and `.cursor/skills/fantasy-grounds/`).
 
@@ -8,15 +8,15 @@ Target: Fantasy Grounds **3.5E** ruleset load + automation conventions (per `ski
 
 | Module | .mod | Load ready | Errors | Warnings | Info | Records |
 |--------|------|:----------:|-------:|---------:|-----:|--------:|
-| [Warcraft The Roleplaying Game](warcraft-the-roleplaying-game.md) | `Warcraft The Roleplaying Game.mod` | yes | 0 | 11 | 0 | 135 |
+| [Dungeon Master's Guide](dungeon-master-s-guide.md) | `Dungeon Master's Guide.mod` | yes | 0 | 0 | 0 | 295 |
 
 ## Rollup totals
 
 - **Modules reviewed:** 1
 - **Load ready:** 1 / 1
-- **Total records:** 135
+- **Total records:** 295
 - **Total errors:** 0
-- **Total warnings:** 11
+- **Total warnings:** 0
 - **Total info:** 0
 
 ## Verdict

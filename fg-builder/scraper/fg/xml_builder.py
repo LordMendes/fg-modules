@@ -253,5 +253,7 @@ def write_definition(path: Any, title: str, author: str) -> None:
     typed_string(root, "name", title)
     typed_string(root, "category", "Rules")
     typed_string(root, "author", author)
-    typed_string(root, "ruleset", "WoWRPG")
+    # Warcraft modules are titled "WOWRPG - ...". Core and 3.5 books use 3.5E.
+    ruleset = "WoWRPG" if str(title).startswith("WOWRPG") else "3.5E"
+    typed_string(root, "ruleset", ruleset)
     write_xml(root, Path(path) / "definition.xml", clear_after=False)

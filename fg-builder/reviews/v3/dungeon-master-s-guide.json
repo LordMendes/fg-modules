@@ -1,0 +1,27 @@
+{
+  "module_name": "Dungeon Master's Guide",
+  "module_path": "C:\\Users\\User\\Documents\\fg-modules\\fg-builder\\reviews\\v3\\Dungeon Master's Guide.mod",
+  "book_slug": "dungeon-masters-guide",
+  "load_ready": true,
+  "automation_ready": true,
+  "record_counts": {
+    "class": 32,
+    "feat": 15,
+    "spell": 1,
+    "item": 247
+  },
+  "build_warnings": [],
+  "spellclass_readiness": {
+    "spell_related_features": 70,
+    "named_spells": 10,
+    "named_spellcasting": 0,
+    "named_spells_per_day": 60,
+    "score_equal_to_count": 10
+  },
+  "totals": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0
+  },
+  "issues": []
+}
