@@ -106,36 +106,57 @@ def save_lookup_cache(path: Path, lookup: dict[Any, str]) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
+_SECTION_HEADINGS = frozenset({"h3", "h4"})
+
+
+def _heading_title(tag: Tag) -> str:
+    return tag.get_text(strip=True).rstrip(":").strip().casefold()
+
+
+def _is_foreign_heading(node: Tag, needle: str) -> bool:
+    return node.name in _SECTION_HEADINGS and needle not in _heading_title(node)
+
+
+def _collect_section_node(node: Tag | str, needle: str, parts: list[str]) -> bool:
+    """Collect a sibling into parts. True means a later section heading stopped us."""
+    if not isinstance(node, Tag):
+        text = str(node).strip()
+        if text:
+            parts.append(text)
+        return False
+    if _is_foreign_heading(node, needle):
+        return True
+    if node.name == "div" and "nice-textile" in (node.get("class") or []):
+        for child in node.children:
+            if _collect_section_node(child, needle, parts):
+                return True
+        return False
+    parts.append(str(node))
+    return False
+
+
 def _section_after_h4(content: Tag, title_match: str) -> tuple[str | None, str | None]:
     """Extract HTML/text under an h4 whose title contains title_match."""
     needle = title_match.casefold()
     for heading in content.find_all("h4"):
-        title = heading.get_text(strip=True).rstrip(":").strip().casefold()
+        title = _heading_title(heading)
         if needle not in title:
             continue
         parts: list[str] = []
         for sibling in heading.next_siblings:
-            if isinstance(sibling, Tag) and sibling.name in ("h3", "h4"):
+            if isinstance(sibling, Tag) and sibling.name in _SECTION_HEADINGS:
                 break
-            if isinstance(sibling, Tag):
-                if sibling.name == "div" and "nice-textile" in (sibling.get("class") or []):
-                    # Prefer paragraphs inside nested textile blocks.
-                    paragraphs = sibling.find_all("p")
-                    if paragraphs:
-                        parts.extend(str(p) for p in paragraphs)
-                    else:
-                        parts.append("".join(str(c) for c in sibling.children))
-                else:
-                    parts.append(str(sibling))
-            else:
-                text = str(sibling).strip()
-                if text:
-                    parts.append(text)
+            if _collect_section_node(sibling, needle, parts):
+                break
         html = "".join(parts).strip()
         if not html:
             return None, None
         text = BeautifulSoup(html, "lxml").get_text("\n", strip=True)
-        return clean_field_value(html), clean_field_value(text)
+        html_clean = clean_field_value(html)
+        text_clean = clean_field_value(text)
+        if not text_clean:
+            return None, None
+        return html_clean, text_clean
     return None, None
 
 

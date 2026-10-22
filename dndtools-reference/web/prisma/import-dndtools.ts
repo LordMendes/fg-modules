@@ -15,6 +15,7 @@ import {
   buildSourceDisplayNameMap,
 } from "@/lib/source-display";
 import { classifyClassType } from "@/lib/class-type";
+import { isolateFeatSections } from "@/lib/feat-sections";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -442,24 +443,21 @@ function monsterIndexData(record: Record<string, unknown>): object {
   return { ...index, ...stats };
 }
 
-const FEAT_SECTION_KEYS = [
-  ["prerequisite_html", "prerequisiteHtml"],
-  ["benefit_html", "benefitHtml"],
-  ["special_html", "specialHtml"],
-  ["normal_html", "normalHtml"],
-] as const;
-
 function featIndexData(record: Record<string, unknown>): object {
   const index = (record.index ?? {}) as Record<string, unknown>;
   const source = record.source as SourceData | undefined;
   const data: Record<string, unknown> = { ...index };
+  const isolated = isolateFeatSections({
+    prerequisiteHtml: cleanImportedText(record.prerequisite_html),
+    benefitHtml: cleanImportedText(record.benefit_html),
+    specialHtml: cleanImportedText(record.special_html),
+    normalHtml: cleanImportedText(record.normal_html),
+  });
 
-  for (const [sourceKey, targetKey] of FEAT_SECTION_KEYS) {
-    const value = cleanImportedText(record[sourceKey]);
-    if (value) {
-      data[targetKey] = value;
-    }
-  }
+  if (isolated.prerequisiteHtml) data.prerequisiteHtml = isolated.prerequisiteHtml;
+  if (isolated.benefitHtml) data.benefitHtml = isolated.benefitHtml;
+  if (isolated.specialHtml) data.specialHtml = isolated.specialHtml;
+  if (isolated.normalHtml) data.normalHtml = isolated.normalHtml;
 
   if (typeof source?.page === "number") data.sourcePage = source.page;
 

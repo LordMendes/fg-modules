@@ -258,9 +258,56 @@ PATH_RE = re.compile(
 )
 FEAT_TYPE_RE = re.compile(r"^\[([^\]]+)\]$")
 REQ_LINE_RE = re.compile(
-    r"^(Prerequisite|Prerequisites|Benefit|Normal|Special)\s*:\s*(.*)$",
+    r"^(Prerequisite|Prerequisites|B\s*enefits?|Normal|Special)\s*:\s*(.*)$",
     re.I,
 )
+INLINE_SECTION_RE = re.compile(
+    r"\b(B\s*enefits?|Normals?|Specials?|Prerequisites?)\s*:\s*",
+    re.I,
+)
+
+
+def feat_mode_from_label(label: str) -> str:
+    compact = re.sub(r"\s+", "", label.casefold())
+    if compact.startswith("prereq"):
+        return "prerequisite"
+    if compact.startswith("benefit"):
+        return "benefit"
+    if compact.startswith("normal"):
+        return "normal"
+    if compact.startswith("special"):
+        return "special"
+    return compact
+
+
+def split_feat_section_chunks(text: str, default_mode: str) -> dict[str, str]:
+    """Peel Benefit/Normal/Special labels that were glued onto another field."""
+    if not text:
+        return {}
+    matches = list(INLINE_SECTION_RE.finditer(text))
+    if not matches:
+        return {default_mode: text}
+    chunks: dict[str, str] = {}
+    head = text[: matches[0].start()].strip()
+    if head:
+        chunks[default_mode] = head
+    for index, match in enumerate(matches):
+        dest = feat_mode_from_label(match.group(1))
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        body = text[match.end() : end].strip()
+        if not body:
+            continue
+        chunks[dest] = f"{chunks[dest]} {body}".strip() if dest in chunks else body
+    return chunks
+
+
+def merge_feat_section_chunks(current: dict, chunks: dict[str, str]) -> str:
+    last_mode = ""
+    for mode, body in chunks.items():
+        existing = current.get(mode) or ""
+        current[mode] = f"{existing} {body}".strip() if existing else body
+        last_mode = mode
+    return last_mode
 
 
 def normalize(text: str) -> str:
@@ -294,6 +341,7 @@ def normalize(text: str) -> str:
         (r"\bmodifi er\b", "modifier"),
         (r"\bbenefit s\b", "benefits"),
         (r"\bBene fit\b", "Benefit"),
+        (r"\bB enefit", "Benefit"),
     )
     for pattern, repl in replacements:
         text = re.sub(pattern, repl, text)
@@ -1813,6 +1861,14 @@ def extract_feats(lines: list[tuple[int, str]], abbrev: str, book: str, suffix: 
         if len(name) < 3 or name.lower() in {"general feats", "metamagic feats", "technology feats"}:
             current = None
             return
+        for field in ("flavor", "prerequisite", "benefit", "normal", "special"):
+            chunks = split_feat_section_chunks(current.get(field) or "", field)
+            current[field] = chunks.get(field, "")
+            for mode, body in chunks.items():
+                if mode == field:
+                    continue
+                if not (current.get(mode) or "").strip():
+                    current[mode] = body
         benefit = plain(current.get("benefit") or "")
         prereq = plain(current.get("prerequisite") or "")
         normal = plain(current.get("normal") or "")
@@ -1867,10 +1923,16 @@ def extract_feats(lines: list[tuple[int, str]], abbrev: str, book: str, suffix: 
             continue
         req = REQ_LINE_RE.match(line)
         if current and req:
-            mode = req.group(1).lower()
-            if mode.startswith("prereq"):
-                mode = "prerequisite"
+            mode = feat_mode_from_label(req.group(1))
             current[mode] = req.group(2)
+            pending_name = None
+            continue
+        inline = INLINE_SECTION_RE.search(line) if current else None
+        if current and inline and inline.start() > 0:
+            chunks = split_feat_section_chunks(line, mode or "flavor")
+            switched = merge_feat_section_chunks(current, chunks)
+            if switched:
+                mode = switched
             pending_name = None
             continue
         # A short title line may start the next feat.

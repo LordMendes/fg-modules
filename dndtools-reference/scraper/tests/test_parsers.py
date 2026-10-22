@@ -187,6 +187,42 @@ def test_classic_feat_prerequisite_parser() -> None:
     fields = parse_classic_feat_prerequisite(html)
     assert fields["prerequisite_text"]
     assert "dragonmarked race" in fields["prerequisite_text"].lower()
+    assert "spell-like ability" not in (fields["prerequisite_text"] or "").lower()
+
+
+def test_classic_feat_prerequisite_stops_at_nested_benefit() -> None:
+    html = """
+    <div id="content">
+      <h2>Aberrant Dragonmark Gift</h2>
+      <h4>Prerequisite</h4>
+      <p>Aberrant Dragonmark,</p>
+      <div class="nice-textile">
+        <h4>Benefit </h4>
+        <p>You can use the spell-like ability granted by your Aberrant Dragonmark three times per day.</p>
+      </div>
+    </div>
+    """
+    fields = parse_classic_feat_prerequisite(html)
+    assert fields["prerequisite_text"]
+    assert "aberrant dragonmark" in fields["prerequisite_text"].lower()
+    assert "spell-like ability" not in (fields["prerequisite_text"] or "").lower()
+
+
+def test_classic_feat_prerequisite_empty_when_only_benefit_follows() -> None:
+    html = """
+    <div id="content">
+      <h2>Aberration Banemagic</h2>
+      <h4>Prerequisite</h4>
+      <p></p>
+      <div class="nice-textile">
+        <h4>Benefit </h4>
+        <p>When you cast a spell that damages an aberration, you deal an extra 2d6 points of damage.</p>
+      </div>
+    </div>
+    """
+    fields = parse_classic_feat_prerequisite(html)
+    assert fields["prerequisite_html"] is None
+    assert fields["prerequisite_text"] is None
 
 
 def test_feat_prerequisite_overlay() -> None:

@@ -27,6 +27,7 @@ import {
   type EquipmentView,
 } from "@/lib/equipment-display";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
+import { buildFeatSections } from "@/lib/feat-sections";
 import { buildSourceDisplayNameMap } from "@/lib/source-display";
 import type { TableSort } from "@/lib/table-sort";
 import { isCastingClassVariant, resolveClassSpellOriginSlug } from "@/lib/class-spell-origin";
@@ -227,20 +228,6 @@ function parseMonsterAbilities(
       .filter((item): item is { label: string; href?: string } => item !== null);
   }
   return linked.map(({ label, href }) => ({ label, href }));
-}
-
-function buildFeatSections(indexData: Record<string, unknown>): { title: string; html: string }[] {
-  const mapping: [string, string][] = [
-    ["Prerequisite", "prerequisiteHtml"],
-    ["Benefit", "benefitHtml"],
-    ["Normal", "normalHtml"],
-    ["Special", "specialHtml"],
-  ];
-
-  return mapping.flatMap(([title, key]) => {
-    const html = indexString(indexData, key);
-    return html ? [{ title, html }] : [];
-  });
 }
 
 function buildClassSections(indexData: Record<string, unknown>): { title: string; html: string }[] {
