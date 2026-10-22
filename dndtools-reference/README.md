@@ -14,7 +14,7 @@ Standalone project for scraping D&D 3.5 content from [new.dndtools.org](https://
 ## Requirements
 
 - **Python 3.10+** for the scraper
-- **Node.js 22+** and **pnpm 10+** for the web app
+- **Node.js 22.23.4+** and **pnpm 10+** for the web app
 - Internet access to new.dndtools.org and dndtools.org
 
 > **Ubuntu 20.04 note:** system `python3` is often 3.8. Use `python3.11` or `python3.12` if below 3.10.

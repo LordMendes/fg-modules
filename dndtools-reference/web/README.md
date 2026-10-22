@@ -6,7 +6,7 @@ Part of the `dndtools-reference` pnpm workspace (`@fg-modules/web`).
 
 ## Prerequisites
 
-- Node.js 22+
+- Node.js 22.23.4+ (Oct 2026 security release)
 - pnpm 10+ (`corepack enable`)
 - PostgreSQL 16+ (or Docker)
 - Scraped JSON data in `../data/dndtools/`
@@ -19,7 +19,7 @@ All commands below assume your shell is in **`dndtools-reference/`** (the pnpm w
 
 | Requirement | Notes |
 |-------------|--------|
-| Node.js 22+ | `node -v` |
+| Node.js 22.23.4+ | `node -v` |
 | pnpm 10+ | `corepack enable` then `pnpm -v` |
 | Docker Desktop | Easiest way to run PostgreSQL 16 |
 | JSON data | Must exist at `../data/dndtools/` (bundled in repo) |

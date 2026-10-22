@@ -1,7 +1,7 @@
 # Build from dndtools-reference/: docker build -f web/Dockerfile .
 # No "# syntax=docker/dockerfile:1", avoids a Docker Hub pull that can fail with 500 on some hosts.
 
-FROM node:22-alpine AS base
+FROM node:22.23.4-alpine AS base
 RUN apk add --no-cache libc6-compat openssl wget
 RUN corepack enable && corepack prepare pnpm@10.12.1 --activate
 WORKDIR /app
@@ -52,7 +52,7 @@ RUN node /app/web/scripts/stage-runtime-packages.mjs
 # --- Production ---
 # Do not inherit `base` (pnpm). Previous runner `npm install` added 220 packages
 # and made Coolify's "exporting layers" step OOM/disk-out on small hosts.
-FROM node:22-alpine AS runner
+FROM node:22.23.4-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
