@@ -424,6 +424,28 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
         "For each target AC column, the highlighted cell is the penalty with the highest expected damage. When two penalties tie, the smaller penalty is preferred.",
     },
   ],
+  "point-buy": [
+    {
+      question: "Which point-buy costs does this use?",
+      answer:
+        "Scores 8–18 use the Dungeon Master's Guide / SRD table (8 costs 0, 15 costs 8, 16 costs 10, 17 costs 13, 18 costs 16). Scores above 18 use a house curve of +4, +4, +5, +5 per point.",
+    },
+    {
+      question: "Why do scores below 8 refund points?",
+      answer:
+        "The official table starts at 8. House refunds below that are: 7 costs −1, 6 costs −2, 5 costs −4, 4 costs −6, and 3 costs −8. That lets weaker dump stats free up points without changing the 8–18 costs.",
+    },
+    {
+      question: "Do age adjustments cost points?",
+      answer:
+        "No. Age effects apply after purchase for display only, using the Player's Handbook cumulative totals (middle, old, venerable). They do not change the point total spent.",
+    },
+    {
+      question: "How do I share a point-buy preset with players?",
+      answer:
+        "Set Points, Min, and Max. The URL always includes points, min, and max (default /tools/point-buy?points=28&min=8&max=22). Copy the address bar and send it; ability scores and aging stay local to each browser session.",
+    },
+  ],
   "random-tables": [
     {
       question: "How are trap Search DCs set in D&D 3.5?",

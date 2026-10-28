@@ -3858,6 +3858,301 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   margin-top: 1rem;
 }
 
+/* Point Buy Calculator */
+.point-buy-page-header {
+  margin-bottom: 0.75rem;
+}
+
+.point-buy-page-header p {
+  margin-bottom: 0;
+}
+
+.point-buy-calculator {
+  margin-top: 0.5rem;
+  gap: 1rem;
+}
+
+.point-buy-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.point-buy-preset {
+  padding: 0.625rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.point-buy-preset-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.5rem 0.75rem;
+}
+
+.point-buy-preset-fields .tool-field {
+  flex: 0 1 auto;
+  min-width: 4.5rem;
+  gap: 0.25rem;
+}
+
+.point-buy-preset-fields .tool-input {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.8125rem;
+  width: 4.75rem;
+}
+
+.point-buy-aging-field {
+  min-width: 11rem;
+  flex: 1 1 11rem;
+}
+
+.point-buy-aging-field .tool-input {
+  width: 100%;
+}
+
+.point-buy-note {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.point-buy-summary-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.5rem 1rem;
+  margin: 0 0 0 auto;
+  padding-left: 0.25rem;
+}
+
+.point-buy-summary-stats > div {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.point-buy-summary-stats dt {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.point-buy-summary-stats dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.point-buy-summary-ok {
+  color: var(--success, #3d9a5f);
+}
+
+.point-buy-summary-bad {
+  color: var(--danger, #c45c5c);
+}
+
+.point-buy-abilities-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.375rem;
+}
+
+.point-buy-abilities-header h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.point-buy-abilities-header .tool-btn-secondary {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+}
+
+.point-buy-ability-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.point-buy-ability-row {
+  display: grid;
+  grid-template-columns:
+    2.75rem
+    minmax(6rem, 1fr)
+    3.25rem
+    2.5rem
+    3rem;
+  gap: 0.375rem 0.5rem;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  min-height: 2.25rem;
+}
+
+.point-buy-ability-list--aging .point-buy-ability-row {
+  grid-template-columns:
+    2.75rem
+    minmax(5rem, 1fr)
+    3.25rem
+    2.5rem
+    minmax(0, 7.5rem)
+    3rem;
+}
+
+.point-buy-ability-meta {
+  display: flex;
+  align-items: center;
+}
+
+.point-buy-ability-short {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-gold);
+}
+
+.point-buy-slider-wrap {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.point-buy-slider-wrap .tool-range {
+  max-width: none;
+  width: 100%;
+  margin-top: 0;
+  height: 1.25rem;
+}
+
+.point-buy-score-input {
+  width: 3.25rem;
+  padding: 0.25rem 0.35rem;
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.point-buy-mod-display {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-gold);
+  text-align: center;
+}
+
+.point-buy-aging-adjustment {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.point-buy-row-cost {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.point-buy-table-summary {
+  padding: 0.75rem;
+}
+
+.point-buy-table-summary h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.point-buy-table-summary .point-buy-table-wrap {
+  max-height: min(22rem, 55vh);
+  overflow: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.point-buy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.point-buy-table th,
+.point-buy-table td {
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.point-buy-table th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.point-buy-table-row--refund td {
+  color: var(--success, #3d9a5f);
+}
+
+.point-buy-table-row--out td {
+  opacity: 0.55;
+}
+
+@media (max-width: 900px) {
+  .point-buy-ability-row {
+    grid-template-columns: 2.5rem 1fr 3.25rem 2.5rem;
+    grid-template-areas:
+      "abbr slider score mod"
+      "abbr age age cost";
+  }
+
+  .point-buy-ability-meta {
+    grid-area: abbr;
+  }
+
+  .point-buy-slider-wrap {
+    grid-area: slider;
+  }
+
+  .point-buy-score-input {
+    grid-area: score;
+  }
+
+  .point-buy-mod-display {
+    grid-area: mod;
+  }
+
+  .point-buy-aging-adjustment {
+    grid-area: age;
+  }
+
+  .point-buy-row-cost {
+    grid-area: cost;
+  }
+
+  .point-buy-summary-stats {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
 .power-attack {
   margin-top: 1rem;
   display: flex;

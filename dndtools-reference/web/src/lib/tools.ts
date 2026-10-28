@@ -33,6 +33,16 @@ export const TOOLS = [
     group: "table",
   },
   {
+    key: "point-buy",
+    label: "Point Buy Calculator",
+    icon: "🧮",
+    href: "/tools/point-buy",
+    description:
+      "Spend points on ability scores with a shareable budget and min/max range. Uses the DMG 8–18 table, with refunds below 8 and a house curve above 18.",
+    source: "DMG / PHB",
+    group: "table",
+  },
+  {
     key: "npc-creator",
     label: "NPC Creator",
     icon: "🗡️",
