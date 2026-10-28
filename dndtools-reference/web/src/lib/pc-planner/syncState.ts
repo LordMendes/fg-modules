@@ -13,6 +13,7 @@ import { normalizeCombatState } from "./combatStats";
 import { normalizeHitPointsState, syncHitDice } from "./hitPoints";
 import { normalizePcPlanState } from "./normalizePlanState";
 import { computeAutoDefenses } from "./pcDefenses";
+import { syncGestaltClassLevels } from "./gestalt";
 import {
   collectPrestigeCasterContributions,
   isPrestigeOnlyCasterClass,
@@ -121,6 +122,7 @@ export function syncPcPlanState(
   options: SyncPcPlanOptions = {},
 ): PcPlanState {
   normalizePcPlanState(state);
+  syncGestaltClassLevels(state);
   normalizePlanIdentity(state);
 
   const classSpellTables = options.classSpellTables ?? {};

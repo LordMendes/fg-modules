@@ -6,15 +6,25 @@ import { PcImageSlot } from "@/components/tools/pc-image-slot";
 import { PcMainRaceAlignmentFields } from "@/components/tools/pc-main/race-alignment";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import { RandomNameButton } from "@/components/tools/random-name-button";
-import { totalCharacterLevel } from "@/lib/pc-planner/skillPoints";
+import {
+  characterLevelFromPlan,
+  formatGestaltClassSummary,
+  isGestaltActive,
+} from "@/lib/pc-planner/gestalt";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
 type PatchFn = (fn: (draft: PcPlanState) => void) => void;
 
-function formatClassSummary(classLevels: PcPlanState["identity"]["classLevels"]): string | null {
-  if (classLevels.length === 0) return null;
+function formatClassSummary(state: PcPlanState): string | null {
+  const classLevels = state.identity.classLevels;
+  if (classLevels.length === 0 && !isGestaltActive(state)) return null;
+  const level = characterLevelFromPlan(state);
+  if (isGestaltActive(state)) {
+    const summary = formatGestaltClassSummary(classLevels);
+    return summary ? `${summary} · Level ${level}` : `Level ${level}`;
+  }
   const classes = classLevels.map((cl) => `${cl.className} ${cl.level}`).join(" / ");
-  return `${classes} · Level ${totalCharacterLevel(classLevels)}`;
+  return `${classes} · Level ${level}`;
 }
 
 export function PcMainProfile({
@@ -30,7 +40,7 @@ export function PcMainProfile({
   readOnly?: boolean;
   onNameBlur: (name?: string) => void;
 }) {
-  const classSummary = formatClassSummary(state.identity.classLevels);
+  const classSummary = formatClassSummary(state);
   const [imagesDialogOpen, setImagesDialogOpen] = useState(false);
 
   return (

@@ -13,6 +13,11 @@ import {
   type ClassAdvancementMap,
 } from "./combatStats";
 import { computeEquippedGear } from "./equippedGear";
+import {
+  characterLevelFromPlan,
+  formatGestaltNoteLine,
+  isGestaltActive,
+} from "./gestalt";
 import { deriveFeatEffects } from "./parseFeatEffects";
 import { computeMaxHitPoints } from "./hitPoints";
 import { classSkillKeySet } from "./syncSkills";
@@ -594,7 +599,7 @@ export function buildPcFgXml(
   const hpCurrent = state.hitPoints?.current ?? hpMax;
   const hpTemp = state.hitPoints?.temporary ?? 0;
   const hpWounds = Math.max(0, hpMax - hpCurrent);
-  const totalLevel = state.identity.classLevels.reduce((sum, cl) => sum + cl.level, 0);
+  const totalLevel = characterLevelFromPlan(state);
   const defenseLine = state.identity.defenses
     ? formatDefensesLine(state.identity.defenses)
     : "";
@@ -607,6 +612,9 @@ export function buildPcFgXml(
   if (senses.length > 0) notesParts.push(`Senses: ${senses.join(", ")}`);
   const domains = (state.identity.domains ?? []).map((d) => d.name).join(", ");
   if (domains) notesParts.push(`Domains: ${domains}`);
+  if (isGestaltActive(state)) {
+    notesParts.push(formatGestaltNoteLine(state.identity.classLevels, totalLevel));
+  }
 
   const acParts = stats.ac.parts;
   const ffParts = stats.flatFooted.parts;

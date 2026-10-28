@@ -18,6 +18,18 @@ export type ClassLevelEntry = {
   level: number;
 };
 
+/** One side of a gestalt level row (null = empty). */
+export type GestaltSide = {
+  classSlug: string;
+  className: string;
+} | null;
+
+/** One character level under gestalt: two class slots. */
+export type GestaltLevelRow = {
+  a: GestaltSide;
+  b: GestaltSide;
+};
+
 export type FeatEntry = {
   slug: string;
   name: string;
@@ -240,6 +252,8 @@ export type HitDieRoll = {
   classSlug: string;
   classLevel: number;
   rolled: number;
+  /** Gestalt: character level (1-based) this die belongs to. */
+  characterLevel?: number;
 };
 
 export type TreasureBuiltin = "pp" | "gp" | "sp" | "cp";
@@ -378,6 +392,10 @@ export type PcPlanState = {
     raceSlug?: string | null;
     alignment: string;
     classLevels: ClassLevelEntry[];
+    /** Unearthed Arcana gestalt: each character level is a pair of classes. */
+    gestalt?: boolean;
+    /** One row per character level when gestalt is on. */
+    gestaltLevels?: GestaltLevelRow[];
     /** Class slug that receives ×4 skill points at 1st character level. */
     firstClassSlug?: string | null;
     deity?: string;

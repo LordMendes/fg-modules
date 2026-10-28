@@ -1,4 +1,5 @@
 import { emptyDerivedList, normalizeDerivedList, type DerivedListField } from "./derivedField";
+import { normalizeGestaltLevels } from "./gestalt";
 import { emptyDefenses, normalizeDefensesState } from "./pcDefenses";
 import { sensesLinesFromState } from "./parseRaceFeatures";
 import { normalizeAbilityDamage, normalizeAbilityDrain } from "./syncDerived";
@@ -203,6 +204,11 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   identity.languages = normalizeDerivedList(identity.languages);
   identity.defenses = normalizeDefenses(identity.defenses);
   identity.defensesCustomized = Boolean(identity.defensesCustomized);
+  identity.gestalt = Boolean(identity.gestalt);
+  identity.gestaltLevels = normalizeGestaltLevels(identity.gestaltLevels);
+  if (!identity.gestalt) {
+    identity.gestaltLevels = [];
+  }
   if (identity.xp == null || !Number.isFinite(identity.xp)) identity.xp = 0;
   if (identity.xpNecessary == null || !Number.isFinite(identity.xpNecessary)) {
     identity.xpNecessary = 0;

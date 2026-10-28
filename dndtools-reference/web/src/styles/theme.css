@@ -7551,6 +7551,98 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   min-height: 0;
 }
 
+.pc-class-card-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pc-gestalt-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.pc-gestalt-toggle input {
+  margin: 0;
+}
+
+.pc-class-picker-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.pc-gestalt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pc-gestalt-row {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr) auto auto;
+  column-gap: 0.35rem;
+  row-gap: 0.15rem;
+  align-items: center;
+  padding: 0.2rem 0;
+}
+
+.pc-gestalt-level {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.pc-gestalt-sides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.pc-gestalt-side {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pc-gestalt-cell-pick {
+  border: none;
+  background: none;
+  padding: 0;
+  min-width: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.pc-gestalt-cell-empty {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+.pc-gestalt-die {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-gestalt-warn {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.6875rem;
+  color: var(--accent-gold);
+}
+
 .pc-main-classes .pc-class-list {
   max-height: 9.75rem;
   overflow-y: auto;
@@ -7558,6 +7650,10 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   margin-bottom: 0;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+
+.pc-main-classes .pc-gestalt-list {
+  max-height: 14rem;
 }
 
 .pc-main-classes .pc-class-row {

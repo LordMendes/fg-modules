@@ -28,6 +28,7 @@ import { computeEncumbrance } from "@/lib/pc-planner/encumbrance";
 import { computeEquippedBonuses, skillItemBonus } from "@/lib/pc-planner/itemBonuses";
 import { deriveFeatEffects, featSkillBonus } from "@/lib/pc-planner/parseFeatEffects";
 import { resolveClassFeaturesForPlan } from "@/lib/pc-planner/resolveCompendium";
+import { characterLevelFromPlan } from "@/lib/pc-planner/gestalt";
 import {
   computeSkillPointSummary,
   computeSkillTotal,
@@ -35,7 +36,6 @@ import {
   formatSkillPointBudgetLine,
   isClassSkillRow,
   maxSkillRanks,
-  totalCharacterLevel as skillHitDice,
 } from "@/lib/pc-planner/skillPoints";
 import {
   canRemoveSpecialtyRow,
@@ -163,11 +163,10 @@ export function PcSheet({
     setSkillPreviewLoading(false);
   }, []);
 
-  const classLevels = state.identity.classLevels;
   const raceFeatures = compendium?.raceFeatures ?? null;
 
   const classSkillKeys = classSkillKeySet(compendium?.skills ?? []);
-  const skillHd = skillHitDice(classLevels);
+  const skillHd = characterLevelFromPlan(state);
   const equippedGear = computeEquippedGear(state.inventory ?? [], state.combat.speedBase);
   const featEffects = deriveFeatEffects(state.feats);
   const resolvedClassFeatures = resolveClassFeaturesForPlan(compendium, state);

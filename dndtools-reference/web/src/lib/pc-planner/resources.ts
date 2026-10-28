@@ -13,29 +13,35 @@ const RESOURCE_SEEDS: { match: RegExp; name: string; maxFromLevel?: (level: numb
   { match: /bardic music/i, name: "Bardic music", maxFromLevel: (l) => Math.max(1, l) },
 ];
 
+/** One pool per seed; when multiple classes match, keep the higher max. */
 export function seedResourcesFromAbilities(
   abilities: ClassAbilityEntry[],
   existing: PcResourceEntry[] = [],
 ): PcResourceEntry[] {
   const kept = existing.filter((r) => !r.auto);
-  const autoById = new Map(existing.filter((r) => r.auto).map((r) => [r.id, r]));
+  const priorAuto = new Map(existing.filter((r) => r.auto).map((r) => [r.id, r]));
+  const nextAuto = new Map<string, PcResourceEntry>();
 
   for (const ability of abilities) {
     for (const seed of RESOURCE_SEEDS) {
       if (!seed.match.test(ability.name)) continue;
       const id = resourceId(seed.name);
-      const prior = autoById.get(id);
       const max = seed.maxFromLevel?.(ability.level) ?? 1;
-      kept.push({
+      const existingAuto = nextAuto.get(id) ?? priorAuto.get(id);
+      const nextMax = Math.max(existingAuto?.max ?? 0, max);
+      const priorCurrent = existingAuto?.current;
+      nextAuto.set(id, {
         id,
         name: seed.name,
-        current: prior?.current ?? max,
-        max: prior?.max ?? max,
+        current:
+          priorCurrent != null && Number.isFinite(priorCurrent)
+            ? Math.min(Math.max(0, Math.trunc(priorCurrent)), nextMax)
+            : nextMax,
+        max: nextMax,
         auto: true,
       });
-      autoById.delete(id);
     }
   }
 
-  return kept;
+  return [...kept, ...nextAuto.values()];
 }

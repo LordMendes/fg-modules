@@ -1,6 +1,6 @@
 import type { PcPlanState } from "@/lib/pc-planner/types";
+import { characterLevelFromPlan } from "@/lib/pc-planner/gestalt";
 import { normalizePcPlanState } from "@/lib/pc-planner/normalizePlanState";
-import { totalCharacterLevel } from "@/lib/pc-planner/skillPoints";
 
 export type RestKind = "night" | "full";
 
@@ -14,7 +14,7 @@ export function restPcPlanState(
   kind: RestKind,
 ): PcPlanState {
   const normalized = normalizePcPlanState(state);
-  const level = Math.max(1, totalCharacterLevel(normalized.identity.classLevels));
+  const level = Math.max(1, characterLevelFromPlan(normalized));
   const healAmt = healAmountForRest(level, kind);
   const current = normalized.hitPoints.current ?? 0;
 

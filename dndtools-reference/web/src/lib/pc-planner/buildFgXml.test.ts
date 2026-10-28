@@ -63,6 +63,22 @@ describe("buildPcFgXml", () => {
     assert.match(xml, /<availablelevel1 type="number">/);
   });
 
+  it("exports gestalt character level and note", () => {
+    const state = createDefaultPcPlanState("Gestalt Hero");
+    state.identity.gestalt = true;
+    state.identity.gestaltLevels = Array.from({ length: 5 }, () => ({
+      a: { classSlug: "fighter", className: "Fighter" },
+      b: { classSlug: "wizard", className: "Wizard" },
+    }));
+    state.identity.classLevels = [
+      { classSlug: "fighter", className: "Fighter", level: 5 },
+      { classSlug: "wizard", className: "Wizard", level: 5 },
+    ];
+    const xml = buildPcFgXml(state);
+    assert.match(xml, /<level type="number">5<\/level>/);
+    assert.match(xml, /Gestalt: Fighter 5 \/\/ Wizard 5 \(character level 5\)/);
+  });
+
   it("exports coins and equipped weapons", () => {
     const state = createDefaultPcPlanState("Merchant");
     state.identity.classLevels = [

@@ -19,7 +19,16 @@ export type PendingRemoveClassAction = {
   isFirstClass: boolean;
 };
 
-export type PendingClassAction = PendingFirstClassAction | PendingRemoveClassAction;
+export type PendingDisableGestaltAction = {
+  kind: "disable-gestalt";
+  characterLevel: number;
+  sideBClassNames: string[];
+};
+
+export type PendingClassAction =
+  | PendingFirstClassAction
+  | PendingRemoveClassAction
+  | PendingDisableGestaltAction;
 
 function firstClassChangeLines(action: PendingFirstClassAction): string[] {
   const lines = [
@@ -57,6 +66,22 @@ function removeClassChangeLines(action: PendingRemoveClassAction): string[] {
   return lines;
 }
 
+function disableGestaltChangeLines(action: PendingDisableGestaltAction): string[] {
+  const lines = [
+    "Gestalt planning will turn off.",
+    `Side A classes become a normal multiclass list (${action.characterLevel} character level${action.characterLevel === 1 ? "" : "s"} from side A).`,
+  ];
+  if (action.sideBClassNames.length > 0) {
+    lines.push(
+      `Side B classes will be dropped: ${action.sideBClassNames.join(", ")}.`,
+    );
+  } else {
+    lines.push("Side B is empty, so no classes are dropped.");
+  }
+  lines.push("Base attack bonus, saves, skill points, and hit dice will use normal multiclass stacking again.");
+  return lines;
+}
+
 export function ClassActionConfirmDialog({
   action,
   onConfirm,
@@ -77,18 +102,37 @@ export function ClassActionConfirmDialog({
   const title =
     action.kind === "first"
       ? `Make ${action.className} your 1st level class?`
-      : `Remove ${action.className}?`;
+      : action.kind === "disable-gestalt"
+        ? "Turn off Gestalt planning?"
+        : `Remove ${action.className}?`;
 
   const intro =
     action.kind === "first"
       ? "This affects which class gets the special 1st character level benefits:"
-      : "This cannot be undone without re-adding the class. The following will change:";
+      : action.kind === "disable-gestalt"
+        ? "This cannot be undone without rebuilding side B. The following will change:"
+        : "This cannot be undone without re-adding the class. The following will change:";
 
   const lines =
-    action.kind === "first" ? firstClassChangeLines(action) : removeClassChangeLines(action);
+    action.kind === "first"
+      ? firstClassChangeLines(action)
+      : action.kind === "disable-gestalt"
+        ? disableGestaltChangeLines(action)
+        : removeClassChangeLines(action);
 
   const titleId =
-    action.kind === "first" ? "pc-class-first-confirm-title" : "pc-class-remove-confirm-title";
+    action.kind === "first"
+      ? "pc-class-first-confirm-title"
+      : action.kind === "disable-gestalt"
+        ? "pc-class-gestalt-confirm-title"
+        : "pc-class-remove-confirm-title";
+
+  const confirmLabel =
+    action.kind === "first"
+      ? "Make 1st"
+      : action.kind === "disable-gestalt"
+        ? "Turn off Gestalt"
+        : "Remove class";
 
   return (
     <div className="confirm-dialog-overlay" role="presentation">
@@ -112,10 +156,14 @@ export function ClassActionConfirmDialog({
           </button>
           <button
             type="button"
-            className={action.kind === "remove" ? "tool-btn tool-btn--danger" : "tool-btn"}
+            className={
+              action.kind === "remove" || action.kind === "disable-gestalt"
+                ? "tool-btn tool-btn--danger"
+                : "tool-btn"
+            }
             onClick={onConfirm}
           >
-            {action.kind === "first" ? "Make 1st" : "Remove class"}
+            {confirmLabel}
           </button>
         </div>
       </div>

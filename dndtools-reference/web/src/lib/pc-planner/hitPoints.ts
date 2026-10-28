@@ -1,7 +1,15 @@
 import { abilityModifier } from "./combatStats";
+import { isGestaltActive } from "./gestalt";
 import { deriveFeatEffects } from "./parseFeatEffects";
 import { effectiveFirstClassSlug, totalCharacterLevel } from "./skillPoints";
-import type { ClassLevelEntry, HitDieRoll, HitPointsState, PcPlanState } from "./types";
+import type {
+  ClassLevelEntry,
+  GestaltLevelRow,
+  GestaltSide,
+  HitDieRoll,
+  HitPointsState,
+  PcPlanState,
+} from "./types";
 
 /** Parse "d10", "10", or "d8" into die sides. */
 export function parseHitDieSides(raw: string | null | undefined): number {
@@ -55,6 +63,10 @@ function rollKey(classSlug: string, classLevel: number): string {
   return `${classSlug}::${classLevel}`;
 }
 
+function gestaltRollKey(characterLevel: number): string {
+  return `gestalt::${characterLevel}`;
+}
+
 function desiredHitDice(classLevels: ClassLevelEntry[]): { classSlug: string; classLevel: number }[] {
   const desired: { classSlug: string; classLevel: number }[] = [];
   for (const cl of classLevels) {
@@ -64,6 +76,22 @@ function desiredHitDice(classLevels: ClassLevelEntry[]): { classSlug: string; cl
     }
   }
   return desired;
+}
+
+/** Prefer the side with the larger hit die; ties prefer side A. */
+export function pickGestaltHitDieSide(
+  row: GestaltLevelRow,
+  classHitDice: Record<string, string> | null | undefined,
+): GestaltSide {
+  const a = row.a;
+  const b = row.b;
+  if (!a && !b) return null;
+  if (!a) return b;
+  if (!b) return a;
+  if (a.classSlug === b.classSlug) return a;
+  const sidesA = parseHitDieSides(resolveHitDie(a.classSlug, classHitDice));
+  const sidesB = parseHitDieSides(resolveHitDie(b.classSlug, classHitDice));
+  return sidesB > sidesA ? b : a;
 }
 
 export function normalizeHitPointsState(raw: unknown): HitPointsState {
@@ -84,7 +112,15 @@ export function normalizeHitPointsState(raw: unknown): HitPointsState {
     const rolled =
       typeof row.rolled === "number" && Number.isFinite(row.rolled) ? Math.trunc(row.rolled) : 0;
     if (!classSlug || classLevel < 1) continue;
-    rolls.push({ classSlug, classLevel, rolled });
+    const characterLevel =
+      typeof row.characterLevel === "number" && Number.isFinite(row.characterLevel)
+        ? Math.trunc(row.characterLevel)
+        : undefined;
+    const out: HitDieRoll = { classSlug, classLevel, rolled };
+    if (characterLevel != null && characterLevel >= 1) {
+      out.characterLevel = characterLevel;
+    }
+    rolls.push(out);
   }
   const current =
     typeof hp.current === "number" && Number.isFinite(hp.current)
@@ -100,38 +136,89 @@ export function normalizeHitPointsState(raw: unknown): HitPointsState {
   return out;
 }
 
+function syncGestaltHitDice(
+  state: PcPlanState,
+  classHitDice: Record<string, string> | null,
+  existing: HitPointsState,
+): HitDieRoll[] {
+  const rows = state.identity.gestaltLevels ?? [];
+  const byGestaltKey = new Map<string, HitDieRoll>();
+  for (const r of existing.rolls) {
+    if (r.characterLevel != null && r.characterLevel >= 1) {
+      byGestaltKey.set(gestaltRollKey(r.characterLevel), r);
+    }
+  }
+
+  const nextRolls: HitDieRoll[] = [];
+  for (let i = 0; i < rows.length; i++) {
+    const characterLevel = i + 1;
+    const winner = pickGestaltHitDieSide(rows[i]!, classHitDice);
+    if (!winner) continue;
+    const sides = parseHitDieSides(resolveHitDie(winner.classSlug, classHitDice));
+    const prior = byGestaltKey.get(gestaltRollKey(characterLevel));
+    if (prior && sides > 0 && prior.rolled >= 1 && prior.rolled <= sides) {
+      nextRolls.push({
+        classSlug: winner.classSlug,
+        classLevel: characterLevel,
+        characterLevel,
+        rolled: prior.rolled,
+      });
+      continue;
+    }
+    const rolled = characterLevel === 1 ? sides : averageHitDieRoll(sides);
+    nextRolls.push({
+      classSlug: winner.classSlug,
+      classLevel: characterLevel,
+      characterLevel,
+      rolled,
+    });
+  }
+  return nextRolls;
+}
+
 /**
  * Append/truncate hit-die rolls to match class levels.
- * Never rewrites an existing roll value.
+ * Never rewrites an existing roll value when it still fits.
  */
 export function syncHitDice(
   state: PcPlanState,
   classHitDice: Record<string, string> | null = null,
 ): void {
   const existing = normalizeHitPointsState(state.hitPoints);
-  const byKey = new Map(existing.rolls.map((r) => [rollKey(r.classSlug, r.classLevel), r]));
-  const firstSlug = effectiveFirstClassSlug(
-    state.identity.classLevels,
-    state.identity.firstClassSlug,
-  );
 
-  const nextRolls: HitDieRoll[] = [];
-  for (const slot of desiredHitDice(state.identity.classLevels)) {
-    const key = rollKey(slot.classSlug, slot.classLevel);
-    const prior = byKey.get(key);
-    if (prior) {
-      nextRolls.push(prior);
-      continue;
+  let nextRolls: HitDieRoll[];
+  if (isGestaltActive(state)) {
+    nextRolls = syncGestaltHitDice(state, classHitDice, existing);
+  } else {
+    const byKey = new Map(existing.rolls.map((r) => [rollKey(r.classSlug, r.classLevel), r]));
+    const firstSlug = effectiveFirstClassSlug(
+      state.identity.classLevels,
+      state.identity.firstClassSlug,
+    );
+
+    nextRolls = [];
+    for (const slot of desiredHitDice(state.identity.classLevels)) {
+      const key = rollKey(slot.classSlug, slot.classLevel);
+      const prior = byKey.get(key);
+      if (prior) {
+        nextRolls.push({
+          classSlug: prior.classSlug,
+          classLevel: prior.classLevel,
+          rolled: prior.rolled,
+        });
+        continue;
+      }
+      const sides = parseHitDieSides(resolveHitDie(slot.classSlug, classHitDice));
+      const isFirstHd = firstSlug === slot.classSlug && slot.classLevel === 1;
+      const rolled = isFirstHd ? sides : averageHitDieRoll(sides);
+      nextRolls.push({ classSlug: slot.classSlug, classLevel: slot.classLevel, rolled });
     }
-    const sides = parseHitDieSides(resolveHitDie(slot.classSlug, classHitDice));
-    const isFirstHd = firstSlug === slot.classSlug && slot.classLevel === 1;
-    const rolled = isFirstHd ? sides : averageHitDieRoll(sides);
-    nextRolls.push({ classSlug: slot.classSlug, classLevel: slot.classLevel, rolled });
   }
 
   state.hitPoints = {
     rolls: nextRolls,
     ...(existing.current !== undefined ? { current: existing.current } : {}),
+    ...(existing.temporary !== undefined ? { temporary: existing.temporary } : {}),
   };
 }
 

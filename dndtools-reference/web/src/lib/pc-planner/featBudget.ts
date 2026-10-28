@@ -1,4 +1,4 @@
-import { totalCharacterLevel } from "./skillPoints";
+import { characterLevelFromPlan } from "./gestalt";
 import type { ClassLevelEntry, FeatEntry, PcPlanState } from "./types";
 import type { RaceDerivedFeatures } from "./parseRaceFeatures";
 
@@ -98,7 +98,7 @@ export function computeFeatBudget(
   state: PcPlanState,
   raceFeatures: RaceDerivedFeatures | null = null,
 ): FeatBudgetBreakdown {
-  const characterLevel = totalCharacterLevel(state.identity.classLevels);
+  const characterLevel = characterLevelFromPlan(state);
   const general = generalFeatBudget(characterLevel);
   const human = humanBonusFeatBudget(
     characterLevel,

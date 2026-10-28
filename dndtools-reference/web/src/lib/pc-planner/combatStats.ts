@@ -16,6 +16,10 @@ import {
   stackArmorBonus,
   type EquippedBonuses,
 } from "./itemBonuses";
+import {
+  gestaltSideClassLevels,
+  isGestaltActive,
+} from "./gestalt";
 import type { RaceDerivedFeatures } from "./parseRaceFeatures";
 import type { FeatDerivedFeatures } from "./parseFeatEffects";
 import { emptyFeatDerivedFeatures } from "./parseFeatEffects";
@@ -141,6 +145,20 @@ export function computeBaseAttackBonus(
   return total;
 }
 
+/** Gestalt: better of the two sides' BAB (whole-side totals). */
+export function computeGestaltBaseAttackBonus(
+  state: PcPlanState,
+  classAdvancement: ClassAdvancementMap | null = null,
+): number {
+  const rows = state.identity.gestaltLevels ?? [];
+  const sideA = gestaltSideClassLevels(rows, "a");
+  const sideB = gestaltSideClassLevels(rows, "b");
+  return Math.max(
+    computeBaseAttackBonus(sideA, classAdvancement),
+    computeBaseAttackBonus(sideB, classAdvancement),
+  );
+}
+
 export function computeClassSave(
   save: "fort" | "ref" | "will",
   classLevels: PcPlanState["identity"]["classLevels"],
@@ -157,6 +175,21 @@ export function computeClassSave(
     total += saveFromClassLevel(cl.level, info[save]);
   }
   return total;
+}
+
+/** Gestalt: better of the two sides for one save. */
+export function computeGestaltClassSave(
+  save: "fort" | "ref" | "will",
+  state: PcPlanState,
+  classAdvancement: ClassAdvancementMap | null = null,
+): number {
+  const rows = state.identity.gestaltLevels ?? [];
+  const sideA = gestaltSideClassLevels(rows, "a");
+  const sideB = gestaltSideClassLevels(rows, "b");
+  return Math.max(
+    computeClassSave(save, sideA, classAdvancement),
+    computeClassSave(save, sideB, classAdvancement),
+  );
 }
 
 export function computeCombatStats(
@@ -239,7 +272,9 @@ export function computeCombatStats(
     abilityModifier,
   );
 
-  const bab = computeBaseAttackBonus(identity.classLevels, classAdvancement);
+  const bab = isGestaltActive(state)
+    ? computeGestaltBaseAttackBonus(state, classAdvancement)
+    : computeBaseAttackBonus(identity.classLevels, classAdvancement);
   const grappleSize = grappleSizeModFromAttackSizeMod(combat.sizeMod);
   const itemNatural = itemBonuses.combat.naturalArmor.total;
   const itemDeflection = itemBonuses.combat.deflection.total;
@@ -270,22 +305,31 @@ export function computeCombatStats(
     misc: combat.grappleMisc,
   };
 
+  const fortClass = isGestaltActive(state)
+    ? computeGestaltClassSave("fort", state, classAdvancement)
+    : computeClassSave("fort", identity.classLevels, classAdvancement);
+  const refClass = isGestaltActive(state)
+    ? computeGestaltClassSave("ref", state, classAdvancement)
+    : computeClassSave("ref", identity.classLevels, classAdvancement);
+  const willClass = isGestaltActive(state)
+    ? computeGestaltClassSave("will", state, classAdvancement)
+    : computeClassSave("will", identity.classLevels, classAdvancement);
   const fortParts = {
-    class: computeClassSave("fort", identity.classLevels, classAdvancement),
+    class: fortClass,
     stat: conMod,
     ability: classFortAbility,
     racial: racialSave.fort,
     misc: combat.fortMisc + classSaveBonus.fort + itemFort + feats.fortBonus,
   };
   const refParts = {
-    class: computeClassSave("ref", identity.classLevels, classAdvancement),
+    class: refClass,
     stat: dexMod,
     ability: classRefAbility,
     racial: racialSave.ref,
     misc: combat.refMisc + classSaveBonus.ref + itemRef + feats.refBonus,
   };
   const willParts = {
-    class: computeClassSave("will", identity.classLevels, classAdvancement),
+    class: willClass,
     stat: wisMod,
     ability: classWillAbility,
     racial: racialSave.will,

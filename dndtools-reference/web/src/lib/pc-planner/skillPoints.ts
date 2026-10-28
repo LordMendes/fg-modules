@@ -1,7 +1,14 @@
 import { abilityModifier } from "./combatStats";
+import { characterLevelFromPlan, isGestaltActive } from "./gestalt";
 import type { RacialSkillPointBonus } from "./parseRaceFeatures";
 import { specialtyFamilyKey } from "./skillSpecialty";
-import type { AbilityKey, ClassLevelEntry, PcPlanState, SkillRow } from "./types";
+import type {
+  AbilityKey,
+  ClassLevelEntry,
+  GestaltLevelRow,
+  PcPlanState,
+  SkillRow,
+} from "./types";
 
 const SKILL_ABILITY_KEYS: Record<string, AbilityKey> = {
   str: "str",
@@ -146,6 +153,54 @@ export function skillPointsForCharacterLevelGain(
   return isFirstCharacterLevel ? perLevel * 4 : perLevel;
 }
 
+function sideSkillPointsPerLevel(
+  side: GestaltLevelRow["a"],
+  skillPointBaseBySlug: Record<string, number>,
+  intScore: number,
+  defaultBase: number,
+): number {
+  if (!side?.classSlug) return 0;
+  const base = skillPointBaseBySlug[side.classSlug] ?? defaultBase;
+  return skillPointsPerClassLevel(base, intScore);
+}
+
+/** Gestalt: each row grants the better of the two classes' skill points. */
+export function computeGestaltSkillPointBudgetBreakdown(
+  rows: GestaltLevelRow[],
+  skillPointBaseBySlug: Record<string, number>,
+  intScore: number,
+  defaultBase = 2,
+): SkillPointBudgetLine[] {
+  const lines: SkillPointBudgetLine[] = [];
+  let total = 0;
+  const rowLines: SkillPointBudgetLine[] = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i]!;
+    const ptsA = sideSkillPointsPerLevel(row.a, skillPointBaseBySlug, intScore, defaultBase);
+    const ptsB = sideSkillPointsPerLevel(row.b, skillPointBaseBySlug, intScore, defaultBase);
+    const perLevel = Math.max(ptsA, ptsB);
+    if (perLevel <= 0) continue;
+    const isFirst = i === 0;
+    const points = skillPointsForCharacterLevelGain(perLevel, isFirst);
+    total += points;
+    const aName = row.a?.className ?? "—";
+    const bName = row.b?.className ?? "—";
+    rowLines.push({
+      label: isFirst
+        ? `Level ${i + 1} (${aName} // ${bName}, ×4)`
+        : `Level ${i + 1} (${aName} // ${bName})`,
+      value: points,
+      indent: true,
+    });
+  }
+
+  if (rowLines.length === 0) return [];
+  lines.push({ label: "Gestalt", value: total });
+  lines.push(...rowLines);
+  return lines;
+}
+
 /** Per-class and per-level contributions to the skill point budget. */
 export function computeSkillPointBudgetBreakdown(
   classLevels: ClassLevelEntry[],
@@ -239,31 +294,44 @@ export function computeSkillPointSummary(
   raceName?: string,
   classSkillKeys: Set<string> = new Set(),
 ): { spent: number; available: number; breakdown: SkillPointBudgetLine[] } {
-  const firstClassSlug = effectiveFirstClassSlug(
-    state.identity.classLevels,
-    state.identity.firstClassSlug,
-  );
-  const classBreakdown = computeSkillPointBudgetBreakdown(
-    state.identity.classLevels,
-    skillPointBaseBySlug,
-    state.abilities.int,
-    2,
-    firstClassSlug,
-  );
+  const charLevel = characterLevelFromPlan(state);
+  let classBreakdown: SkillPointBudgetLine[];
+  let classTotal: number;
+
+  if (isGestaltActive(state)) {
+    classBreakdown = computeGestaltSkillPointBudgetBreakdown(
+      state.identity.gestaltLevels ?? [],
+      skillPointBaseBySlug,
+      state.abilities.int,
+      2,
+    );
+    classTotal = classBreakdown
+      .filter((line) => !line.indent)
+      .reduce((sum, line) => sum + line.value, 0);
+  } else {
+    const firstClassSlug = effectiveFirstClassSlug(
+      state.identity.classLevels,
+      state.identity.firstClassSlug,
+    );
+    classBreakdown = computeSkillPointBudgetBreakdown(
+      state.identity.classLevels,
+      skillPointBaseBySlug,
+      state.abilities.int,
+      2,
+      firstClassSlug,
+    );
+    classTotal = classBreakdown
+      .filter((line) => !line.indent)
+      .reduce((sum, line) => sum + line.value, 0);
+  }
+
   const racialBreakdown = computeRacialSkillPointBudgetBreakdown(
-    totalCharacterLevel(state.identity.classLevels),
+    charLevel,
     racialSkillPointBonus,
     raceName,
   );
   const breakdown = [...classBreakdown, ...racialBreakdown];
-  const available = computeSkillPointBudget(
-    state.identity.classLevels,
-    skillPointBaseBySlug,
-    state.abilities.int,
-    2,
-    racialSkillPointBonus,
-    firstClassSlug,
-  );
+  const available = classTotal + computeRacialSkillPointBudget(charLevel, racialSkillPointBonus);
   const spent = computeSkillRanksSpent(state.skills, classSkillKeys);
   return { spent, available, breakdown };
 }
