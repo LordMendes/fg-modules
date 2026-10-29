@@ -9,6 +9,8 @@ from typing import Any
 
 from .converters import CONVERTERS
 from .converters.spell_lists import (
+    DREAD_NECROMANCER_CLASS,
+    add_dread_necromancer_spell_list,
     arcanist_path_spell_links,
     build_spell_lists,
     index_spell_paths,
@@ -72,9 +74,21 @@ def build_module(
                 lists_el, library_el, class_spell_links = build_spell_lists(
                     records, paths, display_name, report
                 )
-                if lists_el is not None:
+                if _module_has_class(root, DREAD_NECROMANCER_CLASS):
+                    lists_el, library_el, dn_links = add_dread_necromancer_spell_list(
+                        lists_el,
+                        library_el,
+                        current_paths=paths,
+                        module_name=display_name,
+                        ph_spells_json=Path(scraped_dir).parent
+                        / "players-handbook"
+                        / "spells.json",
+                        report=report,
+                    )
+                    class_spell_links.update(dn_links)
+                if lists_el is not None and len(lists_el):
                     root.append(lists_el)
-                if library_el is not None:
+                if library_el is not None and len(library_el):
                     root.append(library_el)
         else:
             section = converter(records, book.title, report, ids)
@@ -115,6 +129,15 @@ def _append_formatted_html(text_el: ET.Element, html: str) -> None:
     if html in existing:
         return
     _FORMATTED_INNER[id(text_el)] = (existing or "") + html
+
+
+def _module_has_class(root: ET.Element, class_name: str) -> bool:
+    for category in root.findall("./class/category"):
+        for node in category:
+            name_el = node.find("name")
+            if name_el is not None and (name_el.text or "").strip() == class_name:
+                return True
+    return False
 
 
 def _inject_class_spell_links(root: ET.Element, links: dict[str, str]) -> None:

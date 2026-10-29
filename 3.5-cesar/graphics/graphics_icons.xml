@@ -27,4 +27,5 @@
 	<icon name="char_weapon_cm" file="graphics/icons/char_weapon_cm.png" />
 	<icon name="char_quicklist" file="graphics/icons/char_quicklist.png" />
 	<icon name="char_armorcheck" file="graphics/icons/char_armorcheck.png" />
+	<icon name="tab_dr" file="graphics/tabs/tab_dr.png" />
 </root>

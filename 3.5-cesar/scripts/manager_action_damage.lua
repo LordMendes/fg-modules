@@ -50,6 +50,7 @@ function onPostGetRoll(_, rAction, rRoll)
 end
 
 function applyDamageAdjustMain(rSource, rTarget, rRoll, tApplyData)
+	CesarRules.applyCharacterDefenses(rTarget, rRoll, tApplyData);
 	CesarRules.applyMagicDRThreshold(rRoll, tApplyData);
 	return ActionDamage._fApplyDamageAdjustMain(rSource, rTarget, rRoll, tApplyData);
 end

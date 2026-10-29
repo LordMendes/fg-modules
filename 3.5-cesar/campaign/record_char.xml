@@ -45,6 +45,11 @@
 			<resource>tab_actions</resource>
 			<class>charsheet_actions</class>
 		</tab>
+		<tab merge="add">
+			<name>dr</name>
+			<resource>tab_dr</resource>
+			<class>charsheet_dr</class>
+		</tab>
 	</windowclass>
 	<windowclass name="charsheet_overview" copy="charsheet_overview_base_v2" />
 

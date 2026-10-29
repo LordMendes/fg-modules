@@ -350,3 +350,98 @@ def test_class_record_stores_spell_slots_for_the_actions_tab():
     level4 = xml.split('<level type="number">4</level>', 1)[1]
     assert '<slot1 type="number">6</slot1>' in level4
     assert '<slot2 type="number">3</slot2>' in level4
+
+
+def test_dread_necromancer_spell_columns_are_a_second_table():
+    from scraper.fg.converters.classes import _build_notes_html
+
+    detail = {
+        "advancement_html": "<table><tr><td>combined spell columns</td></tr></table>",
+        "advancement": [
+            {
+                "level": 1,
+                "bab": "+0",
+                "fort": "+0",
+                "ref": "+0",
+                "will": "+2",
+                "special": "Charnel touch",
+                "spell_levels": [1, 2],
+                "spells_per_day": ["3", "\u2014"],
+            },
+            {
+                "level": 4,
+                "bab": "+2",
+                "fort": "+1",
+                "ref": "+1",
+                "will": "+4",
+                "special": "Advanced learning",
+                "spell_levels": [1, 2],
+                "spells_per_day": ["6", "3"],
+            },
+        ],
+    }
+    html = _build_notes_html(detail, "Dread Necromancer")
+    assert "combined spell columns" not in html
+    assert html.lower().count("<table") == 2
+    advancement, spells = html.split("Spells per Day", 1)
+    assert "Charnel touch" in advancement
+    assert "1st" not in advancement
+    assert ">1st<" in spells
+    assert ">2nd<" in spells
+    assert ">3<" in spells
+    assert ">-</td>" in spells
+    assert "\u2014" not in html
+
+    wizard = _build_notes_html(detail, "Wizard")
+    assert "combined spell columns" in wizard
+
+
+def test_dread_necromancer_spell_list_links_each_source_module():
+    from scraper.fg.converters.spell_lists import add_dread_necromancer_spell_list
+
+    lists_el, library_el, links = add_dread_necromancer_spell_list(
+        None,
+        None,
+        current_paths={"bestow wound": "spell.id-00003@Heroes of Horror"},
+        module_name="Heroes of Horror",
+        ph_spells_json=Path("missing-players-handbook-spells.json"),
+        report=BuildReport(),
+        entries=[
+            {"name": "Bane", "level": 1},
+            {"name": "Bestow Wound", "level": 1},
+            {"name": "Command Undead", "level": 2},
+        ],
+    )
+    # Player's Handbook ids are not available in this fixture, so only the
+    # spell that lives in the current module is listed.
+    xml = ET.tostring(lists_el, encoding="unicode")
+    assert "<dreadnecromancer>" in xml
+    assert "spell.id-00003@Heroes of Horror" in xml
+    assert "Bane" not in xml
+    assert "Level 1" in xml
+    assert "Dread Necromancer" in links
+    assert 'class="reference_classspelllist"' in links["Dread Necromancer"]
+    assert "spelllists.dreadnecromancer@Heroes of Horror" in links["Dread Necromancer"]
+    library_xml = ET.tostring(library_el, encoding="unicode")
+    assert "reference_classspelllist" in library_xml
+
+
+def test_dread_necromancer_catalog_spells_resolve_to_built_modules():
+    from scraper.fg.converters.spell_lists import (
+        catalog_class_spell_entries,
+        indexed_module_spell_paths,
+    )
+
+    root = Path(__file__).resolve().parents[2]
+    ph_file = root / "scraped" / "dndtools" / "players-handbook" / "spells.json"
+    hh_file = root / "scraped" / "dndtools" / "heroes-of-horror" / "spells.json"
+    if not ph_file.is_file() or not hh_file.is_file():
+        pytest.skip("staged spell modules are not present")
+
+    paths = indexed_module_spell_paths(ph_file, "Player's Handbook")
+    paths.update(indexed_module_spell_paths(hh_file, "Heroes of Horror"))
+    entries = catalog_class_spell_entries("Dread Necromancer")
+    missing = sorted({entry["name"] for entry in entries if entry["name"].lower() not in paths})
+    assert not missing
+    assert len(entries) >= 80
+    assert paths["bane"] == "spell.id-00031@Player's Handbook"

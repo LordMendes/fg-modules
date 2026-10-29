@@ -337,16 +337,88 @@ def _write_spell_slots(node: ET.Element, advancement: list[dict[str, Any]]) -> N
             typed_number(child, f"slot{spell_level}", count)
 
 
-def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
+# Classes whose spell columns are a second table, matching the wizard layout.
+_SPLIT_SPELL_TABLE_CLASSES = frozenset({"Dread Necromancer"})
+
+
+def _slot_display(value: Any) -> str:
+    text = str(value or "").strip()
+    text = (
+        text.replace("\u2014", "-")
+        .replace("\u2013", "-")
+        .replace("\u2212", "-")
+    )
+    return text or "-"
+
+
+def _spell_level_header(level: int) -> str:
+    if level == 0:
+        return "0"
+    teen = level % 100
+    if 10 <= teen <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(level % 10, "th")
+    return f"{level}{suffix}"
+
+
+def _ordered_spell_levels(rows: list[dict[str, Any]]) -> list[int]:
+    levels: list[int] = []
+    for row in rows:
+        for level in row.get("spell_levels") or []:
+            try:
+                number = int(level)
+            except (TypeError, ValueError):
+                continue
+            if number not in levels:
+                levels.append(number)
+    return levels
+
+
+def _spells_per_day_table_html(rows: list[dict[str, Any]]) -> str:
+    levels = _ordered_spell_levels(rows)
+    if not levels:
+        return ""
+    headers = ["Level", *[_spell_level_header(level) for level in levels]]
+    parts = ["<table><tr>"]
+    for header in headers:
+        parts.append(f"<td><b>{header}</b></td>")
+    parts.append("</tr>")
+    for row in rows:
+        row_levels = row.get("spell_levels") or []
+        slots = row.get("spells_per_day") or []
+        by_level: dict[int, str] = {}
+        for index, level in enumerate(row_levels):
+            try:
+                number = int(level)
+            except (TypeError, ValueError):
+                continue
+            if index < len(slots):
+                by_level[number] = _slot_display(slots[index])
+        parts.append("<tr>")
+        parts.append(f"<td>{row.get('level', '')}</td>")
+        for level in levels:
+            parts.append(f"<td>{by_level.get(level, '-')}</td>")
+        parts.append("</tr>")
+    parts.append("</table>")
+    return "".join(parts)
+
+
+def _advancement_table_html(
+    rows: list[dict[str, Any]],
+    *,
+    include_slots: bool = True,
+) -> str:
     if not rows:
         return ""
     has_saves = any(r.get("bab") for r in rows)
     has_spellcasting = any(r.get("spellcasting") for r in rows)
     slot_len = 0
-    for row in rows:
-        slots = row.get("spells_per_day")
-        if isinstance(slots, list) and len(slots) > slot_len:
-            slot_len = len(slots)
+    if include_slots:
+        for row in rows:
+            slots = row.get("spells_per_day")
+            if isinstance(slots, list) and len(slots) > slot_len:
+                slot_len = len(slots)
     if has_saves:
         headers = ["Level", "BAB", "Fort", "Ref", "Will", "Special"]
         if has_spellcasting:
@@ -392,7 +464,7 @@ def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
     return "".join(parts)
 
 
-def _build_notes_html(detail: dict[str, Any]) -> str:
+def _build_notes_html(detail: dict[str, Any], class_name: str = "") -> str:
     parts: list[str] = []
     desc = _description_html(detail)
     if desc:
@@ -418,7 +490,17 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
     except Exception:
         prefer_original = False
 
-    if prefer_original and detail.get("advancement_html"):
+    rows = detail.get("advancement") or []
+    split_spells = class_name in _SPLIT_SPELL_TABLE_CLASSES and any(
+        row.get("spell_levels") for row in rows
+    )
+    spells_html = ""
+    if split_spells:
+        advancement_html = normalize_fg_table_html(
+            _advancement_table_html(rows, include_slots=False)
+        )
+        spells_html = normalize_fg_table_html(_spells_per_day_table_html(rows))
+    elif prefer_original and detail.get("advancement_html"):
         advancement_html = normalize_fg_table_html(detail["advancement_html"])
     elif detail.get("advancement"):
         advancement_html = normalize_fg_table_html(
@@ -429,9 +511,11 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
     else:
         advancement_html = ""
     if advancement_html:
-        # Use <p><b>…</b></p> instead of <h4> — FG can swallow h4 into the
-        # previous table cell when prerequisites/advancement are adjacent.
+        # Use <p><b>…</b></p> instead of <h4>. FG can swallow h4 into the
+        # previous table cell when prerequisites and advancement are adjacent.
         parts.append(f"<p><b>Advancement</b></p>{advancement_html}")
+    if spells_html:
+        parts.append(f"<p><b>Spells per Day</b></p>{spells_html}")
     if not parts:
         return ""
     return normalize_all_tables_in_html("".join(parts))
@@ -528,7 +612,7 @@ def convert_classes(
                 text_el = typed_formattedtext(fnode, "text", html)
                 set_formatted_inner(text_el, prepare_formatted_html(html))
 
-        notes = _build_notes_html(detail)
+        notes = _build_notes_html(detail, rec.get("name", ""))
         if notes:
             text_el = typed_formattedtext(node, "text", notes)
             set_formatted_inner(text_el, prepare_formatted_html(notes))

@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_dr">
+		<script file="campaign/scripts/char_dr.lua" />
+		<sheetdata>
+			<frame_char name="toolbar">
+				<anchored position="insidetop" height="46" />
+			</frame_char>
+			<label name="hint">
+				<anchored to="toolbar" height="16">
+					<top offset="14" />
+					<left offset="140" />
+					<right offset="-12" />
+				</anchored>
+				<static textres="cesar_label_drhint" />
+			</label>
+			<button_text name="button_add">
+				<anchored to="toolbar" width="78" height="22">
+					<top offset="12" />
+					<left offset="12" />
+				</anchored>
+				<tooltip textres="cesar_tooltip_dradd" />
+				<state textres="cesar_label_dradd" />
+				<script>
+					function onButtonPress()
+						local w = Interface.openWindow("cesar_dr_add", "");
+						if w and w.setCharacter then
+							w.setCharacter(window.getDatabaseNode());
+						end
+					end
+				</script>
+			</button_text>
+			<frame_char name="listframe">
+				<anchored position="insidetop" offset="0,46">
+					<bottom />
+				</anchored>
+			</frame_char>
+
+			<genericcontrol name="header_dr">
+				<anchored to="listframe" height="20">
+					<top offset="12" />
+					<left offset="12" />
+					<right offset="-12" />
+				</anchored>
+				<frame name="groupbox" offset="10,10,10,10" />
+				<disabled />
+			</genericcontrol>
+			<label name="label_dr">
+				<anchored to="header_dr" position="insidetop" offset="-10,0" />
+				<static textres="cesar_label_drkind" />
+				<center />
+			</label>
+			<list_text name="list_dr">
+				<anchored to="listframe">
+					<top parent="header_dr" anchor="bottom" offset="8" />
+					<left offset="16" />
+					<right offset="-28" />
+					<bottom anchor="center" offset="-36" />
+				</anchored>
+				<datasource>.damagereduction.drlist</datasource>
+				<class>charsheet_dr_entry</class>
+			</list_text>
+			<scrollbar_content_base>
+				<anchored to="list_dr" />
+				<target>list_dr</target>
+			</scrollbar_content_base>
+
+			<genericcontrol name="header_resist">
+				<anchored to="listframe" height="20">
+					<top parent="list_dr" anchor="bottom" offset="12" />
+					<left offset="12" />
+					<right offset="-12" />
+				</anchored>
+				<frame name="groupbox" offset="10,10,10,10" />
+				<disabled />
+			</genericcontrol>
+			<label name="label_resist">
+				<anchored to="header_resist" position="insidetop" offset="-10,0" />
+				<static textres="cesar_label_resistkind" />
+				<center />
+			</label>
+			<list_text name="list_resist">
+				<anchored to="listframe">
+					<top parent="header_resist" anchor="bottom" offset="8" />
+					<left offset="16" />
+					<right offset="-28" />
+					<bottom offset="-12" />
+				</anchored>
+				<datasource>.damagereduction.resistlist</datasource>
+				<class>charsheet_dr_entry</class>
+			</list_text>
+			<scrollbar_content_base>
+				<anchored to="list_resist" />
+				<target>list_resist</target>
+			</scrollbar_content_base>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charsheet_dr_entry">
+		<margins control="8,6,12,6" />
+		<sizelimits>
+			<minimum height="36" />
+		</sizelimits>
+		<script>
+			function editEntry()
+				local node = getDatabaseNode();
+				local nodeChar = DB.getChild(node, "....");
+				local w = Interface.openWindow("cesar_dr_add", "");
+				if w then
+					if w.setCharacter then
+						w.setCharacter(nodeChar);
+					end
+					if w.setEntry then
+						w.setEntry(node);
+					end
+				end
+			end
+			function onDoubleClick()
+				editEntry();
+				return true;
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+			<button_listitem_idelete_left name="idelete" />
+			<button_text name="edit">
+				<anchored to="rightanchor" width="52" height="22">
+					<top offset="6" />
+					<right offset="-4" />
+				</anchored>
+				<tooltip textres="cesar_tooltip_dredit" />
+				<state textres="cesar_label_dredit" />
+				<script>
+					function onButtonPress()
+						window.editEntry();
+					end
+				</script>
+			</button_text>
+			<stringfield name="label">
+				<anchored to="leftanchor" height="22">
+					<top offset="7" />
+					<left relation="relative" offset="16" />
+					<right parent="edit" anchor="left" relation="relative" offset="-12" />
+				</anchored>
+				<font>sheetlabel</font>
+				<readonly />
+			</stringfield>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="cesar_dr_add">
+		<frame>utilitybox</frame>
+		<placement>
+			<size width="520" height="440" />
+			<nosave />
+		</placement>
+		<script file="campaign/scripts/char_dr_add.lua" />
+		<sheetdata>
+			<windowtitlebar_utilitybox name="title" />
+			<windowmenubar_utilitybox name="menubar" />
+			<anchor_content_utilitybox_top />
+			<anchor_content_utilitybox_bottom />
+
+			<label name="amount_label">
+				<anchored to="contentanchor" width="70" height="20">
+					<top offset="4" />
+					<left />
+				</anchored>
+				<font>button-white</font>
+				<static textres="cesar_label_dramount" />
+			</label>
+			<numbercontrol name="amount">
+				<anchored to="amount_label" position="righthigh" offset="8,0" width="50" height="22" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+				<font>sheetnumber</font>
+				<script>
+					function onValueChanged()
+						if window.updatePreview then
+							window.updatePreview();
+						end
+					end
+				</script>
+			</numbercontrol>
+
+			<button_text name="kind_dr">
+				<anchored to="contentanchor" width="150" height="22">
+					<top offset="36" />
+					<left />
+				</anchored>
+				<state textres="cesar_label_drkind" />
+				<script>
+					function onButtonPress()
+						window.setKind("dr");
+					end
+				</script>
+			</button_text>
+			<button_text name="kind_resist">
+				<anchored to="kind_dr" position="righthigh" offset="8,0" width="170" height="22" />
+				<state textres="cesar_label_resistkind" />
+				<script>
+					function onButtonPress()
+						window.setKind("resist");
+					end
+				</script>
+			</button_text>
+
+			<button_text name="join_and">
+				<anchored to="contentanchor" width="70" height="22">
+					<top offset="68" />
+					<left />
+				</anchored>
+				<state textres="cesar_label_drand" />
+				<script>
+					function onButtonPress()
+						window.setJoin("and");
+					end
+				</script>
+			</button_text>
+			<button_text name="join_or">
+				<anchored to="join_and" position="righthigh" offset="8,0" width="70" height="22" />
+				<state textres="cesar_label_dror" />
+				<script>
+					function onButtonPress()
+						window.setJoin("or");
+					end
+				</script>
+			</button_text>
+
+			<genericcontrol name="heading_dr">
+				<anchored to="contentanchor" height="20">
+					<top offset="100" />
+					<left />
+					<right />
+				</anchored>
+				<frame name="groupbox" offset="10,10,10,10" />
+				<disabled />
+			</genericcontrol>
+			<label name="heading_dr_label">
+				<anchored to="heading_dr" position="insidetop" offset="-10,0" />
+				<static textres="cesar_label_drkind" />
+				<center />
+			</label>
+			<genericcontrol name="heading_resist">
+				<anchored to="contentanchor" height="20">
+					<top offset="100" />
+					<left />
+					<right />
+				</anchored>
+				<frame name="groupbox" offset="10,10,10,10" />
+				<disabled />
+			</genericcontrol>
+			<label name="heading_resist_label">
+				<anchored to="heading_resist" position="insidetop" offset="-10,0" />
+				<static textres="cesar_label_resistkind" />
+				<center />
+			</label>
+			<stringcontrol name="preview">
+				<anchored to="contentanchor" height="20">
+					<top offset="128" />
+					<left />
+					<right />
+				</anchored>
+				<font>button-white</font>
+				<center />
+				<readonly />
+			</stringcontrol>
+
+			<button_text name="type_bludgeoning">
+				<anchored to="contentanchor" width="112" height="22">
+					<top offset="156" />
+					<left />
+				</anchored>
+				<state textres="cesar_label_dr_bludgeoning" />
+				<script>function onButtonPress() window.onTypePress("bludgeoning"); end</script>
+			</button_text>
+			<button_text name="type_piercing">
+				<anchored to="type_bludgeoning" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_piercing" />
+				<script>function onButtonPress() window.onTypePress("piercing"); end</script>
+			</button_text>
+			<button_text name="type_slashing">
+				<anchored to="type_piercing" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_slashing" />
+				<script>function onButtonPress() window.onTypePress("slashing"); end</script>
+			</button_text>
+			<button_text name="type_magic">
+				<anchored to="type_slashing" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_magic" />
+				<script>function onButtonPress() window.onTypePress("magic"); end</script>
+			</button_text>
+
+			<button_text name="type_silver">
+				<anchored to="type_bludgeoning" position="below" offset="0,6" width="112" height="22" />
+				<state textres="cesar_label_dr_silver" />
+				<script>function onButtonPress() window.onTypePress("silver"); end</script>
+			</button_text>
+			<button_text name="type_coldiron">
+				<anchored to="type_silver" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_coldiron" />
+				<script>function onButtonPress() window.onTypePress("cold iron"); end</script>
+			</button_text>
+			<button_text name="type_adamantine">
+				<anchored to="type_coldiron" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_adamantine" />
+				<script>function onButtonPress() window.onTypePress("adamantine"); end</script>
+			</button_text>
+			<button_text name="type_good">
+				<anchored to="type_adamantine" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_good" />
+				<script>function onButtonPress() window.onTypePress("good"); end</script>
+			</button_text>
+
+			<button_text name="type_evil">
+				<anchored to="type_silver" position="below" offset="0,6" width="112" height="22" />
+				<state textres="cesar_label_dr_evil" />
+				<script>function onButtonPress() window.onTypePress("evil"); end</script>
+			</button_text>
+			<button_text name="type_lawful">
+				<anchored to="type_evil" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_lawful" />
+				<script>function onButtonPress() window.onTypePress("lawful"); end</script>
+			</button_text>
+			<button_text name="type_chaotic">
+				<anchored to="type_lawful" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_chaotic" />
+				<script>function onButtonPress() window.onTypePress("chaotic"); end</script>
+			</button_text>
+			<button_text name="type_epic">
+				<anchored to="type_chaotic" position="righthigh" offset="6,0" width="112" height="22" />
+				<state textres="cesar_label_dr_epic" />
+				<script>function onButtonPress() window.onTypePress("epic"); end</script>
+			</button_text>
+
+			<button_text name="type_none">
+				<anchored to="type_evil" position="below" offset="0,8" width="112" height="22" />
+				<state textres="cesar_label_dr_none" />
+				<script>function onButtonPress() window.onNonePress(); end</script>
+			</button_text>
+			<label name="magiclevel_label">
+				<anchored to="type_none" position="righthigh" offset="12,0" width="90" height="22" />
+				<font>button-white</font>
+				<static textres="cesar_label_drmagic" />
+			</label>
+			<numbercontrol name="magiclevel">
+				<anchored to="magiclevel_label" position="righthigh" offset="4,0" width="40" height="22" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+				<font>sheetnumber</font>
+				<script>
+					function onValueChanged()
+						if window.updatePreview then
+							window.updatePreview();
+						end
+					end
+				</script>
+			</numbercontrol>
+
+			<button_text name="energy_acid">
+				<anchored to="contentanchor" width="90" height="22">
+					<top offset="156" />
+					<left />
+				</anchored>
+				<state textres="cesar_label_energy_acid" />
+				<script>function onButtonPress() window.onEnergyPress("acid"); end</script>
+			</button_text>
+			<button_text name="energy_cold">
+				<anchored to="energy_acid" position="righthigh" offset="6,0" width="90" height="22" />
+				<state textres="cesar_label_energy_cold" />
+				<script>function onButtonPress() window.onEnergyPress("cold"); end</script>
+			</button_text>
+			<button_text name="energy_electricity">
+				<anchored to="energy_cold" position="righthigh" offset="6,0" width="110" height="22" />
+				<state textres="cesar_label_energy_electricity" />
+				<script>function onButtonPress() window.onEnergyPress("electricity"); end</script>
+			</button_text>
+			<button_text name="energy_fire">
+				<anchored to="energy_acid" position="below" offset="0,6" width="90" height="22" />
+				<state textres="cesar_label_energy_fire" />
+				<script>function onButtonPress() window.onEnergyPress("fire"); end</script>
+			</button_text>
+			<button_text name="energy_sonic">
+				<anchored to="energy_fire" position="righthigh" offset="6,0" width="90" height="22" />
+				<state textres="cesar_label_energy_sonic" />
+				<script>function onButtonPress() window.onEnergyPress("sonic"); end</script>
+			</button_text>
+
+			<stringcontrol name="charpath">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+			<stringcontrol name="entrypath">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left offset="2" />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+
+			<sub_content_bottom name="sub_buttons">
+				<class>dialog_buttons_okcancel</class>
+			</sub_content_bottom>
+		</sheetdata>
+	</windowclass>
+</root>
