@@ -312,12 +312,155 @@ def normalize_all_tables_in_html(html: str) -> str:
     return separate_fg_tables(normalized)
 
 
+_HEADER_DECORATION_RE = re.compile(r"^[\s\-—–_]+|[\s\-—–_]+$")
+
+
+def _span_count(cell: Tag, attr: str) -> int:
+    raw = str(cell.get(attr) or "1").strip()
+    try:
+        return max(1, int(raw))
+    except ValueError:
+        return 1
+
+
+def _clean_header_label(text: str) -> str:
+    text = re.sub(r"\s+", " ", text or "").strip()
+    return _HEADER_DECORATION_RE.sub("", text).strip()
+
+
+def _table_has_spans(table: Tag) -> bool:
+    for cell in table.find_all(["th", "td"]):
+        if _span_count(cell, "colspan") > 1 or _span_count(cell, "rowspan") > 1:
+            return True
+    return False
+
+
+def _expand_table_grid(table: Tag) -> list[list[dict[str, Any]]]:
+    """Expand colspan and rowspan into a rectangular grid.
+
+    Fantasy Grounds formattedtext ignores both attributes, so a second header
+    row of spell levels otherwise starts in column 1.
+    """
+    grid: list[list[dict[str, Any] | None]] = []
+    for row_index, tr in enumerate(table.find_all("tr")):
+        while len(grid) <= row_index:
+            grid.append([])
+        column = 0
+        for cell in tr.find_all(["th", "td"], recursive=False):
+            while column < len(grid[row_index]) and grid[row_index][column] is not None:
+                column += 1
+            colspan = _span_count(cell, "colspan")
+            rowspan = _span_count(cell, "rowspan")
+            header = cell.name == "th"
+            text = cell.get_text(" ", strip=True)
+            for row_offset in range(rowspan):
+                target_row = row_index + row_offset
+                while len(grid) <= target_row:
+                    grid.append([])
+                row = grid[target_row]
+                while len(row) < column + colspan:
+                    row.append(None)
+                for col_offset in range(colspan):
+                    if row[column + col_offset] is not None:
+                        continue
+                    origin = row_offset == 0 and col_offset == 0
+                    row[column + col_offset] = {
+                        "text": text if header or origin else "",
+                        "header": header,
+                        "origin": origin,
+                        "colspan": colspan,
+                        "node": cell if origin else None,
+                    }
+            column += colspan
+
+    width = max((len(row) for row in grid), default=0)
+    blank = {"text": "", "header": False, "origin": True, "colspan": 1, "node": None}
+    for row in grid:
+        while len(row) < width:
+            row.append(dict(blank))
+        for index, cell in enumerate(row):
+            if cell is None:
+                row[index] = dict(blank)
+    return grid  # type: ignore[return-value]
+
+
+def _header_row_count(grid: list[list[dict[str, Any]]]) -> int:
+    count = 0
+    for row in grid:
+        origins = [cell for cell in row if cell.get("origin")]
+        if not origins or not all(cell.get("header") for cell in origins):
+            break
+        count += 1
+    return count
+
+
+def _collapsed_header(grid: list[list[dict[str, Any]]], header_rows: int) -> list[str]:
+    labels: list[str] = []
+    if not grid:
+        return labels
+    for column in range(len(grid[0])):
+        chosen = ""
+        for row_index in range(header_rows - 1, -1, -1):
+            cell = grid[row_index][column]
+            text = _clean_header_label(cell.get("text") or "")
+            if not text:
+                continue
+            if cell.get("colspan", 1) == 1:
+                chosen = text
+                break
+            if not chosen:
+                chosen = text
+        labels.append(chosen)
+    return labels
+
+
+def _append_cell_contents(td: Tag, soup: BeautifulSoup, node: Tag | None) -> None:
+    if node is None:
+        return
+    for child in list(node.contents):
+        td.append(child.extract())
+
+
+def _flatten_spanned_table(table: Tag, soup: BeautifulSoup) -> None:
+    grid = _expand_table_grid(table)
+    rows: list[Tag] = []
+    header_rows = _header_row_count(grid)
+    if header_rows:
+        header = soup.new_tag("tr")
+        for label in _collapsed_header(grid, header_rows):
+            td = soup.new_tag("td")
+            if label:
+                bold = soup.new_tag("b")
+                bold.string = label
+                td.append(bold)
+            header.append(td)
+        rows.append(header)
+
+    for row in grid[header_rows:]:
+        tr = soup.new_tag("tr")
+        for cell in row:
+            td = soup.new_tag("td")
+            if cell.get("origin"):
+                _append_cell_contents(td, soup, cell.get("node"))
+            tr.append(td)
+        rows.append(tr)
+
+    table.clear()
+    for row in rows:
+        table.append(row)
+
+
 def _normalize_table_headers(table: Tag, soup: BeautifulSoup) -> None:
-    """FG formattedtext renders <th> as stacked blocks; use <td><b>…</b></td> instead."""
-    for th in table.find_all("th"):
-        label = th.get_text(" ", strip=True)
+    """FG formattedtext renders <th> as stacked blocks and ignores spans."""
+    if _table_has_spans(table):
+        _flatten_spanned_table(table, soup)
+        return
+    for th in list(table.find_all("th")):
+        label = _clean_header_label(th.get_text(" ", strip=True))
         th.clear()
         th.name = "td"
+        if not label:
+            continue
         bold = soup.new_tag("b")
         bold.string = label
         th.append(bold)

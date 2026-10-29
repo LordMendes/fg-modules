@@ -235,7 +235,7 @@ _SKILL_ABILITY: dict[str, str] = {
 
 _FEATURE_STRONG_RE = re.compile(r"^(.+?)(?:\(([^)]+)\))?\s*:?\s*$")
 _LEVEL_IN_TEXT_RE = re.compile(
-    r"\b(?:at|starting at|reaches|who is at least|of at least)\s+"
+    r"\b(?:at|starting at|reaches|attaining|upon reaching|who is at least|of at least)\s+"
     r"(\d+)(?:st|nd|rd|th)\s+level\b",
     re.I,
 )
@@ -669,6 +669,32 @@ def _mapped_class_type(slug: str) -> str:
     return mapped if mapped in ("base", "prestige") else ""
 
 
+def _copy_spell_columns(
+    advancement: list[dict[str, Any]],
+    parsed: list[dict[str, Any]],
+) -> None:
+    """Keep spell-slot columns parsed from the class table.
+
+    The stored row often keeps only the first number as spellcasting.
+    """
+    by_level = {
+        row.get("level"): row
+        for row in parsed
+        if row.get("spells_per_day") and row.get("spell_levels")
+    }
+    if not by_level:
+        return
+    for row in advancement:
+        source = by_level.get(row.get("level"))
+        if not source:
+            continue
+        row["spells_per_day"] = list(source["spells_per_day"])
+        row["spell_levels"] = list(source["spell_levels"])
+        casting = str(row.get("spellcasting") or "")
+        if casting and "level" not in casting.lower():
+            row.pop("spellcasting", None)
+
+
 def _should_replace_advancement(
     rows: list[dict[str, Any]],
     parsed: list[dict[str, Any]],
@@ -820,6 +846,8 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
             )
     if prose_html:
         description_html = f"{description_html}{prose_html}"
+    if parsed_html:
+        _copy_spell_columns(advancement, parsed_html)
 
     index = record.get("index") or {}
     is_racial = bool(index.get("racial_class") or record.get("race") or record.get("levelmax"))

@@ -45,6 +45,29 @@ def test_header_parser_skips_spell_group_banner():
     assert row["will"] == "+2"
     assert row["special"] == "Bardic music"
     assert row["spells_per_day"] == ["2", "—"]
+    assert row["spell_levels"] == [0, 1]
+
+
+def test_spanned_spellcasting_header_keeps_each_spell_level():
+    html = (
+        "<table><tr>"
+        '<th rowspan="2">Class Level</th><th rowspan="2">Base Attack Bonus</th>'
+        '<th rowspan="2">Fort Save</th><th rowspan="2">Ref Save</th>'
+        '<th rowspan="2">Will Save</th><th rowspan="2">Special</th>'
+        '<th colspan="3">Spellcasting</th></tr>'
+        "<tr><th>1st</th><th>2nd</th><th>3rd</th></tr>"
+        "<tr><td>1st</td><td>+0</td><td>+0</td><td>+0</td><td>+2</td>"
+        "<td>Charnel touch</td><td>3</td><td>—</td><td>—</td></tr>"
+        "<tr><td>4th</td><td>+2</td><td>+1</td><td>+1</td><td>+4</td>"
+        "<td>Mental bastion</td><td>6</td><td>3</td><td>—</td></tr>"
+        "</table>"
+    )
+    rows = parse_advancement_html(html)
+    assert rows[0]["special"] == "Charnel touch"
+    assert rows[0]["spell_levels"] == [1, 2, 3]
+    assert rows[0]["spells_per_day"] == ["3", "—", "—"]
+    assert rows[1]["spells_per_day"] == ["6", "3", "—"]
+    assert "spellcasting" not in rows[0]
 
 
 def test_header_parser_reads_npc_and_ac_columns():

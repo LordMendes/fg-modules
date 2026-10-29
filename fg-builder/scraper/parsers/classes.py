@@ -451,6 +451,171 @@ def _is_spellcasting_advancement(special: str) -> bool:
     return bool(_SPELLCASTING_ADVANCEMENT_RE.search(special or ""))
 
 
+_PAREN_TAIL = re.compile(r"\s*(\((?!ex\)|su\)|sp\))[^)]*\))\s*$", re.I)
+_NUMERIC_TAILS = (
+    re.compile(r"\s*[+\-]?\d+d\d+\s*$", re.I),
+    re.compile(r"\s+\d+\s*/\s*[^\s,)]+\s*$", re.I),
+    re.compile(r"\s+dr\s+\d+\s*$", re.I),
+    re.compile(r"\s*[+\-]\d+\s*$"),
+    re.compile(r"\s+\d+\s*%\s*$"),
+    re.compile(r"\s+\d+\s*ft\.?\s*$", re.I),
+    re.compile(r"\s+any\s+distance\s*$", re.I),
+)
+_LEADING_ORDINAL = re.compile(r"^(\d+(?:st|nd|rd|th))\s+(.+)$", re.I)
+
+
+def _clean_suffix(suffix: str) -> str:
+    suffix = suffix.strip()
+    if len(suffix) >= 2 and suffix[0] == "(" and suffix[-1] == ")":
+        return suffix[1:-1].strip()
+    return suffix
+
+
+def _progression_parts(name: str) -> tuple[str, str]:
+    """Split 'Rage 2/day' into ('Rage', '2/day'). A bare name has an empty suffix."""
+    stem = re.sub(r"\s+", " ", name or "").strip(" ,.;")
+    end_pieces: list[str] = []
+    paren = _PAREN_TAIL.search(stem)
+    if paren and len(stem[: paren.start()].strip()) >= 3:
+        end_pieces.append(paren.group(1).strip())
+        stem = stem[: paren.start()].strip()
+    changed = True
+    while changed and stem:
+        changed = False
+        for pattern in _NUMERIC_TAILS:
+            match = pattern.search(stem)
+            if not match:
+                continue
+            remain = stem[: match.start()].strip(" ,.;")
+            if len(remain) < 3:
+                continue
+            end_pieces.append(stem[match.start() :].strip())
+            stem = remain
+            changed = True
+            break
+    lead = ""
+    ordinal = _LEADING_ORDINAL.match(stem)
+    if ordinal and len(ordinal.group(2).split()) >= 2:
+        lead = ordinal.group(1)
+        stem = ordinal.group(2).strip()
+    if not lead and not end_pieces:
+        return stem, ""
+    suffix = " ".join(piece for piece in [lead, *reversed(end_pieces)] if piece)
+    return stem, _clean_suffix(suffix)
+
+
+def _last_word_variants(key: str) -> set[str]:
+    """Match 'Special Abilities' with 'Special ability', and 'Bonus Feats' with 'Bonus feat'."""
+    words = key.split()
+    if not words:
+        return set()
+    last = words[-1]
+    variants = {last}
+    if last.endswith("ies") and len(last) > 4:
+        variants.add(last[:-3] + "y")
+    elif last.endswith("s") and not last.endswith("ss") and len(last) > 3:
+        variants.add(last[:-1])
+    if last.endswith("y") and len(last) > 2 and last[-2] not in "aeiou":
+        variants.add(last[:-1] + "ies")
+    elif not last.endswith("s"):
+        variants.add(last + "s")
+    prefix = words[:-1]
+    return {" ".join([*prefix, word]) for word in variants}
+
+
+def _stem_keys(name: str) -> set[str]:
+    stem, _suffix = _progression_parts(name)
+    stem = re.sub(r"\s+\((?:ex|su|sp)\)\s*$", "", stem, flags=re.I).strip()
+    key = re.sub(r"\s+", " ", stem).strip().lower()
+    if not key:
+        return set()
+    return _last_word_variants(key)
+
+
+def _feature_by_stem(features: list[dict[str, Any]], name: str) -> dict[str, Any] | None:
+    keys = _stem_keys(name)
+    if not keys:
+        return None
+    for feature in features:
+        if _stem_keys(feature.get("name") or "") & keys:
+            return feature
+    return None
+
+
+def _ordinal_level(level: int) -> str:
+    value = int(level or 0)
+    if 10 <= value % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(value % 10, "th")
+    return f"{value}{suffix}"
+
+
+def _display_stem(stem: str) -> str:
+    small = {"of", "the", "and", "a", "an"}
+    words = stem.split()
+    titled: list[str] = []
+    for index, word in enumerate(words):
+        if index and word.lower() in small:
+            titled.append(word.lower())
+        elif word.isupper() and len(word) > 1:
+            titled.append(word)
+        else:
+            titled.append(word[:1].upper() + word[1:])
+    return " ".join(titled)
+
+
+def _record_progression(feature: dict[str, Any], level: int, suffix: str) -> None:
+    """Rewrite the count on a table-only feature instead of adding another entry.
+
+    Book prose already states its own schedule, so those features are left as written.
+    """
+    if feature.get("source") != "advancement":
+        return
+    steps: list[tuple[int, str]] = feature.setdefault("_steps", [])
+    item = (int(level or 0), suffix)
+    if item not in steps:
+        steps.append(item)
+    sentence = "; ".join(
+        f"{step_suffix} at {_ordinal_level(step_level)} level" for step_level, step_suffix in steps
+    )
+    sentence = sentence[0].upper() + sentence[1:] + "."
+    feature["text"] = sentence
+    feature["text_html"] = f"<p>{sentence}</p>"
+
+
+def _split_commas_outside_parens(text: str) -> list[str]:
+    parts: list[str] = []
+    buf: list[str] = []
+    depth = 0
+    for char in text:
+        if char == "(":
+            depth += 1
+            buf.append(char)
+        elif char == ")":
+            depth = max(0, depth - 1)
+            buf.append(char)
+        elif char == "," and depth == 0:
+            parts.append("".join(buf))
+            buf = []
+        else:
+            buf.append(char)
+    parts.append("".join(buf))
+    return parts
+
+
+def _special_parts(special: str) -> list[str]:
+    """Split a Special cell on commas, and on 'and' only when both sides are features."""
+    parts: list[str] = []
+    for chunk in _split_commas_outside_parens(special):
+        pieces = re.split(r"\s+and\s+(?!the\b)", chunk, flags=re.I)
+        if len(pieces) == 2 and len(pieces[1].split()) < 2:
+            parts.append(chunk.strip(" ,.;"))
+            continue
+        parts.extend(piece.strip(" ,.;") for piece in pieces)
+    return [part for part in parts if part]
+
+
 def _merge_advancement_features(
     features: list[dict[str, Any]],
     advancement: list[dict[str, Any]],
@@ -491,27 +656,34 @@ def _merge_advancement_features(
                 )
                 existing.add(key)
             continue
-        for part in re.split(r"\s*,\s*|\s+and\s+(?!the\b)", special, flags=re.I):
-            name = part.strip()
-            if not name or len(name) < 3:
+        for name in _special_parts(special):
+            if len(name) < 3 or re.fullmatch(r"[\u2014\u2013\-]+", name):
                 continue
             if name.lower() in {"or", "and", "the", "see", "text"}:
                 continue
-            key = (level, name.lower())
-            matching = next(
-                (
-                    feature
-                    for feature in merged
-                    if (feature.get("name") or "").lower() == name.lower()
-                ),
-                None,
-            )
+            _stem, suffix = _progression_parts(name)
+            matching = _feature_by_stem(merged, name)
             if matching:
-                old_key = (matching.get("level"), (matching.get("name") or "").lower())
-                matching["level"] = level
-                existing.discard(old_key)
-                existing.add(key)
+                # A later daily use, DR, or bonus updates the existing feature.
+                # It does not add a row, and it does not move the feature's level.
+                if suffix:
+                    _record_progression(matching, level, suffix)
                 continue
+            if suffix:
+                display = _display_stem(_stem)
+                feature = {
+                    "level": level,
+                    "name": display,
+                    "type": "",
+                    "text_html": f"<p>{name}</p>",
+                    "text": name,
+                    "source": "advancement",
+                }
+                _record_progression(feature, level, suffix)
+                merged.append(feature)
+                existing.add((level, display.lower()))
+                continue
+            key = (level, name.lower())
             if key in existing:
                 continue
             merged.append(
@@ -525,6 +697,8 @@ def _merge_advancement_features(
                 }
             )
             existing.add(key)
+    for feature in merged:
+        feature.pop("_steps", None)
     merged.sort(key=lambda f: (f.get("level", 0), f.get("name", "")))
     return merged
 

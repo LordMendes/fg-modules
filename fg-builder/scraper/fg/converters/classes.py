@@ -288,6 +288,55 @@ def _has_prerequisites_heading(html: str) -> bool:
     )
 
 
+def _parse_slot_count(raw: Any) -> int:
+    text = str(raw or "").strip()
+    if not text or re.fullmatch(r"[\u2014\u2013\-]+", text):
+        return 0
+    match = re.search(r"\d+", text)
+    return int(match.group()) if match else 0
+
+
+def _encode_spell_slots(row: dict[str, Any]) -> list[int] | None:
+    """Map a class-table row onto spell levels 0 through 9."""
+    slots = row.get("spells_per_day")
+    levels = row.get("spell_levels")
+    if not isinstance(slots, list) or not isinstance(levels, list):
+        return None
+    if not slots or len(slots) != len(levels):
+        return None
+    counts = [0] * 10
+    for spell_level, raw in zip(levels, slots):
+        if isinstance(spell_level, bool) or not isinstance(spell_level, int):
+            return None
+        if spell_level < 0 or spell_level > 9:
+            return None
+        counts[spell_level] = _parse_slot_count(raw)
+    return counts
+
+
+def _write_spell_slots(node: ET.Element, advancement: list[dict[str, Any]]) -> None:
+    encoded: list[tuple[int, list[int]]] = []
+    for row in advancement or []:
+        counts = _encode_spell_slots(row)
+        if counts is None:
+            continue
+        try:
+            level = int(row.get("level") or 0)
+        except (TypeError, ValueError):
+            continue
+        if level < 1:
+            continue
+        encoded.append((level, counts))
+    if not encoded:
+        return
+    parent = ET.SubElement(node, "spellslots")
+    for index, (level, counts) in enumerate(encoded, start=1):
+        child = ET.SubElement(parent, f"id-{index:05d}")
+        typed_number(child, "level", level)
+        for spell_level, count in enumerate(counts):
+            typed_number(child, f"slot{spell_level}", count)
+
+
 def _advancement_table_html(rows: list[dict[str, Any]]) -> str:
     if not rows:
         return ""
@@ -439,6 +488,8 @@ def convert_classes(
             ranks = _parse_skill_ranks(detail.get("skill_points", ""))
         if ranks is not None:
             typed_number(node, "skillranks", ranks)
+
+        _write_spell_slots(node, detail.get("advancement") or [])
 
         req_html = class_requirements_html(detail)
         if req_html:

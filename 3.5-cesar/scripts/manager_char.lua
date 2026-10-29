@@ -129,11 +129,19 @@ end
 
 function calcLevel(nodeChar)
 	local nLevel = 0;
-	
+	local bGestalt = DB.getValue(nodeChar, "gestalt", 0) ~= 0;
+
 	for _,nodeChild in ipairs(DB.getChildList(nodeChar, "classes")) do
-		nLevel = nLevel + DB.getValue(nodeChild, "level", 0);
+		local nClassLevel = DB.getValue(nodeChild, "level", 0);
+		if bGestalt then
+			if nClassLevel > nLevel then
+				nLevel = nClassLevel;
+			end
+		else
+			nLevel = nLevel + nClassLevel;
+		end
 	end
-	
+
 	DB.setValue(nodeChar, "level", "number", nLevel);
 end
 
@@ -547,7 +555,7 @@ function addToWeaponDB(nodeItem)
 	local nThresholdIndex = 1;
 	local nMultIndex = 1;
 	for kCrit, sCrit in ipairs(aCrit) do
-		local sCritThreshold = string.match(sCrit, "(%d+)[%-ï¿½]20");
+		local sCritThreshold = string.match(sCrit, "(%d+)[%-–]20");
 		if sCritThreshold then
 			aCritThreshold[nThresholdIndex] = tonumber(sCritThreshold) or 20;
 			nThresholdIndex = nThresholdIndex + 1;
@@ -1641,7 +1649,284 @@ function addSaveBonus(nodeChar, sSave, sBonusType, nBonus)
 	ChatManager.SystemMessage(sMsg);
 end
 
+function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
+	if not nodeChar then
+		return false;
+	end
+
+	local function hdSides(sHD)
+		local sMult, sSides = (sHD or ""):match("^(%d?)d(%d+)");
+		if not sSides then
+			return 0, 0;
+		end
+		return tonumber(sMult) or 1, tonumber(sSides) or 0;
+	end
+
+	local function babStep(sBAB, nLevel)
+		if sBAB == CLASS_BAB_FAST then
+			return 1;
+		elseif sBAB == CLASS_BAB_MEDIUM then
+			if nLevel % 4 ~= 1 then
+				return 1;
+			end
+		elseif sBAB == CLASS_BAB_SLOW then
+			if nLevel % 2 == 0 then
+				return 1;
+			end
+		end
+		return 0;
+	end
+
+	local function saveStep(sSave, nLevel)
+		if sSave == CLASS_SAVE_GOOD then
+			if nLevel == 1 then
+				return 2;
+			elseif nLevel % 2 == 0 then
+				return 1;
+			end
+		elseif sSave == CLASS_SAVE_BAD then
+			if nLevel % 3 == 0 then
+				return 1;
+			end
+		end
+		return 0;
+	end
+
+	local function readProgression(nodeSource)
+		local sClassLookup = StringManager.strip(DB.getValue(nodeSource, "name", ""):lower());
+		local sHD = StringManager.trim(DB.getValue(nodeSource, "hitdie", ""));
+		local sBAB = StringManager.trim(DB.getValue(nodeSource, "bab", "")):lower();
+		local sFort = StringManager.trim(DB.getValue(nodeSource, "fort", "")):lower();
+		local sRef = StringManager.trim(DB.getValue(nodeSource, "ref", "")):lower();
+		local sWill = StringManager.trim(DB.getValue(nodeSource, "will", "")):lower();
+		local nSkillPoints = DB.getValue(nodeSource, "skillranks", 0);
+		local sClassSkills = DB.getValue(nodeSource, "classskills", "");
+		local tData = DataCommon.classdata[sClassLookup];
+		if tData then
+			if not sHD:match("^%d?d%d+") then
+				sHD = tData.hd;
+			end
+			if not StringManager.contains({ "fast", "medium", "slow" }, sBAB) then
+				sBAB = tData.bab;
+			end
+			if not StringManager.contains({ "good", "bad" }, sFort) then
+				sFort = tData.fort;
+			end
+			if not StringManager.contains({ "good", "bad" }, sRef) then
+				sRef = tData.ref;
+			end
+			if not StringManager.contains({ "good", "bad" }, sWill) then
+				sWill = tData.will;
+			end
+			if nSkillPoints <= 0 then
+				nSkillPoints = tData.skillranks;
+			end
+			if sClassSkills == "" then
+				sClassSkills = tData.skills;
+			end
+		end
+		return {
+			sLookup = sClassLookup,
+			sName = DB.getValue(nodeSource, "name", ""),
+			sHD = sHD or "",
+			sBAB = sBAB or "",
+			sFort = sFort or "",
+			sRef = sRef or "",
+			sWill = sWill or "",
+			nSkillPoints = nSkillPoints or 0,
+			sClassSkills = sClassSkills or "",
+		};
+	end
+
+	local function grantClassSkillList(nodeChar, sClassSkills, sClassLookup)
+		if (sClassSkills or "") ~= "" then
+			sClassSkills = sClassSkills:gsub(" and ", "");
+			for _, vSkill in ipairs(StringManager.split(sClassSkills, ",", true)) do
+				local sSkillAbility = vSkill:match("%((%w+)%)$");
+				if sSkillAbility and (DataCommon.ability_ltos[sSkillAbility:lower()] or DataCommon.ability_stol[sSkillAbility:upper()]) then
+					vSkill = vSkill:gsub("%s*%((%w+)%)$", "");
+				end
+				local sSkill = vSkill:match("[^(]+%w");
+				if sSkill then
+					addClassSkill(nodeChar, sSkill, vSkill:match("%(([^)]+)%)"));
+				end
+			end
+		end
+		applyCesarClassSkills(nodeChar, sClassLookup);
+	end
+
+	local function grantFeatures(nodeChar, nodeSource, nLevel)
+		for _, v in ipairs(DB.getChildList(nodeSource, "classfeatures")) do
+			if DB.getValue(v, "level", 0) == nLevel then
+				addClassFeature(nodeChar, "referenceclassability", DB.getPath(v));
+			end
+		end
+	end
+
+	local nodeSource1 = DB.findNode(sRecord1 or "");
+	local nodeSource2 = DB.findNode(sRecord2 or "");
+	if not nodeSource1 or not nodeSource2 then
+		ChatManager.SystemMessage(Interface.getString("char_error_missingrecord"));
+		return false;
+	end
+
+	local t1 = readProgression(nodeSource1);
+	local t2 = readProgression(nodeSource2);
+	if t1.sLookup == "" or t1.sLookup == t2.sLookup then
+		ChatManager.SystemMessage(Interface.getString("cesar_message_gestalt_duplicate"));
+		return false;
+	end
+
+	local aNamed = {};
+	for _, nodeClass in ipairs(DB.getChildList(nodeChar, "classes")) do
+		local sName = StringManager.trim(DB.getValue(nodeClass, "name", ""));
+		if sName ~= "" then
+			table.insert(aNamed, nodeClass);
+		end
+	end
+
+	local bGestalt = DB.getValue(nodeChar, "gestalt", 0) ~= 0;
+	local nodeClass1 = nil;
+	local nodeClass2 = nil;
+	if #aNamed == 0 then
+		bGestalt = false;
+	elseif bGestalt and #aNamed == 2 then
+		local tByName = {};
+		for _, nodeClass in ipairs(aNamed) do
+			local sKey = StringManager.strip(StringManager.trim(DB.getValue(nodeClass, "name", "")):lower());
+			tByName[sKey] = nodeClass;
+		end
+		nodeClass1 = tByName[t1.sLookup];
+		nodeClass2 = tByName[t2.sLookup];
+		if not nodeClass1 or not nodeClass2 then
+			ChatManager.SystemMessage(Interface.getString("cesar_message_gestalt_mismatch"));
+			return false;
+		end
+	else
+		ChatManager.SystemMessage(Interface.getString("cesar_message_gestalt_mismatch"));
+		return false;
+	end
+
+	local nLevel = 1;
+	if nodeClass1 then
+		nLevel = math.max(DB.getValue(nodeClass1, "level", 0), DB.getValue(nodeClass2, "level", 0)) + 1;
+	end
+
+	local nodeList = DB.createChild(nodeChar, "classes");
+	if not nodeList then
+		return false;
+	end
+	if not nodeClass1 then
+		nodeClass1 = DB.createChild(nodeList);
+		DB.setValue(nodeClass1, "name", "string", t1.sName);
+	end
+	if not nodeClass2 then
+		nodeClass2 = DB.createChild(nodeList);
+		DB.setValue(nodeClass2, "name", "string", t2.sName);
+	end
+	DB.setValue(nodeClass1, "shortcut", "windowreference", sClass1, sRecord1);
+	DB.setValue(nodeClass2, "shortcut", "windowreference", sClass2, sRecord2);
+
+	DB.setValue(nodeChar, "gestalt", "number", 1);
+	DB.setValue(nodeClass1, "level", "number", nLevel);
+	DB.setValue(nodeClass2, "level", "number", nLevel);
+	calcLevel(nodeChar);
+
+	local nMult1, nSides1 = hdSides(t1.sHD);
+	local nMult2, nSides2 = hdSides(t2.sHD);
+	local nHDMult, nHDSides = nMult1, nSides1;
+	if nSides2 > nSides1 or (nSides2 == nSides1 and nMult2 > nMult1) then
+		nHDMult, nHDSides = nMult2, nSides2;
+	end
+	if nHDSides > 0 then
+		local nHP = GameManager.getRecordFieldValue(nodeChar, "hptotal", 0);
+		local nConScore = DB.getValue(nodeChar, "abilities.constitution.score", 10);
+		local nConMod = math.floor((nConScore - 10) / 2);
+		local nRoll = 0;
+		for _ = 1, math.max(nHDMult, 1) do
+			nRoll = nRoll + math.random(nHDSides);
+		end
+		if nRoll < nConMod then
+			nRoll = nConMod;
+		end
+		local nAddHP = nRoll + nConMod;
+		if nLevel == 1 then
+			nAddHP = nAddHP + math.floor(nConScore / 2);
+		end
+		if nAddHP < 1 then
+			nAddHP = 1;
+		end
+		nHP = nHP + nAddHP;
+		GameManager.setRecordFieldValue(nodeChar, "hptotal", "number", nHP);
+
+		local sHPFormat = Interface.getString("char_message_classhpadd");
+		if (sHPFormat or "") == "" then
+			sHPFormat = "Hit points added for %s to %s";
+		end
+		local sHPMsg = string.format(sHPFormat, t1.sName .. " / " .. t2.sName, DB.getValue(nodeChar, "name", "")) .. " (" .. nRoll .. "+" .. nConMod;
+		if nLevel == 1 then
+			sHPMsg = sHPMsg .. "+" .. math.floor(nConScore / 2);
+		end
+		sHPMsg = sHPMsg .. ")";
+		ChatManager.SystemMessage(sHPMsg);
+	end
+
+	local nAddBAB = math.max(babStep(t1.sBAB, nLevel), babStep(t2.sBAB, nLevel));
+	if nAddBAB > 0 then
+		DB.setValue(nodeChar, "attackbonus.base", "number", DB.getValue(nodeChar, "attackbonus.base", 0) + nAddBAB);
+	end
+
+	local nFort = math.max(saveStep(t1.sFort, nLevel), saveStep(t2.sFort, nLevel));
+	local nRef = math.max(saveStep(t1.sRef, nLevel), saveStep(t2.sRef, nLevel));
+	local nWill = math.max(saveStep(t1.sWill, nLevel), saveStep(t2.sWill, nLevel));
+	if nFort > 0 then
+		addSaveBonus(nodeChar, "fortitude", "base", nFort);
+	end
+	if nRef > 0 then
+		addSaveBonus(nodeChar, "reflex", "base", nRef);
+	end
+	if nWill > 0 then
+		addSaveBonus(nodeChar, "will", "base", nWill);
+	end
+
+	local nAllot = math.max(t1.nSkillPoints, t2.nSkillPoints);
+	if nAllot > 0 then
+		local nIntScore = DB.getValue(nodeChar, "abilities.intelligence.score", 10);
+		local nIntMod = math.floor((nIntScore - 10) / 2);
+		local nAddPoints = math.max(nAllot + nIntMod, 1);
+		if nLevel == 1 then
+			nAddPoints = nAddPoints * 4;
+		end
+		local nodeSkillClass = nodeClass1;
+		if t2.nSkillPoints > t1.nSkillPoints then
+			nodeSkillClass = nodeClass2;
+		end
+		DB.setValue(nodeSkillClass, "skillranks", "number", DB.getValue(nodeSkillClass, "skillranks", 0) + nAddPoints);
+		local sSkillFormat = Interface.getString("char_message_classskillranksadd");
+		local sSkillMsg = string.format(sSkillFormat, DB.getValue(nodeSkillClass, "name", ""), DB.getValue(nodeChar, "name", "")) .. " (" .. nAddPoints .. ")";
+		ChatManager.SystemMessage(sSkillMsg);
+	end
+
+	if nLevel == 1 then
+		grantClassSkillList(nodeChar, t1.sClassSkills, t1.sLookup);
+		grantClassSkillList(nodeChar, t2.sClassSkills, t2.sLookup);
+	end
+
+	grantFeatures(nodeChar, nodeSource1, nLevel);
+	grantFeatures(nodeChar, nodeSource2, nLevel);
+	addClassSpellLevel(nodeChar, t1.sName);
+	addClassSpellLevel(nodeChar, t2.sName);
+
+	local sApplied = Interface.getString("cesar_message_gestalt_applied");
+	ChatManager.SystemMessage(string.format(sApplied, nLevel, t1.sName, t2.sName, DB.getValue(nodeChar, "name", "")));
+	return true;
+end
+
 function addClass(nodeChar, sClass, sRecord)
+	if nodeChar and DB.getValue(nodeChar, "gestalt", 0) ~= 0 then
+		ChatManager.SystemMessage(Interface.getString("cesar_message_gestalt_useadd"));
+		return;
+	end
 	local nodeSource = DB.findNode(sRecord);
 	if not nodeSource then
 		ChatManager.SystemMessage(Interface.getString("char_error_missingrecord"));
@@ -2555,6 +2840,81 @@ function addClassSpellLevel(nodeChar, sClassName)
 	end
 end
 
+function usesBuiltinSpellProgression(sClassName)
+	if StringManager.contains({
+		CLASS_NAME_CLERIC, CLASS_NAME_DRUID, CLASS_NAME_WITCH, CLASS_NAME_WIZARD,
+		CLASS_NAME_ORACLE, CLASS_NAME_SORCERER, CLASS_NAME_PALADIN, CLASS_NAME_RANGER,
+		CLASS_NAME_ADEPT, CLASS_NAME_MAGUS, CLASS_FEATURE_DOMAIN_SPELLS
+	}, sClassName) then
+		return true;
+	end
+	if DataCommon.isPFRPG() and StringManager.contains({
+		CLASS_NAME_ALCHEMIST, CLASS_NAME_BARD, CLASS_NAME_INQUISITOR, CLASS_NAME_SUMMONER
+	}, sClassName) then
+		return true;
+	end
+	if not DataCommon.isPFRPG() and StringManager.contains({
+		CLASS_NAME_BARD, CLASS_NAME_ASSASSIN, CLASS_NAME_BLACKGUARD
+	}, sClassName) then
+		return true;
+	end
+	return false;
+end
+
+function getClassRecord(nodeChar, sClassName)
+	local sLookup = StringManager.strip(sClassName or ""):lower();
+	if sLookup == "" then
+		return nil;
+	end
+	for _, nodeClass in ipairs(DB.getChildList(nodeChar, "classes")) do
+		local sName = StringManager.strip(DB.getValue(nodeClass, "name", "")):lower();
+		if sName == sLookup then
+			local _, sRecord = DB.getValue(nodeClass, "shortcut", "", "");
+			if (sRecord or "") ~= "" then
+				return DB.findNode(sRecord);
+			end
+		end
+	end
+	return nil;
+end
+
+function getSpellSlotRow(nodeSource, nLevel)
+	if not nodeSource then
+		return nil;
+	end
+	for _, nodeRow in ipairs(DB.getChildList(nodeSource, "spellslots")) do
+		if DB.getValue(nodeRow, "level", 0) == nLevel then
+			return nodeRow;
+		end
+	end
+	return nil;
+end
+
+function applyModuleSpellSlots(nodeChar, nodeSpellClass, nCL)
+	-- Class tables stored on the module record. Base slots only; ability bonuses stay below.
+	local nodeSource = getClassRecord(nodeChar, DB.getValue(nodeSpellClass, "label", ""));
+	local nodeRow = getSpellSlotRow(nodeSource, nCL);
+	if not nodeRow then
+		return false, 0;
+	end
+	local nodePrev = getSpellSlotRow(nodeSource, nCL - 1);
+	local nNewSpellLevel = 0;
+	for i = 0, 9 do
+		local nNow = DB.getValue(nodeRow, "slot" .. i, 0);
+		local nWas = 0;
+		if nodePrev then
+			nWas = DB.getValue(nodePrev, "slot" .. i, 0);
+		end
+		if nNow > nWas then
+			addClassSpellLevelSlot(nodeSpellClass, i, nNow - nWas);
+			if nWas == 0 and i >= 1 and i > nNewSpellLevel then
+				nNewSpellLevel = i;
+			end
+		end
+	end
+	return true, nNewSpellLevel;
+end
+
 function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 	local sClassName = DB.getValue(nodeSpellClass, "label", "");
 	
@@ -2564,6 +2924,11 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 
 	-- Update spell slots based on class
 	local nNewSpellLevel = 0;
+	local bModuleSlots = false;
+	if not usesBuiltinSpellProgression(sClassName) then
+		bModuleSlots, nNewSpellLevel = applyModuleSpellSlots(nodeChar, nodeSpellClass, nCL);
+	end
+	if not bModuleSlots then
 	if StringManager.contains({ CLASS_NAME_CLERIC, CLASS_NAME_DRUID, CLASS_NAME_WITCH, CLASS_NAME_WIZARD }, sClassName) then
 		if nCL == 1 then
 			addClassSpellLevelSlot(nodeSpellClass, 0, 3);
@@ -3049,6 +3414,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 				addClassSpellLevelSlot(nodeSpellClass, nNewDomainSpellLevel);
 			end
 		end
+	end
 	end
 	
 	-- Add bonus spell slots, if we just gained a new spell level

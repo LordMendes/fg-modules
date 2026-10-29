@@ -46,6 +46,47 @@ def test_prepare_formatted_html_does_not_resurrect_escaped_anchors():
     assert "<em>armor</em>" in twice
 
 
+def test_normalize_fg_table_flattens_spellcasting_header():
+    html = (
+        "<table>"
+        "<tr><th rowspan=\"2\">Class Level</th><th rowspan=\"2\">Base Attack Bonus</th>"
+        "<th rowspan=\"2\">Fort Save</th><th rowspan=\"2\">Ref Save</th>"
+        "<th rowspan=\"2\">Will Save</th><th rowspan=\"2\">Special</th>"
+        "<th colspan=\"9\">———Spellcasting———</th></tr>"
+        "<tr><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th>"
+        "<th>6th</th><th>7th</th><th>8th</th><th>9th</th></tr>"
+        "<tr><td>1st</td><td>+0</td><td>+0</td><td>+0</td><td>+2</td>"
+        "<td>Charnel touch, rebuke undead</td><td>3</td><td>—</td><td>—</td>"
+        "<td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>"
+        "</table>"
+    )
+    out = normalize_fg_table_html(html)
+    assert "<th>" not in out
+    assert "rowspan" not in out
+    assert "colspan" not in out
+    assert "Spellcasting" not in out
+    header, data = out.split("</tr>", 1)
+    assert header.index("<b>Class Level</b>") < header.index("<b>Special</b>")
+    assert header.index("<b>Special</b>") < header.index("<b>1st</b>")
+    assert header.index("<b>1st</b>") < header.index("<b>9th</b>")
+    assert "<td>Charnel touch, rebuke undead</td>" in data
+    assert data.index("<td>Charnel touch, rebuke undead</td>") < data.index("<td>3</td>")
+
+
+def test_normalize_fg_table_uses_spell_level_labels_under_group_banner():
+    html = (
+        "<table><tr><th colspan=\"6\"></th><th colspan=\"2\">Spells per Day</th></tr>"
+        "<tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th>"
+        "<th>Special</th><th>0th</th><th>1st</th></tr>"
+        "<tr><td>1st</td><td>+0</td><td>+0</td><td>+2</td><td>+2</td>"
+        "<td>Bardic music</td><td>2</td><td>—</td></tr></table>"
+    )
+    out = normalize_fg_table_html(html)
+    assert "Spells per Day" not in out
+    assert "<td><b>0th</b></td><td><b>1st</b></td>" in out
+    assert out.count("<tr>") == 2
+
+
 def test_normalize_fg_table_html_converts_th_to_bold_td():
     html = "<table><tr><th>Level</th><th>BAB</th></tr><tr><td>1</td><td>+0</td></tr></table>"
     out = normalize_fg_table_html(html)

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
@@ -11,7 +12,10 @@ import pytest
 from scraper.fg.builder import build_module
 from scraper.fg.converters.classes import (
     _prepare_feature_for_output,
+    convert_classes,
 )
+from scraper.fg.loader import BuildReport
+from scraper.fg.xml_builder import IdAllocator
 from scraper.fg.validators.class_spellcasting import (
     classify_spell_feature,
     normalize_spell_feature_name,
@@ -165,3 +169,184 @@ class TestParserPrestigeSpellcasting:
         assert len(merged) == 1
         assert merged[0]["name"] == "Spells per Day"
         assert merged[0]["level"] == 2
+
+
+class TestAdvancementProgression:
+    def test_use_increase_updates_table_feature_text(self):
+        from scraper.parsers.classes import _merge_advancement_features
+
+        merged = _merge_advancement_features(
+            [],
+            [
+                {"level": 1, "special": "Rage 1/day"},
+                {"level": 4, "special": "Rage 2/day"},
+                {"level": 11, "special": "Greater rage"},
+            ],
+        )
+        names = [feat["name"] for feat in merged]
+        assert names.count("Rage") == 1
+        assert "Rage 2/day" not in names
+        rage = next(feat for feat in merged if feat["name"] == "Rage")
+        assert rage["level"] == 1
+        assert "1/day at 1st level" in rage["text"]
+        assert "2/day at 4th level" in rage["text"]
+        assert any(feat["name"] == "Greater rage" and feat["level"] == 11 for feat in merged)
+
+    def test_prose_feature_keeps_its_text_and_level(self):
+        from scraper.parsers.classes import _merge_advancement_features
+
+        prose = {
+            "level": 3,
+            "name": "Negative Energy Burst",
+            "type": "Su",
+            "text": "Once per day at 3rd level, and 2/day at 8th level.",
+            "text_html": "<p>Once per day at 3rd level, and 2/day at 8th level.</p>",
+        }
+        learning = {
+            "level": 4,
+            "name": "Advanced Learning",
+            "type": "Ex",
+            "text": "At 4th level, and again at 8th, 12th, 16th, and 20th level.",
+            "text_html": "<p>At 4th level.</p>",
+        }
+        merged = _merge_advancement_features(
+            [prose, learning],
+            [
+                {"level": 3, "special": "Negative energy burst 1/day"},
+                {"level": 4, "special": "Advanced learning, mental bastion +2"},
+                {"level": 8, "special": "Advanced learning, negative energy burst 2/day"},
+                {"level": 20, "special": "Advanced learning"},
+            ],
+        )
+        names = [feat["name"] for feat in merged]
+        assert names.count("Negative Energy Burst") == 1
+        assert not any("1/day" in name or "2/day" in name for name in names)
+        burst = next(feat for feat in merged if feat["name"] == "Negative Energy Burst")
+        assert burst["level"] == 3
+        assert burst["text"].startswith("Once per day")
+        learned = next(feat for feat in merged if feat["name"] == "Advanced Learning")
+        assert learned["level"] == 4
+        bastion = next(feat for feat in merged if feat["name"] == "Mental Bastion")
+        assert bastion["level"] == 4
+        assert "2/day" not in bastion["text"]
+
+    def test_base_class_progressions_fold_into_one_feature(self):
+        from scraper.parsers.classes import _merge_advancement_features
+
+        features = [
+            {"level": 1, "name": "Bonus Feats", "text": "At 1st level.", "text_html": "<p>At 1st level.</p>"},
+            {"level": 1, "name": "Sneak Attack", "text": "1d6, plus 1d6 every two levels.", "text_html": "<p>1d6.</p>"},
+            {"level": 1, "name": "Favored Enemy", "text": "At 1st level.", "text_html": "<p>At 1st level.</p>"},
+            {"level": 2, "name": "Uncanny Dodge", "text": "Cannot be flanked.", "text_html": "<p>Cannot be flanked.</p>"},
+            {"level": 4, "name": "Ki Strike", "text": "Magic, then lawful, then adamantine.", "text_html": "<p>Magic.</p>"},
+            {"level": 4, "name": "Slow Fall", "text": "20 feet, later any distance.", "text_html": "<p>20 feet.</p>"},
+            {"level": 5, "name": "Wild Shape", "text": "1/day, then more.", "text_html": "<p>1/day.</p>"},
+        ]
+        merged = _merge_advancement_features(
+            features,
+            [
+                {"level": 1, "special": "Sneak attack +1d6"},
+                {"level": 1, "special": "1st favored enemy"},
+                {"level": 2, "special": "Bonus feat"},
+                {"level": 3, "special": "Sneak attack +2d6, trap sense +1"},
+                {"level": 4, "special": "Ki strike (magic), slow fall 20 ft."},
+                {"level": 5, "special": "2nd favored enemy, wild shape (2/day)"},
+                {"level": 6, "special": "Improved uncanny dodge"},
+                {"level": 17, "special": "Tongue of the sun and moon, slow fall any distance"},
+                {"level": 20, "special": "Bonus feat"},
+            ],
+        )
+        names = [feat["name"] for feat in merged]
+        assert names.count("Bonus Feats") == 1
+        assert names.count("Sneak Attack") == 1
+        assert names.count("Favored Enemy") == 1
+        assert names.count("Wild Shape") == 1
+        assert names.count("Ki Strike") == 1
+        assert names.count("Slow Fall") == 1
+        assert "Bonus feat" not in names
+        assert not any("1d6" in name or "+1" in name for name in names)
+        assert any(feat["name"] == "Improved uncanny dodge" for feat in merged)
+        assert any(feat["name"] == "Tongue of the sun and moon" for feat in merged)
+        assert next(feat for feat in merged if feat["name"] == "Bonus Feats")["level"] == 1
+        trap = next(feat for feat in merged if feat["name"] == "Trap Sense")
+        assert trap["level"] == 3
+        assert "+1 at 3rd level" in trap["text"]
+
+    def test_comma_inside_parentheses_stays_one_feature(self):
+        from scraper.parsers.classes import _merge_advancement_features
+
+        merged = _merge_advancement_features(
+            [
+                {
+                    "level": 5,
+                    "name": "Wild Shape",
+                    "text": "Once per day, later Large and elemental.",
+                    "text_html": "<p>Once per day.</p>",
+                }
+            ],
+            [
+                {"level": 5, "special": "Wild shape (1/day)"},
+                {"level": 18, "special": "Wild shape (6/day, elemental 2/day)"},
+            ],
+        )
+        assert [feat["name"] for feat in merged] == ["Wild Shape"]
+        assert merged[0]["level"] == 5
+
+    def test_plural_name_matches_singular_table_entry(self):
+        from scraper.parsers.classes import _merge_advancement_features
+
+        merged = _merge_advancement_features(
+            [
+                {
+                    "level": 10,
+                    "name": "Special Abilities",
+                    "text": "On attaining 10th level, and again at 13th, 16th, and 19th.",
+                    "text_html": "<p>On attaining 10th level.</p>",
+                }
+            ],
+            [
+                {"level": 10, "special": "Special ability"},
+                {"level": 19, "special": "Special ability"},
+            ],
+        )
+        assert len(merged) == 1
+        assert merged[0]["name"] == "Special Abilities"
+        assert merged[0]["level"] == 10
+
+
+def test_class_record_stores_spell_slots_for_the_actions_tab():
+    section = convert_classes(
+        [
+            {
+                "name": "Dread Necromancer",
+                "index": {},
+                "detail": {
+                    "hit_die": "d6",
+                    "bab": "Slow",
+                    "advancement": [
+                        {
+                            "level": 1,
+                            "spells_per_day": ["3", "—", "—"],
+                            "spell_levels": [1, 2, 3],
+                        },
+                        {
+                            "level": 4,
+                            "spells_per_day": ["6", "3", "—"],
+                            "spell_levels": [1, 2, 3],
+                        },
+                    ],
+                    "class_features": [],
+                },
+            }
+        ],
+        "Heroes of Horror",
+        BuildReport(),
+        IdAllocator(),
+    )
+    xml = ET.tostring(section, encoding="unicode")
+    assert '<level type="number">1</level>' in xml
+    assert '<slot1 type="number">3</slot1>' in xml
+    assert '<slot2 type="number">0</slot2>' in xml
+    level4 = xml.split('<level type="number">4</level>', 1)[1]
+    assert '<slot1 type="number">6</slot1>' in level4
+    assert '<slot2 type="number">3</slot2>' in level4

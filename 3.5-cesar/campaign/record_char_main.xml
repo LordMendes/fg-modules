@@ -306,7 +306,7 @@
 				<static textres="char_label_hptemp" />
 			</label_fieldtop>
 			<number_charwounds name="wounds" source="hp.wounds">
-				<anchored to="hpframe" position="insidetopright" offset="120,27" width="40" height="28" />
+				<anchored to="hpframe" position="insidetopright" offset="80,27" width="40" height="28" />
 				<description textres="char_tooltip_wounds" />
 			</number_charwounds>
 			<label_fieldtop name="wounds_label">
@@ -314,9 +314,10 @@
 				<static textres="char_label_wounds" />
 			</label_fieldtop>
 			<stringcontrol name="woundoverride_label">
-				<anchored to="hptemp" width="90" height="16">
-					<bottom anchor="top" relation="relative" offset="-1" />
-					<left anchor="right" relation="relative" offset="6" />
+				<anchored height="16">
+					<bottom parent="hptemp" anchor="top" relation="relative" offset="-1" />
+					<left parent="hptemp" anchor="right" relation="relative" offset="4" />
+					<right parent="wounds" anchor="left" relation="relative" offset="-4" />
 				</anchored>
 				<font>sheetlabelmini</font>
 				<center />
@@ -706,7 +707,7 @@
 			
 			<list_text name="classes">
 				<anchored to="classframe">
-					<top offset="30" />
+					<top offset="84" />
 					<left offset="10" />
 					<right offset="-10" />
 					<bottom offset="-10" />
@@ -767,6 +768,19 @@
 				<anchored to="classes_iedit" position="righthigh" />
 				<target>classes</target>
 			</button_iadd>
+			<button_text name="button_gestaltadd">
+				<anchored to="classframe" position="insidetopright" offset="10,4" width="88" height="22" />
+				<tooltip textres="cesar_tooltip_gestaltadd" />
+				<state textres="cesar_label_gestaltadd" />
+				<script>
+					function onButtonPress()
+						local w = Interface.openWindow("cesar_gestalt_add", "");
+						if w and w.setCharacter then
+							w.setCharacter(window.getDatabaseNode());
+						end
+					end
+				</script>
+			</button_text>
 		</sheetdata>
 	</windowclass>
 

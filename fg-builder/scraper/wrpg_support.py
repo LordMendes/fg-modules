@@ -72,10 +72,47 @@ def advancement_table_column_count(html: str) -> int:
     return len(header_row.find_all(["th", "td"]))
 
 
+def _spell_level_number(header: str) -> int | None:
+    match = re.fullmatch(r"(\d+)(?:st|nd|rd|th)?", (header or "").strip().lower())
+    if not match:
+        return None
+    level = int(match.group(1))
+    if 0 <= level <= 9:
+        return level
+    return None
+
+
+def _advancement_matrix(table) -> tuple[list[str], list[list[str]]]:
+    """Return collapsed headers and body rows, expanding colspan and rowspan."""
+    from scraper.fg.html_utils import (
+        _collapsed_header,
+        _expand_table_grid,
+        _header_row_count,
+    )
+
+    grid = _expand_table_grid(table)
+    header_rows = _header_row_count(grid)
+    if header_rows:
+        headers = _collapsed_header(grid, header_rows)
+        body = [[cell.get("text") or "" for cell in row] for row in grid[header_rows:]]
+        return headers, body
+
+    rows_el = table.find_all("tr")
+    header_index = _advancement_header_index(rows_el)
+    headers = [
+        cell.get_text(" ", strip=True) for cell in rows_el[header_index].find_all(["th", "td"])
+    ]
+    body = []
+    for tr in rows_el[header_index + 1 :]:
+        body.append([cell.get_text(" ", strip=True) for cell in tr.find_all(["td", "th"])])
+    return headers, body
+
+
 def parse_advancement_html(html: str) -> list[dict[str, Any]]:
     """Parse WRPG advancement HTML into automation rows.
 
     Extra spell-slot columns after Special become spells_per_day (list).
+    A two-row header (Spellcasting over 1st-9th) is expanded first.
     """
     if not html or "<table" not in html.lower():
         return []
@@ -83,21 +120,16 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
     table = soup.find("table")
     if not table:
         return []
-    rows_el = table.find_all("tr")
-    if not rows_el:
-        return []
 
-    header_index = _advancement_header_index(rows_el)
-    headers = [
-        c.get_text(" ", strip=True).lower()
-        for c in rows_el[header_index].find_all(["th", "td"])
-    ]
-    column_keys = [_advancement_header_key(header) for header in headers]
+    headers, body = _advancement_matrix(table)
+    if not headers:
+        return []
+    headers_l = [header.lower() for header in headers]
+    column_keys = [_advancement_header_key(header) for header in headers_l]
     named = any(key in {"bab", "fort", "ref", "will"} for key in column_keys)
-    special_idx = next((i for i, h in enumerate(headers) if "special" in h), 5)
+    special_idx = next((i for i, header in enumerate(headers_l) if "special" in header), 5)
     rows: list[dict[str, Any]] = []
-    for tr in rows_el[header_index + 1 :]:
-        cells = [c.get_text(" ", strip=True) for c in tr.find_all(["td", "th"])]
+    for cells in body:
         if len(cells) < 2:
             continue
         level_raw = cells[0].replace(" ", "")
@@ -107,6 +139,7 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
         row: dict[str, Any] = {"level": int(match.group(1))}
         if named:
             slots: list[str] = []
+            spell_levels: list[int] = []
             unlabeled: list[str] = []
             special_at = next(
                 (i for i, key in enumerate(column_keys) if key == "special"),
@@ -118,6 +151,9 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
                 value = cells[index]
                 if key == "slot":
                     slots.append(value)
+                    spell_level = _spell_level_number(headers_l[index])
+                    if spell_level is not None:
+                        spell_levels.append(spell_level)
                 elif key == "":
                     if special_at is not None and index > special_at:
                         unlabeled.append(value)
@@ -127,6 +163,8 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
                     row[key] = value
             if slots:
                 row["spells_per_day"] = slots
+                if len(spell_levels) == len(slots):
+                    row["spell_levels"] = spell_levels
             elif len(unlabeled) == 1:
                 _apply_spellcasting_cell(row, unlabeled[0])
                 if "spellcasting" not in row and unlabeled[0]:

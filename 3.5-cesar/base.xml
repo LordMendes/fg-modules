@@ -54,6 +54,7 @@
 
 	<includefile source="campaign/record_char.xml" />
 	<includefile source="campaign/record_char_main.xml" />
+	<includefile source="campaign/record_gestalt.xml" />
 	<includefile source="campaign/record_char_combat.xml" />
 	<includefile source="campaign/record_char_skills.xml" />
 	<includefile source="campaign/record_char_abilities.xml" />
