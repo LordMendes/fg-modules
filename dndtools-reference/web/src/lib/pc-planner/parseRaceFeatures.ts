@@ -31,6 +31,8 @@ export type RaceDerivedFeatures = {
   skillBonuses: Record<string, number>;
   skillPointBonus: RacialSkillPointBonus | null;
   saveBonus: { fort: number; ref: number; will: number };
+  /** Constant dodge bonus to AC against all creatures. */
+  dodgeBonus?: number;
   naturalArmor: number;
   sizeMod: number;
   speed: number;
@@ -155,7 +157,25 @@ export function parseSaveBonuses(text: string): { fort: number; ref: number; wil
     if (/enchantment/i.test(text)) bonus.will += amount;
   }
 
+  const spellSaves = text.match(
+    /([+-−–]?\d+)\s*racial bonus on saving throws against spells/i,
+  );
+  if (spellSaves) {
+    const amount = parseSignedInt(spellSaves[1]);
+    bonus.fort += amount;
+    bonus.ref += amount;
+    bonus.will += amount;
+  }
+
   return bonus;
+}
+
+/** Flat dodge bonus that applies against every creature, not a type-limited one. */
+export function parseDodgeBonus(text: string): number {
+  const match = text.match(
+    /([+-−–]?\d+)\s*dodge bonus to Armor Class against all creatures/i,
+  );
+  return match ? parseSignedInt(match[1]) : 0;
 }
 
 export function parseNaturalArmor(text: string): number {
@@ -171,7 +191,9 @@ export function parseSpeedUnhinderedByEncumbrance(text: string): boolean {
 }
 
 export function parseDarkvisionFeet(text: string): number {
-  const match = text.match(/darkvision\s*(?:out to\s*)?(\d+)\s*ft/i);
+  const match = text.match(
+    /darkvision(?:\s+(?:up to|out to))?\s*(\d+)\s*(?:ft\.?|feet)/i,
+  );
   return match ? Number.parseInt(match[1], 10) : 0;
 }
 
@@ -289,6 +311,7 @@ export function parseRaceFeatures(input: {
   const skillBonuses = parseSkillBonuses(text);
   const skillPointBonus = parseRacialSkillPointBonus(text);
   const saveBonus = parseSaveBonuses(text);
+  const dodgeBonus = parseDodgeBonus(text);
   const naturalArmor = parseNaturalArmor(text);
   const sizeMod = sizeModFromLabel(input.size);
   const speed =
@@ -308,6 +331,7 @@ export function parseRaceFeatures(input: {
     skillBonuses,
     skillPointBonus,
     saveBonus,
+    dodgeBonus,
     naturalArmor,
     sizeMod,
     speed,

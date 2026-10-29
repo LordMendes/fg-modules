@@ -338,8 +338,9 @@ class TestMinimalBuild:
         text = (out / "db.xml").read_text(encoding="utf-8")
         assert '<requirements type="formattedtext">' in text
         assert "<p><b>Prerequisites:</b></p>" in text
-        assert "<table><tr><td>\xa0\xa0\xa0\xa0Base Attack Bonus: +5</td></tr>" in text
-        assert "<tr><td>\xa0\xa0\xa0\xa0Alignment: Lawful good</td></tr></table>" in text
+        assert "<p>Base Attack Bonus: +5</p>" in text
+        assert "<p>Alignment: Lawful good</p>" in text
+        assert "<p><b>Prerequisites:</b></p><table>" not in text
         assert "<p><b>Weapon and Armor Proficiency:</b>" in text
         assert "<p><b>Sneak Attack (Ex):</b>" in text
         skill_pts = text.index("Skill Points:")
@@ -516,8 +517,8 @@ class TestCompleteDivineIntegration:
         assert "\n" not in inner, "formattedtext inner HTML must be a single line"
         assert "<a href=" not in inner
         assert "Prerequisites:" in inner
-        assert "<table><tr><td>\xa0\xa0\xa0\xa0<b>Alignment:</b> As a cleric of the chosen deity</td></tr>" in inner
-        assert "<b>Alignment:</b> As a cleric of the chosen deity" in inner
+        assert "<p><b>Alignment:</b> As a cleric of the chosen deity</p>" in inner
+        assert "<p><b>Prerequisites:</b></p><table>" not in inner
         assert "Bluff 8 ranks" in inner
         assert "Negotiator" in inner
         pre = inner.index("Prerequisites")

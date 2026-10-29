@@ -5,11 +5,45 @@ from scraper.fg.html_utils import (
     normalize_class_body_html,
     normalize_fg_table_html,
     normalize_fg_tables_in_html,
+    prepare_formatted_html,
     prepare_spell_description_html,
     requirements_text_to_html,
     sanitize_xml_text,
     structured_requirements_to_html,
 )
+
+
+def test_separate_fg_tables_inserts_a_gap_and_stays_idempotent():
+    from scraper.fg.html_utils import prepare_formatted_html, separate_fg_tables
+
+    html = (
+        "<table><tr><td>1</td></tr></table>"
+        "<h4>Spells per Day</h4>"
+        "<table><tr><td>2</td></tr></table>"
+        "<table><tr><td>3</td></tr></table>"
+    )
+    out = separate_fg_tables(html)
+    assert "<h4>" not in out
+    assert "</table><table" not in out.lower()
+    assert "</table><p /><p><b>Spells per Day</b></p><table>" in out
+    assert "</table><p /><table>" in out
+    again = separate_fg_tables(prepare_formatted_html(out))
+    assert again.lower().count("</table><table") == 0
+    assert "<h4>" not in again
+
+    trailing = "<table><tr><td>1</td></tr></table><h4>Leadership Score</h4><p>Base score.</p>"
+    spaced = separate_fg_tables(trailing)
+    assert "<h4>" not in spaced
+    assert "</table><p /><p><b>Leadership Score</b></p><p>Base score.</p>" in spaced
+
+
+def test_prepare_formatted_html_does_not_resurrect_escaped_anchors():
+    raw = '<p>See &lt;a href=”/armor-darkness-3844/”&gt;<em>armor</em></a>.</p>'
+    once = prepare_formatted_html(raw)
+    twice = prepare_formatted_html(once)
+    assert "<a " not in once
+    assert "<a " not in twice
+    assert "<em>armor</em>" in twice
 
 
 def test_normalize_fg_table_html_converts_th_to_bold_td():

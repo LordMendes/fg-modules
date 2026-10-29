@@ -153,36 +153,54 @@ def append_racial_traits(
     land = movement.get("land")
     land_int = int(land) if land not in (None, "") else 30
     speed_name, speed_header = _speed_name(land_int)
+    speed_text = f"{race_name} have a base speed of {land_int} feet."
+    if movement.get("unencumbered"):
+        speed_text += (
+            " This speed is not reduced by medium or heavy armor or by a medium or heavy load."
+        )
+    speed_effect = ""
+    swim = movement.get("swim")
+    if swim not in (None, ""):
+        swim_int = int(swim)
+        speed_text += (
+            f" They have a swim speed of {swim_int} feet and a +8 racial bonus on Swim checks "
+            "made to perform a special action or avoid a hazard. They can always take 10 on "
+            "a Swim check, even if distracted or endangered, and they can use the run action "
+            "while swimming in a straight line."
+        )
+        speed_effect = "SKILL: 8, swim"
     _append_trait(
         traits_el,
         "speed",
         speed_name,
         speed_header,
-        f"{race_name} have a base speed of {land_int} feet.",
+        speed_text,
         ids,
+        effect=speed_effect,
     )
 
     senses = fg.get("senses") or {}
     darkvision = (senses.get("darkvision") or "").strip()
     if darkvision:
-        range_text = darkvision if "ft" in darkvision.lower() else f"{darkvision} ft."
-        range_text = range_text.rstrip(".")
+        range_text = darkvision.rstrip(".")
+        if not re.search(r"\b(ft|feet)\b", range_text, flags=re.I):
+            range_text = f"{range_text} feet"
         _append_trait(
             traits_el,
             "vision",
             "Darkvision",
             "Darkvision",
             (
-                f"{race_name} can see in the dark up to {range_text} feet. "
+                f"{race_name} can see in the dark up to {range_text}. "
                 "Darkvision is black and white only, but it is otherwise like normal sight, "
                 f"and {race_lower} can function just fine with no light at all."
             ),
             ids,
         )
-    elif senses.get("low_light_vision"):
+    if senses.get("low_light_vision"):
         _append_trait(
             traits_el,
-            "vision",
+            "lowlight" if darkvision else "vision",
             "Low-Light Vision",
             "Low-Light Vision",
             (

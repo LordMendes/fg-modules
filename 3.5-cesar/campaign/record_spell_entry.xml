@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="spell_class">
+		<margins control="0,0,0,5" />
+		<script file="campaign/scripts/spell_class.lua" />
+		<sheetdata>
+			<anchor_listitem_left_lg />
+			<anchor_listitem_right_lg />
+
+			<button_listitem_idelete_left name="idelete" />
+			<iconcycler_listitem_left name="castertype">
+				<parameters>
+					<defaulticon>caster_prep</defaulticon>
+					<defaulttooltipres>spell_tooltip_casterprep</defaulttooltipres>
+					<icons>caster_spontaneous|caster_points</icons>
+					<tooltipsres>spell_tooltip_casterspontaneous|spell_tooltip_casterpoints</tooltipsres>
+					<values>spontaneous|points</values>
+				</parameters>
+				<script>
+					function onValueChanged()
+						window.onCasterTypeChanged();
+					end
+				</script>
+			</iconcycler_listitem_left>
+
+			<button_listitem_toggledetail_right name="activatedetail" />
+			<number_listitem_right name="pointsused">
+				<anchored width="20" />
+				<min>0</min>
+				<tooltip textres="spell_tooltip_ppused" />
+				<tabtarget next="availablelevel0" prev="points"/>
+				<script>
+					function onValueChanged()
+						WindowManager.callOuterWindowFunction(window, "onSpellCounterUpdate");
+					end
+				</script>
+			</number_listitem_right>
+			<label_listitem_right name="label_pointsused">
+				<static>/</static>
+			</label_listitem_right>
+			<number_listitem_right name="points">
+				<anchored width="20" />
+				<min>0</min>
+				<tooltip textres="spell_tooltip_ppmax" />
+				<tabtarget next="pointsused" prev="cl"/>
+				<script>
+					function onValueChanged()
+						WindowManager.callOuterWindowFunction(window, "onSpellCounterUpdate");
+					end
+				</script>
+			</number_listitem_right>
+			<label_listitem_right name="label_points">
+				<static textres="spell_label_pp" />
+			</label_listitem_right>
+			<button_cc name="button_cc">
+				<tooltip textres="spell_tooltip_cc" />
+			</button_cc>
+			<label_listitem_right name="label_cc">
+				<static textres="spell_label_cc" />
+				<tooltip textres="spell_tooltip_cc" />
+			</label_listitem_right>
+			<number_listitem_right name="cl">
+				<anchored width="20" />
+				<min>0</min>
+				<tooltip textres="casterlevel" />
+				<tabtarget next="points" prev="label"/>
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</number_listitem_right>
+			<label_listitem_right name="label_cl">
+				<static textres="cl" />
+				<tooltip textres="casterlevel" />
+			</label_listitem_right>
+
+			<string_listitem_center_underline name="label">
+				<font>sheetlabel</font>
+				<empty textres="spellclass_emptyname" />
+				<tabtarget next="cl" />
+			</string_listitem_center_underline>
+
+			<genericcontrol name="detailanchor">
+				<bounds>0,35,0,0</bounds>
+			</genericcontrol>
+
+			<genericcontrol name="frame_levels">
+				<anchored width="325" height="55">
+					<top parent="detailanchor" anchor="bottom" relation="relative" />
+					<left offset="5" />
+				</anchored>
+				<frame name="groupbox" />
+			</genericcontrol>
+			
+			<label name="availablelevel_label">
+				<anchored to="frame_levels" position="insidetopleft" offset="15,25" />
+				<static textres="level" />
+			</label>
+			<genericcontrol name="availablelevel">
+				<anchored to="frame_levels" position="insidetopleft" offset="55,25" width="1" height="25" />
+			</genericcontrol>
+			<number_spellsavailable name="availablelevel0">
+				<tabtarget next="availablelevel1" prev="pointsused"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel1">
+				<tabtarget next="availablelevel2" prev="availablelevel0"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel2">
+				<tabtarget next="availablelevel3" prev="availablelevel1"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel3">
+				<tabtarget next="availablelevel4" prev="availablelevel2"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel4">
+				<tabtarget next="availablelevel5" prev="availablelevel3"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel5">
+				<tabtarget next="availablelevel6" prev="availablelevel4"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel6">
+				<tabtarget next="availablelevel7" prev="availablelevel5"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel7">
+				<tabtarget next="availablelevel8" prev="availablelevel6"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel8">
+				<tabtarget next="availablelevel9" prev="availablelevel7"/>
+			</number_spellsavailable>
+			<number_spellsavailable name="availablelevel9">
+				<tabtarget next="dcmisc" prev="availablelevel8"/>
+			</number_spellsavailable>
+			<label_fieldtop name="availablelevel0_label">
+				<anchored to="availablelevel0" />
+				<static>0</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel1_label">
+				<anchored to="availablelevel1" />
+				<static>1</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel2_label">
+				<anchored to="availablelevel2" />
+				<static>2</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel3_label">
+				<anchored to="availablelevel3" />
+				<static>3</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel4_label">
+				<anchored to="availablelevel4" />
+				<static>4</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel5_label">
+				<anchored to="availablelevel5" />
+				<static>5</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel6_label">
+				<anchored to="availablelevel6" />
+				<static>6</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel7_label">
+				<anchored to="availablelevel7" />
+				<static>7</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel8_label">
+				<anchored to="availablelevel8" />
+				<static>8</static>
+			</label_fieldtop>
+			<label_fieldtop name="availablelevel9_label">
+				<anchored to="availablelevel9" />
+				<static>9</static>
+			</label_fieldtop>
+
+			<genericcontrol name="frame_dc">
+				<anchored width="180" height="55">
+					<top parent="detailanchor" anchor="bottom" relation="relative" />
+					<left offset="5" />
+				</anchored>
+				<frame name="groupbox" />
+			</genericcontrol>
+			
+			<label name="dc_label">
+				<anchored to="frame_dc" position="insidetopleft" offset="15,25" />
+				<static textres="spell_label_basedc" />
+			</label>
+			<number name="dcstatmod" source="dc.abilitymod">
+				<anchored to="frame_dc" position="insidetopleft" offset="75,25" width="30" height="20" />
+				<font>sheetnumber</font>
+				<readonly />
+				<displaysign />
+				<disabled />
+			</number>
+			<label_fieldtop name="dcstatmod_label">
+				<anchored to="dcstatmod" />
+				<static textres="spell_label_ability" />
+			</label_fieldtop>
+			<number_spell name="dcmisc" source="dc.misc">
+				<anchored to="dcstatmod" position="righthigh" offset="5,0" width="15" />
+				<tabtarget next="sp" prev="availablelevel9" />
+			</number_spell>
+			<label_fieldtop name="dcmisc_label">
+				<anchored to="dcmisc" />
+				<static textres="spell_label_misc" />
+			</label_fieldtop>
+			<number_spelldc name="dctotal" source="dc.total">
+				<anchored to="dcmisc" position="righthigh" offset="10,0" />
+				<description textres="spell_tooltip_basedc" />
+			</number_spelldc>
+			<label_fieldtop name="dctotal_label">
+				<anchored to="dctotal" />
+				<static textres="spell_label_total" />
+			</label_fieldtop>
+		
+			<genericcontrol name="frame_stat">
+				<anchored to="frame_dc" width="150" height="55">
+					<top />
+					<left anchor="right" offset="-5" />
+				</anchored>
+				<frame name="groupbox" />
+			</genericcontrol>
+			
+			<label name="ability_label">
+				<anchored to="frame_stat" position="insidetopleft" offset="15,25" />
+				<static textres="spell_label_baseability" />
+			</label>
+			<cycler_ability name="dcstat">
+				<anchored to="frame_stat" position="insidetopleft" offset="80,25" width="50" height="20" />
+				<source>
+					<name>dc.ability</name>
+				</source>
+				<parameters>
+					<defaultlabelres>dash</defaultlabelres>
+				</parameters>
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</cycler_ability>
+			<label_fieldtop name="dcstat_label">
+				<anchored to="dcstat" />
+				<static textres="spell_label_ability" />
+			</label_fieldtop>
+			
+			<genericcontrol name="frame_sp">
+				<anchored width="180" height="55">
+					<top parent="detailanchor" anchor="bottom" relation="relative" />
+					<left offset="5" />
+				</anchored>
+				<frame name="groupbox" />
+			</genericcontrol>
+			
+			<label name="spmain_label">
+				<anchored to="frame_sp" position="insidetopleft" offset="15,25" />
+				<static textres="spell_label_sp" />
+			</label>
+			<number_spell name="sp">
+				<anchored to="frame_sp" position="insidetopleft" offset="140,25" />
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</number_spell>
+			<label_fieldtop name="sp_label">
+				<anchored to="sp" />
+				<static textres="spell_label_mod" />
+			</label_fieldtop>
+			
+			<genericcontrol name="frame_cc">
+				<anchored to="frame_sp" width="150" height="55">
+					<top />
+					<left anchor="right" offset="-5" />
+				</anchored>
+				<frame name="groupbox" />
+			</genericcontrol>
+			
+			<label name="label_cc">
+				<anchored to="frame_cc" position="insidetopleft" offset="15,25" />
+				<static textres="spell_label_ccdetail" />
+			</label>
+			<number_spell name="ccmisc" source="cc.misc">
+				<anchored to="frame_cc" position="insidetopleft" offset="105,25" />
+			</number_spell>
+			<label_fieldtop name="ccmisc_label">
+				<anchored to="ccmisc" />
+				<static textres="spell_label_mod" />
+			</label_fieldtop>
+			
+			<genericcontrol name="classframe">
+				<anchored>
+					<top offset="5" />
+					<left offset="5" />
+					<right offset="-5" />
+					<bottom parent="detailanchor" relation="relative" anchor="bottom" />
+				</anchored>
+				<frame name="headersimple" offset="5,5,5,5" />
+				<disabled />
+			</genericcontrol>
+
+			<list_spelllevel name="levels">
+				<anchored>
+					<top parent="classframe" anchor="bottom" offset="8" />
+					<left />
+					<right />
+				</anchored>
+				<class>spell_level</class>
+				<tabtarget prev="sp" />
+			</list_spelllevel>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="spell_level">
+		<script file="campaign/scripts/spell_level.lua" />
+		<sheetdata>
+			<genericcontrol>
+				<anchored height="24">
+					<top />
+					<left />
+					<right />
+				</anchored>
+				<frame name="rowshade" />
+				<script>
+					function onClickDown(button, x, y)
+						return window.onClickDown(button, x, y);
+					end
+					
+					function onClickRelease(button, x, y)
+						return window.onClickRelease(button, x, y);
+					end
+				</script>
+			</genericcontrol>
+			
+			<label name="label">
+				<anchored position="insidetopleft" offset="10,2" width="60" />
+				<disabled />
+			</label>
+			<label name="stats">
+				<anchored to="label" position="righthigh" offset="10,0" />
+				<disabled />
+			</label>
+			
+			<button_iadd name="spells_iadd">
+				<bounds>-50,2,20,20</bounds>
+				<target>spells</target>
+			</button_iadd>
+
+			<list_spellitem name="spells">
+				<anchored>
+					<top offset="24" />
+					<left />
+					<right />
+				</anchored>
+				<class>power_item</class>
+			</list_spellitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="power_item" merge="join">
+		<sheetdata>
+			<linkc_listitem_left name="shortcut">
+				<class>spelldesc2</class>
+			</linkc_listitem_left>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="power_item_mini" merge="join">
+		<sheetdata>
+			<linkc_listitem_left name="shortcut">
+				<class>spelldesc2</class>
+			</linkc_listitem_left>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="power_action_cast">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onDataChanged();
+				DB.addHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onClose()
+				DB.removeHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onDataChanged()
+				local nodeAction = getDatabaseNode();
+				
+				attackview.setValue(PowerActionManagerCore.getActionText(nodeAction, { sSubRoll = "atk" }));
+				levelcheckview.setValue(PowerActionManagerCore.getActionText(nodeAction, { sSubRoll = "clc" }));
+				saveview.setValue(PowerActionManagerCore.getActionText(nodeAction, { sSubRoll = "save" }));
+			end
+			function performAction(draginfo, sSubRoll)
+				PowerActionManagerCore.performAction(draginfo, getDatabaseNode(), { sSubRoll = sSubRoll });
+			end
+		</script>
+		<sheetdata>
+			<button_poweraction name="castbutton">
+				<anchored position="insidetopleft" offset="2,2" />
+			</button_poweraction>
+			<label name="castlabel">
+				<anchored to="castbutton" position="righthigh" offset="5,0" width="40" />
+				<static textres="power_label_cast" />
+			</label>
+
+			<button_poweraction name="attackbutton">
+				<anchored to="castlabel" position="righthigh" offset="5,0" />
+				<icon normal="button_action_attack" pressed="button_action_attack_down" />
+				<subroll>atk</subroll>
+			</button_poweraction>
+			<label name="attackviewlabel">
+				<anchored to="attackbutton" position="righthigh" offset="5,0" />
+				<static textres="power_label_atk" />
+			</label>
+			<string_poweractionview name="attackview">
+				<anchored to="attackviewlabel" position="righthigh" offset="5,0" width="70" />
+				<subroll>atk</subroll>
+			</string_poweractionview>
+
+			<button_poweraction name="savebutton">
+				<anchored to="attackview" position="righthigh" offset="10,0" />
+				<subroll>save</subroll>
+			</button_poweraction>
+			<label name="saveviewlabel">
+				<anchored to="savebutton" position="righthigh" offset="5,0" />
+				<static textres="save" />
+			</label>
+			<string_poweractionview name="saveview">
+				<anchored to="saveviewlabel" position="righthigh" offset="5,0" width="60" />
+				<subroll>save</subroll>
+			</string_poweractionview>
+
+			<button_poweraction name="levelcheckbutton">
+				<anchored to="saveview" position="righthigh" offset="10,0" />
+				<subroll>clc</subroll>
+			</button_poweraction>
+			<label name="levelcheckviewlabel">
+				<anchored to="levelcheckbutton" position="righthigh" offset="5,0" />
+				<static textres="clc" />
+				<tooltip textres="casterlevelcheck" />
+			</label>
+			<string_poweractionview name="levelcheckview">
+				<anchored to="levelcheckviewlabel" position="righthigh" offset="5,0" width="25" />
+				<subroll>clc</subroll>
+			</string_poweractionview>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="power_action_damage">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onDataChanged();
+				DB.addHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onClose()
+				DB.removeHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onDataChanged()
+				damageview.setValue(PowerActionManagerCore.getActionText(getDatabaseNode()));
+			end
+			function performAction(draginfo, sSubRoll)
+				PowerActionManagerCore.performAction(draginfo, getDatabaseNode(), { sSubRoll = sSubRoll });
+			end
+		</script>
+		<sheetdata>
+			<button_poweraction name="damagebutton">
+				<anchored position="insidetopleft" offset="2,2" />
+				<icon normal="button_action_damage" pressed="button_action_damage_down" />
+			</button_poweraction>
+			<label name="damagelabel">
+				<anchored to="damagebutton" position="righthigh" offset="5,0" width="40" />
+				<static textres="power_label_dmg" />
+			</label>
+			<string_poweractionview name="damageview">
+				<anchored to="damagelabel" position="righthigh" offset="10,0">
+					<right parent="" offset="-5" />
+				</anchored>
+			</string_poweractionview>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="power_action_heal">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onDataChanged();
+				DB.addHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onClose()
+				DB.removeHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onDataChanged()
+				healview.setValue(PowerActionManagerCore.getActionText(getDatabaseNode()));
+			end
+			function performAction(draginfo, sSubRoll)
+				PowerActionManagerCore.performAction(draginfo, getDatabaseNode(), { sSubRoll = sSubRoll });
+			end
+		</script>
+		<sheetdata>
+			<button_poweraction name="healbutton">
+				<anchored position="insidetopleft" offset="2,2" />
+				<icon normal="button_action_heal" pressed="button_action_heal_down" />
+			</button_poweraction>
+			<label name="heallabel">
+				<anchored to="healbutton" position="righthigh" offset="5,0" width="40" />
+				<static textres="power_label_heal" />
+			</label>
+			<iconcycler_poweraction_targeting name="healtargeting">
+				<anchored to="heallabel" />
+			</iconcycler_poweraction_targeting>
+			<string_poweractionview name="healview">
+				<anchored to="heallabel" position="righthigh" offset="40,0">
+					<right parent="" offset="-5" />
+				</anchored>
+			</string_poweractionview>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="power_action_effect">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onDataChanged();
+				DB.addHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onClose()
+				DB.removeHandler(getDatabaseNode(), "onChildUpdate", self.onDataChanged);
+			end
+			function onDataChanged()
+				local nodeAction = getDatabaseNode();
+				effectview.setValue(PowerActionManagerCore.getActionText(nodeAction));
+				durationview.setValue(PowerActionManagerCore.getActionText(nodeAction, { sSubRoll = "duration" }));
+			end
+			function performAction(draginfo, sSubRoll)
+				PowerActionManagerCore.performAction(draginfo, getDatabaseNode(), { sSubRoll = sSubRoll });
+			end
+		</script>
+		<sheetdata>
+			<button_poweraction name="effectbutton">
+				<anchored position="insidetopleft" offset="2,2" />
+				<icon normal="button_action_effect" pressed="button_action_effect_down" />
+			</button_poweraction>
+			<label name="effectlabel">
+				<anchored to="effectbutton" position="righthigh" offset="5,0" width="40" />
+				<static textres="power_label_effect" />
+			</label>
+			<iconcycler_poweraction_effect_targeting name="targeting">
+				<anchored to="effectlabel" />
+			</iconcycler_poweraction_effect_targeting>
+			<string_poweractionview name="effectview">
+				<anchored to="effectlabel" position="righthigh" offset="40,0">
+					<right parent="" offset="-65" />
+				</anchored>
+			</string_poweractionview>
+			<string_poweractionview name="durationview">
+				<anchored to="effectview" position="righthigh" offset="10,0" width="50" />
+			</string_poweractionview>
+		</sheetdata>
+	</windowclass>
+</root>

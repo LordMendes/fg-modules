@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ps_xp_partyentry" merge="join">
+		<sheetdata>
+			<string_ps name="class">
+				<anchored position="insidetopleft" offset="55,35" height="20">
+					<right offset="-55" />
+				</anchored>
+				<empty textres="ps_empty_class" />
+			</string_ps>
+			<number_ps name="level">
+				<anchored position="insidetopright" offset="15,35" width="30" height="20" />
+			</number_ps>			
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ps_xp_battles" merge="join">
+		<sheetdata>
+			<label_list_content_number_right name="label_cr" insertbefore="label_name">
+				<anchored width="40" />
+				<static textres="cr" />
+				<tooltip textres="cr" />
+				<center />
+			</label_list_content_number_right>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ps_xp_battleentry" merge="join">
+		<sheetdata>
+			<number_listitem_right name="cr" insertbefore="name">
+				<anchored width="40" />
+			</number_listitem_right>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ps_xp_quests" merge="join">
+		<sheetdata>
+			<label_list_content_number_right name="label_level" insertbefore="label_name">
+				<anchored width="30" />
+				<static textres="lvl" />
+				<tooltip textres="level" />
+				<center />
+			</label_list_content_number_right>
+			<label_list_content_string_right name="label_xptype" insertbefore="label_name">
+				<anchored width="50" />
+				<static textres="ps_label_xptype" />
+				<center />
+			</label_list_content_string_right>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ps_xp_questentry" merge="join">
+		<sheetdata>
+			<number_listitem_right name="level" insertbefore="name">
+				<anchored width="30" />
+			</number_listitem_right>
+			<stringcycler_listitem_right name="type" insertbefore="name">
+				<anchored width="50" />
+				<parameters>
+					<defaultlabelres>quest_label_typeminor</defaultlabelres>
+					<labelsres>quest_label_typemajor</labelsres>
+					<values>Major</values>
+				</parameters>
+				<readonly />
+			</stringcycler_listitem_right>
+		</sheetdata>
+	</windowclass>
+</root>

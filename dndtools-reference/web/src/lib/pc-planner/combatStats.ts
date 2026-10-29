@@ -340,6 +340,7 @@ export function computeCombatStats(
   const dodgeTotal =
     combat.dodge +
     feats.dodgeBonus +
+    (raceFeatures?.dodgeBonus ?? 0) +
     itemDodge +
     (fightingDefensively ? 2 : 0);
   const acMisc =

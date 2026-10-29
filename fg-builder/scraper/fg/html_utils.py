@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html as html_lib
 import re
 from typing import Any
 
@@ -49,6 +50,11 @@ def prepare_formatted_html(html: str) -> str:
     """Normalize scraper HTML for FG formattedtext nodes."""
     if not html or not html.strip():
         return "<p />"
+
+    # A second pass must not turn "&lt;a href=...”&gt;" back into a raw tag.
+    # Unescape first so anchors are real markup and can be removed.
+    if "&lt;" in html or "&gt;" in html:
+        html = html_lib.unescape(html)
 
     soup = BeautifulSoup(html, "lxml")
     for tag in soup.find_all(["script", "style"]):
@@ -248,11 +254,62 @@ def wrap_loose_table_rows(html: str) -> str:
     return "".join(out)
 
 
+_TABLE_PAIR_RE = re.compile(r"(</table>)(.*?)(<table\b)", re.I | re.S)
+_EMPTY_P_RE = re.compile(r"^\s*(?:<p\s*/\s*>|<p>\s*</p>)\s*", re.I)
+_BETWEEN_HEADING_RE = re.compile(r"<h([1-6])\b[^>]*>(.*?)</h\1>", re.I | re.S)
+
+
+def _heading_to_paragraph(fragment: str) -> str:
+    """FG swallows <h4> into the previous table cell, which merges the next table."""
+
+    def repl(match: re.Match[str]) -> str:
+        label = re.sub(r"<[^>]+>", "", match.group(2))
+        label = re.sub(r"\s+", " ", label).strip()
+        if not label:
+            return ""
+        return f"<p><b>{label}</b></p>"
+
+    return _BETWEEN_HEADING_RE.sub(repl, fragment)
+
+
+def separate_fg_tables(html: str) -> str:
+    """Put a blank paragraph between tables so Fantasy Grounds does not merge them.
+
+    A heading glued to the end of a table is also swallowed into the last cell,
+    so those headings become a paragraph after the same spacer.
+    """
+    if not html or "<table" not in html.lower():
+        return html
+
+    def repl(match: re.Match[str]) -> str:
+        gap = _heading_to_paragraph(match.group(2))
+        if _EMPTY_P_RE.match(gap):
+            return f"{match.group(1)}{gap}{match.group(3)}"
+        return f"{match.group(1)}<p />{gap}{match.group(3)}"
+
+    if html.lower().count("<table") >= 2:
+        html = _TABLE_PAIR_RE.sub(repl, html)
+
+    def trailing(match: re.Match[str]) -> str:
+        label = re.sub(r"<[^>]+>", "", match.group(2))
+        label = re.sub(r"\s+", " ", label).strip()
+        heading = f"<p><b>{label}</b></p>" if label else ""
+        return f"{match.group(1)}<p />{heading}"
+
+    return re.sub(
+        r"(</table>)\s*<h[1-6]\b[^>]*>(.*?)</h[1-6]>",
+        trailing,
+        html,
+        flags=re.I | re.S,
+    )
+
+
 def normalize_all_tables_in_html(html: str) -> str:
     """Wrap loose rows and convert <th> headers to FG-safe <td><b>…</b></td>."""
     if not html or ("<table" not in html.lower() and "<tr" not in html.lower()):
         return html
-    return normalize_fg_tables_in_html(wrap_loose_table_rows(html))
+    normalized = normalize_fg_tables_in_html(wrap_loose_table_rows(html))
+    return separate_fg_tables(normalized)
 
 
 def _normalize_table_headers(table: Tag, soup: BeautifulSoup) -> None:

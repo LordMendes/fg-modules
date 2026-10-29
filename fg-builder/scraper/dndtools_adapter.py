@@ -12,19 +12,43 @@ from scraper.fg.html_utils import strip_html_to_text, truncate_feat_prerequisite
 DNDTOOLS_ROOT = Path(__file__).resolve().parent.parent.parent / "dndtools-reference" / "data" / "dndtools"
 
 BOOKS: dict[str, tuple[str, str]] = {
-    "Complete Divine": ("CD", "complete-divine"),
-    "Complete Warrior": ("CW", "complete-warrior"),
-    "Complete Mage": ("CM", "complete-mage"),
-    "Complete Arcane": ("CAr", "complete-arcane"),
+    "Player's Handbook": ("PH", "players-handbook"),
+    "Arms and Equipment Guide": ("AE", "arms-and-equipment-guide"),
+    "Player's Handbook II": ("PH2", "players-handbook-ii"),
+    "Champions of Ruin": ("CR", "champions-of-ruin"),
+    "Player's Guide to Faerûn": ("PG", "players-guide-to-faerun"),
+    "Champions of Valor": ("CV", "champions-of-valor"),
+    "Dungeon Master's Guide": ("DMG", "dungeon-masters-guide"),
+    "CityScape": ("Ci", "cityscape"),
+    "Dungeon Master's Guide II": ("DMG2", "dungeon-masters-guide-ii"),
     "Complete Adventurer": ("CAd", "complete-adventurer"),
+    "Complete Arcane": ("CAr", "complete-arcane"),
+    "Complete Champion": ("CC", "complete-champion"),
+    "Complete Divine": ("CD", "complete-divine"),
+    "Complete Mage": ("CM", "complete-mage"),
+    "Complete Scoundrel": ("CS", "complete-scoundrel"),
+    "Complete Warrior": ("CW", "complete-warrior"),
+    "Dragon Magic": ("DM", "dragon-magic"),
+    "Dungeonscape": ("Du", "dungeonscape"),
+    "Faiths & Pantheons": ("FP", "faiths-and-pantheons"),
+    "Frostburn": ("Fr", "frostburn"),
+    "Heroes of Battle": ("HB", "heroes-of-battle"),
+    "Magic of Faerûn": ("Mag", "magic-of-faerun"),
+    "Miniatures Handbook": ("MH", "miniatures-handbook"),
+    "Races of Destiny": ("RD", "races-of-destiny"),
+    "Races of Faerûn": ("Rac", "races-of-faerun"),
+    "Races of Stone": ("RS", "races-of-stone"),
+    "Races of the Dragon": ("RDr", "races-of-the-dragon"),
+    "Races of the Wild": ("RW", "races-of-the-wild"),
+    "Sandstorm": ("Sa", "sandstorm"),
+    "Stormwrack": ("Sto", "stormwrack"),
+    "Stronghold Builder's Guidebook": ("SB", "stronghold-builders-guidebook"),
+    "Tome of Battle": ("ToB", "tome-of-battle"),
+    "Heroes of Horror": ("HH", "heroes-of-horror"),
     "Unearthed Arcana": ("UA", "unearthed-arcana"),
     "Book of Vile Darkness": ("BV", "book-of-vile-darkness"),
-    "Complete Champion": ("CC", "complete-champion"),
-    "Player's Handbook II": ("PH2", "players-handbook-ii"),
     "Red Hand of Doom": ("RH", "red-hand-of-doom"),
-    "Races of Faerûn": ("Rac", "races-of-faerun"),
     "Forgotten Realms Campaign Setting": ("FRCS", "forgotten-realms-campaign-setting"),
-    "Dungeon Master's Guide": ("DMG", "dungeon-masters-guide"),
     "Warcraft The Roleplaying Game": ("WRPG", "warcraft-the-roleplaying-game"),
     "World of Warcraft The Roleplaying Game": ("WoW", "world-of-warcraft-the-roleplaying-game"),
     "Alliance Player's Guide": ("APG", "alliance-players-guide"),
@@ -75,6 +99,7 @@ SUPPLEMENTAL_FILES: dict[str, list[str]] = {
         "wowrpg_core_races.json",
         "wowrpg_apg_races.json",
         "wowrpg_hpg_races.json",
+        "pg_lesser_planetouched.json",
     ],
     "monsters": ["wowrpg_mg_monsters.json"],
 }
@@ -101,7 +126,13 @@ def filter_by_abbrev(records: list[dict[str, Any]], abbrev: str) -> list[dict[st
     return [r for r in records if _source_abbrev(r) == abbrev]
 
 
+_CATEGORY_CACHE: dict[str, list[dict[str, Any]]] = {}
+
+
 def load_category(category: str) -> list[dict[str, Any]]:
+    cached = _CATEGORY_CACHE.get(category)
+    if cached is not None:
+        return cached
     filename = CATEGORY_FILES.get(category)
     if not filename:
         return []
@@ -124,7 +155,33 @@ def load_category(category: str) -> list[dict[str, Any]]:
             if key not in seen:
                 records.append(rec)
                 seen.add(key)
+    _CATEGORY_CACHE[category] = records
     return records
+
+
+def _is_blank_stat(value: object) -> bool:
+    text = str(value or "").strip()
+    return text in {"", "-", "—", "–", "None", "n/a", "N/A"}
+
+
+def _is_empty_class_stub(record: dict[str, Any]) -> bool:
+    """Drop cross-book shells that have no description, table, or class stats."""
+    if (record.get("description_html") or record.get("description_text") or "").strip():
+        return False
+    if record.get("advancement"):
+        return False
+    if "<table" in (record.get("advancement_html") or "").lower():
+        return False
+    index = record.get("index") or {}
+    if not _is_blank_stat(record.get("hit_die")) or not _is_blank_stat(index.get("hit_die")):
+        return False
+    if not _is_blank_stat(record.get("skill_points")) or not _is_blank_stat(
+        index.get("skill_points")
+    ):
+        return False
+    if record.get("class_skills"):
+        return False
+    return True
 
 
 # FG only accepts Good/Bad for class save progression.
@@ -702,6 +759,26 @@ def _apply_epic_progression(
         row["will"] = f"+{_save_bonus(will, level)}"
 
 
+# Spellcasting ability used for the FG "score equal to 10 + spell level" hook.
+_CASTER_ABILITY: dict[str, str] = {
+    "Adept": "Wisdom",
+    "Bard": "Charisma",
+    "Cleric": "Wisdom",
+    "Druid": "Wisdom",
+    "Paladin": "Wisdom",
+    "Ranger": "Wisdom",
+    "Sorcerer": "Charisma",
+    "Wizard": "Intelligence",
+    "Epic Bard": "Charisma",
+    "Epic Cleric": "Wisdom",
+    "Epic Druid": "Wisdom",
+    "Epic Paladin": "Wisdom",
+    "Epic Ranger": "Wisdom",
+    "Epic Sorcerer": "Charisma",
+    "Epic Wizard": "Intelligence",
+}
+
+
 def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     from scraper.wrpg_support import (
         expand_wrpg_spell_hook_text,
@@ -717,6 +794,32 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         not advancement and parsed_html
     ):
         advancement = parsed_html
+
+    description_html = record.get("description_html") or ""
+    # Some pages put the feature prose in advancement_html and the class table
+    # in the description. Keep the prose, and use the table for automation.
+    prose_html = ""
+    if advancement_html and "<table" not in advancement_html.lower():
+        prose_html = advancement_html
+        advancement_html = ""
+    if not advancement and "<table" in description_html.lower():
+        parsed_desc = parse_advancement_html(description_html)
+        if parsed_desc and any(row.get("bab") for row in parsed_desc):
+            advancement = parsed_desc
+            table_match = re.search(
+                r"<table\b.*?</table>", description_html, flags=re.I | re.S
+            )
+            if table_match and "<table" not in advancement_html.lower():
+                advancement_html = table_match.group(0)
+            description_html = re.sub(
+                r"<table\b.*?</table>",
+                "",
+                description_html,
+                count=1,
+                flags=re.I | re.S,
+            )
+    if prose_html:
+        description_html = f"{description_html}{prose_html}"
 
     index = record.get("index") or {}
     is_racial = bool(index.get("racial_class") or record.get("race") or record.get("levelmax"))
@@ -741,14 +844,14 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     prebuilt_features = record.get("class_features") if is_racial else None
     if isinstance(prebuilt_features, list) and prebuilt_features:
         intro, notes, _ignored = _split_class_description(
-            record.get("description_html") or "",
+            description_html,
             advancement,
         )
         class_features = [dict(feat) for feat in prebuilt_features]
         overlay: dict[str, Any] = {}
     else:
         intro, notes, class_features = _split_class_description(
-            record.get("description_html") or "",
+            description_html,
             advancement,
         )
 
@@ -789,16 +892,7 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "druid-of-the-wild-wrpg": "Wisdom",
         "warlock-wrpg": "Charisma",
     }
-    ability = ability_by_slug.get(slug) or {
-        "Adept": "Wisdom",
-        "Epic Bard": "Charisma",
-        "Epic Cleric": "Wisdom",
-        "Epic Druid": "Wisdom",
-        "Epic Paladin": "Wisdom",
-        "Epic Ranger": "Wisdom",
-        "Epic Sorcerer": "Charisma",
-        "Epic Wizard": "Intelligence",
-    }.get(record.get("name") or "")
+    ability = ability_by_slug.get(slug) or _CASTER_ABILITY.get(record.get("name") or "")
     if ability:
         hook = (
             f"To cast a spell, a character must have a {ability} score equal to "
@@ -837,7 +931,7 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
                     feat["text_html"] = f"{html}<p>{hook}</p>"
                 else:
                     feat["text_html"] = f"<p><b>{feat.get('name')}:</b> {feat['text']}</p>"
-        if "score equal to" not in (notes or "").lower():
+        if (has_spells or has_own_slots) and "score equal to" not in (notes or "").lower():
             notes = f"{notes}<p>{hook}</p>" if notes else f"<p>{hook}</p>"
 
     # Only invent an intro from plain text when HTML split found nothing usable.
@@ -1123,11 +1217,13 @@ def convert_race(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "description_text": record.get("description_text") or "",
         "raw_sections": [],
     }
-    # Build FG racial trait automation. WoW RPG ability names are mapped in build_race_fg.
+    # Prebuilt fg (lesser planetouched) wins. Otherwise build WoW RPG automation.
     abbrev = (record.get("index") or {}).get("source_abbrev") or (record.get("source") or {}).get(
         "abbrev"
     )
-    if abbrev in {"WRPG", "WoW", "APG", "HPG"}:
+    if record.get("fg"):
+        detail["fg"] = record["fg"]
+    elif abbrev in {"WRPG", "WoW", "APG", "HPG"}:
         detail["fg"] = build_race_fg(record)
     return {
         "id": record.get("id"),
@@ -1293,6 +1389,8 @@ def build_scraped_book(
     merged_items: list[dict[str, Any]] = []
     for cat, filename in CATEGORY_FILES.items():
         records = filter_by_abbrev(load_category(cat), abbrev)
+        if cat == "classes":
+            records = [record for record in records if not _is_empty_class_stub(record)]
         if not records:
             continue
         converter = CONVERTERS[cat]

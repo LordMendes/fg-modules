@@ -202,7 +202,9 @@ def _serialize_element(elem: ET.Element, indent: int = 0) -> str:
     tab = "\t"
     parts: list[str] = []
 
-    attrs = "".join(f' {k}="{v}"' for k, v in sorted(elem.attrib.items()))
+    attrs = "".join(
+        f' {k}="{_escape_xml_attr(str(v))}"' for k, v in sorted(elem.attrib.items())
+    )
     inner_html = _FORMATTED_INNER.get(id(elem))
 
     children = list(elem)
@@ -213,7 +215,7 @@ def _serialize_element(elem: ET.Element, indent: int = 0) -> str:
     elif children:
         parts.append(f"{tab * indent}<{elem.tag}{attrs}>")
         if elem.text and elem.text.strip():
-            parts.append(f"{tab * (indent + 1)}{elem.text.strip()}")
+            parts.append(f"{tab * (indent + 1)}{_escape_xml_text(elem.text.strip())}")
         for child in children:
             parts.append(_serialize_element(child, indent + 1))
         parts.append(f"{tab * indent}</{elem.tag}>")
@@ -233,6 +235,10 @@ def _escape_xml_text(text: str) -> str:
         .replace("<", "&lt;")
         .replace(">", "&gt;")
     )
+
+
+def _escape_xml_attr(value: str) -> str:
+    return _escape_xml_text(value).replace('"', "&quot;")
 
 
 def write_xml(root: ET.Element, path: str | Any, *, clear_after: bool = True) -> None:

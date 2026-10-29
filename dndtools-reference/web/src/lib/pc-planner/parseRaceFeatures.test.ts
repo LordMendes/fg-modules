@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseAbilityMods, parseRaceFeatures, parseRacialSkillPointBonus } from "./parseRaceFeatures";
 
 describe("parseAbilityMods", () => {
@@ -60,5 +63,59 @@ describe("parseRaceFeatures", () => {
     });
     assert.equal(features.speed, 20);
     assert.equal(features.speedUnhinderedByEncumbrance, true);
+  });
+
+  it("reads Player's Guide lesser races", () => {
+    const path = join(
+      dirname(fileURLToPath(import.meta.url)),
+      "../../../../data/dndtools/supplemental/pg_lesser_planetouched.json",
+    );
+    const records = JSON.parse(readFileSync(path, "utf8")) as Array<{
+      name: string;
+      size: string;
+      speed: string;
+      description_text: string;
+    }>;
+    const byName = new Map(records.map((rec) => [rec.name, rec]));
+
+    const gray = parseRaceFeatures({
+      size: byName.get("Lesser Gray Dwarf")?.size,
+      speed: byName.get("Lesser Gray Dwarf")?.speed,
+      descriptionText: byName.get("Lesser Gray Dwarf")?.description_text,
+    });
+    assert.equal(gray.abilityMods.con, 2);
+    assert.equal(gray.abilityMods.cha, -4);
+    assert.equal(gray.speed, 20);
+    assert.equal(gray.speedUnhinderedByEncumbrance, true);
+    assert.equal(gray.senses.darkvisionFeet, 60);
+    assert.equal(gray.skillBonuses.hide, 2);
+    assert.equal(gray.skillBonuses["move silently"], 2);
+    assert.equal(gray.dodgeBonus ?? 0, 0);
+
+    const drow = parseRaceFeatures({
+      size: byName.get("Lesser Drow")?.size,
+      speed: byName.get("Lesser Drow")?.speed,
+      descriptionText: byName.get("Lesser Drow")?.description_text,
+    });
+    assert.equal(drow.abilityMods.dex, 2);
+    assert.equal(drow.abilityMods.con, -2);
+    assert.equal(drow.saveBonus.will, 2);
+    assert.equal(drow.senses.lowLight, false);
+    assert.equal(drow.skillBonuses.listen, 2);
+
+    const gnome = parseRaceFeatures({
+      size: byName.get("Lesser Deep Gnome")?.size,
+      speed: byName.get("Lesser Deep Gnome")?.speed,
+      descriptionText: byName.get("Lesser Deep Gnome")?.description_text,
+    });
+    assert.equal(gnome.abilityMods.str, -2);
+    assert.equal(gnome.abilityMods.dex, 2);
+    assert.equal(gnome.sizeMod, 1);
+    assert.equal(gnome.dodgeBonus, 1);
+    assert.equal(gnome.saveBonus.fort, 2);
+    assert.equal(gnome.saveBonus.ref, 2);
+    assert.equal(gnome.saveBonus.will, 2);
+    assert.equal(gnome.senses.lowLight, true);
+    assert.equal(gnome.senses.darkvisionFeet, 60);
   });
 });

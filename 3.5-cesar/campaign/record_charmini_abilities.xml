@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheetmini_abilities">
+		<sheetdata>
+			<frame_char name="mini_skillframe">
+				<anchored position="insideleft">
+					<right anchor="center" />
+				</anchored>
+			</frame_char>
+			<windowlist name="skills">
+				<anchored to="mini_skillframe" position="over" offset="-10,-10">
+					<right offset="-10" />
+				</anchored>
+				<datasource>.skilllist</datasource>
+				<class>charmini_skill</class>
+				<sortby><control>name</control></sortby>
+				<script file="campaign/scripts/charmini_skilllist.lua" />
+			</windowlist>
+			<scrollbar_content_base>
+				<anchored to="skills" />
+				<target>skills</target>
+			</scrollbar_content_base>
+
+			<frame_char name="mini_featframe">
+				<anchored position="insidetopright">
+					<left anchor="center" />
+					<bottom anchor="center" />
+				</anchored>
+			</frame_char>
+			<list_text name="feat_list">
+				<anchored to="mini_featframe" position="over" offset="-10,-10">
+					<right offset="-10" />
+				</anchored>
+				<datasource>.featlist</datasource>
+				<class>charmini_ability_feat</class>
+				<readonly />
+			</list_text>
+			<scrollbar_content_base>
+				<anchored to="feat_list" />
+				<target>feat_list</target>
+			</scrollbar_content_base>
+
+			<frame_char name="mini_saframe">
+				<anchored position="insidebottomright">
+					<left anchor="center" />
+					<top anchor="center" />
+				</anchored>
+			</frame_char>
+			<list_text name="specialabilitylist">
+				<anchored to="mini_saframe" position="over" offset="-10,-10">
+					<right offset="-10" />
+				</anchored>
+				<datasource>.specialabilitylist</datasource>
+				<class>charmini_ability_class</class>
+				<readonly />
+			</list_text>
+			<scrollbar_content_base>
+				<anchored to="specialabilitylist" />
+				<target>specialabilitylist</target>
+			</scrollbar_content_base>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charmini_skill">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/charmini_skill.lua" />
+		<sheetdata>
+			<hn name="showonminisheet">
+				<default>1</default>
+				<script>
+					function onValueChanged()
+						window.updateStatus();
+					end
+				</script>
+			</hn>
+			<hs name="label">
+				<script>
+					function onValueChanged()
+						window.updateName();
+					end
+				</script>
+			</hs>
+			<hs name="sublabel">
+				<script>
+					function onValueChanged()
+						window.updateName();
+					end
+				</script>
+			</hs>
+			<hn name="stat">
+				<script>
+					function update(statname)
+						setValue(DB.getValue(window.getDatabaseNode(), "...abilities." .. statname .. ".bonus", 0));
+					end
+				</script>
+			</hn>
+			<hs name="statname">
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</hs>
+			
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<number_charskilltotal name="total">
+				<anchored width="30" />
+			</number_charskilltotal>
+
+			<stringc_listitem_center_noframe_static name="name" />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="charmini_ability_feat">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<linkc_listitem_left name="shortcut">
+				<class>referencefeat</class>
+			</linkc_listitem_left>
+
+			<stringc_listitem_center_noframe_static name="name" />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="charmini_ability_class">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<linkc_listitem_left name="shortcut">
+				<class>referenceclassability</class>
+			</linkc_listitem_left>
+
+			<stringc_listitem_center_noframe_static name="name" />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="charmini_ability_race">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<linkc_listitem_left name="shortcut">
+				<class>referenceracialtrait</class>
+			</linkc_listitem_left>
+
+			<stringc_listitem_center_noframe_static name="name" />
+		</sheetdata>
+	</windowclass>
+</root>

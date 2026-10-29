@@ -87,12 +87,16 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
     if not rows_el:
         return []
 
-    headers = [c.get_text(" ", strip=True).lower() for c in rows_el[0].find_all(["th", "td"])]
+    header_index = _advancement_header_index(rows_el)
+    headers = [
+        c.get_text(" ", strip=True).lower()
+        for c in rows_el[header_index].find_all(["th", "td"])
+    ]
     column_keys = [_advancement_header_key(header) for header in headers]
     named = any(key in {"bab", "fort", "ref", "will"} for key in column_keys)
     special_idx = next((i for i, h in enumerate(headers) if "special" in h), 5)
     rows: list[dict[str, Any]] = []
-    for tr in rows_el[1:]:
+    for tr in rows_el[header_index + 1 :]:
         cells = [c.get_text(" ", strip=True) for c in tr.find_all(["td", "th"])]
         if len(cells) < 2:
             continue
@@ -145,6 +149,18 @@ def parse_advancement_html(html: str) -> list[dict[str, Any]]:
             row["special"] = cells[-1]
         rows.append(row)
     return rows
+
+
+def _advancement_header_index(rows_el: list) -> int:
+    """Skip a group-title row (for example a colspan "Spells per Day" banner)."""
+    for index, tr in enumerate(rows_el[:6]):
+        headers = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+        keys = [_advancement_header_key(header) for header in headers]
+        if "level" in keys and any(key in {"bab", "fort", "ref", "will"} for key in keys):
+            return index
+        if any(key in {"bab", "fort", "ref", "will"} for key in keys):
+            return index
+    return 0
 
 
 def _advancement_header_key(header: str) -> str:

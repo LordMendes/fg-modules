@@ -491,7 +491,7 @@ def _merge_advancement_features(
                 )
                 existing.add(key)
             continue
-        for part in re.split(r"\s*,\s*|\s+and\s+", special):
+        for part in re.split(r"\s*,\s*|\s+and\s+(?!the\b)", special, flags=re.I):
             name = part.strip()
             if not name or len(name) < 3:
                 continue

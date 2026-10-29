@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referencefeat" copy="record_window" />
+	<windowclass name="referencefeat_header" copy="record_header" />
+
+	<windowclass name="referencefeat_main">
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				local tFields = { "prerequisites", "flavor", "summary", "benefit", "normal", "special", "type", };
+				WindowManager.callSafeControlsSetLockMode(self, tFields, bReadOnly);
+
+				type_biglabel.setValue(string.format("[%s]", type.getValue()));
+				WindowManager.callSafeControlsSetVisible(self, { "type_biglabel", }, bReadOnly);
+				WindowManager.callSafeControlsSetVisible(self, { "type", }, not bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+			
+			<stringc_content_noframe_noscroll_static_top name="type_biglabel">
+				<font>reference-b-large</font>
+			</stringc_content_noframe_noscroll_static_top>
+
+			<label_content_column name="type_label">
+				<static textres="feat_label_type" />
+			</label_content_column>
+			<string_content_columnh name="type">
+				<delaykeyupdate />
+			</string_content_columnh>
+			
+			<string_content_columnh_full name="flavor">
+				<font>reference-i</font>
+				<empty textres="empty_flavor" />
+			</string_content_columnh_full>
+			
+			<label_content_column name="prerequisites_label">
+				<static textres="feat_label_prereq" />
+			</label_content_column>
+			<string_content_columnh name="prerequisites" />
+			
+			<header_content_framed_headersimple name="summary_label">
+				<static textres="feat_label_summary"/>
+			</header_content_framed_headersimple>
+			<string_content_columnh_full name="summary" />
+
+			<header_content_framed_headersimple name="benefit_label">
+				<static textres="feat_label_benefit"/>
+			</header_content_framed_headersimple>
+			<ft_content_columnh_full name="benefit" />
+
+			<header_content_framed_headersimple name="normal_label">
+				<static textres="feat_label_normal"/>
+			</header_content_framed_headersimple>
+			<ft_content_columnh_full name="normal" />
+
+			<header_content_framed_headersimple name="special_label">
+				<static textres="feat_label_special"/>
+			</header_content_framed_headersimple>
+			<ft_content_columnh_full name="special" />
+		</sheetdata>
+	</windowclass>
+</root>

@@ -61,3 +61,5 @@ def test_lesser_aasimar_racial_traits_structure(tmp_path):
     assert "<attributes>" in xml
     assert "Attribute Adjustments" in xml
     assert "Keen Senses" in xml
+    assert "up to 60 ft." in xml
+    assert "60 ft feet" not in xml

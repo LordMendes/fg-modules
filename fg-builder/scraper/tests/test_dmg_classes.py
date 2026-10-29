@@ -30,6 +30,23 @@ def _by_name(records: list[dict]) -> dict[str, dict]:
     return {record["name"]: convert_class(record, "dungeon-masters-guide") for record in records}
 
 
+def test_header_parser_skips_spell_group_banner():
+    html = (
+        "<table><tr><th colspan=\"6\"></th><th colspan=\"2\">Spells per Day</th></tr>"
+        "<tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th>"
+        "<th>Special</th><th>0th</th><th>1st</th></tr>"
+        "<tr><td>1st</td><td>+0</td><td>+0</td><td>+2</td><td>+2</td>"
+        "<td>Bardic music</td><td>2</td><td>—</td></tr></table>"
+    )
+    row = parse_advancement_html(html)[0]
+    assert row["level"] == 1
+    assert row["bab"] == "+0"
+    assert row["ref"] == "+2"
+    assert row["will"] == "+2"
+    assert row["special"] == "Bardic music"
+    assert row["spells_per_day"] == ["2", "—"]
+
+
 def test_header_parser_reads_npc_and_ac_columns():
     npc = (
         "<table><tr><th>Level</th><th>BAB</th><th>Fort</th><th>Ref</th><th>Will</th></tr>"

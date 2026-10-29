@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="item" merge="join">
+		<script file="campaign/scripts/item_drop.lua" />
+	</windowclass>
+	<windowclass name="referencearmor" copy="item" />
+	<windowclass name="referenceequipment" copy="item" />
+	<windowclass name="referenceweapon" copy="item" />
+
+	<windowclass name="item_main">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/item_main.lua" />
+		<sheetdata>
+			<anchor_content_top />
+
+			<sub_record_nonid_notes name="sub_nonid" />
+			
+			<label_content_column name="type_label">
+				<static textres="item_label_type" />
+			</label_content_column>
+			<string_content_columnh name="type">
+				<nohide />
+				<delaykeyupdate />
+				<script>
+					function onValueChanged()
+						window.onStateChanged();
+					end
+				</script>
+			</string_content_columnh>
+
+			<label_content_column name="subtype_label">
+				<static textres="item_label_subtype" />
+			</label_content_column>
+			<string_content_columnh name="subtype">
+				<delaykeyupdate />
+			</string_content_columnh>
+
+			<line_content_top name="divider2" />
+
+			<label_content_column name="cost_label">
+				<static textres="item_label_cost" />
+			</label_content_column>
+			<string_content_columnh name="cost" />
+
+			<label_content_column name="weight_label">
+				<static textres="item_label_weight" />
+			</label_content_column>
+			<number_content_columnh name="weight" />
+
+			<line_content_top name="divider3" />
+
+			<sub_content_column name="type_stats" />
+
+			<line_content_top name="divider4" />
+
+			<label_content_column name="aura_label">
+				<static textres="item_label_aura" />
+			</label_content_column>
+			<string_content_columnh name="aura" />
+
+			<label_content_column name="cl_label">
+				<static textres="casterlevel" />
+			</label_content_column>
+			<number_content_columnh name="cl" />
+
+			<label_content_column name="prerequisites_label">
+				<static textres="item_label_prereq" />
+			</label_content_column>
+			<string_content_columnh name="prerequisites" />
+			
+			<line_content_top name="divider5" />
+
+			<ft_content_columnh_full name="description" />
+
+			<sub_item_pack name="sub_pack" />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="item_main_armor">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				local tFields = { "bonus", "ac", "maxstatbonus", "checkpenalty", "spellfailure", "speed30", "speed20", "properties", };
+				WindowManager.callSafeControlsSetLockMode(self, tFields, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+
+			<label_content_column name="bonus_label">
+				<static textres="item_label_bonus" />
+			</label_content_column>
+			<number_content_columnh name="bonus">
+				<delaykeyupdate />
+				<displaysign />
+			</number_content_columnh>
+
+			<label_content_column name="ac_label">
+				<static textres="item_label_ac" />
+			</label_content_column>
+			<number_content_columnh name="ac">
+				<delaykeyupdate />
+				<displaysign />
+			</number_content_columnh>
+			
+			<label_content_column name="maxstatbonus_label">
+				<static textres="item_label_maxstat" />
+			</label_content_column>
+			<number_content_columnh name="maxstatbonus">
+				<delaykeyupdate />
+				<displaysign />
+			</number_content_columnh>
+			
+			<label_content_column name="checkpenalty_label">
+				<static textres="item_label_scp" />
+			</label_content_column>
+			<number_content_columnh name="checkpenalty">
+				<delaykeyupdate />
+				<displaysign />
+			</number_content_columnh>
+			
+			<label_content_column name="spellfailure_label">
+				<static textres="item_label_spellfail" />
+			</label_content_column>
+			<number_content_columnh name="spellfailure">
+				<delaykeyupdate />
+			</number_content_columnh>
+			
+			<label_content_column name="speed30_label">
+				<static textres="item_label_speed30" />
+			</label_content_column>
+			<number_content_columnh name="speed30" />
+			
+			<label_content_column name="speed20_label">
+				<static textres="item_label_speed20" />
+			</label_content_column>
+			<number_content_columnh name="speed20" />
+
+			<label_content_column name="properties_label">
+				<static textres="item_label_properties" />
+			</label_content_column>
+			<string_content_columnh name="properties" />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="item_main_weapon">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				local tFields = { "bonus", "damage", "damagetype", "critical", "range", "properties", };
+				WindowManager.callSafeControlsSetLockMode(self, tFields, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+
+			<label_content_column name="bonus_label">
+				<static textres="item_label_bonus" />
+			</label_content_column>
+			<number_content_columnh name="bonus">
+				<delaykeyupdate />
+			</number_content_columnh>
+
+			<label_content_column name="damage_label">
+				<static textres="item_label_damage" />
+			</label_content_column>
+			<string_content_columnh name="damage" />
+			
+			<label_content_column name="damagetype_label">
+				<static textres="item_label_dmgtype" />
+			</label_content_column>
+			<string_content_columnh name="damagetype" />
+			
+			<label_content_column name="critical_label">
+				<static textres="item_label_critical" />
+			</label_content_column>
+			<string_content_columnh name="critical" />
+			
+			<label_content_column name="range_label">
+				<static textres="item_label_range" />
+			</label_content_column>
+			<number_content_columnh name="range" />
+
+			<label_content_column name="properties_label">
+				<static textres="item_label_properties" />
+			</label_content_column>
+			<string_content_columnh name="properties" />
+		</sheetdata>
+	</windowclass>
+</root>

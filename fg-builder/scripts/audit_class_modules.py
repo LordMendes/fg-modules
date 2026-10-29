@@ -7,17 +7,39 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 MODULES = [
-    "Complete Divine",
-    "Complete Warrior",
-    "Complete Mage",
-    "Complete Arcane",
-    "Complete Adventurer",
-    "Unearthed Arcana",
-    "Book of Vile Darkness",
-    "Complete Champion",
+    "Player's Handbook",
+    "Arms and Equipment Guide",
     "Player's Handbook II",
-    "Warcraft The Roleplaying Game",
+    "Champions of Ruin",
+    "Player's Guide to Faerûn",
+    "Champions of Valor",
     "Dungeon Master's Guide",
+    "CityScape",
+    "Dungeon Master's Guide II",
+    "Complete Adventurer",
+    "Complete Arcane",
+    "Complete Champion",
+    "Complete Divine",
+    "Complete Mage",
+    "Complete Scoundrel",
+    "Complete Warrior",
+    "Dragon Magic",
+    "Dungeonscape",
+    "Faiths & Pantheons",
+    "Frostburn",
+    "Heroes of Battle",
+    "Magic of Faerûn",
+    "Miniatures Handbook",
+    "Races of Destiny",
+    "Races of Faerûn",
+    "Races of Stone",
+    "Races of the Dragon",
+    "Races of the Wild",
+    "Sandstorm",
+    "Stormwrack",
+    "Stronghold Builder's Guidebook",
+    "Tome of Battle",
+    "Heroes of Horror",
 ]
 
 VALID_SAVES = {"Good", "Bad"}
@@ -25,12 +47,36 @@ VALID_SAVES = {"Good", "Bad"}
 
 def audit_mod(path: Path) -> dict:
     with zipfile.ZipFile(path) as z:
-        root = ET.fromstring(z.read("db.xml"))
-        xml = z.read("db.xml").decode("utf-8")
+        raw = z.read("db.xml")
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError as exc:
+        return {
+            "mod": path.name,
+            "classes": 0,
+            "no_features": 0,
+            "bad_saves": 0,
+            "non_skills": 0,
+            "prereq_table": 0,
+            "h4_advancement": 0,
+            "merged_hint": 0,
+            "issues": [f"db.xml is not valid XML: {exc}"],
+        }
+    xml = raw.decode("utf-8")
 
     section = root.find("class")
     if section is None:
-        return {"mod": path.name, "classes": 0, "issues": ["no class section"]}
+        return {
+            "mod": path.name,
+            "classes": 0,
+            "no_features": 0,
+            "bad_saves": 0,
+            "non_skills": 0,
+            "prereq_table": 0,
+            "h4_advancement": 0,
+            "merged_hint": 0,
+            "issues": ["no class section"],
+        }
 
     issues: list[str] = []
     class_count = 0
@@ -77,6 +123,12 @@ def audit_mod(path: Path) -> dict:
         h4_advancement += xml.count("<h4>Advancement</h4>")
     if "</table><h4>Advancement</h4><table>" in xml:
         merged_hint += xml.count("</table><h4>Advancement</h4><table>")
+    adjacent_tables = xml.lower().count("</table><table")
+    h4_before_table = xml.lower().count("</table><h4")
+    if adjacent_tables:
+        issues.append(f"adjacent tables with no spacer: {adjacent_tables}")
+    if h4_before_table:
+        issues.append(f"heading glued to a table: {h4_before_table}")
 
     return {
         "mod": path.name,

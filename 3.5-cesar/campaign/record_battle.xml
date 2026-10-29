@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="battle_header" merge="join">
+		<script>
+			function onInit()
+				if super and super.onInit then
+					super.onInit();
+				end
+				if DataCommon.isPFRPG() then
+					if cr.getValue() == 0 and exp.getValue() == 0 then
+						if DB.getChildCount(getDatabaseNode(), "npclist") &gt; 0 then
+							button_refreshcr.onButtonPress();
+						end
+					end
+				end
+			end
+			function onLockModeChanged(bReadOnly)
+				if super and super.onLockModeChanged then
+					super.onLockModeChanged(bReadOnly);
+				end
+				WindowManager.callSafeControlsSetLockMode(self, { "cr", "exp", }, bReadOnly);
+				local tButtons = { "button_refreshcr", "button_refreshxp", };
+				WindowManager.callSafeControlsSetVisible(self, tButtons, DataCommon.isPFRPG() and not bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<area_content_record_header_details name="area_details" />
+			<label name="cr_label">
+				<anchored to="area_details" position="insidetopleft" offset="0,0" />
+				<static textres="battle_label_cr" />
+				<tooltip textres="battle_tooltip_cr" />
+			</label>
+			<number_listitem_base name="cr" source="level">
+				<anchored to="cr_label" position="righthigh" offset="10,0" width="30" height="20" />
+				<description textres="battle_tooltip_cr" />
+			</number_listitem_base>
+			<button_refresh name="button_refreshcr">
+				<anchored to="cr" position="righthigh" offset="10,0" />
+				<tooltip textres="enc_tooltip_refreshcr" />
+				<script>
+					function onButtonPress()
+						CombatManager2.calcBattleCR(window.getDatabaseNode());
+					end
+				</script>
+			</button_refresh>
+
+			<button_refresh name="button_refreshxp">
+				<anchored to="area_details" position="insidetopright" offset="5,0" />
+				<tooltip textres="enc_tooltip_refreshxp" />
+				<script>
+					function onButtonPress()
+						CombatManager2.calcBattleXP(window.getDatabaseNode());
+					end
+				</script>
+			</button_refresh>
+			<number_listitem_base name="exp">
+				<anchored to="button_refreshxp" position="lefthigh" offset="10,0" width="70" height="20" />
+				<description textres="xp" />
+			</number_listitem_base>
+			<label name="exp_label">
+				<anchored to="exp" position="lefthigh" offset="10,0" />
+				<static textres="xp" />
+			</label>
+		</sheetdata>
+	</windowclass>
+</root>

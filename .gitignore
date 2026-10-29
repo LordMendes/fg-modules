@@ -2,6 +2,7 @@
 node_modules/
 3.5E/
 3.5E-basicrules/
+5E/
 
 # Cursor local state; keep project skills versioned for agents
 .cursor/*

@@ -47,6 +47,7 @@ const SUPPLEMENTAL_RACE_FILES = [
   "wowrpg_core_races.json",
   "wowrpg_apg_races.json",
   "wowrpg_hpg_races.json",
+  "pg_lesser_planetouched.json",
 ] as const;
 const SUPPLEMENTAL_CLASS_FILES = [
   "warcraft_rpg_classes.json",
@@ -800,7 +801,17 @@ async function pass2Entities(
             creatureType: (r.type as string) ?? index?.type ?? null,
             levelAdjustment: (r.level_adjustment as string) ?? index?.level_adjustment ?? null,
           },
-          update: { name: r.name, indexData: (r.index ?? {}) as object },
+          update: {
+            name: r.name,
+            sourceUrl: r.source_url ?? null,
+            sourceId: getSourceId(r, sourceMap, abbrevNameMap),
+            indexData: (r.index ?? {}) as object,
+            descriptionHtml: (r.description_html as string) ?? null,
+            descriptionText: (r.description_text as string) ?? null,
+            size: (r.size as string) ?? null,
+            creatureType: (r.type as string) ?? index?.type ?? null,
+            levelAdjustment: (r.level_adjustment as string) ?? index?.level_adjustment ?? null,
+          },
         });
       }
     });

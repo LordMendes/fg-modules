@@ -357,7 +357,8 @@ def _build_notes_html(detail: dict[str, Any]) -> str:
         if table.get("html"):
             title = table.get("title", "Spells")
             table_html = normalize_fg_table_html(table["html"])
-            parts.append(f"<h4>{title}</h4>{table_html}")
+            # <h4> is swallowed into the previous table cell, so the next table merges.
+            parts.append(f"<p><b>{title}</b></p>{table_html}")
 
     # Prefer original rich advancement_html (spell-slot columns) over rebuilt table.
     prefer_original = False

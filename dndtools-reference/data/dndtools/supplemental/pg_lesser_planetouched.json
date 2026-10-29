@@ -1,0 +1,671 @@
+[
+  {
+    "slug": "lesser-gray-dwarf",
+    "name": "Lesser Gray Dwarf",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0",
+      "speed": "20 ft."
+    },
+    "size": "Medium",
+    "type": "Humanoid (dwarf)",
+    "speed": "20 ft.",
+    "level_adjustment": "+0",
+    "description_html": "<ul><li>+2 Constitution, -4 Charisma. These adjustments replace the dwarf ability adjustments.</li><li>Medium.</li><li>Lesser gray dwarf base land speed is 20 feet. However, lesser gray dwarves can move at this speed even when wearing medium or heavy armor or when carrying a medium or heavy load.</li><li>Darkvision up to 60 feet.</li><li>Stonecunning: +2 bonus on Search checks to notice unusual stonework. A lesser gray dwarf within 10 feet of unusual stonework can Search as if actively searching, can find stonework traps as a rogue can, and can intuit approximate depth underground.</li><li>Stability: +4 bonus on ability checks made to resist a bull rush or trip while standing on the ground.</li><li>+1 bonus on attack rolls against orcs and goblinoids.</li><li>+4 dodge bonus to Armor Class against giants.</li><li>+2 racial bonus on saving throws against poison, phantasms, and paralysis. This replaces the dwarf bonus on saves against poison.</li><li>+2 bonus on Appraise checks related to stone or metal items.</li><li>+2 bonus on Craft checks related to stone or metal.</li><li>+2 racial bonus on Hide and Move Silently checks.</li><li>Spell-like abilities: 1/day enlarge person. Caster level equals twice the lesser gray dwarf's class levels (minimum 3rd). The ability affects only the lesser gray dwarf and whatever he carries.</li><li>Light sensitivity: dazzled in bright sunlight or within the radius of a daylight spell.</li><li>Weapon familiarity: lesser gray dwarves do not have weapon familiarity with the dwarven waraxe or the dwarven urgrosh.</li><li>Automatic Languages: Common and Dwarven.</li><li>Bonus Languages: Giant, Gnome, Goblin, Orc, Terran, and Undercommon.</li><li>Favored Class: Fighter.</li><li>Level adjustment +0.</li></ul>",
+    "description_text": "+2 Constitution, -4 Charisma. These adjustments replace the dwarf ability adjustments.\nMedium.\nLesser gray dwarf base land speed is 20 feet. However, lesser gray dwarves can move at this speed even when wearing medium or heavy armor or when carrying a medium or heavy load.\nDarkvision up to 60 feet.\nStonecunning: +2 bonus on Search checks to notice unusual stonework. A lesser gray dwarf within 10 feet of unusual stonework can Search as if actively searching, can find stonework traps as a rogue can, and can intuit approximate depth underground.\nStability: +4 bonus on ability checks made to resist a bull rush or trip while standing on the ground.\n+1 bonus on attack rolls against orcs and goblinoids.\n+4 dodge bonus to Armor Class against giants.\n+2 racial bonus on saving throws against poison, phantasms, and paralysis. This replaces the dwarf bonus on saves against poison.\n+2 bonus on Appraise checks related to stone or metal items.\n+2 bonus on Craft checks related to stone or metal.\n+2 racial bonus on Hide and Move Silently checks.\nSpell-like abilities: 1/day enlarge person. Caster level equals twice the lesser gray dwarf's class levels (minimum 3rd). The ability affects only the lesser gray dwarf and whatever he carries.\nLight sensitivity: dazzled in bright sunlight or within the radius of a daylight spell.\nWeapon familiarity: lesser gray dwarves do not have weapon familiarity with the dwarven waraxe or the dwarven urgrosh.\nAutomatic Languages: Common and Dwarven.\nBonus Languages: Giant, Gnome, Goblin, Orc, Terran, and Undercommon.\nFavored Class: Fighter.\nLevel adjustment +0.",
+    "fg": {
+      "ability_scores": {
+        "con": 2,
+        "cha": -4
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (dwarf)",
+        "favored_class": "Fighter",
+        "level_adjustment": "+0",
+        "starting_languages": "Common and Dwarven",
+        "bonus_languages": "Giant, Gnome, Goblin, Orc, Terran, and Undercommon"
+      },
+      "movement": {
+        "land": 20,
+        "unencumbered": true
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "stonecunning",
+          "name": "Stonecunning",
+          "text": "<h>Stonecunning</h><p>Lesser gray dwarves have a +2 bonus on Search checks to notice unusual stonework. Within 10 feet of such stonework they can Search as if actively searching, they can find stonework traps as a rogue can, and they can intuit their approximate depth underground.</p>"
+        },
+        {
+          "slug": "stability",
+          "name": "Stability",
+          "text": "<h>Stability</h><p>A lesser gray dwarf gains a +4 bonus on ability checks made to resist being bull rushed or tripped when standing on the ground.</p>"
+        },
+        {
+          "slug": "orcsgoblins",
+          "name": "Orcs and Goblinoids",
+          "text": "<h>Orcs and Goblinoids</h><p>Lesser gray dwarves have a +1 bonus on attack rolls against orcs and goblinoids.</p>"
+        },
+        {
+          "slug": "giants",
+          "name": "Giants",
+          "text": "<h>Giants</h><p>Lesser gray dwarves have a +4 dodge bonus to Armor Class against giants.</p>"
+        },
+        {
+          "slug": "hardy",
+          "name": "Hardy",
+          "text": "<h>Hardy</h><p>Lesser gray dwarves have a +2 racial bonus on saving throws against poison, phantasms, and paralysis. This replaces the dwarf bonus on saves against poison.</p>"
+        },
+        {
+          "slug": "craft",
+          "name": "Stone and Metal",
+          "text": "<h>Stone and Metal</h><p>Lesser gray dwarves have a +2 bonus on Appraise checks related to stone or metal items and on Craft checks related to stone or metal.</p>"
+        },
+        {
+          "slug": "stealth",
+          "name": "Stealth",
+          "text": "<h>Stealth</h><p>Lesser gray dwarves have a +2 racial bonus on Hide and Move Silently checks.</p>",
+          "effect": "SKILL: 2, hide; SKILL: 2, move silently"
+        },
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p>Enlarge person (Sp): Once per day. Caster level equals twice the lesser gray dwarf's class levels (minimum 3rd). This ability affects only the lesser gray dwarf and whatever he carries.</p>"
+        },
+        {
+          "slug": "lightsensitivity",
+          "name": "Light Sensitivity",
+          "text": "<h>Light Sensitivity</h><p>Lesser gray dwarves are dazzled in bright sunlight or within the radius of a daylight spell.</p>"
+        },
+        {
+          "slug": "weapons",
+          "name": "Weapon Familiarity",
+          "text": "<h>Weapon Familiarity</h><p>Unlike other dwarves, lesser gray dwarves do not have weapon familiarity with the dwarven waraxe or the dwarven urgrosh.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser gray dwarves (lesser duergar) use dwarf racial traits with the <b>Lesser Versions</b> changes from <i>Player's Guide to Faerûn</i>: level adjustment +0.</p><ul><li>+2 Constitution, -4 Charisma. These adjustments replace the dwarf ability adjustments.</li><li>Medium.</li><li>Lesser gray dwarf base land speed is 20 feet. However, lesser gray dwarves can move at this speed even when wearing medium or heavy armor or when carrying a medium or heavy load.</li><li>Darkvision up to 60 feet.</li><li>Stonecunning: +2 bonus on Search checks to notice unusual stonework. A lesser gray dwarf within 10 feet of unusual stonework can Search as if actively searching, can find stonework traps as a rogue can, and can intuit approximate depth underground.</li><li>Stability: +4 bonus on ability checks made to resist a bull rush or trip while standing on the ground.</li><li>+1 bonus on attack rolls against orcs and goblinoids.</li><li>+4 dodge bonus to Armor Class against giants.</li><li>+2 racial bonus on saving throws against poison, phantasms, and paralysis. This replaces the dwarf bonus on saves against poison.</li><li>+2 bonus on Appraise checks related to stone or metal items.</li><li>+2 bonus on Craft checks related to stone or metal.</li><li>+2 racial bonus on Hide and Move Silently checks.</li><li>Spell-like abilities: 1/day enlarge person. Caster level equals twice the lesser gray dwarf's class levels (minimum 3rd). The ability affects only the lesser gray dwarf and whatever he carries.</li><li>Light sensitivity: dazzled in bright sunlight or within the radius of a daylight spell.</li><li>Weapon familiarity: lesser gray dwarves do not have weapon familiarity with the dwarven waraxe or the dwarven urgrosh.</li><li>Automatic Languages: Common and Dwarven.</li><li>Bonus Languages: Giant, Gnome, Goblin, Orc, Terran, and Undercommon.</li><li>Favored Class: Fighter.</li><li>Level adjustment +0.</li></ul>"
+    }
+  },
+  {
+    "slug": "lesser-drow",
+    "name": "Lesser Drow",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0",
+      "speed": "30 ft."
+    },
+    "size": "Medium",
+    "type": "Humanoid (elf)",
+    "speed": "30 ft.",
+    "level_adjustment": "+0",
+    "description_html": "<ul><li>+2 Dexterity, -2 Constitution. These adjustments replace the elf ability adjustments.</li><li>Medium.</li><li>Lesser drow base land speed is 30 feet.</li><li>Immunity to magic sleep effects.</li><li>Darkvision up to 60 feet. This replaces the elf ability to see twice as far in dim light.</li><li>Weapon proficiency: hand crossbow, rapier, and short sword. These replace the elf weapon proficiencies.</li><li>+2 racial bonus on Listen, Search, and Spot checks.</li><li>+2 racial bonus on Will saves against spells and spell-like effects.</li><li>Spell-like abilities: if Charisma is at least 10, 1/day dancing lights, daze, and touch of fatigue. Caster level equals the lesser drow's class levels.</li><li>Light blindness: abrupt exposure to bright light (sunlight or a daylight spell) blinds a lesser drow for 1 round. On later rounds, the lesser drow is dazzled while remaining in the area.</li><li>Automatic Languages: Common and Elven.</li><li>Bonus Languages: Draconic, Gnoll, Gnome, Goblin, Orc, and Sylvan.</li><li>Favored Class: Wizard (male) or cleric (female).</li><li>Level adjustment +0.</li></ul>",
+    "description_text": "+2 Dexterity, -2 Constitution. These adjustments replace the elf ability adjustments.\nMedium.\nLesser drow base land speed is 30 feet.\nImmunity to magic sleep effects.\nDarkvision up to 60 feet. This replaces the elf ability to see twice as far in dim light.\nWeapon proficiency: hand crossbow, rapier, and short sword. These replace the elf weapon proficiencies.\n+2 racial bonus on Listen, Search, and Spot checks.\n+2 racial bonus on Will saves against spells and spell-like effects.\nSpell-like abilities: if Charisma is at least 10, 1/day dancing lights, daze, and touch of fatigue. Caster level equals the lesser drow's class levels.\nLight blindness: abrupt exposure to bright light (sunlight or a daylight spell) blinds a lesser drow for 1 round. On later rounds, the lesser drow is dazzled while remaining in the area.\nAutomatic Languages: Common and Elven.\nBonus Languages: Draconic, Gnoll, Gnome, Goblin, Orc, and Sylvan.\nFavored Class: Wizard (male) or cleric (female).\nLevel adjustment +0.",
+    "fg": {
+      "ability_scores": {
+        "dex": 2,
+        "con": -2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (elf)",
+        "favored_class": "Wizard (male) or Cleric (female)",
+        "level_adjustment": "+0",
+        "starting_languages": "Common and Elven",
+        "bonus_languages": "Draconic, Gnoll, Gnome, Goblin, Orc, and Sylvan"
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "sleep",
+          "name": "Sleep Immunity",
+          "text": "<h>Sleep Immunity</h><p>Lesser drow are immune to magic sleep effects.</p>"
+        },
+        {
+          "slug": "weapons",
+          "name": "Weapon Proficiency",
+          "text": "<h>Weapon Proficiency</h><p>Lesser drow are proficient with the hand crossbow, rapier, and short sword. These proficiencies replace the elf weapon proficiencies.</p>"
+        },
+        {
+          "slug": "keensenses",
+          "name": "Keen Senses",
+          "text": "<h>Keen Senses</h><p>Lesser drow have a +2 racial bonus on Listen, Search, and Spot checks.</p>",
+          "effect": "SKILL: 2, listen; SKILL: 2, search; SKILL: 2, spot"
+        },
+        {
+          "slug": "spellresistance",
+          "name": "Will Saves",
+          "text": "<h>Will Saves</h><p>Lesser drow have a +2 racial bonus on Will saves against spells and spell-like effects.</p>"
+        },
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p>A lesser drow with a Charisma score of at least 10 can use dancing lights, daze, and touch of fatigue once per day each. Caster level equals the lesser drow's class levels.</p>"
+        },
+        {
+          "slug": "lightblindness",
+          "name": "Light Blindness",
+          "text": "<h>Light Blindness</h><p>Abrupt exposure to bright light (sunlight or a daylight spell) blinds a lesser drow for 1 round. On later rounds, the lesser drow is dazzled while remaining in the area.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser drow use elf racial traits with the <b>Lesser Versions</b> changes from <i>Player's Guide to Faerûn</i>: level adjustment +0. They do not gain drow spell resistance or the darkness and faerie fire spell-like abilities.</p><ul><li>+2 Dexterity, -2 Constitution. These adjustments replace the elf ability adjustments.</li><li>Medium.</li><li>Lesser drow base land speed is 30 feet.</li><li>Immunity to magic sleep effects.</li><li>Darkvision up to 60 feet. This replaces the elf ability to see twice as far in dim light.</li><li>Weapon proficiency: hand crossbow, rapier, and short sword. These replace the elf weapon proficiencies.</li><li>+2 racial bonus on Listen, Search, and Spot checks.</li><li>+2 racial bonus on Will saves against spells and spell-like effects.</li><li>Spell-like abilities: if Charisma is at least 10, 1/day dancing lights, daze, and touch of fatigue. Caster level equals the lesser drow's class levels.</li><li>Light blindness: abrupt exposure to bright light (sunlight or a daylight spell) blinds a lesser drow for 1 round. On later rounds, the lesser drow is dazzled while remaining in the area.</li><li>Automatic Languages: Common and Elven.</li><li>Bonus Languages: Draconic, Gnoll, Gnome, Goblin, Orc, and Sylvan.</li><li>Favored Class: Wizard (male) or cleric (female).</li><li>Level adjustment +0.</li></ul>"
+    }
+  },
+  {
+    "slug": "lesser-deep-gnome",
+    "name": "Lesser Deep Gnome",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0",
+      "speed": "20 ft."
+    },
+    "size": "Small",
+    "type": "Humanoid (gnome)",
+    "speed": "20 ft.",
+    "level_adjustment": "+0",
+    "description_html": "<ul><li>-2 Strength, +2 Dexterity. These adjustments replace the gnome ability adjustments.</li><li>Small.</li><li>Lesser deep gnome base land speed is 20 feet.</li><li>Low-light vision.</li><li>Darkvision up to 60 feet.</li><li>Stonecunning: +2 bonus on Search checks to notice unusual stonework. A lesser deep gnome within 10 feet of unusual stonework can Search as if actively searching, can find stonework traps as a rogue can, and can intuit approximate depth underground.</li><li>+2 racial bonus on saving throws against spells and spell-like effects. This replaces the gnome bonus on saves against illusions.</li><li>+1 dodge bonus to Armor Class against all creatures. This replaces the gnome dodge bonus against giants.</li><li>+1 bonus on attack rolls against kobolds and goblinoids.</li><li>+2 racial bonus on Listen checks.</li><li>+2 bonus on Craft (alchemy) checks.</li><li>Weapon familiarity: gnome hooked hammers are martial weapons.</li><li>+1 to the Difficulty Class of illusion spells cast by a lesser deep gnome.</li><li>Spell-like abilities: 1/day speak with animals (burrowing mammal only), dancing lights, ghost sound, and prestidigitation. Caster level 1st. Save DC is 10 + spell level + Charisma modifier.</li><li>Spell-like abilities: 1/day resistance, daze, and lullaby. Caster level equals one-half the lesser deep gnome's character level. Save DC is 10 + spell level + Charisma modifier.</li><li>+2 racial bonus on Hide checks. This bonus improves to +4 underground.</li><li>Automatic Languages: Common and Gnome.</li><li>Bonus Languages: Draconic, Dwarven, Elven, Giant, Goblin, and Orc.</li><li>Favored Class: Rogue.</li><li>Level adjustment +0.</li></ul>",
+    "description_text": "-2 Strength, +2 Dexterity. These adjustments replace the gnome ability adjustments.\nSmall.\nLesser deep gnome base land speed is 20 feet.\nLow-light vision.\nDarkvision up to 60 feet.\nStonecunning: +2 bonus on Search checks to notice unusual stonework. A lesser deep gnome within 10 feet of unusual stonework can Search as if actively searching, can find stonework traps as a rogue can, and can intuit approximate depth underground.\n+2 racial bonus on saving throws against spells and spell-like effects. This replaces the gnome bonus on saves against illusions.\n+1 dodge bonus to Armor Class against all creatures. This replaces the gnome dodge bonus against giants.\n+1 bonus on attack rolls against kobolds and goblinoids.\n+2 racial bonus on Listen checks.\n+2 bonus on Craft (alchemy) checks.\nWeapon familiarity: gnome hooked hammers are martial weapons.\n+1 to the Difficulty Class of illusion spells cast by a lesser deep gnome.\nSpell-like abilities: 1/day speak with animals (burrowing mammal only), dancing lights, ghost sound, and prestidigitation. Caster level 1st. Save DC is 10 + spell level + Charisma modifier.\nSpell-like abilities: 1/day resistance, daze, and lullaby. Caster level equals one-half the lesser deep gnome's character level. Save DC is 10 + spell level + Charisma modifier.\n+2 racial bonus on Hide checks. This bonus improves to +4 underground.\nAutomatic Languages: Common and Gnome.\nBonus Languages: Draconic, Dwarven, Elven, Giant, Goblin, and Orc.\nFavored Class: Rogue.\nLevel adjustment +0.",
+    "fg": {
+      "ability_scores": {
+        "str": -2,
+        "dex": 2
+      },
+      "identity": {
+        "size": "Small",
+        "type": "Humanoid (gnome)",
+        "favored_class": "Rogue",
+        "level_adjustment": "+0",
+        "starting_languages": "Common and Gnome",
+        "bonus_languages": "Draconic, Dwarven, Elven, Giant, Goblin, and Orc"
+      },
+      "movement": {
+        "land": 20
+      },
+      "senses": {
+        "darkvision": "60 ft.",
+        "low_light_vision": true
+      },
+      "traits": [
+        {
+          "slug": "stonecunning",
+          "name": "Stonecunning",
+          "text": "<h>Stonecunning</h><p>Lesser deep gnomes have a +2 bonus on Search checks to notice unusual stonework. Within 10 feet of such stonework they can Search as if actively searching, they can find stonework traps as a rogue can, and they can intuit their approximate depth underground.</p>"
+        },
+        {
+          "slug": "spellresistance",
+          "name": "Resistant to Magic",
+          "text": "<h>Resistant to Magic</h><p>Lesser deep gnomes have a +2 racial bonus on saving throws against spells and spell-like effects. This replaces the gnome bonus on saves against illusions.</p>"
+        },
+        {
+          "slug": "dodge",
+          "name": "Dodge",
+          "text": "<h>Dodge</h><p>Lesser deep gnomes have a +1 dodge bonus to Armor Class against all creatures. This replaces the gnome dodge bonus against giants.</p>",
+          "effect": "AC: 1, dodge"
+        },
+        {
+          "slug": "kobolds",
+          "name": "Kobolds and Goblinoids",
+          "text": "<h>Kobolds and Goblinoids</h><p>Lesser deep gnomes have a +1 bonus on attack rolls against kobolds and goblinoids.</p>"
+        },
+        {
+          "slug": "listen",
+          "name": "Alert",
+          "text": "<h>Alert</h><p>Lesser deep gnomes have a +2 racial bonus on Listen checks.</p>",
+          "effect": "SKILL: 2, listen"
+        },
+        {
+          "slug": "alchemy",
+          "name": "Alchemy",
+          "text": "<h>Alchemy</h><p>Lesser deep gnomes have a +2 bonus on Craft (alchemy) checks.</p>"
+        },
+        {
+          "slug": "weapons",
+          "name": "Weapon Familiarity",
+          "text": "<h>Weapon Familiarity</h><p>Lesser deep gnomes may treat gnome hooked hammers as martial weapons rather than exotic weapons.</p>"
+        },
+        {
+          "slug": "illusions",
+          "name": "Illusionist",
+          "text": "<h>Illusionist</h><p>Add +1 to the Difficulty Class of illusion spells cast by a lesser deep gnome.</p>"
+        },
+        {
+          "slug": "gnomespells",
+          "name": "Gnome Spell-Like Abilities",
+          "text": "<h>Gnome Spell-Like Abilities</h><p>Once per day: speak with animals (burrowing mammal only), dancing lights, ghost sound, and prestidigitation. Caster level 1st. Save DC is 10 + spell level + Charisma modifier.</p>"
+        },
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p>Once per day: resistance, daze, and lullaby. Caster level equals one-half the lesser deep gnome's character level. Save DC is 10 + spell level + Charisma modifier.</p>"
+        },
+        {
+          "slug": "hide",
+          "name": "Camouflage",
+          "text": "<h>Camouflage</h><p>Lesser deep gnomes have a +2 racial bonus on Hide checks. This bonus improves to +4 underground.</p>",
+          "effect": "SKILL: 2, hide"
+        }
+      ],
+      "summary_text": "<p>Lesser deep gnomes (lesser svirfneblin) use gnome racial traits with the <b>Lesser Versions</b> changes from <i>Player's Guide to Faerûn</i>: level adjustment +0.</p><ul><li>-2 Strength, +2 Dexterity. These adjustments replace the gnome ability adjustments.</li><li>Small.</li><li>Lesser deep gnome base land speed is 20 feet.</li><li>Low-light vision.</li><li>Darkvision up to 60 feet.</li><li>Stonecunning: +2 bonus on Search checks to notice unusual stonework. A lesser deep gnome within 10 feet of unusual stonework can Search as if actively searching, can find stonework traps as a rogue can, and can intuit approximate depth underground.</li><li>+2 racial bonus on saving throws against spells and spell-like effects. This replaces the gnome bonus on saves against illusions.</li><li>+1 dodge bonus to Armor Class against all creatures. This replaces the gnome dodge bonus against giants.</li><li>+1 bonus on attack rolls against kobolds and goblinoids.</li><li>+2 racial bonus on Listen checks.</li><li>+2 bonus on Craft (alchemy) checks.</li><li>Weapon familiarity: gnome hooked hammers are martial weapons.</li><li>+1 to the Difficulty Class of illusion spells cast by a lesser deep gnome.</li><li>Spell-like abilities: 1/day speak with animals (burrowing mammal only), dancing lights, ghost sound, and prestidigitation. Caster level 1st. Save DC is 10 + spell level + Charisma modifier.</li><li>Spell-like abilities: 1/day resistance, daze, and lullaby. Caster level equals one-half the lesser deep gnome's character level. Save DC is 10 + spell level + Charisma modifier.</li><li>+2 racial bonus on Hide checks. This bonus improves to +4 underground.</li><li>Automatic Languages: Common and Gnome.</li><li>Bonus Languages: Draconic, Dwarven, Elven, Giant, Goblin, and Orc.</li><li>Favored Class: Rogue.</li><li>Level adjustment +0.</li></ul>"
+    }
+  },
+  {
+    "slug": "lesser-aasimar",
+    "name": "Lesser Aasimar",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0"
+    },
+    "description_html": "<p>Lesser aasimar use the standard aasimar racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Wisdom, +2 Charisma</li><li>Darkvision 60 ft.</li><li>Acid, cold, and electricity resistance 5</li><li><i>Light</i> 1/day (Sp), caster level equals character level</li><li>+2 racial bonus on Listen and Spot checks</li><li>Favored class: Paladin</li></list>",
+    "fg": {
+      "ability_scores": {
+        "wis": 2,
+        "cha": 2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (planetouched)",
+        "favored_class": "Paladin",
+        "level_adjustment": "+0",
+        "starting_languages": "Common and Celestial",
+        "bonus_languages": "Draconic, Dwarven, Elven, Gnome, Halfling, and Sylvan"
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "energyresistance",
+          "name": "Energy Resistances",
+          "text": "<h>Energy Resistances</h><p>Lesser aasimar have acid, cold, and electricity resistance 5.</p>",
+          "effect": "RESIST: 5, acid; RESIST: 5, cold; RESIST: 5, electricity"
+        },
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p><i>Light</i> (Sp): Once per day, a lesser aasimar can use <i>light</i>. Caster level equals the lesser aasimar's character level.</p>"
+        },
+        {
+          "slug": "keensenses",
+          "name": "Keen Senses",
+          "text": "<h>Keen Senses</h><p>Lesser aasimar have a +2 racial bonus on Listen and Spot checks.</p>",
+          "effect": "SKILL: 2, listen; SKILL: 2, spot"
+        },
+        {
+          "slug": "planetouched",
+          "name": "Planetouched",
+          "text": "<h>Planetouched</h><p>Lesser aasimar are humanoids with the planetouched subtype, not outsiders. Spells and effects that target humanoids, such as <i>charm person</i>, affect them, and so do effects that target outsiders, such as <i>banishment</i>. This replaces the outsider type and the level adjustment of the standard aasimar.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser aasimar use the standard aasimar racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Wisdom, +2 Charisma</li><li>Darkvision 60 ft.</li><li>Acid, cold, and electricity resistance 5</li><li><i>Light</i> 1/day (Sp), caster level equals character level</li><li>+2 racial bonus on Listen and Spot checks</li><li>Favored class: Paladin</li></list>"
+    },
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "size": "Medium",
+    "type": "Humanoid (planetouched)",
+    "level_adjustment": "+0"
+  },
+  {
+    "slug": "lesser-tiefling",
+    "name": "Lesser Tiefling",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0"
+    },
+    "description_html": "<p>Lesser tieflings use the standard tiefling racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Dexterity, +2 Intelligence, -2 Charisma</li><li>Darkvision 60 ft.</li><li>Fire, cold, and electricity resistance 5</li><li><i>Darkness</i> 1/day (Sp), caster level equals character level</li><li>+2 racial bonus on Bluff and Hide checks</li><li>Favored class: Rogue</li></list>",
+    "fg": {
+      "ability_scores": {
+        "dex": 2,
+        "int": 2,
+        "cha": -2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (planetouched)",
+        "favored_class": "Rogue",
+        "level_adjustment": "+0",
+        "starting_languages": "Common and Infernal",
+        "bonus_languages": "Draconic, Dwarven, Elven, Gnome, Goblin, Halfling, and Orc"
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "energyresistance",
+          "name": "Energy Resistances",
+          "text": "<h>Energy Resistances</h><p>Lesser tieflings have fire, cold, and electricity resistance 5.</p>",
+          "effect": "RESIST: 5, fire; RESIST: 5, cold; RESIST: 5, electricity"
+        },
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p><i>Darkness</i> (Sp): Once per day, a lesser tiefling can use <i>darkness</i>. Caster level equals the lesser tiefling's character level.</p>"
+        },
+        {
+          "slug": "deceptive",
+          "name": "Deceptive",
+          "text": "<h>Deceptive</h><p>Lesser tieflings have a +2 racial bonus on Bluff and Hide checks.</p>",
+          "effect": "SKILL: 2, bluff; SKILL: 2, hide"
+        },
+        {
+          "slug": "planetouched",
+          "name": "Planetouched",
+          "text": "<h>Planetouched</h><p>Lesser tieflings are humanoids with the planetouched subtype, not outsiders. Spells and effects that target humanoids, such as <i>charm person</i>, affect them, and so do effects that target outsiders, such as <i>banishment</i>. This replaces the outsider type and the level adjustment of the standard tiefling.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser tieflings use the standard tiefling racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Dexterity, +2 Intelligence, -2 Charisma</li><li>Darkvision 60 ft.</li><li>Fire, cold, and electricity resistance 5</li><li><i>Darkness</i> 1/day (Sp), caster level equals character level</li><li>+2 racial bonus on Bluff and Hide checks</li><li>Favored class: Rogue</li></list>"
+    },
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "size": "Medium",
+    "type": "Humanoid (planetouched)",
+    "level_adjustment": "+0"
+  },
+  {
+    "slug": "lesser-air-genasi",
+    "name": "Lesser Air Genasi",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0"
+    },
+    "description_html": "<p>Lesser air genasi use the standard air genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Dexterity, +2 Intelligence, -2 Wisdom, -2 Charisma</li><li>Darkvision 60 ft.</li><li><i>Levitate</i> 1/day (Sp), caster level 5th</li><li>+1 on saves against air spells and effects, +1 more per five class levels</li><li>Does not breathe</li><li>Cleric must take the Air domain</li><li>Favored class: Fighter</li></list>",
+    "fg": {
+      "ability_scores": {
+        "dex": 2,
+        "int": 2,
+        "wis": -2,
+        "cha": -2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (planetouched)",
+        "favored_class": "Fighter",
+        "level_adjustment": "+0",
+        "starting_languages": "Common",
+        "bonus_languages": "Any (except secret languages, such as Druidic)"
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p><i>Levitate</i> (Sp): Once per day, a lesser air genasi can use <i>levitate</i>. Caster level 5th.</p>"
+        },
+        {
+          "slug": "elementalsaves",
+          "name": "Air Affinity",
+          "text": "<h>Air Affinity</h><p>Lesser air genasi have a +1 racial bonus on saving throws against air spells and effects. This bonus increases by +1 for every five class levels the genasi attains.</p>"
+        },
+        {
+          "slug": "breathless",
+          "name": "Breathless",
+          "text": "<h>Breathless</h><p>Lesser air genasi do not breathe, so they are immune to drowning, suffocation, and attacks that require inhalation (such as some poisons).</p>"
+        },
+        {
+          "slug": "clericalfocus",
+          "name": "Clerical Focus",
+          "text": "<h>Clerical Focus</h><p>A lesser air genasi cleric must choose a deity who grants the Air domain, and must select Air as one of their two domains.</p>"
+        },
+        {
+          "slug": "planetouched",
+          "name": "Planetouched",
+          "text": "<h>Planetouched</h><p>Lesser air genasi are humanoids with the planetouched subtype, not outsiders. Spells and effects that target humanoids, such as <i>charm person</i>, affect them, and so do effects that target outsiders, such as <i>banishment</i>. This replaces the outsider type and the level adjustment of the standard air genasi.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser air genasi use the standard air genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Dexterity, +2 Intelligence, -2 Wisdom, -2 Charisma</li><li>Darkvision 60 ft.</li><li><i>Levitate</i> 1/day (Sp), caster level 5th</li><li>+1 on saves against air spells and effects, +1 more per five class levels</li><li>Does not breathe</li><li>Cleric must take the Air domain</li><li>Favored class: Fighter</li></list>"
+    },
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "size": "Medium",
+    "type": "Humanoid (planetouched)",
+    "level_adjustment": "+0"
+  },
+  {
+    "slug": "lesser-earth-genasi",
+    "name": "Lesser Earth Genasi",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0"
+    },
+    "description_html": "<p>Lesser earth genasi use the standard earth genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Strength, +2 Constitution, -2 Wisdom, -2 Charisma</li><li>Darkvision 60 ft.</li><li><i>Pass without trace</i> 1/day (Sp), caster level 5th</li><li>+1 on saves against earth spells and effects, +1 more per five class levels</li><li>Cleric must take the Earth domain</li><li>Favored class: Fighter</li></list>",
+    "fg": {
+      "ability_scores": {
+        "str": 2,
+        "con": 2,
+        "wis": -2,
+        "cha": -2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (planetouched)",
+        "favored_class": "Fighter",
+        "level_adjustment": "+0",
+        "starting_languages": "Common",
+        "bonus_languages": "Any (except secret languages, such as Druidic)"
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p><i>Pass without Trace</i> (Sp): Once per day, a lesser earth genasi can use <i>pass without trace</i>. Caster level 5th.</p>"
+        },
+        {
+          "slug": "elementalsaves",
+          "name": "Earth Affinity",
+          "text": "<h>Earth Affinity</h><p>Lesser earth genasi have a +1 racial bonus on saving throws against earth spells and effects. This bonus increases by +1 for every five class levels the genasi attains.</p>"
+        },
+        {
+          "slug": "clericalfocus",
+          "name": "Clerical Focus",
+          "text": "<h>Clerical Focus</h><p>A lesser earth genasi cleric must choose a deity who grants the Earth domain, and must select Earth as one of their two domains.</p>"
+        },
+        {
+          "slug": "planetouched",
+          "name": "Planetouched",
+          "text": "<h>Planetouched</h><p>Lesser earth genasi are humanoids with the planetouched subtype, not outsiders. Spells and effects that target humanoids, such as <i>charm person</i>, affect them, and so do effects that target outsiders, such as <i>banishment</i>. This replaces the outsider type and the level adjustment of the standard earth genasi.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser earth genasi use the standard earth genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Strength, +2 Constitution, -2 Wisdom, -2 Charisma</li><li>Darkvision 60 ft.</li><li><i>Pass without trace</i> 1/day (Sp), caster level 5th</li><li>+1 on saves against earth spells and effects, +1 more per five class levels</li><li>Cleric must take the Earth domain</li><li>Favored class: Fighter</li></list>"
+    },
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "size": "Medium",
+    "type": "Humanoid (planetouched)",
+    "level_adjustment": "+0"
+  },
+  {
+    "slug": "lesser-fire-genasi",
+    "name": "Lesser Fire Genasi",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0"
+    },
+    "description_html": "<p>Lesser fire genasi use the standard fire genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Intelligence, -2 Charisma</li><li>Darkvision 60 ft.</li><li>+1 on saves against fire spells and effects, +1 more per five class levels</li><li><i>Control flame</i> 1/day (Sp), caster level 5th</li><li>Cleric must take the Fire domain</li><li>Favored class: Fighter</li></list>",
+    "fg": {
+      "ability_scores": {
+        "int": 2,
+        "cha": -2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (planetouched)",
+        "favored_class": "Fighter",
+        "level_adjustment": "+0",
+        "starting_languages": "Common",
+        "bonus_languages": "Any (except secret languages, such as Druidic)"
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "elementalsaves",
+          "name": "Fire Affinity",
+          "text": "<h>Fire Affinity</h><p>Lesser fire genasi have a +1 racial bonus on saving throws against fire spells and effects. This bonus increases by +1 for every five class levels the genasi attains.</p>"
+        },
+        {
+          "slug": "controlflame",
+          "name": "Control Flame",
+          "text": "<h>Control Flame</h><p><i>Control Flame</i> (Sp): Once per day, a lesser fire genasi can cause a nonmagical fire within 10 feet to diminish to the level of coals, or flare to the brightness of daylight and double its normal radius of illumination. This does not change the fire's heat or fuel use. The change lasts 5 minutes. Caster level 5th.</p>"
+        },
+        {
+          "slug": "clericalfocus",
+          "name": "Clerical Focus",
+          "text": "<h>Clerical Focus</h><p>A lesser fire genasi cleric must choose a deity who grants the Fire domain, and must select Fire as one of their two domains.</p>"
+        },
+        {
+          "slug": "planetouched",
+          "name": "Planetouched",
+          "text": "<h>Planetouched</h><p>Lesser fire genasi are humanoids with the planetouched subtype, not outsiders. Spells and effects that target humanoids, such as <i>charm person</i>, affect them, and so do effects that target outsiders, such as <i>banishment</i>. This replaces the outsider type and the level adjustment of the standard fire genasi.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser fire genasi use the standard fire genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Intelligence, -2 Charisma</li><li>Darkvision 60 ft.</li><li>+1 on saves against fire spells and effects, +1 more per five class levels</li><li><i>Control flame</i> 1/day (Sp), caster level 5th</li><li>Cleric must take the Fire domain</li><li>Favored class: Fighter</li></list>"
+    },
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "size": "Medium",
+    "type": "Humanoid (planetouched)",
+    "level_adjustment": "+0"
+  },
+  {
+    "slug": "lesser-water-genasi",
+    "name": "Lesser Water Genasi",
+    "source_url": "https://dnd.arkalseif.info/rulebooks/forgotten-realms-35--4/players-guide-to-faerun--22/",
+    "index": {
+      "source_abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)",
+      "level_adjustment": "+0"
+    },
+    "description_html": "<p>Lesser water genasi use the standard water genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Constitution, -2 Charisma</li><li>Swim speed 30 ft.</li><li>Darkvision 60 ft.</li><li><i>Create water</i> 1/day (Sp), caster level 5th</li><li>+1 on saves against water spells and effects, +1 more per five class levels</li><li>Can breathe water</li><li>Cleric must take the Water domain</li><li>Favored class: Fighter</li></list>",
+    "fg": {
+      "ability_scores": {
+        "con": 2,
+        "cha": -2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (planetouched)",
+        "favored_class": "Fighter",
+        "level_adjustment": "+0",
+        "starting_languages": "Common",
+        "bonus_languages": "Any (except secret languages, such as Druidic)"
+      },
+      "movement": {
+        "land": 30,
+        "swim": 30
+      },
+      "senses": {
+        "darkvision": "60 ft."
+      },
+      "traits": [
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p><i>Create Water</i> (Sp): Once per day, a lesser water genasi can use <i>create water</i>. Caster level 5th.</p>"
+        },
+        {
+          "slug": "elementalsaves",
+          "name": "Water Affinity",
+          "text": "<h>Water Affinity</h><p>Lesser water genasi have a +1 racial bonus on saving throws against water spells and effects. This bonus increases by +1 for every five class levels the genasi attains.</p>"
+        },
+        {
+          "slug": "breathewater",
+          "name": "Breathe Water",
+          "text": "<h>Breathe Water</h><p>Lesser water genasi can breathe water as easily as air. This is an extraordinary ability.</p>"
+        },
+        {
+          "slug": "clericalfocus",
+          "name": "Clerical Focus",
+          "text": "<h>Clerical Focus</h><p>A lesser water genasi cleric must choose a deity who grants the Water domain, and must select Water as one of their two domains.</p>"
+        },
+        {
+          "slug": "planetouched",
+          "name": "Planetouched",
+          "text": "<h>Planetouched</h><p>Lesser water genasi are humanoids with the planetouched subtype, not outsiders. Spells and effects that target humanoids, such as <i>charm person</i>, affect them, and so do effects that target outsiders, such as <i>banishment</i>. This replaces the outsider type and the level adjustment of the standard water genasi.</p>"
+        }
+      ],
+      "summary_text": "<p>Lesser water genasi use the standard water genasi racial traits with the <b>Lesser Planetouched</b> changes from <i>Player's Guide to Faerûn</i> (pages 190-191): humanoid (planetouched) type and level adjustment +0.</p><list><li>+2 Constitution, -2 Charisma</li><li>Swim speed 30 ft.</li><li>Darkvision 60 ft.</li><li><i>Create water</i> 1/day (Sp), caster level 5th</li><li>+1 on saves against water spells and effects, +1 more per five class levels</li><li>Can breathe water</li><li>Cleric must take the Water domain</li><li>Favored class: Fighter</li></list>"
+    },
+    "source": {
+      "name": "Player's Guide to Faerûn",
+      "abbrev": "PG",
+      "edition": "Forgotten Realms (3.5)"
+    },
+    "size": "Medium",
+    "type": "Humanoid (planetouched)",
+    "level_adjustment": "+0"
+  }
+]

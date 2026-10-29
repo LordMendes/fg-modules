@@ -4,4 +4,5 @@
 	<category type="string">Rules</category>
 	<author type="string">LordCaca</author>
 	<ruleset type="string">3.5E</ruleset>
+	<ruleset type="string">3.5-cesar</ruleset>
 </root>
