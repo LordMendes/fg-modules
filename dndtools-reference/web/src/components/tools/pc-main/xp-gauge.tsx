@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { Settings } from "lucide-react";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
@@ -86,29 +87,27 @@ export function PcMainXpGauge({
         <div className="pc-xp-settings" ref={settingsRef}>
           <label className="pc-identity-field">
             <span className="npc-sheet-sub">XP</span>
-            <input
-              type="number"
+            <DraftNumberInput
               className="pc-sheet-input pc-sheet-input--narrow"
               min={0}
               value={xp}
-              onChange={(e) =>
+              onValueChange={(next) =>
                 patch((s) => {
-                  s.identity.xp = clampNonNegative(Number(e.target.value));
+                  s.identity.xp = clampNonNegative(next);
                 })
               }
             />
           </label>
           <label className="pc-identity-field">
             <span className="npc-sheet-sub">Necessary</span>
-            <input
-              type="number"
+            <DraftNumberInput
               className="pc-sheet-input pc-sheet-input--narrow"
               min={0}
               value={xpNecessary}
               placeholder="Next level"
-              onChange={(e) =>
+              onValueChange={(next) =>
                 patch((s) => {
-                  s.identity.xpNecessary = clampNonNegative(Number(e.target.value));
+                  s.identity.xpNecessary = clampNonNegative(next);
                 })
               }
             />

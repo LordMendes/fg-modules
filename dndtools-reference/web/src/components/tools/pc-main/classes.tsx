@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { Plus, Star } from "lucide-react";
 import { paginateEntities } from "@/actions/data";
 import { useRefreshSession, useSessionNonce } from "@/components/session-provider";
@@ -521,19 +522,16 @@ export function PcMainClasses({
                     )}
                   </div>
                   <div className="pc-class-level-controls">
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       className="pc-sheet-input pc-sheet-input--narrow"
                       min={1}
                       max={20}
                       value={cl.level}
                       aria-label={`${cl.className} level`}
-                      onChange={(e) =>
+                      onValueChange={(level) =>
                         patch((s) => {
                           if (!s.identity.classLevels[index]) return;
-                          s.identity.classLevels[index].level = clampClassLevel(
-                            Number(e.target.value),
-                          );
+                          s.identity.classLevels[index].level = clampClassLevel(level);
                         })
                       }
                     />

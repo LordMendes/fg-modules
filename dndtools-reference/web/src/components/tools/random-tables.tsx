@@ -10,6 +10,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { advanceGeneratorSeed } from "@/lib/random-spellbook/seeded-rng";
 import { rollRandomTables } from "@/actions/random-tables";
@@ -389,32 +390,26 @@ export function RandomTablesTool() {
 
           <div className="tool-field">
             <Label htmlFor="rt-count">Count</Label>
-            <input
+            <DraftNumberInput
               id="rt-count"
               className="tool-input"
-              type="number"
               min={1}
               max={20}
               value={count}
-              onChange={(event) =>
-                setCount(Math.min(20, Math.max(1, Number(event.target.value) || 1)))
-              }
+              onValueChange={setCount}
             />
           </div>
 
           {kind === "traps" ? (
             <div className="tool-field">
               <Label htmlFor="rt-trap-cr">Trap CR</Label>
-              <input
+              <DraftNumberInput
                 id="rt-trap-cr"
                 className="tool-input"
-                type="number"
                 min={1}
                 max={20}
                 value={trapCr}
-                onChange={(event) =>
-                  setTrapCr(Math.min(20, Math.max(1, Number(event.target.value) || 1)))
-                }
+                onValueChange={setTrapCr}
               />
             </div>
           ) : null}
@@ -530,12 +525,12 @@ export function RandomTablesTool() {
         <div className="random-tables-seed-row">
           <div className="tool-field random-tables-seed-field">
             <Label htmlFor="rt-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="rt-seed"
               className="tool-input"
-              type="number"
+              min={1}
               value={seed}
-              onChange={(event) => setSeed(Number.parseInt(event.target.value, 10) || 1)}
+              onValueChange={setSeed}
             />
           </div>
           <button

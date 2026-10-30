@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { fetchSpellPreview } from "@/actions/data";
 import { SpellCastDetailsView } from "@/components/tools/spell-cast-details-view";
 import { useSessionNonce } from "@/components/session-provider";
@@ -104,14 +105,13 @@ export function PcSpellListItem({
         {mode === "preparation" ? (
           <label className="pc-spell-prepared" onClick={(event) => event.stopPropagation()}>
             <span className="npc-sheet-sub">Prep</span>
-            <input
-              type="number"
+            <DraftNumberInput
               className="pc-sheet-input pc-sheet-input--narrow"
               min={0}
               max={slotLimit}
               value={spell.prepared ?? 1}
               aria-label={`${spell.name} prepared count`}
-              onChange={(e) => onUpdatePrepared(Number(e.target.value))}
+              onValueChange={(prepared) => onUpdatePrepared(prepared)}
             />
           </label>
         ) : null}

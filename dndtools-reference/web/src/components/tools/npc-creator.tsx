@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { TemplateConflictModal } from "@/components/tools/npc-conflict-modal";
 import { RandomNameButton } from "@/components/tools/random-name-button";
 import {
@@ -114,12 +115,11 @@ function NumField({
   return (
     <div className="tool-field">
       <Label htmlFor={id}>{label}</Label>
-      <input
+      <DraftNumberInput
         id={id}
-        type="number"
         className="tool-input"
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onValueChange={onChange}
       />
     </div>
   );

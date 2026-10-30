@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { Plus, Search, Trash2 } from "lucide-react";
 import { calculateStronghold } from "@/lib/stronghold/calculate";
 import { STRONGHOLD_CLUSTERS } from "@/lib/stronghold/clusters";
@@ -106,15 +107,14 @@ function NumberField({
   return (
     <div className="tool-field">
       <Label htmlFor={id}>{label}</Label>
-      <input
+      <DraftNumberInput
         id={id}
-        type="number"
         className="tool-input"
         value={value}
         min={min}
         max={max}
         step={step}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onValueChange={onChange}
       />
     </div>
   );
@@ -387,16 +387,12 @@ export function StrongholdCalculator() {
                       </span>
                     </div>
                     <div className="tool-component-actions">
-                      <input
-                        type="number"
+                      <DraftNumberInput
                         className="tool-input tool-input-sm"
                         min={1}
                         value={sel.quantity}
-                        onChange={(e) =>
-                          setComponentQuantity(
-                            sel.componentId,
-                            Number(e.target.value),
-                          )
+                        onValueChange={(quantity) =>
+                          setComponentQuantity(sel.componentId, quantity)
                         }
                         aria-label={`Quantity for ${component.name}`}
                       />

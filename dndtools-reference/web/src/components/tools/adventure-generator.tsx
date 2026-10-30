@@ -8,6 +8,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -123,15 +124,12 @@ export function AdventureGenerator() {
         <div className="adventure-gen-seed-row">
           <div className="tool-field adventure-gen-seed-field">
             <Label htmlFor="adventure-gen-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="adventure-gen-seed"
               className="tool-input"
-              type="number"
-              inputMode="numeric"
+              min={0}
               value={seed}
-              onChange={(event) =>
-                setSeed(parseSeed(event.target.value.trim() || "1"))
-              }
+              onValueChange={setSeed}
             />
           </div>
           <button

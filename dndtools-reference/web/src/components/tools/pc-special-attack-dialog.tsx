@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { DraggableDialog } from "@/components/draggable-dialog";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import {
   entryFromTemplate,
   filterSpecialAttackCatalog,
@@ -180,16 +181,11 @@ export function PcSpecialAttackDialog({
               </label>
               <label className="pc-identity-field">
                 <span className="npc-sheet-sub">Count</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input pc-sheet-input--narrow"
                   min={1}
                   value={draft.count}
-                  onChange={(e) =>
-                    patchDraft({
-                      count: Math.max(1, Number.parseInt(e.target.value, 10) || 1),
-                    })
-                  }
+                  onValueChange={(count) => patchDraft({ count })}
                 />
               </label>
               <label className="pc-identity-field">
@@ -249,28 +245,20 @@ export function PcSpecialAttackDialog({
               </label>
               <label className="pc-identity-field">
                 <span className="npc-sheet-sub">Attack misc</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input pc-sheet-input--narrow"
                   value={draft.attackMisc ?? 0}
-                  onChange={(e) =>
-                    patchDraft({
-                      attackMisc: Number.parseInt(e.target.value, 10) || 0,
-                    })
-                  }
+                  emptyValue={0}
+                  onValueChange={(attackMisc) => patchDraft({ attackMisc })}
                 />
               </label>
               <label className="pc-identity-field">
                 <span className="npc-sheet-sub">Damage misc</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input pc-sheet-input--narrow"
                   value={draft.damageMisc ?? 0}
-                  onChange={(e) =>
-                    patchDraft({
-                      damageMisc: Number.parseInt(e.target.value, 10) || 0,
-                    })
-                  }
+                  emptyValue={0}
+                  onValueChange={(damageMisc) => patchDraft({ damageMisc })}
                 />
               </label>
               {showSaveFields ? (

@@ -19,6 +19,7 @@ import { PcMainDivineArcane } from "@/components/tools/pc-main/divine-arcane";
 import { PcMainProfile } from "@/components/tools/pc-main/profile";
 import { PcMainSkillShortcuts } from "@/components/tools/pc-main/skill-shortcuts";
 import { PcMainXpGauge } from "@/components/tools/pc-main/xp-gauge";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { EntityPreviewModal } from "@/components/entity-preview-modal";
 import { FgSheetTabs } from "@/components/fg-sheet-tabs";
@@ -526,18 +527,16 @@ export function PcSheet({
                           </td>
                           <td>{row.ability ?? "—"}</td>
                           <td>
-                            <input
-                              type="number"
+                            <DraftNumberInput
                               className={`pc-sheet-input pc-sheet-input--narrow${
                                 overMax ? " pc-sheet-input--warn" : ""
                               }`}
-                              step={1}
                               min={0}
                               value={row.ranks}
                               title={overMax ? `Max ranks ${maxRanks}` : `Max ${maxRanks}`}
-                              onChange={(e) =>
+                              onValueChange={(ranks) =>
                                 patch((s) => {
-                                  s.skills[i].ranks = coerceSkillRanks(Number(e.target.value));
+                                  s.skills[i].ranks = coerceSkillRanks(ranks);
                                 })
                               }
                             />
@@ -557,13 +556,12 @@ export function PcSheet({
                                 : row.synergyMisc}
                           </td>
                           <td>
-                            <input
-                              type="number"
+                            <DraftNumberInput
                               className="pc-sheet-input pc-sheet-input--narrow"
                               value={row.misc}
-                              onChange={(e) =>
+                              onValueChange={(misc) =>
                                 patch((s) => {
-                                  s.skills[i].misc = Number(e.target.value);
+                                  s.skills[i].misc = misc;
                                 })
                               }
                             />

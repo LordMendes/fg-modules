@@ -10,6 +10,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { advanceGeneratorSeed } from "@/lib/random-spellbook/seeded-rng";
 import { getShopItems } from "@/actions/magic-shop";
@@ -228,12 +229,12 @@ export function MagicShopGenerator() {
         <div className="magic-shop-seed-row">
           <div className="tool-field magic-shop-seed-field">
             <Label htmlFor="magic-shop-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="magic-shop-seed"
-              type="number"
               className="tool-input"
-              value={Number.isFinite(seed) ? seed : ""}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              min={0}
+              value={Number.isFinite(seed) ? seed : 0}
+              onValueChange={setSeed}
             />
           </div>
           <button

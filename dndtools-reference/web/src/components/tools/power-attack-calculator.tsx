@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { averageExpression, RollExpressionError } from "@/lib/dice/roll-expression";
 import {
   buildPowerAttackTable,
@@ -91,17 +92,14 @@ export function PowerAttackCalculator() {
 
         <div className="tool-field">
           <Label htmlFor="pa-attack-mod">Additional attack modifiers</Label>
-          <input
+          <DraftNumberInput
             id="pa-attack-mod"
-            type="number"
             className="tool-input"
             step={1}
             min={-20}
             max={20}
             value={input.attackMod}
-            onChange={(event) =>
-              patch({ attackMod: Number(event.target.value) })
-            }
+            onValueChange={(attackMod) => patch({ attackMod })}
           />
         </div>
 
@@ -125,33 +123,27 @@ export function PowerAttackCalculator() {
 
         <div className="tool-field">
           <Label htmlFor="pa-extra-attacks">Extra attacks (full BAB)</Label>
-          <input
+          <DraftNumberInput
             id="pa-extra-attacks"
-            type="number"
             className="tool-input"
             min={0}
             max={4}
             value={input.extraAttacks}
             disabled={input.action === "single"}
-            onChange={(event) =>
-              patch({ extraAttacks: Number(event.target.value) })
-            }
+            onValueChange={(extraAttacks) => patch({ extraAttacks })}
           />
         </div>
 
         <div className="tool-field power-attack-dice-row">
           <Label htmlFor="pa-weapon-average">Weapon damage (average)</Label>
           <div className="power-attack-dice-pair">
-            <input
+            <DraftNumberInput
               id="pa-weapon-average"
-              type="number"
               className="tool-input"
               step={0.5}
               min={0}
               value={input.weaponAverage}
-              onChange={(event) =>
-                patch({ weaponAverage: Number(event.target.value) })
-              }
+              onValueChange={(weaponAverage) => patch({ weaponAverage })}
             />
             <input
               id="pa-weapon-dice"
@@ -176,16 +168,13 @@ export function PowerAttackCalculator() {
             Extra damage (not multiplied on a crit)
           </Label>
           <div className="power-attack-dice-pair">
-            <input
+            <DraftNumberInput
               id="pa-extra-average"
-              type="number"
               className="tool-input"
               step={0.5}
               min={0}
               value={input.extraAverage}
-              onChange={(event) =>
-                patch({ extraAverage: Number(event.target.value) })
-              }
+              onValueChange={(extraAverage) => patch({ extraAverage })}
             />
             <input
               id="pa-extra-dice"
@@ -241,16 +230,13 @@ export function PowerAttackCalculator() {
 
         <div className="tool-field">
           <Label htmlFor="pa-target-ac">Target AC</Label>
-          <input
+          <DraftNumberInput
             id="pa-target-ac"
-            type="number"
             className="tool-input"
             min={1}
             max={50}
             value={input.targetAc}
-            onChange={(event) =>
-              patch({ targetAc: Number(event.target.value) })
-            }
+            onValueChange={(targetAc) => patch({ targetAc })}
           />
         </div>
 

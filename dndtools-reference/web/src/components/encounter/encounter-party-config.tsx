@@ -7,6 +7,7 @@ import {
   type EncounterDifficulty,
   type PartyConfig,
 } from "@/lib/encounter/partyConfig";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { formatEl } from "@/lib/encounter/formatEl";
 
 type EncounterPartyConfigProps = {
@@ -36,16 +37,13 @@ export function EncounterPartyConfig({
           <label htmlFor="encounter-party-size" className="tool-label">
             Party members
           </label>
-          <input
+          <DraftNumberInput
             id="encounter-party-size"
-            type="number"
             className="tool-input"
             min={1}
             max={12}
             value={config.partySize}
-            onChange={(e) =>
-              update({ partySize: clampPartySize(Number(e.target.value)) })
-            }
+            onValueChange={(partySize) => update({ partySize: clampPartySize(partySize) })}
           />
         </div>
 
@@ -53,16 +51,13 @@ export function EncounterPartyConfig({
           <label htmlFor="encounter-party-level" className="tool-label">
             Party level
           </label>
-          <input
+          <DraftNumberInput
             id="encounter-party-level"
-            type="number"
             className="tool-input"
             min={1}
             max={20}
             value={config.partyLevel}
-            onChange={(e) =>
-              update({ partyLevel: clampPartyLevel(Number(e.target.value)) })
-            }
+            onValueChange={(partyLevel) => update({ partyLevel: clampPartyLevel(partyLevel) })}
           />
         </div>
 

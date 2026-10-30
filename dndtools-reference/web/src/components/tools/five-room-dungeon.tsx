@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { advanceGeneratorSeed } from "@/lib/random-spellbook/seeded-rng";
 import {
@@ -213,12 +214,12 @@ export function FiveRoomDungeon() {
         <div className="five-room-seed-row">
           <div className="tool-field five-room-seed-field">
             <Label htmlFor="five-room-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="five-room-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
           <button
@@ -251,30 +252,24 @@ export function FiveRoomDungeon() {
           </div>
           <div className="tool-field">
             <Label htmlFor="five-room-level">Dungeon level</Label>
-            <input
+            <DraftNumberInput
               id="five-room-level"
-              type="number"
               className="tool-input"
               min={1}
               max={20}
               value={level}
-              onChange={(event) =>
-                setLevel(clampInt(Number(event.target.value), 1, 20))
-              }
+              onValueChange={(next) => setLevel(clampInt(next, 1, 20))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="five-room-party">Party size</Label>
-            <input
+            <DraftNumberInput
               id="five-room-party"
-              type="number"
               className="tool-input"
               min={1}
               max={12}
               value={partySize}
-              onChange={(event) =>
-                setPartySize(clampInt(Number(event.target.value), 1, 12))
-              }
+              onValueChange={(next) => setPartySize(clampInt(next, 1, 12))}
             />
           </div>
         </div>

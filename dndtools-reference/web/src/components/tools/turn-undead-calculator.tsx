@@ -2,6 +2,7 @@
 
 import { Plus, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { TurnUndeadSummary } from "@/components/tools/turn-undead-summary";
 import {
   TurnUndeadOutcomeBadge,
@@ -50,15 +51,14 @@ function NumberField({
   return (
     <div className="tool-field">
       <Label htmlFor={id}>{label}</Label>
-      <input
+      <DraftNumberInput
         id={id}
-        type="number"
         className="tool-input"
         value={value}
         min={min}
         max={max}
         placeholder={placeholder}
-        onChange={(event) => onChange(Number(event.target.value))}
+        onValueChange={onChange}
       />
     </div>
   );
@@ -298,34 +298,24 @@ export function TurnUndeadCalculator() {
                     </div>
                     <div className="tool-field turn-undead-target-number">
                       <Label htmlFor={`target-hd-${index}`}>HD</Label>
-                      <input
+                      <DraftNumberInput
                         id={`target-hd-${index}`}
-                        type="number"
                         className="tool-input"
                         value={target.hd}
                         min={0}
                         max={100}
-                        onChange={(event) =>
-                          updateTarget(index, {
-                            hd: Math.max(0, Number(event.target.value)),
-                          })
-                        }
+                        onValueChange={(hd) => updateTarget(index, { hd })}
                       />
                     </div>
                     <div className="tool-field turn-undead-target-number">
                       <Label htmlFor={`target-count-${index}`}>Count</Label>
-                      <input
+                      <DraftNumberInput
                         id={`target-count-${index}`}
-                        type="number"
                         className="tool-input"
                         value={target.count}
                         min={0}
                         max={999}
-                        onChange={(event) =>
-                          updateTarget(index, {
-                            count: Math.max(0, Number(event.target.value)),
-                          })
-                        }
+                        onValueChange={(count) => updateTarget(index, { count })}
                       />
                     </div>
                   </div>

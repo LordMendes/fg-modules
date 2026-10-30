@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -207,12 +208,12 @@ export function TreasureGenerator() {
         <div className="treasure-gen-seed-row">
           <div className="tool-field treasure-gen-seed-field">
             <Label htmlFor="treasure-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="treasure-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
         </div>
@@ -233,29 +234,23 @@ export function TreasureGenerator() {
               {rows.map((row, index) => (
                 <tr key={index}>
                   <td>
-                    <input
+                    <DraftNumberInput
                       aria-label={`Hoard ${index + 1} count`}
-                      type="number"
                       className="tool-input"
                       min={1}
                       max={20}
                       value={row.count}
-                      onChange={(event) =>
-                        updateRow(index, { count: Number(event.target.value) })
-                      }
+                      onValueChange={(count) => updateRow(index, { count })}
                     />
                   </td>
                   <td>
-                    <input
+                    <DraftNumberInput
                       aria-label={`Hoard ${index + 1} level`}
-                      type="number"
                       className="tool-input"
                       min={1}
                       max={20}
                       value={row.level}
-                      onChange={(event) =>
-                        updateRow(index, { level: Number(event.target.value) })
-                      }
+                      onValueChange={(level) => updateRow(index, { level })}
                     />
                   </td>
                   <td>

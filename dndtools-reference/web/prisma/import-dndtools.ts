@@ -16,6 +16,7 @@ import {
 } from "@/lib/source-display";
 import { classifyClassType } from "@/lib/class-type";
 import { isolateFeatSections } from "@/lib/feat-sections";
+import { stripPostgresNulls } from "@/lib/postgres-text";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -84,7 +85,8 @@ function cleanImportedText(value: unknown): string | null {
   if (typeof value !== "string" || value.length === 0 || isPlaceholderText(value)) {
     return null;
   }
-  return value;
+  const cleaned = stripPostgresNulls(value);
+  return cleaned.length === 0 ? null : cleaned;
 }
 
 type LinkRef = {
@@ -156,7 +158,7 @@ function loadJson(filename: string): RecordBase[] {
   if (!existsSync(path)) {
     throw new Error(`Missing data file: ${path}`);
   }
-  return JSON.parse(readFileSync(path, "utf-8")) as RecordBase[];
+  return stripPostgresNulls(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]);
 }
 
 function loadSupplementalFiles(filenames: readonly string[]): RecordBase[] {
@@ -164,7 +166,7 @@ function loadSupplementalFiles(filenames: readonly string[]): RecordBase[] {
   for (const filename of filenames) {
     const path = join(SUPPLEMENTAL_DIR, filename);
     if (!existsSync(path)) continue;
-    records.push(...(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]));
+    records.push(...stripPostgresNulls(JSON.parse(readFileSync(path, "utf-8")) as RecordBase[]));
   }
   return records;
 }

@@ -8,6 +8,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -190,12 +191,12 @@ export function TreasureMapTool() {
         <div className="treasure-map-seed-row">
           <div className="tool-field treasure-map-seed-field">
             <Label htmlFor="treasure-map-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="treasure-map-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
           <button

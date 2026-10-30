@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeftRight, Copy, Pencil, Plus, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { fetchInventoryItem, listCatalogWeapons, type CatalogWeaponSummary } from "@/actions/data";
 import { getPcPlan, getUserPcPlans, type PcPlanSummary } from "@/actions/pc-plans";
 import { useAuthReady, useAuthUser } from "@/components/auth-provider";
@@ -68,14 +69,13 @@ function NumberField({
   return (
     <div className="tool-field">
       <Label htmlFor={id}>{label}</Label>
-      <input
+      <DraftNumberInput
         id={id}
-        type="number"
         className="tool-input"
         value={value}
         min={min}
         max={max}
-        onChange={(event) => onChange(Number(event.target.value))}
+        onValueChange={onChange}
       />
     </div>
   );
@@ -572,20 +572,19 @@ export function DamageStatisticCalculator() {
                   <li key={entry.id} className="damage-statistic-dr-row">
                     <div className="tool-field">
                       <Label htmlFor={`dr-amount-${entry.id}`}>Amount</Label>
-                      <input
+                      <DraftNumberInput
                         id={`dr-amount-${entry.id}`}
-                        type="number"
                         className="tool-input"
                         min={0}
                         value={entry.amount}
-                        onChange={(event) =>
+                        onValueChange={(amount) =>
                           setTarget((current) => ({
                             ...current,
                             dr: current.dr.map((row) =>
                               row.id === entry.id
                                 ? {
                                     ...row,
-                                    amount: Number(event.target.value),
+                                    amount,
                                   }
                                 : row,
                             ),

@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -453,15 +454,12 @@ export function TownGenerator() {
 
         <div className="town-gen-seed-row">
           <Label htmlFor="town-gen-seed">Seed</Label>
-          <input
+          <DraftNumberInput
             id="town-gen-seed"
             className="tool-input"
-            inputMode="numeric"
+            min={0}
             value={seed}
-            onChange={(event) => {
-              const parsed = Number.parseInt(event.target.value, 10);
-              setSeed(Number.isNaN(parsed) ? 1 : parsed);
-            }}
+            onValueChange={setSeed}
           />
           <button
             type="button"

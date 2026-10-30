@@ -17,6 +17,7 @@ import type {
   MapDiagonalRule,
 } from "@/lib/map/types";
 import { useRef, useState, useTransition } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 
 type MapScenesDrawerProps = {
   maps: CampaignMapListItem[];
@@ -280,43 +281,39 @@ export function MapScenesDrawer({
             <div className="map-scenes-drawer-grid-fields">
               <label>
                 <span>Cell size (px)</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input"
                   min={1}
                   value={gridSizePx}
-                  onChange={(e) => setGridSizePx(Number(e.target.value))}
+                  onValueChange={setGridSizePx}
                   disabled={pending}
                 />
               </label>
               <label>
                 <span>Offset X</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input"
                   value={gridOffsetX}
-                  onChange={(e) => setGridOffsetX(Number(e.target.value))}
+                  onValueChange={setGridOffsetX}
                   disabled={pending}
                 />
               </label>
               <label>
                 <span>Offset Y</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input"
                   value={gridOffsetY}
-                  onChange={(e) => setGridOffsetY(Number(e.target.value))}
+                  onValueChange={setGridOffsetY}
                   disabled={pending}
                 />
               </label>
               <label>
                 <span>Feet per square</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input"
                   min={1}
                   value={scaleFeet}
-                  onChange={(e) => setScaleFeet(Number(e.target.value))}
+                  onValueChange={setScaleFeet}
                   disabled={pending}
                 />
               </label>

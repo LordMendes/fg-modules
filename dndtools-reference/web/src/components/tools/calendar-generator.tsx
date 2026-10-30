@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   buildCalendarExportFile,
@@ -459,12 +460,12 @@ export function CalendarGenerator() {
         <div className="calendar-gen-seed-row">
           <div className="tool-field calendar-gen-seed-field">
             <Label htmlFor="calendar-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="calendar-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
           <button
@@ -479,72 +480,57 @@ export function CalendarGenerator() {
         <div className="calendar-gen-grid-fields">
           <div className="tool-field">
             <Label htmlFor="calendar-year-length">Year length</Label>
-            <input
+            <DraftNumberInput
               id="calendar-year-length"
-              type="number"
               className="tool-input"
               min={40}
               max={1000}
               value={yearLength}
-              onChange={(event) =>
-                setYearLength(clampInt(Number(event.target.value), 40, 1000))
-              }
+              onValueChange={(next) => setYearLength(clampInt(next, 40, 1000))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="calendar-months">Months</Label>
-            <input
+            <DraftNumberInput
               id="calendar-months"
-              type="number"
               className="tool-input"
               min={2}
               max={24}
               value={months}
-              onChange={(event) =>
-                setMonths(clampInt(Number(event.target.value), 2, 24))
-              }
+              onValueChange={(next) => setMonths(clampInt(next, 2, 24))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="calendar-week-length">Week length</Label>
-            <input
+            <DraftNumberInput
               id="calendar-week-length"
-              type="number"
               className="tool-input"
               min={1}
               max={14}
               value={weekLength}
-              onChange={(event) =>
-                setWeekLength(clampInt(Number(event.target.value), 1, 14))
-              }
+              onValueChange={(next) => setWeekLength(clampInt(next, 1, 14))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="calendar-moons">Moons</Label>
-            <input
+            <DraftNumberInput
               id="calendar-moons"
-              type="number"
               className="tool-input"
               min={0}
               max={4}
               value={moons}
-              onChange={(event) =>
-                setMoons(clampInt(Number(event.target.value), 0, 4))
-              }
+              onValueChange={(next) => setMoons(clampInt(next, 0, 4))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="calendar-events">Holidays</Label>
-            <input
+            <DraftNumberInput
               id="calendar-events"
-              type="number"
               className="tool-input"
               min={0}
               max={24}
               value={events}
-              onChange={(event) =>
-                setEvents(clampInt(Number(event.target.value), 0, 24))
-              }
+              onValueChange={(next) => setEvents(clampInt(next, 0, 24))}
             />
           </div>
           <div className="tool-field">

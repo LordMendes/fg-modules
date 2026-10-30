@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
@@ -367,23 +368,19 @@ export function PcActionsPanel({
                     <span className="pc-slot-label">L{lvl}</span>
                     {computed.mode === "spontaneous" && maxSlots > 0 ? (
                       <span className="pc-slot-used-row">
-                        <input
-                          type="number"
+                        <DraftNumberInput
                           className="pc-sheet-input pc-sheet-input--narrow"
                           min={0}
                           max={maxSlots}
                           value={used}
-                          onChange={(e) =>
+                          onValueChange={(next) =>
                             patch((s) => {
                               const row = s.spellClasses[activeSpellClassIndex];
                               if (!row) return;
                               if (!row.slotsUsed) {
                                 row.slotsUsed = Array.from({ length: 10 }, () => 0);
                               }
-                              row.slotsUsed[lvl] = Math.max(
-                                0,
-                                Math.min(maxSlots, Number(e.target.value) || 0),
-                              );
+                              row.slotsUsed[lvl] = Math.max(0, Math.min(maxSlots, next));
                             })
                           }
                         />

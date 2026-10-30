@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { DraggableDialog } from "@/components/draggable-dialog";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import {
   ARMOR_ABILITIES,
@@ -492,29 +493,27 @@ export function PcInventoryItemEditor({
             ) : null}
             <label className="pc-item-editor-field">
               <span>Qty</span>
-              <input
-                type="number"
+              <DraftNumberInput
                 min={0}
                 className="pc-sheet-input"
                 value={row.quantity}
-                onChange={(event) =>
+                onValueChange={(quantity) =>
                   patchRow((current) => {
-                    current.quantity = Number(event.target.value);
+                    current.quantity = quantity;
                   })
                 }
               />
             </label>
             <label className="pc-item-editor-field">
               <span>Weight</span>
-              <input
-                type="number"
+              <DraftNumberInput
                 min={0}
-                step="0.1"
+                step={0.1}
                 className="pc-sheet-input"
                 value={row.weight}
-                onChange={(event) =>
+                onValueChange={(weight) =>
                   patchRow((current) => {
-                    current.weight = Number(event.target.value);
+                    current.weight = weight;
                   })
                 }
               />
@@ -573,13 +572,12 @@ export function PcInventoryItemEditor({
               <>
                 <label className="pc-item-editor-field">
                   <span>AC bonus</span>
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="pc-sheet-input"
                     value={row.armorBonus ?? 0}
-                    onChange={(event) =>
+                    onValueChange={(armorBonus) =>
                       patchRow((current) => {
-                        current.armorBonus = Number(event.target.value);
+                        current.armorBonus = armorBonus;
                       })
                     }
                   />
@@ -600,13 +598,12 @@ export function PcInventoryItemEditor({
                 </label>
                 <label className="pc-item-editor-field">
                   <span>ACP</span>
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="pc-sheet-input"
                     value={row.acp ?? 0}
-                    onChange={(event) =>
+                    onValueChange={(acp) =>
                       patchRow((current) => {
-                        current.acp = Number(event.target.value);
+                        current.acp = acp;
                       })
                     }
                   />
@@ -677,13 +674,13 @@ export function PcInventoryItemEditor({
               </label>
               <label className="pc-item-editor-field">
                 <span>Misc</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input"
                   value={attackMisc}
-                  onChange={(event) =>
+                  emptyValue={0}
+                  onValueChange={(attackMisc) =>
                     patchRow((current) => {
-                      current.attackMisc = Number(event.target.value) || 0;
+                      current.attackMisc = attackMisc;
                     })
                   }
                 />
@@ -918,13 +915,13 @@ export function PcInventoryItemEditor({
                   </label>
                   <label className="pc-item-editor-field">
                     <span>Misc</span>
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       className="pc-sheet-input"
                       value={damageMisc}
-                      onChange={(event) =>
+                      emptyValue={0}
+                      onValueChange={(damageMisc) =>
                         patchRow((current) => {
-                          current.damageMisc = Number(event.target.value) || 0;
+                          current.damageMisc = damageMisc;
                         })
                       }
                     />
@@ -1078,17 +1075,16 @@ export function PcInventoryItemEditor({
                   ) : null}
                   <label className="pc-item-editor-field">
                     <span>Amount</span>
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       className="pc-sheet-input"
                       value={bonus.amount}
-                      onChange={(event) =>
+                      onValueChange={(amount) =>
                         patchRow((current) => {
                           const list = [...(current.statBonuses ?? [])];
                           if (list[index]) {
                             list[index] = {
                               ...list[index],
-                              amount: Number(event.target.value),
+                              amount,
                             };
                           }
                           current.statBonuses = list;
@@ -1154,13 +1150,13 @@ export function PcInventoryItemEditor({
               <div className="pc-item-editor-grid">
                 <label className="pc-item-editor-field">
                   <span>Extra AC bonus</span>
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="pc-sheet-input"
                     value={armorMisc}
-                    onChange={(event) =>
+                    emptyValue={0}
+                    onValueChange={(armorMisc) =>
                       patchRow((current) => {
-                        current.armorMisc = Number(event.target.value) || 0;
+                        current.armorMisc = armorMisc;
                       })
                     }
                   />
@@ -1447,53 +1443,43 @@ export function PcInventoryItemEditor({
                   </label>
                   <label className="pc-item-editor-field">
                     <span>Spell level</span>
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       min={0}
                       max={9}
                       className="pc-sheet-input"
                       value={spellLevel}
-                      onChange={(event) =>
+                      onValueChange={(spellLevel) =>
                         patchRow((current) => {
                           const effect = current.spellEffects?.[0];
                           if (!effect) return;
-                          const next = Math.max(
-                            0,
-                            Math.min(9, Number(event.target.value) || 0),
-                          );
-                          effect.spellLevel = next;
-                          current.itemCasterLevel = minItemCasterLevel(next);
+                          effect.spellLevel = spellLevel;
+                          current.itemCasterLevel = minItemCasterLevel(spellLevel);
                         })
                       }
                     />
                   </label>
                   <label className="pc-item-editor-field">
                     <span>Caster level</span>
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       min={1}
                       className="pc-sheet-input"
                       value={itemCasterLevel}
-                      onChange={(event) =>
+                      onValueChange={(itemCasterLevel) =>
                         patchRow((current) => {
-                          current.itemCasterLevel = Math.max(
-                            1,
-                            Number(event.target.value) || 1,
-                          );
+                          current.itemCasterLevel = itemCasterLevel;
                         })
                       }
                     />
                   </label>
                   <label className="pc-item-editor-field">
                     <span>Charges left</span>
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       min={0}
                       className="pc-sheet-input"
                       value={row.chargesCurrent ?? 0}
-                      onChange={(event) =>
+                      onValueChange={(chargesCurrent) =>
                         patchRow((current) => {
-                          current.chargesCurrent = Number(event.target.value);
+                          current.chargesCurrent = chargesCurrent;
                           clampItemCharges(current);
                         })
                       }
@@ -1501,14 +1487,13 @@ export function PcInventoryItemEditor({
                   </label>
                   <label className="pc-item-editor-field">
                     <span>Charges max</span>
-                    <input
-                      type="number"
+                    <DraftNumberInput
                       min={0}
                       className="pc-sheet-input"
                       value={row.chargesMax ?? 0}
-                      onChange={(event) =>
+                      onValueChange={(chargesMax) =>
                         patchRow((current) => {
-                          current.chargesMax = Number(event.target.value);
+                          current.chargesMax = chargesMax;
                           clampItemCharges(current);
                         })
                       }

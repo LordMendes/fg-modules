@@ -8,6 +8,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   buildDungeonSvg,
@@ -396,14 +397,13 @@ export function DungeonGenerator() {
           <div className="dungeon-gen-seed-row">
             <div className="tool-field dungeon-gen-seed-field">
               <Label htmlFor="dungeon-seed">Seed</Label>
-              <input
+              <DraftNumberInput
                 id="dungeon-seed"
                 className="tool-input"
-                type="number"
+                min={0}
+                max={999_999_999}
                 value={seed}
-                onChange={(event) =>
-                  setSeed(clampInt(Number(event.target.value), 0, 999_999_999))
-                }
+                onValueChange={(next) => setSeed(clampInt(next, 0, 999_999_999))}
               />
             </div>
             <button
@@ -429,30 +429,24 @@ export function DungeonGenerator() {
             </div>
             <div className="tool-field">
               <Label htmlFor="dungeon-level">Dungeon level</Label>
-              <input
+              <DraftNumberInput
                 id="dungeon-level"
                 className="tool-input"
-                type="number"
                 min={1}
                 max={20}
                 value={level}
-                onChange={(event) =>
-                  setLevel(clampInt(Number(event.target.value), 1, 20))
-                }
+                onValueChange={(next) => setLevel(clampInt(next, 1, 20))}
               />
             </div>
             <div className="tool-field">
               <Label htmlFor="dungeon-party">Party size</Label>
-              <input
+              <DraftNumberInput
                 id="dungeon-party"
                 className="tool-input"
-                type="number"
                 min={1}
                 max={12}
                 value={partySize}
-                onChange={(event) =>
-                  setPartySize(clampInt(Number(event.target.value), 1, 12))
-                }
+                onValueChange={(next) => setPartySize(clampInt(next, 1, 12))}
               />
             </div>
             <div className="tool-field">
@@ -489,30 +483,24 @@ export function DungeonGenerator() {
               <>
                 <div className="tool-field">
                   <Label htmlFor="dungeon-cols">Columns</Label>
-                  <input
+                  <DraftNumberInput
                     id="dungeon-cols"
                     className="tool-input"
-                    type="number"
                     min={20}
                     max={120}
                     value={cols}
-                    onChange={(event) =>
-                      setCols(clampInt(Number(event.target.value), 20, 120))
-                    }
+                    onValueChange={(next) => setCols(clampInt(next, 20, 120))}
                   />
                 </div>
                 <div className="tool-field">
                   <Label htmlFor="dungeon-rows">Rows</Label>
-                  <input
+                  <DraftNumberInput
                     id="dungeon-rows"
                     className="tool-input"
-                    type="number"
                     min={20}
                     max={120}
                     value={rows}
-                    onChange={(event) =>
-                      setRows(clampInt(Number(event.target.value), 20, 120))
-                    }
+                    onValueChange={(next) => setRows(clampInt(next, 20, 120))}
                   />
                 </div>
               </>

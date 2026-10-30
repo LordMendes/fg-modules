@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -204,14 +205,13 @@ export function FractalWorldTool() {
         <div className="fractal-world-seed-row">
           <div className="tool-field fractal-world-seed-field">
             <Label htmlFor="fractal-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="fractal-seed"
               className="tool-input"
-              type="number"
+              min={1}
+              max={2 ** 31 - 1}
               value={seed}
-              onChange={(e) =>
-                setSeed(clampInt(Number(e.target.value), 1, 2 ** 31 - 1, 1))
-              }
+              onValueChange={(next) => setSeed(clampInt(next, 1, 2 ** 31 - 1, 1))}
             />
           </div>
           <button
@@ -267,76 +267,57 @@ export function FractalWorldTool() {
           </div>
           <div className="tool-field">
             <Label htmlFor="fractal-water">Water percent</Label>
-            <input
+            <DraftNumberInput
               id="fractal-water"
               className="tool-input"
-              type="number"
               min={0}
               max={100}
               value={water}
-              onChange={(e) =>
-                setWater(clampInt(Number(e.target.value), 0, 100, water))
-              }
+              onValueChange={(next) => setWater(clampInt(next, 0, 100, water))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="fractal-ice">Ice percent of land</Label>
-            <input
+            <DraftNumberInput
               id="fractal-ice"
               className="tool-input"
-              type="number"
               min={0}
               max={100}
               value={ice}
-              onChange={(e) =>
-                setIce(clampInt(Number(e.target.value), 0, 100, ice))
-              }
+              onValueChange={(next) => setIce(clampInt(next, 0, 100, ice))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="fractal-height">Image height (px)</Label>
-            <input
+            <DraftNumberInput
               id="fractal-height"
               className="tool-input"
-              type="number"
               min={240}
               max={800}
               value={height}
-              onChange={(e) =>
-                setHeight(clampInt(Number(e.target.value), 240, 800, height))
-              }
+              onValueChange={(next) => setHeight(clampInt(next, 240, 800, height))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="fractal-iterations">Noise octaves</Label>
-            <input
+            <DraftNumberInput
               id="fractal-iterations"
               className="tool-input"
-              type="number"
               min={1}
               max={6}
               value={iterations}
-              onChange={(e) =>
-                setIterations(
-                  clampInt(Number(e.target.value), 1, 6, iterations),
-                )
-              }
+              onValueChange={(next) => setIterations(clampInt(next, 1, 6, iterations))}
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="fractal-rotation">Rotation (degrees)</Label>
-            <input
+            <DraftNumberInput
               id="fractal-rotation"
               className="tool-input"
-              type="number"
               min={0}
               max={359}
               value={rotation}
-              onChange={(e) =>
-                setRotation(
-                  clampInt(Number(e.target.value), 0, 359, rotation),
-                )
-              }
+              onValueChange={(next) => setRotation(clampInt(next, 0, 359, rotation))}
             />
           </div>
         </div>

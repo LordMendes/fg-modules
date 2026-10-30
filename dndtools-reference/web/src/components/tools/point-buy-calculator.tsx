@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   HARD_SCORE_MAX,
@@ -182,58 +183,38 @@ export function PointBuyCalculator() {
           <div className="point-buy-preset-fields">
             <div className="tool-field">
               <Label htmlFor="pb-points">Points</Label>
-              <input
+              <DraftNumberInput
                 id="pb-points"
-                type="number"
                 className="tool-input"
-                inputMode="numeric"
                 min={0}
                 max={999}
                 step={1}
                 value={budget}
-                onChange={(event) =>
-                  patchUrlState({
-                    points: Number.parseInt(event.target.value, 10) || 0,
-                  })
-                }
+                onValueChange={(points) => patchUrlState({ points })}
               />
             </div>
             <div className="tool-field">
               <Label htmlFor="pb-min">Min</Label>
-              <input
+              <DraftNumberInput
                 id="pb-min"
-                type="number"
                 className="tool-input"
-                inputMode="numeric"
                 min={HARD_SCORE_MIN}
                 max={HARD_SCORE_MAX}
                 step={1}
                 value={range.min}
-                onChange={(event) =>
-                  patchUrlState({
-                    min:
-                      Number.parseInt(event.target.value, 10) || HARD_SCORE_MIN,
-                  })
-                }
+                onValueChange={(min) => patchUrlState({ min })}
               />
             </div>
             <div className="tool-field">
               <Label htmlFor="pb-max">Max</Label>
-              <input
+              <DraftNumberInput
                 id="pb-max"
-                type="number"
                 className="tool-input"
-                inputMode="numeric"
                 min={HARD_SCORE_MIN}
                 max={HARD_SCORE_MAX}
                 step={1}
                 value={range.max}
-                onChange={(event) =>
-                  patchUrlState({
-                    max:
-                      Number.parseInt(event.target.value, 10) || HARD_SCORE_MAX,
-                  })
-                }
+                onValueChange={(max) => patchUrlState({ max })}
               />
             </div>
             <div className="tool-field point-buy-aging-field">
@@ -335,20 +316,14 @@ export function PointBuyCalculator() {
                       }
                     />
                   </label>
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="tool-input tool-input-sm point-buy-score-input"
                     min={range.min}
                     max={range.max}
                     step={1}
-                    value={scores[i]}
+                    value={scores[i]!}
                     aria-label={`${ab.short} score`}
-                    onChange={(event) =>
-                      handleScore(
-                        i,
-                        Number.parseInt(event.target.value, 10),
-                      )
-                    }
+                    onValueChange={(score) => handleScore(i, score)}
                   />
                   <span
                     className="point-buy-mod-display"

@@ -1,5 +1,6 @@
 "use client";
 
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { AbilityScoreLabelHint } from "@/components/tools/pc-main/bonus-sources-hint";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
@@ -60,15 +61,13 @@ export function PcMainAbilities({
 
               <div className="pc-ability-row-segment pc-ability-card-score">
                 <div className="pc-ability-score-controls">
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="pc-sheet-input pc-sheet-input--ability pc-ability-card-score-input"
                     min={1}
                     max={99}
                     value={undamaged}
                     aria-label={`${key.toUpperCase()} score`}
-                    onChange={(e) => {
-                      const desired = clampAbilityScore(Number(e.target.value));
+                    onValueChange={(desired) => {
                       updateAbility(key, desired - racial - itemTotal);
                     }}
                   />
@@ -130,18 +129,16 @@ export function PcMainAbilities({
                   }
                 >
                   <span className="pc-ability-col-label">Dmg</span>
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
                     min={0}
                     max={99}
                     value={damage}
                     aria-label={`${key.toUpperCase()} ability damage`}
-                    onChange={(e) => {
-                      const next = clampAbilityDamage(Number(e.target.value));
+                    onValueChange={(next) => {
                       patch((s) => {
                         if (!s.abilityDamage) s.abilityDamage = emptyAbilityDamage();
-                        s.abilityDamage[key] = next;
+                        s.abilityDamage[key] = clampAbilityDamage(next);
                       });
                     }}
                   />
@@ -149,17 +146,16 @@ export function PcMainAbilities({
 
                 <div className="pc-ability-row-segment pc-ability-col pc-ability-col--dmg">
                   <span className="pc-ability-col-label">Drain</span>
-                  <input
-                    type="number"
+                  <DraftNumberInput
                     className="pc-sheet-input pc-sheet-input--ability pc-sheet-input--ability-dmg"
                     min={0}
                     max={99}
                     value={drain}
                     aria-label={`${key.toUpperCase()} ability drain`}
-                    onChange={(e) =>
+                    onValueChange={(next) =>
                       patch((s) => {
                         if (!s.abilityDrain) s.abilityDrain = emptyAbilityDrain();
-                        s.abilityDrain[key] = clampAbilityDamage(Number(e.target.value));
+                        s.abilityDrain[key] = clampAbilityDamage(next);
                       })
                     }
                   />

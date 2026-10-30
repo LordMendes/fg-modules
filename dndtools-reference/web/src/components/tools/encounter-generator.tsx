@@ -10,6 +10,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { loadEncounterMonsterCandidates } from "@/actions/encounter-generator";
 import { formatEl, formatXp } from "@/lib/encounter/formatEl";
@@ -244,12 +245,12 @@ export function EncounterGenerator() {
         <div className="encounter-gen-seed-row">
           <div className="tool-field encounter-gen-seed-field">
             <Label htmlFor="encounter-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="encounter-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
           <button
@@ -265,16 +266,13 @@ export function EncounterGenerator() {
         <div className="encounter-gen-grid">
           <div className="tool-field">
             <Label htmlFor="encounter-level">Level (target EL)</Label>
-            <input
+            <DraftNumberInput
               id="encounter-level"
-              type="number"
               className="tool-input"
               min={1}
               max={20}
               value={level}
-              onChange={(event) =>
-                setLevel(clampInt(Number(event.target.value), 1, 20))
-              }
+              onValueChange={(next) => setLevel(clampInt(next, 1, 20))}
             />
           </div>
           <div className="tool-field">
@@ -402,34 +400,24 @@ export function EncounterGenerator() {
                 <div className="encounter-gen-xp-grid">
                   <div className="tool-field">
                     <Label htmlFor="encounter-party-size">Party size</Label>
-                    <input
+                    <DraftNumberInput
                       id="encounter-party-size"
-                      type="number"
                       className="tool-input"
                       min={1}
                       max={12}
                       value={partySize}
-                      onChange={(event) =>
-                        setPartySize(
-                          clampInt(Number(event.target.value), 1, 12),
-                        )
-                      }
+                      onValueChange={(next) => setPartySize(clampInt(next, 1, 12))}
                     />
                   </div>
                   <div className="tool-field">
                     <Label htmlFor="encounter-party-level">Party level</Label>
-                    <input
+                    <DraftNumberInput
                       id="encounter-party-level"
-                      type="number"
                       className="tool-input"
                       min={1}
                       max={20}
                       value={partyLevel}
-                      onChange={(event) =>
-                        setPartyLevel(
-                          clampInt(Number(event.target.value), 1, 20),
-                        )
-                      }
+                      onValueChange={(next) => setPartyLevel(clampInt(next, 1, 20))}
                     />
                   </div>
                 </div>

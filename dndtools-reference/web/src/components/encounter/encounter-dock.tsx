@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronUp, Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import {
   EncounterPartyConfig,
   elDeltaClassName,
@@ -239,15 +240,11 @@ export function EncounterDock() {
                         >
                           <Minus size={14} aria-hidden="true" />
                         </button>
-                        <input
-                          type="number"
+                        <DraftNumberInput
                           min={1}
                           max={999}
                           value={entry.count}
-                          onChange={(e) => {
-                            const n = parseInt(e.target.value, 10);
-                            if (!Number.isNaN(n)) setCount(entry.slug, n);
-                          }}
+                          onValueChange={(count) => setCount(entry.slug, count)}
                           className="encounter-qty-input"
                           aria-label={`${entry.name} count`}
                         />

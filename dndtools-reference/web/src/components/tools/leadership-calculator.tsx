@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { LeadershipSummary } from "@/components/tools/leadership-summary";
 import {
   buildLeadershipSearchParams,
@@ -54,14 +55,13 @@ function NumberField({
   return (
     <div className="tool-field">
       <Label htmlFor={id}>{label}</Label>
-      <input
+      <DraftNumberInput
         id={id}
-        type="number"
         className="tool-input"
         value={value}
         min={min}
         max={max}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onValueChange={onChange}
       />
     </div>
   );

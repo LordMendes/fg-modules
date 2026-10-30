@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { RollableStat } from "@/components/dice/rollable-stat";
 import { computeArcaneSpellFailure } from "@/lib/pc-planner/combatStats";
 import { CONDITION_PRESETS } from "@/lib/pc-planner/conditions";
@@ -176,26 +177,24 @@ export function PcResourcesPanel({ state, patch }: { state: PcPlanState; patch: 
           {resources.map((res) => (
             <li key={res.id} className="pc-resource-row">
               <span>{res.name}</span>
-              <input
-                type="number"
+              <DraftNumberInput
                 className="pc-sheet-input pc-sheet-input--narrow"
                 value={res.current}
-                onChange={(e) =>
+                onValueChange={(current) =>
                   patch((s) => {
                     const row = s.resources?.find((r) => r.id === res.id);
-                    if (row) row.current = Number(e.target.value);
+                    if (row) row.current = current;
                   })
                 }
               />
               <span>/</span>
-              <input
-                type="number"
+              <DraftNumberInput
                 className="pc-sheet-input pc-sheet-input--narrow"
                 value={res.max}
-                onChange={(e) =>
+                onValueChange={(max) =>
                   patch((s) => {
                     const row = s.resources?.find((r) => r.id === res.id);
-                    if (row) row.max = Number(e.target.value);
+                    if (row) row.max = max;
                   })
                 }
               />

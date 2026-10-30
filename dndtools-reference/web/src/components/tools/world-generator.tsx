@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -303,12 +304,12 @@ export function WorldGenerator() {
         <div className="world-gen-seed-row">
           <div className="tool-field world-gen-seed-field">
             <Label htmlFor="world-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="world-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
           <button
@@ -323,43 +324,27 @@ export function WorldGenerator() {
         <div className="world-gen-fields">
           <div className="tool-field">
             <Label htmlFor="world-water">Water percent</Label>
-            <input
+            <DraftNumberInput
               id="world-water"
-              type="number"
               className="tool-input"
               min={10}
               max={90}
               value={water}
-              onChange={(event) =>
-                setWater(
-                  clampInt(
-                    Number(event.target.value),
-                    10,
-                    90,
-                    DEFAULT_WORLD_INPUT.water,
-                  ),
-                )
+              onValueChange={(next) =>
+                setWater(clampInt(next, 10, 90, DEFAULT_WORLD_INPUT.water))
               }
             />
           </div>
           <div className="tool-field">
             <Label htmlFor="world-ice">Ice percent</Label>
-            <input
+            <DraftNumberInput
               id="world-ice"
-              type="number"
               className="tool-input"
               min={0}
               max={40}
               value={ice}
-              onChange={(event) =>
-                setIce(
-                  clampInt(
-                    Number(event.target.value),
-                    0,
-                    40,
-                    DEFAULT_WORLD_INPUT.ice,
-                  ),
-                )
+              onValueChange={(next) =>
+                setIce(clampInt(next, 0, 40, DEFAULT_WORLD_INPUT.ice))
               }
             />
           </div>

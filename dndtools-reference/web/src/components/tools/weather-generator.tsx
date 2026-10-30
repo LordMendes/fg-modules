@@ -8,6 +8,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -181,12 +182,12 @@ export function WeatherGenerator() {
         <div className="weather-gen-seed-row">
           <div className="tool-field weather-gen-seed-field">
             <Label htmlFor="weather-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="weather-seed"
-              type="number"
               className="tool-input"
+              min={0}
               value={seed}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              onValueChange={setSeed}
             />
           </div>
           <button
@@ -252,16 +253,13 @@ export function WeatherGenerator() {
           </div>
           <div className="tool-field">
             <Label htmlFor="weather-days">Days</Label>
-            <input
+            <DraftNumberInput
               id="weather-days"
-              type="number"
               className="tool-input"
               min={1}
               max={60}
               value={days}
-              onChange={(event) =>
-                setDays(clampInt(Number(event.target.value), 1, 60))
-              }
+              onValueChange={(next) => setDays(clampInt(next, 1, 60))}
             />
           </div>
         </div>

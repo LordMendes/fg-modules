@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   advanceGeneratorSeed,
@@ -306,24 +307,23 @@ export function NameGeneratorTool() {
         <div className="name-gen-grid">
           <div className="tool-field">
             <Label htmlFor="name-gen-count">Count</Label>
-            <input
+            <DraftNumberInput
               id="name-gen-count"
-              type="number"
               className="tool-input"
               min={1}
               max={50}
               value={count}
-              onChange={(event) => setCount(Number(event.target.value))}
+              onValueChange={setCount}
             />
           </div>
           <div className="tool-field name-gen-seed-field">
             <Label htmlFor="name-gen-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="name-gen-seed"
-              type="number"
               className="tool-input"
-              value={Number.isFinite(seed) ? seed : ""}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              min={0}
+              value={Number.isFinite(seed) ? seed : 0}
+              onValueChange={setSeed}
             />
           </div>
         </div>

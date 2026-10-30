@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { Backpack, Package, Pencil, Plus, Shield, Shirt, Sparkles, Sword, Trash2 } from "lucide-react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { fetchInventoryItem } from "@/actions/data";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import { PcInventoryItemEditor } from "@/components/tools/pc-inventory-item-editor";
@@ -652,14 +653,13 @@ export function PcInventoryPanel({
                   <div className="pc-inventory-row-controls">
                     <label className="pc-inventory-field pc-inventory-field--qty">
                       <span>Qty</span>
-                      <input
-                        type="number"
+                      <DraftNumberInput
                         min={0}
                         className="pc-sheet-input pc-inventory-num"
                         value={row.quantity}
-                        onChange={(e) =>
+                        onValueChange={(quantity) =>
                           patch((s) => {
-                            s.inventory[i].quantity = Number(e.target.value);
+                            s.inventory[i].quantity = quantity;
                           })
                         }
                       />
@@ -667,17 +667,16 @@ export function PcInventoryPanel({
                     {isChargedSpellItem(row) ? (
                       <label className="pc-inventory-field pc-inventory-field--charges">
                         <span>Chg</span>
-                        <input
-                          type="number"
+                        <DraftNumberInput
                           min={0}
                           max={row.chargesMax ?? undefined}
                           className="pc-sheet-input pc-inventory-num"
                           value={row.chargesCurrent ?? 0}
                           aria-label={`${row.name || "Item"} charges remaining`}
-                          onChange={(e) =>
+                          onValueChange={(charges) =>
                             patch((s) => {
                               const target = s.inventory[i];
-                              target.chargesCurrent = Number(e.target.value);
+                              target.chargesCurrent = charges;
                               clampItemCharges(target);
                             })
                           }
@@ -686,16 +685,15 @@ export function PcInventoryPanel({
                     ) : null}
                     <label className="pc-inventory-field pc-inventory-field--wt">
                       <span>Wt</span>
-                      <input
-                        type="number"
+                      <DraftNumberInput
                         min={0}
-                        step="0.1"
+                        step={0.1}
                         className="pc-sheet-input pc-inventory-num"
                         value={row.weight}
                         aria-label="Weight in pounds"
-                        onChange={(e) =>
+                        onValueChange={(weight) =>
                           patch((s) => {
-                            s.inventory[i].weight = Number(e.target.value);
+                            s.inventory[i].weight = weight;
                           })
                         }
                       />
@@ -922,16 +920,15 @@ export function PcInventoryPanel({
             <li key={row.id} className="pc-treasure-coin">
               <label className="pc-inventory-field">
                 <span>{row.name}</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   min={0}
                   className="pc-sheet-input pc-inventory-num pc-treasure-amount"
                   value={row.amount}
                   aria-label={`${row.name} amount`}
-                  onChange={(event) =>
+                  onValueChange={(amount) =>
                     patchTreasure((rows) => {
                       const current = rows.find((entry) => entry.id === row.id);
-                      if (current) current.amount = Number(event.target.value);
+                      if (current) current.amount = amount;
                     })
                   }
                 />
@@ -956,16 +953,15 @@ export function PcInventoryPanel({
                     })
                   }
                 />
-                <input
-                  type="number"
+                <DraftNumberInput
                   min={0}
                   className="pc-sheet-input pc-inventory-num pc-treasure-amount"
                   value={row.amount}
                   aria-label={`${row.name || "Custom currency"} amount`}
-                  onChange={(event) =>
+                  onValueChange={(amount) =>
                     patchTreasure((rows) => {
                       const current = rows.find((entry) => entry.id === row.id);
-                      if (current) current.amount = Number(event.target.value);
+                      if (current) current.amount = amount;
                     })
                   }
                 />

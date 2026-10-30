@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import {
   computeCombatStats,
   formatIterativeAttacks,
@@ -121,12 +122,12 @@ function CombatNumberInput({
   onChange: (raw: string) => void;
 }) {
   return (
-    <input
-      type="number"
+    <DraftNumberInput
       className="pc-sheet-input pc-combat-value pc-combat-input"
-      value={value === 0 ? "" : value}
-      placeholder="0"
-      onChange={(e) => onChange(e.target.value)}
+      value={value}
+      emptyValue={0}
+      blankZero
+      onValueChange={(next) => onChange(String(next))}
     />
   );
 }

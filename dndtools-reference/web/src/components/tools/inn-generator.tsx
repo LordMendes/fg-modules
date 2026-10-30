@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { advanceGeneratorSeed } from "@/lib/random-spellbook/seeded-rng";
 import {
@@ -235,12 +236,12 @@ export function InnGenerator() {
         <div className="inn-gen-fields">
           <div className="tool-field">
             <Label htmlFor="inn-gen-seed">Seed</Label>
-            <input
+            <DraftNumberInput
               id="inn-gen-seed"
-              type="number"
               className="tool-input"
-              value={Number.isFinite(seed) ? seed : ""}
-              onChange={(event) => setSeed(Number(event.target.value))}
+              min={0}
+              value={Number.isFinite(seed) ? seed : 0}
+              onValueChange={setSeed}
               onKeyDown={(event) => {
                 if (event.key === "Enter") handleUseSeed();
               }}

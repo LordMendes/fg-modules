@@ -3,6 +3,7 @@
 import { Dices } from "lucide-react";
 import { useCallback, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { DieIcon } from "@/components/dice/die-icon";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { useDice } from "@/components/dice/dice-provider";
 import { poolDieCount } from "@/lib/dice/notation";
 import { DICE_SKINS } from "@/lib/dice/skins";
@@ -266,15 +267,13 @@ export function DiceTray() {
             <div className="dice-tray-controls">
               <label className="dice-tray-mod">
                 <span>Mod</span>
-                <input
-                  type="number"
+                <DraftNumberInput
                   className="pc-sheet-input dice-tray-mod-input"
-                  value={modifier === 0 ? "" : modifier}
+                  value={modifier}
+                  emptyValue={0}
+                  blankZero
                   placeholder="0"
-                  onChange={(e) => {
-                    const raw = e.target.value;
-                    setModifier(raw === "" ? 0 : Number(raw));
-                  }}
+                  onValueChange={setModifier}
                 />
               </label>
               <button

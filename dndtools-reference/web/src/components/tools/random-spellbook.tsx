@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { DraftNumberInput } from "@/components/draft-number-input";
 import { Link2, Sparkles } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FieldTooltip, LabelWithTooltip } from "@/components/field-tooltip";
@@ -63,14 +64,13 @@ function CompactNumberField({
   return (
     <div className="tool-field random-spellbook-compact-field">
       <LabelWithTooltip htmlFor={id} label={label} tooltip={tooltip} />
-      <input
+      <DraftNumberInput
         id={id}
-        type="number"
         className="tool-input random-spellbook-compact-input"
-        value={Number.isFinite(value) ? value : ""}
+        value={value}
         min={min}
         max={max}
-        onChange={(event) => onChange(Number(event.target.value))}
+        onValueChange={onChange}
       />
     </div>
   );
