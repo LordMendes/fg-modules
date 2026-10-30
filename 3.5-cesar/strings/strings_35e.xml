@@ -743,7 +743,7 @@
 	<string name="cesar_message_heropoint_death_stable_noct">Hero point: held at the brink of death. Add the character to the combat tracker to mark Stable.</string>
 	<string name="cesar_message_heropoint_death_save">Hero point: automatic failure converted to a success.</string>
 	<string name="cesar_label_gestaltadd">Add Class</string>
-	<string name="cesar_tooltip_gestaltadd">Add both classes for one gestalt level.</string>
+	<string name="cesar_tooltip_gestaltadd">Add both classes for one gestalt level. A later level can use a different pair.</string>
 	<string name="cesar_title_gestalt">Add Gestalt Classes</string>
 	<string name="cesar_label_gestalthint">Drop one class in each slot.</string>
 	<string name="cesar_label_gestaltslot1">Class 1</string>
@@ -752,9 +752,9 @@
 	<string name="cesar_tooltip_gestaltslot">Drop a class here.</string>
 	<string name="cesar_message_gestalt_empty">Drop a class in both slots.</string>
 	<string name="cesar_message_gestalt_duplicate">Choose two different classes.</string>
-	<string name="cesar_message_gestalt_mismatch">These classes do not match this character. A new character can take a gestalt pair, and a gestalt character can only level that same pair.</string>
-	<string name="cesar_message_gestalt_useadd">This character is gestalt. Use Add Class to level both classes.</string>
-	<string name="cesar_message_gestalt_applied">Gestalt level %d (%s and %s) applied to %s.</string>
+	<string name="cesar_message_gestalt_mismatch">This character already has classes added the normal way. Gestalt starts on a character with no classes.</string>
+	<string name="cesar_message_gestalt_useadd">This character is gestalt. Use Add Class to level a pair.</string>
+	<string name="cesar_message_gestalt_applied">Gestalt level %d (%s %d and %s %d) applied to %s.</string>
 	<string name="tab_dr">DR</string>
 	<string name="cesar_label_dradd">Add</string>
 	<string name="cesar_label_dredit">Edit</string>

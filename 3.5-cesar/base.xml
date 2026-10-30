@@ -105,6 +105,7 @@
 	<script name="EffectManager35E" file="scripts/manager_effect_35E.lua" />
 	<script name="EncumbranceManager35E" file="scripts/manager_encumbrance_35E.lua" />
 	<script name="ItemManager2" file="scripts/manager_item2.lua" />
+	<script name="InvLog" file="scripts/manager_invlog.lua" />
 	<script name="PartyManager2" file="scripts/manager_ps2.lua" />
 	<script name="PowerManager35E" file="scripts/manager_power_35E.lua" />
 	<script name="SpellManager" file="scripts/manager_spell.lua" />

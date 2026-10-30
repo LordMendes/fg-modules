@@ -132,14 +132,11 @@ function calcLevel(nodeChar)
 	local bGestalt = DB.getValue(nodeChar, "gestalt", 0) ~= 0;
 
 	for _,nodeChild in ipairs(DB.getChildList(nodeChar, "classes")) do
-		local nClassLevel = DB.getValue(nodeChild, "level", 0);
-		if bGestalt then
-			if nClassLevel > nLevel then
-				nLevel = nClassLevel;
-			end
-		else
-			nLevel = nLevel + nClassLevel;
-		end
+		nLevel = nLevel + DB.getValue(nodeChild, "level", 0);
+	end
+
+	if bGestalt then
+		nLevel = math.floor(nLevel / 2);
 	end
 
 	DB.setValue(nodeChar, "level", "number", nLevel);
@@ -555,7 +552,7 @@ function addToWeaponDB(nodeItem)
 	local nThresholdIndex = 1;
 	local nMultIndex = 1;
 	for kCrit, sCrit in ipairs(aCrit) do
-		local sCritThreshold = string.match(sCrit, "(%d+)[%-–]20");
+		local sCritThreshold = string.match(sCrit, "(%d+)[%-ï¿½]20");
 		if sCritThreshold then
 			aCritThreshold[nThresholdIndex] = tonumber(sCritThreshold) or 20;
 			nThresholdIndex = nThresholdIndex + 1;
@@ -1778,39 +1775,37 @@ function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
 	end
 
 	local aNamed = {};
+	local nExisting = 0;
 	for _, nodeClass in ipairs(DB.getChildList(nodeChar, "classes")) do
 		local sName = StringManager.trim(DB.getValue(nodeClass, "name", ""));
 		if sName ~= "" then
 			table.insert(aNamed, nodeClass);
+			nExisting = nExisting + DB.getValue(nodeClass, "level", 0);
 		end
 	end
 
 	local bGestalt = DB.getValue(nodeChar, "gestalt", 0) ~= 0;
-	local nodeClass1 = nil;
-	local nodeClass2 = nil;
-	if #aNamed == 0 then
-		bGestalt = false;
-	elseif bGestalt and #aNamed == 2 then
-		local tByName = {};
-		for _, nodeClass in ipairs(aNamed) do
-			local sKey = StringManager.strip(StringManager.trim(DB.getValue(nodeClass, "name", "")):lower());
-			tByName[sKey] = nodeClass;
-		end
-		nodeClass1 = tByName[t1.sLookup];
-		nodeClass2 = tByName[t2.sLookup];
-		if not nodeClass1 or not nodeClass2 then
-			ChatManager.SystemMessage(Interface.getString("cesar_message_gestalt_mismatch"));
-			return false;
-		end
-	else
+	if #aNamed > 0 and not bGestalt then
 		ChatManager.SystemMessage(Interface.getString("cesar_message_gestalt_mismatch"));
 		return false;
 	end
 
-	local nLevel = 1;
-	if nodeClass1 then
-		nLevel = math.max(DB.getValue(nodeClass1, "level", 0), DB.getValue(nodeClass2, "level", 0)) + 1;
+	local tByName = {};
+	for _, nodeClass in ipairs(aNamed) do
+		local sKey = StringManager.strip(StringManager.trim(DB.getValue(nodeClass, "name", "")):lower());
+		tByName[sKey] = nodeClass;
 	end
+	local nodeClass1 = tByName[t1.sLookup];
+	local nodeClass2 = tByName[t2.sLookup];
+	local nLevel1 = 1;
+	local nLevel2 = 1;
+	if nodeClass1 then
+		nLevel1 = DB.getValue(nodeClass1, "level", 0) + 1;
+	end
+	if nodeClass2 then
+		nLevel2 = DB.getValue(nodeClass2, "level", 0) + 1;
+	end
+	local bFirstLevel = (nExisting <= 0);
 
 	local nodeList = DB.createChild(nodeChar, "classes");
 	if not nodeList then
@@ -1828,8 +1823,8 @@ function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
 	DB.setValue(nodeClass2, "shortcut", "windowreference", sClass2, sRecord2);
 
 	DB.setValue(nodeChar, "gestalt", "number", 1);
-	DB.setValue(nodeClass1, "level", "number", nLevel);
-	DB.setValue(nodeClass2, "level", "number", nLevel);
+	DB.setValue(nodeClass1, "level", "number", nLevel1);
+	DB.setValue(nodeClass2, "level", "number", nLevel2);
 	calcLevel(nodeChar);
 
 	local nMult1, nSides1 = hdSides(t1.sHD);
@@ -1850,7 +1845,7 @@ function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
 			nRoll = nConMod;
 		end
 		local nAddHP = nRoll + nConMod;
-		if nLevel == 1 then
+		if bFirstLevel then
 			nAddHP = nAddHP + math.floor(nConScore / 2);
 		end
 		if nAddHP < 1 then
@@ -1864,21 +1859,21 @@ function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
 			sHPFormat = "Hit points added for %s to %s";
 		end
 		local sHPMsg = string.format(sHPFormat, t1.sName .. " / " .. t2.sName, DB.getValue(nodeChar, "name", "")) .. " (" .. nRoll .. "+" .. nConMod;
-		if nLevel == 1 then
+		if bFirstLevel then
 			sHPMsg = sHPMsg .. "+" .. math.floor(nConScore / 2);
 		end
 		sHPMsg = sHPMsg .. ")";
 		ChatManager.SystemMessage(sHPMsg);
 	end
 
-	local nAddBAB = math.max(babStep(t1.sBAB, nLevel), babStep(t2.sBAB, nLevel));
+	local nAddBAB = math.max(babStep(t1.sBAB, nLevel1), babStep(t2.sBAB, nLevel2));
 	if nAddBAB > 0 then
 		DB.setValue(nodeChar, "attackbonus.base", "number", DB.getValue(nodeChar, "attackbonus.base", 0) + nAddBAB);
 	end
 
-	local nFort = math.max(saveStep(t1.sFort, nLevel), saveStep(t2.sFort, nLevel));
-	local nRef = math.max(saveStep(t1.sRef, nLevel), saveStep(t2.sRef, nLevel));
-	local nWill = math.max(saveStep(t1.sWill, nLevel), saveStep(t2.sWill, nLevel));
+	local nFort = math.max(saveStep(t1.sFort, nLevel1), saveStep(t2.sFort, nLevel2));
+	local nRef = math.max(saveStep(t1.sRef, nLevel1), saveStep(t2.sRef, nLevel2));
+	local nWill = math.max(saveStep(t1.sWill, nLevel1), saveStep(t2.sWill, nLevel2));
 	if nFort > 0 then
 		addSaveBonus(nodeChar, "fortitude", "base", nFort);
 	end
@@ -1894,7 +1889,7 @@ function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
 		local nIntScore = DB.getValue(nodeChar, "abilities.intelligence.score", 10);
 		local nIntMod = math.floor((nIntScore - 10) / 2);
 		local nAddPoints = math.max(nAllot + nIntMod, 1);
-		if nLevel == 1 then
+		if bFirstLevel then
 			nAddPoints = nAddPoints * 4;
 		end
 		local nodeSkillClass = nodeClass1;
@@ -1907,18 +1902,20 @@ function addGestaltPair(nodeChar, sClass1, sRecord1, sClass2, sRecord2)
 		ChatManager.SystemMessage(sSkillMsg);
 	end
 
-	if nLevel == 1 then
+	if nLevel1 == 1 then
 		grantClassSkillList(nodeChar, t1.sClassSkills, t1.sLookup);
+	end
+	if nLevel2 == 1 then
 		grantClassSkillList(nodeChar, t2.sClassSkills, t2.sLookup);
 	end
 
-	grantFeatures(nodeChar, nodeSource1, nLevel);
-	grantFeatures(nodeChar, nodeSource2, nLevel);
+	grantFeatures(nodeChar, nodeSource1, nLevel1);
+	grantFeatures(nodeChar, nodeSource2, nLevel2);
 	addClassSpellLevel(nodeChar, t1.sName);
 	addClassSpellLevel(nodeChar, t2.sName);
 
 	local sApplied = Interface.getString("cesar_message_gestalt_applied");
-	ChatManager.SystemMessage(string.format(sApplied, nLevel, t1.sName, t2.sName, DB.getValue(nodeChar, "name", "")));
+	ChatManager.SystemMessage(string.format(sApplied, DB.getValue(nodeChar, "level", 0), t1.sName, nLevel1, t2.sName, nLevel2, DB.getValue(nodeChar, "name", "")));
 	return true;
 end
 

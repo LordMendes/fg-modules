@@ -17,6 +17,7 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Player's Handbook II": ("PH2", "players-handbook-ii"),
     "Champions of Ruin": ("CR", "champions-of-ruin"),
     "Player's Guide to Faerûn": ("PG", "players-guide-to-faerun"),
+    "Player's Guide to Eberron": ("PE", "players-guide-to-eberron"),
     "Champions of Valor": ("CV", "champions-of-valor"),
     "Dungeon Master's Guide": ("DMG", "dungeon-masters-guide"),
     "CityScape": ("Ci", "cityscape"),
