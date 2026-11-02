@@ -9,24 +9,11 @@ import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
 import { SortableHtmlTables } from "@/components/sortable-html-tables";
 
-/** These entries lead with the rules text. Quick answers stay at the bottom. */
-const QUICK_ANSWERS_AT_END = new Set<CategoryKey>(["feats", "classes", "spells"]);
-
-function EntityQuickAnswers({
-  faqs,
-  subdued = false,
-}: {
-  faqs: EntityFaq[];
-  subdued?: boolean;
-}) {
+function EntityQuickAnswers({ faqs }: { faqs: EntityFaq[] }) {
   if (faqs.length === 0) return null;
   return (
     <section
-      className={
-        subdued
-          ? "entity-quick-answers entity-quick-answers-footer"
-          : "tool-explainer entity-quick-answers"
-      }
+      className="entity-quick-answers entity-quick-answers-footer"
       aria-labelledby="entity-quick-answers-heading"
     >
       <h2 id="entity-quick-answers-heading">Quick answers</h2>
@@ -58,7 +45,6 @@ export function EntityDetailView({
   const fields = Object.entries(entity.fields).filter(([, v]) => v);
   const lead = buildEntityLead(category, entity);
   const faqs = buildEntityFaqs(category, entity);
-  const quickAnswersAtEnd = QUICK_ANSWERS_AT_END.has(category);
 
   return (
     <article className="entity-detail">
@@ -116,8 +102,6 @@ export function EntityDetailView({
       </header>
 
       {lead ? <p className="entity-lead">{lead}</p> : null}
-
-      {quickAnswersAtEnd ? null : <EntityQuickAnswers faqs={faqs} />}
 
       {entity.sections && entity.sections.length > 0 && (
         <>
@@ -263,7 +247,7 @@ export function EntityDetailView({
         />
       )}
 
-      {quickAnswersAtEnd ? <EntityQuickAnswers faqs={faqs} subdued /> : null}
+      <EntityQuickAnswers faqs={faqs} />
     </article>
   );
 }

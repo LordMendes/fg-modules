@@ -558,17 +558,21 @@ function getLastRoll(nodeChar)
 end
 
 function applyHeroBonus(nodeChar)
-	local tRoll = getLastRoll(nodeChar);
-	if not tRoll or not _tHeroRoll[tRoll.sType] then
-		announce(nodeChar, Interface.getString("cesar_message_heropoint_noroll"));
+	if not nodeChar then
+		return;
+	end
+	if not ModifierStack or not ModifierStack.addSlot then
+		return;
+	end
+	if ModifierStack.slots and (#ModifierStack.slots >= 6) then
+		announce(nodeChar, Interface.getString("cesar_message_heropoint_stackfull"));
 		return;
 	end
 	if not spendHeroPoint(nodeChar) then
 		return;
 	end
-	local nOld = tRoll.nTotal;
-	tRoll.nTotal = nOld + 5;
-	announce(nodeChar, string.format(Interface.getString("cesar_message_heropoint_bonus"), tRoll.nTotal, nOld), tRoll.bSecret);
+	ModifierStack.addSlot(Interface.getString("char_label_heropoints"), 5);
+	announce(nodeChar, Interface.getString("cesar_message_heropoint_bonus"));
 end
 
 function rerollHero(nodeChar)

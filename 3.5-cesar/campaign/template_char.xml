@@ -624,26 +624,7 @@
 				end
 
 				function onValueChanged()
-					local nodeSkill = window.getDatabaseNode();
-					local nodeList = DB.getChild(nodeSkill, "...");
-					local nodeChar = nodeList;
-					if nodeList and not DB.getChild(nodeList, "skilllist") then
-						local nodeParent = DB.getChild(nodeList, "...");
-						if nodeParent and DB.getChild(nodeParent, "skilllist") then
-							nodeChar = nodeParent;
-						end
-					end
-					if DB.getValue(nodeSkill, "state", 0) == 0 and nodeChar then
-						local nLevel = DB.getValue(nodeChar, "level", 0);
-						if nLevel > 0 then
-							local nMax = math.floor(nLevel / 2);
-							if getValue() > nMax then
-								setValue(nMax);
-								return;
-							end
-						end
-					end
-					CharManager.updateSkillPoints(DB.getChild(nodeSkill, "..."));
+					CharManager.updateSkillPoints(DB.getChild(window.getDatabaseNode(), "..."));
 				end
 			</script>
 		</number_listitem_right>

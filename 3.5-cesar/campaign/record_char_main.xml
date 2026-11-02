@@ -367,21 +367,12 @@
 				<anchored to="heroframe" position="insidetopleft" offset="16,16" />
 				<static textres="char_label_heropoints" />
 			</label>
-			<buttongroup_counter name="heropoints">
+			<buttongroup_counter name="heropoints_counter">
 				<anchored to="heropoints_label" position="righthigh" offset="8,0" height="24" />
 				<tooltip textres="char_label_heropoints" />
 				<maxslotperrow>10</maxslotperrow>
+				<values><maximum>20</maximum></values>
 				<sourcefields><current>heropoints</current></sourcefields>
-				<script>
-					function onInit()
-						if super and super.onInit then
-							super.onInit();
-						end
-						if self.setMaxValue then
-							self.setMaxValue(20);
-						end
-					end
-				</script>
 			</buttongroup_counter>
 			<button_text name="button_herogrant">
 				<anchored to="heroframe" position="insidetopright" offset="16,14" width="22" height="20" />
@@ -450,10 +441,10 @@
 				<sourcefields><current>alignmentuses</current></sourcefields>
 				<script>
 					function onInit()
+						self.refreshMax();
 						if super and super.onInit then
 							super.onInit();
 						end
-						self.refreshMax();
 						DB.addHandler(DB.getPath(window.getDatabaseNode(), "level"), "onUpdate", self.refreshMax);
 						DB.addHandler(DB.getPath(window.getDatabaseNode(), "classes"), "onChildUpdate", self.refreshMax);
 					end

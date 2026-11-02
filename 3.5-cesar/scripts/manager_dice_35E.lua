@@ -165,7 +165,9 @@ local _tActorSystemDefaults = {
 		{ diceskin = 304 }
 	},
 	["undead_skeleton"] = {
-		{ diceskin = 305 }
+		{ diceskin = 305 },
+		{ diceskin = 315 },
+		{ diceskin = 0, dicebodycolor="FFF3E5C4", dicetextcolor="FF2A2118" }
 	},
 	["humanoid_were"] = {
 		{ diceskin = 306 }
@@ -222,6 +224,23 @@ function onInit()
 	DiceManager35E.registerActorSystemRules();
 
 	DiceManager35E.registerActions();
+	DiceManager35E.registerSkeletonNameMatch();
+end
+
+-- Exact name rules stay in _tActorDiceSystemRules. Any other creature whose
+-- name contains "skeleton" uses the same bone skin.
+function registerSkeletonNameMatch()
+	local fnResolve = DiceRollManager.resolveActorSystem;
+	DiceRollManager.resolveActorSystem = function(sKey)
+		local tSkin = fnResolve(sKey);
+		if tSkin then
+			return tSkin;
+		end
+		if sKey and sKey:lower():find("skeleton", 1, true) then
+			return DiceRollManager.resolveDiceSkinDefaults("undead_skeleton");
+		end
+		return nil;
+	end
 end
 
 function registerActions()

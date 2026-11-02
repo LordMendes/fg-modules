@@ -846,7 +846,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 
 	elseif rAction.type == "effect" then
 		local rRoll;
-		rRoll = ActionEffect.getRoll(draginfo, rActor, rAction);
+		rRoll = ActionEffect.getRoll(rActor, rAction);
 		if rRoll then
 			table.insert(rRolls, rRoll);
 		end

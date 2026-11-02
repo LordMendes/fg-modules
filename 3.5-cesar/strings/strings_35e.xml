@@ -727,7 +727,7 @@
 	<string name="cesar_label_herogrant">+</string>
 	<string name="cesar_tooltip_herogrant">Gain level + 1 hero points. Maximum is 20.</string>
 	<string name="cesar_label_herobonus">+5</string>
-	<string name="cesar_tooltip_herobonus">Spend 1 hero point to add 5 to the last attack, save, or skill roll.</string>
+	<string name="cesar_tooltip_herobonus">Spend 1 hero point to add +5 to the next roll.</string>
 	<string name="cesar_label_heroreroll">Reroll</string>
 	<string name="cesar_tooltip_heroreroll">Spend 1 hero point to reroll the last d20 and keep the higher result.</string>
 	<string name="cesar_label_herodeath">Death</string>
@@ -736,7 +736,8 @@
 	<string name="cesar_message_heropoint_full">Hero points are already at the maximum (20).</string>
 	<string name="cesar_message_heropoint_gained">Gained %d hero points (%d/%d).</string>
 	<string name="cesar_message_heropoint_noroll">No attack, save, or skill roll to change.</string>
-	<string name="cesar_message_heropoint_bonus">Hero point: +5. New total %d (was %d).</string>
+	<string name="cesar_message_heropoint_bonus">Hero point: +5 on the next roll.</string>
+	<string name="cesar_message_heropoint_stackfull">The modifier stack is full. No hero point was spent.</string>
 	<string name="cesar_message_heropoint_reroll">Hero point: reroll %d and %d, kept %d. New total %d (was %d).</string>
 	<string name="cesar_message_heropoint_death_none">No hero point spent. The character is not dying, and the last roll was not an automatic failure.</string>
 	<string name="cesar_message_heropoint_death_stable">Hero point: stabilized before -10.</string>
