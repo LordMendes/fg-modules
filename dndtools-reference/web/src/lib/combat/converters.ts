@@ -18,6 +18,7 @@ import { pcPlanToCombatSpells } from "./converters/pcCombatSpells";
 import type {
   CombatAttackLine,
   CombatSnapshot,
+  CombatSpellClass,
   CombatSpellEntry,
   CombatSpellUses,
   CombatantView,
@@ -40,6 +41,7 @@ export type CombatStatBlock = {
   stats: CombatantView["stats"];
   spells?: CombatSpellEntry[];
   spellUses?: CombatSpellUses;
+  spellClasses?: CombatSpellClass[];
 };
 
 function indexString(data: Record<string, unknown>, key: string): string | null {
@@ -258,6 +260,7 @@ export function monsterToCombatStats(record: {
 export function pcPlanStateToCombatSpellData(state: PcPlanState): {
   spells: CombatSpellEntry[];
   spellUses: CombatSpellUses;
+  spellClasses: CombatSpellClass[];
 } {
   return pcPlanToCombatSpells(state);
 }

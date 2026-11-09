@@ -1,2 +1,69 @@
 @import "tailwindcss";
 @import "../styles/theme.css";
+
+
+/* Spell Class Section */
+.combat-spell-class-block {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-secondary);
+}
+
+.combat-spell-class-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.combat-spell-class-meta {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.combat-spell-slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.combat-spell-slot-level {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.combat-spell-slot-label {
+  font-weight: 600;
+}
+
+.combat-spell-slot-count {
+  font-family: monospace;
+  color: var(--color-success);
+}
+
+.combat-spell-slot-count.exhausted {
+  color: var(--color-danger);
+  text-decoration: line-through;
+}
+
+.combat-spell-slot-breakdown {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.combat-spell-known-info {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
