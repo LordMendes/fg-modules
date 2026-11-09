@@ -2211,6 +2211,173 @@ export async function applyTempHp(
   return { success: true as const };
 }
 
+export async function setHpMax(
+  actor: CombatActor,
+  combatantId: string,
+  hpMax: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetMax = clampInt(hpMax, 1, 9999);
+  if (targetMax == null) return { success: false as const, error: "Invalid HP max" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const hpBefore = row.hpMax;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { hpMax: targetMax },
+    });
+    row.hpMax = targetMax;
+    await syncDeathSystemEffects(tx, row);
+
+    const event = await writeCombatEvent(tx, combat, "hpEdit", {
+      hpBefore: Math.max(0, hpBefore - row.wounds),
+      hpAfter: Math.max(0, targetMax - row.wounds),
+      hpMax: targetMax,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setTempHpAbsolute(
+  actor: CombatActor,
+  combatantId: string,
+  tempHp: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetTemp = clampInt(tempHp, 0, 9999);
+  if (targetTemp == null) return { success: false as const, error: "Invalid temp HP" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const tempBefore = row.hpTemp;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { hpTemp: targetTemp },
+    });
+    row.hpTemp = targetTemp;
+
+    const event = await writeCombatEvent(tx, combat, "tempHp", {
+      source: "DM set temp HP",
+      amount: targetTemp - tempBefore,
+      tempBefore,
+      tempAfter: targetTemp,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setNonlethalAbsolute(
+  actor: CombatActor,
+  combatantId: string,
+  nonlethal: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetNonlethal = clampInt(nonlethal, 0, 9999);
+  if (targetNonlethal == null) return { success: false as const, error: "Invalid nonlethal" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const nonlethalBefore = row.nonlethal;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { nonlethal: targetNonlethal },
+    });
+    row.nonlethal = targetNonlethal;
+    await syncDeathSystemEffects(tx, row);
+
+    const event = await writeCombatEvent(tx, combat, "nonlethal", {
+      source: "DM set nonlethal",
+      amount: targetNonlethal - nonlethalBefore,
+      nonlethalBefore,
+      nonlethalAfter: targetNonlethal,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setWoundsAbsolute(
+  actor: CombatActor,
+  combatantId: string,
+  wounds: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetWounds = clampInt(wounds, 0, 9999);
+  if (targetWounds == null) return { success: false as const, error: "Invalid wounds" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const hpBefore = Math.max(0, row.hpMax - row.wounds);
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { wounds: targetWounds },
+    });
+    row.wounds = targetWounds;
+    await syncDeathSystemEffects(tx, row);
+    await syncPcPlanHpFromCombatant(tx, actor, row, row.wounds, row.hpTemp);
+
+    const hpAfter = Math.max(0, row.hpMax - row.wounds);
+    const event = await writeCombatEvent(tx, combat, "hpEdit", {
+      hpBefore,
+      hpAfter,
+      hpMax: row.hpMax,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
 export async function setHp(
   actor: CombatActor,
   combatantId: string,

@@ -94,7 +94,11 @@ export function CombatEditableNumber({
 
   if (editing) {
     return (
-      <div ref={ref} className="combat-editable-number-editor">
+      <div 
+        ref={ref} 
+        className="combat-editable-number-editor"
+        onClick={(e) => e.stopPropagation()}
+      >
         <input
           ref={inputRef}
           type="number"
@@ -122,7 +126,8 @@ export function CombatEditableNumber({
       type="button"
       className={`combat-editable-number-btn ${className ?? ""}`}
       title={label ? `${label}: ${value} (click to edit)` : "Click to edit"}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setEditing(true);
         setDraft(String(value));
       }}

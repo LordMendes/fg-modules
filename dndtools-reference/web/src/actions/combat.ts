@@ -42,6 +42,10 @@ import {
   resetSpellUses,
   setEncounterEntryQuantity,
   setHp,
+  setHpMax,
+  setTempHpAbsolute,
+  setNonlethalAbsolute,
+  setWoundsAbsolute,
   startCombat,
   statsFromNpcSnapshot,
   toggleCombatTarget,
@@ -680,6 +684,16 @@ export async function combatApplyNonlethal(
   return applyNonlethal(auth.actor, combatantId, amount, source);
 }
 
+export async function combatSetHpMax(
+  campaignId: string,
+  combatantId: string,
+  hpMax: number,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setHpMax(auth.actor, combatantId, hpMax);
+}
+
 export async function combatSetTempHp(
   campaignId: string,
   combatantId: string,
@@ -687,8 +701,7 @@ export async function combatSetTempHp(
 ): Promise<CombatActionResult> {
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
-  if (!auth.isDm) return { success: false, error: "DM only" };
-  return applyTempHp(auth.actor, combatantId, amount);
+  return setTempHpAbsolute(auth.actor, combatantId, amount);
 }
 
 export async function combatSetNonlethal(
@@ -698,8 +711,17 @@ export async function combatSetNonlethal(
 ): Promise<CombatActionResult> {
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
-  if (!auth.isDm) return { success: false, error: "DM only" };
-  return applyNonlethal(auth.actor, combatantId, amount);
+  return setNonlethalAbsolute(auth.actor, combatantId, amount);
+}
+
+export async function combatSetWounds(
+  campaignId: string,
+  combatantId: string,
+  wounds: number,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  return setWoundsAbsolute(auth.actor, combatantId, wounds);
 }
 
 export async function combatAddEffect(
