@@ -715,6 +715,16 @@ async function resolveCastIntent(
 
   const spellUses = { ...asSpellUses(caster.spellUses) };
   const casterEngine = buildEngineContext(combatantFields(caster));
+  
+  const snapshot = caster.snapshot as { spellClasses?: Array<{ 
+    key: string; 
+    dcModifier: number; 
+    dcMisc: number; 
+    casterLevel: number;
+  }> };
+  const spellClasses = snapshot?.spellClasses ?? [];
+  const spellClass = spellClasses.find((sc) => sc.key === entry.spellClassKey);
+  
   const targets: SpellCastTarget[] = [];
   for (const targetId of intent.targetIds) {
     const row = combat.combatants.find((c) => c.id === targetId) as
@@ -743,9 +753,10 @@ async function resolveCastIntent(
     entry,
     faces,
     {
-      casterLevel: intent.casterLevel ?? entry.casterLevel ?? casterEngine.casterLevel ?? 1,
+      casterLevel: intent.casterLevel ?? spellClass?.casterLevel ?? entry.casterLevel ?? casterEngine.casterLevel ?? 1,
       spellLevel: intent.spellLevel ?? entry.level ?? 0,
-      castingStatMod: intent.castingStatMod ?? 0,
+      castingStatMod: intent.castingStatMod ?? spellClass?.dcModifier ?? 0,
+      featMods: spellClass?.dcMisc,
       attackBonus: intent.attackBonus,
       dmOverrideSlots: intent.dmOverrideSlots,
     },

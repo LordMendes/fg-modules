@@ -11,6 +11,7 @@ import {
 } from "@/components/combat/combat-utils";
 
 import { CombatSpellEditor } from "@/components/combat/combat-spell-editor";
+import { CombatSpellClassSection } from "@/components/combat/combat-spell-class-section";
 
 import {
 
@@ -750,6 +751,10 @@ export function CombatRowDetail({
     c.spells.length > 0 &&
 
     (isDm || (c.kind === "pc" && c.pcPlanId === viewerPcPlanId) || c.identified);
+  
+  const snapshot = c.snapshot as { spellClasses?: import("@/lib/combat/types").CombatSpellClass[] };
+  const spellClasses = snapshot?.spellClasses ?? [];
+  const showSpellClasses = spellClasses.length > 0 && showSpells;
 
 
 
@@ -770,6 +775,10 @@ export function CombatRowDetail({
           viewerPcPlanId={viewerPcPlanId}
           campaignId={campaignId}
         />
+      ) : null}
+
+      {showSpellClasses ? (
+        <CombatSpellClassSection spellClasses={spellClasses} spellUses={c.spellUses} />
       ) : null}
 
       {showSpells ? <SpellsSection c={c} campaignId={campaignId} /> : null}

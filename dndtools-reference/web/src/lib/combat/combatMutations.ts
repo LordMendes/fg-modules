@@ -1022,7 +1022,10 @@ export async function addCombatantFromStats(
       spaceSquares: input.stats.spaceSquares,
       reachFeet: input.stats.reachFeet,
       attacks: input.stats.attacks,
-      snapshot: input.stats.snapshot,
+      snapshot: {
+        ...(input.stats.snapshot as object),
+        spellClasses: input.stats.spellClasses ?? [],
+      },
       defenses: input.stats.defenses,
       stats: input.stats.stats,
       spells: (input.stats.spells ?? []) as unknown as Prisma.InputJsonValue,
@@ -1410,6 +1413,7 @@ export function pcPlanToCombatStats(
     },
     spells: spellData.spells,
     spellUses: spellData.spellUses,
+    spellClasses: spellData.spellClasses,
   };
 }
 
@@ -1428,14 +1432,18 @@ async function syncPcPlanSpellUsesFromCombatant(
   if (!plan?.state || typeof plan.state !== "object") return;
 
   const state = normalizePcPlanState(structuredClone(plan.state as PcPlanState));
-  for (const spellClass of state.spellClasses ?? []) {
+  const computed = pcPlanStateToCombatSpellData(state);
+  
+  for (const [index, spellClass] of (state.spellClasses ?? []).entries()) {
     const slotsUsed = [...(spellClass.slotsUsed ?? Array.from({ length: 10 }, () => 0))];
+    const combatSpellClass = computed.spellClasses[index];
+    if (!combatSpellClass) continue;
+    
     for (let level = 0; level <= 9; level += 1) {
-      const key = `slot:${level}`;
+      const key = `slot:${combatSpellClass.key}:${level}`;
       const remaining = spellUses[key];
       if (remaining == null) continue;
-      const computed = pcPlanStateToCombatSpellData(state);
-      const total = (computed.spellUses[key] ?? 0) + (spellClass.slotsUsed?.[level] ?? 0);
+      const total = combatSpellClass.totalSlots[level] ?? 0;
       slotsUsed[level] = Math.max(0, total - remaining);
     }
     spellClass.slotsUsed = slotsUsed;
@@ -1559,12 +1567,25 @@ export async function resetSpellUses(actor: CombatActor, combatantId: string) {
 
   const dbRow = await prisma.campaignCombatant.findUnique({
     where: { id: combatantId },
-    select: { spells: true },
+    select: { spells: true, snapshot: true },
   });
   const spells = Array.isArray(dbRow?.spells)
     ? (dbRow.spells as unknown as CombatSpellEntry[])
     : [];
   const nextUses: CombatSpellUses = {};
+  
+  const snapshot = dbRow?.snapshot as { spellClasses?: Array<{ key: string; totalSlots: number[] }> };
+  const spellClasses = snapshot?.spellClasses ?? [];
+  
+  for (const spellClass of spellClasses) {
+    for (let level = 0; level <= 9; level++) {
+      const total = spellClass.totalSlots[level] ?? 0;
+      if (total > 0) {
+        nextUses[`slot:${spellClass.key}:${level}`] = total;
+      }
+    }
+  }
+  
   for (const entry of spells) {
     if (entry.kind === "sla" && entry.usesPerDay != null) {
       nextUses[entry.key] = entry.usesPerDay;

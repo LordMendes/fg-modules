@@ -28,10 +28,42 @@ export type CombatSpellEntry = {
   /** Optional area template hint for map targeting (feet). */
   rangeFeet?: number | null;
   areaShape?: "circle" | "square" | "cone" | "ray" | null;
+  /** Which spell class this spell belongs to (for DC calculation). */
+  spellClassKey?: string | null;
 };
 
-/** Remaining spell slots / SLA uses keyed by `slot:N` or `sla:<key>`. */
+/** Remaining spell slots / SLA uses keyed by `slot:N` or `sla:<key>` or `slot:classKey:N`. */
 export type CombatSpellUses = Record<string, number>;
+
+/** Spell class metadata for computing DCs and tracking slots per class. */
+export type CombatSpellClass = {
+  /** Unique key for this spell class (e.g., "wizard", "cleric-1"). */
+  key: string;
+  /** Display label (e.g., "Wizard", "Cleric"). */
+  label: string;
+  /** Class slug from compendium. */
+  classSlug: string;
+  /** Caster level for this class. */
+  casterLevel: number;
+  /** Key ability for save DCs (int, wis, cha). */
+  dcAbility: Ability;
+  /** Ability modifier for DC. */
+  dcModifier: number;
+  /** Misc DC bonus (Spell Focus, etc.). */
+  dcMisc: number;
+  /** Casting mode. */
+  mode: "preparation" | "spontaneous";
+  /** Base slots per level (0-9). */
+  baseSlots: number[];
+  /** Bonus slots from ability (0-9). */
+  bonusSlots: number[];
+  /** Total slots per level (base + bonus). */
+  totalSlots: number[];
+  /** Spells known limits per level (spontaneous only). */
+  known: number[];
+  /** Max spell level accessible. */
+  maxSpellLevel: number;
+};
 
 /** Parsed offense line from FG-style attack text. */
 export type CombatAttackLine = {
