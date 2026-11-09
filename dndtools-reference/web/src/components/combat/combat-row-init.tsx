@@ -25,25 +25,30 @@ export function CombatRowInit({
 
   if (editingInit && isDm) {
     return (
-      <input
-        className="tool-input tool-input-sm combat-init-input"
-        value={initDraft}
-        autoFocus
-        disabled={pending}
-        onChange={(e) => setInitDraft(e.target.value)}
-        onBlur={() => {
-          setEditingInit(false);
-          const n = Number.parseFloat(initDraft);
-          if (!Number.isFinite(n) || !ctx) return;
-          startTransition(async () => {
-            await combatSetInitiative(ctx.campaignId, c.id, n);
-          });
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") (e.target as HTMLInputElement).blur();
-          if (e.key === "Escape") setEditingInit(false);
-        }}
-      />
+      <div onClick={(e) => e.stopPropagation()}>
+        <input
+          className="tool-input tool-input-sm combat-init-input"
+          value={initDraft}
+          autoFocus
+          disabled={pending}
+          onChange={(e) => setInitDraft(e.target.value)}
+          onBlur={() => {
+            setEditingInit(false);
+            const n = Number.parseFloat(initDraft);
+            if (!Number.isFinite(n) || !ctx) return;
+            startTransition(async () => {
+              await combatSetInitiative(ctx.campaignId, c.id, n);
+            });
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+            if (e.key === "Escape") {
+              e.stopPropagation();
+              setEditingInit(false);
+            }
+          }}
+        />
+      </div>
     );
   }
 
@@ -78,6 +83,7 @@ export function CombatRowInit({
         }
         disabled={pending || (!isDm && !canRollOwn)}
         onClick={(e) => {
+          e.stopPropagation();
           if (isDm && !e.shiftKey) {
             setInitDraft(String(c.init));
             setEditingInit(true);

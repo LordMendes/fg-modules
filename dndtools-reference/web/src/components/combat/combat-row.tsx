@@ -6,9 +6,14 @@ import {
   combatReadyCombatant,
   combatRemoveCombatant,
   combatSetCombatantFlags,
+  combatSetHpMax,
+  combatSetTempHp,
+  combatSetNonlethal,
+  combatSetWounds,
   combatToggleTarget,
 } from "@/actions/combat";
 import {
+  canEditHp,
   canExpandRow,
   isDeadRow,
   isOwnPc,
@@ -19,6 +24,7 @@ import {
   readCombatDragPayload,
   resolveCombatDrop,
 } from "@/components/combat/combat-roll-drop";
+import { CombatEditableNumber } from "@/components/combat/combat-editable-number";
 import type { CombatantView } from "@/lib/combat/types";
 import {
   ChevronDown,
@@ -85,9 +91,10 @@ export function CombatRow({
   const viewerCombatant = ctx?.combat?.combatants.find(
     (row) => row.pcPlanId === viewerPcPlanId,
   );
-  const actorForTargets = isDm ? currentActor : viewerCombatant;
-  const canTarget =
-    ctx && (isDm ? currentActor != null : viewerCombatant != null);
+  const actorForTargets = isDm 
+    ? (currentActor ?? ctx?.combat?.combatants[0]) 
+    : viewerCombatant;
+  const canTarget = ctx && (isDm || viewerCombatant != null);
   const isTargeted = actorForTargets?.targetIds.includes(c.id) ?? false;
   const showCrosshair =
     canTarget && actorForTargets?.id !== c.id && !dead;
@@ -212,11 +219,49 @@ export function CombatRow({
           isDm={isDm}
           canRollOwn={isOwnPc(c, viewerPcPlanId)}
         />
-        <CombatRowHp
-          c={c}
-          isDm={isDm}
-          viewerPcPlanId={viewerPcPlanId}
-          campaignId={campaignId}
+        <CombatEditableNumber
+          value={c.hpMax}
+          label="HP Max"
+          editable={isDm}
+          min={1}
+          max={9999}
+          onChange={async (value) => {
+            await combatSetHpMax(campaignId, c.id, value);
+          }}
+          className="combat-cell-hp"
+        />
+        <CombatEditableNumber
+          value={c.hpTemp}
+          label="Temp HP"
+          editable={isDm}
+          min={0}
+          max={999}
+          onChange={async (value) => {
+            await combatSetTempHp(campaignId, c.id, value);
+          }}
+          className="combat-cell-tmp"
+        />
+        <CombatEditableNumber
+          value={c.nonlethal}
+          label="Subdual/Nonlethal"
+          editable={isDm}
+          min={0}
+          max={999}
+          onChange={async (value) => {
+            await combatSetNonlethal(campaignId, c.id, value);
+          }}
+          className="combat-cell-sbd"
+        />
+        <CombatEditableNumber
+          value={c.wounds}
+          label="Wounds"
+          editable={isDm}
+          min={0}
+          max={c.hpMax}
+          onChange={async (value) => {
+            await combatSetWounds(campaignId, c.id, value);
+          }}
+          className="combat-cell-wnd"
         />
         {expandable ? (
           <button

@@ -540,6 +540,7 @@ export function buildMask(
     rng: _rng,
     corridorStraight: 50,
     doors: "standard",
+    polymorph: "none",
   };
   const mask = applyLayoutMask(d, layout);
   if (mask.length === rows && mask[0]!.length === cols) return mask;

@@ -99,7 +99,10 @@ export async function toggleCombatTargetPhase3(
         return { success: false as const, error: "No PC in combat" };
       }
     } else if (!actorRow) {
-      return { success: false as const, error: "No active turn" };
+      actorRow = combat.combatants[0] ?? null;
+      if (!actorRow) {
+        return { success: false as const, error: "No combatants in combat" };
+      }
     }
 
     const raw = actorRow.targetIds;

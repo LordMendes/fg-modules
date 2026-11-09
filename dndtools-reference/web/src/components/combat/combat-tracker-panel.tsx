@@ -103,6 +103,9 @@ export function CombatTrackerPanel({
             <span />
             <span>Init</span>
             <span>HP</span>
+            <span>Tmp</span>
+            <span>Sbd</span>
+            <span>Wnd</span>
             <span />
           </div>
           <div className="combat-list">

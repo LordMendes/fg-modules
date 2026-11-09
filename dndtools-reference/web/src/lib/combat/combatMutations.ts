@@ -168,6 +168,7 @@ export type LockedCombatantRow = {
     expiry: string;
     visibility: string;
     sourceCombatantId: string | null;
+    applierUserId: string | null;
     seq: number;
   }>;
 };
@@ -312,7 +313,7 @@ export function publishCombatEvent(
   });
 }
 
-function clampInt(value: unknown, min: number, max: number): number | null {
+export function clampInt(value: unknown, min: number, max: number): number | null {
   if (!Number.isFinite(value)) return null;
   return Math.max(min, Math.min(max, Math.trunc(Number(value))));
 }
@@ -2231,6 +2232,173 @@ export async function applyTempHp(
   return { success: true as const };
 }
 
+export async function setHpMax(
+  actor: CombatActor,
+  combatantId: string,
+  hpMax: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetMax = clampInt(hpMax, 1, 9999);
+  if (targetMax == null) return { success: false as const, error: "Invalid HP max" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const hpBefore = row.hpMax;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { hpMax: targetMax },
+    });
+    row.hpMax = targetMax;
+    await syncDeathSystemEffects(tx, row);
+
+    const event = await writeCombatEvent(tx, combat, "hpEdit", {
+      hpBefore: Math.max(0, hpBefore - row.wounds),
+      hpAfter: Math.max(0, targetMax - row.wounds),
+      hpMax: targetMax,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setTempHpAbsolute(
+  actor: CombatActor,
+  combatantId: string,
+  tempHp: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetTemp = clampInt(tempHp, 0, 9999);
+  if (targetTemp == null) return { success: false as const, error: "Invalid temp HP" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const tempBefore = row.hpTemp;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { hpTemp: targetTemp },
+    });
+    row.hpTemp = targetTemp;
+
+    const event = await writeCombatEvent(tx, combat, "tempHp", {
+      source: "DM set temp HP",
+      amount: targetTemp - tempBefore,
+      tempBefore,
+      tempAfter: targetTemp,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setNonlethalAbsolute(
+  actor: CombatActor,
+  combatantId: string,
+  nonlethal: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetNonlethal = clampInt(nonlethal, 0, 9999);
+  if (targetNonlethal == null) return { success: false as const, error: "Invalid nonlethal" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const nonlethalBefore = row.nonlethal;
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { nonlethal: targetNonlethal },
+    });
+    row.nonlethal = targetNonlethal;
+    await syncDeathSystemEffects(tx, row);
+
+    const event = await writeCombatEvent(tx, combat, "nonlethal", {
+      source: "DM set nonlethal",
+      amount: targetNonlethal - nonlethalBefore,
+      nonlethalBefore,
+      nonlethalAfter: targetNonlethal,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
+export async function setWoundsAbsolute(
+  actor: CombatActor,
+  combatantId: string,
+  wounds: number,
+) {
+  if (!isDm(actor)) return { success: false as const, error: "DM only" };
+
+  const targetWounds = clampInt(wounds, 0, 9999);
+  if (targetWounds == null) return { success: false as const, error: "Invalid wounds" };
+
+  const result = await combatTransaction(async (tx) => {
+    const combat = await lockCombatRow(tx, actor.campaignId);
+    if (!combat) return { success: false as const, error: "No combat" };
+    const row = combatantInCombat(combat, combatantId);
+    if (!row) return { success: false as const, error: "Combatant not found" };
+
+    const hpBefore = Math.max(0, row.hpMax - row.wounds);
+    await tx.campaignCombatant.update({
+      where: { id: combatantId },
+      data: { wounds: targetWounds },
+    });
+    row.wounds = targetWounds;
+    await syncDeathSystemEffects(tx, row);
+    await syncPcPlanHpFromCombatant(tx, actor, row, row.wounds, row.hpTemp);
+
+    const hpAfter = Math.max(0, row.hpMax - row.wounds);
+    const event = await writeCombatEvent(tx, combat, "hpEdit", {
+      hpBefore,
+      hpAfter,
+      hpMax: row.hpMax,
+    }, {
+      targetCombatantId: combatantId,
+      actorUserId: actor.userId,
+    });
+
+    return { success: true as const, combat, events: [event.record] };
+  });
+
+  if (!result.success) return result;
+  await publishMutationResult(actor, result.combat, result.events);
+  return { success: true as const };
+}
+
 export async function setHp(
   actor: CombatActor,
   combatantId: string,
@@ -2363,6 +2531,7 @@ export async function addEffect(
           label: validated.trimmed,
           components: components as unknown as Prisma.InputJsonValue,
           sourceCombatantId: sourceId,
+          applierUserId: actor.userId,
           duration: normalized.duration,
           durationUnit: normalized.durationUnit,
           tickInit,
@@ -2388,6 +2557,7 @@ export async function addEffect(
         expiry: effectRow.expiry,
         visibility: effectRow.visibility,
         sourceCombatantId: effectRow.sourceCombatantId,
+        applierUserId: effectRow.applierUserId,
         seq,
       });
 
@@ -2415,6 +2585,27 @@ export async function addEffect(
   return { success: true as const };
 }
 
+export function canRemoveEffect(params: {
+  isDm: boolean;
+  effectIsSystem: boolean;
+  effectVisibility: "visible" | "hidden" | "gm";
+  effectApplierUserId: string | null;
+  actorUserId: string;
+}): { canRemove: boolean; error?: string } {
+  if (params.effectIsSystem) {
+    return { canRemove: false, error: "Cannot remove system effect" };
+  }
+  if (!params.isDm) {
+    if (params.effectVisibility === "gm") {
+      return { canRemove: false, error: "Not allowed" };
+    }
+    if (params.effectApplierUserId !== params.actorUserId) {
+      return { canRemove: false, error: "Only the effect's applier or DM can remove it" };
+    }
+  }
+  return { canRemove: true };
+}
+
 export async function removeEffect(
   actor: CombatActor,
   effectId: string,
@@ -2437,14 +2628,16 @@ export async function removeEffect(
     if (!targetRow || !effect) {
       return { success: false as const, error: "Effect not found" };
     }
-    if (effect.system) return { success: false as const, error: "Cannot remove system effect" };
-    if (!isDm(actor)) {
-      if (!(await ownsCombatant(actor, targetRow))) {
-        return { success: false as const, error: "Not allowed" };
-      }
-      if (effect.visibility === "gm") {
-        return { success: false as const, error: "Not allowed" };
-      }
+    
+    const permission = canRemoveEffect({
+      isDm: isDm(actor),
+      effectIsSystem: effect.system,
+      effectVisibility: effect.visibility,
+      effectApplierUserId: effect.applierUserId,
+      actorUserId: actor.userId,
+    });
+    if (!permission.canRemove) {
+      return { success: false as const, error: permission.error || "Not allowed" };
     }
 
     await tx.campaignCombatEffect.delete({ where: { id: effectId } });

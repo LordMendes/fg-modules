@@ -227,6 +227,7 @@ export type CombatEffectView = {
   components: EffectComponent[];
   sourceCombatantId: string | null;
   sourceName: string | null;
+  applierUserId: string | null;
   duration: number | null;
   durationUnit: "round" | "minute" | "hour" | "day";
   expiry: "startOfTurn" | "endOfTurn";

@@ -798,6 +798,8 @@ model CampaignCombatEffect {
   /// Parsed components cached for the engine (EffectComponent[])
   components         Json              @default("[]")
   sourceCombatantId  String?
+  /// User who applied this effect (for removal permissions); null = legacy/system
+  applierUserId      String?
   /// Remaining duration in units; null = until removed
   duration           Int?
   /// round | minute | hour | day
