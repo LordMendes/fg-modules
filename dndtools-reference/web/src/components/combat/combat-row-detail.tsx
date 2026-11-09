@@ -11,6 +11,7 @@ import {
 } from "@/components/combat/combat-utils";
 
 import { CombatSpellEditor } from "@/components/combat/combat-spell-editor";
+import { CombatSpellClassSection } from "@/components/combat/combat-spell-class-section";
 
 import {
 
@@ -23,6 +24,8 @@ import {
 import { useDice } from "@/components/dice/dice-provider";
 
 import { useCombatContext } from "@/components/combat/combat-context";
+
+import { useAreaSpellBridge } from "@/components/combat/area-spell-bridge";
 
 import {
   combatSetCombatantAttacks,
@@ -267,6 +270,8 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
   const ctx = useCombatContext();
 
   const { canRoll } = useDice();
+  
+  const { startPlacement: startAreaSpellPlacement } = useAreaSpellBridge();
 
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
@@ -374,13 +379,45 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
                   if (!ctx) return;
 
+                  const pool = spellCastDicePool(
+
+                    spell,
+
+                    [],
+
+                    spell.casterLevel ?? c.stats.cl ?? 1,
+
+                  );
+
+                  // Check if area spell - trigger placement mode
+                  if (
+                    spell.areaShape &&
+                    (spell.areaShape === "circle" ||
+                      spell.areaShape === "square" ||
+                      spell.areaShape === "cone" ||
+                      spell.areaShape === "ray")
+                  ) {
+                    startAreaSpellPlacement({
+                      spell,
+                      casterId: c.id,
+                      casterTokenId: c.tokenId ?? null,
+                      label: `${c.name} ${spell.name}`,
+                      dice: pool,
+                      casterLevel: spell.casterLevel ?? c.stats.cl,
+                      spellLevel: spell.level ?? undefined,
+                      castingStatMod: c.stats.int ?? c.stats.wis ?? c.stats.cha ?? undefined,
+                    });
+                    return;
+                  }
+
+                  // Normal single/multi-target cast
                   const targetRows = (ctx.combat?.combatants ?? []).filter((t) =>
 
                     c.targetIds.includes(t.id),
 
                   );
 
-                  const pool = spellCastDicePool(
+                  const targetPool = spellCastDicePool(
 
                     spell,
 
@@ -400,7 +437,7 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
                     label: `${c.name} ${spell.name}`,
 
-                    dice: pool,
+                    dice: targetPool,
 
                     casterLevel: spell.casterLevel ?? c.stats.cl ?? undefined,
 
@@ -750,6 +787,10 @@ export function CombatRowDetail({
     c.spells.length > 0 &&
 
     (isDm || (c.kind === "pc" && c.pcPlanId === viewerPcPlanId) || c.identified);
+  
+  const snapshot = c.snapshot as { spellClasses?: import("@/lib/combat/types").CombatSpellClass[] };
+  const spellClasses = snapshot?.spellClasses ?? [];
+  const showSpellClasses = spellClasses.length > 0 && showSpells;
 
 
 
@@ -770,6 +811,10 @@ export function CombatRowDetail({
           viewerPcPlanId={viewerPcPlanId}
           campaignId={campaignId}
         />
+      ) : null}
+
+      {showSpellClasses ? (
+        <CombatSpellClassSection spellClasses={spellClasses} spellUses={c.spellUses} />
       ) : null}
 
       {showSpells ? <SpellsSection c={c} campaignId={campaignId} /> : null}

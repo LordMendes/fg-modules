@@ -11,6 +11,10 @@ export type FeatDerivedFeatures = {
   willBonus: number;
   toughnessHp: number;
   skillBonuses: Record<string, number>;
+  /** DC bonus per school from Spell Focus / Greater Spell Focus. */
+  spellDcBonusBySchool: Record<string, number>;
+  /** CL bonus for spell penetration checks (+2 from Spell Penetration feat, +2 from Greater). */
+  spellPenetrationBonus: number;
 };
 
 export function emptyFeatDerivedFeatures(): FeatDerivedFeatures {
@@ -24,6 +28,8 @@ export function emptyFeatDerivedFeatures(): FeatDerivedFeatures {
     willBonus: 0,
     toughnessHp: 0,
     skillBonuses: {},
+    spellDcBonusBySchool: {},
+    spellPenetrationBonus: 0,
   };
 }
 
@@ -95,6 +101,30 @@ const FEAT_EFFECT_RULES: FeatEffectRule[] = [
       return { skillBonuses: { [normalizeSkillKey(skill)]: 3 } };
     },
   },
+  {
+    match: (name, slug) => name === "spell focus" || name.startsWith("spell focus (") || slug.startsWith("spell-focus-"),
+    apply: (feat) => {
+      const school = feat.choice?.trim().toLowerCase();
+      if (!school) return {};
+      return { spellDcBonusBySchool: { [school]: 1 } };
+    },
+  },
+  {
+    match: (name, slug) => name === "greater spell focus" || name.startsWith("greater spell focus (") || slug.startsWith("greater-spell-focus-"),
+    apply: (feat) => {
+      const school = feat.choice?.trim().toLowerCase();
+      if (!school) return {};
+      return { spellDcBonusBySchool: { [school]: 2 } };
+    },
+  },
+  {
+    match: (name, slug) => name === "spell penetration" || slug === "spell-penetration",
+    apply: () => ({ spellPenetrationBonus: 2 }),
+  },
+  {
+    match: (name, slug) => name === "greater spell penetration" || slug === "greater-spell-penetration",
+    apply: () => ({ spellPenetrationBonus: 4 }),
+  },
 ];
 
 export function mergeFeatDerivedFeatures(
@@ -107,6 +137,15 @@ export function mergeFeatDerivedFeatures(
       skillBonuses[key] = (skillBonuses[key] ?? 0) + amount;
     }
   }
+  const spellDcBonusBySchool = { ...base.spellDcBonusBySchool };
+  if (add.spellDcBonusBySchool) {
+    for (const [school, bonus] of Object.entries(add.spellDcBonusBySchool)) {
+      spellDcBonusBySchool[school] = Math.max(
+        spellDcBonusBySchool[school] ?? 0,
+        bonus,
+      );
+    }
+  }
   return {
     dodgeBonus: base.dodgeBonus + (add.dodgeBonus ?? 0),
     initBonus: base.initBonus + (add.initBonus ?? 0),
@@ -117,7 +156,9 @@ export function mergeFeatDerivedFeatures(
     refBonus: base.refBonus + (add.refBonus ?? 0),
     willBonus: base.willBonus + (add.willBonus ?? 0),
     toughnessHp: base.toughnessHp + (add.toughnessHp ?? 0),
+    spellPenetrationBonus: Math.max(base.spellPenetrationBonus, add.spellPenetrationBonus ?? 0),
     skillBonuses,
+    spellDcBonusBySchool,
   };
 }
 
