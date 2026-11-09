@@ -24,6 +24,7 @@ import {
   combatSubtitle,
 } from "@/components/combat/combat-tracker-panel";
 import { CombatProvider, useCombatContext } from "@/components/combat/combat-context";
+import { AreaSpellBridgeProvider } from "@/components/combat/area-spell-bridge";
 import { combatToggleTarget } from "@/actions/combat";
 import { CampaignLogsDrawer } from "@/components/tools/campaign-logs-drawer";
 import { CampaignMapBoard } from "@/components/map/campaign-map-board";
@@ -660,7 +661,8 @@ function CampaignTableBody({
       isDm={isDm}
       viewerPcPlanId={viewerPcPlanId}
     >
-      <div className="campaign-stage">
+      <AreaSpellBridgeProvider>
+        <div className="campaign-stage">
         {error ? <p className="tool-error campaign-stage-error">{error}</p> : null}
 
         <CampaignRail
@@ -1111,6 +1113,8 @@ function CampaignTableBody({
       <DiceCanvas />
       <DiceTray />
       <DiceLogTray />
+      </div>
+      </AreaSpellBridgeProvider>
     </CombatProvider>
   );
 }

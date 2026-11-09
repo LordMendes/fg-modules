@@ -25,7 +25,7 @@ import { useDice } from "@/components/dice/dice-provider";
 
 import { useCombatContext } from "@/components/combat/combat-context";
 
-import { useAreaSpellPlacement } from "@/components/combat/area-spell-placement-context";
+import { useAreaSpellBridge } from "@/components/combat/area-spell-bridge";
 
 import {
   combatSetCombatantAttacks,
@@ -271,7 +271,7 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
   const { canRoll } = useDice();
   
-  const areaSpellCtx = useAreaSpellPlacement();
+  const { startPlacement: startAreaSpellPlacement } = useAreaSpellBridge();
 
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
@@ -397,9 +397,7 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
                       spell.areaShape === "cone" ||
                       spell.areaShape === "ray")
                   ) {
-                    // Find caster's token (note: tokens are on map, not in combat)
-                    // For now, pass null and let map board find it
-                    areaSpellCtx.startPlacement({
+                    startAreaSpellPlacement({
                       spell,
                       casterId: c.id,
                       casterTokenId: c.tokenId ?? null,

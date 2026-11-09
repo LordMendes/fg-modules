@@ -57,6 +57,7 @@ import { MapTargetingLayer } from "./map-targeting-layer";
 import { MapAreaSpellLayer, type AreaSpellPlacement } from "./map-area-spell-layer";
 import { MapToken } from "./map-token";
 import { MapToolbar } from "./map-toolbar";
+import { useAreaSpellBridge } from "@/components/combat/area-spell-bridge";
 import { MapViewportOverlay } from "./map-viewport-overlay";
 import { castAreaSpellAction } from "@/actions/areaSpellCast";
 import type { DicePoolItem } from "@/lib/dice/types";
@@ -101,16 +102,6 @@ type CampaignMapBoardProps = {
   viewportGoTo?: { x: number; y: number } | null;
   sendLive: LiveSend;
   connected: boolean;
-  onStartAreaSpellPlacement?: (params: {
-    spell: any;
-    casterId: string;
-    casterTokenId: string | null;
-    label: string;
-    dice: DicePoolItem[];
-    casterLevel?: number;
-    spellLevel?: number;
-    castingStatMod?: number;
-  }) => void;
   combat?: CampaignCombatView | null;
   onToggleCombatTarget?: (targetCombatantId: string) => void;
 };
@@ -176,10 +167,10 @@ export function CampaignMapBoard({
   connected,
   combat = null,
   onToggleCombatTarget,
-  onStartAreaSpellPlacement,
 }: CampaignMapBoardProps) {
   const { store } = useCampaignLive();
   const combatCtx = useCombatContext();
+  const { currentPlacement: bridgePlacement } = useAreaSpellBridge();
   const combatEvents = useSyncExternalStore(
     store.subscribe,
     () => store.getState().combatEvents,
@@ -224,22 +215,24 @@ export function CampaignMapBoard({
   } | null>(null);
   const [areaSpellPlacement, setAreaSpellPlacement] = useState<AreaSpellPlacement | null>(null);
   
-  // Handler for starting area spell placement from combat UI
-  const handleStartAreaSpellPlacement = useCallback((params: Omit<AreaSpellPlacement, "x" | "y" | "rotation" | "highlightedTokenIds">) => {
-    const casterToken = tokensRef.current.find(t => t.id === params.casterTokenId);
+  // React to area spell placement requests from combat UI via bridge
+  useEffect(() => {
+    if (!bridgePlacement) return;
+    
+    const casterToken = tokensRef.current.find(t => t.id === bridgePlacement.casterTokenId);
     if (!casterToken) {
       console.error("Caster token not found for area spell placement");
       return;
     }
     
     setAreaSpellPlacement({
-      ...params,
+      ...bridgePlacement,
       x: casterToken.x,
       y: casterToken.y,
       rotation: 0,
       highlightedTokenIds: [],
     });
-  }, []);
+  }, [bridgePlacement]);
   
   const [selectedDrawingId, setSelectedDrawingId] = useState<string | null>(
     null,
