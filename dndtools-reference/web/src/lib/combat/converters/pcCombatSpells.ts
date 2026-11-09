@@ -1,6 +1,7 @@
 import { spellToActionSet } from "@/lib/spell-to-action-set";
 import { abilityModifier } from "@/lib/pc-planner/combatStats";
 import { computeSpellClass } from "@/lib/pc-planner/spellSlots";
+import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import type { PcPlanState, SpellClassState } from "@/lib/pc-planner/types";
 import type { CombatSpellClass, CombatSpellEntry, CombatSpellUses } from "@/lib/combat/types";
 
@@ -30,9 +31,6 @@ function mirrorSlotUses(
     const used = spellClass.slotsUsed?.[level] ?? 0;
     const remaining = Math.max(0, total - used);
     spellUses[`slot:${spellClassKey}:${level}`] = remaining;
-    if (!spellUses[`slot:${level}`] || remaining > spellUses[`slot:${level}`]) {
-      spellUses[`slot:${level}`] = remaining;
-    }
   }
 }
 
@@ -44,6 +42,8 @@ export function pcPlanToCombatSpells(state: PcPlanState): {
   const spells: CombatSpellEntry[] = [];
   const spellUses: CombatSpellUses = {};
   const spellClasses: CombatSpellClass[] = [];
+
+  const featEffects = deriveFeatEffects(state.feats ?? []);
 
   for (const [index, spellClass] of (state.spellClasses ?? []).entries()) {
     const computed = computeSpellClass(
@@ -67,16 +67,23 @@ export function pcPlanToCombatSpells(state: PcPlanState): {
       dcAbility: computed.dcAbility,
       dcModifier: dcMod,
       dcMisc: 0,
+      dcMiscManual: 0,
       mode: computed.mode,
       baseSlots: [...computed.baseSlots],
       bonusSlots: [...computed.bonusSlots],
       totalSlots: [...computed.slots],
       known: [...computed.known],
       maxSpellLevel: computed.maxSpellLevel,
+      spellPenetrationBonus: featEffects.spellPenetrationBonus,
     });
 
     for (const spell of spellClass.spells) {
       const converted = spellToActionSet(spell.name);
+      const schoolShort = converted.schoolShort?.toLowerCase();
+      const dcMiscFromFeats = schoolShort
+        ? featEffects.spellDcBonusBySchool[schoolShort] ?? 0
+        : 0;
+      
       spells.push({
         key: slugKey(spell.name, spell.slug),
         name: spell.name,
@@ -90,6 +97,8 @@ export function pcPlanToCombatSpells(state: PcPlanState): {
         rangeFeet: converted.rangeFeet ?? null,
         areaShape: converted.areaShape ?? null,
         spellClassKey,
+        dcMiscFromFeats,
+        schoolShort,
       });
     }
   }

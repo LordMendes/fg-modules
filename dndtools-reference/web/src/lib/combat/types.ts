@@ -30,6 +30,10 @@ export type CombatSpellEntry = {
   areaShape?: "circle" | "square" | "cone" | "ray" | null;
   /** Which spell class this spell belongs to (for DC calculation). */
   spellClassKey?: string | null;
+  /** DC misc from feats (Spell Focus/Greater for this school). */
+  dcMiscFromFeats?: number;
+  /** Spell school (short form, e.g. "evocation"). */
+  schoolShort?: string | null;
 };
 
 /** Remaining spell slots / SLA uses keyed by `slot:N` or `sla:<key>` or `slot:classKey:N`. */
@@ -51,6 +55,8 @@ export type CombatSpellClass = {
   dcModifier: number;
   /** Misc DC bonus (Spell Focus, etc.). */
   dcMisc: number;
+  /** Manual misc DC bonus (editable field). */
+  dcMiscManual: number;
   /** Casting mode. */
   mode: "preparation" | "spontaneous";
   /** Base slots per level (0-9). */
@@ -63,6 +69,8 @@ export type CombatSpellClass = {
   known: number[];
   /** Max spell level accessible. */
   maxSpellLevel: number;
+  /** Spell penetration bonus for CL checks (+2/+4 from feat). */
+  spellPenetrationBonus: number;
 };
 
 /** Parsed offense line from FG-style attack text. */

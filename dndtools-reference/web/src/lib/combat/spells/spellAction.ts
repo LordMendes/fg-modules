@@ -154,6 +154,9 @@ function effectDuration(
 
 function slotUseKey(entry: CombatSpellEntry): string | null {
   if (entry.kind === "sla") return `sla:${entry.key}`;
+  if (entry.level != null && entry.spellClassKey) {
+    return `slot:${entry.spellClassKey}:${entry.level}`;
+  }
   if (entry.level != null) return `slot:${entry.level}`;
   return null;
 }
@@ -235,7 +238,7 @@ export function resolveSpellCast(
   const dc = spellSaveDc({
     spellLevel: opts.spellLevel,
     castingStatMod: opts.castingStatMod,
-    featMods: opts.featMods,
+    featMods: (opts.featMods ?? 0) + (entry.dcMiscFromFeats ?? 0),
     effects: caster.effects,
     descriptors: cast.schoolShort ? [cast.schoolShort] : [],
   });
