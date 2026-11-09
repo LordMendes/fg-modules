@@ -2639,7 +2639,6 @@ export async function removeEffect(
     if (!permission.canRemove) {
       return { success: false as const, error: permission.error || "Not allowed" };
     }
-    }
 
     await tx.campaignCombatEffect.delete({ where: { id: effectId } });
     targetRow.effects = targetRow.effects.filter((e) => e.id !== effectId);
