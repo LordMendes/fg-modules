@@ -223,6 +223,24 @@ export function CampaignMapBoard({
     current: MapPoint;
   } | null>(null);
   const [areaSpellPlacement, setAreaSpellPlacement] = useState<AreaSpellPlacement | null>(null);
+  
+  // Handler for starting area spell placement from combat UI
+  const handleStartAreaSpellPlacement = useCallback((params: Omit<AreaSpellPlacement, "x" | "y" | "rotation" | "highlightedTokenIds">) => {
+    const casterToken = tokensRef.current.find(t => t.id === params.casterTokenId);
+    if (!casterToken) {
+      console.error("Caster token not found for area spell placement");
+      return;
+    }
+    
+    setAreaSpellPlacement({
+      ...params,
+      x: casterToken.x,
+      y: casterToken.y,
+      rotation: 0,
+      highlightedTokenIds: [],
+    });
+  }, []);
+  
   const [selectedDrawingId, setSelectedDrawingId] = useState<string | null>(
     null,
   );

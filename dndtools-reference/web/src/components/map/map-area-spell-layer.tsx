@@ -9,7 +9,7 @@ import type { CombatSpellEntry } from "@/lib/combat/types";
 export type AreaSpellPlacement = {
   spell: CombatSpellEntry;
   casterId: string;
-  casterTokenId: string;
+  casterTokenId: string | null;
   label: string;
   dice: any[];
   casterLevel?: number;
