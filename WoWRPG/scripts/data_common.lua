@@ -28,6 +28,29 @@ ability_ltos = {
 	["charisma"] = "CHA"
 };
 
+-- Alternate ability names (WoW names and abbreviations) mapped to database names
+ability_aliases = {
+	["strength"] = "strength",
+	["str"] = "strength",
+	["dexterity"] = "dexterity",
+	["dex"] = "dexterity",
+	["agility"] = "dexterity",
+	["agy"] = "dexterity",
+	["constitution"] = "constitution",
+	["con"] = "constitution",
+	["stamina"] = "constitution",
+	["sta"] = "constitution",
+	["intelligence"] = "intelligence",
+	["int"] = "intelligence",
+	["intellect"] = "intelligence",
+	["wisdom"] = "wisdom",
+	["wis"] = "wisdom",
+	["spirit"] = "wisdom",
+	["spt"] = "wisdom",
+	["charisma"] = "charisma",
+	["cha"] = "charisma"
+};
+
 ability_stol = {
 	["STR"] = "strength",
 	["DEX"] = "dexterity",

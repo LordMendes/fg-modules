@@ -1639,6 +1639,15 @@ body {
   line-height: 1.35;
 }
 
+.advancement-table.spells-known-table td:nth-child(6),
+.advancement-table.spells-known-table th:nth-child(6) {
+  text-align: center;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: none;
+  line-height: inherit;
+}
+
 .advancement-table .caps {
   letter-spacing: 0.04em;
 }

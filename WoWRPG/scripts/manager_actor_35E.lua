@@ -205,6 +205,12 @@ function getAbilityBonus(rActor, sStat, rEffect)
 		sStat = string.sub(sStat, 7);
 	end
 
+	-- Map WoW ability names (Intellect, Spirit, Stamina, Agility) to database names so the modifier is used, not the raw score
+	local sAliasStat = DataCommon.ability_aliases[sStat:lower()];
+	if sAliasStat then
+		sStat = sAliasStat;
+	end
+
 	-- GET ABILITY VALUE
 	local nStatScore = ActorManager35E.getAbilityScore(rActor, sStat, rEffect);
 	if nStatScore < 0 then

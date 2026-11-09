@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referenceskill" copy="record_window" />
+	<windowclass name="referenceskill_header" copy="record_header" />
+
+	<windowclass name="referenceskill_main">
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				local tFields = { "ability", "trained", "armorcheckpenalty", };
+				WindowManager.callSafeControlsSetLockMode(self, tFields, bReadOnly);
+
+				self.updateTypeLabel();
+				WindowManager.callSafeControlsSetVisible(self, { "type_label", }, bReadOnly);
+				WindowManager.callSafeControlsSetVisible(self, tFields, not bReadOnly);
+
+				WindowManager.callSafeControlsSetLockMode(self, { "text", }, bReadOnly);
+			end
+			function updateTypeLabel()
+				local tLabel = {};
+				table.insert(tLabel, ability.getValue());
+				if trained.getValue() ~= 0 then
+					table.insert(tLabel, "Trained only");
+				end
+				if armorcheckpenalty.getValue() ~= 0 then
+					table.insert(tLabel, "Armor check penalty");
+				end
+				type_label.setValue(string.format("[%s]", table.concat(tLabel, "; ")));
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+			
+			<stringc_content_noframe_noscroll_static_top name="type_label">
+				<font>reference-b-large</font>
+			</stringc_content_noframe_noscroll_static_top>
+
+			<label_content_column name="ability_label">
+				<static textres="skill_label_ability" />
+			</label_content_column>
+			<string_content_columnh name="ability">
+				<delaykeyupdate />
+			</string_content_columnh>
+			
+			<label_content_column name="trained_label">
+				<static textres="skill_label_trainedonly" />
+			</label_content_column>
+			<button_checkbox_content_columnh name="trained" />
+			
+			<label_content_column name="armorcheckpenalty_label">
+				<static textres="skill_label_armorcheckpenalty" />
+			</label_content_column>
+			<number_content_columnh name="armorcheckpenalty" />
+			
+			<ft_content_columnh_full name="text" />
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1345,28 +1345,7 @@ function resolveAbilityScoreField(sWord)
 		return nil;
 	end
 	local s = StringManager.trim(sWord):lower();
-	local aMap = {
-		strength = "strength",
-		str = "strength",
-		dexterity = "dexterity",
-		dex = "dexterity",
-		agility = "dexterity",
-		agy = "dexterity",
-		constitution = "constitution",
-		con = "constitution",
-		stamina = "constitution",
-		sta = "constitution",
-		intelligence = "intelligence",
-		int = "intelligence",
-		intellect = "intelligence",
-		wisdom = "wisdom",
-		wis = "wisdom",
-		spirit = "wisdom",
-		spt = "wisdom",
-		charisma = "charisma",
-		cha = "charisma",
-	};
-	return aMap[s];
+	return DataCommon.ability_aliases[s];
 end
 
 function handleRacialAbilities(nodeChar, sText)
@@ -2541,6 +2520,8 @@ end
 
 function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 	local sClassName = DB.getValue(nodeSpellClass, "label", "");
+	-- Table 3-4: Arcanist Spell Slots per Day matches the wizard progression.
+	local bWizardSlots = StringManager.contains({ CLASS_NAME_WIZARD, "Arcanist" }, sClassName);
 	
 	-- Increment caster level
 	local nCL = DB.getValue(nodeSpellClass, "cl", 0) + 1;
@@ -2556,7 +2537,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 
 	-- Update spell slots based on class
 	local nNewSpellLevel = 0;
-	if StringManager.contains({ CLASS_NAME_CLERIC, CLASS_NAME_DRUID, CLASS_NAME_WITCH, CLASS_NAME_WIZARD }, sClassName) then
+	if StringManager.contains({ CLASS_NAME_CLERIC, CLASS_NAME_DRUID, CLASS_NAME_WITCH, CLASS_NAME_WIZARD, "Arcanist" }, sClassName) then
 		if nCL == 1 then
 			addClassSpellLevelSlot(nodeSpellClass, 0, 3);
 			addClassSpellLevelSlot(nodeSpellClass, 1);
@@ -2568,7 +2549,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 2);
 			nNewSpellLevel = 2;
 		elseif nCL == 4 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 0);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 1);
@@ -2580,7 +2561,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 2);
 			addClassSpellLevelSlot(nodeSpellClass, 3);
 		elseif nCL == 7 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 0);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 1);
@@ -2597,7 +2578,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 4);
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 		elseif nCL == 11 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 1);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 3);
@@ -2607,7 +2588,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 		elseif nCL == 13 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 2);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 4);
@@ -2617,7 +2598,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 			addClassSpellLevelSlot(nodeSpellClass, 7);
 		elseif nCL == 15 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 3);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 5);
@@ -2627,7 +2608,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 7);
 			addClassSpellLevelSlot(nodeSpellClass, 8);
 		elseif nCL == 17 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 4);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 6);
@@ -2637,7 +2618,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 8);
 			addClassSpellLevelSlot(nodeSpellClass, 9);
 		elseif nCL == 19 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
+			if not DataCommon.isPFRPG() and not bWizardSlots then
 				addClassSpellLevelSlot(nodeSpellClass, 5);
 			end
 			addClassSpellLevelSlot(nodeSpellClass, 7);
@@ -3046,6 +3027,7 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 	-- Add bonus spell slots, if we just gained a new spell level
 	if nNewSpellLevel >= 1 and nNewSpellLevel <= 9 then
 		local sSpellAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
+		sSpellAbility = DataCommon.ability_aliases[sSpellAbility:lower()] or sSpellAbility;
 		if StringManager.contains(DataCommon.abilities, sSpellAbility) then
 			local nBonus = 0;
 			local nAbilityScore = DB.getValue(nodeChar, "abilities." .. sSpellAbility .. ".score", 10);

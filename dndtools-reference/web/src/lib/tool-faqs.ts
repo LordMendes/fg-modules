@@ -61,12 +61,12 @@ export const TOOL_FAQS: Partial<Record<ToolKey, ToolFaq[]>> = {
     {
       question: "How do turn undead checks work in D&D 3.5?",
       answer:
-        "Clerics and paladins roll 1d20 plus class level and Charisma modifier against each undead's Hit Dice. PHB Table 8-9 defines turn, destroy, or rebuke results.",
+        "The turning check is 1d20 plus your Charisma modifier, with +2 if you have 5 or more ranks in Knowledge (religion). PHB Table 8-9 applies your effective cleric level to that result and gives the highest Hit Dice you can affect.",
     },
     {
       question: "What is the turn undead damage pool?",
       answer:
-        "On a successful turn, you allocate turning damage equal to 2d6 per class level (plus bonuses). The tool helps assign that pool across multiple undead targets.",
+        "Turning damage is 2d6 + effective cleric level + Charisma modifier. That total is how many Hit Dice you can turn or destroy, spent on the weakest eligible undead first. A result below 0 turns nothing.",
     },
     {
       question: "Does this support rebuking undead?",

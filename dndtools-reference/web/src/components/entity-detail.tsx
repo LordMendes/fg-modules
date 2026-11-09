@@ -28,10 +28,13 @@ function EntityQuickAnswers({ faqs }: { faqs: EntityFaq[] }) {
 }
 
 function formatAdvancementHtml(html: string): string {
-  const withClass = html.replace(
-    /<table(\s[^>]*)?>/gi,
-    '<table class="entity-table advancement-table">',
-  );
+  const withClass = html.replace(/<table(\s[^>]*)?>/gi, (_match, _attrs, offset: number) => {
+    const head = html.slice(offset, offset + 500).toLowerCase();
+    const className = head.includes("spells known")
+      ? "entity-table advancement-table spells-known-table"
+      : "entity-table advancement-table";
+    return `<table class="${className}">`;
+  });
   return sanitizeHtml(withClass);
 }
 

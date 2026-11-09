@@ -204,8 +204,8 @@ function parseSpell(nodeSpell)
 	
 	-- Get the description minos some problem characters and in lowercase
 	local sDesc = string.lower(DB.getValue(nodeSpell, "description", ""));
-	sDesc = string.gsub(sDesc, "’", "'");
-	sDesc = string.gsub(sDesc, "–", "-");
+	sDesc = string.gsub(sDesc, "Â’", "'");
+	sDesc = string.gsub(sDesc, "Â–", "-");
 	
 	local aWords = StringManager.parseWords(sDesc);
 	
@@ -846,7 +846,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 
 	elseif rAction.type == "effect" then
 		local rRoll;
-		rRoll = ActionEffect.getRoll(draginfo, rActor, rAction);
+		rRoll = ActionEffect.getRoll(rActor, rAction);
 		if rRoll then
 			table.insert(rRolls, rRoll);
 		end

@@ -163,23 +163,68 @@ function getEnhancementFromClauses(aClauses)
 	return nEnhancement;
 end
 
-function getWeaponEnhancement(nodeWeapon, aClauses)
-	local nEnhancement = getEnhancementFromClauses(aClauses);
-	local bMagic = false;
-	for _, tClause in ipairs(aClauses or {}) do
-		if ((tClause.dmgtype or ""):lower()):find("magic", 1, true) then
-			bMagic = true;
-			break;
+local function highestPlus(sText)
+	local nBest = 0;
+	for sPlus in (sText or ""):gmatch("%+(%d+)") do
+		local nPlus = tonumber(sPlus) or 0;
+		if nPlus > nBest then
+			nBest = nPlus;
 		end
 	end
-	if bMagic and nodeWeapon then
-		local nBonus = DB.getValue(nodeWeapon, "bonus", 0);
-		if nBonus > nEnhancement then
-			nEnhancement = nBonus;
+	return nBest;
+end
+
+local function textHasMagic(sText)
+	return (sText or ""):lower():find("magic", 1, true) ~= nil;
+end
+
+local function linkedItem(nodeWeapon)
+	if not nodeWeapon then
+		return nil;
+	end
+	local _, sRecord = DB.getValue(nodeWeapon, "shortcut", "", "");
+	if (sRecord or "") == "" then
+		return nil;
+	end
+	return DB.findNode(sRecord);
+end
+
+function getWeaponEnhancement(nodeWeapon, aClauses)
+	local nEnhancement = 0;
+	local bMagic = false;
+	for _, tClause in ipairs(aClauses or {}) do
+		local sType = (tClause.dmgtype or ""):lower();
+		if textHasMagic(sType) then
+			bMagic = true;
 		end
-		if nEnhancement < 1 then
-			nEnhancement = 1;
+		local nPlus = highestPlus(sType);
+		if nPlus > nEnhancement then
+			nEnhancement = nPlus;
 		end
+	end
+	if nodeWeapon then
+		local nNamed = highestPlus(DB.getValue(nodeWeapon, "name", ""));
+		if nNamed > nEnhancement then
+			nEnhancement = nNamed;
+		end
+		if textHasMagic(DB.getValue(nodeWeapon, "properties", "")) then
+			bMagic = true;
+		end
+		local nodeItem = linkedItem(nodeWeapon);
+		if nodeItem then
+			if textHasMagic(DB.getValue(nodeItem, "properties", "")) or textHasMagic(DB.getValue(nodeItem, "damagetype", "")) then
+				bMagic = true;
+			end
+			if bMagic then
+				local nItem = DB.getValue(nodeItem, "bonus", 0);
+				if nItem > nEnhancement then
+					nEnhancement = nItem;
+				end
+			end
+		end
+	end
+	if bMagic and nEnhancement < 1 then
+		nEnhancement = 1;
 	end
 	return nEnhancement;
 end

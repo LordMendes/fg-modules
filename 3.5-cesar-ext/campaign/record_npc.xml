@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="radio_record_npctype">
+		<buttongroup_radio>
+			<anchored to="area_controls" height="20">
+				<top offset="5" />
+				<left anchor="center" offset="-150" />
+			</anchored>
+			<parameters merge="replace">
+				<optionwidth>100</optionwidth>
+				<labelsres>npc_label_typetrap|npc_label_typevehicle</labelsres>
+				<values>Trap|Vehicle</values>
+				<defaultlabelres>npc_label_typecreature</defaultlabelres>
+			</parameters>
+			<script>
+				function onValueChanged()
+					window.TypeChanged();
+				end
+			</script>
+		</buttongroup_radio>
+	</template>
+	<windowclass name="npc" copy="record_window_tabbed">
+		<sizelimits>
+			<minimum width="450" height="550" />
+		</sizelimits>
+		<minimize>minimized_npc</minimize>
+		<gmexport>npc</gmexport>
+		<tab>
+			<name>main</name>
+			<resource>tab_main</resource>
+			<embed />
+		</tab>
+		<tab merge="add">
+			<name>spells</name>
+			<resource>tab_spells</resource>
+			<class>npc_spells</class>
+			<embed />
+		</tab>
+		<tab merge="add">
+			<name>notes</name>
+			<resource>tab_notes</resource>
+			<class>record_content_text</class>
+			<embed />
+		</tab>
+		<tab merge="add">
+			<name>pictures</name>
+			<resource>tab_pictures</resource>
+			<class>record_content_pictures</class>
+			<embed />
+		</tab>
+		<script>
+			function onInit()
+				super.onInit();
+				self.TypeChanged();
+				self.onLockChanged();
+			end
+			function TypeChanged()
+				if not tabs then
+					return;
+				end
+				local sType = DB.getValue(getDatabaseNode(), "npctype", "");
+				if sType == "Trap" then
+					tabs.replaceTabClass(1, "npc_combat_trap");
+				elseif sType == "Vehicle" then
+					tabs.replaceTabClass(1, "npc_combat_vehicle");
+				else
+					tabs.replaceTabClass(1, "npc_combat_creature");
+				end
+			end
+			function onLockChanged()
+				super.onLockChanged();
+				npctype.setReadOnly(WindowManager.getReadOnlyState(getDatabaseNode()));
+			end
+			function onIDChanged()
+				super.onIDChanged();
+				if not Session.IsHost then
+					local bID = LibraryData.getIDState("npc", getDatabaseNode(), true);
+					tabs.setVisible(bID);
+					area_controls.setVisible(bID);
+					npctype.setVisible(bID);
+				end
+			end
+		</script>
+		<sheetdata>
+			<hs name="spelldisplaymode">
+				<default>action</default>
+			</hs>
+			
+			<area_content_framed_groupbox_bottom name="area_controls">
+				<anchored height="30" />
+			</area_content_framed_groupbox_bottom>
+			<radio_record_npctype name="npctype" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="npc_combat_creature">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_label">
+				<static textres="npc_label_type" />
+			</label_column>
+			<string_columnh name="type">
+				<delaykeyupdate />
+				<script file="campaign/scripts/record_size.lua" />
+			</string_columnh>
+			
+			<label_column name="alignment_label">
+				<static textres="npc_label_alignment" />
+			</label_column>
+			<string_columnh name="alignment" />
+
+			<label_column name="init_label">
+				<static textres="initiative" />
+			</label_column>
+			<number_npc_init name="init" />
+	
+			<label_column_right name="cr_label">
+				<anchored to="init" />
+				<static textres="npc_label_cr" />
+			</label_column_right>
+			<number_column_right name="cr">
+				<anchored to="init" />
+				<delaykeyupdate />
+			</number_column_right>
+
+			<label_column name="senses_label">
+				<static textres="npc_label_senses" />
+			</label_column>
+			<string_columnh_multiroll name="senses">
+				<senses_only />
+				<delaykeyupdate />
+				<script file="campaign/scripts/npc_skill.lua" />
+			</string_columnh_multiroll>
+
+			<label_column name="aura_label">
+				<static textres="npc_label_aura" />
+			</label_column>
+			<string_columnh name="aura" />
+
+			<header_column>
+				<static textres="npc_header_defense" />
+			</header_column>
+			
+			<label_column name="ac_label">
+				<static textres="ac" />
+			</label_column>
+			<string_columnh name="ac" />
+
+			<label_column name="hd_label">
+				<static textres="npc_label_hd" />
+			</label_column>
+			<string_columnh name="hd" />
+
+			<label_column name="hp_label">
+				<static textres="hp" />
+			</label_column>
+			<number_column name="hp" />
+
+			<label_column>
+				<anchored>
+					<top offset="20" />
+				</anchored>
+				<static textres="npc_label_saves" />
+			</label_column>
+			<number_npc_save name="fortitudesave">
+				<anchored width="50" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
+					<left offset="97" />
+				</anchored>
+				<target>fortitude</target>
+			</number_npc_save>
+			<label_fieldtop name="fortitudesave_label">
+				<anchored to="fortitudesave" />
+				<static textres="fortitude" />
+			</label_fieldtop>
+			<number_npc_save name="reflexsave">
+				<anchored to="fortitudesave" width="50" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>reflex</target>
+			</number_npc_save>
+			<label_fieldtop name="reflexsave_label">
+				<anchored to="reflexsave" />
+				<static textres="reflex" />
+			</label_fieldtop>
+			<number_npc_save name="willsave">
+				<anchored to="fortitudesave" width="50" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>will</target>
+			</number_npc_save>
+			<label_fieldtop name="willsave_label">
+				<anchored to="willsave" />
+				<static textres="will_long" />
+			</label_fieldtop>
+
+			<label_column name="specialqualities_label">
+				<static textres="npc_label_sq" />
+			</label_column>
+			<string_columnh name="specialqualities">
+				<delaykeyupdate />
+			</string_columnh>
+
+			<header_column>
+				<static textres="npc_header_offense" />
+			</header_column>
+			
+			<label_column name="speed_label">
+				<static textres="npc_label_speed" />
+			</label_column>
+			<string_columnh name="speed" />
+
+			<label_column name="atk_label">
+				<static textres="npc_label_atk" />
+			</label_column>
+			<string_columnh name="atk">
+				<nodragselect />
+				<actorpath>..</actorpath>
+				<script file="common/scripts/string_attackline.lua" />
+			</string_columnh>
+
+			<label_column name="fullatk_label">
+				<static textres="npc_label_fullatk" />
+			</label_column>
+			<string_columnh name="fullatk">
+				<nodragselect />
+				<actorpath>..</actorpath>
+				<script file="common/scripts/string_attackline.lua" />
+			</string_columnh>
+	
+			<label_column name="spacereach_label">
+				<static textres="npc_label_spacereach" />
+			</label_column>
+			<string_columnh name="spacereach" />
+
+			<label_column name="specialattacks_label">
+				<static textres="npc_label_sa" />
+			</label_column>
+			<string_columnh name="specialattacks" />
+
+			<header_column>
+				<static textres="npc_header_statistics" />
+			</header_column>
+			
+			<label_column name="abilities_label">
+				<anchored>
+					<top offset="20" />
+				</anchored>
+				<static textres="npc_label_abilities" />
+			</label_column>
+			<number_npc_ability name="strength">
+				<anchored width="25" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
+					<left offset="97" />
+				</anchored>
+				<target>strength</target>
+			</number_npc_ability>
+			<label_fieldtop name="strength_label">
+				<anchored to="strength" />
+				<static textres="str" />
+			</label_fieldtop>
+			<number_npc_ability name="dexterity">
+				<anchored to="strength" width="25" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>dexterity</target>
+			</number_npc_ability>
+			<label_fieldtop name="dexterity_label">
+				<anchored to="dexterity" />
+				<static textres="dex" />
+			</label_fieldtop>
+			<number_npc_ability name="constitution">
+				<anchored to="strength" width="25" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>constitution</target>
+			</number_npc_ability>
+			<label_fieldtop name="constitution_label">
+				<anchored to="constitution" />
+				<static textres="con" />
+			</label_fieldtop>
+			<number_npc_ability name="intelligence">
+				<anchored to="strength" width="25" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>intelligence</target>
+			</number_npc_ability>
+			<label_fieldtop name="intelligence_label">
+				<anchored to="intelligence" />
+				<static textres="int" />
+			</label_fieldtop>
+			<number_npc_ability name="wisdom">
+				<anchored to="strength" width="25" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>wisdom</target>
+			</number_npc_ability>
+			<label_fieldtop name="wisdom_label">
+				<anchored to="wisdom" />
+				<static textres="wis" />
+			</label_fieldtop>
+			<number_npc_ability name="charisma">
+				<anchored to="strength" width="25" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<target>charisma</target>
+			</number_npc_ability>
+			<label_fieldtop name="charisma_label">
+				<anchored to="charisma" />
+				<static textres="cha" />
+			</label_fieldtop>
+			
+			<label_column name="babgrp_label">
+				<static textres="npc_label_babgrp" />
+			</label_column>
+			<string_columnh name="babgrp">
+				<nodragselect />
+				<script file="campaign/scripts/npc_babgrp.lua" />
+			</string_columnh>
+			
+			<label_column name="feats_label">
+				<static textres="npc_label_feats" />
+			</label_column>
+			<string_columnh name="feats" />
+
+			<label_column name="skills_label">
+				<static textres="npc_label_skills" />
+			</label_column>
+			<string_columnh_multiroll name="skills">
+				<script file="campaign/scripts/npc_skill.lua" />
+			</string_columnh_multiroll>
+
+			<label_column name="languages_label">
+				<static textres="npc_label_languages" />
+			</label_column>
+			<string_columnh name="languages" />
+
+			<label_column name="advancement_label">
+				<static textres="npc_label_advancement" />
+			</label_column>
+			<string_columnh name="advancement" />
+
+			<label_column name="leveladjustment_label">
+				<static textres="npc_label_leveladj" />
+			</label_column>
+			<string_columnh name="leveladjustment" />
+
+			<header_column>
+				<static textres="npc_header_ecology" />
+			</header_column>
+			
+			<label_column name="environment_label">
+				<static textres="npc_label_environment" />
+			</label_column>
+			<string_columnh name="environment" />
+
+			<label_column name="organization_label">
+				<static textres="npc_label_organization" />
+			</label_column>
+			<string_columnh name="organization" />
+
+			<label_column name="treasure_label">
+				<static textres="npc_label_treasure" />
+			</label_column>
+			<string_columnh name="treasure" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="npc_combat_trap">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_label">
+				<static textres="npc_label_type" />
+			</label_column>
+			<string_columnh name="type">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<label_column name="hp_label">
+				<static textres="hp" />
+			</label_column>
+			<number_column name="hp" />
+
+			<label_column_right name="cr_label">
+				<anchored to="hp" />
+				<static textres="npc_label_cr" />
+			</label_column_right>
+			<number_column_right name="cr">
+				<anchored to="hp" />
+			</number_column_right>
+
+			<string_column_full name="senses">
+				<script file="common/scripts/column_string.lua" />
+			</string_column_full>
+
+			<header_column>
+				<static textres="npc_header_effects" />
+			</header_column>
+			
+			<label_column name="trigger_label">
+				<static textres="npc_label_trigger" />
+			</label_column>
+			<string_columnh name="trigger" />
+			
+			<label_column name="reset_label">
+				<static textres="npc_label_reset" />
+			</label_column>
+			<string_columnh name="reset" />
+			
+			<label_column name="atk_label">
+				<static textres="npc_label_effect" />
+			</label_column>
+			<string_columnh name="atk">
+				<nodragselect />
+				<actorpath>..</actorpath>
+				<script file="common/scripts/string_attackline.lua" />
+			</string_columnh>
+			
+			<label_column name="fullatk_label">
+				<static textres="npc_label_effect2" />
+			</label_column>
+			<string_columnh name="fullatk">
+				<nodragselect />
+				<actorpath>..</actorpath>
+				<script file="common/scripts/string_attackline.lua" />
+			</string_columnh>
+
+			<label_column name="specialqualities_label">
+				<static textres="npc_label_destruction" />
+			</label_column>
+			<string_columnh name="specialqualities" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="npc_combat_vehicle">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_label">
+				<static textres="npc_label_type" />
+			</label_column>
+			<string_columnh name="type">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<label_column name="squares_label">
+				<static textres="npc_label_squares" />
+			</label_column>
+			<string_columnh name="squares" />
+
+			<header_column name="header_defense">
+				<static textres="npc_header_defense" />
+			</header_column>
+			
+			<label_column name="ac_label">
+				<static textres="ac" />
+			</label_column>
+			<string_columnh name="ac" />
+
+			<label_column name="hp_label">
+				<static textres="hp" />
+			</label_column>
+			<number_columnh name="hp" />
+
+			<label_column name="basesave_label">
+				<static textres="npc_label_basesave" />
+			</label_column>
+			<number_columnh name="basesave" />
+
+			<header_column name="header_offense">>
+				<static textres="npc_header_offense" />
+			</header_column>
+			
+			<label_column name="speed_label">
+				<static textres="npc_label_speed" />
+			</label_column>
+			<string_columnh name="speed" />
+
+			<label_column name="babgrp_label">
+				<static textres="npc_label_cm" />
+			</label_column>
+			<string_columnh name="babgrp">
+				<nodragselect />
+				<script file="campaign/scripts/npc_babgrp.lua" />
+			</string_columnh>
+			
+			<label_column name="atk_label">
+				<static textres="npc_label_atk" />
+			</label_column>
+			<string_columnh name="atk">
+				<nodragselect />
+				<actorpath>..</actorpath>
+				<script file="common/scripts/string_attackline.lua" />
+			</string_columnh>
+
+			<header_column name="header_desc">
+				<static textres="npc_header_desc" />
+			</header_column>
+			
+			<label_column name="prop_label">
+				<static textres="npc_label_propulsion" />
+			</label_column>
+			<string_columnh name="prop" />
+
+			<label_column name="drive_label">
+				<static textres="npc_label_drivecheck" />
+			</label_column>
+			<string_columnh name="drive" />
+
+			<label_column name="ff_label">
+				<static textres="npc_label_forwardface" />
+			</label_column>
+			<string_columnh name="ff" />
+			
+			<label_column name="drived_label">
+				<static textres="npc_label_drivedevice" />
+			</label_column>
+			<string_columnh name="drived" />
+			
+			<label_column name="drives_label">
+				<static textres="npc_label_drivespace" />
+			</label_column>
+			<string_columnh name="drives" />
+			
+			<label_column name="crew_label">
+				<static textres="npc_label_crew" />
+			</label_column>
+			<number_columnh name="crew" />
+			
+			<label_column name="decks_label">
+				<static textres="npc_label_decks" />
+			</label_column>
+			<string_columnh name="decks" />
+			
+			<label_column name="weapons_label">
+				<static textres="npc_label_weapons" />
+			</label_column>
+			<string_columnh name="weapons" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="npc_spells">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_spells.lua" />
+		<sheetdata>
+			<button_expand name="expand_full">
+				<anchored position="insidetopleft" offset="5,2" />
+				<target>spellclasslist,levels,spells</target>
+				<togglelevel>2</togglelevel>
+			</button_expand>
+			<button_collapse name="collapse_full">
+				<anchored position="insidetopleft" offset="35,2" />
+				<target>spellclasslist,levels,spells</target>
+				<togglelevel>2</togglelevel>
+			</button_collapse>
+			<label name="label_mode">
+				<anchored position="insidetopleft" offset="75,2" height="20" />
+				<static textres="spell_label_mode" />
+			</label>
+			<button_stringcycler name="spellmode">
+				<anchored to="label_mode" position="righthigh" offset="10,0" width="80" />
+				<parameters>
+					<labelsres>spell_label_modeprep|spell_label_modecombat</labelsres>
+					<values>preparation|combat</values>
+					<defaultlabelres>spell_label_modestd</defaultlabelres>
+				</parameters>
+				<script>
+					function onValueChanged()
+						window.onModeChanged();
+					end
+				</script>
+			</button_stringcycler>
+			<buttoncontrol name="spellclass_iadd">
+				<anchored position="insidetopright" offset="35,2" width="20" height="20" />
+				<icon normal="button_star" pressed="button_star_down" />
+				<tooltip textres="npc_tooltip_spelladdclass" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						window.addSpellClass();
+					end
+				</script>
+			</buttoncontrol>
+
+			<list_spellclass name="spellclasslist">
+				<anchored position="insidetop" offset="0,30" />
+				<class>spell_class</class>
+				<npc />
+				<script>
+					function onInit()
+						if super and super.onInit then
+							super.onInit();
+						end
+						registerMenuItem(Interface.getString("menu_resetspells"), "lockvisibilityon", 8);
+					end
+					
+					function onMenuSelection(selection)
+						if selection == 8 then
+							SpellManager.resetSpells(window.getDatabaseNode());
+						end
+					end
+				</script>
+			</list_spellclass>
+		</sheetdata>
+	</windowclass>
+</root>

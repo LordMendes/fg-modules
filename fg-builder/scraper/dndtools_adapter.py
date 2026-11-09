@@ -87,7 +87,11 @@ SUPPLEMENTAL_FILES: dict[str, list[str]] = {
         "wowrpg_hpg_feats.json",
         "wowrpg_mmm_feats.json",
     ],
-    "spells": ["warcraft_rpg_spells.json", "wowrpg_mmm_spells.json"],
+    "spells": [
+        "warcraft_rpg_spells.json",
+        "wowrpg_core_spells.json",
+        "wowrpg_mmm_spells.json",
+    ],
     "items": ["warcraft_rpg_items.json", "wowrpg_mmm_items.json", "wowrpg_hpg_items.json"],
     "equipment": [
         "warcraft_rpg_equipment.json",
@@ -895,6 +899,15 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
 
         class_features = _merge_advancement_features(class_features, advancement)
 
+    # The PDF extract mixes familiar sidebar text into the feature list and
+    # pins every path heading at 1st level. Table 3-3 is the advancement.
+    if (record.get("slug") or "") == "arcanist-wow":
+        from scraper.wow_arcanist_class import apply_arcanist_advancement
+
+        advancement, class_features = apply_arcanist_advancement(
+            advancement, class_features
+        )
+
     # Expand WRPG spell-hook shorthand in feature text.
     for feat in class_features:
         if feat.get("text"):
@@ -1092,6 +1105,7 @@ def convert_feat(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
 
 
 def convert_spell(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
+    from scraper.wow_core_spells import spell_actions_for_wow_core
     from scraper.wrpg_support import COSMOLOGY_SPELL_SLUG, spell_actions_for_wrpg
 
     slug = record.get("slug") or ""
@@ -1132,6 +1146,8 @@ def convert_spell(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         "description_text": record.get("description_text") or record.get("description") or "",
     }
     override = spell_actions_for_wrpg(slug)
+    if override is None:
+        override = spell_actions_for_wow_core(slug, detail)
     if override is not None:
         detail["actions"] = override
     return {

@@ -11,7 +11,8 @@ export type TurnUndeadTarget = {
 export type TurnUndeadInput = {
   class: TurnUndeadClass;
   level: number;
-  chaMod: number;
+  /** Ability score, not the modifier. 3 is a -4 modifier. */
+  charisma: number;
   religionBonus: boolean;
   greaterTurnUndead: boolean;
   d20: number | null;
@@ -30,8 +31,13 @@ export type TurnUndeadStackResult = {
 
 export type TurnUndeadResult = {
   effectiveLevel: number;
+  charismaModifier: number;
+  /** 3 + Charisma modifier. Negative means no attempts. */
+  turningAttempts: number;
   checkTotal: number;
   maxHdPerCreature: number;
+  /** 2d6 + effective level + Charisma modifier, before the 0 HD floor. */
+  damageRoll: number;
   damagePool: number;
   damageSpent: number;
   damageRemaining: number;

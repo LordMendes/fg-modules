@@ -338,7 +338,7 @@ def _write_spell_slots(node: ET.Element, advancement: list[dict[str, Any]]) -> N
 
 
 # Classes whose spell columns are a second table, matching the wizard layout.
-_SPLIT_SPELL_TABLE_CLASSES = frozenset({"Dread Necromancer"})
+_SPLIT_SPELL_TABLE_CLASSES = frozenset({"Dread Necromancer", "Arcanist"})
 
 
 def _slot_display(value: Any) -> str:

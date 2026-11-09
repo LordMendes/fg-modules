@@ -146,6 +146,10 @@ def emit_spell_actions(
             typed_string(action_el, "durunit", action.get("durunit"))
             typed_number(action_el, "durmod", action.get("durmod"))
             typed_number(action_el, "durmult", action.get("durmult"))
+            if action.get("durmult"):
+                # FG only applies durmult (a per-caster-level multiplier) when
+                # durstat names the caster level; without it the duration is 0.
+                typed_string(action_el, "durstat", "cl")
 
     return actions_el
 

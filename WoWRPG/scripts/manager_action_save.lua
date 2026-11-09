@@ -341,7 +341,7 @@ function applySave(rSource, rOrigin, rRoll)
 			end
 		end
 
-		ActionSaveCore.handleSaveSuccess(rSource, rRoll);
+		ActionSaveCore.handleSaveSuccess(rSource, rOrigin, rRoll);
 	else
 		if rRoll.sResult == "critfailure" then
 			msgLong.icon = "action_save_failure_crit";

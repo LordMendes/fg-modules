@@ -1,0 +1,4 @@
+--
+-- Stub: official 3.5E registers ActionSpellSave. Cesar routes save handling through ActionSpell.
+-- Empty replacement so the stock handlers do not run beside Cesar's spell code.
+--

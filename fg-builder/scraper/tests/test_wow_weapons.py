@@ -205,7 +205,7 @@ def test_times_sign_critical_becomes_ascii_x():
 def test_every_wow_weapon_has_ruleset_fields():
     records = json.loads(EQUIPMENT.read_text(encoding="utf-8"))
     weapons = [record for record in records if record.get("kind") == "weapon"]
-    assert len(weapons) == 60
+    assert len(weapons) == 62
     for record in weapons:
         item = convert_item(record, "wow", mundane=True)
         detail = item["detail"]
@@ -215,6 +215,59 @@ def test_every_wow_weapon_has_ruleset_fields():
         assert detail["damagetype"]
         assert detail["critical"].startswith("x") or "/x" in detail["critical"]
         assert " gp" not in item["name"]
+
+
+def test_core_firearms_ammunition_and_gunpowder():
+    records = json.loads(EQUIPMENT.read_text(encoding="utf-8"))
+    by_name = {record["name"]: record for record in records}
+    expect_ammo = {
+        "Balls, pistol (10)": "5 gp",
+        "Bullets, rifle (10)": "6 gp",
+        "Shot, blunderbuss (12)": "10 gp",
+        "Shell, mortar": "25 gp",
+    }
+    for name, cost in expect_ammo.items():
+        item = convert_item(by_name[name], "wow", mundane=True)
+        assert item["detail"]["item_type"] == "Goods and Services"
+        assert item["detail"]["subtype"] == "Ammunition"
+        assert item["detail"]["price"] == cost
+    powders = [
+        "Gunpowder, 2-pound horn",
+        "Gunpowder, 15-pound keg",
+        "Gunpowder, refined, 2-pound horn",
+        "Gunpowder, refined, 15-pound keg",
+        "Gunpowder, imbued, 2-pound horn",
+    ]
+    for name in powders:
+        item = convert_item(by_name[name], "wow", mundane=True)
+        assert item["detail"]["subtype"] == "Special Substances And Items", name
+        assert item["detail"]["mr"] >= 1
+    assert convert_item(by_name["Gunpowder, imbued, 2-pound horn"], "wow", mundane=True)["detail"]["mr"] == 2
+    blunder = convert_item(by_name["Blunderbuss"], "wow", mundane=True)
+    assert blunder["detail"]["subtype"] == "Exotic Firearm"
+    assert blunder["detail"]["damage"] == "3d6"
+    assert blunder["detail"]["mr"] == 1
+    mortar = convert_item(by_name["Mortar"], "wow", mundane=True)
+    assert mortar["detail"]["subtype"] == "Exotic Firearm"
+    assert mortar["detail"]["damagetype"] == "Fire"
+    assert mortar["detail"]["range"] == 40
+    rifle = convert_item(by_name["Long rifle"], "wow", mundane=True)
+    assert "long rifle" in (rifle["detail"]["description_html"] or "").lower() or "Reloading" in (
+        rifle["detail"]["description_html"] or ""
+    )
+
+
+def test_axiomatic_is_a_weapon_property():
+    path = EQUIPMENT.parents[0] / "wowrpg_mmm_items.json"
+    records = json.loads(path.read_text(encoding="utf-8"))
+    axiomatic = next(record for record in records if record["name"] == "Axiomatic")
+    item = convert_item(axiomatic, "mmm", mundane=False)
+    section = convert_items([item], "More Magic and Mayhem", BuildReport(), IdAllocator())
+    node = section.find(".//id-00001")
+    assert node is not None
+    assert node.find("type").text == "Weapon"
+    assert node.find("subtype").text == "Enchantment"
+    assert "ammunition" in item["detail"]["description_html"].lower()
 
 
 def test_ammunition_is_not_an_attack():

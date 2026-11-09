@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referenceclass" copy="record_window_tabbed">
+		<tab>
+			<name>notes</name>
+			<resource>tab_main</resource>
+			<class>record_content_text</class>
+			<embed />
+		</tab>
+		<tab merge="add">
+			<name>main</name>
+			<resource>tab_other</resource>
+			<class>referenceclass_main</class>
+			<embed />
+		</tab>
+	</windowclass>
+	<windowclass name="referenceclass_header" copy="record_header" />
+
+	<template name="cycler_column_classstat">
+		<button_stringcycler_content_column>
+			<anchored width="50" />
+			<alignleft />
+		</button_stringcycler_content_column>
+	</template>
+	<windowclass name="referenceclass_main">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				local tFields = { "classtype", "hitdie", "bab", "fort", "ref", "will", "skillranks", "classskills", "features_iadd", };
+				WindowManager.callSafeControlsSetLockMode(self, tFields, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+
+			<label_content_column name="classtype_label">
+				<static textres="class_label_classtype" />
+			</label_content_column>
+			<cycler_column_classstat name="classtype">
+				<anchored width="150" />
+				<parameters>
+					<labelsres>class_label_classtype_base|class_label_classtype_prestige|class_label_classtype_npc|class_label_classtype_archetype|class_label_classtype_animalcompanion|class_label_classtype_eidolon|class_label_classtype_phantom</labelsres>
+					<values>base|prestige|npc|archetype|animalcompanion|eidolon|phantom</values>
+				</parameters>
+			</cycler_column_classstat>
+			
+			<label_content_column name="hitdie_label">
+				<static textres="class_label_hitdie" />
+			</label_content_column>
+			<string_content_column name="hitdie">
+				<anchored width="30"><right merge="delete" /></anchored>
+			</string_content_column>
+			
+			<label_content_column name="bab_label">
+				<static textres="class_label_bab" />
+			</label_content_column>
+			<cycler_column_classstat name="bab">
+				<parameters>
+					<labelsres>class_label_bab_fast|class_label_bab_medium|class_label_bab_slow</labelsres>
+					<values>Fast|Medium|Slow</values>
+				</parameters>
+			</cycler_column_classstat>
+			
+			<label_content_column name="fort_label">
+				<static textres="class_label_fort" />
+			</label_content_column>
+			<cycler_column_classstat name="fort">
+				<parameters>
+					<labelsres>class_label_save_good|class_label_save_bad</labelsres>
+					<values>Good|Bad</values>
+				</parameters>
+			</cycler_column_classstat>
+			
+			<label_content_column name="ref_label">
+				<static textres="class_label_ref" />
+			</label_content_column>
+			<cycler_column_classstat name="ref">
+				<parameters>
+					<labelsres>class_label_save_good|class_label_save_bad</labelsres>
+					<values>Good|Bad</values>
+				</parameters>
+			</cycler_column_classstat>
+			
+			<label_content_column name="will_label">
+				<static textres="class_label_will" />
+			</label_content_column>
+			<cycler_column_classstat name="will">
+				<parameters>
+					<labelsres>class_label_save_good|class_label_save_bad</labelsres>
+					<values>Good|Bad</values>
+				</parameters>
+			</cycler_column_classstat>
+			
+			<label_content_column name="skillranks_label">
+				<static textres="class_label_skillranks" />
+			</label_content_column>
+			<number_content_column name="skillranks">
+				<hideonvalue>0</hideonvalue>
+			</number_content_column>
+			<label name="skillranks_suffix">
+				<anchored to="skillranks" position="righthigh" offset="10,0" />
+				<static textres="class_label_skillrankssuffix" />
+			</label>
+			
+			<header_content_framed_headersimple name="classskills_header">
+				<static textres="class_header_classskills"/>
+			</header_content_framed_headersimple>
+			<string_content_column_full name="classskills" />
+			
+			<header_content_framed_headersimple name="features_header">
+				<static textres="class_header_features"/>
+			</header_content_framed_headersimple>
+			<button_iadd name="features_iadd">
+				<anchored to="features_header" position="righthigh" offset="-20,0" />
+				<target>features</target>
+			</button_iadd>
+			<list_content_top name="features">
+				<datasource>.classfeatures</datasource>
+				<sortby><control>level</control><control>name</control></sortby>
+				<class>ref_class_feature</class>
+			</list_content_top>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_class_feature">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				WindowManager.callSafeControlsSetLockMode(self, { "level", "name", "idelete" }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<button_listitem_idelete_left name="idelete" />
+			<link_listitem_left name="link">
+				<class>referenceclassability</class>
+			</link_listitem_left>
+			<number_listitem_left name="level">
+				<anchored width="20" />
+			</number_listitem_left>
+
+			<string_listitem_center name="name">
+				<empty textres="library_recordtype_empty_classfeature" />
+				<font>sheetlabel</font>
+			</string_listitem_center>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="referenceclassability" copy="record_window" />
+	<windowclass name="referenceclassability_header" copy="record_header">
+		<name_emptyres>library_recordtype_empty_classfeature</name_emptyres>
+	</windowclass>
+
+	<windowclass name="referenceclassability_main">
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				WindowManager.callSafeControlsSetLockMode(self, { "type", "text", }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_content_top />
+			
+			<label_content_column name="type_label">
+				<static textres="specialability_label_type" />
+			</label_content_column>
+			<string_content_columnh name="type">
+				<empty textres="specialability_empty_type" />
+				<nohide />
+				<delaykeyupdate />
+			</string_content_columnh>
+			
+			<ft_content_columnh_full name="text" />
+		</sheetdata>
+	</windowclass>
+</root>

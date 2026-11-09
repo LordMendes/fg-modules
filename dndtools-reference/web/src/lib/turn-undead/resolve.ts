@@ -23,6 +23,26 @@ export function effectiveTurnLevel(
   return Math.max(1, level - 3);
 }
 
+/** D&D 3.5 ability modifier: floor((score - 10) / 2). */
+export function charismaModifier(score: number): number {
+  if (!Number.isFinite(score)) return 0;
+  return Math.floor((Math.trunc(score) - 10) / 2);
+}
+
+export function formatModifier(value: number): string {
+  if (value >= 0) return `+${value}`;
+  return String(value);
+}
+
+/** PHB: attempts per day equal 3 + Charisma modifier (can be negative). */
+export function turningAttemptsPerDay(charismaScore: number): number {
+  return 3 + charismaModifier(charismaScore);
+}
+
+/**
+ * PHB Table 8-9. The check is 1d20 + Charisma modifier.
+ * Level is applied here, not added to the d20.
+ */
 export function maxHdFromCheck(
   checkTotal: number,
   effectiveLevel: number,
@@ -34,7 +54,7 @@ export function maxHdFromCheck(
   } else if (checkTotal <= 3) {
     offset = -3;
   } else if (checkTotal <= 6) {
-    offset = -4;
+    offset = -2;
   } else if (checkTotal <= 9) {
     offset = -1;
   } else if (checkTotal <= 12) {
@@ -126,13 +146,14 @@ export function resolveTurnUndead(input: TurnUndeadInput): TurnUndeadResult | nu
   }
 
   const effectiveLevel = effectiveTurnLevel(input.class, input.level);
+  const modifier = charismaModifier(input.charisma);
   const religionBonus = input.religionBonus ? 2 : 0;
 
-  const checkTotal =
-    input.d20 + effectiveLevel + input.chaMod + religionBonus;
+  const checkTotal = input.d20 + modifier + religionBonus;
   const maxHdPerCreature = maxHdFromCheck(checkTotal, effectiveLevel);
-  const damagePool =
-    input.d6First + input.d6Second + effectiveLevel + input.chaMod;
+  const damageRoll =
+    input.d6First + input.d6Second + effectiveLevel + modifier;
+  const damagePool = Math.max(0, damageRoll);
 
   const creatures = expandCreatures(input);
   const eligibleCreatures = creatures.filter(
@@ -173,8 +194,11 @@ export function resolveTurnUndead(input: TurnUndeadInput): TurnUndeadResult | nu
 
   return {
     effectiveLevel,
+    charismaModifier: modifier,
+    turningAttempts: 3 + modifier,
     checkTotal,
     maxHdPerCreature,
+    damageRoll,
     damagePool,
     damageSpent,
     damageRemaining,

@@ -22,6 +22,7 @@
 
 	<!-- Layers -->
 	<importruleset source="CoreRPG" />
+	<importruleset source="3.5E" />
 	
 	<!-- Tabletop settings -->
 	<includefile source="gameelements.xml" />

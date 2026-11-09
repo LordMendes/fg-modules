@@ -1,17 +1,17 @@
 "use client";
 
-import type { TurnUndeadResult } from "@/lib/turn-undead";
-import { stackOutcomeTone } from "@/lib/turn-undead";
+import type { TurnUndeadInput, TurnUndeadResult } from "@/lib/turn-undead";
+import { formatModifier, stackOutcomeTone } from "@/lib/turn-undead";
 import { TurnUndeadOutcomeBadge } from "@/components/tools/turn-undead-outcome-badge";
 
 export function TurnUndeadSummary({
+  input,
   result,
   diceReady,
-  greaterTurnUndead,
 }: {
+  input: TurnUndeadInput;
   result: TurnUndeadResult | null;
   diceReady: boolean;
-  greaterTurnUndead: boolean;
 }) {
   if (!diceReady) {
     return (
@@ -41,6 +41,19 @@ export function TurnUndeadSummary({
         <span className="tool-summary-label">Turning check</span>
         <span className="tool-summary-amount">{result.checkTotal}</span>
       </div>
+      <p className="tool-step-desc">
+        d20 {input.d20} + Cha {formatModifier(result.charismaModifier)}
+        {input.religionBonus ? " + 2" : ""} = {result.checkTotal}. Table 8-9
+        allows up to {result.maxHdPerCreature} HD on one creature.
+      </p>
+      <p className="tool-step-desc">
+        Damage: {input.d6First} + {input.d6Second} + level{" "}
+        {result.effectiveLevel} + Cha {formatModifier(result.charismaModifier)}{" "}
+        = {result.damageRoll}
+        {result.damageRoll < 0
+          ? ", so the pool is 0 HD."
+          : " HD."}
+      </p>
 
       <dl className="tool-summary-stats">
         <div>
@@ -94,7 +107,7 @@ export function TurnUndeadSummary({
         <h3>Rules reminder</h3>
         <p className="tool-step-desc">
           Damage pool is spent on the weakest eligible HD first.
-          {greaterTurnUndead
+          {input.greaterTurnUndead
             ? " Greater Turn Undead destroys all affected undead instead of turning them."
             : " Undead are destroyed (not just turned) when effective level is at least twice their HD."}
         </p>

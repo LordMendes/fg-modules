@@ -95,12 +95,16 @@ def build_module(
             if section is not None:
                 root.append(section)
 
+    if book.slug == "world-of-warcraft-the-roleplaying-game":
+        # The dedicated block below links the general list and each path.
+        class_spell_links.pop("Arcanist", None)
+
     if class_spell_links:
         _inject_class_spell_links(root, class_spell_links)
 
-    # Core Arcanist path links point at the MMM module spell lists.
+    # Core class dialog lists the Chapter 16 lists, then MMM path additions.
     if book.slug == "world-of-warcraft-the-roleplaying-game":
-        _inject_arcanist_links(root)
+        _inject_arcanist_links(root, display_name)
 
     if sum(report.written.values()) == 0:
         raise EmptyModuleError(
@@ -157,9 +161,9 @@ def _inject_class_spell_links(root: ET.Element, links: dict[str, str]) -> None:
             _append_formatted_html(text_el, html)
 
 
-def _inject_arcanist_links(root: ET.Element) -> None:
-    """Append Mage/Necromancer/Warlock spell list links onto Arcanist and High Elf."""
-    link_html = arcanist_path_spell_links(MMM_MODULE_NAME)
+def _inject_arcanist_links(root: ET.Element, module_name: str) -> None:
+    """Append core and MMM spell list links onto Arcanist and High Elf."""
+    link_html = arcanist_path_spell_links(module_name, extra_module=MMM_MODULE_NAME)
     for category in root.findall("./class/category"):
         for node in category:
             name_el = node.find("name")

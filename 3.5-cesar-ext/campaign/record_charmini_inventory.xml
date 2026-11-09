@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheetmini_inventory">
+		<sheetdata>
+			<anchor_content_top />
+			<anchor_content_bottom />
+
+			<list_content_framed_groupbox_alternating name="inventorylist">
+				<datasource>.inventorylist</datasource>
+				<class>charmini_inventoryitem</class>
+				<script file="campaign/scripts/charmini_invlist.lua" />
+			</list_content_framed_groupbox_alternating>
+			<scrollbar_content_base>
+				<anchored to="inventorylist" />
+				<target>inventorylist</target>
+			</scrollbar_content_base>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="charmini_inventoryitem">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+			end
+			function onLockModeChanged(bReadOnly)
+				WindowManager.callSafeControlsSetLockMode(self, { "count", }, bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<hidden_record_isidentified name="isidentified"><class>item</class><ignorehost /></hidden_record_isidentified>
+			<hn name="showonminisheet">
+				<script>
+					function onValueChanged()
+						window.windowlist.applyFilter();
+					end
+				</script>
+			</hn>
+
+			<anchor_listitem_left_sm />
+			<anchor_listitem_right_sm />
+
+			<linkc_listitem_left name="shortcut">
+				<class>item</class>
+			</linkc_listitem_left>
+			<number_listitem_left name="count">
+				<anchored width="20" />
+				<nodrag />
+				<hideonvalue>0</hideonvalue>
+			</number_listitem_left>
+
+			<string_listitem_center_underline name="name">
+				<readonly />
+			</string_listitem_center_underline>
+			<string_listitem_center_underline name="nonid_name">
+				<empty textres="library_recordtype_empty_nonid_item" />
+				<readonly />
+				<invisible />
+			</string_listitem_center_underline>
+		</sheetdata>
+	</windowclass>
+</root>

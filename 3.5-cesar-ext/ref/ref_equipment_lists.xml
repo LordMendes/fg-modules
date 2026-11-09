@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="reference_weapontablelist">
+		<script>
+			function onInit()
+				local sModule = DB.getModule(getDatabaseNode());
+				ListManager.toggleRecordView("item", "weapon", "reference.weapon@" .. sModule);
+				close();
+			end
+		</script>
+		<sheetdata />
+	</windowclass>
+	<windowclass name="reference_armortablelist">
+		<script>
+			function onInit()
+				local sModule = DB.getModule(getDatabaseNode());
+				ListManager.toggleRecordView("item", "armor", "reference.armor@" .. sModule);
+				close();
+			end
+		</script>
+		<sheetdata />
+	</windowclass>
+	<windowclass name="reference_equipmenttablelist">
+		<script>
+			function onInit()
+				local sModule = DB.getModule(getDatabaseNode());
+				local sPath = "reference.equipment@" .. sModule;
+				local w = Interface.findWindow("reference_list", sPath);
+				if not w then
+					w = Interface.openWindow("reference_list", sPath);
+					ListManager.initSimpleListFromRecord(w, { sRecordType = "item", sSource = sPath, sTitle = LibraryData.getDisplayText("item") });
+				end
+				close();
+			end
+		</script>
+		<sheetdata />
+	</windowclass>
+</root>

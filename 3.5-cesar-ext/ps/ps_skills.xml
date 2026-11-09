@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ps_skills">
+		<sheetdata>
+			<anchor_content_top />
+			<anchor_content_bottom />
+
+			<sub_content_framed_groupbox_bottom name="sub_rolls">
+				<class>ps_skills_rolls</class>
+			</sub_content_framed_groupbox_bottom>
+
+			<sub_content_framed_groupbox name="sub_content">
+				<class>ps_skills_content</class>
+			</sub_content_framed_groupbox>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ps_skills_content">
+		<sheetdata>
+			<anchor_content_top />
+			<anchor_content_bottom />
+
+			<sub_content_top name="sub_labels">
+				<anchored height="40" />
+				<class>ps_skills_labels</class>
+			</sub_content_top>
+
+			<list_content name="list">
+				<datasource>.partyinformation</datasource>
+				<class>ps_skillsitem</class>
+				<sortby><control>name</control></sortby>
+				<empty font="list-empty" textres="ps_emptylistother" />
+			</list_content>
+			<scrollbar_content_list />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ps_skills_labels">
+		<script>
+			function onInit()
+				local bPFMode = DataCommon.isPFRPG();
+				
+				spotlabel.setVisible(not bPFMode);
+				listenlabel.setVisible(not bPFMode);
+				searchlabel.setVisible(not bPFMode);
+				perceptionlabel.setVisible(bPFMode);
+				smlabel.setVisible(bPFMode);
+				
+				gatherinfolabel.setVisible(not bPFMode);
+				
+				acrobaticslabel.setVisible(bPFMode);
+				heallabel.setVisible(bPFMode);
+				jumplabel.setVisible(not bPFMode);
+				
+				hidelabel.setVisible(not bPFMode);
+				movesilentlabel.setVisible(not bPFMode);
+				stealthlabel.setVisible(bPFMode);
+			end
+		</script>
+		<sheetdata>
+			<label_list_content_base name="namelabel">
+				<anchored position="insidetopleft" offset="50,17" width="110" />
+				<static textres="ps_label_name" />
+				<center />
+			</label_list_content_base>
+			
+			<genericcontrol name="skillanchor">
+				<anchored position="insidetopleft" offset="163,17" width="0" height="20" />
+			</genericcontrol>
+			<label_list_ps_skill name="spotlabel">
+				<static textres="ps_label_spot" />
+				<tooltip textres="skill_value_spot" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="listenlabel">
+				<static textres="ps_label_listen" />
+				<tooltip textres="skill_value_listen" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="searchlabel">
+				<static textres="ps_label_search" />
+				<tooltip textres="skill_value_search" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="perceptionlabel">
+				<static textres="ps_label_perception" />
+				<tooltip textres="skill_value_perception" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="smlabel">
+				<static textres="ps_label_sensemotive" />
+				<tooltip textres="skill_value_sensemotive" />
+			</label_list_ps_skill>
+			<label_list_content_base name="passivelabel">
+				<anchored>
+					<top />
+					<left parent="spotlabel" />
+					<right parent="smlabel" />
+				</anchored>
+				<static textres="ps_label_passive" />
+				<center />
+			</label_list_content_base>
+			
+			<label_list_ps_skill name="arcanalabel">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="ps_label_knowarcana" />
+				<tooltip textres="skill_value_knowarcana" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="dungeoneeringlabel">
+				<static textres="ps_label_knowdungeoneering" />
+				<tooltip textres="skill_value_knowdungeoneering" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="locallabel">
+				<static textres="ps_label_knowlocal" />
+				<tooltip textres="skill_value_knowlocal" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="naturelabel">
+				<static textres="ps_label_knownature" />
+				<tooltip textres="skill_value_knownature" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="planeslabel">
+				<static textres="ps_label_knowplanes" />
+				<tooltip textres="skill_value_knowplanes" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="religionlabel">
+				<static textres="ps_label_knowreligion" />
+				<tooltip textres="skill_value_knowreligion" />
+			</label_list_ps_skill>
+			<label_list_content_base name="knowledgeskillslabel">
+				<anchored>
+					<top />
+					<left parent="arcanalabel" />
+					<right parent="religionlabel" />
+				</anchored>
+				<static textres="ps_label_knowledge" />
+				<center />
+			</label_list_content_base>
+			
+			<label_list_ps_skill name="blufflabel">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="ps_label_bluff" />
+				<tooltip textres="skill_value_bluff" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="diplomacylabel">
+				<static textres="ps_label_diplomacy" />
+				<tooltip textres="skill_value_diplomacy" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="gatherinfolabel">
+				<static textres="ps_label_gatherinfo" />
+				<tooltip textres="skill_value_gatherinfo" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="intimidatelabel">
+				<static textres="ps_label_intimidate" />
+				<tooltip textres="skill_value_intimidate" />
+			</label_list_ps_skill>
+			<label_list_content_base name="socialskillslabel">
+				<anchored>
+					<top />
+					<left parent="blufflabel" />
+					<right parent="intimidatelabel" />
+				</anchored>
+				<static textres="ps_label_social" />
+				<center />
+			</label_list_content_base>
+
+			<label_list_ps_skill name="acrobaticslabel">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="ps_label_acrobatics" />
+				<tooltip textres="skill_value_acrobatics" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="climblabel">
+				<static textres="ps_label_climb" />
+				<tooltip textres="skill_value_climb" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="heallabel">
+				<static textres="ps_label_heal" />
+				<tooltip textres="skill_value_heal" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="jumplabel">
+				<static textres="ps_label_jump" />
+				<tooltip textres="skill_value_jump" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="survivallabel">
+				<static textres="ps_label_survival" />
+				<tooltip textres="skill_value_survival" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="hidelabel">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="ps_label_hide" />
+				<tooltip textres="skill_value_hide" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="movesilentlabel">
+				<static textres="ps_label_movesilent" />
+				<tooltip textres="skill_value_movesilent" />
+			</label_list_ps_skill>
+			<label_list_ps_skill name="stealthlabel">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="ps_label_stealth" />
+				<tooltip textres="skill_value_stealth" />
+			</label_list_ps_skill>
+			<label_list_content_base name="physicalskillslabel">
+				<anchored>
+					<top />
+					<left parent="acrobaticslabel" />
+					<right parent="stealthlabel" />
+				</anchored>
+				<static textres="ps_label_physical" />
+				<center />
+			</label_list_content_base>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ps_skills_rolls">
+		<margins control="0,0,0,10" />
+		<script>
+			function onInit()
+				OptionsManager.registerCallback("REVL", update);
+				self.update();
+			end
+			function onClose()
+				OptionsManager.unregisterCallback("REVL", update);
+			end
+			function update()
+				hiderollresults.setVisible(OptionsManager.isOption("REVL", "on"));
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored position="insidetopleft" offset="0,10" width="0" height="20" />
+				<disabled />
+			</genericcontrol>
+			
+			<buttonfield name="hiderollresults">
+				<anchored to="leftanchor" height="20" width="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<frame name="fielddark" offset="10,8,10,6" />
+				<state icon="visibilityon" tooltipres="ps_tooltip_showrollon" />
+				<state icon="visibilityoff" tooltipres="ps_tooltip_showrolloff" />
+			</buttonfield>
+
+			<genericcontrol name="partyskillframe">
+				<anchored to="leftanchor" height="20" width="295">
+					<top />
+					<left anchor="right" relation="relative" offset="15" />
+				</anchored>
+				<frame name="groupbox" offset="10,10,10,10" />
+			</genericcontrol>			
+			<button_roll name="skillroll">
+				<anchored to="partyskillframe" position="insidetopleft" offset="5,0" />
+				<script file="ps/scripts/ps_roll_skill.lua" />
+			</button_roll>
+			<label name="skilllabel">
+				<anchored to="skillroll" position="righthigh" offset="5,0" />
+				<static textres="ps_label_groupskill" />
+			</label>
+			<combobox name="selectedskill">
+				<anchored to="skilllabel" position="righthigh" offset="10,0" width="120" height="20" />
+				<empty textres="ps_empty_skill" />
+				<listdirection>down</listdirection>
+				<listmaxsize>5</listmaxsize>
+				<script>
+					function onInit()
+						super.onInit();
+						addItems(DataCommon.psskilldata);
+					end
+				</script>
+			</combobox>
+			<label name="skilldclabel">
+				<anchored to="selectedskill" position="righthigh" offset="10,0" />
+				<static textres="dc" />
+			</label>
+			<basicnumber name="skilldc">
+				<anchored to="skilldclabel" position="righthigh" offset="10,0" width="30" height="20" />
+			</basicnumber>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ps_skillsitem">
+		<margins control="0,0,0,10" />
+		<frame>fieldlight</frame>
+		<script>
+			function onInit()
+				local bPFMode = DataCommon.isPFRPG();
+
+				spot.setVisible(not bPFMode);
+				listen.setVisible(not bPFMode);
+				search.setVisible(not bPFMode);
+				perception.setVisible(bPFMode);
+				sensemotive.setVisible(bPFMode);
+				
+				gatherinfo.setVisible(not bPFMode);
+				
+				acrobatics.setVisible(bPFMode);
+				heal.setVisible(bPFMode);
+				jump.setVisible(not bPFMode);
+				
+				hide.setVisible(not bPFMode);
+				movesilent.setVisible(not bPFMode);
+				stealth.setVisible(bPFMode);
+			end
+		</script>
+		<sheetdata>
+			<hlink name="link">
+				<script>
+					function onValueChanged()
+						window.portrait.update();
+					end
+				</script>
+			</hlink>
+			
+			<portrait_ps name="portrait">
+				<bounds>10,10,40,40</bounds>
+			</portrait_ps>
+			
+			<string_ps name="name">
+				<anchored position="insidetopleft" offset="55,20" width="110" height="20" />
+				<empty textres="library_recordtype_empty_charsheet" />
+			</string_ps>
+			
+			<genericcontrol name="skillanchor">
+				<anchored to="name" width="0" height="20">
+					<top offset="-10" />
+					<left anchor="right" offset="-3" />
+				</anchored>
+			</genericcontrol>
+			<number_ps_skill name="spot">
+				<skill>Spot</skill>
+			</number_ps_skill>
+			<number_ps_skill name="listen">
+				<skill>Listen</skill>
+			</number_ps_skill>
+			<number_ps_skill name="search">
+				<skill>Search</skill>
+			</number_ps_skill>
+			<number_ps_skill name="perception">
+				<skill>Perception</skill>
+			</number_ps_skill>
+			<number_ps_skill name="sensemotive">
+				<skill>Sense Motive</skill>
+			</number_ps_skill>
+
+			<number_ps_skill name="arcana">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<skill>Knowledge</skill>
+				<subskill>Arcana</subskill>
+			</number_ps_skill>
+			<number_ps_skill name="dungeoneering">
+				<skill>Knowledge</skill>
+				<subskill>Dungeoneering</subskill>
+			</number_ps_skill>
+			<number_ps_skill name="klocal">
+				<skill>Knowledge</skill>
+				<subskill>Local</subskill>
+			</number_ps_skill>
+			<number_ps_skill name="nature">
+				<skill>Knowledge</skill>
+				<subskill>Nature</subskill>
+			</number_ps_skill>
+			<number_ps_skill name="planes">
+				<skill>Knowledge</skill>
+				<subskill>Planes</subskill>
+			</number_ps_skill>
+			<number_ps_skill name="religion">
+				<skill>Knowledge</skill>
+				<subskill>Religion</subskill>
+			</number_ps_skill>
+
+			<number_ps_skill name="bluff">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<skill>Bluff</skill>
+			</number_ps_skill>
+			<number_ps_skill name="diplomacy">
+				<skill>Diplomacy</skill>
+			</number_ps_skill>
+			<number_ps_skill name="gatherinfo">
+				<skill>Gather Information</skill>
+			</number_ps_skill>
+			<number_ps_skill name="intimidate">
+				<skill>Intimidate</skill>
+			</number_ps_skill>
+
+			<number_ps_skill name="acrobatics">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<skill>Acrobatics</skill>
+			</number_ps_skill>
+			<number_ps_skill name="climb">
+				<skill>Climb</skill>
+			</number_ps_skill>
+			<number_ps_skill name="heal">
+				<skill>Heal</skill>
+			</number_ps_skill>
+			<number_ps_skill name="jump">
+				<skill>Jump</skill>
+			</number_ps_skill>
+			<number_ps_skill name="survival">
+				<skill>Survival</skill>
+			</number_ps_skill>
+			<number_ps_skill name="hide">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<skill>Hide</skill>
+			</number_ps_skill>
+			<number_ps_skill name="movesilent">
+				<skill>Move Silently</skill>
+			</number_ps_skill>
+			<number_ps_skill name="stealth">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<skill>Stealth</skill>
+			</number_ps_skill>
+			
+			<string_ps name="senses">
+				<anchored height="20">
+					<left parent="spot" />
+					<right parent="religion" />
+					<top offset="30" />
+				</anchored>
+				<tooltip textres="ps_label_senses" />
+			</string_ps>
+			<stringu name="languages">
+				<anchored height="20">
+					<left parent="bluff" />
+					<right parent="skillanchor" relation="relative" />
+					<top offset="30" />
+				</anchored>
+				<readonly />
+				<nodrag />
+				<tooltip textres="ps_label_languages" />
+			</stringu>
+		</sheetdata>
+	</windowclass>
+</root>

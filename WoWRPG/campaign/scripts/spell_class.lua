@@ -6,12 +6,23 @@
 	
 function onInit()
 	self.setInitialized();
+
+	-- Store WoW ability names (Intellect, Spirit, ...) as database names so the ability cycler and DC math resolve them
+	local nodeSpellClass = getDatabaseNode();
+	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
+	local sAbilityDB = DataCommon.ability_aliases[sAbility:lower()];
+	if sAbilityDB and sAbilityDB ~= sAbility then
+		DB.setValue(nodeSpellClass, "dc.ability", "string", sAbilityDB);
+	end
 	
 	self.onCasterTypeChanged();
 	self.toggleDetail();
 	self.onDisplayChanged();
 
 	self.onLockModeChanged(WindowManager.getWindowReadOnlyState(self));
+
+	-- Recalculate the stored DC modifier so an existing sheet shows the modifier, not a stale raw score
+	self.onStatUpdate();
 end
 
 function onLockModeChanged(bReadOnly)

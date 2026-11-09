@@ -130,6 +130,34 @@ describe("computeSpellClass", () => {
     assert.equal(withDomains.slots[0], without.slots[0]);
   });
 
+  it("computes bard spells known from the PHB table", () => {
+    const level1 = computeSpellClass(
+      "bard",
+      "Bard",
+      1,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+    );
+    assert.equal(level1.known[0], 4);
+    assert.equal(level1.known[1], 0);
+
+    const level2 = computeSpellClass(
+      "bard",
+      "Bard",
+      2,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+    );
+    assert.equal(level2.known[0], 5);
+    assert.equal(level2.known[1], 2);
+
+    const level20 = computeSpellClass(
+      "bard",
+      "Bard",
+      20,
+      { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+    );
+    assert.deepEqual(level20.known.slice(0, 7), [6, 5, 5, 5, 5, 5, 4]);
+  });
+
   it("computes sorcerer slots and known limits from compendium slug", () => {
     const result = computeSpellClass(
       "sorcerer-98",

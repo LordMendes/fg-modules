@@ -497,186 +497,195 @@ def expand_wrpg_spell_hook_text(text: str) -> str:
 expand_wrpg_spell_hook_text = expand_wrpg_spell_hook_text
 
 
-def _cast(
-    *,
-    save: str = "",
-    atk: str = "",
-    onmiss: str = "",
-    school: str = "",
-    tags: str = "",
-) -> dict[str, Any]:
-    action: dict[str, Any] = {"type": "cast", "stype": "spell"}
+def _cast(*, save: str = "", atk: str = "", onmiss: str = "") -> dict[str, Any]:
+    """Cast action using only the keys the emitter writes.
+
+    Omit save for harmless spells and for spells whose damage always applies,
+    matching the generic cast builder (a successful save negates damage in FG).
+    """
+    action: dict[str, Any] = {"type": "cast"}
     if save:
         action["savetype"] = save
     if atk:
         action["atktype"] = atk
     if onmiss:
         action["onmissdamage"] = onmiss
-    if school:
-        action["school"] = school
-    if tags:
-        action["othertags"] = tags
     return action
 
 
-def _damage(
+def _dice_list(dice: str) -> list[str]:
+    """Expand "2d8" to ["d8", "d8"], the dice_list shape the emitter expects."""
+    match = re.fullmatch(r"(\d*)d(\d+)", dice.strip())
+    if not match:
+        raise ValueError(f"bad dice expression: {dice!r}")
+    return [f"d{match.group(2)}"] * int(match.group(1) or 1)
+
+
+def _damage_entry(
     dice: str,
-    dtype: str,
+    damage_type: str = "",
     *,
-    bonus: int = 0,
-    stat: str = "",
-    statmax: int = 0,
+    scale: str = "",
+    max_cl: int = 0,
 ) -> dict[str, Any]:
-    entry: dict[str, Any] = {"dice": dice, "bonus": bonus, "type": dtype}
-    if stat:
-        entry["dicestat"] = stat
-        if statmax:
-            entry["dicestatmax"] = statmax
-    return {"type": "damage", "entries": [entry]}
+    """One damage entry.
+
+    scale="dice" adds one die per caster level (dicestat).
+    scale="bonus" adds +1 damage per caster level (stat).
+    max_cl caps the scaling at that caster level.
+    """
+    entry: dict[str, Any] = {"dice_list": _dice_list(dice), "bonus": 0}
+    if damage_type:
+        entry["damage_type"] = damage_type
+    if scale == "dice":
+        entry["dicestat"] = "cl"
+    elif scale == "bonus":
+        entry["stat"] = "cl"
+    elif scale:
+        raise ValueError(f"unknown scale: {scale!r}")
+    if scale and max_cl:
+        entry["max_stat"] = max_cl
+    return entry
 
 
-def _heal(dice: str, *, stat: str = "cl", statmax: int = 0, bonus: int = 0) -> dict[str, Any]:
-    entry: dict[str, Any] = {"dice": dice, "bonus": bonus}
-    if stat:
-        entry["stat"] = stat
-        if statmax:
-            entry["statmax"] = statmax
-        entry["statmult"] = 1
-    return {"type": "heal", "entries": [entry]}
+def _heal_entry(dice: str = "", *, bonus: int = 0) -> dict[str, Any]:
+    """Flat heal entry: dice, a flat bonus, or both."""
+    return {"dice_list": _dice_list(dice) if dice else [], "bonus": bonus}
 
 
-def _effect(label: str, *, durmod: int = 0, durunit: str = "round") -> dict[str, Any]:
-    return {
-        "type": "effect",
-        "label": label,
-        "durmod": durmod,
-        "durunit": durunit,
-        "durdice": "",
-    }
+def _damage(*entries: dict[str, Any]) -> dict[str, Any]:
+    return {"type": "damage", "entries": list(entries)}
+
+
+def _heal(*entries: dict[str, Any]) -> dict[str, Any]:
+    return {"type": "heal", "entries": list(entries)}
+
+
+def _effect(
+    label: str,
+    *,
+    durmod: int = 0,
+    durmult: int = 0,
+    durunit: str = "",
+) -> dict[str, Any]:
+    """Condition effect.
+
+    durmod is a fixed duration. durmult is a per-caster-level multiplier in
+    durunit (rounds when durunit is empty).
+    """
+    action: dict[str, Any] = {"type": "effect", "label": label}
+    if durmod:
+        action["durmod"] = durmod
+    if durmult:
+        action["durmult"] = durmult
+    if durunit:
+        action["durunit"] = durunit
+    return action
 
 
 # Keys must match supplemental warcraft_rpg_spells.json slugs exactly.
+# Rules used here:
+# - Per-round damage or healing is one roll per round; FG re-rolls the action each round.
+# - A condition the book applies only on a separate save, or only on some targets
+#   (for example undead), is left out so it is not applied to everyone.
+# - Triggered effects (shields, thorn/totem attacks) and effects with no book text
+#   for the numbers are cast-only.
 WRPG_SPELL_ACTION_OVERRIDES: dict[str, list[dict[str, Any]]] = {
     "cripple-wrpg": [
-        _cast(save="will", school="transmutation"),
-        _effect("Crippled", durmod=1, durunit="round"),
+        _cast(save="will"),
+        _effect("Crippled", durmult=1),
     ],
-    "stasis-trap-wrpg": [
-        _cast(save="will", school="conjuration"),
-        _effect("Paralyzed", durmod=1, durunit="round"),
-    ],
+    "stasis-trap-wrpg": [_cast(save="will")],
     "ice-armor-wrpg": [
-        _cast(save="will", school="abjuration", tags="cold; "),
-        _effect("AC: 4 armor", durmod=10, durunit="minute"),
+        _cast(),
+        _effect("AC: 4 armor", durmult=1, durunit="hour"),
     ],
-    "banish-wrpg": [_cast(save="will", school="abjuration")],
+    "banish-wrpg": [_cast(save="will")],
     "healing-rain-wrpg": [
-        _cast(save="fortitude", school="conjuration", tags="healing; "),
-        _heal("d8", stat="cl", statmax=10),
+        _cast(),
+        _heal(_heal_entry("d4")),
     ],
     "fire-rain-wrpg": [
-        _cast(school="evocation", tags="fire; "),
-        _damage("d6", "fire", stat="cl", statmax=10),
+        _cast(),
+        _damage(_damage_entry("3d6", "impact"), _damage_entry("2d6", "fire")),
     ],
     "bloodlust-wrpg": [
-        _cast(save="fortitude", school="transmutation"),
-        _effect("Haste", durmod=1, durunit="round"),
+        _cast(),
+        _effect("STR: 4", durmult=1),
     ],
-    "mana-burn-wrpg": [_cast(save="will", school="abjuration")],
+    "mana-burn-wrpg": [_cast(save="will", atk="rtouch")],
     "carrion-swarm-wrpg": [
-        _cast(save="reflex", onmiss="half", school="conjuration"),
-        _damage("d4", "slashing", stat="cl", statmax=10),
+        _cast(save="reflex", onmiss="half"),
+        _damage(_damage_entry("d6", scale="dice", max_cl=15)),
     ],
-    "thorns-shield-wrpg": [
-        _cast(school="transmutation"),
-        _damage("d6", "piercing"),
-    ],
-    "lightning-shield-wrpg": [
-        _cast(school="evocation", tags="electricity; "),
-        _damage("d6", "electricity"),
-    ],
+    "thorns-shield-wrpg": [_cast()],
+    "lightning-shield-wrpg": [_cast()],
     "death-coil-wrpg": [
-        _cast(save="will", onmiss="half", school="necromancy", tags="negative; "),
-        _damage("d8", "negative", stat="cl", statmax=10),
-        _heal("d8", stat="cl", statmax=10),
+        _cast(save="will", onmiss="half"),
+        _damage(_damage_entry("2d8", "negative", scale="bonus", max_cl=10)),
     ],
     "lesser-death-coil-wrpg": [
-        _cast(save="will", onmiss="half", school="necromancy", tags="negative; "),
-        _damage("d6", "negative", stat="cl", statmax=5),
-        _heal("d6", stat="cl", statmax=5),
+        _cast(save="will", onmiss="half"),
+        _damage(_damage_entry("d8", "negative", scale="bonus", max_cl=5)),
     ],
     "greater-death-coil-wrpg": [
-        _cast(save="will", onmiss="half", school="necromancy", tags="negative; "),
-        _damage("d10", "negative", stat="cl", statmax=15),
-        _heal("d10", stat="cl", statmax=15),
+        _cast(save="will", onmiss="half"),
+        _damage(_damage_entry("3d8", "negative", scale="bonus", max_cl=15)),
     ],
     "falling-star-wrpg": [
-        _cast(save="reflex", onmiss="half", school="evocation"),
-        _damage("d6", "untyped", stat="cl", statmax=15),
+        _cast(save="reflex", onmiss="half"),
+        _damage(_damage_entry("d6", "force", scale="dice", max_cl=10)),
     ],
-    "force-of-nature-wrpg": [_cast(school="conjuration")],
-    "greater-force-of-nature-wrpg": [_cast(school="conjuration")],
-    "moon-glaive-spell-wrpg": [
-        _cast(atk="ranged", school="evocation"),
-        _damage("d6", "slashing", stat="cl", statmax=5),
-    ],
+    "force-of-nature-wrpg": [_cast()],
+    "greater-force-of-nature-wrpg": [_cast()],
+    "moon-glaive-spell-wrpg": [_cast(atk="ranged")],
     "immolation-wrpg": [
-        _cast(school="evocation", tags="fire; "),
-        _damage("d6", "fire", stat="cl", statmax=10),
+        _cast(),
+        _damage(_damage_entry("d6", "fire")),
     ],
     "glacial-burst-wrpg": [
-        _cast(save="reflex", onmiss="half", school="evocation", tags="cold; "),
-        _damage("d6", "cold", stat="cl", statmax=10),
-        _effect("Slowed", durmod=1, durunit="round"),
+        _cast(save="reflex", onmiss="half"),
+        _damage(_damage_entry("d6", "cold", scale="dice", max_cl=10)),
     ],
     "stormhammer-spell-wrpg": [
-        _cast(save="fortitude", atk="ranged", school="evocation", tags="electricity; "),
-        _damage("d6", "electricity", stat="cl", statmax=10),
-        _effect("Dazed", durmod=1, durunit="round"),
+        _cast(atk="rtouch"),
+        _damage(_damage_entry("2d4", "force")),
+        _effect("Dazed", durmod=1),
     ],
     "blend-with-shadows-wrpg": [
-        _cast(school="illusion"),
-        _effect("Invisible", durmod=1, durunit="minute"),
+        _cast(),
+        _effect("Invisible", durmult=10, durunit="minute"),
     ],
     "razor-blizzard-wrpg": [
-        _cast(school="evocation", tags="cold; "),
-        _damage("d6", "cold", stat="cl", statmax=10),
+        _cast(),
+        _damage(_damage_entry("d6", "impact"), _damage_entry("d6", "cold")),
     ],
     "shockwave-wrpg": [
-        _cast(save="reflex", school="evocation"),
-        _damage("d8", "bludgeoning", stat="cl", statmax=10),
-        _effect("Prone"),
+        _cast(save="reflex"),
+        _damage(_damage_entry("d6", "force", scale="dice", max_cl=10)),
     ],
     "entangling-roots-wrpg": [
-        _cast(save="reflex", school="transmutation"),
-        _effect("Entangled", durmod=1, durunit="round"),
+        _cast(save="reflex"),
+        _effect("Entangled", durmult=1),
     ],
     "rejuvenation-wrpg": [
-        _cast(save="fortitude", school="conjuration", tags="healing; "),
-        _heal("d6", stat="cl", statmax=5),
+        _cast(),
+        _heal(_heal_entry("2d8")),
     ],
     "roar-wrpg": [
-        _cast(school="enchantment"),
-        _effect("ATK: 2", durmod=1, durunit="round"),
+        _cast(),
+        _effect("ATK: 1", durmult=1),
+        _effect("DMG: 1", durmult=1),
     ],
-    "second-soul-wrpg": [_cast(school="necromancy")],
-    "sentinel-wrpg": [_cast(school="divination")],
-    "blade-storm-wrpg": [
-        _cast(school="transmutation"),
-        _damage("d6", "slashing", stat="cl", statmax=10),
-    ],
-    "touch-of-life-wrpg": [
-        _cast(school="conjuration", tags="healing; "),
-        _heal("d8", stat="cl", statmax=20),
-    ],
+    "second-soul-wrpg": [_cast()],
+    "sentinel-wrpg": [_cast()],
+    "blade-storm-wrpg": [_cast()],
+    "touch-of-life-wrpg": [_cast()],
     "healing-totem-wrpg": [
-        _cast(save="fortitude", school="conjuration", tags="healing; "),
-        _heal("d6", stat="cl", statmax=10),
+        _cast(),
+        _heal(_heal_entry(bonus=1)),
     ],
-    "serpent-totem-wrpg": [
-        _cast(save="reflex", onmiss="half", school="conjuration"),
-        _damage("d6", "piercing", stat="cl", statmax=10),
-    ],
+    "serpent-totem-wrpg": [_cast()],
 }
 
 
@@ -760,6 +769,8 @@ _DAMAGE_WORDS = {
     "piercing": "piercing",
     "slashing": "slashing",
     "bludgeoning": "bludgeoning",
+    "fire": "fire",
+    "special": "special",
 }
 # Properties column in 3.5E Basic Rules: empty, Double, Reach, or Special.
 _REACH_KEYS = {

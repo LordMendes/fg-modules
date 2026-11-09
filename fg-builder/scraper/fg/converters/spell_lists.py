@@ -59,6 +59,13 @@ CLASS_TO_LIST = {
     "Inscriber": ("runepatterns", "Rune pattern lists", "reference_schoolspelllist"),
 }
 
+ARCANIST_LISTS = (
+    ("arcanist", "Arcanist spell list"),
+    ("mage", "Mage spell list"),
+    ("necromancer", "Necromancer spell list"),
+    ("warlock", "Warlock spell list"),
+)
+# Path lists that live in More Magic and Mayhem, in addition to the core lists.
 ARCANIST_PATH_LISTS = (
     ("mage", "Mage spell list"),
     ("necromancer", "Necromancer spell list"),
@@ -498,16 +505,26 @@ def add_dread_necromancer_spell_list(
     return spelllists, library, {DREAD_NECROMANCER_CLASS: link_html}
 
 
-def arcanist_path_spell_links(module_name: str = "More Magic and Mayhem") -> str:
+def arcanist_path_spell_links(
+    module_name: str = "WOWRPG - World of Warcraft The Roleplaying Game",
+    extra_module: str | None = "WOWRPG - More Magic and Mayhem",
+) -> str:
+    """Core Arcanist, mage, necromancer, and warlock lists, plus MMM additions."""
     items = [
         (
             "reference_classspelllist",
             f"spelllists.{key}@{module_name}",
             label,
         )
-        for key, label in ARCANIST_PATH_LISTS
+        for key, label in ARCANIST_LISTS
     ]
-    return (
-        "<p><b>Spell Lists</b></p>"
-        + _linklist(items)
-    )
+    if extra_module and extra_module != module_name:
+        for key, label in ARCANIST_PATH_LISTS:
+            items.append(
+                (
+                    "reference_classspelllist",
+                    f"spelllists.{key}@{extra_module}",
+                    f"{label} (More Magic and Mayhem)",
+                )
+            )
+    return "<p><b>Spell Lists</b></p>" + _linklist(items)

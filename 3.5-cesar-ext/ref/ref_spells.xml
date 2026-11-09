@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Class spell lists -->
+	<windowclass name="reference_classspelllist" copy="reference_groupindex_window">
+		<sizelimits>
+			<minimum width="750" height="450" />
+		</sizelimits>
+		<sheetdata>
+			<list_content_framed_groupbox name="grouplist">
+				<class>reference_spellgroup</class>
+			</list_content_framed_groupbox>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="reference_spellgroup" copy="reference_groupindex_group">
+		<sheetdata>
+			<list_content_groupitems name="list">
+				<datasource>.spells</datasource>
+				<class>reference_spellitem</class>
+			</list_content_groupitems>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="reference_spellitem">
+		<margins control="0,0,0,2" />
+		<script>
+			function onDrag(draginfo)
+				local sClass, sRecord = link.getValue();
+
+				draginfo.setType("spelldescwithlevel");
+				draginfo.setIcon(Interface.getLinkIcon(sClass));
+				draginfo.setNumberData(DB.getValue(getDatabaseNode(), "level", 0));
+				draginfo.setShortcutData(sClass, sRecord);
+				draginfo.setDescription(DB.getValue(link.getTargetDatabaseNode(), "name", ""));
+
+				local base = draginfo.createBaseData("shortcut");
+				base.setShortcutData(link.getValue());
+				return true;
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<link_listitem_left name="link">
+				<script>
+					function onDragStart(button, x, y, draginfo)
+						return window.onDrag(draginfo);
+					end
+				</script>
+			</link_listitem_left>
+			<stringc_listitem_left_noframe_static_linked name="name">
+				<anchored width="140" />
+			</stringc_listitem_left_noframe_static_linked>
+
+			<anchor_listitem_right_sm />
+
+			<stringc_listitem_center_noframe_static_inherit name="shortdescription" />
+		</sheetdata>
+	</windowclass>
+
+	<!-- Spells by school -->
+	<windowclass name="reference_schoolspelllist" copy="reference_groupindex_window">
+		<sizelimits>
+			<minimum width="750" height="450" />
+		</sizelimits>
+		<sheetdata>
+			<filter_content_grouped_bottom name="filter">
+				<target>grouplist,list,list</target>
+			</filter_content_grouped_bottom>
+			<button_content_grouped_expand name="button_expand">
+				<target>grouplist,list,list</target>
+			</button_content_grouped_expand>
+			<button_content_grouped_collapse name="button_collapse">
+				<target>grouplist,list,list</target>
+			</button_content_grouped_collapse>
+
+			<list_content_framed_groupbox name="grouplist">
+				<datasource>.schools</datasource>
+				<class>reference_spellschoolitem</class>
+			</list_content_framed_groupbox>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="reference_spellschoolitem">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_content_top />
+			<header_content_groupdesc name="header">
+				<frame name="headerblack" />
+			</header_content_groupdesc>
+
+			<list_content_noscroll_top name="list">
+				<datasource>.groups</datasource>
+				<class>reference_spellgroup</class>
+				<readonly />
+			</list_content_noscroll_top>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Domain spells -->
+	<windowclass name="reference_domainlist" copy="reference_groupindex_window">
+		<sizelimits>
+			<minimum width="750" height="450" />
+		</sizelimits>
+		<script>
+			function onFilterChanged()
+				local sFilter = WindowManager.getOuterControlValue(self, "filter");
+				local bEmptyFilter = (sFilter == "");
+
+				for _,w in ipairs(grouplist.getWindows()) do
+					w.grantedpower.setVisible(bEmptyFilter);
+					w.list.setVisible(true);
+					w.filter.setValue(sFilter);
+					w.list.applyFilter();
+				end
+			end
+		</script>
+		<sheetdata>
+			<list_content_framed_groupbox name="grouplist">
+				<datasource>.domains</datasource>
+				<class>reference_domain</class>
+			</list_content_framed_groupbox>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="reference_domain">
+		<script>
+			function onInit()
+				header.setValue(DB.getValue(getDatabaseNode(), "description", ""));
+			end
+			function onFilter(w)
+				local sFilter = filter.getValue();
+				if sFilter == "" then
+					return true;
+				end
+				if string.find(w.name.getValue():lower(), sFilter:lower(), 0, true) then
+					return true;
+				end
+				return false;
+			end
+			function onToggle()
+				local bShow = not list.isVisible();
+				grantedpower.setVisible(bShow and (filter.getValue() == ""));
+				list.setVisible(bShow);
+			end
+		</script>
+		<sheetdata>
+			<hsc name="filter" />
+
+			<anchor_content_top />
+			<header_content_groupdesc name="header" />
+			<string_content_noframe_static_top name="grantedpower">
+				<font>reference-i</font>
+			</string_content_noframe_static_top>
+
+			<list_content_noscroll_alternating_top name="list">
+				<datasource>.spells</datasource>
+				<class>reference_spelldomainitem</class>
+				<sortby>
+					<control>level</control>
+					<control>name</control>
+				</sortby>
+				<filter><control>filter</control></filter>
+				<filteron><control>name</control></filteron>
+			</list_content_noscroll_alternating_top>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="reference_spelldomainitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<anchor_listitem_left_sm />
+			<link_listitem_left name="link" />
+			<stringc_listitem_left_noframe_static_linked name="name">
+				<anchored width="200" />
+			</stringc_listitem_left_noframe_static_linked>
+			<number_text_listitem_left_noframe_static name="level">
+				<anchored width="20" />
+			</number_text_listitem_left_noframe_static>
+
+			<anchor_listitem_right_sm />
+
+			<stringc_listitem_center_noframe_static_inherit name="shortdescription" />
+		</sheetdata>
+	</windowclass>
+</root>

@@ -9,9 +9,12 @@ import {
   turnUndeadTargetRowClassName,
 } from "@/components/tools/turn-undead-outcome-badge";
 import {
+  charismaModifier,
   DEFAULT_TURN_UNDEAD_INPUT,
   effectiveTurnLevel,
+  formatModifier,
   resolveTurnUndead,
+  turningAttemptsPerDay,
   type TurnUndeadClass,
   type TurnUndeadInput,
   type TurnUndeadTarget,
@@ -120,6 +123,8 @@ export function TurnUndeadCalculator() {
     () => effectiveTurnLevel(input.class, input.level),
     [input.class, input.level],
   );
+  const chaMod = charismaModifier(input.charisma);
+  const attempts = turningAttemptsPerDay(input.charisma);
 
   const diceReady =
     input.d20 !== null && input.d6First !== null && input.d6Second !== null;
@@ -185,17 +190,28 @@ export function TurnUndeadCalculator() {
             />
             <NumberField
               id="turn-cha"
-              label="Charisma modifier"
-              value={input.chaMod}
-              min={-5}
-              max={20}
-              onChange={(value) => updateInput({ chaMod: value })}
+              label="Charisma score"
+              value={input.charisma}
+              min={1}
+              max={99}
+              onChange={(value) => updateInput({ charisma: Math.max(1, value) })}
             />
           </div>
           <p className="tool-step-desc">
             Effective turning level: {effectiveLevel}
-            {input.class === "paladin" ? " (paladin level − 3, minimum 1)" : ""}
+            {input.class === "paladin" ? " (paladin level − 3, minimum 1)" : ""}.
+            {" "}
+            Charisma modifier: {formatModifier(chaMod)}. Turning attempts per
+            day: 3 + modifier ({formatModifier(chaMod)}) = {attempts}.
           </p>
+          {attempts < 1 ? (
+            <p className="tool-warning" role="status">
+              Charisma {input.charisma} is a {formatModifier(chaMod)} modifier,
+              so this character has no turn undead attempts. Extra Turning or
+              another effect can still grant attempts. The roll below shows
+              what one attempt would do.
+            </p>
+          ) : null}
           <label className="tool-checkbox">
             <input
               type="checkbox"
@@ -229,7 +245,8 @@ export function TurnUndeadCalculator() {
           </h2>
           <p className="tool-step-desc">
             Enter the dice you rolled at the table. This tool does not roll for
-            you.
+            you. The turning check is 1d20 + Charisma modifier. Turning damage
+            is 2d6 + effective level + Charisma modifier.
           </p>
           <div className="tool-field-row">
             <OptionalDieField
@@ -349,9 +366,9 @@ export function TurnUndeadCalculator() {
       </div>
 
       <TurnUndeadSummary
+        input={input}
         result={result}
         diceReady={diceReady}
-        greaterTurnUndead={input.greaterTurnUndead}
       />
     </div>
   );

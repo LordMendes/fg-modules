@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="cesar_gestalt_add">
+		<frame>utilitybox</frame>
+		<placement>
+			<size width="380" height="240" />
+			<nosave />
+		</placement>
+		<script file="campaign/scripts/char_gestalt.lua" />
+		<sheetdata>
+			<windowtitlebar_utilitybox name="title" />
+			<windowmenubar_utilitybox name="menubar" />
+
+			<anchor_content_utilitybox_top />
+			<anchor_content_utilitybox_bottom />
+
+			<label name="hint">
+				<anchored to="contentanchor" height="20">
+					<top offset="6" />
+					<left />
+					<right />
+				</anchored>
+				<center />
+				<static textres="cesar_label_gestalthint" />
+			</label>
+
+			<label name="slot1_label">
+				<anchored to="contentanchor" position="insidetopleft" offset="0,36" width="145" height="16" />
+				<static textres="cesar_label_gestaltslot1" />
+			</label>
+			<stringcontrol name="slot1_name">
+				<anchored to="slot1_label" position="below" offset="0,4" height="32" />
+				<frame name="fieldlight" offset="6,5,6,5" />
+				<font>sheetlabel</font>
+				<center />
+				<tooltip textres="cesar_tooltip_gestaltslot" />
+				<script>
+					function onDrop(x, y, draginfo)
+						return window.onClassDrop(1, draginfo);
+					end
+				</script>
+			</stringcontrol>
+
+			<label name="slot2_label">
+				<anchored to="contentanchor" position="insidetopright" offset="0,36" width="145" height="16" />
+				<static textres="cesar_label_gestaltslot2" />
+			</label>
+			<stringcontrol name="slot2_name">
+				<anchored to="slot2_label" position="below" offset="0,4" height="32" />
+				<frame name="fieldlight" offset="6,5,6,5" />
+				<font>sheetlabel</font>
+				<center />
+				<tooltip textres="cesar_tooltip_gestaltslot" />
+				<script>
+					function onDrop(x, y, draginfo)
+						return window.onClassDrop(2, draginfo);
+					end
+				</script>
+			</stringcontrol>
+
+			<stringcontrol name="charpath">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+			<stringcontrol name="slot1_class">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+			<stringcontrol name="slot1_record">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+			<stringcontrol name="slot2_class">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+			<stringcontrol name="slot2_record">
+				<anchored to="contentanchor" width="1" height="1">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</stringcontrol>
+
+			<sub_content_bottom name="sub_buttons">
+				<class>dialog_buttons_okcancel</class>
+			</sub_content_bottom>
+		</sheetdata>
+	</windowclass>
+</root>

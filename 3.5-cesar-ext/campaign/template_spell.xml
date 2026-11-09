@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="list_spellclass">
+		<windowlist>
+			<datasource>.spellset</datasource>
+			<script file="campaign/scripts/list_spellclass.lua" />
+		</windowlist>
+	</template>
+	<template name="list_spelllevel">
+		<windowlist>
+			<datasource>.levels</datasource>
+			<noscroll />
+			<script file="campaign/scripts/list_spelllevel.lua" />
+		</windowlist>
+	</template>
+	<template name="list_spellitem">
+		<windowlist>
+			<noscroll />
+			<datasource>.spells</datasource>
+			<sortby><field>name</field></sortby>
+			<script file="campaign/scripts/list_spell.lua" />
+		</windowlist>
+	</template>
+
+	<template name="button_cc">
+		<button_listitem_roll_right>
+			<tooltip textres="spell_tooltip_cc" />
+			<script>
+				function action(draginfo)
+					local nodeSpellClass = window.getDatabaseNode();
+					local rActor = ActorManager.resolveActor(DB.getChild(nodeSpellClass, "..."));
+					GameSystem.performConcentrationCheck(draginfo, rActor, nodeSpellClass);
+				end
+				
+				function onButtonPress()
+					action();
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_listitem_roll_right>
+	</template>
+	
+	<template name="number_spelldc">
+		<number_linked_framed>
+			<anchored width="25" height="20" />
+			<source><name>dc.misc</name><op>+</op></source>
+			<source><name>dc.abilitymod</name><op>+</op></source>
+			<script>
+				function onSourceUpdate()
+					setValue(10 + calculateSources());
+				end
+			</script>
+		</number_linked_framed>
+	</template>
+	<template name="number_spell">
+		<basicnumber>
+			<anchored width="25" height="20" />
+		</basicnumber>
+	</template>
+	<template name="number_spellsavailable">
+		<number_spell>
+			<anchored to="availablelevel" width="15">
+				<top />
+				<left anchor="right" relation="relative" offset="10" />
+			</anchored>
+			<script>
+				function onValueChanged()
+					WindowManager.callOuterWindowFunction(window, "onSpellCounterUpdate");
+				end
+			</script>
+		</number_spell>
+	</template>
+	<template name="number_spellsavailable_mini">
+		<numberfield>
+			<bounds>0,0,0,0</bounds>
+			<invisible />
+			<script>
+				function onValueChanged()
+					WindowManager.callOuterWindowFunction(window, "onSpellCounterUpdate");
+				end
+			</script>
+		</numberfield>
+	</template>
+	
+	<template name="string_spelllevellabel_mini">
+		<label>
+			<frame name="rowshade" />
+			<center />
+			<empty textres="spelllevel_emptyname" />
+			<script>
+				function onClickDown(button, x, y)
+					window.spells.setVisible(not window.spells.isVisible());
+				end
+			</script>
+		</label>
+	</template>
+</root>

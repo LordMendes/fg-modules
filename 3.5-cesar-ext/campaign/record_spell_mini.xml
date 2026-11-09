@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="spell_class_mini">
+		<minisheet />
+		<script file="campaign/scripts/spell_class.lua" />
+		<sheetdata>
+			<hs name="castertype">
+				<script>
+					function onValueChanged()
+						window.onCasterTypeChanged();
+					end
+				</script>
+			</hs>
+			<hn name="cl">
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</hn>
+			<number_spellsavailable_mini name="availablelevel0" />
+			<number_spellsavailable_mini name="availablelevel1" />
+			<number_spellsavailable_mini name="availablelevel2" />
+			<number_spellsavailable_mini name="availablelevel3" />
+			<number_spellsavailable_mini name="availablelevel4" />
+			<number_spellsavailable_mini name="availablelevel5" />
+			<number_spellsavailable_mini name="availablelevel6" />
+			<number_spellsavailable_mini name="availablelevel7" />
+			<number_spellsavailable_mini name="availablelevel8" />
+			<number_spellsavailable_mini name="availablelevel9" />
+
+			<anchor_listitem_left_lg />
+			<anchor_listitem_right_lg />
+
+			<genericcontrol name="classframe">
+				<bounds>5,5,-5,30</bounds>
+				<frame name="headersimple" offset="5,5,5,5" />
+				<disabled />
+			</genericcontrol>
+			
+			<number_listitem_right name="pointsused">
+				<anchored width="20" />
+				<min>0</min>
+				<tooltip textres="spell_tooltip_ppused" />
+				<script>
+					function onValueChanged()
+						WindowManager.callOuterWindowFunction(window, "onSpellCounterUpdate");
+					end
+				</script>
+			</number_listitem_right>
+			<label_listitem_right name="label_pointsused">
+				<static>/</static>
+			</label_listitem_right>
+			<number_listitem_right name="points">
+				<anchored width="20" />
+				<min>0</min>
+				<tooltip textres="spell_tooltip_ppmax" />
+				<script>
+					function onValueChanged()
+						WindowManager.callOuterWindowFunction(window, "onSpellCounterUpdate");
+					end
+				</script>
+			</number_listitem_right>
+			<label_listitem_right name="label_points">
+				<static textres="spell_label_pp" />
+			</label_listitem_right>
+			<button_cc name="button_cc">
+				<tooltip textres="spell_tooltip_cc" />
+			</button_cc>
+			<label_listitem_right name="label_cc">
+				<static textres="spell_label_cc" />
+			</label_listitem_right>
+			<number_listitem_right name="cl">
+				<anchored width="20" />
+				<min>0</min>
+				<tooltip textres="casterlevel" />
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</number_listitem_right>
+			<label_listitem_right name="label_cl">
+				<static textres="cl" />
+			</label_listitem_right>
+
+			<string_listitem_center_underline name="label">
+				<font>sheetlabel</font>
+				<empty textres="spellclass_emptyname" />
+				<readonly />
+			</string_listitem_center_underline>
+			
+			<list_spelllevel name="levels">
+				<anchored>
+					<top parent="classframe" anchor="bottom" offset="6" />
+					<left />
+					<right />
+				</anchored>
+				<class>spell_level_mini</class>
+				<minisheet />
+				<readonly />
+			</list_spelllevel>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="spell_level_mini">
+		<minisheet />
+		<script file="campaign/scripts/spell_level.lua" />
+		<sheetdata>
+			<string_spelllevellabel_mini name="label">
+				<anchored position="insidetop" offset="0,2" height="20" />
+			</string_spelllevellabel_mini>
+
+			<list_spellitem name="spells">
+				<anchored position="insidetop" offset="0,22" />
+				<class>power_item_mini</class>
+				<readonly />
+			</list_spellitem>
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1980,24 +1980,24 @@
       "name": "World of Warcraft: The Roleplaying Game",
       "abbrev": "WoW",
       "edition": "WoW RPG (3.5)",
-      "page": 184,
+      "page": 185,
       "url": null
     },
     "index": {
       "source_abbrev": "WoW",
       "edition": "WoW RPG (3.5)",
       "kind": "weapon",
-      "category": "simple",
+      "category": "exotic",
       "stats": "3d6 · x3",
       "cost": "400 gp",
       "weight": "5 lb."
     },
     "kind": "weapon",
-    "category": "simple",
+    "category": "exotic",
     "cost": "400 gp",
     "weight": "5 lb.",
-    "description_html": "",
-    "description_text": "",
+    "description_html": "<p>MR 1. A flintlock pistol holds one ball. Reloading is a standard action that provokes attacks of opportunity. You can shoot, but not load, it in one hand at no penalty. A pistol in each hand uses the attack penalties for two light weapons. Each shot uses one pistol ball and 1 ounce of gunpowder. Firearms do not add a Strength bonus to damage. Exotic Weapon Proficiency (firearms) covers every firearm except the blunderbuss, which needs no proficiency, and the mortar, which needs Exotic Weapon Proficiency (mortar). Ironforge dwarves and goblins treat flintlock pistols and long rifles as martial weapons. A firearm's enhancement bonus does not stack with the enhancement bonus of its ammunition. Ammunition fired from a firearm is destroyed even if it misses.</p>",
+    "description_text": "MR 1. A flintlock pistol holds one ball. Reloading is a standard action that provokes attacks of opportunity. You can shoot, but not load, it in one hand at no penalty. A pistol in each hand uses the attack penalties for two light weapons. Each shot uses one pistol ball and 1 ounce of gunpowder. Firearms do not add a Strength bonus to damage. Exotic Weapon Proficiency (firearms) covers every firearm except the blunderbuss, which needs no proficiency, and the mortar, which needs Exotic Weapon Proficiency (mortar). Ironforge dwarves and goblins treat flintlock pistols and long rifles as martial weapons. A firearm's enhancement bonus does not stack with the enhancement bonus of its ammunition. Ammunition fired from a firearm is destroyed even if it misses.",
     "damage_s": "2d6",
     "damage_m": "3d6",
     "critical": "x3",
@@ -2014,30 +2014,434 @@
       "name": "World of Warcraft: The Roleplaying Game",
       "abbrev": "WoW",
       "edition": "WoW RPG (3.5)",
-      "page": 184,
+      "page": 186,
       "url": null
     },
     "index": {
       "source_abbrev": "WoW",
       "edition": "WoW RPG (3.5)",
       "kind": "weapon",
-      "category": "simple",
+      "category": "exotic",
       "stats": "3d6 · x3",
       "cost": "700 gp",
       "weight": "20 lb."
     },
     "kind": "weapon",
-    "category": "simple",
+    "category": "exotic",
     "cost": "700 gp",
     "weight": "20 lb.",
-    "description_html": "",
-    "description_text": "",
+    "description_html": "<p>MR 1. Reloading a long rifle is a standard action that provokes attacks of opportunity. It normally takes two hands. You can shoot, but not load, it in one hand at a -4 penalty. A rifle in each hand uses the penalties for two one-handed weapons, and that stacks with the one-handed penalty. Each shot uses one rifle bullet and 1 ounce of gunpowder. Firearms do not add a Strength bonus to damage. Exotic Weapon Proficiency (firearms) covers every firearm except the blunderbuss, which needs no proficiency, and the mortar, which needs Exotic Weapon Proficiency (mortar). Ironforge dwarves and goblins treat flintlock pistols and long rifles as martial weapons. A firearm's enhancement bonus does not stack with the enhancement bonus of its ammunition. Ammunition fired from a firearm is destroyed even if it misses.</p>",
+    "description_text": "MR 1. Reloading a long rifle is a standard action that provokes attacks of opportunity. It normally takes two hands. You can shoot, but not load, it in one hand at a -4 penalty. A rifle in each hand uses the penalties for two one-handed weapons, and that stacks with the one-handed penalty. Each shot uses one rifle bullet and 1 ounce of gunpowder. Firearms do not add a Strength bonus to damage. Exotic Weapon Proficiency (firearms) covers every firearm except the blunderbuss, which needs no proficiency, and the mortar, which needs Exotic Weapon Proficiency (mortar). Ironforge dwarves and goblins treat flintlock pistols and long rifles as martial weapons. A firearm's enhancement bonus does not stack with the enhancement bonus of its ammunition. Ammunition fired from a firearm is destroyed even if it misses.",
     "damage_s": "2d6",
     "damage_m": "3d6",
     "critical": "x3",
     "range_increment": "200 ft.",
     "damage_type": "P",
     "handed": "ranged"
+  },
+  {
+    "slug": "blunderbuss-wow",
+    "name": "Blunderbuss",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 181,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "3d6 · x2",
+      "cost": "250 gp",
+      "weight": "10 lb."
+    },
+    "kind": "weapon",
+    "category": "exotic",
+    "cost": "250 gp",
+    "weight": "10 lb.",
+    "description_html": "<p>MR 1. No attack roll and no weapon proficiency. The blunderbuss fires a 20-foot cone of pellets and deals 3d6 piercing damage to every creature and object in the cone. A Reflex save DC 15 halves the damage. Cover grants a bonus on that save. It needs two hands. Reloading is a full-round action that provokes attacks of opportunity. Each shot uses one load of blunderbuss shot and 1 ounce of gunpowder. The table lists its critical as none because it does not make an attack roll.</p>",
+    "description_text": "MR 1. No attack roll and no weapon proficiency. The blunderbuss fires a 20-foot cone of pellets and deals 3d6 piercing damage to every creature and object in the cone. A Reflex save DC 15 halves the damage. Cover grants a bonus on that save. It needs two hands. Reloading is a full-round action that provokes attacks of opportunity. Each shot uses one load of blunderbuss shot and 1 ounce of gunpowder. The table lists its critical as none because it does not make an attack roll.",
+    "damage_s": "3d6",
+    "damage_m": "3d6",
+    "critical": "x2",
+    "range_increment": "20 ft.",
+    "damage_type": "P",
+    "handed": "ranged"
+  },
+  {
+    "slug": "mortar-wow",
+    "name": "Mortar",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 186,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "weapon",
+      "category": "exotic",
+      "stats": "3d6 · x2",
+      "cost": "75 gp",
+      "weight": "20 lb."
+    },
+    "kind": "weapon",
+    "category": "exotic",
+    "cost": "75 gp",
+    "weight": "20 lb.",
+    "description_html": "<p>MR 1. A mortar needs Exotic Weapon Proficiency (mortar), not the general firearms proficiency. Each shot uses one mortar shell and 4 ounces of gunpowder. Firing is a standard action. Reloading is a full-round action that provokes attacks of opportunity. It needs two hands. The shell deals 3d6 fire damage in a 5-foot radius. Mortar attacks ignore cover that does not protect the target from above. A target with full cover has full concealment instead. A mortar cannot fire at a target within one range increment (40 feet).</p>",
+    "description_text": "MR 1. A mortar needs Exotic Weapon Proficiency (mortar), not the general firearms proficiency. Each shot uses one mortar shell and 4 ounces of gunpowder. Firing is a standard action. Reloading is a full-round action that provokes attacks of opportunity. It needs two hands. The shell deals 3d6 fire damage in a 5-foot radius. Mortar attacks ignore cover that does not protect the target from above. A target with full cover has full concealment instead. A mortar cannot fire at a target within one range increment (40 feet).",
+    "damage_s": "3d6",
+    "damage_m": "3d6",
+    "critical": "x2",
+    "range_increment": "40 ft.",
+    "damage_type": "Fire",
+    "handed": "ranged"
+  },
+  {
+    "slug": "balls-pistol-10-wow",
+    "name": "Balls, pistol (10)",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 181,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "ammunition",
+      "stats": "",
+      "cost": "5 gp",
+      "weight": "3 lb."
+    },
+    "kind": "good",
+    "category": "ammunition",
+    "cost": "5 gp",
+    "weight": "3 lb.",
+    "description_html": "<p>Soft lead balls about 2 inches across, sold ten to a sack. A flintlock pistol and a repeating pistol fire these balls. Each shot also uses 1 ounce of gunpowder.</p>",
+    "description_text": "Soft lead balls about 2 inches across, sold ten to a sack. A flintlock pistol and a repeating pistol fire these balls. Each shot also uses 1 ounce of gunpowder."
+  },
+  {
+    "slug": "bullets-rifle-10-wow",
+    "name": "Bullets, rifle (10)",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "ammunition",
+      "stats": "",
+      "cost": "6 gp",
+      "weight": "3 lb."
+    },
+    "kind": "good",
+    "category": "ammunition",
+    "cost": "6 gp",
+    "weight": "3 lb.",
+    "description_html": "<p>Shaped lead bullets about half an inch across, sold ten to a pouch. A long rifle fires these bullets. Each shot also uses 1 ounce of gunpowder.</p>",
+    "description_text": "Shaped lead bullets about half an inch across, sold ten to a pouch. A long rifle fires these bullets. Each shot also uses 1 ounce of gunpowder."
+  },
+  {
+    "slug": "shot-blunderbuss-12-wow",
+    "name": "Shot, blunderbuss (12)",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 187,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "ammunition",
+      "stats": "",
+      "cost": "10 gp",
+      "weight": "3 lb."
+    },
+    "kind": "good",
+    "category": "ammunition",
+    "cost": "10 gp",
+    "weight": "3 lb.",
+    "description_html": "<p>Twelve muslin-wrapped loads. Each load is a quarter-pound of tiny lead pellets, one blunderbuss shot. Each shot also uses 1 ounce of gunpowder.</p>",
+    "description_text": "Twelve muslin-wrapped loads. Each load is a quarter-pound of tiny lead pellets, one blunderbuss shot. Each shot also uses 1 ounce of gunpowder."
+  },
+  {
+    "slug": "shell-mortar-wow",
+    "name": "Shell, mortar",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 187,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "ammunition",
+      "stats": "",
+      "cost": "25 gp",
+      "weight": "1 lb."
+    },
+    "kind": "good",
+    "category": "ammunition",
+    "cost": "25 gp",
+    "weight": "1 lb.",
+    "description_html": "<p>MR 1. Malfunction: The shell detonates. A metal case of gunpowder with a small bursting charge. It deals 3d6 fire damage in a 5-foot radius. Hardness 0, 2 hit points. Fired from a mortar, which also spends 4 ounces of gunpowder.</p>",
+    "description_text": "MR 1. Malfunction: The shell detonates. A metal case of gunpowder with a small bursting charge. It deals 3d6 fire damage in a 5-foot radius. Hardness 0, 2 hit points. Fired from a mortar, which also spends 4 ounces of gunpowder."
+  },
+  {
+    "slug": "gunpowder-horn-wow",
+    "name": "Gunpowder, 2-pound horn",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "35 gp",
+      "weight": "2 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "35 gp",
+    "weight": "2 lb.",
+    "description_html": "<p>MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This water-resistant horn holds 2 pounds and weighs 2 pounds.</p>",
+    "description_text": "MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This water-resistant horn holds 2 pounds and weighs 2 pounds."
+  },
+  {
+    "slug": "gunpowder-keg-wow",
+    "name": "Gunpowder, 15-pound keg",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "250 gp",
+      "weight": "20 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "250 gp",
+    "weight": "20 lb.",
+    "description_html": "<p>MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This keg holds 15 pounds of powder and weighs 20 pounds in total.</p>",
+    "description_text": "MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This keg holds 15 pounds of powder and weighs 20 pounds in total."
+  },
+  {
+    "slug": "gunpowder-refined-horn-wow",
+    "name": "Gunpowder, refined, 2-pound horn",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "100 gp",
+      "weight": "2 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "100 gp",
+    "weight": "2 lb.",
+    "description_html": "<p>MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Refined powder grants a +1 enhancement bonus on damage rolls. That bonus stacks with the weapon or with its ammunition. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This horn holds 2 pounds.</p>",
+    "description_text": "MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Refined powder grants a +1 enhancement bonus on damage rolls. That bonus stacks with the weapon or with its ammunition. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This horn holds 2 pounds."
+  },
+  {
+    "slug": "gunpowder-refined-keg-wow",
+    "name": "Gunpowder, refined, 15-pound keg",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "1,400 gp",
+      "weight": "20 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "1,400 gp",
+    "weight": "20 lb.",
+    "description_html": "<p>MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Refined powder grants a +1 enhancement bonus on damage rolls. That bonus stacks with the weapon or with its ammunition. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This keg holds 15 pounds and weighs 20 pounds in total.</p>",
+    "description_text": "MR 1. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Refined powder grants a +1 enhancement bonus on damage rolls. That bonus stacks with the weapon or with its ammunition. Sixteen ounces make a pound. A firearm uses 1 ounce per shot. A mortar uses 4 ounces. Common and refined powder is ruined if it gets wet. This keg holds 15 pounds and weighs 20 pounds in total."
+  },
+  {
+    "slug": "gunpowder-imbued-horn-wow",
+    "name": "Gunpowder, imbued, 2-pound horn",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "1,300 gp",
+      "weight": "2 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "1,300 gp",
+    "weight": "2 lb.",
+    "description_html": "<p>MR 2. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Water does not ruin imbued powder. A weapon that uses it gains a +1 enhancement bonus on attack and damage rolls and overcomes damage reduction as a magic weapon. The weapon's Malfunction Rating also increases by 1. These bonuses stack with the weapon or with its ammunition. This horn holds 2 pounds.</p>",
+    "description_text": "MR 2. Malfunction: The powder detonates. One pound deals 2d6 fire damage to creatures within 5 feet (Reflex DC 18 half). Each additional pound adds 2d6 damage and 5 feet of radius. Imbued gunpowder deals twice that damage. A natural 1 on a save against a fire effect detonates every load of gunpowder the character is carrying. Water does not ruin imbued powder. A weapon that uses it gains a +1 enhancement bonus on attack and damage rolls and overcomes damage reduction as a magic weapon. The weapon's Malfunction Rating also increases by 1. These bonuses stack with the weapon or with its ammunition. This horn holds 2 pounds."
+  },
+  {
+    "slug": "bomb-catapult-wow",
+    "name": "Bomb, catapult",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "150 gp",
+      "weight": "10 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "150 gp",
+    "weight": "10 lb.",
+    "description_html": "<p>MR 1. Malfunction: The bomb is a dud or explodes early. Damage 8d6 fire, blast radius 15 feet. Catapults usually launch it. Range increment 5 feet if thrown. About half the weight is gunpowder. Priming is a move action and a DC 12 Use Technological Device check. Each round of fuse delay adds 1 to that DC and makes priming a standard action. No weapon proficiency is required.</p>",
+    "description_text": "MR 1. Malfunction: The bomb is a dud or explodes early. Damage 8d6 fire, blast radius 15 feet. Catapults usually launch it. Range increment 5 feet if thrown. About half the weight is gunpowder. Priming is a move action and a DC 12 Use Technological Device check. Each round of fuse delay adds 1 to that DC and makes priming a standard action. No weapon proficiency is required."
+  },
+  {
+    "slug": "bomb-emplaced-wow",
+    "name": "Bomb, emplaced",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "80 gp",
+      "weight": "5 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "80 gp",
+    "weight": "5 lb.",
+    "description_html": "<p>MR 1. Malfunction: The bomb is a dud or explodes early. Damage 4d6 fire, blast radius 5 feet. A plate about 2 inches thick and 2 feet across, set at the base of a wall before the fuse is lit. Priming is a move action and a DC 12 Use Technological Device check. No weapon proficiency is required.</p>",
+    "description_text": "MR 1. Malfunction: The bomb is a dud or explodes early. Damage 4d6 fire, blast radius 5 feet. A plate about 2 inches thick and 2 feet across, set at the base of a wall before the fuse is lit. Priming is a move action and a DC 12 Use Technological Device check. No weapon proficiency is required."
+  },
+  {
+    "slug": "bomb-grenade-wow",
+    "name": "Bomb, grenade",
+    "source_url": null,
+    "scraped_at": "2026-11-05T00:00:00Z",
+    "source": {
+      "name": "World of Warcraft: The Roleplaying Game",
+      "abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "page": 184,
+      "url": null
+    },
+    "index": {
+      "source_abbrev": "WoW",
+      "edition": "WoW RPG (3.5)",
+      "kind": "good",
+      "category": "special material",
+      "stats": "",
+      "cost": "40 gp",
+      "weight": "1 lb."
+    },
+    "kind": "good",
+    "category": "special material",
+    "cost": "40 gp",
+    "weight": "1 lb.",
+    "description_html": "<p>MR 1. Malfunction: The bomb is a dud or explodes early. Damage 2d6 fire, blast radius 10 feet, range increment 10 feet. A black ball about half a foot across with a short fuse, usually thrown. Priming is a move action and a DC 12 Use Technological Device check. No weapon proficiency is required.</p>",
+    "description_text": "MR 1. Malfunction: The bomb is a dud or explodes early. Damage 2d6 fire, blast radius 10 feet, range increment 10 feet. A black ball about half a foot across with a short fuse, usually thrown. Priming is a move action and a DC 12 Use Technological Device check. No weapon proficiency is required."
   },
   {
     "slug": "padded-wow",

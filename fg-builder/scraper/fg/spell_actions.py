@@ -420,6 +420,11 @@ def _finalize_effects(effects: list[dict[str, Any]], duration: str) -> list[dict
     return effects
 
 
+def build_cast_action(detail: dict[str, Any]) -> dict[str, Any]:
+    """Cast action (save type, SR, attack type) derived from spell detail fields."""
+    return _add_cast_action(detail)
+
+
 def build_spell_actions(detail: dict[str, Any]) -> list[dict[str, Any]]:
     """Build FG spell action dicts from scraped spell detail."""
     actions: list[dict[str, Any]] = [_add_cast_action(detail)]

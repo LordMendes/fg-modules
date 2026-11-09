@@ -1,18 +1,20 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  charismaModifier,
   effectiveTurnLevel,
   formatStackOutcome,
   maxHdFromCheck,
   resolveTurnUndead,
   stackOutcomeTone,
+  turningAttemptsPerDay,
 } from "./resolve";
 import type { TurnUndeadInput } from "./types";
 
 const baseInput: TurnUndeadInput = {
   class: "cleric",
   level: 6,
-  chaMod: 3,
+  charisma: 16,
   religionBonus: false,
   greaterTurnUndead: false,
   d20: 20,
@@ -36,11 +38,29 @@ describe("effectiveTurnLevel", () => {
   });
 });
 
+describe("charismaModifier", () => {
+  it("uses floor((score - 10) / 2)", () => {
+    assert.equal(charismaModifier(3), -4);
+    assert.equal(charismaModifier(10), 0);
+    assert.equal(charismaModifier(16), 3);
+  });
+});
+
+describe("turningAttemptsPerDay", () => {
+  it("is 3 + Charisma modifier, and can be negative", () => {
+    assert.equal(turningAttemptsPerDay(3), -1);
+    assert.equal(turningAttemptsPerDay(10), 3);
+    assert.equal(turningAttemptsPerDay(16), 6);
+  });
+});
+
 describe("maxHdFromCheck", () => {
   it("maps Table 8-9 brackets", () => {
     assert.equal(maxHdFromCheck(0, 6), 2);
     assert.equal(maxHdFromCheck(3, 6), 3);
-    assert.equal(maxHdFromCheck(6, 6), 2);
+    assert.equal(maxHdFromCheck(4, 6), 4);
+    assert.equal(maxHdFromCheck(6, 6), 4);
+    assert.equal(maxHdFromCheck(7, 6), 5);
     assert.equal(maxHdFromCheck(9, 6), 5);
     assert.equal(maxHdFromCheck(12, 6), 6);
     assert.equal(maxHdFromCheck(15, 6), 7);
@@ -59,8 +79,10 @@ describe("resolveTurnUndead", () => {
     const result = resolveTurnUndead(baseInput);
     assert.ok(result);
     assert.equal(result.effectiveLevel, 6);
-    assert.equal(result.checkTotal, 29);
+    assert.equal(result.charismaModifier, 3);
+    assert.equal(result.checkTotal, 23);
     assert.equal(result.maxHdPerCreature, 10);
+    assert.equal(result.damageRoll, 11);
     assert.equal(result.damagePool, 11);
     assert.equal(result.damageSpent, 8);
     assert.equal(result.damageRemaining, 3);
@@ -95,7 +117,7 @@ describe("resolveTurnUndead", () => {
     const result = resolveTurnUndead({
       class: "cleric",
       level: 5,
-      chaMod: 0,
+      charisma: 10,
       religionBonus: false,
       d20: 15,
       d6First: 1,
@@ -116,7 +138,7 @@ describe("resolveTurnUndead", () => {
     const result = resolveTurnUndead({
       class: "cleric",
       level: 3,
-      chaMod: 0,
+      charisma: 10,
       religionBonus: false,
       d20: 1,
       d6First: 6,
@@ -139,7 +161,7 @@ describe("resolveTurnUndead", () => {
     const result = resolveTurnUndead({
       class: "cleric",
       level: 10,
-      chaMod: 0,
+      charisma: 10,
       religionBonus: false,
       d20: 15,
       d6First: 3,
@@ -168,6 +190,85 @@ describe("resolveTurnUndead", () => {
     assert.equal(resolveTurnUndead({ ...baseInput, d6Second: null }), null);
     assert.equal(resolveTurnUndead({ ...baseInput, d20: 0 }), null);
     assert.equal(resolveTurnUndead({ ...baseInput, d6First: 7 }), null);
+  });
+
+  it("does not add cleric level to the turning check", () => {
+    const low = resolveTurnUndead({
+      class: "cleric",
+      level: 1,
+      charisma: 16,
+      religionBonus: false,
+      greaterTurnUndead: false,
+      d20: 9,
+      d6First: 1,
+      d6Second: 1,
+      targets: [],
+    });
+    const high = resolveTurnUndead({
+      class: "cleric",
+      level: 8,
+      charisma: 16,
+      religionBonus: false,
+      greaterTurnUndead: false,
+      d20: 9,
+      d6First: 1,
+      d6Second: 1,
+      targets: [],
+    });
+
+    assert.ok(low);
+    assert.ok(high);
+    assert.equal(low.checkTotal, 12);
+    assert.equal(high.checkTotal, 12);
+    assert.equal(low.maxHdPerCreature, 1);
+    assert.equal(high.maxHdPerCreature, 8);
+    assert.equal(low.damagePool, 6);
+    assert.equal(high.damagePool, 13);
+  });
+
+  it("resolves a 1st-level cleric with Charisma 3 and damage dice 3 and 5", () => {
+    const result = resolveTurnUndead({
+      class: "cleric",
+      level: 1,
+      charisma: 3,
+      religionBonus: false,
+      greaterTurnUndead: false,
+      d20: 10,
+      d6First: 3,
+      d6Second: 5,
+      targets: [{ label: "Skeleton", hd: 1, count: 4 }],
+    });
+
+    assert.ok(result);
+    assert.equal(result.charismaModifier, -4);
+    assert.equal(result.turningAttempts, -1);
+    assert.equal(result.checkTotal, 6);
+    assert.equal(result.maxHdPerCreature, 0);
+    assert.equal(result.damageRoll, 5);
+    assert.equal(result.damagePool, 5);
+    assert.equal(result.stacks[0]?.affected, 0);
+  });
+
+  it("floors a negative damage roll to an empty pool", () => {
+    const result = resolveTurnUndead({
+      class: "cleric",
+      level: 1,
+      charisma: 3,
+      religionBonus: false,
+      greaterTurnUndead: false,
+      d20: 14,
+      d6First: 1,
+      d6Second: 1,
+      targets: [{ label: "Skeleton", hd: 1, count: 1 }],
+    });
+
+    assert.ok(result);
+    assert.equal(result.checkTotal, 10);
+    assert.equal(result.maxHdPerCreature, 1);
+    assert.equal(result.damageRoll, -1);
+    assert.equal(result.damagePool, 0);
+    assert.equal(result.damageSpent, 0);
+    assert.equal(result.stacks[0]?.affected, 0);
   });
 
   it("handles empty targets without crashing", () => {
