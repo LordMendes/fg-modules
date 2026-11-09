@@ -65,6 +65,7 @@ describe("coneContains - 3.5E 90-degree cone", () => {
     assert.equal(
       coneContains({ x: 5, y: 5 }, 30, 0, { x: 8, y: 8 }, 5),
       true,
+    );
   });
 
   it("excludes token outside 45-degree edge", () => {
