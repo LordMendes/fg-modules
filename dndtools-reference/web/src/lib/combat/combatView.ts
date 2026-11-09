@@ -21,6 +21,7 @@ type EffectRow = {
   label: string;
   components: unknown;
   sourceCombatantId: string | null;
+  applierUserId: string | null;
   duration: number | null;
   durationUnit: string;
   expiry: string;
@@ -224,6 +225,7 @@ function effectViewFromRow(
     sourceName: row.sourceCombatantId
       ? sourceNames.get(row.sourceCombatantId) ?? null
       : null,
+    applierUserId: row.applierUserId,
     duration: row.duration,
     durationUnit:
       row.durationUnit === "minute" ||

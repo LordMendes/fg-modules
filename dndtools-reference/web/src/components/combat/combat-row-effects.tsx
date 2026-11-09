@@ -21,6 +21,7 @@ import {
 import { parseEffect } from "@/lib/combat/effects/parseEffect";
 import { formatEffect } from "@/lib/combat/effects/formatEffect";
 import type { CombatEffectView, CombatantView } from "@/lib/combat/types";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import { GripVertical } from "lucide-react";
 import {
   useCallback,
@@ -52,6 +53,9 @@ function EffectChipEditor({
   const [durationUnit, setDurationUnit] = useState(effect.durationUnit);
   const [expiry, setExpiry] = useState(effect.expiry);
   const [visibility, setVisibility] = useState(effect.visibility);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useClickOutside(ref, onClose);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -64,7 +68,7 @@ function EffectChipEditor({
   if (!canEdit) return null;
 
   return (
-    <div className="combat-effect-editor" role="dialog" aria-label="Edit effect">
+    <div ref={ref} className="combat-effect-editor" role="dialog" aria-label="Edit effect">
       <div className="combat-effect-editor-row">
         <label className="combat-effect-editor-label">Duration</label>
         <input

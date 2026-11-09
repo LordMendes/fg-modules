@@ -680,6 +680,28 @@ export async function combatApplyNonlethal(
   return applyNonlethal(auth.actor, combatantId, amount, source);
 }
 
+export async function combatSetTempHp(
+  campaignId: string,
+  combatantId: string,
+  amount: number,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  if (!auth.isDm) return { success: false, error: "DM only" };
+  return applyTempHp(auth.actor, combatantId, amount);
+}
+
+export async function combatSetNonlethal(
+  campaignId: string,
+  combatantId: string,
+  amount: number,
+): Promise<CombatActionResult> {
+  const auth = await requireCombatActor(campaignId);
+  if (!auth.ok) return { success: false, error: auth.error };
+  if (!auth.isDm) return { success: false, error: "DM only" };
+  return applyNonlethal(auth.actor, combatantId, amount);
+}
+
 export async function combatAddEffect(
   campaignId: string,
   combatantIds: string[],

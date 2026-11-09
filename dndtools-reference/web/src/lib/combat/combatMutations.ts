@@ -168,6 +168,7 @@ export type LockedCombatantRow = {
     expiry: string;
     visibility: string;
     sourceCombatantId: string | null;
+    applierUserId: string | null;
     seq: number;
   }>;
 };
@@ -2342,6 +2343,7 @@ export async function addEffect(
           label: validated.trimmed,
           components: components as unknown as Prisma.InputJsonValue,
           sourceCombatantId: sourceId,
+          applierUserId: actor.userId,
           duration: normalized.duration,
           durationUnit: normalized.durationUnit,
           tickInit,
@@ -2367,6 +2369,7 @@ export async function addEffect(
         expiry: effectRow.expiry,
         visibility: effectRow.visibility,
         sourceCombatantId: effectRow.sourceCombatantId,
+        applierUserId: effectRow.applierUserId,
         seq,
       });
 
@@ -2418,11 +2421,12 @@ export async function removeEffect(
     }
     if (effect.system) return { success: false as const, error: "Cannot remove system effect" };
     if (!isDm(actor)) {
-      if (!(await ownsCombatant(actor, targetRow))) {
-        return { success: false as const, error: "Not allowed" };
-      }
       if (effect.visibility === "gm") {
         return { success: false as const, error: "Not allowed" };
+      }
+      const canRemove = effect.applierUserId === actor.userId;
+      if (!canRemove) {
+        return { success: false as const, error: "Only the effect's applier or DM can remove it" };
       }
     }
 
