@@ -313,7 +313,7 @@ export function publishCombatEvent(
   });
 }
 
-function clampInt(value: unknown, min: number, max: number): number | null {
+export function clampInt(value: unknown, min: number, max: number): number | null {
   if (!Number.isFinite(value)) return null;
   return Math.max(min, Math.min(max, Math.trunc(Number(value))));
 }
@@ -2585,6 +2585,27 @@ export async function addEffect(
   return { success: true as const };
 }
 
+export function canRemoveEffect(params: {
+  isDm: boolean;
+  effectIsSystem: boolean;
+  effectVisibility: "visible" | "hidden" | "gm";
+  effectApplierUserId: string | null;
+  actorUserId: string;
+}): { canRemove: boolean; error?: string } {
+  if (params.effectIsSystem) {
+    return { canRemove: false, error: "Cannot remove system effect" };
+  }
+  if (!params.isDm) {
+    if (params.effectVisibility === "gm") {
+      return { canRemove: false, error: "Not allowed" };
+    }
+    if (params.effectApplierUserId !== params.actorUserId) {
+      return { canRemove: false, error: "Only the effect's applier or DM can remove it" };
+    }
+  }
+  return { canRemove: true };
+}
+
 export async function removeEffect(
   actor: CombatActor,
   effectId: string,
@@ -2607,15 +2628,17 @@ export async function removeEffect(
     if (!targetRow || !effect) {
       return { success: false as const, error: "Effect not found" };
     }
-    if (effect.system) return { success: false as const, error: "Cannot remove system effect" };
-    if (!isDm(actor)) {
-      if (effect.visibility === "gm") {
-        return { success: false as const, error: "Not allowed" };
-      }
-      const canRemove = effect.applierUserId === actor.userId;
-      if (!canRemove) {
-        return { success: false as const, error: "Only the effect's applier or DM can remove it" };
-      }
+    
+    const permission = canRemoveEffect({
+      isDm: isDm(actor),
+      effectIsSystem: effect.system,
+      effectVisibility: effect.visibility,
+      effectApplierUserId: effect.applierUserId,
+      actorUserId: actor.userId,
+    });
+    if (!permission.canRemove) {
+      return { success: false as const, error: permission.error || "Not allowed" };
+    }
     }
 
     await tx.campaignCombatEffect.delete({ where: { id: effectId } });
