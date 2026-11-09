@@ -54,9 +54,12 @@ import {
 import { MapCombatFxLayer } from "./map-combat-fx-layer";
 import { MapDrawLayer } from "./map-draw-layer";
 import { MapTargetingLayer } from "./map-targeting-layer";
+import { MapAreaSpellLayer, type AreaSpellPlacement } from "./map-area-spell-layer";
 import { MapToken } from "./map-token";
 import { MapToolbar } from "./map-toolbar";
 import { MapViewportOverlay } from "./map-viewport-overlay";
+import { castAreaSpellAction } from "@/actions/areaSpellCast";
+import type { DicePoolItem } from "@/lib/dice/types";
 
 const MIN_SCALE = 0.15;
 const MAX_SCALE = 4;
@@ -98,6 +101,16 @@ type CampaignMapBoardProps = {
   viewportGoTo?: { x: number; y: number } | null;
   sendLive: LiveSend;
   connected: boolean;
+  onStartAreaSpellPlacement?: (params: {
+    spell: any;
+    casterId: string;
+    casterTokenId: string | null;
+    label: string;
+    dice: DicePoolItem[];
+    casterLevel?: number;
+    spellLevel?: number;
+    castingStatMod?: number;
+  }) => void;
   combat?: CampaignCombatView | null;
   onToggleCombatTarget?: (targetCombatantId: string) => void;
 };
@@ -163,6 +176,7 @@ export function CampaignMapBoard({
   connected,
   combat = null,
   onToggleCombatTarget,
+  onStartAreaSpellPlacement,
 }: CampaignMapBoardProps) {
   const { store } = useCampaignLive();
   const combatCtx = useCombatContext();
@@ -208,6 +222,7 @@ export function CampaignMapBoard({
     origin: MapPoint;
     current: MapPoint;
   } | null>(null);
+  const [areaSpellPlacement, setAreaSpellPlacement] = useState<AreaSpellPlacement | null>(null);
   const [selectedDrawingId, setSelectedDrawingId] = useState<string | null>(
     null,
   );
@@ -531,6 +546,13 @@ export function CampaignMapBoard({
         return;
       }
 
+      // AREA SPELL - cancel on Escape
+      if (e.key === "Escape" && areaSpellPlacement) {
+        e.preventDefault();
+        setAreaSpellPlacement(null);
+        return;
+      }
+      
       if (e.key === "Delete" || e.key === "Backspace") {
         if (selectedDrawingId) {
           const d = map.drawings.find((x) => x.id === selectedDrawingId);
@@ -615,6 +637,7 @@ export function CampaignMapBoard({
     updateTokenLocal,
     sendLive,
     combat?.active,
+    areaSpellPlacement,
   ]);
 
   const handleDaylightChange = useCallback(
@@ -644,6 +667,43 @@ export function CampaignMapBoard({
   }, []);
 
   const handleBoardPointerDown = (e: React.PointerEvent) => {
+    // AREA SPELL PLACEMENT - left click to confirm
+    if (areaSpellPlacement && e.button === 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const targetIds = areaSpellPlacement.highlightedTokenIds;
+      const combatants = combat?.combatants ?? [];
+      const targetCombatantIds = targetIds
+        .map((tokenId: string) => combatants.find((c) => c.tokenId === tokenId)?.id)
+        .filter((id): id is string => id != null);
+      
+      // Call server action
+      castAreaSpellAction({
+        campaignId,
+        label: areaSpellPlacement.label,
+        kind: "spell",
+        dice: areaSpellPlacement.dice,
+        modifier: 0,
+        combat: {
+          kind: "cast",
+          casterId: areaSpellPlacement.casterId,
+          spellKey: areaSpellPlacement.spell.key,
+          targetIds: targetCombatantIds,
+          casterLevel: areaSpellPlacement.casterLevel,
+          spellLevel: areaSpellPlacement.spellLevel,
+          castingStatMod: areaSpellPlacement.castingStatMod,
+        },
+      }).then(() => {
+        console.log("Area spell cast complete");
+      }).catch((err) => {
+        console.error("Area spell cast failed:", err);
+      });
+      
+      setAreaSpellPlacement(null);
+      return;
+    }
+    
     const isPanButton = e.button === 1 || e.button === 2;
     const panActive = tool === "pan" || spacePan || isPanButton;
     if (panActive) {
@@ -770,6 +830,63 @@ export function CampaignMapBoard({
     }
 
     const pt = clientToGrid(e.clientX, e.clientY);
+
+    // AREA SPELL PLACEMENT - handle before other tools
+    if (areaSpellPlacement) {
+      const casterToken = tokensRef.current.find(t => t.id === areaSpellPlacement.casterTokenId);
+      if (!casterToken) return;
+      
+      const casterPos = { x: casterToken.x, y: casterToken.y };
+      let centerX = pt.x;
+      let centerY = pt.y;
+      let rotation = areaSpellPlacement.rotation;
+      
+      // For cone/ray, rotate toward mouse from caster
+      if (areaSpellPlacement.spell.areaShape === "cone" || areaSpellPlacement.spell.areaShape === "ray") {
+        centerX = casterPos.x;
+        centerY = casterPos.y;
+        const dx = pt.x - casterPos.x;
+        const dy = pt.y - casterPos.y;
+        rotation = Math.atan2(dy, dx) * (180 / Math.PI);
+      } else if (areaSpellPlacement.spell.areaShape === "circle") {
+        // Snap to grid intersection (grid coords already in feet)
+        centerX = Math.round(pt.x / map.scaleFeet) * map.scaleFeet;
+        centerY = Math.round(pt.y / map.scaleFeet) * map.scaleFeet;
+      }
+      
+      // Compute tokens inside
+      const shape: any = areaSpellPlacement.spell.areaShape === "cone"
+        ? {
+            kind: "cone" as const,
+            origin: casterPos,
+            sizeFeet: areaSpellPlacement.spell.rangeFeet ?? 30,
+            rotationDeg: rotation,
+          }
+        : areaSpellPlacement.spell.areaShape === "ray"
+        ? {
+            kind: "ray" as const,
+            origin: casterPos,
+            endX: pt.x,
+            endY: pt.y,
+          }
+        : {
+            kind: (areaSpellPlacement.spell.areaShape ?? "circle") as "circle" | "square",
+            center: { x: centerX, y: centerY },
+            radiusFeet: areaSpellPlacement.spell.rangeFeet ?? 20,
+          };
+      
+      const tokenCenters = tokensRef.current.map((t: MapTokenView) => ({ id: t.id, x: t.x, y: t.y }));
+      const highlightedTokenIds = tokensInsideShape(shape, tokenCenters, map.scaleFeet);
+      
+      setAreaSpellPlacement((prev: AreaSpellPlacement | null) => prev ? {
+        ...prev,
+        x: centerX,
+        y: centerY,
+        rotation,
+        highlightedTokenIds,
+      } : null);
+      return;  // Skip other handlers
+    }
 
     if (shapeDragRef.current) {
       const d = shapeDragRef.current;
@@ -1433,7 +1550,14 @@ export function CampaignMapBoard({
         }}
         onPointerUp={handleBoardPointerUp}
         onPointerLeave={handleBoardPointerUp}
-        onContextMenu={(e) => e.preventDefault()}
+        onContextMenu={(e) => {
+          if (areaSpellPlacement) {
+            e.preventDefault();
+            setAreaSpellPlacement(null);
+            return;
+          }
+          e.preventDefault();
+        }}
         onDragOver={handleMapDragOver}
         onDrop={handleMapDrop}
       >
@@ -1576,6 +1700,14 @@ export function CampaignMapBoard({
                 : null
             }
             combatants={combat?.combatants ?? []}
+          />
+          <MapAreaSpellLayer
+            placement={areaSpellPlacement}
+            tokens={displayTokens}
+            grid={grid}
+            imageWidth={map.imageWidth}
+            imageHeight={map.imageHeight}
+            scaleFeet={map.scaleFeet}
           />
 
           {combat?.active && aoePointers.length > 0 ? (

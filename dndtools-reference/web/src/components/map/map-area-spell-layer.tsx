@@ -6,9 +6,15 @@ import { coneSectorPath } from "@/lib/map/distance";
 import type { MapTokenView } from "@/lib/map/types";
 import type { CombatSpellEntry } from "@/lib/combat/types";
 
-type AreaSpellPlacement = {
+export type AreaSpellPlacement = {
   spell: CombatSpellEntry;
+  casterId: string;
   casterTokenId: string;
+  label: string;
+  dice: any[];
+  casterLevel?: number;
+  spellLevel?: number;
+  castingStatMod?: number;
   /** Grid-space center (for radius) or origin (for cone/line). */
   x: number;
   y: number;
@@ -41,8 +47,8 @@ export function MapAreaSpellLayer({
   const shape = spell.areaShape;
   const radiusFeet = spell.rangeFeet ?? 20;
 
-  const centerPx = gridToPixels({ x, y }, grid);
-  const radiusPx = radiusFeet / scaleFeet;
+  const centerPx = gridToPixels(x, y, grid);
+  const radiusPx = (radiusFeet / scaleFeet) * grid.gridSizePx;
 
   const highlightedTokens = tokens.filter((t) =>
     highlightedTokenIds.includes(t.id),
@@ -119,8 +125,8 @@ export function MapAreaSpellLayer({
 
       {/* Token highlights */}
       {highlightedTokens.map((token) => {
-        const tokenCenterPx = gridToPixels({ x: token.x, y: token.y }, grid);
-        const tokenSizePx = (token.width * grid.gridSize) / scaleFeet;
+        const tokenCenterPx = gridToPixels(token.x, token.y, grid);
+        const tokenSizePx = (token.width * grid.gridSizePx) / scaleFeet;
         return (
           <g key={token.id}>
             <circle
