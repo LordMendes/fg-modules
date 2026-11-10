@@ -135,9 +135,9 @@ describe("pcPlanToCombatSpells", () => {
     assert.equal(sorcClass.dcAbility, "cha");
     assert.equal(sorcClass.dcModifier, 3);
 
-    // Sorcerer 3 with Cha 16: L0=6 (base), L1=5 (4 base + 1 bonus)
+    // Sorcerer 3 with Cha 16: L0=6 (base), L1=6 (5 base + 1 bonus)
     assert.equal(sorcClass.totalSlots[0], 6);
-    assert.equal(sorcClass.totalSlots[1], 5);
+    assert.equal(sorcClass.totalSlots[1], 6);
 
     // Spells known for sorc 3: L0=5, L1=3
     assert.equal(sorcClass.known[0], 5);

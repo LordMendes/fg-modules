@@ -1113,8 +1113,7 @@ function CampaignTableBody({
       <DiceCanvas />
       <DiceTray />
       <DiceLogTray />
-      </div>
-      </AreaSpellBridgeProvider>
-    </CombatProvider>
+    </AreaSpellBridgeProvider>
+  </CombatProvider>
   );
 }
