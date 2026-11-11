@@ -1689,9 +1689,13 @@ export async function setCombatTargets(actor: CombatActor, targetIds: string[]) 
   return { success: true as const, targetIds: unique };
 }
 
-export async function toggleCombatTarget(actor: CombatActor, targetId: string) {
+export async function toggleCombatTarget(
+  actor: CombatActor,
+  targetId: string,
+  attackerId?: string,
+) {
   const { toggleCombatTargetPhase3 } = await import("@/lib/combat/phase3Mutations");
-  return toggleCombatTargetPhase3(actor, targetId);
+  return toggleCombatTargetPhase3(actor, targetId, attackerId);
 }
 
 export async function startCombat(actor: CombatActor) {

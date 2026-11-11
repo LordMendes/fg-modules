@@ -856,6 +856,7 @@ body {
   grid-template-columns: auto 1fr;
   grid-template-areas:
     "tag name"
+    "source source"
     "snippet snippet";
   gap: 0.125rem 0.75rem;
   padding: 0.75rem;
@@ -892,6 +893,13 @@ body {
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 600;
   color: var(--link-color);
+}
+
+.home-search-result-source {
+  grid-area: source;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.3;
 }
 
 .home-search-result-snippet {
@@ -1132,6 +1140,17 @@ body {
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+.source-cell {
+  max-width: 16rem;
+}
+
+.source-name {
+  display: inline;
+  margin-left: 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
 }
 
 .edition-cell {
@@ -2841,6 +2860,12 @@ body {
   font-family: var(--font-display), system-ui, sans-serif;
   color: var(--link-color);
   margin-bottom: 0.25rem;
+}
+
+.search-result-source {
+  margin: 0 0 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
 }
 
 .search-result-item .category-tag {
@@ -7339,9 +7364,11 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-class-add-option {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.35rem;
+  column-gap: 0.35rem;
+  row-gap: 0.1rem;
   width: 100%;
   padding: 0.25rem 0.4rem;
   border: none;
@@ -7368,7 +7395,8 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-class-add-option-name {
-  flex: 1 1 auto;
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -7378,12 +7406,18 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
 }
 
 .pc-class-add-option-meta {
-  flex-shrink: 0;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 0.625rem;
   color: var(--text-muted);
 }
 
 .pc-class-add-option-added {
+  grid-column: 2;
+  grid-row: 1;
   flex-shrink: 0;
   font-size: 0.625rem;
   font-weight: 600;
@@ -9362,21 +9396,75 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   padding: 0.25rem 0.5rem;
 }
 
-.pc-slot-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+.pc-spellcast-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  margin: 0.15rem 0 0.4rem;
+}
+
+.pc-spellcast-class {
+  flex: 1 1 9rem;
+  min-width: 0;
+  margin: 0;
+}
+
+.pc-spellcast-class .pc-sheet-select {
+  width: 100%;
+}
+
+.pc-spellcast-class-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.pc-spellcast-cl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.pc-spellcast-meta {
+  display: inline-flex;
+  align-items: center;
   gap: 0.35rem;
-  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.pc-spellcast-meta-sep {
+  color: var(--text-muted);
+}
+
+.pc-slot-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  overflow-x: auto;
 }
 
 .pc-slot-cell {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: row;
   align-items: center;
-  padding: 0.35rem;
+  justify-content: center;
+  gap: 0.2rem;
+  flex: 1 0 auto;
+  min-height: 1.65rem;
+  padding: 0.1rem 0.35rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  white-space: nowrap;
   background: var(--bg-primary);
 }
 
@@ -9390,8 +9478,36 @@ body:has(.encounter-dock.encounter-dock--expanded) .cookie-consent-banner {
   font-size: 0.6875rem;
 }
 
+.pc-slot-used-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.pc-slot-used.pc-sheet-input {
+  width: 1.7rem;
+  min-width: 1.7rem;
+  height: 1.35rem;
+  margin: 0;
+  padding: 0 0.1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.pc-slot-used.pc-sheet-input::-webkit-outer-spin-button,
+.pc-slot-used.pc-sheet-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.pc-slot-max,
 .pc-slot-count {
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .pc-slot-bonus {
@@ -11376,6 +11492,23 @@ button.pc-abilities-row-name-btn:focus-visible {
   gap: 0.5rem;
 }
 
+.pc-feat-list--editable li.pc-spell-accordion-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  width: 100%;
+  padding: 0;
+  border-bottom: 0;
+}
+
+.pc-feat-list--editable li.pc-spell-accordion-item > .pc-spell-accordion-header,
+.pc-feat-list--editable li.pc-spell-accordion-item > .pc-spell-accordion-body {
+  width: 100%;
+  align-self: stretch;
+}
+
 .pc-feat-link {
   color: var(--accent-gold);
   text-decoration: none;
@@ -12551,6 +12684,112 @@ button.pc-abilities-row-name-btn:focus-visible {
 .pc-spell-accordion-body .pc-spell-picker-status {
   width: 100%;
   max-width: none;
+}
+
+.pc-spell-actions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: 100%;
+}
+
+.pc-spell-action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.pc-spell-action-kind {
+  flex: 0 0 2.6rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--text-muted);
+}
+
+.pc-spell-action-kind--save {
+  color: #7eb6d6;
+}
+
+.pc-spell-action-kind--dmg {
+  color: #e07a4a;
+}
+
+.pc-spell-action-kind--effect {
+  color: var(--accent-gold, #c9a227);
+}
+
+.pc-spell-action-value,
+.pc-spell-roll-btn.dice-rollable {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  min-height: 2rem;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--bg-card, var(--bg-primary)) 88%, transparent);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.pc-spell-roll-btn.dice-rollable {
+  cursor: pointer;
+}
+
+.pc-spell-roll-btn--save.dice-rollable {
+  border-color: color-mix(in srgb, #7eb6d6 55%, var(--border-color));
+  background: color-mix(in srgb, #7eb6d6 10%, var(--bg-card, var(--bg-primary)));
+}
+
+.pc-spell-roll-btn--dmg.dice-rollable {
+  border-color: color-mix(in srgb, #e07a4a 55%, var(--border-color));
+  background: color-mix(in srgb, #e07a4a 10%, var(--bg-card, var(--bg-primary)));
+}
+
+.pc-spell-roll-btn--effect.dice-rollable {
+  border-color: color-mix(in srgb, var(--accent-gold, #c9a227) 55%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-gold, #c9a227) 10%, var(--bg-card, var(--bg-primary)));
+}
+
+.pc-spell-roll-btn.dice-rollable:hover:not(:disabled),
+.pc-spell-roll-btn.dice-rollable:focus-visible {
+  filter: brightness(1.08);
+}
+
+.pc-spell-roll-btn.dice-rollable:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.pc-spell-roll-value {
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-spell-roll-hint {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .pc-spell-cast-details {
@@ -13997,13 +14236,17 @@ html.dice-secret-cursor * {
 .pc-spell-cast-block {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .pc-spell-cast-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 0.4rem;
+  width: 100%;
 }
 
 .pc-sheet-body--readonly .pc-sheet-input,
@@ -16334,17 +16577,22 @@ html.dice-secret-cursor * {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 4;
+  z-index: 6;
 }
 
 .map-targeting-arrow {
   stroke: var(--fx-target);
-  stroke-width: 2;
+  stroke-width: 3;
 }
 
 .map-targeting-arrow--far {
   stroke-dasharray: 6 4;
   opacity: 0.75;
+}
+
+.map-targeting-arrow--preview {
+  stroke-dasharray: 5 4;
+  opacity: 0.95;
 }
 
 .map-targeting-arrowhead {
@@ -16353,6 +16601,11 @@ html.dice-secret-cursor * {
 
 .map-targeting-arrowhead--far {
   fill: color-mix(in srgb, var(--fx-target) 70%, transparent);
+}
+
+.map-targeting-arrowhead--preview {
+  fill: var(--fx-target);
+  opacity: 0.95;
 }
 
 .combat-window {

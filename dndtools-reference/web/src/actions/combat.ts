@@ -601,10 +601,11 @@ export async function combatSetCombatTargets(
 export async function combatToggleTarget(
   campaignId: string,
   targetCombatantId: string,
+  attackerCombatantId?: string,
 ): Promise<CombatActionResult> {
   const auth = await requireCombatActor(campaignId);
   if (!auth.ok) return { success: false, error: auth.error };
-  return toggleCombatTarget(auth.actor, targetCombatantId);
+  return toggleCombatTarget(auth.actor, targetCombatantId, attackerCombatantId);
 }
 
 export async function combatSetInitiative(

@@ -33,12 +33,14 @@ describe("llms.txt hostname", () => {
     process.env.SITE_URL = "https://dnd-helper.com";
     const text = buildLlmsTxt();
 
-    assert.ok(text.includes("- Home: https://dnd-helper.com\n"));
-    assert.ok(text.includes("- Tools: https://dnd-helper.com/tools\n"));
+    assert.ok(text.includes("- [Home](https://dnd-helper.com)\n"));
+    assert.ok(text.includes("- [Tools](https://dnd-helper.com/tools)\n"));
     assert.ok(
-      text.includes("- Spells: https://dnd-helper.com/spells (A-Z catalog: https://dnd-helper.com/catalog/spells)"),
+      text.includes(
+        "- [Spells](https://dnd-helper.com/spells): [A-Z catalog](https://dnd-helper.com/catalog/spells)",
+      ),
     );
-    assert.ok(text.includes("- Fireball spell: https://dnd-helper.com/spells/fireball\n"));
+    assert.ok(text.includes("- [Fireball spell](https://dnd-helper.com/spells/fireball)\n"));
   });
 
   it("emits only the configured origin in llms.txt and llms-full.txt", () => {
@@ -69,13 +71,28 @@ describe("llms.txt hostname", () => {
     process.env.SITE_URL = "dnd-helper.com/";
     const text = buildLlmsTxt();
 
-    assert.ok(text.includes("- Home: https://dnd-helper.com\n"));
+    assert.ok(text.includes("- [Home](https://dnd-helper.com)\n"));
     assert.ok(!text.includes("https://dnd-helper.com//"));
   });
 
   it("points llms.txt at llms-full.txt on the same origin", () => {
     process.env.SITE_URL = "https://dnd-helper.com";
 
-    assert.ok(buildLlmsTxt().includes("https://dnd-helper.com/llms-full.txt"));
+    assert.ok(buildLlmsTxt().includes("[llms-full.txt](https://dnd-helper.com/llms-full.txt)"));
+  });
+
+  it("uses markdown links that the Lighthouse llms.txt audit counts", () => {
+    process.env.SITE_URL = "https://dnd-helper.com";
+    const hasH1 = /^\s*#\s+.+/m;
+    const hasLink = /\[.+\]\(.+\)/;
+
+    for (const text of [buildLlmsTxt(), buildLlmsFullTxt()]) {
+      assert.match(text, hasH1);
+      assert.match(text, hasLink);
+      assert.ok(text.length >= 50);
+      for (const url of urlsIn(text)) {
+        assert.ok(text.includes(`](${url})`), `url is not a markdown link: ${url}`);
+      }
+    }
   });
 });

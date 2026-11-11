@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { DraftNumberInput } from "@/components/draft-number-input";
 import { Plus, Star } from "lucide-react";
 import { paginateEntities } from "@/actions/data";
+import { formatSourceResultLabel } from "@/lib/source-display";
 import { useRefreshSession, useSessionNonce } from "@/components/session-provider";
 import {
   ClassActionConfirmDialog,
@@ -25,6 +26,7 @@ type ClassOption = {
   slug: string;
   name: string;
   sourceAbbrev?: string | null;
+  sourceName?: string | null;
 };
 
 type PickerTarget =
@@ -145,6 +147,7 @@ export function PcMainClasses({
             slug: item.slug,
             name: item.name,
             sourceAbbrev: item.sourceAbbrev,
+            sourceName: item.sourceName,
           })) ?? [];
         setOptions((prev) => (append ? [...prev, ...hits] : hits));
         setNextCursor(result.nextCursor ?? null);
@@ -325,6 +328,10 @@ export function PcMainClasses({
                 {options.map((option) => {
                   const alreadyAdded =
                     pickerTarget?.kind === "add-class" && addedSlugs.has(option.slug);
+                  const sourceLabel = formatSourceResultLabel(
+                    option.sourceName,
+                    option.sourceAbbrev,
+                  );
                   return (
                     <li key={option.slug} role="presentation">
                       <button
@@ -336,8 +343,10 @@ export function PcMainClasses({
                         onClick={() => applyClassPick(option)}
                       >
                         <span className="pc-class-add-option-name">{option.name}</span>
-                        {option.sourceAbbrev ? (
-                          <span className="pc-class-add-option-meta">{option.sourceAbbrev}</span>
+                        {sourceLabel ? (
+                          <span className="pc-class-add-option-meta" title={sourceLabel}>
+                            {sourceLabel}
+                          </span>
                         ) : null}
                         {alreadyAdded ? (
                           <span className="pc-class-add-option-added">Added</span>

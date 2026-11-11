@@ -1,0 +1,92 @@
+[
+  {
+    "id": 68,
+    "slug": "drow-68",
+    "name": "Drow",
+    "source_url": "https://new.dndtools.org/races/drow-68",
+    "scraped_at": "2026-11-10T00:00:00Z",
+    "index": {
+      "type": "Humanoid (elf)",
+      "level_adjustment": "+2",
+      "source_abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)"
+    },
+    "speed": "Land 30 ft.",
+    "size": "Medium",
+    "type": "Humanoid (elf)",
+    "level_adjustment": "+2",
+    "languages_html": "Elven, Undercommon, and the language of the character's home region",
+    "languages_text": "Elven, Undercommon, and the language of the character's home region",
+    "description_html": "<p>Drow use the elf racial traits from the Player's Handbook, with the changes in <i>Forgotten Realms Campaign Setting</i>. Level adjustment +2.</p><ul><li>+2 Dexterity, -2 Constitution, +2 Intelligence, +2 Charisma.</li><li>Medium. Base land speed 30 feet.</li><li>Immunity to magic sleep effects, and a +2 racial bonus on saving throws against enchantment spells or effects.</li><li>Darkvision 120 feet. This replaces elven low-light vision.</li><li>Proficient with the hand crossbow and the light crossbow, and with either the rapier or the shortsword. This replaces the elf weapon proficiencies.</li><li>+2 racial bonus on Listen, Search, and Spot checks. A drow who passes within 5 feet of a secret or concealed door can make a Search check to notice it as if she were actively looking for it.</li><li>Spell-like abilities: 1/day dancing lights, darkness, and faerie fire, as a sorcerer of the drow's character level.</li><li>Light blindness: abrupt exposure to bright light (such as sunlight or a daylight spell) blinds a drow for 1 round. Drow take a -1 circumstance penalty on attack rolls, saves, and checks while operating in bright light.</li><li>Spell resistance 11 + character level.</li><li>+2 racial bonus on Will saves against spells and spell-like abilities.</li><li>Automatic languages: Elven, Undercommon, and the language of the character's home region.</li><li>Favored class: Wizard (male) or cleric (female).</li><li>Level adjustment +2.</li></ul>",
+    "description_text": "Drow use the elf racial traits from the Player's Handbook, with the changes in Forgotten Realms Campaign Setting. Level adjustment +2.\n+2 Dexterity, -2 Constitution, +2 Intelligence, +2 Charisma.\nMedium. Base land speed 30 feet.\nImmunity to magic sleep effects, and a +2 racial bonus on saving throws against enchantment spells or effects.\nDarkvision 120 feet. This replaces elven low-light vision.\nProficient with the hand crossbow and the light crossbow, and with either the rapier or the shortsword. This replaces the elf weapon proficiencies.\n+2 racial bonus on Listen, Search, and Spot checks. A drow who passes within 5 feet of a secret or concealed door can make a Search check to notice it as if she were actively looking for it.\nSpell-like abilities: 1/day dancing lights, darkness, and faerie fire, as a sorcerer of the drow's character level.\nLight blindness: abrupt exposure to bright light (such as sunlight or a daylight spell) blinds a drow for 1 round. Drow take a -1 circumstance penalty on attack rolls, saves, and checks while operating in bright light.\nSpell resistance 11 + character level.\n+2 racial bonus on Will saves against spells and spell-like abilities.\nAutomatic languages: Elven, Undercommon, and the language of the character's home region.\nFavored class: Wizard (male) or cleric (female).\nLevel adjustment +2.",
+    "source": {
+      "name": "Forgotten Realms Campaign Setting",
+      "abbrev": "FRCS",
+      "edition": "Forgotten Realms (3.0)",
+      "page": 13,
+      "url": null
+    },
+    "fg": {
+      "ability_scores": {
+        "dex": 2,
+        "con": -2,
+        "int": 2,
+        "cha": 2
+      },
+      "identity": {
+        "size": "Medium",
+        "type": "Humanoid (elf)",
+        "favored_class": "Wizard (male) or Cleric (female)",
+        "level_adjustment": "+2",
+        "starting_languages": "Elven, Undercommon, and the language of their home region",
+        "bonus_languages": ""
+      },
+      "movement": {
+        "land": 30
+      },
+      "senses": {
+        "darkvision": "120 ft."
+      },
+      "traits": [
+        {
+          "slug": "elvenimmunities",
+          "name": "Elven Immunities",
+          "text": "<h>Elven Immunities</h><p>Drow are immune to magic sleep effects and have a +2 racial bonus on saving throws against enchantment spells or effects.</p>"
+        },
+        {
+          "slug": "weapons",
+          "name": "Weapon Proficiency",
+          "text": "<h>Weapon Proficiency</h><p>Drow are proficient with the hand crossbow and the light crossbow, and with either the rapier or the shortsword. These proficiencies replace the elf weapon proficiencies.</p>"
+        },
+        {
+          "slug": "keensenses",
+          "name": "Keen Senses",
+          "text": "<h>Keen Senses</h><p>Drow have a +2 racial bonus on Listen, Search, and Spot checks. A drow who passes within 5 feet of a secret or concealed door can make a Search check to notice it as if she were actively looking for it.</p>",
+          "effect": "SKILL: 2, listen; SKILL: 2, search; SKILL: 2, spot"
+        },
+        {
+          "slug": "spelllikeabilities",
+          "name": "Spell-Like Abilities",
+          "text": "<h>Spell-Like Abilities</h><p>1/day: dancing lights, darkness, and faerie fire. Caster level equals the drow's character level. The save DC is Charisma-based, as for a sorcerer.</p>"
+        },
+        {
+          "slug": "lightblindness",
+          "name": "Light Blindness",
+          "text": "<h>Light Blindness</h><p>Abrupt exposure to bright light (such as sunlight or a daylight spell) blinds a drow for 1 round. Drow take a -1 circumstance penalty on attack rolls, saves, and checks while operating in bright light.</p>"
+        },
+        {
+          "slug": "spellresistance",
+          "name": "Spell Resistance",
+          "text": "<h>Spell Resistance</h><p>Drow have spell resistance equal to 11 + character level.</p>",
+          "effect": "SR: 11 + level"
+        },
+        {
+          "slug": "willsaves",
+          "name": "Will Saves",
+          "text": "<h>Will Saves</h><p>Drow have a +2 racial bonus on Will saves against spells and spell-like abilities.</p>"
+        }
+      ],
+      "summary_text": "<p>Drow use the elf racial traits from the Player's Handbook, with the changes in <i>Forgotten Realms Campaign Setting</i>. Level adjustment +2.</p><ul><li>+2 Dexterity, -2 Constitution, +2 Intelligence, +2 Charisma.</li><li>Medium. Base land speed 30 feet.</li><li>Immunity to magic sleep effects, and a +2 racial bonus on saving throws against enchantment spells or effects.</li><li>Darkvision 120 feet. This replaces elven low-light vision.</li><li>Proficient with the hand crossbow and the light crossbow, and with either the rapier or the shortsword. This replaces the elf weapon proficiencies.</li><li>+2 racial bonus on Listen, Search, and Spot checks. A drow who passes within 5 feet of a secret or concealed door can make a Search check to notice it as if she were actively looking for it.</li><li>Spell-like abilities: 1/day dancing lights, darkness, and faerie fire, as a sorcerer of the drow's character level.</li><li>Light blindness: abrupt exposure to bright light (such as sunlight or a daylight spell) blinds a drow for 1 round. Drow take a -1 circumstance penalty on attack rolls, saves, and checks while operating in bright light.</li><li>Spell resistance 11 + character level.</li><li>+2 racial bonus on Will saves against spells and spell-like abilities.</li><li>Automatic languages: Elven, Undercommon, and the language of the character's home region.</li><li>Favored class: Wizard (male) or cleric (female).</li><li>Level adjustment +2.</li></ul>"
+    }
+  }
+]

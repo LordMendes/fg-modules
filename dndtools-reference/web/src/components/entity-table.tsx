@@ -8,6 +8,7 @@ import { SortableTh } from "@/components/sortable-th";
 import { DEFAULT_ENTITY_SORT } from "@/lib/entity-sort";
 import type { EntityListItem } from "@/lib/entities";
 import type { CategoryKey } from "@/lib/categories";
+import { PLACEHOLDER_SOURCE_NAME } from "@/lib/source-display";
 import { buildListSearchParams, type ParsedListFilters } from "@/lib/entity-filters";
 import {
   equipmentTableColumns,
@@ -166,7 +167,14 @@ export function EntityTable({
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
+          {items.map((item) => {
+            const sourceTitle =
+              item.sourceName &&
+              item.sourceName !== PLACEHOLDER_SOURCE_NAME &&
+              item.sourceName.toLowerCase() !== (item.sourceAbbrev ?? "").toLowerCase()
+                ? item.sourceName
+                : null;
+            return (
             <tr key={item.slug}>
               <td>
                 <Link href={`/${category}/${item.slug}`} className="entity-link">
@@ -174,14 +182,14 @@ export function EntityTable({
                 </Link>
               </td>
               {columns.map((col) => renderDataCell(col, item))}
-              <td>
+              <td className="source-cell">
                 {item.sourceAbbrev ? (
                   <Link href={`/sources/${item.sourceAbbrev}`} className="source-badge">
                     {item.sourceAbbrev}
                   </Link>
-                ) : (
-                  "—"
-                )}
+                ) : null}
+                {sourceTitle ? <span className="source-name">{sourceTitle}</span> : null}
+                {!item.sourceAbbrev && !sourceTitle ? "—" : null}
               </td>
               <td className="edition-cell">{item.edition ?? "—"}</td>
               <td className="save-cell">
@@ -205,7 +213,8 @@ export function EntityTable({
                 </td>
               )}
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

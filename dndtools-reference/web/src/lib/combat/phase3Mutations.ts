@@ -44,6 +44,7 @@ import {
 import { normalizePcPlanState } from "@/lib/pc-planner/normalizePlanState";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 import { Prisma } from "@/generated/prisma/client";
+import { resolveTargetAttacker } from "@/lib/combat/targetAttacker";
 import { prisma } from "@/lib/prisma";
 
 function newEntityId(): string {
@@ -84,26 +85,24 @@ export async function findOwnedPcCombatant(
 export async function toggleCombatTargetPhase3(
   actor: CombatActor,
   targetId: string,
+  attackerId?: string,
 ) {
   const result = await combatTransaction(async (tx) => {
     const combat = await lockCombatRow(tx, actor.campaignId);
     if (!combat) return { success: false as const, error: "No combat" };
 
-    let actorRow = combat.combatants.find(
-      (c) => c.id === combat.currentCombatantId,
-    );
+    const owned = isDm(actor) ? null : await findOwnedPcCombatant(actor, combat);
+    const resolved = resolveTargetAttacker({
+      isDm: isDm(actor),
+      requestedAttackerId: attackerId,
+      currentCombatantId: combat.currentCombatantId,
+      combatantIds: combat.combatants.map((c) => c.id),
+      ownedCombatantId: owned?.id ?? null,
+    });
+    if (!resolved.ok) return { success: false as const, error: resolved.error };
 
-    if (!isDm(actor)) {
-      actorRow = (await findOwnedPcCombatant(actor, combat)) as typeof actorRow;
-      if (!actorRow) {
-        return { success: false as const, error: "No PC in combat" };
-      }
-    } else if (!actorRow) {
-      actorRow = combat.combatants[0] ?? null;
-      if (!actorRow) {
-        return { success: false as const, error: "No combatants in combat" };
-      }
-    }
+    const actorRow = combat.combatants.find((c) => c.id === resolved.attackerId);
+    if (!actorRow) return { success: false as const, error: "Combatant not found" };
 
     const raw = actorRow.targetIds;
     const ids = Array.isArray(raw)

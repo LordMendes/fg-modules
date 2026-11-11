@@ -2,6 +2,7 @@ import Link from "next/link";
 import { searchAll } from "@/lib/entities";
 import { getCategoryLabel, isCategoryKey } from "@/lib/categories";
 import { buildPageMetadata, SITE_NAME } from "@/lib/seo";
+import { formatSourceResultLabel } from "@/lib/source-display";
 
 type Props = {
   searchParams: Promise<{ q?: string }>;
@@ -42,7 +43,9 @@ export default async function SearchPage({ searchParams }: Props) {
             Results
           </h2>
         )}
-        {results.map((r) => (
+        {results.map((r) => {
+          const sourceLabel = formatSourceResultLabel(r.sourceName, r.sourceAbbrev);
+          return (
           <Link
             key={`${r.category}-${r.slug}`}
             href={`/${r.category}/${r.slug}`}
@@ -52,9 +55,11 @@ export default async function SearchPage({ searchParams }: Props) {
               {isCategoryKey(r.category) ? getCategoryLabel(r.category) : r.category}
             </span>
             <h3>{r.name}</h3>
+            {sourceLabel ? <p className="search-result-source">{sourceLabel}</p> : null}
             {r.snippet && <p className="snippet">{r.snippet}…</p>}
           </Link>
-        ))}
+          );
+        })}
       </div>
     </>
   );

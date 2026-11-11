@@ -110,7 +110,8 @@ function computeDamageFromShort(
       1 + Math.floor(Math.max(0, casterLevel - spellLevel) / 2),
       maxMissiles,
     );
-    return `${missiles}× (1d4+1) force (${missiles}d4+${missiles})`;
+    if (missiles <= 1) return "1d4+1 force";
+    return `${missiles}× 1d4+1 force`;
   }
 
   const bonusPerLevel = short.match(/(\d+d\d+)\s+damage\s+\+(\d+)\/level\s+\(max\s+\+(\d+)\)/i);

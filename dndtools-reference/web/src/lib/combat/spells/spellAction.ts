@@ -180,7 +180,7 @@ export function spellCastDicePool(
     : 0;
   if (srCount > 0) pool.push({ qty: srCount, sides: 20 });
 
-  if (cast.atktype || cast.savetype) {
+  if ((cast.atktype || cast.savetype) && targets.length > 0) {
     pool.push({ qty: targets.length, sides: 20 });
   }
 

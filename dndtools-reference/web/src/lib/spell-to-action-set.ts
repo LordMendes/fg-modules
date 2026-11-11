@@ -61,6 +61,44 @@ function followUpsFromHit(hit: ReturnType<typeof tryLookupSrdSpell>): SpellFollo
   return actions;
 }
 
+function energyType(text: string): string {
+  const match = text.match(
+    /\b(fire|cold|acid|electricity|sonic|force|negative|positive)\b/i,
+  );
+  return match?.[1]?.toLowerCase() ?? "";
+}
+
+/** Damage action from a short description when the library has no structured actions. */
+function inferDamageFromShort(short: string | null | undefined): SpellFollowUpAction | null {
+  if (!short || !/damage|deals|points of/i.test(short)) return null;
+
+  const perLevel = short.match(
+    /(\d*)d(\d+)[^.]{0,48}(?:per caster level|\/\s*level)/i,
+  );
+  if (perLevel) {
+    const max = short.match(/max(?:imum)?\s+(\d+)\s*d/i);
+    const leading = perLevel[1];
+    const dice =
+      leading && leading !== "1" ? `${leading}d${perLevel[2]}` : `d${perLevel[2]}`;
+    return {
+      type: "damage",
+      dice,
+      dicestat: "cl",
+      ...(max ? { dicestatmax: Number(max[1]) } : {}),
+      dmgType: energyType(short),
+    };
+  }
+
+  const fixed = short.match(/(\d+)d(\d+)\s*(?:\+\s*(\d+))?/);
+  if (!fixed) return null;
+  return {
+    type: "damage",
+    dice: `${fixed[1]}d${fixed[2]}`,
+    ...(fixed[3] ? { bonus: Number(fixed[3]) } : {}),
+    dmgType: energyType(short),
+  };
+}
+
 function inferFollowUps(
   name: string,
   hit: ReturnType<typeof tryLookupSrdSpell>,
@@ -69,6 +107,9 @@ function inferFollowUps(
   if (existing.length > 0) return existing;
 
   const key = normalizeSpellKey(name);
+  if (key === "magic missile") {
+    return [{ type: "damage", dice: "1d4", bonus: 1, dmgType: "force" }];
+  }
   if (key === "bless") {
     return [
       {
@@ -96,7 +137,8 @@ function inferFollowUps(
     return [{ type: "damage", dice: "4d6", dmgType: "fire" }];
   }
 
-  return [];
+  const fromShort = inferDamageFromShort(hit?.short);
+  return fromShort ? [fromShort] : [];
 }
 
 function inferCastFields(

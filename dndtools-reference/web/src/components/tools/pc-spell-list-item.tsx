@@ -19,6 +19,7 @@ export function PcSpellListItem({
   mode,
   slotLimit,
   castContext,
+  casterPcPlanId = null,
   onRemove,
   onUpdatePrepared,
 }: {
@@ -26,6 +27,7 @@ export function PcSpellListItem({
   mode: SpellMode;
   slotLimit: number;
   castContext: SpellCastContext;
+  casterPcPlanId?: string | null;
   onRemove: () => void;
   onUpdatePrepared: (prepared: number) => void;
 }) {
@@ -131,7 +133,15 @@ export function PcSpellListItem({
         <div className="pc-spell-accordion-body">
           {loading ? <p className="pc-spell-picker-status">Loading cast details…</p> : null}
           {!loading ? (
-            <SpellCastDetailsView details={details} spellName={spell.name} />
+            <SpellCastDetailsView
+              details={details}
+              spellName={spell.name}
+              spellKey={spell.slug}
+              spellLevel={spell.level}
+              casterLevel={castContext.casterLevel}
+              castingStatMod={castContext.dcModifier}
+              casterPcPlanId={casterPcPlanId}
+            />
           ) : null}
         </div>
       ) : null}

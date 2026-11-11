@@ -54,6 +54,7 @@ export type EntityListItem = {
   slug: string;
   name: string;
   sourceAbbrev: string | null;
+  sourceName: string | null;
   edition: string | null;
   extra: Record<string, string | null>;
 };
@@ -119,6 +120,7 @@ export type ClassSpellRef = {
   description: string | null;
   components: SpellComponentFlags;
   sourceAbbrev: string | null;
+  sourceName: string | null;
   edition: string | null;
 };
 
@@ -1279,7 +1281,7 @@ async function getFieldFilterOptions(
   return [];
 }
 
-function formatList<T extends { slug: string; name: string; source: { abbrev: string | null; edition: string } }>(
+function formatList<T extends { slug: string; name: string; source: { name: string; abbrev: string | null; edition: string } }>(
   rows: T[],
   extraFn: (row: T) => Record<string, string | null>,
 ): { items: EntityListItem[]; nextCursor: string | null } {
@@ -1290,6 +1292,7 @@ function formatList<T extends { slug: string; name: string; source: { abbrev: st
       slug: r.slug,
       name: r.name,
       sourceAbbrev: r.source.abbrev,
+      sourceName: r.source.name,
       edition: r.source.edition,
       extra: extraFn(r),
     })),
@@ -1770,22 +1773,36 @@ async function loadEntityDetail(
   }
 }
 
-export async function searchAll(query: string, limit = 20): Promise<
-  { category: CategoryKey; slug: string; name: string; snippet: string | null }[]
-> {
+export type ArchiveSearchHit = {
+  category: CategoryKey;
+  slug: string;
+  name: string;
+  snippet: string | null;
+  sourceName: string | null;
+  sourceAbbrev: string | null;
+};
+
+const archiveSearchSelect = {
+  slug: true,
+  name: true,
+  descriptionText: true,
+  source: { select: { name: true, abbrev: true } },
+} as const;
+
+export async function searchAll(query: string, limit = 20): Promise<ArchiveSearchHit[]> {
   if (!query || query.length < 2) return [];
 
   const pattern = `%${query}%`;
-  const results: { category: CategoryKey; slug: string; name: string; snippet: string | null }[] = [];
+  const results: ArchiveSearchHit[] = [];
 
-  const searches: [CategoryKey, () => Promise<{ slug: string; name: string; descriptionText: string | null }[]>][] = [
-    ["spells", () => prisma.spell.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["feats", () => prisma.feat.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["monsters", () => prisma.monster.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["classes", () => prisma.dndClass.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["skills", () => prisma.skill.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["races", () => prisma.race.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["items", () => prisma.item.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
+  const searches: [CategoryKey, () => Promise<{ slug: string; name: string; descriptionText: string | null; source: { name: string; abbrev: string | null } | null }[]>][] = [
+    ["spells", () => prisma.spell.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["feats", () => prisma.feat.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["monsters", () => prisma.monster.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["classes", () => prisma.dndClass.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["skills", () => prisma.skill.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["races", () => prisma.race.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["items", () => prisma.item.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
     ["equipment", () => prisma.equipment.findMany({
       where: {
         OR: [
@@ -1794,11 +1811,11 @@ export async function searchAll(query: string, limit = 20): Promise<
         ],
       },
       take: limit,
-      select: { slug: true, name: true, descriptionText: true },
+      select: archiveSearchSelect,
     })],
-    ["domains", () => prisma.domain.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["psionics", () => prisma.psionic.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
-    ["rules", () => prisma.rule.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: { slug: true, name: true, descriptionText: true } })],
+    ["domains", () => prisma.domain.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["psionics", () => prisma.psionic.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["rules", () => prisma.rule.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
   ];
 
   void pattern;
@@ -1811,6 +1828,8 @@ export async function searchAll(query: string, limit = 20): Promise<
         slug: row.slug,
         name: row.name,
         snippet: row.descriptionText?.slice(0, 120) ?? null,
+        sourceName: row.source?.name ?? null,
+        sourceAbbrev: row.source?.abbrev ?? null,
       });
       if (results.length >= limit) break;
     }
@@ -1889,7 +1908,7 @@ export async function getClassSpellsAtLevel(
           components: true,
           descriptionText: true,
           indexData: true,
-          source: { select: { abbrev: true, edition: true } },
+          source: { select: { name: true, abbrev: true, edition: true } },
         },
       },
     },
@@ -1902,6 +1921,7 @@ export async function getClassSpellsAtLevel(
     description: spellDescriptionSnippet(spell.indexData, spell.descriptionText),
     components: parseSpellComponents(spell.components, spell.indexData),
     sourceAbbrev: spell.source.abbrev,
+    sourceName: spell.source.name,
     edition: spell.source.edition,
   }));
 }

@@ -192,4 +192,12 @@ describe("resolveSpellCast", () => {
     assert.equal(d20, 3);
     assert.equal(d6, 8);
   });
+
+  it("spellCastDicePool omits a zero-quantity save die when nothing is targeted", () => {
+    const spell = entry("Fireball", 3);
+    const pool = spellCastDicePool(spell, [], 8);
+    assert.ok(pool.every((item) => item.qty > 0));
+    assert.equal(pool.find((item) => item.sides === 20), undefined);
+    assert.equal(pool.find((item) => item.sides === 6)?.qty, 8);
+  });
 });

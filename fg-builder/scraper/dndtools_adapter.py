@@ -79,6 +79,7 @@ SUPPLEMENTAL_FILES: dict[str, list[str]] = {
         "wowrpg_apg_classes.json",
         "wowrpg_hpg_classes.json",
         "wowrpg_mmm_classes.json",
+        "rw_champion_of_corellon.json",
     ],
     "feats": [
         "warcraft_rpg_feats.json",
@@ -105,6 +106,7 @@ SUPPLEMENTAL_FILES: dict[str, list[str]] = {
         "wowrpg_apg_races.json",
         "wowrpg_hpg_races.json",
         "pg_lesser_planetouched.json",
+        "frcs_drow.json",
     ],
     "monsters": ["wowrpg_mg_monsters.json"],
 }
@@ -147,8 +149,13 @@ def load_category(category: str) -> list[dict[str, Any]]:
         data = json.loads(path.read_text(encoding="utf-8"))
         records = data if isinstance(data, list) else data.get("records", [])
 
-    # Merge supplemental files. Later books are filtered by source abbrev.
-    seen = {(r.get("slug") or r.get("name") or id(r)) for r in records}
+    # Supplemental files add missing records and replace a scraped record
+    # when the slug matches, so a revised race or class wins over the scrape.
+    index_by_key: dict[str, int] = {}
+    for i, rec in enumerate(records):
+        key = rec.get("slug") or rec.get("name")
+        if key:
+            index_by_key[str(key)] = i
     for supp_name in SUPPLEMENTAL_FILES.get(category, []):
         supp_path = DNDTOOLS_ROOT / "supplemental" / supp_name
         if not supp_path.exists():
@@ -156,10 +163,13 @@ def load_category(category: str) -> list[dict[str, Any]]:
         supp_data = json.loads(supp_path.read_text(encoding="utf-8"))
         supp_records = supp_data if isinstance(supp_data, list) else supp_data.get("records", [])
         for rec in supp_records:
-            key = rec.get("slug") or rec.get("name") or id(rec)
-            if key not in seen:
-                records.append(rec)
-                seen.add(key)
+            key = rec.get("slug") or rec.get("name")
+            if key and str(key) in index_by_key:
+                records[index_by_key[str(key)]] = rec
+                continue
+            if key:
+                index_by_key[str(key)] = len(records)
+            records.append(rec)
     _CATEGORY_CACHE[category] = records
     return records
 
@@ -907,6 +917,14 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         advancement, class_features = apply_arcanist_advancement(
             advancement, class_features
         )
+
+    # The ex-champions sidebar is a rules note, not a class feature.
+    if (record.get("slug") or "") == "champion-of-corellon-larethian-742":
+        class_features = [
+            feat
+            for feat in class_features
+            if not (feat.get("name") or "").lower().startswith("ex-champion")
+        ]
 
     # Expand WRPG spell-hook shorthand in feature text.
     for feat in class_features:

@@ -5,11 +5,13 @@ import { Search } from "lucide-react";
 import { useRefreshSession, useSessionNonce } from "@/components/session-provider";
 import { fetchClassSpellsAtLevel, paginateEntities } from "@/actions/data";
 import type { CategoryKey } from "@/lib/categories";
+import { formatSourceResultLabel } from "@/lib/source-display";
 
 export type EntitySearchHit = {
   slug: string;
   name: string;
   sourceAbbrev?: string | null;
+  sourceName?: string | null;
   /** Spell min level from catalog (when searching spells). */
   minLevel?: number | null;
   /** Feat category from list extra.type (e.g. "Flaw"). */
@@ -90,6 +92,7 @@ export function EntitySearchCombobox({
               slug: spell.slug,
               name: spell.name,
               sourceAbbrev: spell.sourceAbbrev,
+              sourceName: spell.sourceName,
               minLevel: spellLevel,
             }));
             spellCacheRef.current.set(cacheKey, spells);
@@ -129,6 +132,7 @@ export function EntitySearchCombobox({
               slug: item.slug,
               name: item.name,
               sourceAbbrev: item.sourceAbbrev,
+              sourceName: item.sourceName,
               type: item.extra?.type ?? null,
               ...(Number.isFinite(parsedLevel) ? { minLevel: parsedLevel } : {}),
             });
@@ -233,7 +237,9 @@ export function EntitySearchCombobox({
       </form>
       {open && results.length > 0 && (
         <ul id={listId} className="home-search-results" role="listbox">
-          {results.map((hit, index) => (
+          {results.map((hit, index) => {
+            const sourceLabel = formatSourceResultLabel(hit.sourceName, hit.sourceAbbrev);
+            return (
             <li key={`${hit.slug}-${index}`} role="presentation">
               <button
                 type="button"
@@ -249,12 +255,13 @@ export function EntitySearchCombobox({
                 onClick={() => selectHit(hit)}
               >
                 <span className="home-search-result-name">{hit.name}</span>
-                {hit.sourceAbbrev && (
-                  <span className="home-search-result-meta">{hit.sourceAbbrev}</span>
-                )}
+                {sourceLabel ? (
+                  <span className="home-search-result-meta">{sourceLabel}</span>
+                ) : null}
               </button>
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
     </div>

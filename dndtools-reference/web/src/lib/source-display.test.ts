@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import {
   PLACEHOLDER_SOURCE_NAME,
   buildSourceDisplayNameMap,
+  formatSourceResultLabel,
   pickSourceDisplayName,
 } from "./source-display";
 
@@ -30,6 +31,19 @@ describe("source display names", () => {
     ]);
     assert.equal(map.get("CAd"), "Complete Adventurer");
     assert.equal(map.get("PHB"), "Player's Handbook");
+  });
+
+  it("shows the book title and abbreviation on a search hit", () => {
+    assert.equal(
+      formatSourceResultLabel("Player's Handbook", "PHB"),
+      "Player's Handbook (PHB)",
+    );
+  });
+
+  it("omits a repeated abbreviation and the Core placeholder", () => {
+    assert.equal(formatSourceResultLabel("PHB", "PHB"), "PHB");
+    assert.equal(formatSourceResultLabel(PLACEHOLDER_SOURCE_NAME, "DMG"), "DMG");
+    assert.equal(formatSourceResultLabel(null, null), null);
   });
 
   it("falls back to abbrev when only Core is known", () => {

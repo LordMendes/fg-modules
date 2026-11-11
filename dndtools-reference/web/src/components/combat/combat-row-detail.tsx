@@ -379,30 +379,23 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
 
                   if (!ctx) return;
 
-                  const pool = spellCastDicePool(
+                  const isArea =
+                    spell.areaShape === "circle" ||
+                    spell.areaShape === "square" ||
+                    spell.areaShape === "cone" ||
+                    spell.areaShape === "ray";
 
-                    spell,
-
-                    [],
-
-                    spell.casterLevel ?? c.stats.cl ?? 1,
-
-                  );
-
-                  // Check if area spell - trigger placement mode
-                  if (
-                    spell.areaShape &&
-                    (spell.areaShape === "circle" ||
-                      spell.areaShape === "square" ||
-                      spell.areaShape === "cone" ||
-                      spell.areaShape === "ray")
-                  ) {
+                  if (isArea && c.targetIds.length === 0) {
                     startAreaSpellPlacement({
                       spell,
                       casterId: c.id,
                       casterTokenId: c.tokenId ?? null,
                       label: `${c.name} ${spell.name}`,
-                      dice: pool,
+                      dice: spellCastDicePool(
+                        spell,
+                        [],
+                        spell.casterLevel ?? c.stats.cl ?? 1,
+                      ),
                       casterLevel: spell.casterLevel ?? c.stats.cl,
                       spellLevel: spell.level ?? undefined,
                       castingStatMod: c.stats.int ?? c.stats.wis ?? c.stats.cha ?? undefined,
@@ -410,7 +403,6 @@ function SpellsSection({ c, campaignId }: { c: CombatantView; campaignId: string
                     return;
                   }
 
-                  // Normal single/multi-target cast
                   const targetRows = (ctx.combat?.combatants ?? []).filter((t) =>
 
                     c.targetIds.includes(t.id),

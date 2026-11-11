@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { tokensInsideShape, circleContains, coneContains, squareContains } from "./distance";
+import { tokensInsideShape, circleContains, coneContains, squareContains, rayContains } from "./distance";
 import type { MapTokenCenter } from "./distance";
 
 describe("circleContains", () => {
@@ -184,6 +184,26 @@ describe("tokensInsideShape - multi-target detection", () => {
     assert.ok(inside.includes("t5"));
     assert.ok(!inside.includes("t2"));
     assert.ok(!inside.includes("t4"));
+  });
+
+  it("ray includes a foe center on the line and skips one beside it", () => {
+    assert.equal(
+      rayContains({ x: 0, y: 0 }, { x: 6, y: 0 }, { x: 3, y: 0 }, 5),
+      true,
+    );
+    assert.equal(
+      rayContains({ x: 0, y: 0 }, { x: 6, y: 0 }, { x: 3, y: 2 }, 5),
+      false,
+    );
+    const inside = tokensInsideShape(
+      { kind: "ray", origin: { x: 0, y: 0 }, end: { x: 6, y: 0 } },
+      [
+        { id: "foe", x: 4, y: 0.2 },
+        { id: "ally", x: 4, y: 3 },
+      ],
+      5,
+    );
+    assert.deepEqual(inside, ["foe"]);
   });
 
   it("empty shape returns no tokens", () => {

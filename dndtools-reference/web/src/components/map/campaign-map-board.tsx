@@ -60,7 +60,15 @@ import { MapToolbar } from "./map-toolbar";
 import { useAreaSpellBridge } from "@/components/combat/area-spell-bridge";
 import { MapViewportOverlay } from "./map-viewport-overlay";
 import { castAreaSpellAction } from "@/actions/areaSpellCast";
-import type { DicePoolItem } from "@/lib/dice/types";
+import { spellCastDicePool } from "@/lib/combat/spells/spellAction";
+
+function tokenGridCenters(tokens: MapTokenView[]) {
+  return tokens.map((token) => ({
+    id: token.id,
+    x: token.x + token.width / 2,
+    y: token.y + token.height / 2,
+  }));
+}
 
 const MIN_SCALE = 0.15;
 const MAX_SCALE = 4;
@@ -103,7 +111,10 @@ type CampaignMapBoardProps = {
   sendLive: LiveSend;
   connected: boolean;
   combat?: CampaignCombatView | null;
-  onToggleCombatTarget?: (targetCombatantId: string) => void;
+  onToggleCombatTarget?: (
+    targetCombatantId: string,
+    attackerCombatantId?: string,
+  ) => void;
 };
 
 function viewportKey(campaignId: string) {
@@ -214,6 +225,7 @@ export function CampaignMapBoard({
     current: MapPoint;
   } | null>(null);
   const [areaSpellPlacement, setAreaSpellPlacement] = useState<AreaSpellPlacement | null>(null);
+  const [aimTokenId, setAimTokenId] = useState<string | null>(null);
   
   // React to area spell placement requests from combat UI via bridge
   useEffect(() => {
@@ -227,8 +239,8 @@ export function CampaignMapBoard({
     
     setAreaSpellPlacement({
       ...bridgePlacement,
-      x: casterToken.x,
-      y: casterToken.y,
+      x: casterToken.x + casterToken.width / 2,
+      y: casterToken.y + casterToken.height / 2,
       rotation: 0,
       highlightedTokenIds: [],
     });
@@ -683,18 +695,28 @@ export function CampaignMapBoard({
       e.preventDefault();
       e.stopPropagation();
       
-      const targetIds = areaSpellPlacement.highlightedTokenIds;
       const combatants = combat?.combatants ?? [];
-      const targetCombatantIds = targetIds
-        .map((tokenId: string) => combatants.find((c) => c.tokenId === tokenId)?.id)
-        .filter((id): id is string => id != null);
-      
-      // Call server action
+      const targetCombatantIds = [
+        ...new Set(
+          areaSpellPlacement.highlightedTokenIds
+            .map((tokenId: string) => combatants.find((c) => c.tokenId === tokenId)?.id)
+            .filter((id): id is string => id != null),
+        ),
+      ];
+      const targetRows = targetCombatantIds
+        .map((id) => combatants.find((c) => c.id === id))
+        .filter((row): row is NonNullable<typeof row> => Boolean(row));
+      const dice = spellCastDicePool(
+        areaSpellPlacement.spell,
+        targetRows.map((row) => ({ defenses: row.defenses })),
+        areaSpellPlacement.casterLevel ?? areaSpellPlacement.spell.casterLevel ?? 1,
+      );
+
       castAreaSpellAction({
         campaignId,
         label: areaSpellPlacement.label,
         kind: "spell",
-        dice: areaSpellPlacement.dice,
+        dice,
         modifier: 0,
         combat: {
           kind: "cast",
@@ -705,8 +727,6 @@ export function CampaignMapBoard({
           spellLevel: areaSpellPlacement.spellLevel,
           castingStatMod: areaSpellPlacement.castingStatMod,
         },
-      }).then(() => {
-        console.log("Area spell cast complete");
       }).catch((err) => {
         console.error("Area spell cast failed:", err);
       });
@@ -842,61 +862,93 @@ export function CampaignMapBoard({
 
     const pt = clientToGrid(e.clientX, e.clientY);
 
+    if (tool === "target") {
+      const hit = tokensRef.current.find(
+        (token) =>
+          pt.x >= token.x &&
+          pt.x < token.x + token.width &&
+          pt.y >= token.y &&
+          pt.y < token.y + token.height,
+      );
+      const nextId = hit?.id ?? null;
+      setAimTokenId((prev) => (prev === nextId ? prev : nextId));
+    } else if (aimTokenId) {
+      setAimTokenId(null);
+    }
+
     // AREA SPELL PLACEMENT - handle before other tools
     if (areaSpellPlacement) {
       const casterToken = tokensRef.current.find(t => t.id === areaSpellPlacement.casterTokenId);
       if (!casterToken) return;
-      
-      const casterPos = { x: casterToken.x, y: casterToken.y };
+
+      const casterPos = {
+        x: casterToken.x + casterToken.width / 2,
+        y: casterToken.y + casterToken.height / 2,
+      };
+      const shapeKind = areaSpellPlacement.spell.areaShape;
       let centerX = pt.x;
       let centerY = pt.y;
       let rotation = areaSpellPlacement.rotation;
-      
-      // For cone/ray, rotate toward mouse from caster
-      if (areaSpellPlacement.spell.areaShape === "cone" || areaSpellPlacement.spell.areaShape === "ray") {
+
+      if (shapeKind === "cone" || shapeKind === "ray") {
         centerX = casterPos.x;
         centerY = casterPos.y;
         const dx = pt.x - casterPos.x;
         const dy = pt.y - casterPos.y;
         rotation = Math.atan2(dy, dx) * (180 / Math.PI);
-      } else if (areaSpellPlacement.spell.areaShape === "circle") {
-        // Snap to grid intersection (grid coords already in feet)
-        centerX = Math.round(pt.x / map.scaleFeet) * map.scaleFeet;
-        centerY = Math.round(pt.y / map.scaleFeet) * map.scaleFeet;
+      } else if (shapeKind === "circle" || shapeKind === "square") {
+        centerX = Math.round(pt.x);
+        centerY = Math.round(pt.y);
       }
-      
-      // Compute tokens inside
-      const shape: any = areaSpellPlacement.spell.areaShape === "cone"
-        ? {
-            kind: "cone" as const,
-            origin: casterPos,
-            sizeFeet: areaSpellPlacement.spell.rangeFeet ?? 30,
-            rotationDeg: rotation,
-          }
-        : areaSpellPlacement.spell.areaShape === "ray"
-        ? {
-            kind: "ray" as const,
-            origin: casterPos,
-            endX: pt.x,
-            endY: pt.y,
-          }
-        : {
-            kind: (areaSpellPlacement.spell.areaShape ?? "circle") as "circle" | "square",
-            center: { x: centerX, y: centerY },
-            radiusFeet: areaSpellPlacement.spell.rangeFeet ?? 20,
-          };
-      
-      const tokenCenters = tokensRef.current.map((t: MapTokenView) => ({ id: t.id, x: t.x, y: t.y }));
-      const highlightedTokenIds = tokensInsideShape(shape, tokenCenters, map.scaleFeet);
-      
+
+      const rangeFeet =
+        areaSpellPlacement.spell.rangeFeet ?? (shapeKind === "cone" ? 30 : 20);
+      const shape =
+        shapeKind === "cone"
+          ? {
+              kind: "cone" as const,
+              origin: casterPos,
+              sizeFeet: rangeFeet,
+              rotationDeg: rotation,
+            }
+          : shapeKind === "ray"
+            ? {
+                kind: "ray" as const,
+                origin: casterPos,
+                end: { x: pt.x, y: pt.y },
+              }
+            : shapeKind === "square"
+              ? {
+                  kind: "square" as const,
+                  center: { x: centerX, y: centerY },
+                  widthFeet: rangeFeet,
+                  rotationDeg: rotation,
+                }
+              : {
+                  kind: "circle" as const,
+                  center: { x: centerX, y: centerY },
+                  radiusFeet: rangeFeet,
+                };
+
+      const highlightedTokenIds = tokensInsideShape(
+        shape,
+        tokenGridCenters(tokensRef.current),
+        map.scaleFeet,
+      );
+      const rayFeet = Math.max(
+        map.scaleFeet,
+        Math.hypot(pt.x - casterPos.x, pt.y - casterPos.y) * map.scaleFeet,
+      );
+
       setAreaSpellPlacement((prev: AreaSpellPlacement | null) => prev ? {
         ...prev,
+        spell: shapeKind === "ray" ? { ...prev.spell, rangeFeet: rayFeet } : prev.spell,
         x: centerX,
         y: centerY,
         rotation,
         highlightedTokenIds,
       } : null);
-      return;  // Skip other handlers
+      return;
     }
 
     if (shapeDragRef.current) {
@@ -1291,15 +1343,45 @@ export function CampaignMapBoard({
     }, ms);
   }, []);
 
+  const selectedCombatant = selectedTokenId
+    ? combatantForToken(selectedTokenId)
+    : null;
+  const currentCombatant = combat?.currentCombatantId
+    ? combat.combatants.find((c) => c.id === combat.currentCombatantId) ?? null
+    : null;
+  const ownCombatant =
+    combat?.combatants.find(
+      (c) => c.pcPlanId != null && c.pcPlanId === combatCtx?.viewerPcPlanId,
+    ) ?? null;
+
+  function allowedTargetSource(candidate: typeof selectedCombatant) {
+    if (!candidate) return null;
+    if (isDm) return candidate;
+    if (
+      candidate.pcPlanId &&
+      candidate.pcPlanId === combatCtx?.viewerPcPlanId
+    ) {
+      return candidate;
+    }
+    return null;
+  }
+
+  const aimSource =
+    allowedTargetSource(selectedCombatant) ??
+    (isDm ? currentCombatant ?? combat?.combatants[0] ?? null : ownCombatant);
+  const arrowActor =
+    (allowedTargetSource(selectedCombatant)?.targetIds.length
+      ? allowedTargetSource(selectedCombatant)
+      : null) ?? (isDm ? currentCombatant : ownCombatant);
+
   const handleTokenClick = (e: React.MouseEvent, token: MapTokenView) => {
     if (tool === "target") {
       e.stopPropagation();
       if (!canUseTargetMode || !onToggleCombatTarget) return;
       const target = combatantForToken(token.id);
       if (!target) return;
-      const currentActor = combatCtx?.currentActor;
-      if (currentActor?.id === target.id) return;
-      onToggleCombatTarget(target.id);
+      if (aimSource?.id === target.id) return;
+      onToggleCombatTarget(target.id, aimSource?.id);
       return;
     }
     if (tool !== "select") return;
@@ -1307,7 +1389,9 @@ export function CampaignMapBoard({
     if ((e.ctrlKey || e.metaKey) && onToggleCombatTarget) {
       const target = combatantForToken(token.id);
       if (target) {
-        onToggleCombatTarget(target.id);
+        const attacker = allowedTargetSource(selectedCombatant);
+        if (attacker?.id === target.id) return;
+        onToggleCombatTarget(target.id, attacker?.id);
         return;
       }
     }
@@ -1560,7 +1644,10 @@ export function CampaignMapBoard({
           if (panRef.current) bumpPaint();
         }}
         onPointerUp={handleBoardPointerUp}
-        onPointerLeave={handleBoardPointerUp}
+        onPointerLeave={(e) => {
+          setAimTokenId(null);
+          handleBoardPointerUp(e);
+        }}
         onContextMenu={(e) => {
           if (areaSpellPlacement) {
             e.preventDefault();
@@ -1703,14 +1790,10 @@ export function CampaignMapBoard({
             imageHeight={map.imageHeight}
             scaleFeet={map.scaleFeet}
             diagonalRule={map.diagonalRule}
-            actor={
-              combat?.currentCombatantId
-                ? combat.combatants.find(
-                    (c) => c.id === combat.currentCombatantId,
-                  ) ?? null
-                : null
-            }
+            actor={arrowActor}
             combatants={combat?.combatants ?? []}
+            previewFrom={tool === "target" ? aimSource : null}
+            previewToTokenId={tool === "target" ? aimTokenId : null}
           />
           <MapAreaSpellLayer
             placement={areaSpellPlacement}

@@ -25,7 +25,6 @@ import {
 } from "@/lib/pc-planner/prestigeCasting";
 import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import { resolveClassFeaturesForPlan } from "@/lib/pc-planner/resolveCompendium";
-import { formatDerivedHint } from "@/lib/pc-planner/derivedField";
 import {
   computeSpellClass,
   preparedCountAtLevel,
@@ -290,71 +289,66 @@ export function PcActionsPanel({
         <>
           <div className="npc-sheet-block">
             <h3>Spellcasting</h3>
-            {state.spellClasses.length > 1 ? (
-              <label className="pc-spell-class-picker">
-                <span className="npc-sheet-sub">Spell class</span>
-                <select
-                  className="pc-sheet-input pc-sheet-select"
-                  value={activeSpellClassIndex}
-                  onChange={(e) => onSpellClassIndexChange(Number(e.target.value))}
-                >
-                  {state.spellClasses.map((sc, i) => (
-                    <option key={sc.classSlug} value={i}>
-                      {sc.label} (CL {sc.casterLevel})
-                    </option>
-                  ))}
-                </select>
+            <div className="pc-spellcast-head">
+              {state.spellClasses.length > 1 ? (
+                <label className="pc-spellcast-class">
+                  <span className="sr-only">Spell class</span>
+                  <select
+                    className="pc-sheet-input pc-sheet-select"
+                    value={activeSpellClassIndex}
+                    onChange={(e) => onSpellClassIndexChange(Number(e.target.value))}
+                  >
+                    {state.spellClasses.map((sc, i) => (
+                      <option key={sc.classSlug} value={i}>
+                        {sc.label} (CL {sc.casterLevel})
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : (
+                <span className="pc-spellcast-class-name">{spellClass.label}</span>
+              )}
+              <label className="pc-spellcast-cl">
+                <span>CL</span>
+                <input
+                  type="number"
+                  className="pc-sheet-input pc-slot-used"
+                  min={1}
+                  placeholder={String(autoCasterLevel)}
+                  value={spellClass.casterLevelOverride ?? ""}
+                  aria-label="Caster level"
+                  title={
+                    spellClass.casterLevelOverride != null
+                      ? "Override. Clear the field to use the class caster level."
+                      : `Auto ${autoCasterLevel}. Type a number to override.`
+                  }
+                  onChange={(e) =>
+                    patch((s) => {
+                      const row = s.spellClasses[activeSpellClassIndex];
+                      if (!row) return;
+                      row.casterLevelOverride =
+                        e.target.value === "" ? null : Number(e.target.value);
+                    })
+                  }
+                />
               </label>
-            ) : (
-              <p className="npc-sheet-sub">
-                {spellClass.label} · CL {spellClass.casterLevel}
-              </p>
-            )}
-
-            <label className="pc-caster-level-override">
-              <span className="npc-sheet-sub">
-                Caster level{" "}
-                <span className="pc-derived-hint">
-                  {formatDerivedHint(
-                    spellClass.casterLevelOverride != null,
-                    spellClass.casterLevelOverride != null,
-                  )}
+              <span className="pc-spellcast-meta">
+                {castingModeLabel(computed.mode)}
+                <span className="pc-spellcast-meta-sep" aria-hidden="true">
+                  ·
                 </span>
+                {computed.dcAbility.toUpperCase()} {formatModifier(computed.dcModifier)}
               </span>
-              <input
-                type="number"
-                className="pc-sheet-input pc-sheet-input--narrow"
-                min={1}
-                placeholder={String(autoCasterLevel)}
-                value={spellClass.casterLevelOverride ?? ""}
-                onChange={(e) =>
-                  patch((s) => {
-                    const row = s.spellClasses[activeSpellClassIndex];
-                    if (!row) return;
-                    row.casterLevelOverride =
-                      e.target.value === "" ? null : Number(e.target.value);
-                  })
-                }
-              />
-            </label>
+            </div>
 
-            <dl className="pc-actions-casting-meta">
-              <div>
-                <dt>Mode</dt>
-                <dd>{castingModeLabel(computed.mode)}</dd>
-              </div>
-              <div>
-                <dt>DC ability</dt>
-                <dd>
-                  {computed.dcAbility.toUpperCase()} {formatModifier(computed.dcModifier)}
-                </dd>
-              </div>
-            </dl>
-
-            <p className="npc-sheet-sub pc-sheet-slots-label">
-              {computed.mode === "spontaneous" ? "Slots used / per day" : "Spells per day"}
-            </p>
-            <div className="pc-slot-grid" title="Computed from class level and casting ability">
+            <div
+              className="pc-slot-grid"
+              role="group"
+              aria-label={
+                computed.mode === "spontaneous" ? "Slots used per day" : "Spells per day"
+              }
+              title="Computed from class level and casting ability"
+            >
               {Array.from({ length: 10 }, (_, lvl) => {
                 const maxSlots = computed.slots[lvl] ?? 0;
                 const used = spellClass.slotsUsed?.[lvl] ?? 0;
@@ -369,10 +363,11 @@ export function PcActionsPanel({
                     {computed.mode === "spontaneous" && maxSlots > 0 ? (
                       <span className="pc-slot-used-row">
                         <DraftNumberInput
-                          className="pc-sheet-input pc-sheet-input--narrow"
+                          className="pc-sheet-input pc-slot-used"
                           min={0}
                           max={maxSlots}
                           value={used}
+                          aria-label={`Level ${lvl} slots used`}
                           onValueChange={(next) =>
                             patch((s) => {
                               const row = s.spellClasses[activeSpellClassIndex];
@@ -384,7 +379,7 @@ export function PcActionsPanel({
                             })
                           }
                         />
-                        <span>/ {maxSlots}</span>
+                        <span className="pc-slot-max">/{maxSlots}</span>
                       </span>
                     ) : (
                       <span className="pc-slot-count">{maxSlots}</span>
@@ -463,6 +458,7 @@ export function PcActionsPanel({
                             spell={sp}
                             mode={computed.mode}
                             slotLimit={slotLimit}
+                            casterPcPlanId={pcPlanId}
                             castContext={{
                               casterLevel: spellClass.casterLevel,
                               spellLevel: sp.level,

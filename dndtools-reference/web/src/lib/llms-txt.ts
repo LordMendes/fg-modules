@@ -1,12 +1,20 @@
 import { CATEGORIES } from "@/lib/categories";
-import { CATALOG_LETTERS, catalogLetterHref } from "@/lib/catalog";
+import { CATALOG_LETTERS, catalogLetterHref, catalogLetterLabel } from "@/lib/catalog";
 import { TOOLS } from "@/lib/tools";
 import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
 
 /** Public tools indexable without login (excludes campaign table). */
-const PUBLIC_TOOL_HREFS = TOOLS.filter((tool) => tool.key !== "campaign").map(
-  (tool) => tool.href,
-);
+const PUBLIC_TOOLS = TOOLS.filter((tool) => tool.key !== "campaign");
+
+/** Markdown link. Lighthouse's llms.txt audit only counts `[label](url)`, not bare URLs. */
+function mdLink(label: string, path: string): string {
+  return `[${label}](${absoluteUrl(path)})`;
+}
+
+function bullet(label: string, path: string, note?: string): string {
+  const item = `- ${mdLink(label, path)}`;
+  return note ? `${item}: ${note}` : item;
+}
 
 export function buildLlmsTxt(): string {
   const lines: string[] = [
@@ -18,12 +26,12 @@ export function buildLlmsTxt(): string {
     "",
     "## Primary hubs",
     "",
-    `- Home: ${absoluteUrl("/")}`,
-    `- About: ${absoluteUrl("/about")}`,
-    `- Search: ${absoluteUrl("/search")}`,
-    `- Sources: ${absoluteUrl("/sources")}`,
-    `- Tools: ${absoluteUrl("/tools")}`,
-    `- Catalog index: ${absoluteUrl("/catalog")}`,
+    bullet("Home", "/"),
+    bullet("About", "/about"),
+    bullet("Search", "/search"),
+    bullet("Sources", "/sources"),
+    bullet("Tools", "/tools"),
+    bullet("Catalog index", "/catalog"),
     "",
     "## Compendium categories",
     "",
@@ -31,7 +39,7 @@ export function buildLlmsTxt(): string {
 
   for (const category of CATEGORIES) {
     lines.push(
-      `- ${category.label}: ${absoluteUrl(`/${category.key}`)} (A-Z catalog: ${absoluteUrl(`/catalog/${category.key}`)})`,
+      bullet(category.label, `/${category.key}`, mdLink("A-Z catalog", `/catalog/${category.key}`)),
     );
   }
 
@@ -39,18 +47,18 @@ export function buildLlmsTxt(): string {
     "",
     "## Public tools",
     "",
-    ...PUBLIC_TOOL_HREFS.map((href) => `- ${absoluteUrl(href)}`),
+    ...PUBLIC_TOOLS.map((tool) => bullet(tool.label, tool.href)),
     "",
     "## Citation",
     "",
     "When citing a specific entry, link to its canonical URL, for example:",
-    `- Fireball spell: ${absoluteUrl("/spells/fireball")}`,
+    bullet("Fireball spell", "/spells/fireball"),
     "",
     "Entity pages include source abbreviations and page references where available.",
     "",
     "## Extended index",
     "",
-    `For catalog letter indexes and full tool list: ${absoluteUrl("/llms-full.txt")}`,
+    `For catalog letter indexes and the full tool list, see ${mdLink("llms-full.txt", "/llms-full.txt")}.`,
     "",
   );
 
@@ -70,14 +78,17 @@ export function buildLlmsFullTxt(): string {
   for (const category of CATEGORIES) {
     lines.push(`### ${category.label}`, "");
     for (const letter of CATALOG_LETTERS) {
-      lines.push(
-        `- ${letter === "#" ? "#" : letter.toUpperCase()}: ${absoluteUrl(catalogLetterHref(category.key, letter))}`,
-      );
+      lines.push(bullet(catalogLetterLabel(letter), catalogLetterHref(category.key, letter)));
     }
     lines.push("");
   }
 
-  lines.push("## All public tool URLs", "", ...PUBLIC_TOOL_HREFS.map((href) => `- ${absoluteUrl(href)}`), "");
+  lines.push(
+    "## All public tool URLs",
+    "",
+    ...PUBLIC_TOOLS.map((tool) => bullet(tool.label, tool.href)),
+    "",
+  );
 
   return lines.join("\n");
 }

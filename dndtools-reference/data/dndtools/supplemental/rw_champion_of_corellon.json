@@ -1,0 +1,236 @@
+[
+  {
+    "id": 742,
+    "slug": "champion-of-corellon-larethian-742",
+    "name": "Champion of Corellon Larethian",
+    "source_url": "https://new.dndtools.org/classes/champion-of-corellon-larethian-742",
+    "scraped_at": "2026-07-13T17:31:26Z",
+    "index": {
+      "prestige_level": "",
+      "hit_die": "10",
+      "skill_points": "2",
+      "source_abbrev": "RW",
+      "edition": "Supplementals (3.5)"
+    },
+    "hit_die": "d10",
+    "skill_points": "2+ Int",
+    "min_bab_req": "+7",
+    "advancement_html": "<table><tr><th>Level </th><th><span class=\"caps\"><span class=\"caps\">BAB</span></span> </th><th>Fort </th><th>Ref </th><th>Will </th><th>Special </th></tr><tr><td> 1st </td><td> +1 </td><td> +2 </td><td> +0 </td><td> +2 </td><td> Corellon’s blessing, bonus feat </td></tr><tr><td> 2nd </td><td> +2 </td><td> +3 </td><td> +0 </td><td> +3 </td><td> Elegant strike </td></tr><tr><td> 3rd </td><td> +3 </td><td> +3 </td><td> +1 </td><td> +3 </td><td> Superior defense +1 </td></tr><tr><td> 4th </td><td> +4 </td><td> +4 </td><td> +1 </td><td> +4 </td><td> Bonus feat </td></tr><tr><td> 5th </td><td> +5 </td><td> +4 </td><td> +1 </td><td> +4 </td><td> Unimpeded movement </td></tr><tr><td> 6th </td><td> +6 </td><td> +5 </td><td> +2 </td><td> +5 </td><td> Superior defense +2 </td></tr><tr><td> 7th </td><td> +7 </td><td> +5 </td><td> +2 </td><td> +5 </td><td> Bonus feat </td></tr><tr><td> 8th </td><td> +8 </td><td> +6 </td><td> +2 </td><td> +6 </td><td> Corellon’s wrath </td></tr><tr><td> 9th </td><td> +9 </td><td> +6 </td><td> +3 </td><td> +6 </td><td> Superior defense +3 </td></tr><tr><td> 10th </td><td> +10 </td><td> +7 </td><td> +3 </td><td> +7 </td><td> Bonus feat </td></tr></table>",
+    "advancement_text": "Level\nBAB\nFort\nRef\nWill\nSpecial\n1st\n+1\n+2\n+0\n+2\nCorellon’s blessing, bonus feat\n2nd\n+2\n+3\n+0\n+3\nElegant strike\n3rd\n+3\n+3\n+1\n+3\nSuperior defense +1\n4th\n+4\n+4\n+1\n+4\nBonus feat\n5th\n+5\n+4\n+1\n+4\nUnimpeded movement\n6th\n+6\n+5\n+2\n+5\nSuperior defense +2\n7th\n+7\n+5\n+2\n+5\nBonus feat\n8th\n+8\n+6\n+2\n+6\nCorellon’s wrath\n9th\n+9\n+6\n+3\n+6\nSuperior defense +3\n10th\n+10\n+7\n+3\n+7\nBonus feat",
+    "advancement": [
+      {
+        "level": 1,
+        "bab": "+1",
+        "fort": "+2",
+        "ref": "+0",
+        "will": "+2",
+        "special": "Corellon’s blessing, bonus feat"
+      },
+      {
+        "level": 2,
+        "bab": "+2",
+        "fort": "+3",
+        "ref": "+0",
+        "will": "+3",
+        "special": "Elegant strike"
+      },
+      {
+        "level": 3,
+        "bab": "+3",
+        "fort": "+3",
+        "ref": "+1",
+        "will": "+3",
+        "special": "Superior defense +1"
+      },
+      {
+        "level": 4,
+        "bab": "+4",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 5,
+        "bab": "+5",
+        "fort": "+4",
+        "ref": "+1",
+        "will": "+4",
+        "special": "Unimpeded movement"
+      },
+      {
+        "level": 6,
+        "bab": "+6",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Superior defense +2"
+      },
+      {
+        "level": 7,
+        "bab": "+7",
+        "fort": "+5",
+        "ref": "+2",
+        "will": "+5",
+        "special": "Bonus feat"
+      },
+      {
+        "level": 8,
+        "bab": "+8",
+        "fort": "+6",
+        "ref": "+2",
+        "will": "+6",
+        "special": "Corellon’s wrath"
+      },
+      {
+        "level": 9,
+        "bab": "+9",
+        "fort": "+6",
+        "ref": "+3",
+        "will": "+6",
+        "special": "Superior defense +3"
+      },
+      {
+        "level": 10,
+        "bab": "+10",
+        "fort": "+7",
+        "ref": "+3",
+        "will": "+7",
+        "special": "Bonus feat"
+      }
+    ],
+    "class_skills": [
+      {
+        "name": "Concentration",
+        "slug": "concentration",
+        "url": "/skills/concentration",
+        "id": null
+      },
+      {
+        "name": "Craft",
+        "slug": "craft",
+        "url": "/skills/craft",
+        "id": null
+      },
+      {
+        "name": "Diplomacy",
+        "slug": "diplomacy",
+        "url": "/skills/diplomacy",
+        "id": null
+      },
+      {
+        "name": "Handle Animal",
+        "slug": "handle-animal",
+        "url": "/skills/handle-animal",
+        "id": null
+      },
+      {
+        "name": "Heal",
+        "slug": "heal",
+        "url": "/skills/heal",
+        "id": null
+      },
+      {
+        "name": "Intimidate",
+        "slug": "intimidate",
+        "url": "/skills/intimidate",
+        "id": null
+      },
+      {
+        "name": "Knowledge (arcana)",
+        "slug": "knowledge-arcana",
+        "url": "/skills/knowledge-arcana",
+        "id": null
+      },
+      {
+        "name": "Knowledge (architecture and engineering)",
+        "slug": "knowledge-architecture-and-engineering",
+        "url": "/skills/knowledge-architecture-and-engineering",
+        "id": null
+      },
+      {
+        "name": "Knowledge (dungeoneering)",
+        "slug": "knowledge-dungeoneering",
+        "url": "/skills/knowledge-dungeoneering",
+        "id": null
+      },
+      {
+        "name": "Knowledge (geography)",
+        "slug": "knowledge-geography",
+        "url": "/skills/knowledge-geography",
+        "id": null
+      },
+      {
+        "name": "Knowledge (history)",
+        "slug": "knowledge-history",
+        "url": "/skills/knowledge-history",
+        "id": null
+      },
+      {
+        "name": "Knowledge (local)",
+        "slug": "knowledge-local",
+        "url": "/skills/knowledge-local",
+        "id": null
+      },
+      {
+        "name": "Knowledge (nature)",
+        "slug": "knowledge-nature",
+        "url": "/skills/knowledge-nature",
+        "id": null
+      },
+      {
+        "name": "Knowledge (nobility and royalty)",
+        "slug": "knowledge-nobility-and-royalty",
+        "url": "/skills/knowledge-nobility-and-royalty",
+        "id": null
+      },
+      {
+        "name": "Knowledge (religion)",
+        "slug": "knowledge-religion",
+        "url": "/skills/knowledge-religion",
+        "id": null
+      },
+      {
+        "name": "Knowledge (the planes)",
+        "slug": "knowledge-the-planes",
+        "url": "/skills/knowledge-the-planes",
+        "id": null
+      },
+      {
+        "name": "Profession",
+        "slug": "profession",
+        "url": "/skills/profession",
+        "id": null
+      },
+      {
+        "name": "Ride",
+        "slug": "ride",
+        "url": "/skills/ride",
+        "id": null
+      },
+      {
+        "name": "Sense Motive",
+        "slug": "sense-motive",
+        "url": "/skills/sense-motive",
+        "id": null
+      },
+      {
+        "name": "Spellcraft",
+        "slug": "spellcraft",
+        "url": "/skills/spellcraft",
+        "id": null
+      }
+    ],
+    "description_html": "<p>The champion of Corellon Larethian is a noble elf fighter, an elf knight or lord who can stand up to any orc or human warrior.</p><p><strong>Weapon and Armor Proficiency</strong>: You gain no proficiency with any weapon or armor.</p><p><strong>Corellon’s Blessing (Su)</strong>: Upon entering this class, you gain the ability to heal wounds by touch, much like a paladin’s lay on hands ability. Each day you can heal a total number of hit points of damage equal to your champion level × your Charisma modifier (minimum 1). For example, a 6th-level champion of Corellon with a Charisma score of 14 can heal 12 points of damage per day. You can choose to divide the healing among multiple recipients, and you don’t have to do it all at once. Using this ability is a standard action. You can use any or all of this healing power to deal damage to undead creatures. Using Corellon’s blessing in this way requires a successful melee touch attack and doesn’t provoke attacks of opportunity. You decide how much of your daily allotment of healing to use as damage after successfully touching your undead foe. If you have levels in paladin, you add your levels of champion of Corellon and paladin together and determine your ability to heal accordingly (although if you have a Charisma score of lower than 12, your paladin levels do not contribute to your ability to heal).</p><p><strong>Bonus Feat</strong>: At 1st level and every three levels thereafter, you gain a bonus feat. This must be a feat noted as a bonus fighter feat, and the feat must have Combat Expertise, Dodge, or Mounted Combat as a prerequisite.</p><p><strong>Elegant Strike (Ex)</strong>: Upon reaching 2nd level, you become able to place your attacks where they deal greater damage. You apply your Dexterity bonus as a bonus on damage rolls (in addition to any Strength bonus you may have) with any of the following weapons: longsword, rapier, elven thinblade, elven lightblade, elven court sword, or scimitar. Targets immune to sneak attacks or extra damage from critical hits are immune to your elegant strike.</p><p><strong>Superior Defense (Ex)</strong>: At 3rd level, you learn special techniques for making the best use of an elf’s natural agility even while wearing restrictive armor. The maximum Dexterity bonus for any medium or heavy armor you wear (including mithral versions) is increased by 1. For example, full plate armor normally has a maximum Dexterity bonus of +1, but the superior defense ability increases this to +2. At 6th level, you improve the maximum Dexterity bonus of medium or heavy armor by 2 and at 9th level by 3.</p><p><strong>Unimpeded Movement (Ex)</strong>: At 5th level, you no longer reduce your movement when wearing medium or heavy armor. (You still reduce your movement if carrying a medium or heavy load, however.) If you know the Spring Attack feat, your unimpeded movement ability allows you to use Spring Attack even while wearing heavy armor.</p><p><strong>Corellon’s Wrath (Su)</strong>: At 8th level, you gain the ability to briefly channel the divine power of Corellon Larethian, enveloping one melee weapon you wield in a veil of incandescent light as a free action. You gain a +2 sacred bonus on attack rolls and deal an extra 2d6 points of damage with each melee attack you make with the affected weapon for 1 round. While Corellon’s wrath is in effect, the weapon is considered magic and good-aligned for the purpose of overcoming damage reduction. You can use this ability a number of times per day equal to 3 + your Cha modifier (minimum once per day).</p><p><strong>Ex-Champions of Corellon:</strong> Few champions of Corellon ever turn to evil, but it occasionally happens. If your alignment changes to evil, you are expelled from the order and lose the supernatural abilities derived from this class (Corellon’s blessing and Corellon’s wrath). However, you are not barred from gaining more levels in this class if you so desire. You can continue to refine the combat techniques you have learned, but you cannot make use of the class’s supernatural abilities.</p>",
+    "description_text": "The champion of Corellon Larethian is a noble elf fighter, an elf knight or lord who can stand up to any orc or human warrior.\nWeapon and Armor Proficiency\n: You gain no proficiency with any weapon or armor.\nCorellon’s Blessing (Su)\n: Upon entering this class, you gain the ability to heal wounds by touch, much like a paladin’s lay on hands ability. Each day you can heal a total number of hit points of damage equal to your champion level × your Charisma modifier (minimum 1). For example, a 6th-level champion of Corellon with a Charisma score of 14 can heal 12 points of damage per day. You can choose to divide the healing among multiple recipients, and you don’t have to do it all at once. Using this ability is a standard action. You can use any or all of this healing power to deal damage to undead creatures. Using Corellon’s blessing in this way requires a successful melee touch attack and doesn’t provoke attacks of opportunity. You decide how much of your daily allotment of healing to use as damage after successfully touching your undead foe. If you have levels in paladin, you add your levels of champion of Corellon and paladin together and determine your ability to heal accordingly (although if you have a Charisma score of lower than 12, your paladin levels do not contribute to your ability to heal).\nBonus Feat\n: At 1st level and every three levels thereafter, you gain a bonus feat. This must be a feat noted as a bonus fighter feat, and the feat must have Combat Expertise, Dodge, or Mounted Combat as a prerequisite.\nElegant Strike (Ex)\n: Upon reaching 2nd level, you become able to place your attacks where they deal greater damage. You apply your Dexterity bonus as a bonus on damage rolls (in addition to any Strength bonus you may have) with any of the following weapons: longsword, rapier, elven thinblade, elven lightblade, elven court sword, or scimitar. Targets immune to sneak attacks or extra damage from critical hits are immune to your elegant strike.\nSuperior Defense (Ex)\n: At 3rd level, you learn special techniques for making the best use of an elf’s natural agility even while wearing restrictive armor. The maximum Dexterity bonus for any medium or heavy armor you wear (including mithral versions) is increased by 1. For example, full plate armor normally has a maximum Dexterity bonus of +1, but the superior defense ability increases this to +2. At 6th level, you improve the maximum Dexterity bonus of medium or heavy armor by 2 and at 9th level by 3.\nUnimpeded Movement (Ex)\n: At 5th level, you no longer reduce your movement when wearing medium or heavy armor. (You still reduce your movement if carrying a medium or heavy load, however.) If you know the Spring Attack feat, your unimpeded movement ability allows you to use Spring Attack even while wearing heavy armor.\nCorellon’s Wrath (Su)\n: At 8th level, you gain the ability to briefly channel the divine power of Corellon Larethian, enveloping one melee weapon you wield in a veil of incandescent light as a free action. You gain a +2 sacred bonus on attack rolls and deal an extra 2d6 points of damage with each melee attack you make with the affected weapon for 1 round. While Corellon’s wrath is in effect, the weapon is considered magic and good-aligned for the purpose of overcoming damage reduction. You can use this ability a number of times per day equal to 3 + your Cha modifier (minimum once per day).\nEx-Champions of Corellon:\nFew champions of Corellon ever turn to evil, but it occasionally happens. If your alignment changes to evil, you are expelled from the order and lose the supernatural abilities derived from this class (Corellon’s blessing and Corellon’s wrath). However, you are not barred from gaining more levels in this class if you so desire. You can continue to refine the combat techniques you have learned, but you cannot make use of the class’s supernatural abilities.",
+    "requirements_html": "<p><strong>Base Attack Bonus:</strong> +7</p><p><strong>Alignment:</strong> Any nonevil</p><p><strong>Race:</strong> Elf or half-elf</p><p><strong>Skills:</strong> Diplomacy 4 ranks, Knowledge (religion) 2 ranks</p><p><strong>Feats:</strong> Proficient with all martial weapons and heavy armor, Combat Expertise, Dodge, Mounted Combat, Weapon Focus (longsword) or Exotic Weapon Proficiency (elven thinblade or elven courtblade)</p><p><strong>Special:</strong> Must worship Corellon Larethian.</p>",
+    "requirements_text": "Base Attack Bonus: +7\nAlignment: Any nonevil\nRace: Elf or half-elf\nSkills: Diplomacy 4 ranks, Knowledge (religion) 2 ranks\nFeats: Proficient with all martial weapons and heavy armor, Combat Expertise, Dodge, Mounted Combat, Weapon Focus (longsword) or Exotic Weapon Proficiency (elven thinblade or elven courtblade)\nSpecial: Must worship Corellon Larethian.",
+    "source": {
+      "name": "Races of the Wild",
+      "abbrev": "RW",
+      "edition": "Supplementals (3.5)",
+      "page": null,
+      "url": null
+    }
+  }
+]

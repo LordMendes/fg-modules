@@ -1066,8 +1066,8 @@ function CampaignTableBody({
             sendLive={sendLive}
             connected={connected}
             combat={combat}
-            onToggleCombatTarget={(targetId) => {
-              void combatToggleTarget(table.id, targetId);
+            onToggleCombatTarget={(targetId, attackerId) => {
+              void combatToggleTarget(table.id, targetId, attackerId);
             }}
           />
         ) : null}

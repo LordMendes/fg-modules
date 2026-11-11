@@ -61,7 +61,7 @@ describe("resolveSpellCastDetails", () => {
       spellLevel: 1,
       dcModifier: 2,
     });
-    assert.equal(details.damage, "3× (1d4+1) force (3d4+3)");
+    assert.equal(details.damage, "3× 1d4+1 force");
   });
 
   it("computes inflict wounds as fixed die plus capped level bonus", () => {

@@ -49,6 +49,7 @@ const SUPPLEMENTAL_RACE_FILES = [
   "wowrpg_apg_races.json",
   "wowrpg_hpg_races.json",
   "pg_lesser_planetouched.json",
+  "frcs_drow.json",
 ] as const;
 const SUPPLEMENTAL_CLASS_FILES = [
   "warcraft_rpg_classes.json",
@@ -56,6 +57,7 @@ const SUPPLEMENTAL_CLASS_FILES = [
   "wowrpg_apg_classes.json",
   "wowrpg_hpg_classes.json",
   "wowrpg_mmm_classes.json",
+  "rw_champion_of_corellon.json",
 ] as const;
 const SUPPLEMENTAL_ITEM_FILES = ["warcraft_rpg_items.json", "wowrpg_mmm_items.json", "wowrpg_hpg_items.json"] as const;
 const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json", "wowrpg_mmm_spells.json"] as const;

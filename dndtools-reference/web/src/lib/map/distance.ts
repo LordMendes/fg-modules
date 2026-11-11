@@ -108,7 +108,31 @@ export type AoeShapeInput =
       widthFeet: number;
       rotationDeg?: number;
     }
-  | { kind: "cone"; origin: MapPoint; sizeFeet: number; rotationDeg: number };
+  | { kind: "cone"; origin: MapPoint; sizeFeet: number; rotationDeg: number }
+  | { kind: "ray"; origin: MapPoint; end: MapPoint };
+
+/**
+ * Token center is on a ray if it lies within half a square of the segment.
+ * Coordinates are grid squares. halfWidthFeet defaults to half of one square.
+ */
+export function rayContains(
+  origin: MapPoint,
+  end: MapPoint,
+  point: MapPoint,
+  scaleFeet: number,
+  halfWidthFeet = scaleFeet / 2,
+): boolean {
+  const ax = (point.x - origin.x) * scaleFeet;
+  const ay = (point.y - origin.y) * scaleFeet;
+  const bx = (end.x - origin.x) * scaleFeet;
+  const by = (end.y - origin.y) * scaleFeet;
+  const len2 = bx * bx + by * by;
+  if (len2 < 1e-6) return Math.hypot(ax, ay) <= halfWidthFeet + 1e-9;
+  const t = Math.max(0, Math.min(1, (ax * bx + ay * by) / len2));
+  const dx = ax - bx * t;
+  const dy = ay - by * t;
+  return Math.hypot(dx, dy) <= halfWidthFeet + 1e-9;
+}
 
 /** Return combatant/token ids whose centers lie inside the AOE shape. */
 export function tokensInsideShape(
@@ -138,6 +162,8 @@ export function tokensInsideShape(
             point,
             scaleFeet,
           );
+        case "ray":
+          return rayContains(shape.origin, shape.end, point, scaleFeet);
         default:
           return false;
       }

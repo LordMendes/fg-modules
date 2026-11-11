@@ -7,12 +7,15 @@ import { Loader2, Search } from "lucide-react";
 import { useSessionNonce } from "@/components/session-provider";
 import { searchEntities } from "@/actions/data";
 import { getCategoryLabel, isCategoryKey } from "@/lib/categories";
+import { formatSourceResultLabel } from "@/lib/source-display";
 
 type SearchHit = {
   category: string;
   slug: string;
   name: string;
   snippet: string | null;
+  sourceName?: string | null;
+  sourceAbbrev?: string | null;
 };
 
 const DEBOUNCE_MS = 250;
@@ -183,6 +186,7 @@ export function HomeSearch({
             const label = isCategoryKey(hit.category)
               ? getCategoryLabel(hit.category)
               : hit.category;
+            const sourceLabel = formatSourceResultLabel(hit.sourceName, hit.sourceAbbrev);
             const active = index === activeIndex;
             return (
               <li key={`${hit.category}-${hit.slug}`} role="presentation">
@@ -200,6 +204,9 @@ export function HomeSearch({
                 >
                   <span className="home-search-result-category">{label}</span>
                   <span className="home-search-result-name">{hit.name}</span>
+                  {sourceLabel ? (
+                    <span className="home-search-result-source">{sourceLabel}</span>
+                  ) : null}
                   {hit.snippet ? (
                     <span className="home-search-result-snippet">
                       {hit.snippet}…

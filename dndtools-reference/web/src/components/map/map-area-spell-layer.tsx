@@ -125,8 +125,12 @@ export function MapAreaSpellLayer({
 
       {/* Token highlights */}
       {highlightedTokens.map((token) => {
-        const tokenCenterPx = gridToPixels(token.x, token.y, grid);
-        const tokenSizePx = (token.width * grid.gridSizePx) / scaleFeet;
+        const tokenCenterPx = gridToPixels(
+          token.x + token.width / 2,
+          token.y + token.height / 2,
+          grid,
+        );
+        const tokenSizePx = Math.max(token.width, token.height) * grid.gridSizePx;
         return (
           <g key={token.id}>
             <circle
@@ -160,7 +164,7 @@ export function MapAreaSpellLayer({
         strokeWidth="3"
         paintOrder="stroke"
       >
-        {spell.name} — Click to cast | Right-click or Esc to cancel
+        {spell.name}: Click to cast | Right-click or Esc to cancel
       </text>
     </svg>
   );

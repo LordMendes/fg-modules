@@ -39,3 +39,16 @@ export function buildSourceDisplayNameMap(
   }
   return out;
 }
+
+/** Label for a search hit: book title, with the abbreviation when it adds information. */
+export function formatSourceResultLabel(
+  name: string | null | undefined,
+  abbrev: string | null | undefined,
+): string | null {
+  const title = name && name !== PLACEHOLDER_SOURCE_NAME ? name.trim() : "";
+  const short = abbrev?.trim() ?? "";
+  if (title && short && title.toLowerCase() !== short.toLowerCase()) {
+    return `${title} (${short})`;
+  }
+  return title || short || null;
+}
