@@ -81,6 +81,14 @@ export type EntityDetail = {
   updatedAt?: string | null;
 };
 
+function indexText(indexData: unknown, key: string): string | null {
+  if (!indexData || typeof indexData !== "object") return null;
+  const value = (indexData as Record<string, unknown>)[key];
+  if (typeof value !== "string") return null;
+  const text = value.trim();
+  return text ? text : null;
+}
+
 function entityUpdatedAt(
   scrapedAt: Date | string | null | undefined,
 ): string | null {
@@ -1638,7 +1646,15 @@ async function loadEntityDetail(
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
         source: { ...r.source, page: null },
-        fields: { Type: r.itemType, Price: r.price, "Caster Level": r.casterLevel, Aura: r.aura },
+        fields: {
+          Type: r.itemType,
+          Price: r.price,
+          Slot: indexText(r.indexData, "slot"),
+          "Caster Level": r.casterLevel,
+          Aura: r.aura,
+          Activation: indexText(r.indexData, "activation"),
+          Weight: indexText(r.indexData, "weight"),
+        },
         related: [],
         updatedAt: entityUpdatedAt(r.scrapedAt),
       };

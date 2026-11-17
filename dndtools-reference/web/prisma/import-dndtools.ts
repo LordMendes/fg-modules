@@ -59,7 +59,12 @@ const SUPPLEMENTAL_CLASS_FILES = [
   "wowrpg_mmm_classes.json",
   "rw_champion_of_corellon.json",
 ] as const;
-const SUPPLEMENTAL_ITEM_FILES = ["warcraft_rpg_items.json", "wowrpg_mmm_items.json", "wowrpg_hpg_items.json"] as const;
+const SUPPLEMENTAL_ITEM_FILES = [
+  "warcraft_rpg_items.json",
+  "wowrpg_mmm_items.json",
+  "wowrpg_hpg_items.json",
+  "mic_items.json",
+] as const;
 const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json", "wowrpg_mmm_spells.json"] as const;
 const SPELL_CLASS_LINK_OVERLAY_FILE = "warcraft_rpg_spell_class_links.json";
 const BATCH_SIZE = 500;
