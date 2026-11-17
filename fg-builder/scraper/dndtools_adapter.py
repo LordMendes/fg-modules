@@ -36,6 +36,7 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Heroes of Battle": ("HB", "heroes-of-battle"),
     "Magic of Faerûn": ("Mag", "magic-of-faerun"),
     "Miniatures Handbook": ("MH", "miniatures-handbook"),
+    "Magic Item Compendium": ("MIC", "magic-item-compendium"),
     "Races of Destiny": ("RD", "races-of-destiny"),
     "Races of Faerûn": ("Rac", "races-of-faerun"),
     "Races of Stone": ("RS", "races-of-stone"),
@@ -93,7 +94,12 @@ SUPPLEMENTAL_FILES: dict[str, list[str]] = {
         "wowrpg_core_spells.json",
         "wowrpg_mmm_spells.json",
     ],
-    "items": ["warcraft_rpg_items.json", "wowrpg_mmm_items.json", "wowrpg_hpg_items.json"],
+    "items": [
+        "warcraft_rpg_items.json",
+        "wowrpg_mmm_items.json",
+        "wowrpg_hpg_items.json",
+        "mic_items.json",
+    ],
     "equipment": [
         "warcraft_rpg_equipment.json",
         "wowrpg_core_equipment.json",
@@ -1189,6 +1195,26 @@ def _apply_malfunction(detail: dict[str, Any], info: dict[str, Any]) -> None:
         detail["mrtable"] = info["mrtable"]
 
 
+def _mic_worn_type(record: dict[str, Any], detail: dict[str, Any]) -> tuple[str, str]:
+    """FG type for a MIC item that is not a weapon, armor suit, or property."""
+    name = str(record.get("name") or "").lower()
+    slot = str(detail.get("slot") or record.get("slot") or "").strip()
+    slot_l = slot.lower()
+    if slot_l == "ring" or name.startswith("ring of") or name.startswith("ring,"):
+        return "Ring", ""
+    if "runestaff" in name or name.startswith("staff of") or name.startswith("staff,"):
+        return "Staff", ""
+    if name.startswith("rod of") or name.startswith("rod,") or "metamagic rod" in name:
+        return "Rod", ""
+    if name.startswith("wand of") or name.startswith("wand,"):
+        return "Wand", ""
+    if not slot or slot in {"—", "-"}:
+        return "Wondrous", ""
+    if slot.startswith("—"):
+        return "Wondrous", "Held" if "held" in slot_l else ""
+    return "Wondrous", slot
+
+
 def convert_item(record: dict[str, Any], book_slug: str, *, mundane: bool = False) -> dict[str, Any]:
     index = record.get("index") or {}
     detail = {
@@ -1244,18 +1270,53 @@ def convert_item(record: dict[str, Any], book_slug: str, *, mundane: bool = Fals
             detail["subtype"] = fg_goods_subtype(str(record.get("category") or ""))
             _apply_malfunction(detail, fg_malfunction_fields(record))
     else:
-        from scraper.wrpg_support import fg_magic_weapon_fields, fg_malfunction_fields
+        from scraper.wrpg_support import (
+            fg_magic_armor_fields,
+            fg_magic_weapon_fields,
+            fg_malfunction_fields,
+        )
 
-        magic = fg_magic_weapon_fields(detail.get("description_html") or "")
-        if magic:
+        kind = record.get("mic_kind")
+        group = record.get("mic_group")
+        if kind == "property" and group == "weapons":
             detail["item_type"] = "Weapon"
-            detail["subtype"] = magic["subtype"]
-            detail["damage"] = magic["damage"]
-            detail["damagetype"] = magic["damagetype"]
-            detail["critical"] = magic["critical"]
-            detail["range"] = magic["range"]
-            detail["properties"] = magic["properties"]
-            detail["bonus"] = magic["bonus"]
+            detail["subtype"] = "Enchantment"
+        elif kind == "property" and group == "armor":
+            detail["item_type"] = "Armor"
+            detail["subtype"] = "Enchantment"
+            detail["armor_property"] = True
+        else:
+            html_text = detail.get("description_html") or ""
+            magic = None
+            if group in {None, "weapons", "sets"}:
+                magic = fg_magic_weapon_fields(html_text)
+            armor = None
+            if not magic and group in {"armor", "sets", "weapons"}:
+                armor = fg_magic_armor_fields(html_text)
+            if magic:
+                detail["item_type"] = "Weapon"
+                detail["subtype"] = magic["subtype"]
+                detail["damage"] = magic["damage"]
+                detail["damagetype"] = magic["damagetype"]
+                detail["critical"] = magic["critical"]
+                detail["range"] = magic["range"]
+                detail["properties"] = magic["properties"]
+                detail["bonus"] = magic["bonus"]
+            elif armor:
+                detail["item_type"] = "Armor"
+                detail["subtype"] = armor["subtype"]
+                detail["ac"] = armor["ac"]
+                detail["maxstatbonus"] = armor["maxstatbonus"]
+                detail["checkpenalty"] = armor["checkpenalty"]
+                detail["spellfailure"] = armor["spellfailure"]
+                detail["speed30"] = armor["speed30"]
+                detail["speed20"] = armor["speed20"]
+                detail["properties"] = armor["properties"]
+                detail["bonus"] = armor["bonus"]
+            elif group:
+                item_type, subtype = _mic_worn_type(record, detail)
+                detail["item_type"] = item_type
+                detail["subtype"] = subtype
         _apply_malfunction(detail, fg_malfunction_fields(record))
     return {
         "id": record.get("id"),

@@ -790,23 +790,86 @@ _GOODS_SUBTYPE = {
     "technological device": "Tools And Skill Kits",
     "rune pattern": "Spellcasting And Services",
 }
+def _ph_weapon(
+    damage: str,
+    critical: str,
+    damagetype: str,
+    subtype: str,
+    range_: int = 0,
+    properties: str = "",
+) -> dict[str, Any]:
+    return {
+        "damage": damage,
+        "critical": critical,
+        "damagetype": damagetype,
+        "subtype": subtype,
+        "range": range_,
+        "properties": properties,
+    }
+
+
+# Names as they appear after "+1" in item text, longest phrase first at match time.
 _BASE_WEAPON_STATS = {
-    "longsword": {
-        "damage": "1d8",
-        "critical": "19-20/x2",
-        "damagetype": "Slashing",
-        "subtype": "Martial One-Handed Melee",
-        "range": 0,
-        "properties": "",
-    },
-    "warhammer": {
-        "damage": "1d8",
-        "critical": "x3",
-        "damagetype": "Bludgeoning",
-        "subtype": "Martial One-Handed Melee",
-        "range": 0,
-        "properties": "",
-    },
+    "longsword": _ph_weapon("1d8", "19-20/x2", "Slashing", "Martial One-Handed Melee"),
+    "short sword": _ph_weapon("1d6", "19-20/x2", "Piercing", "Martial Light Melee"),
+    "shortsword": _ph_weapon("1d6", "19-20/x2", "Piercing", "Martial Light Melee"),
+    "greatsword": _ph_weapon("2d6", "19-20/x2", "Slashing", "Martial Two-Handed Melee"),
+    "bastard sword": _ph_weapon("1d10", "19-20/x2", "Slashing", "Exotic One-Handed Melee"),
+    "two-bladed sword": _ph_weapon("1d8/1d8", "19-20/x2", "Slashing", "Exotic Two-Handed Melee", properties="Double"),
+    "scimitar": _ph_weapon("1d6", "18-20/x2", "Slashing", "Martial One-Handed Melee"),
+    "rapier": _ph_weapon("1d6", "18-20/x2", "Piercing", "Martial One-Handed Melee"),
+    "falchion": _ph_weapon("2d4", "18-20/x2", "Slashing", "Martial Two-Handed Melee"),
+    "warhammer": _ph_weapon("1d8", "x3", "Bludgeoning", "Martial One-Handed Melee"),
+    "greatclub": _ph_weapon("1d10", "x2", "Bludgeoning", "Martial Two-Handed Melee"),
+    "heavy mace": _ph_weapon("1d8", "x2", "Bludgeoning", "Simple One-Handed Melee"),
+    "light mace": _ph_weapon("1d6", "x2", "Bludgeoning", "Simple Light Melee"),
+    "morningstar": _ph_weapon("1d8", "x2", "Bludgeoning and piercing", "Simple One-Handed Melee"),
+    "quarterstaff": _ph_weapon("1d6/1d6", "x2", "Bludgeoning", "Simple Two-Handed Melee", properties="Double"),
+    "club": _ph_weapon("1d6", "x2", "Bludgeoning", "Simple Light Melee", range_=10),
+    "dagger": _ph_weapon("1d4", "19-20/x2", "Piercing or slashing", "Simple Light Melee", range_=10),
+    "sickle": _ph_weapon("1d6", "x2", "Slashing", "Simple Light Melee"),
+    "kukri": _ph_weapon("1d4", "18-20/x2", "Slashing", "Martial Light Melee"),
+    "kama": _ph_weapon("1d6", "x2", "Slashing", "Exotic Light Melee"),
+    "handaxe": _ph_weapon("1d6", "x3", "Slashing", "Martial Light Melee"),
+    "battleaxe": _ph_weapon("1d8", "x3", "Slashing", "Martial One-Handed Melee"),
+    "greataxe": _ph_weapon("1d12", "x3", "Slashing", "Martial Two-Handed Melee"),
+    "dwarven waraxe": _ph_weapon("1d10", "x3", "Slashing", "Exotic One-Handed Melee"),
+    "orc double axe": _ph_weapon("1d8/1d8", "x3", "Slashing", "Exotic Two-Handed Melee", properties="Double"),
+    "throwing axe": _ph_weapon("1d6", "x2", "Slashing", "Martial Light Melee", range_=10),
+    "light pick": _ph_weapon("1d4", "x4", "Piercing", "Martial Light Melee"),
+    "heavy pick": _ph_weapon("1d6", "x4", "Piercing", "Martial One-Handed Melee"),
+    "light hammer": _ph_weapon("1d4", "x2", "Bludgeoning", "Martial Light Melee", range_=20),
+    "flail": _ph_weapon("1d8", "x2", "Bludgeoning", "Martial One-Handed Melee"),
+    "heavy flail": _ph_weapon("1d10", "19-20/x2", "Bludgeoning", "Martial Two-Handed Melee"),
+    "dire flail": _ph_weapon("1d8/1d8", "x2", "Bludgeoning", "Exotic Two-Handed Melee", properties="Double"),
+    "whip": _ph_weapon("1d3", "x2", "Slashing", "Exotic One-Handed Melee", properties="Reach"),
+    "spiked chain": _ph_weapon("2d4", "x2", "Piercing", "Exotic Two-Handed Melee", properties="Reach"),
+    "glaive": _ph_weapon("1d10", "x3", "Slashing", "Martial Two-Handed Melee", properties="Reach"),
+    "guisarme": _ph_weapon("2d4", "x3", "Slashing", "Martial Two-Handed Melee", properties="Reach"),
+    "halberd": _ph_weapon("1d10", "x3", "Piercing or slashing", "Martial Two-Handed Melee", properties="Reach"),
+    "lance": _ph_weapon("1d8", "x3", "Piercing", "Martial Two-Handed Melee", properties="Reach"),
+    "longspear": _ph_weapon("1d8", "x3", "Piercing", "Simple Two-Handed Melee", properties="Reach"),
+    "ranseur": _ph_weapon("2d4", "x3", "Piercing", "Martial Two-Handed Melee", properties="Reach"),
+    "scythe": _ph_weapon("2d4", "x4", "Piercing or slashing", "Martial Two-Handed Melee"),
+    "spear": _ph_weapon("1d8", "x3", "Piercing", "Simple Two-Handed Melee", range_=20),
+    "shortspear": _ph_weapon("1d6", "x2", "Piercing", "Simple One-Handed Melee", range_=20),
+    "trident": _ph_weapon("1d8", "x2", "Piercing", "Martial One-Handed Melee", range_=10),
+    "javelin": _ph_weapon("1d6", "x2", "Piercing", "Simple Ranged", range_=30),
+    "dart": _ph_weapon("1d4", "x2", "Piercing", "Simple Ranged", range_=20),
+    "sling": _ph_weapon("1d4", "x2", "Bludgeoning", "Simple Ranged", range_=50),
+    "longbow": _ph_weapon("1d8", "x3", "Piercing", "Martial Ranged", range_=100),
+    "composite longbow": _ph_weapon("1d8", "x3", "Piercing", "Martial Ranged", range_=110),
+    "shortbow": _ph_weapon("1d6", "x3", "Piercing", "Martial Ranged", range_=60),
+    "composite shortbow": _ph_weapon("1d6", "x3", "Piercing", "Martial Ranged", range_=70),
+    "light crossbow": _ph_weapon("1d8", "19-20/x2", "Piercing", "Simple Ranged", range_=80),
+    "heavy crossbow": _ph_weapon("1d10", "19-20/x2", "Piercing", "Simple Ranged", range_=120),
+    "hand crossbow": _ph_weapon("1d4", "19-20/x2", "Piercing", "Exotic Ranged", range_=30),
+    "bolas": _ph_weapon("1d4", "x2", "Bludgeoning", "Exotic Ranged", range_=10),
+    "shuriken": _ph_weapon("1d2", "x2", "Piercing", "Exotic Ranged", range_=10),
+    "sai": _ph_weapon("1d4", "x2", "Bludgeoning", "Exotic Light Melee", range_=10),
+    "nunchaku": _ph_weapon("1d6", "x2", "Bludgeoning", "Exotic Light Melee"),
+    "siangham": _ph_weapon("1d6", "x2", "Piercing", "Exotic Light Melee"),
+    "gnome hooked hammer": _ph_weapon("1d8/1d6", "x3", "Bludgeoning and piercing", "Exotic Two-Handed Melee", properties="Double"),
 }
 _TRAILING_COST_RE = re.compile(r"^(?P<name>.+?)\s+(?P<cost>\d[\d,]*)\s*gp$", re.I)
 _SUBTYPE_BY_GRIP = {
@@ -1037,14 +1100,101 @@ def fg_goods_subtype(category: str) -> str:
     return key.title()
 
 
+def _bonus_item_name(text: str, names: dict[str, Any]) -> tuple[int, str] | None:
+    """Find '+N [adjectives] item' and return the bonus plus the matched name."""
+    ordered = sorted(names, key=len, reverse=True)
+    for match in re.finditer(r"\+(\d+)\s+", text):
+        words = re.findall(r"[A-Za-z][A-Za-z'-]*", text[match.end() : match.end() + 80])
+        for skip in range(0, 5):
+            if skip >= len(words):
+                break
+            phrase = " ".join(words[skip:]).lower()
+            for name in ordered:
+                if not phrase.startswith(name):
+                    continue
+                after = phrase[len(name) : len(name) + 1]
+                if after and after.isalpha():
+                    continue
+                return int(match.group(1)), name
+    return None
+
+
 def fg_magic_weapon_fields(html: str) -> dict[str, Any] | None:
     """Fill combat fields when a magic item is a named weapon, such as +1 longsword."""
     text = re.sub(r"<[^>]+>", " ", html or "")
     text = re.sub(r"\s+", " ", text)
-    names = "|".join(sorted(_BASE_WEAPON_STATS, key=len, reverse=True))
-    match = re.search(rf"\+(\d+)\s+(?:[A-Za-z]+\s+){{0,3}}({names})\b", text, re.I)
-    if not match:
+    found = _bonus_item_name(text, _BASE_WEAPON_STATS)
+    if not found:
         return None
-    stats = dict(_BASE_WEAPON_STATS[match.group(2).lower()])
-    stats["bonus"] = int(match.group(1))
+    bonus, name = found
+    stats = dict(_BASE_WEAPON_STATS[name])
+    stats["bonus"] = bonus
+    return stats
+
+
+def _armor_row(
+    ac: int,
+    max_dex: int,
+    check: int,
+    failure: int,
+    speed30: int,
+    speed20: int,
+    subtype: str,
+) -> dict[str, Any]:
+    return {
+        "ac": ac,
+        "maxstatbonus": max_dex,
+        "checkpenalty": check,
+        "spellfailure": failure,
+        "speed30": speed30,
+        "speed20": speed20,
+        "subtype": subtype,
+        "properties": "",
+    }
+
+
+# Player's Handbook armor and shields. Shield speeds are 0, matching Basic Rules.
+_BASE_ARMOR_STATS = {
+    "studded leather": _armor_row(3, 5, -1, 15, 30, 20, "Light"),
+    "leather armor": _armor_row(2, 6, 0, 10, 30, 20, "Light"),
+    "leather": _armor_row(2, 6, 0, 10, 30, 20, "Light"),
+    "padded": _armor_row(1, 8, 0, 5, 30, 20, "Light"),
+    "chain shirt": _armor_row(4, 4, -2, 20, 30, 20, "Light"),
+    "hide armor": _armor_row(3, 4, -3, 20, 20, 15, "Medium"),
+    "hide": _armor_row(3, 4, -3, 20, 20, 15, "Medium"),
+    "scale mail": _armor_row(4, 3, -4, 25, 20, 15, "Medium"),
+    "chainmail": _armor_row(5, 2, -5, 30, 20, 15, "Medium"),
+    "chain mail": _armor_row(5, 2, -5, 30, 20, 15, "Medium"),
+    "breastplate": _armor_row(5, 3, -4, 25, 20, 15, "Medium"),
+    "splint mail": _armor_row(6, 0, -7, 40, 20, 15, "Heavy"),
+    "banded mail": _armor_row(6, 1, -6, 35, 20, 15, "Heavy"),
+    "half-plate": _armor_row(7, 0, -7, 40, 20, 15, "Heavy"),
+    "half plate": _armor_row(7, 0, -7, 40, 20, 15, "Heavy"),
+    "full plate": _armor_row(8, 1, -6, 35, 20, 15, "Heavy"),
+    "tower shield": _armor_row(4, 2, -10, 50, 0, 0, "Shield"),
+    "heavy steel shield": _armor_row(2, 0, -2, 15, 0, 0, "Shield"),
+    "heavy wooden shield": _armor_row(2, 0, -2, 15, 0, 0, "Shield"),
+    "heavy shield": _armor_row(2, 0, -2, 15, 0, 0, "Shield"),
+    "light steel shield": _armor_row(1, 0, -1, 5, 0, 0, "Shield"),
+    "light wooden shield": _armor_row(1, 0, -1, 5, 0, 0, "Shield"),
+    "light shield": _armor_row(1, 0, -1, 5, 0, 0, "Shield"),
+    "buckler": _armor_row(1, 0, -1, 5, 0, 0, "Shield"),
+}
+
+
+def fg_magic_armor_fields(html: str) -> dict[str, Any] | None:
+    """Fill combat fields when a magic item names a base armor or shield."""
+    text = re.sub(r"<[^>]+>", " ", html or "")
+    text = re.sub(r"\s+", " ", text)
+    found = _bonus_item_name(text, _BASE_ARMOR_STATS)
+    if not found:
+        return None
+    bonus, name = found
+    # "leather boots" and similar are clothing, not armor.
+    if name in {"leather", "hide"}:
+        after = text.lower().split(name, 1)[-1]
+        if re.match(r"\s+(boots|gloves|cloak|belt|hat|vest)\b", after):
+            return None
+    stats = dict(_BASE_ARMOR_STATS[name])
+    stats["bonus"] = bonus
     return stats

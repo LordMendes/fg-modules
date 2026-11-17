@@ -158,6 +158,10 @@ def convert_items(
             _string_node(node, "properties", detail.get("properties"), allow_empty=True)
             typed_string(node, "type", "Weapon")
             typed_string(node, "subtype", detail.get("subtype") or "Enchantment")
+        elif is_armor and detail.get("armor_property"):
+            _string_node(node, "properties", detail.get("properties"), allow_empty=True)
+            typed_string(node, "type", "Armor")
+            typed_string(node, "subtype", detail.get("subtype") or "Enchantment")
         elif is_armor:
             if "ac" not in detail:
                 detail.setdefault("subtype", "Extras")
@@ -170,6 +174,8 @@ def convert_items(
             _string_node(node, "properties", detail.get("properties"), allow_empty=True)
             typed_string(node, "type", "Armor")
             typed_string(node, "subtype", detail.get("subtype") or "Extras")
+            if detail.get("bonus") is not None:
+                _number_node(node, "bonus", detail.get("bonus"))
         elif is_goods:
             typed_string(node, "type", "Goods and Services")
             typed_string(node, "subtype", detail.get("subtype") or "Adventuring Gear")
