@@ -19,6 +19,7 @@ import type { CampaignCombatView } from "@/lib/combat/types";
 import { unplacedNpcCombatants } from "@/lib/combat/types";
 import { UnplacedCombatTray } from "@/components/combat/unplaced-combat-tray";
 import { reachFeetToSquares } from "@/lib/combat/parseSpaceReach";
+import { combatantForToken as getCombatantForToken } from "@/lib/combat/combatantForToken";
 import {
   type Camera,
   fitCameraToImage,
@@ -1315,18 +1316,7 @@ export function CampaignMapBoard({
   }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
   const combatantForToken = useCallback(
-    (tokenId: string) => {
-      if (!combat) return null;
-      // First try to match by tokenId
-      const byTokenId = combat.combatants.find((c) => c.tokenId === tokenId);
-      if (byTokenId) return byTokenId;
-      // If no tokenId match, try to match PC combatants by pcPlanId
-      const token = map.tokens.find((t) => t.id === tokenId);
-      if (token?.pcPlanId) {
-        return combat.combatants.find((c) => c.kind === "pc" && c.pcPlanId === token.pcPlanId) ?? null;
-      }
-      return null;
-    },
+    (tokenId: string) => getCombatantForToken(combat, tokenId, map.tokens),
     [combat, map.tokens],
   );
 

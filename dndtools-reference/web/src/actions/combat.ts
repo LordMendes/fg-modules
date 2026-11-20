@@ -60,6 +60,7 @@ import {
   type ClearTargetsScope,
   type InitiativeScope,
 } from "@/lib/combat/combatMutations";
+import { buildPcTokenMap } from "@/lib/combat/combatantForToken";
 import {
   loadCombatForViewer,
   loadEncounters,
@@ -393,12 +394,10 @@ export async function addPartyToCombat(
           kind: "pc",
           pcPlanId: { not: null },
         },
-        select: { id: true, pcPlanId: true },
+        select: { id: true, kind: true, pcPlanId: true },
       })
     : [];
-  const tokensByPcPlanId = new Map(
-    pcTokens.map((t) => [t.pcPlanId!, t.id]),
-  );
+  const tokensByPcPlanId = buildPcTokenMap(pcTokens);
 
   for (const link of pcs) {
     if (existingPc.has(link.pcPlanId)) continue;

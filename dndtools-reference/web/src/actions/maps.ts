@@ -647,6 +647,7 @@ export async function placePcToken(
     where: { campaignId },
     select: { id: true, state: true },
   });
+  let linkedCombatant = false;
   if (combat && combat.state !== "ended") {
     const combatant = await prisma.campaignCombatant.findFirst({
       where: {
@@ -660,6 +661,7 @@ export async function placePcToken(
         where: { id: combatant.id },
         data: { tokenId: row.id },
       });
+      linkedCombatant = true;
     }
   }
 
@@ -670,6 +672,12 @@ export async function placePcToken(
       fogEnabled: raw.fogEnabled,
       fogRegions: raw.fogRegions,
     });
+  }
+
+  // Publish combat snapshot if we linked a token to a combatant
+  if (linkedCombatant) {
+    const { publishCombatSnapshot } = await import("@/lib/combat/combatMutations");
+    await publishCombatSnapshot(campaignId, member.campaign.dmUserId);
   }
 
   return { success: true, token };
