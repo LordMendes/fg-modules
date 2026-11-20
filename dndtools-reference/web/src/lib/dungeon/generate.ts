@@ -1713,25 +1713,21 @@ export function generateDungeon(
       if (rooms.length > 0) {
         const first = rooms[0]!;
         const last = rooms[rooms.length - 1]!;
+        const firstCenterY = Math.floor(first.y + first.h / 2);
+        const firstCenterX = Math.floor(first.x + first.w / 2);
+        const lastCenterY = Math.floor(last.y + last.h / 2);
+        const lastCenterX = Math.floor(last.x + last.w / 2);
         setBits(
           d,
-          Math.floor((first.north + first.south) / 2),
-          Math.floor((first.west + first.east) / 2),
-          bits(
-            d,
-            Math.floor((first.north + first.south) / 2),
-            Math.floor((first.west + first.east) / 2),
-          ) | STAIR_UP,
+          firstCenterY,
+          firstCenterX,
+          bits(d, firstCenterY, firstCenterX) | STAIR_UP,
         );
         setBits(
           d,
-          Math.floor((last.north + last.south) / 2),
-          Math.floor((last.west + last.east) / 2),
-          bits(
-            d,
-            Math.floor((last.north + last.south) / 2),
-            Math.floor((last.west + last.east) / 2),
-          ) | STAIR_DN,
+          lastCenterY,
+          lastCenterX,
+          bits(d, lastCenterY, lastCenterX) | STAIR_DN,
         );
       }
     }
