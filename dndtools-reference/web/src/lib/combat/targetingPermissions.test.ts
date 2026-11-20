@@ -1,40 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-
-export type TargetingPermission = {
-  canTarget: boolean;
-  sourceCombatantId: string | null;
-  reason?: string;
-};
-
-export function resolveTargetingSource(
-  isDm: boolean,
-  currentTurnCombatantId: string | null,
-  selectedTokenCombatantId: string | null,
-  ownPcCombatantIds: string[],
-  allCombatants: Array<{ id: string }>,
-): TargetingPermission {
-  if (isDm) {
-    const source = 
-      selectedTokenCombatantId ?? 
-      currentTurnCombatantId ?? 
-      allCombatants[0]?.id ?? 
-      null;
-    
-    if (!source) {
-      return { canTarget: false, sourceCombatantId: null, reason: "No combatants in combat" };
-    }
-    
-    return { canTarget: true, sourceCombatantId: source };
-  }
-
-  if (ownPcCombatantIds.length === 0) {
-    return { canTarget: false, sourceCombatantId: null, reason: "No PC in combat" };
-  }
-
-  const source = ownPcCombatantIds[0]!;
-  return { canTarget: true, sourceCombatantId: source };
-}
+import { resolveTargetingSource } from "./validation";
 
 describe("Targeting permissions and source resolution", () => {
   const combatants = [
