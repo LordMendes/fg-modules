@@ -313,10 +313,9 @@ export function publishCombatEvent(
   });
 }
 
-export function clampInt(value: unknown, min: number, max: number): number | null {
-  if (!Number.isFinite(value)) return null;
-  return Math.max(min, Math.min(max, Math.trunc(Number(value))));
-}
+// Validation helpers moved to validation.ts
+import { clampInt } from "./validation";
+export { clampInt, parseInitiative } from "./validation";
 
 function asTargetIds(raw: unknown): string[] {
   if (!Array.isArray(raw)) return [];
