@@ -19,6 +19,7 @@ import type { CampaignCombatView } from "@/lib/combat/types";
 import { unplacedNpcCombatants } from "@/lib/combat/types";
 import { UnplacedCombatTray } from "@/components/combat/unplaced-combat-tray";
 import { reachFeetToSquares } from "@/lib/combat/parseSpaceReach";
+import { combatantForToken as getCombatantForToken } from "@/lib/combat/combatantForToken";
 import {
   type Camera,
   fitCameraToImage,
@@ -1315,9 +1316,8 @@ export function CampaignMapBoard({
   }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
   const combatantForToken = useCallback(
-    (tokenId: string) =>
-      combat?.combatants.find((c) => c.tokenId === tokenId) ?? null,
-    [combat],
+    (tokenId: string) => getCombatantForToken(combat, tokenId, map.tokens),
+    [combat, map.tokens],
   );
 
   const canUseTargetMode = useMemo(() => {

@@ -642,6 +642,29 @@ export async function placePcToken(
     });
   }
 
+  // If there's an active combat and a PC combatant for this PC, link the token
+  const combat = await prisma.campaignCombat.findUnique({
+    where: { campaignId },
+    select: { id: true, state: true },
+  });
+  let linkedCombatant = false;
+  if (combat && combat.state !== "ended") {
+    const combatant = await prisma.campaignCombatant.findFirst({
+      where: {
+        combatId: combat.id,
+        pcPlanId,
+        tokenId: null,
+      },
+    });
+    if (combatant) {
+      await prisma.campaignCombatant.update({
+        where: { id: combatant.id },
+        data: { tokenId: row.id },
+      });
+      linkedCombatant = true;
+    }
+  }
+
   const token = await tokenViewFromRow(row);
   const raw = await loadRawMapView(mapId);
   if (raw) {
@@ -649,6 +672,12 @@ export async function placePcToken(
       fogEnabled: raw.fogEnabled,
       fogRegions: raw.fogRegions,
     });
+  }
+
+  // Publish combat snapshot if we linked a token to a combatant
+  if (linkedCombatant) {
+    const { publishCombatSnapshot } = await import("@/lib/combat/combatMutations");
+    await publishCombatSnapshot(campaignId, member.campaign.dmUserId);
   }
 
   return { success: true, token };
