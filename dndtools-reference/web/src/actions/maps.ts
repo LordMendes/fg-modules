@@ -642,6 +642,27 @@ export async function placePcToken(
     });
   }
 
+  // If there's an active combat and a PC combatant for this PC, link the token
+  const combat = await prisma.campaignCombat.findUnique({
+    where: { campaignId },
+    select: { id: true, state: true },
+  });
+  if (combat && combat.state !== "ended") {
+    const combatant = await prisma.campaignCombatant.findFirst({
+      where: {
+        combatId: combat.id,
+        pcPlanId,
+        tokenId: null,
+      },
+    });
+    if (combatant) {
+      await prisma.campaignCombatant.update({
+        where: { id: combatant.id },
+        data: { tokenId: row.id },
+      });
+    }
+  }
+
   const token = await tokenViewFromRow(row);
   const raw = await loadRawMapView(mapId);
   if (raw) {

@@ -1315,9 +1315,19 @@ export function CampaignMapBoard({
   }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
   const combatantForToken = useCallback(
-    (tokenId: string) =>
-      combat?.combatants.find((c) => c.tokenId === tokenId) ?? null,
-    [combat],
+    (tokenId: string) => {
+      if (!combat) return null;
+      // First try to match by tokenId
+      const byTokenId = combat.combatants.find((c) => c.tokenId === tokenId);
+      if (byTokenId) return byTokenId;
+      // If no tokenId match, try to match PC combatants by pcPlanId
+      const token = map.tokens.find((t) => t.id === tokenId);
+      if (token?.pcPlanId) {
+        return combat.combatants.find((c) => c.kind === "pc" && c.pcPlanId === token.pcPlanId) ?? null;
+      }
+      return null;
+    },
+    [combat, map.tokens],
   );
 
   const canUseTargetMode = useMemo(() => {

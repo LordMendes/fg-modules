@@ -381,6 +381,25 @@ export async function addPartyToCombat(
     combatRow.combatants.map((c) => c.pcPlanId).filter(Boolean),
   );
 
+  // Find existing PC tokens on the live map
+  const campaign = await prisma.campaign.findUnique({
+    where: { id: campaignId },
+    select: { liveMapId: true },
+  });
+  const pcTokens = campaign?.liveMapId
+    ? await prisma.campaignMapToken.findMany({
+        where: {
+          mapId: campaign.liveMapId,
+          kind: "pc",
+          pcPlanId: { not: null },
+        },
+        select: { id: true, pcPlanId: true },
+      })
+    : [];
+  const tokensByPcPlanId = new Map(
+    pcTokens.map((t) => [t.pcPlanId!, t.id]),
+  );
+
   for (const link of pcs) {
     if (existingPc.has(link.pcPlanId)) continue;
     const state = normalizePcPlanState(parseState(link.pcPlan.state));
@@ -394,6 +413,7 @@ export async function addPartyToCombat(
       name: link.pcPlan.name,
       faction: "friend",
       pcPlanId: link.pcPlanId,
+      tokenId: tokensByPcPlanId.get(link.pcPlanId) ?? null,
       stats,
       silent: true,
     });

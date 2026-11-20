@@ -2636,7 +2636,7 @@ export async function removeEffect(
     const permission = canRemoveEffect({
       isDm: isDm(actor),
       effectIsSystem: effect.system,
-      effectVisibility: effect.visibility,
+      effectVisibility: effect.visibility as "visible" | "hidden" | "gm",
       effectApplierUserId: effect.applierUserId,
       actorUserId: actor.userId,
     });
