@@ -39,6 +39,10 @@ import type {
 } from "@/lib/map/types";
 import { parseUvtt } from "@/lib/map/uvtt";
 import { prisma } from "@/lib/prisma";
+import {
+  defaultPartyStartPosition,
+  summarizePartyPlacement,
+} from "@/lib/map/mapDragDrop";
 import { processMapImage } from "@/lib/storage/map-image";
 import {
   campaignMapImageKey,
@@ -752,8 +756,8 @@ export async function placeNpcToken(
 export async function placePartyTokens(
   campaignId: string,
   mapId: string,
-  startX = 0,
-  startY = 0,
+  startX?: number,
+  startY?: number,
 ): Promise<MapActionResult & { placed?: number }> {
   const user = await requireCurrentUser();
   const member = await requireActiveMember(campaignId, user.id);
@@ -770,20 +774,35 @@ export async function placePartyTokens(
     orderBy: { createdAt: "asc" },
   });
 
+  // Default to map center if no position specified
+  const { x: centerX, y: centerY } =
+    startX !== undefined && startY !== undefined
+      ? { x: startX, y: startY }
+      : defaultPartyStartPosition(map.imageWidth, map.imageHeight, map.gridSizePx);
+
   let placed = 0;
+  const failures: Array<{ name: string; error: string }> = [];
   for (let i = 0; i < pcs.length; i++) {
     const pc = pcs[i]!;
     const result = await placePcToken(
       campaignId,
       mapId,
       pc.pcPlanId,
-      startX + i,
-      startY,
+      centerX + i,
+      centerY,
     );
-    if (result.success) placed++;
+    if (result.success) {
+      placed++;
+    } else {
+      failures.push({
+        name: pc.pcPlan.name,
+        error: result.error ?? "unknown error",
+      });
+    }
   }
 
-  return { success: true, placed };
+  const summary = summarizePartyPlacement(placed, pcs.length, failures);
+  return { ...summary, placed };
 }
 
 export async function removeMapToken(

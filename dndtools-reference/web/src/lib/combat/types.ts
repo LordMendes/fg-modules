@@ -379,3 +379,23 @@ export function unplacedNpcCombatants(
   if (!combat) return [];
   return combat.combatants.filter((c) => c.kind === "npc" && !c.tokenId);
 }
+
+/** All combatants (PC and NPC) waiting to be placed on the map. */
+export function unplacedCombatants(
+  combat: CampaignCombatView | null,
+): CombatantView[] {
+  if (!combat) return [];
+  return combat.combatants.filter((c) => !c.tokenId);
+}
+
+/** Separate unplaced combatants into PC and NPC groups. */
+export function separateUnplacedCombatants(combat: CampaignCombatView | null): {
+  pcs: CombatantView[];
+  npcs: CombatantView[];
+} {
+  const all = unplacedCombatants(combat);
+  return {
+    pcs: all.filter((c) => c.kind === "pc"),
+    npcs: all.filter((c) => c.kind === "npc"),
+  };
+}
