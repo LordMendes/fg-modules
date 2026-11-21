@@ -752,8 +752,8 @@ export async function placeNpcToken(
 export async function placePartyTokens(
   campaignId: string,
   mapId: string,
-  startX = 0,
-  startY = 0,
+  startX?: number,
+  startY?: number,
 ): Promise<MapActionResult & { placed?: number }> {
   const user = await requireCurrentUser();
   const member = await requireActiveMember(campaignId, user.id);
@@ -770,17 +770,48 @@ export async function placePartyTokens(
     orderBy: { createdAt: "asc" },
   });
 
+  if (pcs.length === 0) {
+    return { success: false, error: "No characters in this campaign" };
+  }
+
+  // Default to map center if no position specified
+  const centerX = startX ?? Math.floor(map.imageWidth / map.gridSizePx / 2);
+  const centerY = startY ?? Math.floor(map.imageHeight / map.gridSizePx / 2);
+
   let placed = 0;
+  const failures: string[] = [];
   for (let i = 0; i < pcs.length; i++) {
     const pc = pcs[i]!;
     const result = await placePcToken(
       campaignId,
       mapId,
       pc.pcPlanId,
-      startX + i,
-      startY,
+      centerX + i,
+      centerY,
     );
-    if (result.success) placed++;
+    if (result.success) {
+      placed++;
+    } else {
+      failures.push(`${pc.pcPlan.name}: ${result.error ?? "unknown error"}`);
+    }
+  }
+
+  if (placed === 0) {
+    return {
+      success: false,
+      error: failures.length > 0
+        ? `Failed to place any tokens. ${failures.join("; ")}`
+        : "Failed to place any tokens",
+      placed: 0,
+    };
+  }
+
+  if (failures.length > 0) {
+    return {
+      success: true,
+      error: `Placed ${placed} of ${pcs.length}. Failures: ${failures.join("; ")}`,
+      placed,
+    };
   }
 
   return { success: true, placed };

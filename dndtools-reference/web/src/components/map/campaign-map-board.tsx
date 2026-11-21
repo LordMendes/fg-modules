@@ -16,7 +16,8 @@ import { UNPLACED_COMBATANT_MIME } from "@/components/combat/unplaced-combat-tra
 import { useCampaignLive } from "@/components/tools/campaign-live-provider";
 import type { LiveSend } from "@/lib/campaign/liveClient";
 import type { CampaignCombatView } from "@/lib/combat/types";
-import { unplacedNpcCombatants } from "@/lib/combat/types";
+import { unplacedCombatants } from "@/lib/combat/types";
+import { placePcToken } from "@/actions/maps";
 import { UnplacedCombatTray } from "@/components/combat/unplaced-combat-tray";
 import { reachFeetToSquares } from "@/lib/combat/parseSpaceReach";
 import { combatantForToken as getCombatantForToken } from "@/lib/combat/combatantForToken";
@@ -1425,16 +1426,16 @@ export function CampaignMapBoard({
   };
 
   const handleMapDragOver = (e: React.DragEvent) => {
-    if (!isDm) return;
     // During dragover Chromium often hides custom MIME types; accept when
     // text/plain is present or the known custom types appear.
     const types = Array.from(e.dataTransfer.types);
-    const maybeNpcDrop =
+    const maybeTokenDrop =
       types.includes("text/plain") ||
       types.includes("application/x-campaign-npc") ||
+      types.includes("application/x-campaign-pc-token") ||
       types.includes(UNPLACED_COMBATANT_MIME) ||
       types.includes(COMBAT_DRAG_MIME);
-    if (!maybeNpcDrop) return;
+    if (!maybeTokenDrop) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = types.includes(UNPLACED_COMBATANT_MIME)
       ? "move"
@@ -1442,9 +1443,9 @@ export function CampaignMapBoard({
   };
 
   const handleMapDrop = (e: React.DragEvent) => {
-    if (!isDm) return;
-
     const plain = e.dataTransfer.getData("text/plain").trim();
+
+    // Handle unplaced combatant drops (PC or NPC from combat tracker)
     const unplacedRaw =
       e.dataTransfer.getData(UNPLACED_COMBATANT_MIME) ||
       (plain.startsWith("unplaced-combatant:")
@@ -1453,6 +1454,7 @@ export function CampaignMapBoard({
           })
         : "");
     if (unplacedRaw) {
+      if (!isDm) return;
       e.preventDefault();
       let combatantId: string | null = null;
       try {
@@ -1473,6 +1475,36 @@ export function CampaignMapBoard({
       return;
     }
 
+    // Handle PC token drops from party chips (DM or owning player)
+    const pcTokenRaw =
+      e.dataTransfer.getData("application/x-campaign-pc-token") ||
+      (plain.startsWith("campaign-pc:")
+        ? JSON.stringify({ pcPlanId: plain.slice("campaign-pc:".length) })
+        : "");
+    if (pcTokenRaw) {
+      e.preventDefault();
+      let pcPlanId: string | null = null;
+      let ownerUserId: string | null = null;
+      try {
+        const parsed = JSON.parse(pcTokenRaw) as {
+          pcPlanId?: string;
+          userId?: string;
+        };
+        pcPlanId = parsed.pcPlanId ?? null;
+        ownerUserId = parsed.userId ?? null;
+      } catch {
+        return;
+      }
+      if (!pcPlanId) return;
+      // Allow DM or the owning player to place the token
+      if (!isDm && ownerUserId !== viewerUserId) return;
+      const pt = clientToGrid(e.clientX, e.clientY);
+      void placePcToken(campaignId, map.id, pcPlanId, pt.x, pt.y);
+      return;
+    }
+
+    // Handle NPC library drops (DM only)
+    if (!isDm) return;
     const raw =
       e.dataTransfer.getData("application/x-campaign-npc") ||
       (plain.startsWith("campaign-npc:")
@@ -1632,7 +1664,7 @@ export function CampaignMapBoard({
         </div>
       ) : null}
       {isDm ? (
-        <UnplacedCombatTray combatants={unplacedNpcCombatants(combat ?? null)} />
+        <UnplacedCombatTray combatants={unplacedCombatants(combat ?? null)} />
       ) : null}
       <div
         ref={viewportRef}

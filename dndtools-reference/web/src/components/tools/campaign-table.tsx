@@ -1013,6 +1013,7 @@ function CampaignTableBody({
             <ul className="campaign-party-list">
               {onlinePcs.map((pc) => {
                 const canOpen = isDm || pc.userId === user.id;
+                const canDrag = canOpen && liveMap != null;
                 return (
                   <li key={pc.id}>
                     <button
@@ -1027,12 +1028,34 @@ function CampaignTableBody({
                           : ""
                       }${canOpen ? "" : " campaign-party-chip--locked"}`}
                       disabled={!canOpen}
+                      draggable={canDrag}
                       title={
                         canOpen
-                          ? `Open ${pc.name}`
+                          ? canDrag
+                            ? `Open ${pc.name} (or drag onto map)`
+                            : `Open ${pc.name}`
                           : `${pc.name} (${pc.username})`
                       }
                       onClick={() => selectPc(pc.pcPlanId, pc.userId)}
+                      onDragStart={
+                        canDrag
+                          ? (e) => {
+                              const payload = JSON.stringify({
+                                pcPlanId: pc.pcPlanId,
+                                userId: pc.userId,
+                              });
+                              e.dataTransfer.setData(
+                                "application/x-campaign-pc-token",
+                                payload,
+                              );
+                              e.dataTransfer.setData(
+                                "text/plain",
+                                `campaign-pc:${pc.pcPlanId}`,
+                              );
+                              e.dataTransfer.effectAllowed = "copy";
+                            }
+                          : undefined
+                      }
                     >
                       <CampaignPcAvatar
                         name={pc.name}
