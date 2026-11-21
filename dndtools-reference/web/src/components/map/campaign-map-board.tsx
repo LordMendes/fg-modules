@@ -18,6 +18,7 @@ import type { LiveSend } from "@/lib/campaign/liveClient";
 import type { CampaignCombatView } from "@/lib/combat/types";
 import { unplacedCombatants } from "@/lib/combat/types";
 import { placePcToken } from "@/actions/maps";
+import { parsePcTokenDrop, canDropPcToken } from "@/lib/map/mapDragDrop";
 import { UnplacedCombatTray } from "@/components/combat/unplaced-combat-tray";
 import { reachFeetToSquares } from "@/lib/combat/parseSpaceReach";
 import { combatantForToken as getCombatantForToken } from "@/lib/combat/combatantForToken";
@@ -1476,30 +1477,14 @@ export function CampaignMapBoard({
     }
 
     // Handle PC token drops from party chips (DM or owning player)
-    const pcTokenRaw =
-      e.dataTransfer.getData("application/x-campaign-pc-token") ||
-      (plain.startsWith("campaign-pc:")
-        ? JSON.stringify({ pcPlanId: plain.slice("campaign-pc:".length) })
-        : "");
-    if (pcTokenRaw) {
+    const pcTokenRaw = e.dataTransfer.getData("application/x-campaign-pc-token");
+    const pcTokenPayload = parsePcTokenDrop(pcTokenRaw, plain);
+    if (pcTokenPayload) {
       e.preventDefault();
-      let pcPlanId: string | null = null;
-      let ownerUserId: string | null = null;
-      try {
-        const parsed = JSON.parse(pcTokenRaw) as {
-          pcPlanId?: string;
-          userId?: string;
-        };
-        pcPlanId = parsed.pcPlanId ?? null;
-        ownerUserId = parsed.userId ?? null;
-      } catch {
-        return;
-      }
-      if (!pcPlanId) return;
       // Allow DM or the owning player to place the token
-      if (!isDm && ownerUserId !== viewerUserId) return;
+      if (!canDropPcToken(isDm, viewerUserId, pcTokenPayload.userId)) return;
       const pt = clientToGrid(e.clientX, e.clientY);
-      void placePcToken(campaignId, map.id, pcPlanId, pt.x, pt.y);
+      void placePcToken(campaignId, map.id, pcTokenPayload.pcPlanId, pt.x, pt.y);
       return;
     }
 

@@ -39,6 +39,10 @@ import type {
 } from "@/lib/map/types";
 import { parseUvtt } from "@/lib/map/uvtt";
 import { prisma } from "@/lib/prisma";
+import {
+  defaultPartyStartPosition,
+  summarizePartyPlacement,
+} from "@/lib/map/mapDragDrop";
 import { processMapImage } from "@/lib/storage/map-image";
 import {
   campaignMapImageKey,
@@ -770,16 +774,14 @@ export async function placePartyTokens(
     orderBy: { createdAt: "asc" },
   });
 
-  if (pcs.length === 0) {
-    return { success: false, error: "No characters in this campaign" };
-  }
-
   // Default to map center if no position specified
-  const centerX = startX ?? Math.floor(map.imageWidth / map.gridSizePx / 2);
-  const centerY = startY ?? Math.floor(map.imageHeight / map.gridSizePx / 2);
+  const { x: centerX, y: centerY } =
+    startX !== undefined && startY !== undefined
+      ? { x: startX, y: startY }
+      : defaultPartyStartPosition(map.imageWidth, map.imageHeight, map.gridSizePx);
 
   let placed = 0;
-  const failures: string[] = [];
+  const failures: Array<{ name: string; error: string }> = [];
   for (let i = 0; i < pcs.length; i++) {
     const pc = pcs[i]!;
     const result = await placePcToken(
@@ -792,29 +794,15 @@ export async function placePartyTokens(
     if (result.success) {
       placed++;
     } else {
-      failures.push(`${pc.pcPlan.name}: ${result.error ?? "unknown error"}`);
+      failures.push({
+        name: pc.pcPlan.name,
+        error: result.error ?? "unknown error",
+      });
     }
   }
 
-  if (placed === 0) {
-    return {
-      success: false,
-      error: failures.length > 0
-        ? `Failed to place any tokens. ${failures.join("; ")}`
-        : "Failed to place any tokens",
-      placed: 0,
-    };
-  }
-
-  if (failures.length > 0) {
-    return {
-      success: true,
-      error: `Placed ${placed} of ${pcs.length}. Failures: ${failures.join("; ")}`,
-      placed,
-    };
-  }
-
-  return { success: true, placed };
+  const summary = summarizePartyPlacement(placed, pcs.length, failures);
+  return { ...summary, placed };
 }
 
 export async function removeMapToken(

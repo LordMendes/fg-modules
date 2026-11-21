@@ -1,53 +1,11 @@
 import { describe, it } from "node:test";
 import * as assert from "node:assert/strict";
-
-/**
- * Parse PC token drop payload.
- * Returns pcPlanId and userId if valid, null otherwise.
- */
-export function parsePcTokenDrop(
-  dataTransfer: string,
-  plainText: string,
-): { pcPlanId: string; userId: string } | null {
-  try {
-    // Try structured MIME type first
-    if (dataTransfer) {
-      const parsed = JSON.parse(dataTransfer) as {
-        pcPlanId?: string;
-        userId?: string;
-      };
-      if (parsed.pcPlanId && parsed.userId) {
-        return { pcPlanId: parsed.pcPlanId, userId: parsed.userId };
-      }
-    }
-
-    // Fall back to text/plain format
-    if (plainText.startsWith("campaign-pc:")) {
-      const pcPlanId = plainText.slice("campaign-pc:".length);
-      if (pcPlanId) {
-        // Without userId in fallback, we don't have ownership info
-        return null;
-      }
-    }
-  } catch {
-    return null;
-  }
-  return null;
-}
-
-/**
- * Check if a user can drop a PC token.
- * DM can drop any PC. Players can only drop their own PCs.
- */
-export function canDropPcToken(
-  isDm: boolean,
-  viewerUserId: string,
-  tokenOwnerUserId: string | null,
-): boolean {
-  if (isDm) return true;
-  if (tokenOwnerUserId === null) return false;
-  return tokenOwnerUserId === viewerUserId;
-}
+import {
+  parsePcTokenDrop,
+  canDropPcToken,
+  defaultPartyStartPosition,
+  summarizePartyPlacement,
+} from "./mapDragDrop";
 
 describe("parsePcTokenDrop", () => {
   it("parses structured payload with pcPlanId and userId", () => {
@@ -109,42 +67,57 @@ describe("canDropPcToken", () => {
   });
 });
 
-describe("placePartyTokens result handling", () => {
-  it("should return error when no PCs in campaign", () => {
-    // This tests the logic that placePartyTokens should check for empty PC list
-    const pcs: unknown[] = [];
-    const shouldFail = pcs.length === 0;
-    assert.ok(shouldFail, "Should detect empty party");
+describe("defaultPartyStartPosition", () => {
+  it("calculates map center in grid coordinates", () => {
+    const result = defaultPartyStartPosition(3500, 2800, 70);
+    assert.equal(result.x, 25);
+    assert.equal(result.y, 20);
   });
 
-  it("should report partial success with failures", () => {
-    // Simulates placing 2 of 3 PCs successfully
-    const placed = 2;
-    const total = 3;
-    const failures = ["PC1: already placed"];
-
-    assert.ok(placed > 0, "Some tokens were placed");
-    assert.ok(failures.length > 0, "Some failures occurred");
-    assert.ok(placed < total, "Not all tokens were placed");
+  it("handles small maps correctly", () => {
+    const result = defaultPartyStartPosition(700, 700, 70);
+    assert.equal(result.x, 5);
+    assert.equal(result.y, 5);
   });
 
-  it("should report total failure when nothing placed", () => {
-    const placed = 0;
-    const total = 3;
+  it("rounds down for non-integer results", () => {
+    const result = defaultPartyStartPosition(3555, 2855, 71);
+    assert.equal(result.x, 25); // 3555 / 71 / 2 = 25.035...
+    assert.equal(result.y, 20); // 2855 / 71 / 2 = 20.105...
+  });
+});
 
-    assert.equal(placed, 0, "No tokens were placed");
-    assert.ok(total > 0, "Party has members");
+describe("summarizePartyPlacement", () => {
+  it("returns error when no PCs in campaign", () => {
+    const result = summarizePartyPlacement(0, 0, []);
+    assert.equal(result.success, false);
+    assert.equal(result.error, "No characters in this campaign");
   });
 
-  it("should use map center as default position", () => {
-    const imageWidth = 3500;
-    const imageHeight = 2800;
-    const gridSizePx = 70;
+  it("returns error when nothing placed", () => {
+    const result = summarizePartyPlacement(0, 3, [
+      { name: "PC1", error: "already placed" },
+      { name: "PC2", error: "not found" },
+      { name: "PC3", error: "permission denied" },
+    ]);
+    assert.equal(result.success, false);
+    assert.ok(result.error?.includes("Failed to place any tokens"));
+    assert.ok(result.error?.includes("PC1: already placed"));
+    assert.ok(result.error?.includes("PC2: not found"));
+  });
 
-    const centerX = Math.floor(imageWidth / gridSizePx / 2);
-    const centerY = Math.floor(imageHeight / gridSizePx / 2);
+  it("reports partial success with failures", () => {
+    const result = summarizePartyPlacement(2, 3, [
+      { name: "PC1", error: "already placed" },
+    ]);
+    assert.equal(result.success, true);
+    assert.ok(result.error?.includes("Placed 2 of 3"));
+    assert.ok(result.error?.includes("PC1: already placed"));
+  });
 
-    assert.equal(centerX, 25);
-    assert.equal(centerY, 20);
+  it("returns success when all placed", () => {
+    const result = summarizePartyPlacement(3, 3, []);
+    assert.equal(result.success, true);
+    assert.equal(result.error, undefined);
   });
 });
