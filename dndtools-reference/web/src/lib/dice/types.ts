@@ -3,8 +3,8 @@ import type {
   CombatRollOutcome,
 } from "@/lib/combat/combatRollTypes";
 
-/** Supported polyhedral die sides (matches @3d-dice/dice-box). */
-export type DieSides = 4 | 6 | 8 | 10 | 12 | 20 | 100;
+/** Polyhedral sides, plus d2 and d3 used by unarmed strike (dice-box-threejs). */
+export type DieSides = 2 | 3 | 4 | 6 | 8 | 10 | 12 | 20 | 100;
 
 export type DicePoolItem = {
   qty: number;

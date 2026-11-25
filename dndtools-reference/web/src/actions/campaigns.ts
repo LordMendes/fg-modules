@@ -907,7 +907,7 @@ function sanitizeDice(dice: DicePoolItem[]): DicePoolItem[] | null {
       return null;
     }
     if (item.qty < 1 || item.qty > 40) return null;
-    if (![4, 6, 8, 10, 12, 20, 100].includes(item.sides)) return null;
+    if (![2, 3, 4, 6, 8, 10, 12, 20, 100].includes(item.sides)) return null;
     totalQty += item.qty;
     out.push({
       qty: Math.floor(item.qty),

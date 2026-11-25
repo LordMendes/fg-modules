@@ -937,7 +937,7 @@ function validateDicePool(dice: DicePoolItem[]): boolean {
   for (const item of dice) {
     if (!item || typeof item.qty !== "number" || typeof item.sides !== "number") return false;
     if (item.qty < 1 || item.qty > 40) return false;
-    if (![4, 6, 8, 10, 12, 20, 100].includes(item.sides)) return false;
+    if (![2, 3, 4, 6, 8, 10, 12, 20, 100].includes(item.sides)) return false;
     totalQty += item.qty;
   }
   return totalQty >= 1 && totalQty <= 40;

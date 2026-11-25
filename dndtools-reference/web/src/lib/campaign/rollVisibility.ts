@@ -37,7 +37,7 @@ function asDicePool(value: unknown): DicePoolItem[] {
     const sides = (item as { sides?: unknown }).sides;
     const themeColor = (item as { themeColor?: unknown }).themeColor;
     if (typeof qty !== "number" || typeof sides !== "number") continue;
-    if (![4, 6, 8, 10, 12, 20, 100].includes(sides)) continue;
+    if (![2, 3, 4, 6, 8, 10, 12, 20, 100].includes(sides)) continue;
     out.push({
       qty,
       sides: sides as DicePoolItem["sides"],

@@ -14,6 +14,7 @@ import {
   type WeaponAttackRow,
   type WeaponDamagePart,
 } from "./weaponAttacks";
+import { isUnarmedStrikeEntry } from "./unarmedStrike";
 import type {
   FeatEntry,
   PcPlanState,
@@ -209,6 +210,8 @@ export function computeNaturalAttackRows(
 
   entries.forEach((entry, index) => {
     if (entry.kind !== "natural") return;
+    // Unarmed strike is computed from size, class, and feats, not this formula.
+    if (isUnarmedStrikeEntry(entry)) return;
     const diceRaw = specialAttackDamageDice(entry, sizeMod);
     const typeLabel =
       formatDamageType(entry.damageType) ?? (entry.damageType || null);

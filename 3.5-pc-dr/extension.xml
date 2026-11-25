@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root version="3.0">
+	<properties>
+		<name>Feature: PC Sheet DR</name>
+		<version>1.0.0</version>
+		<author>3.5 Cesar</author>
+		<description>Damage reduction and energy resistance on player character sheets for official 3.5E. Same DR lines, bypass types, and damage application as the 3.5 Cesar extension.</description>
+		<loadorder>45</loadorder>
+		<ruleset>
+			<name>3.5E</name>
+		</ruleset>
+	</properties>
+
+	<base>
+		<includefile source="graphics/graphics_icons.xml" />
+		<includefile source="strings/strings_pcdr.xml" />
+		<includefile source="campaign/record_dr.xml" />
+		<includefile source="campaign/record_char.xml" />
+		<script name="PCSheetDR" file="scripts/manager_pcdr.lua" />
+		<script name="PCSheetDRHooks" file="scripts/manager_pcdr_hooks.lua" />
+	</base>
+</root>

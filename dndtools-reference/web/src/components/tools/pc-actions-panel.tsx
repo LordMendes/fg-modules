@@ -30,6 +30,7 @@ import {
   preparedCountAtLevel,
 } from "@/lib/pc-planner/spellSlots";
 import { computeNaturalAttackRows } from "@/lib/pc-planner/specialAttacks";
+import { computeUnarmedStrike } from "@/lib/pc-planner/unarmedStrike";
 import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
 import { PcResourcesPanel } from "@/components/tools/pc-actions-extras";
 import type { PcPlanState } from "@/lib/pc-planner/types";
@@ -79,6 +80,8 @@ function CombatSummary({
   );
   const weapons = computeWeaponAttackRows(state, stats);
   const naturalWeapons = computeNaturalAttackRows(state, stats);
+  const unarmedStrike = computeUnarmedStrike(state, stats).row;
+  const unarmedAndNatural = [unarmedStrike, ...naturalWeapons];
   const [shortcutOpen, setShortcutOpen] = useState(false);
 
   return (
@@ -168,12 +171,12 @@ function CombatSummary({
         <PcWeaponAttacksList weapons={weapons} pcPlanId={pcPlanId} />
       </div>
 
-      {naturalWeapons.length > 0 ? (
-        <div className="pc-actions-weapons pc-actions-natural-weapons">
-          <h4 className="pc-actions-weapons-heading">Natural weapons</h4>
-          <PcWeaponAttacksList weapons={naturalWeapons} pcPlanId={pcPlanId} />
-        </div>
-      ) : null}
+      <div className="pc-actions-weapons pc-actions-natural-weapons">
+        <h4 className="pc-actions-weapons-heading">
+          {naturalWeapons.length > 0 ? "Unarmed and natural weapons" : "Unarmed strike"}
+        </h4>
+        <PcWeaponAttacksList weapons={unarmedAndNatural} pcPlanId={pcPlanId} />
+      </div>
 
       <PcSpecialAttacksActions state={state} />
     </div>

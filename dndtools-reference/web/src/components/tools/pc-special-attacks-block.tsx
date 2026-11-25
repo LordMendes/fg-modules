@@ -4,13 +4,14 @@ import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { PcSpecialAttackDialog } from "@/components/tools/pc-special-attack-dialog";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
-import { abilityModifier } from "@/lib/pc-planner/combatStats";
+import { abilityModifier, computeCombatStats } from "@/lib/pc-planner/combatStats";
 import {
   formatSpecialAttackChip,
   formatSpecialAttacksString,
   syncSpecialAttacksString,
   type SpecialAttackPreviewContext,
 } from "@/lib/pc-planner/specialAttacks";
+import { computeUnarmedStrike, isUnarmedStrikeEntry } from "@/lib/pc-planner/unarmedStrike";
 import type { PcPlanState, PcSpecialAttackEntry } from "@/lib/pc-planner/types";
 
 type PatchFn = (fn: (draft: PcPlanState) => void) => void;
@@ -50,7 +51,13 @@ export function PcSpecialAttacksBlock({
   readOnly?: boolean;
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const entries = state.combat.specialAttacks ?? [];
+  const entries = (state.combat.specialAttacks ?? []).filter(
+    (entry) => !isUnarmedStrikeEntry(entry),
+  );
+  const unarmed = useMemo(
+    () => computeUnarmedStrike(state, computeCombatStats(state)).entry,
+    [state],
+  );
 
   const previewContext = useMemo((): SpecialAttackPreviewContext => {
     return {
@@ -91,37 +98,39 @@ export function PcSpecialAttacksBlock({
         }
       >
         <div className="pc-special-attacks-body">
-          {entries.length > 0 ? (
-            <ul
-              className="pc-language-list pc-special-attacks-list"
-              aria-label="Special attacks"
-            >
-              {entries.map((entry) => (
-                <li key={entry.id}>
-                  <span
-                    className="pc-language-chip pc-special-attack-chip"
-                    title={formatSpecialAttacksString([entry])}
-                  >
-                    {formatSpecialAttackChip(entry)}
-                    {!readOnly ? (
-                      <button
-                        type="button"
-                        className="pc-language-chip-remove"
-                        aria-label={`Remove ${formatSpecialAttackChip(entry)}`}
-                        onClick={() => removeEntry(entry.id)}
-                      >
-                        ×
-                      </button>
-                    ) : null}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="pc-sheet-empty pc-special-attacks-empty">
-              No special attacks yet.
-            </p>
-          )}
+          <ul
+            className="pc-language-list pc-special-attacks-list"
+            aria-label="Special attacks"
+          >
+            <li key={unarmed.id}>
+              <span
+                className="pc-language-chip pc-special-attack-chip"
+                title={formatSpecialAttacksString([unarmed])}
+              >
+                {formatSpecialAttackChip(unarmed)}
+              </span>
+            </li>
+            {entries.map((entry) => (
+              <li key={entry.id}>
+                <span
+                  className="pc-language-chip pc-special-attack-chip"
+                  title={formatSpecialAttacksString([entry])}
+                >
+                  {formatSpecialAttackChip(entry)}
+                  {!readOnly ? (
+                    <button
+                      type="button"
+                      className="pc-language-chip-remove"
+                      aria-label={`Remove ${formatSpecialAttackChip(entry)}`}
+                      onClick={() => removeEntry(entry.id)}
+                    >
+                      ×
+                    </button>
+                  ) : null}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </PcSheetCard>
       <PcSpecialAttackDialog

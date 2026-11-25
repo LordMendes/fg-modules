@@ -32,7 +32,7 @@ import type {
   PcPlanState,
 } from "./types";
 
-const ROLLABLE_SIDES = new Set<number>([4, 6, 8, 10, 12, 20, 100]);
+const ROLLABLE_SIDES = new Set<number>([2, 3, 4, 6, 8, 10, 12, 20, 100]);
 
 export type WeaponAttackMode = "melee" | "ranged";
 

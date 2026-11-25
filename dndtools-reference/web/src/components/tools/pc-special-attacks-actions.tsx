@@ -8,6 +8,7 @@ import {
   listSpecialOnlyAttacks,
   specialAttackDamageDice,
 } from "@/lib/pc-planner/specialAttacks";
+import { isUnarmedStrikeEntry } from "@/lib/pc-planner/unarmedStrike";
 import { parseDamageDice } from "@/lib/pc-planner/weaponAttacks";
 import type { PcPlanState, PcSpecialAttackEntry } from "@/lib/pc-planner/types";
 
@@ -62,7 +63,9 @@ export function PcSpecialAttacksActions({
 }: {
   state: PcPlanState;
 }) {
-  const specials = listSpecialOnlyAttacks(state.combat.specialAttacks);
+  const specials = listSpecialOnlyAttacks(state.combat.specialAttacks).filter(
+    (entry) => !isUnarmedStrikeEntry(entry),
+  );
   if (specials.length === 0) return null;
 
   return (

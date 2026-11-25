@@ -67,10 +67,15 @@ function damagePartsForDisplay(
   const scaled = pending
     ? applyCriticalDamage(weapon.damageDice, damageMod, pending.multiplier)
     : null;
-  const primaryText = `${formatDamageWithModifier(
-    scaled?.dice ?? weapon.damageDice,
-    scaled?.modifier ?? damageMod,
-  )}${formatCritSuffix(weapon.critical)}`;
+  const pool = scaled?.dice ?? weapon.damageDice;
+  const stored = weapon.damageParts?.[0]?.text;
+  const primaryText =
+    pool.length === 0 && !pending && stored
+      ? stored
+      : `${formatDamageWithModifier(
+          pool,
+          scaled?.modifier ?? damageMod,
+        )}${formatCritSuffix(weapon.critical)}`;
   const base = weapon.damageParts ?? [];
   const primaryColor =
     base[0]?.color ?? weapon.damageDice[0]?.themeColor ?? "#C9A227";
