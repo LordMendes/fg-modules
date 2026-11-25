@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import {
   getPcPlanRevision,
   getSharedPcPlanRevision,
@@ -67,6 +67,7 @@ export function PcLevelTimeline({
   const cacheGen = useRef("");
   const publishTarget = useRef<string | null>(null);
   const settleTimer = useRef<number | null>(null);
+  const swallowClick = useRef(false);
   const viewGen = useRef(0);
   const publishedKeyRef = useRef(publishedKey);
   publishedKeyRef.current = publishedKey;
@@ -238,21 +239,66 @@ export function PcLevelTimeline({
   }
 
   function focusCard(key: string) {
+    if (settleTimer.current) window.clearTimeout(settleTimer.current);
     publishTarget.current = key;
     setCenteredKey(key);
     publishKey(key);
-    scrollKeyIntoCenter(key, "smooth");
+    scrollKeyIntoCenter(key, "auto");
+    requestAnimationFrame(() => {
+      if (publishTarget.current !== key) return;
+      if (keyAtCenter() === key) publishTarget.current = null;
+    });
+  }
+
+  function handleCardPointerDown(event: PointerEvent<HTMLButtonElement>, key: string) {
+    const press = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      dragged: false,
+      key,
+    };
+    const onMove = (ev: globalThis.PointerEvent) => {
+      if (ev.pointerId !== press.id || press.dragged) return;
+      const dx = ev.clientX - press.x;
+      const dy = ev.clientY - press.y;
+      if (dx * dx + dy * dy > 36) press.dragged = true;
+    };
+    const onUp = (ev: globalThis.PointerEvent) => {
+      if (ev.pointerId !== press.id) return;
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+      if (ev.type === "pointercancel" || press.dragged) return;
+      const dx = ev.clientX - press.x;
+      const dy = ev.clientY - press.y;
+      if (dx * dx + dy * dy > 36) return;
+      swallowClick.current = true;
+      window.setTimeout(() => {
+        swallowClick.current = false;
+      }, 0);
+      focusCard(press.key);
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+  }
+
+  function handleCardClick(key: string) {
+    if (swallowClick.current) {
+      swallowClick.current = false;
+      return;
+    }
+    focusCard(key);
   }
 
   function handleScroll() {
+    if (publishTarget.current) return;
     const key = keyAtCenter();
     if (key) setCenteredKey((prev) => (prev === key ? prev : key));
-    if (publishTarget.current) {
-      if (key === publishTarget.current) publishTarget.current = null;
-      return;
-    }
     if (settleTimer.current) window.clearTimeout(settleTimer.current);
     settleTimer.current = window.setTimeout(() => {
+      if (publishTarget.current) return;
       const settled = keyAtCenter();
       if (settled) publishKey(settled);
     }, 140);
@@ -260,9 +306,11 @@ export function PcLevelTimeline({
 
   function handleScrollEnd() {
     if (settleTimer.current) window.clearTimeout(settleTimer.current);
-    if (publishTarget.current) {
-      const key = keyAtCenter();
-      if (key === publishTarget.current) publishTarget.current = null;
+    const target = publishTarget.current;
+    if (target) {
+      publishTarget.current = null;
+      setCenteredKey(target);
+      publishKey(target);
       return;
     }
     const settled = keyAtCenter();
@@ -290,7 +338,8 @@ export function PcLevelTimeline({
             className="pc-level-timeline-scroller"
             onScroll={handleScroll}
             onScrollEnd={handleScrollEnd}
-            onPointerDown={() => {
+            onPointerDown={(event) => {
+              if ((event.target as HTMLElement).closest("[data-level-key]")) return;
               publishTarget.current = null;
             }}
           >
@@ -312,7 +361,8 @@ export function PcLevelTimeline({
                   aria-current={centered ? "true" : undefined}
                   aria-label={card.kind === "current" ? `${label}, current` : label}
                   title={label}
-                  onClick={() => focusCard(card.key)}
+                  onPointerDown={(event) => handleCardPointerDown(event, card.key)}
+                  onClick={() => handleCardClick(card.key)}
                 >
                   {photo ? (
                     <img src={photo} alt="" className="pc-level-timeline-photo" />
