@@ -4,11 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Plus } from "lucide-react";
 import type { PcCompendiumBundle } from "@/lib/entities";
 import type { FeatEntry, PcPlanState } from "@/lib/pc-planner/types";
-import {
-  featNeedsWeaponChoice,
-  formatFeatDisplayName,
-  weaponChoiceOptions,
-} from "@/lib/pc-planner/weaponFeatBonuses";
+import { formatFeatDisplayName } from "@/lib/pc-planner/weaponFeatBonuses";
 import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import type { CategoryKey } from "@/lib/categories";
 import {
@@ -19,7 +15,12 @@ import {
   type FeatSourceOption,
 } from "@/lib/pc-planner/featBudget";
 import { classAbilityEffectKey, extractClassAbilityDescription } from "@/lib/pc-planner/parseClassAbilityEffects";
-import { featNeedsSkillChoice } from "@/lib/pc-planner/parseFeatEffects";
+import {
+  applyFeatAsset,
+  featAssetSpec,
+  readFeatAsset,
+} from "@/lib/pc-planner/featAsset";
+import { FeatAssetDialog } from "@/components/tools/feat-asset-dialog";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import { DraggableDialog } from "@/components/draggable-dialog";
 import type { ClassAbilityEntry } from "@/lib/pc-planner/parseClassFeatures";
@@ -225,6 +226,7 @@ function FeatList({
   readOnly: boolean;
 }) {
   const [addOpen, setAddOpen] = useState(false);
+  const [assetSlug, setAssetSlug] = useState<string | null>(null);
   const addPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -245,39 +247,23 @@ function FeatList({
     type?: string | null;
   }) {
     const isFlaw = (hit.type ?? "").toLowerCase() === "flaw";
-    const stub = { slug: hit.slug, name: hit.name };
-    if (featNeedsSkillChoice(stub)) {
-      const choice = window.prompt(
-        `Choose a skill for ${hit.name} (e.g. stealth)`,
-        "stealth",
-      );
-      if (choice == null) return;
-      const trimmed = choice.trim();
-      onAddFeat(hit.slug, hit.name, trimmed || undefined, isFlaw);
-      setAddOpen(false);
-      return;
-    }
-    if (!featNeedsWeaponChoice(stub)) {
-      onAddFeat(hit.slug, hit.name, undefined, isFlaw);
-      setAddOpen(false);
-      return;
-    }
-    const options = weaponChoiceOptions(inventory);
-    const suggestion = options[0]?.label ?? "longsword";
-    const choice = window.prompt(
-      `Choose a weapon type for ${hit.name} (e.g. longsword)`,
-      suggestion,
-    );
-    if (choice == null) return;
-    const trimmed = choice.trim();
-    onAddFeat(hit.slug, hit.name, trimmed || undefined, isFlaw);
+    onAddFeat(hit.slug, hit.name, undefined, isFlaw);
     setAddOpen(false);
+    if (featAssetSpec(hit)) setAssetSlug(hit.slug);
+  }
+
+  function setAsset(slug: string, value: string, close: boolean) {
+    patch((s) => {
+      const row = s.feats.find((feat) => feat.slug === slug);
+      if (row) applyFeatAsset(row, value);
+    });
+    if (close) setAssetSlug(null);
   }
 
   function sourceChoices(feat: FeatEntry): FeatSourceOption[] {
     const taken = new Set(
       feats
-        .filter((other) => other.slug !== feat.slug && other.source)
+        .filter((other) => other.slug !== feat.slug && other.source && !other.isFlaw)
         .map((other) => other.source as string),
     );
     const available = sourceOptions.filter((option) => !taken.has(option.id));
@@ -300,6 +286,9 @@ function FeatList({
       row.source = next;
     });
   }
+
+  const assetFeat = assetSlug ? feats.find((feat) => feat.slug === assetSlug) : undefined;
+  const assetSpec = assetFeat ? featAssetSpec(assetFeat) : null;
 
   return (
     <PcSheetCard
@@ -342,14 +331,18 @@ function FeatList({
         </p>
       ) : (
         <ul className="pc-abilities-row-list pc-abilities-feat-list">
-          {feats.map((feat) => (
+          {feats.map((feat) => {
+            const spec = featAssetSpec(feat);
+            const asset = spec ? readFeatAsset(feat) : "";
+            const displayName = spec ? feat.name : formatFeatDisplayName(feat);
+            return (
             <li key={feat.slug} className="pc-abilities-row">
               <label className="pc-abilities-row-check">
                 <input
                   type="checkbox"
                   checked={!feat.suppressed}
                   disabled={readOnly}
-                  aria-label={`Apply ${formatFeatDisplayName(feat)}`}
+                  aria-label={`Apply ${displayName}`}
                   onChange={(e) =>
                     patch((s) => {
                       const row = s.feats.find((f) => f.slug === feat.slug);
@@ -358,20 +351,39 @@ function FeatList({
                   }
                 />
               </label>
-              <a
-                href={`/feats/${feat.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pc-feat-link pc-abilities-row-name"
-              >
-                {formatFeatDisplayName(feat)}
-              </a>
+              <div className="pc-feat-name-stack">
+                <a
+                  href={`/feats/${feat.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pc-feat-link pc-abilities-row-name"
+                >
+                  {displayName}
+                </a>
+                {spec ? (
+                  readOnly ? (
+                    asset ? <span className="pc-feat-asset-value">{asset}</span> : null
+                  ) : (
+                    <button
+                      type="button"
+                      className={
+                        asset ? "pc-feat-asset-btn" : "pc-feat-asset-btn is-empty"
+                      }
+                      onClick={() => setAssetSlug(feat.slug)}
+                    >
+                      {asset || spec.emptyLabel}
+                    </button>
+                  )
+                ) : null}
+              </div>
               {feat.isFlaw ? (
                 <span className="pc-feat-flaw-badge">Flaw</span>
               ) : (
                 <span className="pc-feat-flaw-badge pc-feat-flaw-badge--empty" aria-hidden="true" />
               )}
-              {readOnly ? (
+              {feat.isFlaw ? (
+                <span />
+              ) : readOnly ? (
                 feat.source ? (
                   <span className="pc-feat-source-label">{featSourceLabel(feat.source)}</span>
                 ) : (
@@ -403,9 +415,20 @@ function FeatList({
                 </button>
               ) : null}
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
+      {assetFeat && assetSpec ? (
+        <FeatAssetDialog
+          featName={assetFeat.name}
+          spec={assetSpec}
+          value={readFeatAsset(assetFeat)}
+          inventory={inventory}
+          onPick={(value) => setAsset(assetFeat.slug, value, Boolean(value.trim()))}
+          onClose={() => setAssetSlug(null)}
+        />
+      ) : null}
     </PcSheetCard>
   );
 }

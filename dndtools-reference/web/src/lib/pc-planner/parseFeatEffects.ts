@@ -1,4 +1,5 @@
 import { isEffectSuppressed } from "./derivedField";
+import { featAssetKind } from "./featAsset";
 import type { FeatEntry } from "./types";
 
 export type FeatDerivedFeatures = {
@@ -217,9 +218,9 @@ export function featSkillBonus(
 }
 
 export function featNeedsSkillChoice(feat: Pick<FeatEntry, "name" | "slug">): boolean {
-  const normalized = normalizeFeatName(feat.name);
+  if (featAssetKind(feat.name) === "skill") return true;
   const slug = feat.slug.toLowerCase();
-  return normalized === "skill focus" || slug === "skill-focus" || slug.startsWith("skill-focus-");
+  return slug === "skill-focus" || slug.startsWith("skill-focus-");
 }
 
 export function createFeatEntry(

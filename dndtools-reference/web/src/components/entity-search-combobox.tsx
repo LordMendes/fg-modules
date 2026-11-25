@@ -28,6 +28,8 @@ type EntitySearchComboboxProps = {
   className?: string;
   /** Limit spell search to a class spell list at a specific level. */
   spellFilter?: { classSlug: string; level: number };
+  /** Category field filters, such as equipment kind or feat type. */
+  fields?: Record<string, string[]>;
 };
 
 function spellFilterKey(classSlug: string, level: number) {
@@ -41,6 +43,7 @@ export function EntitySearchCombobox({
   label = "Search compendium",
   className,
   spellFilter,
+  fields,
 }: EntitySearchComboboxProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<EntitySearchHit[]>([]);
@@ -57,6 +60,7 @@ export function EntitySearchCombobox({
   const spellClassSlug = spellFilter?.classSlug;
   const spellLevel = spellFilter?.level;
   const categoriesKey = categories.join(",");
+  const fieldsKey = JSON.stringify(fields ?? {});
 
   useEffect(() => {
     const trimmed = query.trim();
@@ -115,6 +119,7 @@ export function EntitySearchCombobox({
             category,
             nonce,
             search: trimmed,
+            fields,
           });
           if (id !== requestId.current) return;
           if (!result.success) {
@@ -148,7 +153,7 @@ export function EntitySearchCombobox({
     }, DEBOUNCE_MS);
 
     return () => window.clearTimeout(timer);
-  }, [query, nonce, categoriesKey, categories, spellClassSlug, spellLevel, refreshSession]);
+  }, [query, nonce, categoriesKey, categories, spellClassSlug, spellLevel, refreshSession, fields, fieldsKey]);
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent) {
