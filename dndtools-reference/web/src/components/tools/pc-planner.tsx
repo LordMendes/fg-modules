@@ -45,25 +45,27 @@ import {
   pcFgExportOptionsFromCompendium,
   pcPlanExportBasename,
 } from "@/lib/pc-planner/buildFgXml";
+import { PC_PLANNER_LIST_PATH, pcPlanPath } from "@/lib/pc-planner/paths";
 import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
-export function PcPlanner() {
+export function PcPlanner({ planId = null }: { planId?: string | null }) {
   return (
     <DiceProvider>
-      <PcPlannerBody />
+      <PcPlannerBody planIdFromRoute={planId} />
     </DiceProvider>
   );
 }
 
-function PcPlannerBody() {
+function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) {
   const user = useAuthUser();
   const authReady = useAuthReady();
   const nonce = useSessionNonce();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const planIdParam = searchParams.get("id");
+  // The character id lives in the path. A leftover ?id= on the list page must not reopen the last sheet.
+  const planIdParam = planIdFromRoute;
   const shareTokenParam = searchParams.get("share");
   const isSharedView = Boolean(shareTokenParam && !planIdParam);
   const [planId, setPlanId] = useState<string | null>(null);
@@ -171,16 +173,19 @@ function PcPlannerBody() {
       return;
     }
 
+    let cancelled = false;
     setHydrated(false);
 
     startTransition(async () => {
       if (shareTokenParam && !planIdParam) {
         const shared = await getSharedPcPlan(shareTokenParam);
+        if (cancelled) return;
         if (!shared) {
           setListError("Share link is invalid or has been revoked.");
           if (user) {
-            router.replace("/tools/pc-planner");
+            router.replace(PC_PLANNER_LIST_PATH);
             const userPlans = await getUserPcPlans();
+            if (cancelled) return;
             setPlans(userPlans);
           }
           setPlanId(null);
@@ -190,7 +195,7 @@ function PcPlannerBody() {
         }
 
         if (shared.isOwner) {
-          router.replace(`/tools/pc-planner?id=${shared.id}`);
+          router.replace(pcPlanPath(shared.id));
           return;
         }
 
@@ -210,6 +215,7 @@ function PcPlannerBody() {
 
       if (!planIdParam) {
         const userPlans = await getUserPcPlans();
+        if (cancelled) return;
         setPlans(userPlans);
         setPlanId(null);
         setSharedOwnerUsername(null);
@@ -218,6 +224,7 @@ function PcPlannerBody() {
       }
 
       const plan = await getPcPlan(planIdParam);
+      if (cancelled) return;
       if (plan) {
         lastCompendiumSync.current = "";
         lastRaceSlug.current = undefined;
@@ -229,13 +236,18 @@ function PcPlannerBody() {
       }
 
       setListError("Character not found.");
-      router.replace("/tools/pc-planner");
+      router.replace(PC_PLANNER_LIST_PATH);
       const userPlans = await getUserPcPlans();
+      if (cancelled) return;
       setPlans(userPlans);
       setPlanId(null);
       setSharedOwnerUsername(null);
       setHydrated(true);
     });
+
+    return () => {
+      cancelled = true;
+    };
   }, [authReady, user, planIdParam, shareTokenParam, isSharedView, router]);
 
   useEffect(() => {
@@ -266,12 +278,12 @@ function PcPlannerBody() {
         setStatusMessage(result.error ?? "Could not add character to your plans");
         return;
       }
-      router.push(`/tools/pc-planner?id=${result.plan.id}`);
+      router.push(pcPlanPath(result.plan.id));
     });
   }
 
   function handleShortcutSelect(plan: PcPlanSummary) {
-    router.push(`/tools/pc-planner?id=${plan.id}`);
+    router.push(pcPlanPath(plan.id));
     startTransition(async () => {
       const loaded = await getPcPlan(plan.id);
       if (loaded) {
@@ -294,7 +306,7 @@ function PcPlannerBody() {
       lastCompendiumSync.current = "";
       setPlanId(result.plan.id);
       setState(result.plan.state);
-      router.push(`/tools/pc-planner?id=${result.plan.id}`);
+      router.push(pcPlanPath(result.plan.id));
     });
   }
 
@@ -315,7 +327,7 @@ function PcPlannerBody() {
   }
 
   function handleBackToList() {
-    router.push("/tools/pc-planner");
+    router.push(PC_PLANNER_LIST_PATH);
     setPlanId(null);
     setStatusMessage(null);
     startTransition(async () => {
@@ -421,8 +433,8 @@ function PcPlannerBody() {
   if (!user && !isSharedView) {
     const loginNext =
       planIdParam
-        ? `/tools/pc-planner?id=${encodeURIComponent(planIdParam)}`
-        : "/tools/pc-planner";
+        ? pcPlanPath(planIdParam)
+        : PC_PLANNER_LIST_PATH;
 
     return (
       <div className="pc-planner-auth-gate">
@@ -450,7 +462,7 @@ function PcPlannerBody() {
             All characters
           </button>
         ) : (
-          <Link href="/tools/pc-planner" className="tool-btn">
+          <Link href={PC_PLANNER_LIST_PATH} className="tool-btn">
             Go to PC Planner
           </Link>
         )}
@@ -462,7 +474,7 @@ function PcPlannerBody() {
   if (isSharedView) {
     const shareLoginNext = shareTokenParam
       ? `/tools/pc-planner?share=${encodeURIComponent(shareTokenParam)}`
-      : "/tools/pc-planner";
+      : PC_PLANNER_LIST_PATH;
 
     body = (
       <div className="pc-sheet-page">

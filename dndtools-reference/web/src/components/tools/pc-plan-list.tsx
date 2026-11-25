@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { PcPlanSummary } from "@/actions/pc-plans";
+import { pcPlanPath } from "@/lib/pc-planner/paths";
 
 export type PcPlanListProps = {
   plans: PcPlanSummary[];
@@ -86,7 +87,7 @@ export function PcPlanList({
   const [deleting, setDeleting] = useState(false);
 
   function openPlan(planId: string) {
-    router.push(`/tools/pc-planner?id=${planId}`);
+    router.push(pcPlanPath(planId));
   }
 
   async function confirmDelete() {

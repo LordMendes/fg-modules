@@ -9,6 +9,7 @@ import {
   type PcPlanSummary,
 } from "@/actions/pc-plans";
 import { PcPlanList } from "@/components/tools/pc-plan-list";
+import { pcPlanPath } from "@/lib/pc-planner/paths";
 
 export function ProfilePcPlansManager({
   initialPlans,
@@ -30,7 +31,7 @@ export function ProfilePcPlansManager({
       }
       const refreshed = await getUserPcPlans();
       setPlans(refreshed);
-      router.push(`/tools/pc-planner?id=${result.plan.id}`);
+      router.push(pcPlanPath(result.plan.id));
     });
   }
 
