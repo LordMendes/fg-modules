@@ -26,6 +26,9 @@ CASTER_LIST_NAMES = frozenset(
         "Paladin",
         "Hunter",
         "Arcanist",
+        "Shugenja",
+        "Wu Jen",
+        "Sohei",
     }
 )
 
@@ -271,7 +274,8 @@ def build_spell_lists(
         lib_root = ET.SubElement(library, lib_id)
         lib_root.set("static", "true")
         typed_string(lib_root, "name", module_name)
-        typed_string(lib_root, "categoryname", "WoW RPG")
+        category = "WoW RPG" if str(module_name).startswith("WOWRPG") else module_name
+        typed_string(lib_root, "categoryname", category)
         entries = ET.SubElement(lib_root, "entries")
         for key, display, wclass, recordname in library_entries:
             entry = ET.SubElement(entries, key)

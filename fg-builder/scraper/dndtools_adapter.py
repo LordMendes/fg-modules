@@ -49,6 +49,7 @@ BOOKS: dict[str, tuple[str, str]] = {
     "Heroes of Horror": ("HH", "heroes-of-horror"),
     "Unearthed Arcana": ("UA", "unearthed-arcana"),
     "Book of Vile Darkness": ("BV", "book-of-vile-darkness"),
+    "Oriental Adventures": ("OA", "oriental-adventures"),
     "Red Hand of Doom": ("RH", "red-hand-of-doom"),
     "Forgotten Realms Campaign Setting": ("FRCS", "forgotten-realms-campaign-setting"),
     "Warcraft The Roleplaying Game": ("WRPG", "warcraft-the-roleplaying-game"),
@@ -70,6 +71,7 @@ CATEGORY_FILES: dict[str, str] = {
     "deities": "deities.json",
     "domains": "domains.json",
     "psionics": "psionics.json",
+    "skills": "skills.json",
 }
 
 # Supplemental JSON files live under data/dndtools/supplemental/.
@@ -128,6 +130,7 @@ FG_CATEGORY_MAP: dict[str, str] = {
     "deities": "deities",
     "domains": "domains",
     "psionics": "psionics",
+    "skills": "skills",
 }
 
 
@@ -1098,6 +1101,45 @@ def _feat_prerequisites(record: dict[str, Any]) -> str:
     return text.strip(" ,")
 
 
+_SKILL_ABILITIES = {
+    "STR": "Str",
+    "DEX": "Dex",
+    "CON": "Con",
+    "INT": "Int",
+    "WIS": "Wis",
+    "CHA": "Cha",
+}
+
+
+def _skill_ability(value: object) -> str:
+    text = str(value or "").strip()
+    if text in {"", "-", "—", "–", "None", "n/a", "N/A"}:
+        return ""
+    return _SKILL_ABILITIES.get(text.upper(), text)
+
+
+def convert_skill(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
+    index = record.get("index") or {}
+    return {
+        "id": record.get("id"),
+        "slug": record.get("slug", ""),
+        "name": record.get("name", ""),
+        "source_url": record.get("source_url", ""),
+        "book_slug": book_slug,
+        "category": "skills",
+        "index": {
+            "key_ability": _skill_ability(index.get("key_ability")),
+            "trained_only": bool(index.get("trained_only")),
+            "armor_check_penalty": bool(index.get("armor_check_penalty")),
+        },
+        "detail": {
+            "title": record.get("name", ""),
+            "description_html": record.get("description_html") or "",
+            "description_text": record.get("description_text") or "",
+        },
+    }
+
+
 def convert_feat(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
     benefit = record.get("benefit_html") or record.get("benefit_text") or record.get("description_html") or ""
     detail = {
@@ -1483,6 +1525,7 @@ CONVERTERS = {
     "deities": convert_deity,
     "domains": convert_domain,
     "psionics": convert_psionic,
+    "skills": convert_skill,
 }
 
 
