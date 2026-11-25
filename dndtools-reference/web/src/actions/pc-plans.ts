@@ -13,6 +13,9 @@ import {
   recordAndPublishActivity,
 } from "@/lib/campaign/activityLog";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
+import { characterLevelFromPlan } from "@/lib/pc-planner/gestalt";
+import { classSummaryForPlan } from "@/lib/pc-planner/levelHistory";
+import { normalizePcPlanState } from "@/lib/pc-planner/normalizePlanState";
 import { getWritablePlan } from "@/lib/pc-planner/planAccess";
 import { computeSpellClass, formatSlotSummary } from "@/lib/pc-planner/spellSlots";
 import {
@@ -31,9 +34,12 @@ import type { PcPlanState } from "@/lib/pc-planner/types";
 import { reportError } from "@/lib/monitoring/report";
 import {
   copyPcImageObject,
+  deletePcImageObject,
   deletePcPlanImages,
   pcImageObjectKey,
+  pcRevisionImageObjectKey,
 } from "@/lib/storage/r2";
+import type { PcImageKind } from "@/lib/storage/pc-image-kind";
 import type { Prisma } from "@/generated/prisma/client";
 
 export type PcPlanSummary = {
@@ -462,14 +468,292 @@ export async function renamePcPlan(
   return { success: true };
 }
 
+export type PcPlanLevelCard = {
+  characterLevel: number;
+  name: string;
+  classSummary: string;
+  profileImageKey: string | null;
+};
+
+async function copyLevelImage(
+  userId: string,
+  planId: string,
+  characterLevel: number,
+  kind: PcImageKind,
+  sourceKey: string | null | undefined,
+): Promise<string | null> {
+  const liveKey = pcImageObjectKey(userId, planId, kind);
+  if (!sourceKey || sourceKey !== liveKey) return null;
+  const dest = pcRevisionImageObjectKey(userId, planId, characterLevel, kind);
+  try {
+    await copyPcImageObject(sourceKey, dest);
+    return dest;
+  } catch {
+    return null;
+  }
+}
+
+async function listRevisionCards(pcPlanId: string): Promise<PcPlanLevelCard[]> {
+  const rows = await prisma.pcPlanRevision.findMany({
+    where: { pcPlanId },
+    orderBy: { characterLevel: "asc" },
+    select: {
+      characterLevel: true,
+      classSummary: true,
+      state: true,
+    },
+  });
+  return rows.map((row) => {
+    const parsed = normalizePcPlanState(parseState(row.state));
+    return {
+      characterLevel: row.characterLevel,
+      name: parsed.identity.name.trim() || "Unnamed",
+      classSummary: row.classSummary,
+      profileImageKey: parsed.identity.profileImageKey ?? null,
+    };
+  });
+}
+
+async function readRevisionState(
+  pcPlanId: string,
+  characterLevel: number,
+): Promise<PcPlanState | null> {
+  const row = await prisma.pcPlanRevision.findUnique({
+    where: { pcPlanId_characterLevel: { pcPlanId, characterLevel } },
+  });
+  if (!row) return null;
+  return normalizePcPlanState(parseState(row.state));
+}
+
+async function findPlanByShareToken(token: string) {
+  const user = await getCurrentUser();
+  if (!user) {
+    const hdrs = await headers();
+    const ip = getClientIp(hdrs);
+    const rl = rateLimit(`pc-plan-share:${ip}`, 60, 60_000);
+    if (!rl.success) return null;
+  }
+  const normalized = normalizeShareToken(token);
+  if (!isValidShareToken(normalized)) return null;
+  return prisma.pcPlan.findFirst({ where: { shareToken: normalized } });
+}
+
+/** Freeze the sheet the character just left. Does not touch the live plan. */
+export async function commitPcPlanLevel(
+  planId: string,
+  state: PcPlanState,
+): Promise<PcPlanActionResult & { characterLevel?: number }> {
+  const user = await requireCurrentUser();
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return { success: false, error: "Plan not found" };
+
+  const normalized = normalizePcPlanState(structuredClone(state));
+  const characterLevel = characterLevelFromPlan(normalized);
+  if (characterLevel < 1) return { success: false, error: "Nothing to save" };
+
+  const ownerId = writable.userId;
+  normalized.identity.profileImageKey = await copyLevelImage(
+    ownerId,
+    planId,
+    characterLevel,
+    "profile",
+    normalized.identity.profileImageKey,
+  );
+  normalized.identity.tokenImageKey = await copyLevelImage(
+    ownerId,
+    planId,
+    characterLevel,
+    "token",
+    normalized.identity.tokenImageKey,
+  );
+
+  const classSummary = classSummaryForPlan(normalized);
+  await prisma.pcPlanRevision.upsert({
+    where: { pcPlanId_characterLevel: { pcPlanId: planId, characterLevel } },
+    create: {
+      pcPlanId: planId,
+      characterLevel,
+      classSummary,
+      state: normalized as unknown as Prisma.InputJsonValue,
+    },
+    update: {
+      classSummary,
+      state: normalized as unknown as Prisma.InputJsonValue,
+    },
+  });
+
+  return { success: true, characterLevel };
+}
+
+export async function listPcPlanRevisions(planId: string): Promise<PcPlanLevelCard[]> {
+  const user = await requireCurrentUser();
+  const owned = await getOwnedPlan(planId, user.id);
+  if (!owned) return [];
+  return listRevisionCards(owned.id);
+}
+
+export async function getPcPlanRevision(
+  planId: string,
+  characterLevel: number,
+): Promise<PcPlanState | null> {
+  const user = await requireCurrentUser();
+  const owned = await getOwnedPlan(planId, user.id);
+  if (!owned) return null;
+  return readRevisionState(owned.id, characterLevel);
+}
+
+export async function listSharedPcPlanRevisions(
+  token: string,
+): Promise<PcPlanLevelCard[]> {
+  const plan = await findPlanByShareToken(token);
+  if (!plan) return [];
+  return listRevisionCards(plan.id);
+}
+
+export async function getSharedPcPlanRevision(
+  token: string,
+  characterLevel: number,
+): Promise<PcPlanState | null> {
+  const plan = await findPlanByShareToken(token);
+  if (!plan) return null;
+  return readRevisionState(plan.id, characterLevel);
+}
+
+export type LevelRestorePreview = {
+  characterLevel: number;
+  classSummary: string;
+  state: PcPlanState;
+};
+
+/** Highest saved level below the sheet the player is looking at. */
+export async function previewLevelRestore(
+  planId: string,
+  currentLevel: number,
+): Promise<LevelRestorePreview | null> {
+  const user = await requireCurrentUser();
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return null;
+  const level = Math.floor(currentLevel);
+  if (!Number.isFinite(level)) return null;
+
+  const row = await prisma.pcPlanRevision.findFirst({
+    where: { pcPlanId: planId, characterLevel: { lt: level } },
+    orderBy: { characterLevel: "desc" },
+  });
+  if (!row) return null;
+  return {
+    characterLevel: row.characterLevel,
+    classSummary: row.classSummary,
+    state: normalizePcPlanState(parseState(row.state)),
+  };
+}
+
+async function promoteRevisionImage(
+  userId: string,
+  planId: string,
+  kind: PcImageKind,
+  sourceKey: string | null | undefined,
+): Promise<string | null> {
+  const liveKey = pcImageObjectKey(userId, planId, kind);
+  if (!sourceKey) return null;
+  if (sourceKey === liveKey) return liveKey;
+  const prefix = `pc/${userId}/${planId}/revisions/`;
+  if (!sourceKey.startsWith(prefix)) return null;
+  try {
+    await copyPcImageObject(sourceKey, liveKey);
+    return liveKey;
+  } catch {
+    return null;
+  }
+}
+
+/** Replace the live sheet with a saved level, including its pictures. */
+export async function restorePcPlanLevel(
+  planId: string,
+  characterLevel: number,
+): Promise<PcPlanActionResult & { state?: PcPlanState }> {
+  const user = await requireCurrentUser();
+  const writable = await getWritablePlan(planId, user.id);
+  if (!writable) return { success: false, error: "Plan not found" };
+
+  const level = Math.floor(characterLevel);
+  if (!Number.isFinite(level) || level < 1) {
+    return { success: false, error: "That level is not saved" };
+  }
+  const row = await prisma.pcPlanRevision.findUnique({
+    where: { pcPlanId_characterLevel: { pcPlanId: planId, characterLevel: level } },
+  });
+  if (!row) return { success: false, error: "That level is not saved" };
+
+  const previousState = parseState(writable.state);
+  const restored = normalizePcPlanState(parseState(row.state));
+  const ownerId = writable.userId;
+  restored.identity.profileImageKey = await promoteRevisionImage(
+    ownerId,
+    planId,
+    "profile",
+    restored.identity.profileImageKey,
+  );
+  restored.identity.tokenImageKey = await promoteRevisionImage(
+    ownerId,
+    planId,
+    "token",
+    restored.identity.tokenImageKey,
+  );
+
+  const slugs = restored.spellClasses.map((sc) => sc.classSlug);
+  const classSpellTables = await getClassSpellTablesBySlugs(slugs);
+  const synced = syncPcPlanState(restored, null, { classSpellTables });
+  synced.identity.profileImageKey = restored.identity.profileImageKey;
+  synced.identity.tokenImageKey = restored.identity.tokenImageKey;
+
+  const nextName = synced.identity.name.trim() || writable.name;
+  const updated = await prisma.pcPlan.update({
+    where: { id: planId },
+    data: {
+      state: synced as unknown as Prisma.InputJsonValue,
+      name: nextName,
+    },
+  });
+
+  try {
+    await notifyCampaignLinksAfterWrite(planId, user, {
+      previousState,
+      nextState: synced,
+      updatedAt: updated.updatedAt,
+    });
+  } catch (err) {
+    console.error("Campaign activity log failed after restorePcPlanLevel", err);
+    reportError(err, {
+      source: "action",
+      dedupeKey: "action:activity-log-restorePcPlanLevel",
+    });
+  }
+
+  return { success: true, state: synced };
+}
+
 export async function deletePcPlan(planId: string): Promise<PcPlanActionResult> {
   const user = await requireCurrentUser();
   const owned = await getOwnedPlan(planId, user.id);
   if (!owned) return { success: false, error: "Plan not found" };
 
+  const revisions = await prisma.pcPlanRevision.findMany({
+    where: { pcPlanId: planId },
+    select: { characterLevel: true },
+  });
   await prisma.pcPlan.delete({ where: { id: planId } });
   try {
     await deletePcPlanImages(user.id, planId);
+    await Promise.all(
+      revisions.flatMap((rev) =>
+        (["profile", "token"] as const).map((kind) =>
+          deletePcImageObject(
+            pcRevisionImageObjectKey(user.id, planId, rev.characterLevel, kind),
+          ).catch(() => undefined),
+        ),
+      ),
+    );
   } catch {
     // Best-effort cleanup; plan row is already gone.
   }

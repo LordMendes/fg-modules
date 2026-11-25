@@ -546,10 +546,26 @@ model PcPlan {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   campaignPcs CampaignPc[]
+  revisions  PcPlanRevision[]
 
   @@unique([userId, name])
   @@index([userId])
   @@index([userId, shortcut])
+}
+
+/// Frozen sheet at the moment the character left this level.
+model PcPlanRevision {
+  id             String   @id @default(cuid())
+  pcPlanId       String
+  pcPlan         PcPlan   @relation(fields: [pcPlanId], references: [id], onDelete: Cascade)
+  characterLevel Int
+  classSummary   String
+  state          Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([pcPlanId, characterLevel])
+  @@index([pcPlanId])
 }
 
 model Campaign {

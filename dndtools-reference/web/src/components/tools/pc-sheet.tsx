@@ -78,6 +78,8 @@ export type PcSheetProps = {
   planId?: string | null;
   /** When true, sheet fields are display-only (DM viewing another player's PC). Rolls still work. */
   readOnly?: boolean;
+  /** Replace the whole sheet, used when restoring a saved level. */
+  onRestoreState?: (state: PcPlanState) => void;
 };
 
 export function PcSheet({
@@ -99,6 +101,7 @@ export function PcSheet({
   updateAbility,
   planId = null,
   readOnly = false,
+  onRestoreState,
 }: PcSheetProps) {
   const patch = useCallback(
     (fn: (draft: PcPlanState) => void) => {
@@ -241,7 +244,13 @@ export function PcSheet({
                 readOnly={readOnly}
                 onNameBlur={onNameBlur}
               />
-              <PcMainClasses state={state} patch={patch} />
+              <PcMainClasses
+                state={state}
+                patch={patch}
+                planId={planId}
+                readOnly={readOnly}
+                onRestoreState={onRestoreState}
+              />
               <PcMainDivineArcane
                 state={state}
                 patch={patch}

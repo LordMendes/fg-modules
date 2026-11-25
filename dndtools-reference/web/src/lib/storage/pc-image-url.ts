@@ -1,6 +1,7 @@
 /** Same-origin URL for images proxied from R2. r2.dev public URLs 404 for this bucket. */
 
-const PC_IMAGE_KEY = /^pc\/[a-z0-9]+\/[a-z0-9]+\/(profile|token)\.webp$/i;
+const PC_IMAGE_KEY =
+  /^pc\/[a-z0-9]+\/[a-z0-9]+\/(?:revisions\/\d+\/)?(profile|token)\.webp$/i;
 const MAP_IMAGE_KEY =
   /^campaign\/[a-z0-9]+\/maps\/[a-z0-9]+\/image\.webp$/i;
 const MAP_TOKEN_IMAGE_KEY =

@@ -21,10 +21,12 @@ import { DiceProvider } from "@/components/dice/dice-provider";
 import { DiceTray } from "@/components/dice/dice-tray";
 import { useAuthReady, useAuthUser } from "@/components/auth-provider";
 import { useSessionNonce } from "@/components/session-provider";
+import { PcLevelTimeline, type PcLevelTimelineView } from "@/components/tools/pc-level-timeline";
 import { PcPlanList } from "@/components/tools/pc-plan-list";
 import { PcPlanShareDialog } from "@/components/tools/pc-plan-share-dialog";
 import { PcSheet } from "@/components/tools/pc-sheet";
 import { PcShortcutSearch } from "@/components/tools/pc-shortcut-search";
+import { usePcLevelSnapshots } from "@/components/tools/use-pc-level-snapshots";
 import { createDefaultPcPlanState } from "@/lib/pc-planner/defaultState";
 import { createBlankInventoryRow } from "@/lib/pc-planner/inventoryItem";
 import {
@@ -86,6 +88,13 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
   const lastRaceSlug = useRef<string | null | undefined>(undefined);
   const [compendium, setCompendium] = useState<PcCompendiumBundle | null>(null);
   const [compendiumLoading, setCompendiumLoading] = useState(false);
+  const [viewRevision, setViewRevision] = useState<PcPlanState | null>(null);
+  const [viewMeta, setViewMeta] = useState<{ characterLevel: number; classSummary: string } | null>(
+    null,
+  );
+  const [viewCompendium, setViewCompendium] = useState<PcCompendiumBundle | null>(null);
+  const [viewCompendiumLoading, setViewCompendiumLoading] = useState(false);
+  const [revisionTick, setRevisionTick] = useState(0);
 
   const compendiumKeyValue = compendiumSyncKey(
     state.identity.classLevels,
@@ -102,6 +111,23 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
     },
     [compendium],
   );
+
+  usePcLevelSnapshots({
+    planId,
+    state,
+    enabled: hydrated && Boolean(planId) && Boolean(user) && !isSharedView,
+    onCommitted: () => setRevisionTick((tick) => tick + 1),
+  });
+
+  const handleTimelineView = useCallback((view: PcLevelTimelineView | null) => {
+    if (!view) {
+      setViewRevision(null);
+      setViewMeta(null);
+      return;
+    }
+    setViewRevision(view.state);
+    setViewMeta({ characterLevel: view.characterLevel, classSummary: view.classSummary });
+  }, []);
 
   async function refreshPlans() {
     const refreshed = await getUserPcPlans();
@@ -164,6 +190,35 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
     });
   }, [compendiumKeyValue, hydrated, user, nonce, planIdParam, isSharedView]);
 
+  const viewCompendiumKey = viewRevision
+    ? compendiumSyncKey(viewRevision.identity.classLevels, viewRevision.identity.raceSlug)
+    : "";
+
+  useEffect(() => {
+    if (!viewRevision || !nonce) {
+      setViewCompendium(null);
+      setViewCompendiumLoading(false);
+      return;
+    }
+    let cancelled = false;
+    const classLevels = viewRevision.identity.classLevels;
+    const raceSlug = viewRevision.identity.raceSlug;
+    setViewCompendiumLoading(true);
+    void fetchPcCompendium({ classLevels, raceSlug, nonce }).then((result) => {
+      if (cancelled) return;
+      setViewCompendium(result.success && result.bundle ? result.bundle : null);
+      setViewCompendiumLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [viewCompendiumKey, nonce, viewRevision]);
+
+  useEffect(() => {
+    setViewRevision(null);
+    setViewMeta(null);
+  }, [planIdParam, shareTokenParam]);
+
   useEffect(() => {
     // Until bootstrap finishes the viewer might be signed in. Do not pick the
     // guest branch yet, or a signed-in planner flashes as guest.
@@ -201,7 +256,7 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
 
         lastCompendiumSync.current = "";
         lastRaceSlug.current = undefined;
-        setPlanId(null);
+        setPlanId(shared.id);
         setSharedOwnerUsername(shared.ownerUsername);
         setState(shared.state);
         setHydrated(true);
@@ -417,14 +472,19 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
     });
   }
 
+  const displayedState = viewRevision ?? state;
+  const displayedCompendium = viewRevision ? viewCompendium : compendium;
   const handleDownloadXml = useCallback(() => {
-    const xml = buildPcFgXml(state, pcFgExportOptionsFromCompendium(compendium));
+    const xml = buildPcFgXml(
+      displayedState,
+      pcFgExportOptionsFromCompendium(displayedCompendium),
+    );
     downloadTextFile(
-      `${pcPlanExportBasename(state)}.xml`,
+      `${pcPlanExportBasename(displayedState)}.xml`,
       xml,
       "application/xml",
     );
-  }, [state, compendium]);
+  }, [displayedState, displayedCompendium]);
 
   // Render nothing until bootstrap resolves the viewer, so the sign-in gate
   // does not flash for a signed-in user.
@@ -523,9 +583,15 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
           </p>
         ) : null}
 
+        {viewMeta ? (
+          <p className="pc-level-viewing" role="status">
+            Viewing level {viewMeta.characterLevel}, {viewMeta.classSummary}.
+          </p>
+        ) : null}
+
         <div className="pc-sheet-frame npc-sheet">
           <PcSheet
-            state={state}
+            state={displayedState}
             patch={patch}
             sheetTab={sheetTab}
             onTabChange={setSheetTab}
@@ -533,8 +599,8 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
             readOnly
             activeSpellClassIndex={activeSpellClassIndex}
             onSpellClassIndexChange={setActiveSpellClassIndex}
-            compendium={compendium}
-            compendiumLoading={compendiumLoading}
+            compendium={displayedCompendium}
+            compendiumLoading={viewRevision ? viewCompendiumLoading : compendiumLoading}
             onAddFeat={addFeat}
             onRemoveFeat={removeFeat}
             onAddSpell={addSpell}
@@ -542,6 +608,7 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
             onUpdateSpellPrepared={updateSpellPrepared}
             onAddInventoryRow={addInventoryRow}
             updateAbility={updateAbility}
+            planId={planId}
           />
         </div>
       </div>
@@ -609,20 +676,27 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
           </p>
         ) : null}
 
+        {viewMeta ? (
+          <p className="pc-level-viewing" role="status">
+            Viewing level {viewMeta.characterLevel}, {viewMeta.classSummary}.
+          </p>
+        ) : null}
+
         <div className="pc-sheet-frame npc-sheet">
           <PcSheet
-            state={state}
+            state={displayedState}
             patch={patch}
             sheetTab={sheetTab}
             onTabChange={setSheetTab}
             onNameBlur={(name) => {
-              if (!planId) return;
-              void renamePcPlan(planId, name ?? (state.identity.name || "Unnamed"));
+              if (viewRevision || !planId) return;
+              void renamePcPlan(planId, name ?? (displayedState.identity.name || "Unnamed"));
             }}
+            readOnly={viewRevision != null}
             activeSpellClassIndex={activeSpellClassIndex}
             onSpellClassIndexChange={setActiveSpellClassIndex}
-            compendium={compendium}
-            compendiumLoading={compendiumLoading}
+            compendium={displayedCompendium}
+            compendiumLoading={viewRevision ? viewCompendiumLoading : compendiumLoading}
             onAddFeat={addFeat}
             onRemoveFeat={removeFeat}
             onAddSpell={addSpell}
@@ -631,15 +705,33 @@ function PcPlannerBody({ planIdFromRoute }: { planIdFromRoute: string | null }) 
             onAddInventoryRow={addInventoryRow}
             updateAbility={updateAbility}
             planId={planId}
+            onRestoreState={(next) => {
+              setState(next);
+            }}
           />
         </div>
       </div>
     );
   }
 
+  const timelineSource =
+    hydrated && isSharedView && shareTokenParam
+      ? { shareToken: shareTokenParam }
+      : hydrated && planId
+        ? { planId }
+        : null;
+
   return (
     <>
       {body}
+      {timelineSource ? (
+        <PcLevelTimeline
+          source={timelineSource}
+          liveState={state}
+          refreshKey={revisionTick}
+          onView={handleTimelineView}
+        />
+      ) : null}
       <DiceCanvas />
       <DiceTray />
       <DiceLogTray />

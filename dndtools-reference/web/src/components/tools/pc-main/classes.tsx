@@ -10,6 +10,7 @@ import {
   ClassActionConfirmDialog,
   type PendingClassAction,
 } from "@/components/tools/pc-main/class-action-confirm";
+import { PcRestoreLevelButton } from "@/components/tools/pc-main/restore-level-button";
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import {
@@ -40,9 +41,15 @@ function clampClassLevel(level: number): number {
 export function PcMainClasses({
   state,
   patch,
+  planId = null,
+  readOnly = false,
+  onRestoreState,
 }: {
   state: PcPlanState;
   patch: PatchFn;
+  planId?: string | null;
+  readOnly?: boolean;
+  onRestoreState?: (state: PcPlanState) => void;
 }) {
   const classLevels = state.identity.classLevels;
   const gestalt = Boolean(state.identity.gestalt);
@@ -263,6 +270,12 @@ export function PcMainClasses({
         className="pc-main-classes"
         actions={
           <div className="pc-class-card-actions">
+            <PcRestoreLevelButton
+              state={state}
+              planId={planId}
+              readOnly={readOnly}
+              onRestoreState={onRestoreState}
+            />
             <label className="pc-gestalt-toggle">
               <input
                 type="checkbox"

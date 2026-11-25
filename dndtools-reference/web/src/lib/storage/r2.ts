@@ -73,6 +73,16 @@ export function pcImageObjectKey(
   return `pc/${userId}/${planId}/${kind}.webp`;
 }
 
+/** Copy of a profile or token frozen for one character level. */
+export function pcRevisionImageObjectKey(
+  userId: string,
+  planId: string,
+  characterLevel: number,
+  kind: PcImageKind,
+): string {
+  return `pc/${userId}/${planId}/revisions/${characterLevel}/${kind}.webp`;
+}
+
 export function campaignMapImageKey(
   campaignId: string,
   mapId: string,

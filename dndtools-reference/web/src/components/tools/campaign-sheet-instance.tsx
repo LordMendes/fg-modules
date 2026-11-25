@@ -36,6 +36,7 @@ import {
   mergeCompendiumSkills,
 } from "@/lib/pc-planner/syncSkills";
 import type { AbilityKey, PcPlanState, PcSheetTab } from "@/lib/pc-planner/types";
+import { usePcLevelSnapshots } from "@/components/tools/use-pc-level-snapshots";
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
@@ -173,6 +174,13 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
     },
     [plan?.canEdit, compendium],
   );
+
+  usePcLevelSnapshots({
+    planId: plan?.id ?? pcPlanId,
+    state,
+    enabled: hydrated && Boolean(plan?.canEdit) && !poppedOut && state != null,
+    baselineToken: plan?.updatedAt ? String(new Date(plan.updatedAt).getTime()) : "",
+  });
 
   useEffect(() => {
     if (poppedOut) return;
@@ -389,6 +397,10 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
         updateAbility={updateAbility}
         planId={plan.id}
         readOnly={!plan.canEdit}
+        onRestoreState={(next) => {
+          dirtyRef.current = false;
+          setState(next);
+        }}
       />
     );
   }
