@@ -1,0 +1,292 @@
+[
+  {
+    "slug": "chicken-infested-dr330",
+    "name": "Chicken Infested",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. Chickens turn up whenever you reach for your gear.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. Chickens turn up whenever you reach for your gear.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. Chickens turn up whenever you reach for your gear.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>Each time you draw a weapon or take an item out of a container, there is a 50% chance you produce a live chicken instead.</p>",
+    "benefit_text": "Each time you draw a weapon or take an item out of a container, there is a 50% chance you produce a live chicken instead."
+  },
+  {
+    "slug": "corpse-dr330",
+    "name": "Corpse",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. You are already dead.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. You are already dead.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. You are already dead.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You are dead. The flaw still grants its bonus feat.</p>",
+    "benefit_text": "You are dead. The flaw still grants its bonus feat."
+  },
+  {
+    "slug": "delicious-dr330",
+    "name": "Delicious",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. Creatures find you unusually good to eat.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. Creatures find you unusually good to eat.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. Creatures find you unusually good to eat.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>Monsters attack you whenever they can, no matter how they regard the rest of the party. A swallow whole attack treats you as two size categories smaller than you are.</p>",
+    "benefit_text": "Monsters attack you whenever they can, no matter how they regard the rest of the party. A swallow whole attack treats you as two size categories smaller than you are."
+  },
+  {
+    "slug": "dirt-farmer-dr330",
+    "name": "Dirt Farmer",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. Your days belong to the fields.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. Your days belong to the fields.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. Your days belong to the fields.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You must spend 18 hours every day farming for your liege. If you do not, the liege has you killed.</p>",
+    "benefit_text": "You must spend 18 hours every day farming for your liege. If you do not, the liege has you killed."
+  },
+  {
+    "slug": "incomprehensible-accent-dr330",
+    "name": "Incomprehensible Accent",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. Nobody can parse your speech.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. Nobody can parse your speech.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. Nobody can parse your speech.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>Other creatures cannot understand anything you say. Comprehend languages and similar magic do not overcome the accent.</p>",
+    "benefit_text": "Other creatures cannot understand anything you say. Comprehend languages and similar magic do not overcome the accent."
+  },
+  {
+    "slug": "nagging-cough-dr330",
+    "name": "Nagging Cough",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. You start play already sick.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. You start play already sick.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. You start play already sick.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You begin play with mummy rot, and you have not yet succeeded on a Fortitude save against it.</p>",
+    "benefit_text": "You begin play with mummy rot, and you have not yet succeeded on a Fortitude save against it."
+  },
+  {
+    "slug": "peasant-hat-dr330",
+    "name": "Peasant Hat",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. You will not be seen without a peasant hat.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. You will not be seen without a peasant hat.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. You will not be seen without a peasant hat.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You take a -15 penalty on Diplomacy checks. Other characters in your party can cast command on you once per day, and you get no saving throw.</p>",
+    "benefit_text": "You take a -15 penalty on Diplomacy checks. Other characters in your party can cast command on you once per day, and you get no saving throw.",
+    "special_html": "<p>If you remove the hat, crows peck at your exposed brain and kill you.</p>",
+    "special_text": "If you remove the hat, crows peck at your exposed brain and kill you."
+  },
+  {
+    "slug": "pig-bond-dr330",
+    "name": "Pig Bond",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. You are stuck hauling a pig that will not walk.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. You are stuck hauling a pig that will not walk.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. You are stuck hauling a pig that will not walk.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You must carry a pig whose weight equals your maximum load. It will not move on its own. If your Strength changes, the pig's weight changes to match your new maximum load.</p>",
+    "benefit_text": "You must carry a pig whose weight equals your maximum load. It will not move on its own. If your Strength changes, the pig's weight changes to match your new maximum load.",
+    "special_html": "<p>If more than a few inches separate you from the pig, it turns into Orcus and kills you.</p>",
+    "special_text": "If more than a few inches separate you from the pig, it turns into Orcus and kills you."
+  },
+  {
+    "slug": "unimportant-npc-dr330",
+    "name": "Unimportant NPC",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. The story never includes you.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. The story never includes you.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. The story never includes you.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You have no name. You are left out when the party divides treasure, and you are left out of the initiative order, so you act last if the DM lets you act at all.</p>",
+    "benefit_text": "You have no name. You are left out when the party divides treasure, and you are left out of the initiative order, so you act last if the DM lets you act at all."
+  },
+  {
+    "slug": "weresheep-dr330",
+    "name": "Weresheep",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. Your lycanthropy turns you into a sheep.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. Your lycanthropy turns you into a sheep.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. Your lycanthropy turns you into a sheep.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You have lycanthropy whose animal and hybrid forms are a sheep. In those forms you also have the Delicious flaw.</p>",
+    "benefit_text": "You have lycanthropy whose animal and hybrid forms are a sheep. In those forms you also have the Delicious flaw."
+  },
+  {
+    "slug": "xp-farm-dr330",
+    "name": "XP Farm",
+    "type": "Flaw",
+    "source_url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "Joke flaw from Flaws for Commoners. Defeating you is worth far too much experience.",
+      "source_abbrev": "Dr330",
+      "edition": "Supplementals (3.5)"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr330",
+      "edition": "Supplementals (3.5)",
+      "page": 87,
+      "url": "https://dungeonsdragons.fandom.com/wiki/List_of_Dungeons_%26_Dragons_3rd_edition_flaws"
+    },
+    "description_html": "<p>Joke flaw from Flaws for Commoners. Defeating you is worth far too much experience.</p>",
+    "description_text": "Joke flaw from Flaws for Commoners. Defeating you is worth far too much experience.",
+    "prerequisite_html": "<p>1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.</p>",
+    "prerequisite_text": "1st-level commoner only. Like other flaws, this can be taken only at 1st level, and each flaw grants a bonus feat.",
+    "benefit_html": "<p>You are worth 10 times the normal XP for a creature of your challenge rating.</p>",
+    "benefit_text": "You are worth 10 times the normal XP for a creature of your challenge rating."
+  }
+]

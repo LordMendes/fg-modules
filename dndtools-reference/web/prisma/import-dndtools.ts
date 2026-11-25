@@ -27,6 +27,7 @@ const DATA_DIR = process.env.DATA_DIR ?? resolve(__dirname, "../../data/dndtools
 const SUPPLEMENTAL_DIR = join(DATA_DIR, "supplemental");
 const SUPPLEMENTAL_FEAT_FILES = [
   "realmshelps_flaws.json",
+  "dragon330_commoner_flaws.json",
   "dandwiki_flaws.json",
   "warcraft_rpg_feats.json",
   "wowrpg_core_feats.json",

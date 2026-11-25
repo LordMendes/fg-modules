@@ -2158,5 +2158,30 @@
     "prerequisite_text": "Survival 1 rank.",
     "benefit_html": "<p>Whenever you are entangled, pinned, or bound, you immediately become panicked. Your fear is alleviated 1 round after you are free of all bonds. Spells and effects that remove fear do not prevent this effect.</p>",
     "benefit_text": "Whenever you are entangled, pinned, or bound, you immediately become panicked. Your fear is alleviated 1 round after you are free of all bonds. Spells and effects that remove fear do not prevent this effect."
+  },
+  {
+    "slug": "test-subject-rh",
+    "name": "Test Subject",
+    "type": "Flaw",
+    "source_url": "https://realmshelps.net/charbuild/feat/Test_Subject",
+    "scraped_at": "2026-11-25T18:20:52Z",
+    "index": {
+      "type": "Flaw",
+      "description_snippet": "You had an unscrupulous master who used you to hone his magical talents.",
+      "source_abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "realmshelps_source": "Dragon #333"
+    },
+    "source": {
+      "name": "Dragon Magazine",
+      "abbrev": "Dr333",
+      "edition": "Supplementals (3.5)",
+      "page": 94,
+      "url": "https://realmshelps.net/charbuild/feat/Test_Subject"
+    },
+    "description_html": "<p>You had an unscrupulous master who used you to hone his magical talents.</p>",
+    "description_text": "You had an unscrupulous master who used you to hone his magical talents.",
+    "benefit_html": "<p>Choose three of the following schools: conjuration, enchantment, evocation, illusion, necromancy, and transmutation. Your saving throws made against spells and spell-like abilities from these schools suffer a -2 penalty.</p>",
+    "benefit_text": "Choose three of the following schools: conjuration, enchantment, evocation, illusion, necromancy, and transmutation. Your saving throws made against spells and spell-like abilities from these schools suffer a -2 penalty."
   }
 ]
