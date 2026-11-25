@@ -23,7 +23,26 @@ describe("deityDomainNames", () => {
   });
 
   it("returns an empty list when the deity has no recorded domains", () => {
-    assert.deepEqual(deityDomainNames("lolth", "Lolth"), []);
+    assert.deepEqual(deityDomainNames("bhaal", "Bhaal"), []);
+  });
+
+  it("lists Forgotten Realms deity domains from the slug or the display name", () => {
+    assert.deepEqual(deityDomainNames("mystra"), [
+      "Good",
+      "Illusion",
+      "Knowledge",
+      "Magic",
+      "Rune",
+      "Spell",
+    ]);
+    assert.deepEqual(deityDomainNames("sel-ne", "Selûne"), [
+      "Chaos",
+      "Good",
+      "Moon",
+      "Protection",
+      "Travel",
+    ]);
+    assert.ok(deityDomainNames("tymora")?.includes("Luck"));
   });
 });
 
@@ -36,5 +55,11 @@ describe("domainNameAllowed", () => {
     const allowed = deityDomainNames("boccob");
     assert.equal(domainNameAllowed("magic", allowed), true);
     assert.equal(domainNameAllowed("Sun", allowed), false);
+  });
+
+  it("matches catalog names that append a source", () => {
+    const allowed = deityDomainNames("grumbar");
+    assert.equal(domainNameAllowed("Cavern (FRCS)", allowed), true);
+    assert.equal(domainNameAllowed("Cavernous", allowed), false);
   });
 });
