@@ -1,4 +1,5 @@
 import type { NpcFgExportState } from "@/lib/npc-creator/types";
+import { formatMonsterSpeed } from "@/lib/monster-speed";
 import { abilityModifier } from "@/lib/pc-planner/combatStats";
 import { parseDefensesFromParts } from "./converters/parseDefenses";
 import { parseAcString } from "./parseAc";
@@ -225,7 +226,7 @@ export function monsterToCombatStats(record: {
   const defenseText = monsterDefenseText(index);
 
   const snapshot: CombatSnapshot = {
-    speed: indexString(index, "speed") ?? undefined,
+    speed: formatMonsterSpeed(indexString(index, "speed")) || undefined,
     ...fortRefWill,
     initMod,
     abilities: abilityMods,

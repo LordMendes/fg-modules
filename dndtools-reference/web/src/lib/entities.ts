@@ -27,6 +27,7 @@ import {
   type EquipmentView,
 } from "@/lib/equipment-display";
 import { sortCrFilterOptions } from "@/lib/encounter/parseCr";
+import { formatMonsterSpeed } from "@/lib/monster-speed";
 import { buildFeatSections } from "@/lib/feat-sections";
 import { buildSourceDisplayNameMap } from "@/lib/source-display";
 import type { TableSort } from "@/lib/table-sort";
@@ -263,6 +264,7 @@ function buildMonsterFields(
 
   if (!fields["Hit Dice"]) fields["Hit Dice"] = record.hitDice;
   if (!fields["Challenge Rating"]) fields["Challenge Rating"] = record.challengeRating;
+  if (fields["Speed"]) fields["Speed"] = formatMonsterSpeed(fields["Speed"]);
 
   return fields;
 }
