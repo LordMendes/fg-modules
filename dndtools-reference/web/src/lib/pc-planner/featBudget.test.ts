@@ -4,10 +4,12 @@ import { computeCombatStats } from "./combatStats";
 import { createDefaultPcPlanState } from "./defaultState";
 import {
   computeFeatBudget,
+  featSourceLabel,
   fighterBonusFeatBudget,
   formatFeatBudgetSummary,
   generalFeatBudget,
   humanBonusFeatBudget,
+  listFeatSourceOptions,
 } from "./featBudget";
 import { deriveFeatEffects } from "./parseFeatEffects";
 
@@ -66,6 +68,25 @@ describe("feat budget", () => {
     assert.equal(budget.total, 3);
     assert.equal(budget.spentNonFlaw, 1);
     assert.equal(formatFeatBudgetSummary(budget), "1 / 3");
+  });
+
+  it("lists level, human, bonus, and flaw flags for the character", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.race = "Human";
+    state.identity.classLevels = [
+      { classSlug: "fighter-93", className: "Fighter", level: 4 },
+    ];
+    state.feats = [{ slug: "shaky", name: "Shaky", isFlaw: true }];
+    const options = listFeatSourceOptions(state, null);
+    assert.deepEqual(
+      options.map((option) => option.label),
+      ["Lvl 1", "Lvl 3", "Human", "Bonus feat 1", "Bonus feat 2", "Bonus feat 3", "Flaw 1"],
+    );
+    assert.equal(options.find((option) => option.id === "bonus:1")?.title, "Fighter bonus feat");
+    assert.equal(featSourceLabel("level:3"), "Lvl 3");
+    assert.equal(featSourceLabel("flaw:1"), "Flaw 1");
+    const budget = computeFeatBudget(state, null);
+    assert.equal(options.length, budget.total);
   });
 });
 

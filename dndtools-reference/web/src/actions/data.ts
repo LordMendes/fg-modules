@@ -5,6 +5,7 @@ import {
   getClassSkillsBySlugs,
   getPcCompendiumBundle,
   getClassSpellsAtLevel,
+  getDomainSpellsAtLevel,
   getEntityPreview,
   getSpellPreview,
   getWizardSpellPool,
@@ -133,6 +134,33 @@ export async function fetchClassSpellsAtLevel(
   }
 
   const spells = await getClassSpellsAtLevel(input.classSlug, input.level, input.className);
+  return { success: true, spells };
+}
+
+export type DomainSpellsInput = {
+  domainSlug: string;
+  level: number;
+  nonce: string;
+};
+
+export async function fetchDomainSpellsAtLevel(
+  input: DomainSpellsInput,
+): Promise<ClassSpellsResult> {
+  const hdrs = await headers();
+  const ip = getClientIp(hdrs);
+  const rl = rateLimit(`domain-spells:${ip}`, 120, 60_000);
+  if (!rl.success) return { success: false, error: "Rate limit exceeded" };
+
+  if (!(await validateSessionNonce(input.nonce))) {
+    return { success: false, error: "Invalid session" };
+  }
+
+  if (!input.domainSlug.trim()) return { success: false, error: "Invalid domain" };
+  if (!Number.isInteger(input.level) || input.level < 1 || input.level > 9) {
+    return { success: false, error: "Invalid spell level" };
+  }
+
+  const spells = await getDomainSpellsAtLevel(input.domainSlug, input.level);
   return { success: true, spells };
 }
 

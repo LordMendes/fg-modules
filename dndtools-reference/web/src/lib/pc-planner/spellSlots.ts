@@ -506,6 +506,19 @@ export function preparedCountAtLevel(spells: SpellEntry[], level: number): numbe
     .reduce((sum, sp) => sum + Math.max(0, sp.prepared ?? 1), 0);
 }
 
+export function isDomainSpell(spell: Pick<SpellEntry, "domain">): boolean {
+  return spell.domain === true;
+}
+
+/**
+ * Domain spell lists are ordered 1st through 9th. Planar domains store two
+ * choices at each level, so a list longer than 9 is paired.
+ */
+export function domainSpellLevel(index: number, total: number): number {
+  const perLevel = total > 9 ? 2 : 1;
+  return Math.floor(Math.max(0, index) / perLevel) + 1;
+}
+
 export function computeSpellClass(
   classSlug: string,
   className: string,

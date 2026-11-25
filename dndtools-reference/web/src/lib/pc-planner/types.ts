@@ -44,6 +44,11 @@ export type FeatEntry = {
   suppressed?: boolean;
   /** Flaw feats do not count against general feat budget when flagged. */
   isFlaw?: boolean;
+  /**
+   * Which feat slot this entry fills: `level:1`, `level:3`, `human`,
+   * `bonus:1`, `flaw:1`.
+   */
+  source?: string;
 };
 
 export type SpellMode = "preparation" | "spontaneous";
@@ -56,6 +61,8 @@ export type SpellEntry = {
   prepared?: number;
   /** Prepared in a cleric domain slot. */
   domain?: boolean;
+  /** Domain this spell was added from, when `domain` is set. */
+  domainSlug?: string;
 };
 
 export type DomainEntry = {
@@ -310,7 +317,6 @@ export type PcCombatModes = {
   fightingDefensively?: boolean;
   charge?: boolean;
   rapidShot?: boolean;
-  flurry?: boolean;
   rage?: boolean;
 };
 
@@ -375,8 +381,12 @@ export type CombatState = {
   srBase: number;
   srMisc: number;
   attacks: string;
-  /** Structured natural / special attacks (Combat + Actions). */
+  /** Structured natural / special attacks, edited on the Actions tab. */
   specialAttacks?: PcSpecialAttackEntry[];
+  /** When true, Actions includes an unarmed strike attack. */
+  unarmedStrike?: boolean;
+  /** When true, Actions includes a flurry of blows attack. */
+  flurryOfBlows?: boolean;
   /** Manual ASF bypass (0–100); null = auto from gear. */
   asfOverride?: number | null;
   /** When true, item bonuses of the same type all stack (house rule). */

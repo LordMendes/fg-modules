@@ -188,13 +188,15 @@ function normalizeCombatModes(raw: unknown): PcCombatModes {
     fightingDefensively: rec.fightingDefensively === true ? true : undefined,
     charge: rec.charge === true ? true : undefined,
     rapidShot: rec.rapidShot === true ? true : undefined,
-    flurry: rec.flurry === true ? true : undefined,
     rage: rec.rage === true ? true : undefined,
   };
 }
 
 /** Normalize legacy saves missing new optional blocks. */
 export function normalizePcPlanState(state: PcPlanState): PcPlanState {
+  const legacyFlurry =
+    !!state.combatModes &&
+    (state.combatModes as { flurry?: unknown }).flurry === true;
   const identity = state.identity;
   identity.domains = identity.domains ?? [];
   identity.opposedSchools = identity.opposedSchools ?? [];
@@ -217,6 +219,7 @@ export function normalizePcPlanState(state: PcPlanState): PcPlanState {
   state.abilityDamage = normalizeAbilityDamage(state.abilityDamage);
   state.abilityDrain = normalizeAbilityDrain(state.abilityDrain);
   state.combat = normalizeCombatState(state.combat);
+  if (legacyFlurry) state.combat.flurryOfBlows = true;
   applySpecialAttacksNormalization(state.combat);
   state.hitPoints = normalizeHitPointsState(state.hitPoints);
   state.treasure = ensureTreasure(state.treasure);

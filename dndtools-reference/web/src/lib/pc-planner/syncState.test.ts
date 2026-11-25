@@ -81,6 +81,57 @@ describe("syncPcPlanState half casters", () => {
   });
 });
 
+describe("syncPcPlanState domain spells", () => {
+  it("keeps domain spells out of the class slot budget and shares one domain slot", () => {
+    const state = createDefaultPcPlanState();
+    state.identity.classLevels = [{ classSlug: "cleric-92", className: "Cleric", level: 1 }];
+    state.identity.domains = [
+      { slug: "good-103", name: "Good" },
+      { slug: "healing-111", name: "Healing" },
+    ];
+    state.abilities.wis = 10;
+    state.abilityBase.wis = 10;
+    state.spellClasses = [
+      {
+        label: "Cleric",
+        classSlug: "cleric-92",
+        casterLevel: 1,
+        dcAbility: "wis",
+        mode: "preparation",
+        spells: [
+          { slug: "bless", name: "Bless", level: 1, prepared: 1 },
+          {
+            slug: "protection-from-evil",
+            name: "Protection from Evil",
+            level: 1,
+            prepared: 1,
+            domain: true,
+            domainSlug: "good-103",
+          },
+          {
+            slug: "cure-light-wounds",
+            name: "Cure Light Wounds",
+            level: 1,
+            prepared: 1,
+            domain: true,
+            domainSlug: "healing-111",
+          },
+        ],
+      },
+    ];
+
+    const synced = syncPcPlanState(state);
+    const spells = synced.spellClasses[0].spells;
+    const bless = spells.find((spell) => spell.slug === "bless");
+    const good = spells.find((spell) => spell.slug === "protection-from-evil");
+    const healing = spells.find((spell) => spell.slug === "cure-light-wounds");
+    assert.equal(bless?.prepared, 1);
+    assert.equal(good?.prepared, 1);
+    assert.equal(healing?.prepared, 0);
+    assert.equal(good?.domain, true);
+  });
+});
+
 describe("syncPcPlanState treasure", () => {
   it("seeds default coins on older saves", () => {
     const state = createDefaultPcPlanState();

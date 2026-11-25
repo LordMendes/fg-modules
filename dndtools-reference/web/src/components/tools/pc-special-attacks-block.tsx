@@ -3,15 +3,16 @@
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { PcSpecialAttackDialog } from "@/components/tools/pc-special-attack-dialog";
-import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
-import { abilityModifier, computeCombatStats } from "@/lib/pc-planner/combatStats";
+import { PcSpecialAttacksActions } from "@/components/tools/pc-special-attacks-actions";
+import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
+import { abilityModifier, type CombatComputed } from "@/lib/pc-planner/combatStats";
 import {
+  computeNaturalAttackRows,
   formatSpecialAttackChip,
-  formatSpecialAttacksString,
   syncSpecialAttacksString,
   type SpecialAttackPreviewContext,
 } from "@/lib/pc-planner/specialAttacks";
-import { computeUnarmedStrike, isUnarmedStrikeEntry } from "@/lib/pc-planner/unarmedStrike";
+import { isUnarmedStrikeEntry } from "@/lib/pc-planner/unarmedStrike";
 import type { PcPlanState, PcSpecialAttackEntry } from "@/lib/pc-planner/types";
 
 type PatchFn = (fn: (draft: PcPlanState) => void) => void;
@@ -41,32 +42,42 @@ function applySpecialAttacks(
 export function PcSpecialAttacksBlock({
   state,
   patch,
-  bab = 0,
+  stats,
+  pcPlanId = null,
   readOnly = false,
 }: {
   state: PcPlanState;
   patch: PatchFn;
-  /** Character BAB for dialog preview (from computeCombatStats). */
-  bab?: number;
+  stats: CombatComputed;
+  pcPlanId?: string | null;
   readOnly?: boolean;
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const entries = (state.combat.specialAttacks ?? []).filter(
     (entry) => !isUnarmedStrikeEntry(entry),
   );
-  const unarmed = useMemo(
-    () => computeUnarmedStrike(state, computeCombatStats(state)).entry,
-    [state],
+  const naturalRows = useMemo(
+    () => computeNaturalAttackRows(state, stats),
+    [state, stats],
   );
+  const naturalIds = new Set(
+    naturalRows.map((row) => row.entryId).filter((id): id is string => Boolean(id)),
+  );
+  const hiddenNaturals = entries.filter(
+    (entry) => entry.kind === "natural" && !naturalIds.has(entry.id),
+  );
+  const hasSpecials = entries.some((entry) => entry.kind === "special");
+  const isEmpty =
+    naturalRows.length === 0 && hiddenNaturals.length === 0 && !hasSpecials;
 
   const previewContext = useMemo((): SpecialAttackPreviewContext => {
     return {
-      bab,
+      bab: stats.bab,
       strMod: abilityModifier(state.abilities.str),
       sizeMod: state.combat.sizeMod,
       multiattack: hasMultiattackFeat(state),
     };
-  }, [bab, state.abilities.str, state.combat.sizeMod, state.feats]);
+  }, [stats.bab, state.abilities.str, state.combat.sizeMod, state.feats]);
 
   function addEntry(entry: PcSpecialAttackEntry) {
     applySpecialAttacks(patch, [...entries, entry]);
@@ -81,11 +92,10 @@ export function PcSpecialAttacksBlock({
 
   return (
     <>
-      <PcSheetCard
-        title="Special attacks"
-        className="pc-combat-attacks-card"
-        actions={
-          !readOnly ? (
+      <div className="pc-actions-weapons pc-actions-special-attacks">
+        <div className="pc-actions-section-head">
+          <h4 className="pc-actions-weapons-heading">Special attacks</h4>
+          {!readOnly ? (
             <button
               type="button"
               className="pc-class-add-toggle"
@@ -94,45 +104,49 @@ export function PcSpecialAttacksBlock({
             >
               <Plus aria-hidden className="pc-class-add-toggle-icon" />
             </button>
-          ) : null
-        }
-      >
-        <div className="pc-special-attacks-body">
-          <ul
-            className="pc-language-list pc-special-attacks-list"
-            aria-label="Special attacks"
-          >
-            <li key={unarmed.id}>
-              <span
-                className="pc-language-chip pc-special-attack-chip"
-                title={formatSpecialAttacksString([unarmed])}
-              >
-                {formatSpecialAttackChip(unarmed)}
-              </span>
-            </li>
-            {entries.map((entry) => (
-              <li key={entry.id}>
-                <span
-                  className="pc-language-chip pc-special-attack-chip"
-                  title={formatSpecialAttacksString([entry])}
-                >
-                  {formatSpecialAttackChip(entry)}
-                  {!readOnly ? (
-                    <button
-                      type="button"
-                      className="pc-language-chip-remove"
-                      aria-label={`Remove ${formatSpecialAttackChip(entry)}`}
-                      onClick={() => removeEntry(entry.id)}
-                    >
-                      ×
-                    </button>
-                  ) : null}
-                </span>
-              </li>
-            ))}
-          </ul>
+          ) : null}
         </div>
-      </PcSheetCard>
+        {isEmpty ? (
+          <p className="pc-sheet-empty">No special attacks.</p>
+        ) : (
+          <>
+            {naturalRows.map((row) => (
+              <div
+                key={row.entryId ?? row.name}
+                className="pc-actions-removable"
+              >
+                {!readOnly && row.entryId ? (
+                  <button
+                    type="button"
+                    className="pc-language-chip-remove pc-actions-removable-remove"
+                    aria-label={`Remove ${row.name}`}
+                    onClick={() => removeEntry(row.entryId!)}
+                  >
+                    ×
+                  </button>
+                ) : null}
+                <PcWeaponAttacksList weapons={[row]} pcPlanId={pcPlanId} />
+              </div>
+            ))}
+            {hiddenNaturals.map((entry) => (
+              <p key={entry.id} className="pc-actions-hidden-natural">
+                <span>{formatSpecialAttackChip(entry)}</span>
+                {!readOnly ? (
+                  <button
+                    type="button"
+                    className="pc-language-chip-remove"
+                    aria-label={`Remove ${entry.name}`}
+                    onClick={() => removeEntry(entry.id)}
+                  >
+                    ×
+                  </button>
+                ) : null}
+              </p>
+            ))}
+            <PcSpecialAttacksActions state={state} onRemove={readOnly ? undefined : removeEntry} />
+          </>
+        )}
+      </div>
       <PcSpecialAttackDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}

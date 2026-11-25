@@ -299,6 +299,7 @@ export function computeNaturalAttackRows(
       summary,
       attackSources,
       damageSources,
+      entryId: entry.id,
     });
   });
 

@@ -33,6 +33,7 @@ import { buildSourceDisplayNameMap } from "@/lib/source-display";
 import type { TableSort } from "@/lib/table-sort";
 import { isCastingClassVariant, resolveClassSpellOriginSlug } from "@/lib/class-spell-origin";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
+import { domainSpellLevel } from "@/lib/pc-planner/spellSlots";
 import {
   parseClassAbilities,
   parseClassProficiencies,
@@ -1942,6 +1943,47 @@ export async function getClassSpellsAtLevel(
     sourceName: spell.source.name,
     edition: spell.source.edition,
   }));
+}
+
+export async function getDomainSpellsAtLevel(
+  domainSlug: string,
+  level: number,
+): Promise<ClassSpellRef[]> {
+  const domain = await prisma.domain.findUnique({
+    where: { slug: domainSlug },
+    select: {
+      domainSpells: {
+        orderBy: { position: "asc" },
+        select: {
+          spell: {
+            select: {
+              slug: true,
+              name: true,
+              school: true,
+              components: true,
+              descriptionText: true,
+              indexData: true,
+              source: { select: { name: true, abbrev: true, edition: true } },
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!domain) return [];
+  const total = domain.domainSpells.length;
+  return domain.domainSpells
+    .filter((_, index) => domainSpellLevel(index, total) === level)
+    .map(({ spell }) => ({
+      slug: spell.slug,
+      name: spell.name,
+      school: spell.school,
+      description: spellDescriptionSnippet(spell.indexData, spell.descriptionText),
+      components: parseSpellComponents(spell.components, spell.indexData),
+      sourceAbbrev: spell.source.abbrev,
+      sourceName: spell.source.name,
+      edition: spell.source.edition,
+    }));
 }
 
 const WIZARD_SPELL_LIST_SLUG = "wizard-99";

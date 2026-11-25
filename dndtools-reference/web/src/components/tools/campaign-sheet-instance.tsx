@@ -340,7 +340,7 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
         onAddSpell={(slug, name, level) =>
           patch((s) => {
             const target = s.spellClasses[activeSpellClassIndex];
-            if (!target || target.spells.some((sp) => sp.slug === slug)) return;
+            if (!target || target.spells.some((sp) => sp.slug === slug && !sp.domain)) return;
             const computed = computeSpellClass(
               target.classSlug,
               target.label,
@@ -348,12 +348,12 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
               s.abilities,
               compendium?.classSpellTables?.[target.classSlug],
               {
-                hasDomains: (s.identity.domains?.length ?? 0) > 0,
+                hasDomains: false,
                 specialistSchool: s.identity.specialistSchool,
               },
             );
             if (computed.mode === "spontaneous") {
-              const atLevel = target.spells.filter((sp) => sp.level === level).length;
+              const atLevel = target.spells.filter((sp) => sp.level === level && !sp.domain).length;
               const knownLimit = computed.known[level] ?? 0;
               if (knownLimit > 0 && atLevel >= knownLimit) return;
             }
@@ -369,14 +369,14 @@ export const CampaignSheetInstance = memo(function CampaignSheetInstance({
           patch((s) => {
             const target = s.spellClasses[activeSpellClassIndex];
             if (!target) return;
-            target.spells = target.spells.filter((sp) => sp.slug !== slug);
+            target.spells = target.spells.filter((sp) => sp.domain || sp.slug !== slug);
           })
         }
         onUpdateSpellPrepared={(slug, prepared) =>
           patch((s) => {
             const target = s.spellClasses[activeSpellClassIndex];
             if (!target) return;
-            const spell = target.spells.find((sp) => sp.slug === slug);
+            const spell = target.spells.find((sp) => sp.slug === slug && !sp.domain);
             if (!spell) return;
             spell.prepared = Math.max(0, prepared);
           })

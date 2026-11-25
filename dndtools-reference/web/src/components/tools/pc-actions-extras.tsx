@@ -65,7 +65,6 @@ export function PcCombatModesPanel({
             ["fightingDefensively", "Fight defensively"],
             ["charge", "Charge"],
             ["rapidShot", "Rapid Shot"],
-            ["flurry", "Flurry of blows"],
             ["rage", "Rage"],
           ] as const
         ).map(([key, label]) => (

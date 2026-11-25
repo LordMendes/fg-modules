@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { fetchClassSpellsAtLevel, fetchSpellPreview } from "@/actions/data";
+import { fetchClassSpellsAtLevel, fetchDomainSpellsAtLevel, fetchSpellPreview } from "@/actions/data";
 import { DraggableDialog } from "@/components/draggable-dialog";
 import { SpellCastDetailsView } from "@/components/tools/spell-cast-details-view";
 import { useSessionNonce } from "@/components/session-provider";
@@ -130,6 +130,7 @@ export function PcSpellPickerDialog({
   addedSpellSlugs,
   opposedSchools = [],
   onAddSpell,
+  domainSlug = null,
 }: {
   open: boolean;
   onClose: () => void;
@@ -140,6 +141,8 @@ export function PcSpellPickerDialog({
   addedSpellSlugs: Set<string>;
   opposedSchools?: string[];
   onAddSpell: (slug: string, name: string) => void;
+  /** When set, the picker lists this domain's spells instead of the class list. */
+  domainSlug?: string | null;
 }) {
   const nonce = useSessionNonce();
   const [query, setQuery] = useState("");
@@ -160,7 +163,10 @@ export function PcSpellPickerDialog({
     setLoading(true);
     setLoadError(null);
 
-    void fetchClassSpellsAtLevel({ classSlug, className: classLabel, level, nonce }).then((result) => {
+    void (domainSlug
+      ? fetchDomainSpellsAtLevel({ domainSlug, level, nonce })
+      : fetchClassSpellsAtLevel({ classSlug, className: classLabel, level, nonce })
+    ).then((result) => {
       if (cancelled) return;
       setLoading(false);
       if (!result.success || !result.spells) {
@@ -174,7 +180,7 @@ export function PcSpellPickerDialog({
     return () => {
       cancelled = true;
     };
-  }, [open, classSlug, classLabel, level, nonce]);
+  }, [open, classSlug, classLabel, level, nonce, domainSlug]);
 
   const filteredSpells = useMemo(() => {
     const needle = query.trim().toLowerCase();

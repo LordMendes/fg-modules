@@ -129,3 +129,93 @@ export function computeFeatBudget(
 export function formatFeatBudgetSummary(budget: FeatBudgetBreakdown): string {
   return `${budget.spentNonFlaw} / ${budget.total}`;
 }
+
+export type FeatSourceOption = {
+  id: string;
+  label: string;
+  title?: string;
+};
+
+function isClassEntry(cl: ClassLevelEntry, slug: string): boolean {
+  const classSlug = cl.classSlug.toLowerCase();
+  const className = cl.className.trim().toLowerCase();
+  return classSlug === slug || classSlug.startsWith(`${slug}-`) || className === slug;
+}
+
+/** Class bonus feats in budget order: fighter, wizard, monk, ranger. */
+function classBonusFeatTitles(classLevels: ClassLevelEntry[]): string[] {
+  const titles: string[] = [];
+  const push = (label: string, count: number) => {
+    for (let i = 0; i < count; i++) titles.push(label);
+  };
+  for (const cl of classLevels) {
+    if (!isClassEntry(cl, "fighter") || cl.level < 1) continue;
+    push("Fighter", 1 + Math.floor(cl.level / 2));
+  }
+  for (const cl of classLevels) {
+    if (!isClassEntry(cl, "wizard") || cl.level < 1) continue;
+    push("Wizard", 1 + Math.floor((cl.level - 1) / 5));
+  }
+  for (const cl of classLevels) {
+    if (!isClassEntry(cl, "monk") || cl.level < 1) continue;
+    let count = 0;
+    if (cl.level >= 1) count += 1;
+    if (cl.level >= 2) count += 1;
+    if (cl.level >= 6) count += 1;
+    push("Monk", count);
+  }
+  for (const cl of classLevels) {
+    if (!isClassEntry(cl, "ranger") || cl.level < 1) continue;
+    let count = 0;
+    if (cl.level >= 2) count += 1;
+    if (cl.level >= 6) count += 1;
+    if (cl.level >= 11) count += 1;
+    push("Ranger", count);
+  }
+  return titles;
+}
+
+/** Slots a feat can be flagged with: level, human, class bonus, or flaw. */
+export function listFeatSourceOptions(
+  state: PcPlanState,
+  raceFeatures: RaceDerivedFeatures | null = null,
+): FeatSourceOption[] {
+  const level = Math.max(0, Math.trunc(characterLevelFromPlan(state)));
+  const options: FeatSourceOption[] = [];
+  if (level >= 1) {
+    options.push({ id: "level:1", label: "Lvl 1" });
+    for (let n = 3; n <= level; n += 3) {
+      options.push({ id: `level:${n}`, label: `Lvl ${n}` });
+    }
+  }
+  if (humanBonusFeatBudget(level, raceFeatures, state.identity.race) > 0) {
+    options.push({ id: "human", label: "Human" });
+  }
+  classBonusFeatTitles(state.identity.classLevels).forEach((className, index) => {
+    options.push({
+      id: `bonus:${index + 1}`,
+      label: `Bonus feat ${index + 1}`,
+      title: `${className} bonus feat`,
+    });
+  });
+  const flaws = flawFeatBudget(state.feats);
+  for (let i = 1; i <= flaws; i++) {
+    options.push({
+      id: `flaw:${i}`,
+      label: `Flaw ${i}`,
+      title: "Extra feat from a flaw",
+    });
+  }
+  return options;
+}
+
+export function featSourceLabel(id: string): string {
+  if (id === "human") return "Human";
+  const level = /^level:(\d+)$/.exec(id);
+  if (level) return `Lvl ${level[1]}`;
+  const bonus = /^bonus:(\d+)$/.exec(id);
+  if (bonus) return `Bonus feat ${bonus[1]}`;
+  const flaw = /^flaw:(\d+)$/.exec(id);
+  if (flaw) return `Flaw ${flaw[1]}`;
+  return id;
+}

@@ -7,6 +7,7 @@ import {
   bonusSlotsForLevel,
   buildBaseSlots,
   computeSpellClass,
+  domainSpellLevel,
   splitBaseAndBonus,
 } from "./spellSlots";
 
@@ -128,6 +129,14 @@ describe("computeSpellClass", () => {
     assert.equal(without.slots[1], 1);
     assert.equal(withDomains.slots[1], 2);
     assert.equal(withDomains.slots[0], without.slots[0]);
+  });
+
+  it("maps domain list order to spell levels", () => {
+    assert.equal(domainSpellLevel(0, 9), 1);
+    assert.equal(domainSpellLevel(8, 9), 9);
+    assert.equal(domainSpellLevel(0, 18), 1);
+    assert.equal(domainSpellLevel(1, 18), 1);
+    assert.equal(domainSpellLevel(2, 18), 2);
   });
 
   it("computes bard spells known from the PHB table", () => {

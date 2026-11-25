@@ -8,6 +8,7 @@ import { useRefreshSession, useSessionNonce, useSessionReady } from "@/component
 import { PcSheetCard } from "@/components/tools/pc-main/sheet-card";
 import type { CategoryKey } from "@/lib/categories";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
+import { deityDomainNames, domainNameAllowed } from "@/lib/pc-planner/deityDomains";
 import { ARCANE_SCHOOLS } from "@/lib/spell-utils";
 import type { PcPlanState } from "@/lib/pc-planner/types";
 
@@ -96,16 +97,44 @@ export function PcMainDivineArcane({
   const showDomains = castingNames.has("cleric");
   const showSpecialist = castingNames.has("wizard");
   const domainCatalog = useDomainOptions(showDomains);
+  const allowedDomainNames = useMemo(
+    () => deityDomainNames(state.identity.deitySlug, state.identity.deity),
+    [state.identity.deitySlug, state.identity.deity],
+  );
+
+  useEffect(() => {
+    if (section === "arcane" || !showDomains) return;
+    if (!allowedDomainNames || allowedDomainNames.length === 0) return;
+    const current = state.identity.domains ?? [];
+    if (current.every((domain) => domainNameAllowed(domain.name, allowedDomainNames))) return;
+    patch((s) => {
+      const allowed = deityDomainNames(s.identity.deitySlug, s.identity.deity);
+      if (!allowed || allowed.length === 0) return;
+      s.identity.domains = (s.identity.domains ?? []).filter((domain) =>
+        domainNameAllowed(domain.name, allowed),
+      );
+    });
+  }, [allowedDomainNames, patch, section, showDomains, state.identity.domains]);
 
   const domainOptions = useMemo(() => {
-    const bySlug = new Map(domainCatalog.map((opt) => [opt.value, opt]));
-    for (const domain of state.identity.domains ?? []) {
-      if (!bySlug.has(domain.slug)) {
-        bySlug.set(domain.slug, { value: domain.slug, label: domain.name });
+    const selected = new Set((state.identity.domains ?? []).map((domain) => domain.slug));
+    const bySlug = new Map<string, MultiSelectOption>();
+    const deityChosen = allowedDomainNames != null;
+    const deityKnown = deityChosen && allowedDomainNames.length > 0;
+    if (!deityChosen || deityKnown) {
+      for (const opt of domainCatalog) {
+        if (!deityKnown || domainNameAllowed(opt.label, allowedDomainNames)) {
+          bySlug.set(opt.value, opt);
+        }
       }
     }
+    for (const domain of state.identity.domains ?? []) {
+      if (bySlug.has(domain.slug) || !selected.has(domain.slug)) continue;
+      if (deityKnown && !domainNameAllowed(domain.name, allowedDomainNames)) continue;
+      bySlug.set(domain.slug, { value: domain.slug, label: domain.name });
+    }
     return [...bySlug.values()].sort((a, b) => a.label.localeCompare(b.label));
-  }, [domainCatalog, state.identity.domains]);
+  }, [allowedDomainNames, domainCatalog, state.identity.domains]);
 
   const domainSlugs = (state.identity.domains ?? []).map((domain) => domain.slug);
   const opposedSchools = state.identity.opposedSchools ?? [];
@@ -182,6 +211,11 @@ export function PcMainDivineArcane({
                         patch((s) => {
                           s.identity.deity = hit.name;
                           s.identity.deitySlug = hit.slug;
+                          const allowed = deityDomainNames(hit.slug, hit.name);
+                          if (!allowed || allowed.length === 0) return;
+                          s.identity.domains = (s.identity.domains ?? []).filter((domain) =>
+                            domainNameAllowed(domain.name, allowed),
+                          );
                         })
                       }
                     />
@@ -198,16 +232,29 @@ export function PcMainDivineArcane({
                       {(state.identity.domains ?? []).map((d) => d.name).join(", ") || "None"}
                     </span>
                   ) : (
-                    <MultiSelect
-                      label="Domains"
-                      showLabel={false}
-                      displayMode="badges"
-                      maxSelections={MAX_DOMAINS}
-                      options={domainOptions}
-                      value={domainSlugs}
-                      onChange={setDomains}
-                      placeholder="Select domains"
-                    />
+                    <>
+                      <MultiSelect
+                        label="Domains"
+                        showLabel={false}
+                        displayMode="badges"
+                        maxSelections={MAX_DOMAINS}
+                        options={domainOptions}
+                        value={domainSlugs}
+                        onChange={setDomains}
+                        placeholder={
+                          allowedDomainNames == null
+                            ? "Select domains"
+                            : allowedDomainNames.length > 0
+                              ? `Domains of ${state.identity.deity || "this deity"}`
+                              : "No recorded domains"
+                        }
+                      />
+                      {allowedDomainNames != null && allowedDomainNames.length === 0 ? (
+                        <p className="npc-sheet-sub">
+                          No domains are recorded for {state.identity.deity || "this deity"}.
+                        </p>
+                      ) : null}
+                    </>
                   )}
                 </dd>
               </div>

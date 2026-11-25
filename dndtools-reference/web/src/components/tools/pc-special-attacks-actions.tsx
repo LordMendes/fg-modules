@@ -15,9 +15,11 @@ import type { PcPlanState, PcSpecialAttackEntry } from "@/lib/pc-planner/types";
 function SpecialAttackCard({
   entry,
   sizeMod,
+  onRemove,
 }: {
   entry: PcSpecialAttackEntry;
   sizeMod: number;
+  onRemove?: (id: string) => void;
 }) {
   const diceRaw = specialAttackDamageDice(entry, sizeMod);
   const color = weaponDamageColor(entry.damageType) ?? "#C9A227";
@@ -47,6 +49,16 @@ function SpecialAttackCard({
           </RollableDice>
         ) : null}
         {save ? <span className="npc-sheet-sub">{save}</span> : null}
+        {onRemove ? (
+          <button
+            type="button"
+            className="pc-language-chip-remove pc-special-attack-action-remove"
+            aria-label={`Remove ${entry.name}`}
+            onClick={() => onRemove(entry.id)}
+          >
+            ×
+          </button>
+        ) : null}
       </div>
       {entry.notes?.trim() ? (
         <p className="pc-special-attack-action-notes">{entry.notes.trim()}</p>
@@ -60,8 +72,10 @@ function SpecialAttackCard({
 
 export function PcSpecialAttacksActions({
   state,
+  onRemove,
 }: {
   state: PcPlanState;
+  onRemove?: (id: string) => void;
 }) {
   const specials = listSpecialOnlyAttacks(state.combat.specialAttacks).filter(
     (entry) => !isUnarmedStrikeEntry(entry),
@@ -69,17 +83,15 @@ export function PcSpecialAttacksActions({
   if (specials.length === 0) return null;
 
   return (
-    <div className="pc-actions-special-attacks">
-      <h4 className="pc-actions-weapons-heading">Special attacks</h4>
-      <ul className="pc-special-attack-action-list">
-        {specials.map((entry) => (
-          <SpecialAttackCard
-            key={entry.id}
-            entry={entry}
-            sizeMod={state.combat.sizeMod}
-          />
-        ))}
-      </ul>
-    </div>
+    <ul className="pc-special-attack-action-list">
+      {specials.map((entry) => (
+        <SpecialAttackCard
+          key={entry.id}
+          entry={entry}
+          sizeMod={state.combat.sizeMod}
+          onRemove={onRemove}
+        />
+      ))}
+    </ul>
   );
 }

@@ -3,8 +3,12 @@ import { describe, it } from "node:test";
 import { createDefaultPcPlanState } from "./defaultState";
 import { computeCombatStats } from "./combatStats";
 import { computeNaturalAttackRows } from "./specialAttacks";
+import { normalizePcPlanState } from "./normalizePlanState";
 import {
+  computeFlurryOfBlows,
   computeUnarmedStrike,
+  flurryAttackBonuses,
+  flurryPenalty,
   monkUnarmedLevel,
   unarmedDamageDice,
 } from "./unarmedStrike";
@@ -141,5 +145,67 @@ describe("computeUnarmedStrike", () => {
     ];
     const rows = computeNaturalAttackRows(state, computeCombatStats(state));
     assert.equal(rows.length, 0);
+  });
+});
+
+describe("flurry of blows", () => {
+  it("uses -2, -1, then no penalty by monk level", () => {
+    assert.equal(flurryPenalty(0), 2);
+    assert.equal(flurryPenalty(4), 2);
+    assert.equal(flurryPenalty(5), 1);
+    assert.equal(flurryPenalty(8), 1);
+    assert.equal(flurryPenalty(9), 0);
+  });
+
+  it("adds an extra attack at the highest bonus after the penalty", () => {
+    assert.deepEqual(flurryAttackBonuses(0, 0, 2), [-2, -2]);
+    assert.deepEqual(flurryAttackBonuses(3, 3, 1), [2, 2]);
+    assert.deepEqual(flurryAttackBonuses(6, 6, 0), [6, 6, 1]);
+  });
+
+  it("builds a 1st-level monk flurry at -2/-2", () => {
+    const state = withClasses([
+      { classSlug: "monk", className: "Monk", level: 1 },
+    ]);
+    const row = computeFlurryOfBlows(state, computeCombatStats(state));
+    assert.equal(row.name, "Flurry of blows");
+    assert.deepEqual(row.standardBonuses, [-2]);
+    assert.deepEqual(row.fullAttackBonuses, [-2, -2]);
+    assert.match(row.damageDisplay, /1d6/);
+  });
+
+  it("drops the penalty at monk level 9 and keeps the extra attack", () => {
+    const state = withClasses([
+      { classSlug: "monk", className: "Monk", level: 9 },
+    ]);
+    const stats = computeCombatStats(state);
+    const row = computeFlurryOfBlows(state, stats);
+    assert.equal(stats.bab, 6);
+    assert.deepEqual(row.fullAttackBonuses, [6, 6, 1]);
+    assert.equal(row.attackSources.some((line) => line.startsWith("Flurry")), false);
+  });
+
+  it("applies the -2 penalty when the character is not a monk", () => {
+    const state = withClasses([
+      { classSlug: "fighter", className: "Fighter", level: 6 },
+    ]);
+    state.abilities.str = 14;
+    const stats = computeCombatStats(state);
+    const unarmed = computeUnarmedStrike(state, stats).row;
+    assert.equal(unarmed.attackBonus, 8);
+    const row = computeFlurryOfBlows(state, stats);
+    assert.deepEqual(row.fullAttackBonuses, [6, 6, 1]);
+    assert.ok(row.attackSources.some((line) => line === "Flurry -2"));
+  });
+
+  it("keeps a legacy flurry combat mode as an added flurry attack", () => {
+    const state = createDefaultPcPlanState("Test");
+    Object.assign(state.combatModes, { flurry: true });
+    const next = normalizePcPlanState(state);
+    assert.equal(next.combat.flurryOfBlows, true);
+    assert.equal(
+      (next.combatModes as { flurry?: boolean }).flurry,
+      undefined,
+    );
   });
 });

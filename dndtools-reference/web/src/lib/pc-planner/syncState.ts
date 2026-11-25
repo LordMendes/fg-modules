@@ -6,6 +6,7 @@ import {
 } from "./classCasting";
 import {
   computeSpellClass,
+  isDomainSpell,
   type ClassSpellTableContext,
 } from "./spellSlots";
 import { parseSpellsPerDayFromAdvancementHtml } from "./parseClassSpellTables";
@@ -174,22 +175,40 @@ export function syncPcPlanState(
       state.abilities,
       classSpellTables[updated.classSlug],
       {
-        hasDomains: domainsSelected,
+        hasDomains: false,
         specialistSchool: state.identity.specialistSchool,
       },
     );
 
+    const classIsCleric = (castingInfo?.fgClassName ?? "").toLowerCase() === "cleric";
+    const selectedDomainSlugs = new Set(
+      (state.identity.domains ?? []).map((domain) => domain.slug),
+    );
+    const sourceSpells = classIsCleric
+      ? updated.spells
+      : updated.spells.filter((sp) => !isDomainSpell(sp));
+
     let kept: SpellClassState["spells"];
     if (computed.mode === "preparation") {
-      const byLevel = new Map<number, SpellClassState["spells"]>();
-      for (const sp of updated.spells) {
-        const list = byLevel.get(sp.level) ?? [];
-        list.push(sp);
-        byLevel.set(sp.level, list);
-      }
+      const classSpells = sourceSpells.filter((sp) => !isDomainSpell(sp));
+      const domainSpells =
+        classIsCleric && domainsSelected
+          ? sourceSpells.filter(
+              (sp) =>
+                isDomainSpell(sp) &&
+                typeof sp.domainSlug === "string" &&
+                selectedDomainSlugs.has(sp.domainSlug),
+            )
+          : [];
 
       kept = [];
-      for (const [level, spellsAtLevel] of byLevel) {
+      const classByLevel = new Map<number, SpellClassState["spells"]>();
+      for (const sp of classSpells) {
+        const list = classByLevel.get(sp.level) ?? [];
+        list.push(sp);
+        classByLevel.set(sp.level, list);
+      }
+      for (const [level, spellsAtLevel] of classByLevel) {
         const slotLimit = computed.slots[level] ?? 0;
         let preparedUsed = 0;
         for (const sp of spellsAtLevel) {
@@ -197,11 +216,32 @@ export function syncPcPlanState(
           const remaining = Math.max(0, slotLimit - preparedUsed);
           prepared = Math.min(prepared, remaining);
           preparedUsed += prepared;
-          kept.push({ ...sp, prepared });
+          kept.push({ ...sp, domain: undefined, domainSlug: undefined, prepared });
+        }
+      }
+
+      const domainByLevel = new Map<number, SpellClassState["spells"]>();
+      for (const sp of domainSpells) {
+        const list = domainByLevel.get(sp.level) ?? [];
+        list.push(sp);
+        domainByLevel.set(sp.level, list);
+      }
+      for (const [level, spellsAtLevel] of domainByLevel) {
+        const unlocked = level >= 1 && (computed.slots[level] ?? 0) > 0;
+        const slotLimit = unlocked ? 1 : 0;
+        let preparedUsed = 0;
+        for (const sp of spellsAtLevel) {
+          let prepared = Math.max(0, sp.prepared ?? 1);
+          const remaining = Math.max(0, slotLimit - preparedUsed);
+          prepared = Math.min(prepared, remaining);
+          preparedUsed += prepared;
+          kept.push({ ...sp, domain: true, prepared });
         }
       }
     } else {
-      kept = updated.spells.map((sp) => ({ ...sp, prepared: undefined }));
+      kept = sourceSpells
+        .filter((sp) => !isDomainSpell(sp))
+        .map((sp) => ({ ...sp, prepared: undefined, domain: undefined, domainSlug: undefined }));
     }
 
     nextSpellClasses.push({ ...updated, spells: kept });

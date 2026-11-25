@@ -13,7 +13,10 @@ import { EntitySearchCombobox } from "@/components/entity-search-combobox";
 import type { CategoryKey } from "@/lib/categories";
 import {
   computeFeatBudget,
+  featSourceLabel,
   formatFeatBudgetSummary,
+  listFeatSourceOptions,
+  type FeatSourceOption,
 } from "@/lib/pc-planner/featBudget";
 import { classAbilityEffectKey, extractClassAbilityDescription } from "@/lib/pc-planner/parseClassAbilityEffects";
 import { featNeedsSkillChoice } from "@/lib/pc-planner/parseFeatEffects";
@@ -203,6 +206,7 @@ function FeatList({
   budgetLabel,
   overBudget,
   budgetTitle,
+  sourceOptions,
   onAddFeat,
   onRemoveFeat,
   inventory,
@@ -213,6 +217,7 @@ function FeatList({
   budgetLabel: string;
   overBudget: boolean;
   budgetTitle: string;
+  sourceOptions: FeatSourceOption[];
   onAddFeat: (slug: string, name: string, choice?: string, isFlaw?: boolean) => void;
   onRemoveFeat: (slug: string) => void;
   inventory: PcPlanState["inventory"];
@@ -267,6 +272,33 @@ function FeatList({
     const trimmed = choice.trim();
     onAddFeat(hit.slug, hit.name, trimmed || undefined, isFlaw);
     setAddOpen(false);
+  }
+
+  function sourceChoices(feat: FeatEntry): FeatSourceOption[] {
+    const taken = new Set(
+      feats
+        .filter((other) => other.slug !== feat.slug && other.source)
+        .map((other) => other.source as string),
+    );
+    const available = sourceOptions.filter((option) => !taken.has(option.id));
+    if (feat.source && !available.some((option) => option.id === feat.source)) {
+      return [{ id: feat.source, label: featSourceLabel(feat.source) }, ...available];
+    }
+    return available;
+  }
+
+  function setFeatSource(slug: string, source: string) {
+    patch((s) => {
+      const row = s.feats.find((feat) => feat.slug === slug);
+      if (!row) return;
+      const next = source || undefined;
+      if (next) {
+        for (const other of s.feats) {
+          if (other.slug !== slug && other.source === next) other.source = undefined;
+        }
+      }
+      row.source = next;
+    });
   }
 
   return (
@@ -334,6 +366,32 @@ function FeatList({
               >
                 {formatFeatDisplayName(feat)}
               </a>
+              {feat.isFlaw ? (
+                <span className="pc-feat-flaw-badge">Flaw</span>
+              ) : (
+                <span className="pc-feat-flaw-badge pc-feat-flaw-badge--empty" aria-hidden="true" />
+              )}
+              {readOnly ? (
+                feat.source ? (
+                  <span className="pc-feat-source-label">{featSourceLabel(feat.source)}</span>
+                ) : (
+                  <span />
+                )
+              ) : (
+                <select
+                  className="pc-sheet-input pc-sheet-select pc-feat-source"
+                  aria-label={`Flag for ${formatFeatDisplayName(feat)}`}
+                  value={feat.source ?? ""}
+                  onChange={(event) => setFeatSource(feat.slug, event.target.value)}
+                >
+                  <option value="">Flag</option>
+                  {sourceChoices(feat).map((option) => (
+                    <option key={option.id} value={option.id} title={option.title}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              )}
               {!readOnly ? (
                 <button
                   type="button"
@@ -379,6 +437,7 @@ export function PcAbilitiesPanel({
         budgetLabel={formatFeatBudgetSummary(budget)}
         overBudget={budget.spentNonFlaw > budget.total}
         budgetTitle={`General ${budget.general}, human ${budget.human}, fighter ${budget.fighter}, wizard ${budget.wizard}, monk ${budget.monk}, ranger ${budget.ranger}, flaws ${budget.flaws}`}
+        sourceOptions={listFeatSourceOptions(state, compendium?.raceFeatures ?? null)}
         onAddFeat={onAddFeat}
         onRemoveFeat={onRemoveFeat}
         inventory={state.inventory}

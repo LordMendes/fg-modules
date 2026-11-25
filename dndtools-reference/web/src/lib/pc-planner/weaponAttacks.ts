@@ -92,6 +92,8 @@ export type WeaponAttackRow = {
   attackSources: string[];
   /** Breakdown of the damage modifier (tooltip). */
   damageSources: string[];
+  /** Special-attack entry id, when this row is a natural attack. */
+  entryId?: string;
 };
 
 function asDieSides(sides: number): DieSides | null {

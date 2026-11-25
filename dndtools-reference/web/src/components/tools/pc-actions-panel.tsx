@@ -8,7 +8,7 @@ import { PcSpellPickerDialog } from "@/components/tools/pc-spell-picker-dialog";
 import { PcSpellListItem } from "@/components/tools/pc-spell-list-item";
 import { PcItemSpellListItem } from "@/components/tools/pc-item-spell-list-item";
 import { PcWeaponAttacksList } from "@/components/tools/pc-weapon-attacks-list";
-import { PcSpecialAttacksActions } from "@/components/tools/pc-special-attacks-actions";
+import { PcSpecialAttacksBlock } from "@/components/tools/pc-special-attacks-block";
 import { castingModeLabel, getClassCastingInfo, halfCasterEffectiveLevel, isHalfCaster } from "@/lib/pc-planner/classCasting";
 import {
   computeCombatStats,
@@ -27,10 +27,13 @@ import { deriveFeatEffects } from "@/lib/pc-planner/parseFeatEffects";
 import { resolveClassFeaturesForPlan } from "@/lib/pc-planner/resolveCompendium";
 import {
   computeSpellClass,
+  isDomainSpell,
   preparedCountAtLevel,
 } from "@/lib/pc-planner/spellSlots";
-import { computeNaturalAttackRows } from "@/lib/pc-planner/specialAttacks";
-import { computeUnarmedStrike } from "@/lib/pc-planner/unarmedStrike";
+import {
+  computeFlurryOfBlows,
+  computeUnarmedStrike,
+} from "@/lib/pc-planner/unarmedStrike";
 import { computeWeaponAttackRows } from "@/lib/pc-planner/weaponAttacks";
 import { PcResourcesPanel } from "@/components/tools/pc-actions-extras";
 import type { PcPlanState } from "@/lib/pc-planner/types";
@@ -79,10 +82,25 @@ function CombatSummary({
     deriveFeatEffects(state.feats),
   );
   const weapons = computeWeaponAttackRows(state, stats);
-  const naturalWeapons = computeNaturalAttackRows(state, stats);
-  const unarmedStrike = computeUnarmedStrike(state, stats).row;
-  const unarmedAndNatural = [unarmedStrike, ...naturalWeapons];
+  const showUnarmed = state.combat.unarmedStrike === true;
+  const showFlurry = state.combat.flurryOfBlows === true;
+  const unarmedRows = [
+    ...(showUnarmed ? [computeUnarmedStrike(state, stats).row] : []),
+    ...(showFlurry ? [computeFlurryOfBlows(state, stats)] : []),
+  ];
   const [shortcutOpen, setShortcutOpen] = useState(false);
+
+  function setUnarmed(enabled: boolean) {
+    patch((s) => {
+      s.combat.unarmedStrike = enabled ? true : undefined;
+    });
+  }
+
+  function setFlurry(enabled: boolean) {
+    patch((s) => {
+      s.combat.flurryOfBlows = enabled ? true : undefined;
+    });
+  }
 
   return (
     <div className="npc-sheet-block pc-actions-combat">
@@ -171,14 +189,37 @@ function CombatSummary({
         <PcWeaponAttacksList weapons={weapons} pcPlanId={pcPlanId} />
       </div>
 
-      <div className="pc-actions-weapons pc-actions-natural-weapons">
-        <h4 className="pc-actions-weapons-heading">
-          {naturalWeapons.length > 0 ? "Unarmed and natural weapons" : "Unarmed strike"}
-        </h4>
-        <PcWeaponAttacksList weapons={unarmedAndNatural} pcPlanId={pcPlanId} />
+      <div className="pc-actions-weapons pc-actions-unarmed">
+        <div className="pc-actions-section-head">
+          <h4 className="pc-actions-weapons-heading">Unarmed</h4>
+          <div className="pc-actions-section-actions">
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost tool-btn--compact"
+              onClick={() => setUnarmed(!showUnarmed)}
+            >
+              {showUnarmed ? "Remove unarmed strike" : "Add unarmed strike"}
+            </button>
+            <button
+              type="button"
+              className="tool-btn tool-btn--ghost tool-btn--compact"
+              onClick={() => setFlurry(!showFlurry)}
+            >
+              {showFlurry ? "Remove flurry of blows" : "Add flurry of blows"}
+            </button>
+          </div>
+        </div>
+        {unarmedRows.length > 0 ? (
+          <PcWeaponAttacksList weapons={unarmedRows} pcPlanId={pcPlanId} />
+        ) : null}
       </div>
 
-      <PcSpecialAttacksActions state={state} />
+      <PcSpecialAttacksBlock
+        state={state}
+        patch={patch}
+        stats={stats}
+        pcPlanId={pcPlanId}
+      />
     </div>
   );
 }
@@ -197,6 +238,8 @@ export function PcActionsPanel({
 }: PcActionsPanelProps) {
   const [pendingSpellLevel, setPendingSpellLevel] = useState(1);
   const [spellPickerOpen, setSpellPickerOpen] = useState(false);
+  const [pendingDomainLevel, setPendingDomainLevel] = useState(1);
+  const [domainPickerSlug, setDomainPickerSlug] = useState<string | null>(null);
   const spellClass = state.spellClasses[activeSpellClassIndex];
   const classDescriptions = compendium?.classDescriptions ?? {};
   const prestigeContribs = useMemo(
@@ -218,16 +261,24 @@ export function PcActionsPanel({
         state.abilities,
         compendium?.classSpellTables?.[spellClass.classSlug],
         {
-          hasDomains: (state.identity.domains?.length ?? 0) > 0,
+          hasDomains: false,
           specialistSchool: state.identity.specialistSchool,
         },
       )
     : null;
 
-  const addedSpellSlugs = useMemo(
-    () => new Set(spellClass?.spells.map((spell) => spell.slug) ?? []),
+  const classSpells = useMemo(
+    () => spellClass?.spells.filter((spell) => !isDomainSpell(spell)) ?? [],
     [spellClass?.spells],
   );
+  const addedSpellSlugs = useMemo(
+    () => new Set(classSpells.map((spell) => spell.slug)),
+    [classSpells],
+  );
+  const selectedDomains = state.identity.domains ?? [];
+  const showDomainLists =
+    getClassCastingInfo(spellClass?.classSlug ?? "", spellClass?.label)?.fgClassName.toLowerCase() ===
+      "cleric" && selectedDomains.length > 0;
 
   const castContext = useMemo(() => {
     if (!computed || !spellClass) return null;
@@ -245,6 +296,54 @@ export function PcActionsPanel({
   const itemSpellActions = useMemo(
     () => computeItemSpellActions(state),
     [state.inventory],
+  );
+
+  function addDomainSpell(domainSlug: string, slug: string, name: string, level: number) {
+    patch((s) => {
+      const target = s.spellClasses[activeSpellClassIndex];
+      if (!target) return;
+      if (
+        target.spells.some(
+          (sp) => isDomainSpell(sp) && sp.domainSlug === domainSlug && sp.slug === slug,
+        )
+      ) {
+        return;
+      }
+      target.spells.push({
+        slug,
+        name,
+        level,
+        prepared: 1,
+        domain: true,
+        domainSlug,
+      });
+    });
+  }
+
+  function removeDomainSpell(domainSlug: string, slug: string) {
+    patch((s) => {
+      const target = s.spellClasses[activeSpellClassIndex];
+      if (!target) return;
+      target.spells = target.spells.filter(
+        (sp) => !(isDomainSpell(sp) && sp.domainSlug === domainSlug && sp.slug === slug),
+      );
+    });
+  }
+
+  function updateDomainPrepared(domainSlug: string, slug: string, prepared: number) {
+    patch((s) => {
+      const spell = s.spellClasses[activeSpellClassIndex]?.spells.find(
+        (sp) => isDomainSpell(sp) && sp.domainSlug === domainSlug && sp.slug === slug,
+      );
+      if (spell) spell.prepared = Math.max(0, prepared);
+    });
+  }
+
+  const activeDomain = selectedDomains.find((domain) => domain.slug === domainPickerSlug) ?? null;
+  const domainAddedSlugs = new Set(
+    (spellClass?.spells ?? [])
+      .filter((spell) => isDomainSpell(spell) && spell.domainSlug === domainPickerSlug)
+      .map((spell) => spell.slug),
   );
 
   return (
@@ -436,15 +535,15 @@ export function PcActionsPanel({
               onAddSpell={(slug, name) => onAddSpell(slug, name, pendingSpellLevel)}
             />
 
-            {spellClass.spells.length === 0 ? (
+            {classSpells.length === 0 ? (
               <p className="pc-sheet-empty">No spells added.</p>
             ) : (
               <ul className="pc-spell-by-level">
                 {Array.from({ length: 10 }, (_, lvl) => {
-                  const atLevel = spellClass.spells.filter((s) => s.level === lvl);
+                  const atLevel = classSpells.filter((s) => s.level === lvl);
                   if (atLevel.length === 0) return null;
                   const slotLimit = computed.slots[lvl] ?? 0;
-                  const preparedTotal = preparedCountAtLevel(spellClass.spells, lvl);
+                  const preparedTotal = preparedCountAtLevel(classSpells, lvl);
                   const knownLimit = computed.known[lvl] ?? 0;
                   return (
                     <li key={lvl}>
@@ -480,6 +579,122 @@ export function PcActionsPanel({
               </ul>
             )}
           </div>
+          {showDomainLists && computed && spellClass
+            ? selectedDomains.map((domain) => {
+                const domainSpells = spellClass.spells.filter(
+                  (spell) => isDomainSpell(spell) && spell.domainSlug === domain.slug,
+                );
+                return (
+                  <div key={domain.slug} className="npc-sheet-block pc-domain-spellcast">
+                    <h3>{domain.name}</h3>
+                    <p className="npc-sheet-sub">
+                      Domain spells. One spell per level, shared by every domain of this class.
+                    </p>
+                    <div className="pc-slot-grid" role="group" aria-label={`${domain.name} domain slots`}>
+                      {Array.from({ length: 10 }, (_, lvl) => {
+                        const unlocked = lvl >= 1 && (computed.slots[lvl] ?? 0) > 0;
+                        return (
+                          <div
+                            key={lvl}
+                            className={unlocked ? "pc-slot-cell pc-slot-cell--active" : "pc-slot-cell"}
+                          >
+                            <span className="pc-slot-label">L{lvl}</span>
+                            <span className="pc-slot-count">{unlocked ? 1 : 0}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="pc-spell-add-row">
+                      <label className="pc-spell-level-pick">
+                        <span className="npc-sheet-sub">Level</span>
+                        <select
+                          className="pc-sheet-input pc-sheet-select pc-sheet-input--narrow"
+                          value={pendingDomainLevel}
+                          onChange={(event) => setPendingDomainLevel(Number(event.target.value))}
+                        >
+                          {Array.from({ length: 9 }, (_, index) => index + 1).map((lvl) => (
+                            <option key={lvl} value={lvl}>
+                              L{lvl}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <button
+                        type="button"
+                        className="tool-btn"
+                        onClick={() => setDomainPickerSlug(domain.slug)}
+                      >
+                        Add spell
+                      </button>
+                    </div>
+                    {domainSpells.length === 0 ? (
+                      <p className="pc-sheet-empty">No domain spells added.</p>
+                    ) : (
+                      <ul className="pc-spell-by-level">
+                        {Array.from({ length: 9 }, (_, index) => index + 1).map((lvl) => {
+                          const atLevel = domainSpells.filter((spell) => spell.level === lvl);
+                          if (atLevel.length === 0) return null;
+                          const slotLimit = (computed.slots[lvl] ?? 0) > 0 ? 1 : 0;
+                          const preparedTotal = preparedCountAtLevel(
+                            spellClass.spells.filter(
+                              (spell) => isDomainSpell(spell) && spell.level === lvl,
+                            ),
+                            lvl,
+                          );
+                          return (
+                            <li key={lvl}>
+                              <strong>
+                                Level {lvl} ({preparedTotal}/{slotLimit} prepared)
+                              </strong>
+                              <ul className="pc-feat-list pc-feat-list--editable pc-spell-accordion-list">
+                                {atLevel.map((spell) => (
+                                  <PcSpellListItem
+                                    key={`${domain.slug}-${spell.slug}`}
+                                    spell={spell}
+                                    mode="preparation"
+                                    slotLimit={slotLimit}
+                                    casterPcPlanId={pcPlanId}
+                                    castContext={{
+                                      casterLevel: spellClass.casterLevel,
+                                      spellLevel: spell.level,
+                                      dcModifier: computed.dcModifier,
+                                    }}
+                                    onRemove={() => removeDomainSpell(domain.slug, spell.slug)}
+                                    onUpdatePrepared={(prepared) =>
+                                      updateDomainPrepared(domain.slug, spell.slug, prepared)
+                                    }
+                                  />
+                                ))}
+                              </ul>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })
+            : null}
+          {activeDomain && computed && spellClass ? (
+            <PcSpellPickerDialog
+              open={domainPickerSlug != null}
+              onClose={() => setDomainPickerSlug(null)}
+              classSlug={spellClass.classSlug}
+              classLabel={activeDomain.name}
+              domainSlug={activeDomain.slug}
+              level={pendingDomainLevel}
+              castContext={{
+                casterLevel: spellClass.casterLevel,
+                spellLevel: pendingDomainLevel,
+                dcModifier: computed.dcModifier,
+              }}
+              addedSpellSlugs={domainAddedSlugs}
+              opposedSchools={[]}
+              onAddSpell={(slug, name) =>
+                addDomainSpell(activeDomain.slug, slug, name, pendingDomainLevel)
+              }
+            />
+          ) : null}
         </>
       )}
     </div>

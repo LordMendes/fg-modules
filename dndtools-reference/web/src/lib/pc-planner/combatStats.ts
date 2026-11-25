@@ -463,6 +463,8 @@ export function normalizeCombatState(raw: unknown): PcPlanState["combat"] {
     srMisc: num("srMisc"),
     attacks: legacyAttacks,
     ...(specialAttacksRaw != null ? { specialAttacks: specialAttacksRaw as PcPlanState["combat"]["specialAttacks"] } : {}),
+    ...(combat.unarmedStrike === true ? { unarmedStrike: true as const } : {}),
+    ...(combat.flurryOfBlows === true ? { flurryOfBlows: true as const } : {}),
     asfOverride:
       combat.asfOverride != null && Number.isFinite(combat.asfOverride)
         ? Math.max(0, Math.min(100, Math.trunc(combat.asfOverride as number)))
@@ -474,7 +476,13 @@ export function normalizeCombatState(raw: unknown): PcPlanState["combat"] {
 
 type CombatNumericKey = Exclude<
   keyof PcPlanState["combat"],
-  "attacks" | "specialAttacks" | "asfOverride" | "addAllBonusTypes" | "suppressSynergies"
+  | "attacks"
+  | "specialAttacks"
+  | "unarmedStrike"
+  | "flurryOfBlows"
+  | "asfOverride"
+  | "addAllBonusTypes"
+  | "suppressSynergies"
 >;
 
 export function patchCombatNumber(

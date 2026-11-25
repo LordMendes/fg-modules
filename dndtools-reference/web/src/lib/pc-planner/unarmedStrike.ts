@@ -24,6 +24,9 @@ import {
 
 /** Sentinel so this row does not collide with inventory or natural-attack indexes. */
 export const UNARMED_STRIKE_INDEX = -10000;
+export const FLURRY_INDEX = -10001;
+
+const FLURRY_NAME = "Flurry of blows";
 
 const UNARMED_NAME = "Unarmed strike";
 const UNARMED_TEMPLATE_ID = "unarmed-strike";
@@ -391,4 +394,67 @@ export function computeUnarmedStrike(
   };
 
   return { entry, row };
+}
+
+/**
+ * PHB flurry penalty by monk class level: -2 through 4th, -1 through 8th,
+ * and none from 9th. A character with no monk levels uses the -2 penalty.
+ */
+export function flurryPenalty(monkLevel: number): number {
+  if (monkLevel >= 9) return 0;
+  if (monkLevel >= 5) return 1;
+  return 2;
+}
+
+/**
+ * Flurry of blows full-attack bonuses. One extra attack at the highest bonus,
+ * with the penalty applied to every attack. `attackBonus` already includes BAB.
+ */
+export function flurryAttackBonuses(
+  bab: number,
+  attackBonus: number,
+  penalty: number,
+): number[] {
+  const safeBab = Number.isFinite(bab) ? Math.trunc(bab) : 0;
+  const safeAttack = Number.isFinite(attackBonus) ? Math.trunc(attackBonus) : 0;
+  const safePenalty = Number.isFinite(penalty) ? Math.max(0, Math.trunc(penalty)) : 0;
+  const extra = safeAttack - safeBab - safePenalty;
+  const highest = safeBab + extra;
+  return [highest, ...iterativeAttackBonuses(safeBab, extra)];
+}
+
+/** Unarmed full attack with the monk flurry routine (extra attack and penalty). */
+export function computeFlurryOfBlows(
+  state: PcPlanState,
+  combatStats: CombatComputed,
+): WeaponAttackRow {
+  const unarmed = computeUnarmedStrike(state, combatStats).row;
+  const monkLevel = monkUnarmedLevel(state.identity.classLevels);
+  const penalty = flurryPenalty(monkLevel);
+  const bonuses = flurryAttackBonuses(
+    combatStats.bab,
+    unarmed.attackBonus,
+    penalty,
+  );
+  const fullDisplay = formatAttackBonuses(bonuses);
+  const standard = [bonuses[0] ?? 0];
+  const standardDisplay = formatAttackBonuses(standard);
+  return {
+    ...unarmed,
+    inventoryIndex: FLURRY_INDEX,
+    name: FLURRY_NAME,
+    attackBonus: standard[0],
+    attackBonuses: bonuses,
+    attackDisplay: fullDisplay,
+    standardBonuses: standard,
+    standardDisplay,
+    fullAttackBonuses: bonuses,
+    fullAttackDisplay: fullDisplay,
+    showFullAttack: showFullAttackFor(bonuses),
+    summary: `${FLURRY_NAME} ${fullDisplay} melee (${unarmed.damageDisplay})`,
+    attackSources: [
+      ...unarmed.attackSources,
+      ...formatBonusSources([{ label: "Flurry", amount: -penalty }]),
+    ],
+  };
 }
