@@ -1,0 +1,17 @@
+{
+  "name": "Expert",
+  "slug": "expert-33",
+  "source_abbrev": "DMG",
+  "book_slug": "dungeon-masters-guide",
+  "page": null,
+  "schema": "dmg-npc",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Short introduction before the statistics.",
+      "html": ""
+    }
+  ]
+}

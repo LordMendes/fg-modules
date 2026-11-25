@@ -466,6 +466,12 @@ def _advancement_table_html(
 
 def _build_notes_html(detail: dict[str, Any], class_name: str = "") -> str:
     parts: list[str] = []
+    # Book flavor sits around the mechanical body. "before" is the essay and
+    # the game-rule preamble. "after" is Player's Handbook II material that
+    # follows the class table (Playing, World, Lore, In the Game).
+    before = (detail.get("flavor_html_before") or "").strip()
+    if before:
+        parts.append(before)
     desc = _description_html(detail)
     if desc:
         parts.append(desc)
@@ -516,6 +522,9 @@ def _build_notes_html(detail: dict[str, Any], class_name: str = "") -> str:
         parts.append(f"<p><b>Advancement</b></p>{advancement_html}")
     if spells_html:
         parts.append(f"<p><b>Spells per Day</b></p>{spells_html}")
+    after = (detail.get("flavor_html_after") or "").strip()
+    if after:
+        parts.append(after)
     if not parts:
         return ""
     return normalize_all_tables_in_html("".join(parts))
@@ -625,5 +634,11 @@ def convert_classes(
             )
 
         report.add_written("classes")
+
+    from scraper.class_flavor import flavor_gap_warning
+
+    gap = flavor_gap_warning(book_title)
+    if gap:
+        report.warnings.append(gap)
 
     return section

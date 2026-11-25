@@ -1,0 +1,101 @@
+{
+  "name": "Wizard",
+  "slug": "wizard-99",
+  "source_abbrev": "PH",
+  "book_slug": "players-handbook",
+  "page": null,
+  "schema": "phb-base",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Adventures.",
+      "html": ""
+    },
+    {
+      "key": "adventures",
+      "title": "Adventures",
+      "placement": "before",
+      "hint": "Why this class adventures.",
+      "html": ""
+    },
+    {
+      "key": "characteristics",
+      "title": "Characteristics",
+      "placement": "before",
+      "hint": "How the class plays and what it is good at.",
+      "html": ""
+    },
+    {
+      "key": "alignment",
+      "title": "Alignment",
+      "placement": "before",
+      "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+      "html": ""
+    },
+    {
+      "key": "religion",
+      "title": "Religion",
+      "placement": "before",
+      "hint": "Deities and temples.",
+      "html": ""
+    },
+    {
+      "key": "background",
+      "title": "Background",
+      "placement": "before",
+      "hint": "How someone becomes this class.",
+      "html": ""
+    },
+    {
+      "key": "races",
+      "title": "Races",
+      "placement": "before",
+      "hint": "Which peoples commonly take the class.",
+      "html": ""
+    },
+    {
+      "key": "other_classes",
+      "title": "Other Classes",
+      "placement": "before",
+      "hint": "How the class works with a party.",
+      "html": ""
+    },
+    {
+      "key": "role",
+      "title": "Role",
+      "placement": "before",
+      "hint": "Job in an adventuring group.",
+      "html": ""
+    },
+    {
+      "key": "abilities",
+      "title": "Abilities",
+      "placement": "before",
+      "hint": "Ability score guidance under Game Rule Information.",
+      "html": ""
+    },
+    {
+      "key": "alignment_restriction",
+      "title": "Alignment",
+      "placement": "before",
+      "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+      "html": ""
+    },
+    {
+      "key": "hit_die",
+      "title": "Hit Die",
+      "placement": "before",
+      "hint": "Hit die line under Game Rule Information.",
+      "html": ""
+    },
+    {
+      "key": "class_skills",
+      "title": "Class Skills",
+      "placement": "before",
+      "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+      "html": ""
+    }
+  ]
+}

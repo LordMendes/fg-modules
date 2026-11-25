@@ -1,0 +1,2111 @@
+{
+  "summary": {
+    "sections_done": 0,
+    "sections_missing": 229,
+    "classes_tracked": 37,
+    "classes_deferred": 11
+  },
+  "books": [
+    {
+      "abbrev": "PH",
+      "title": "Player's Handbook",
+      "slug": "players-handbook",
+      "classes": [
+        {
+          "name": "Barbarian",
+          "slug": "barbarian-89",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/barbarian-89.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Bard",
+          "slug": "bard",
+          "schema": "phb-base",
+          "page": 26,
+          "file": "players-handbook/bard.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Cleric",
+          "slug": "cleric-91",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/cleric-91.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Druid",
+          "slug": "druid-92",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/druid-92.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Fighter",
+          "slug": "fighter-93",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/fighter-93.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Monk",
+          "slug": "monk-94",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/monk-94.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Paladin",
+          "slug": "paladin-95",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/paladin-95.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Ranger",
+          "slug": "ranger-96",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/ranger-96.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Rogue",
+          "slug": "rogue-97",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/rogue-97.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Sorcerer",
+          "slug": "sorcerer-98",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/sorcerer-98.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Wizard",
+          "slug": "wizard-99",
+          "schema": "phb-base",
+          "page": null,
+          "file": "players-handbook/wizard-99.json",
+          "done": 0,
+          "missing": 13,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "adventures",
+              "title": "Adventures",
+              "placement": "before",
+              "hint": "Why this class adventures.",
+              "status": "missing"
+            },
+            {
+              "key": "characteristics",
+              "title": "Characteristics",
+              "placement": "before",
+              "hint": "How the class plays and what it is good at.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Roleplaying discussion. This is the essay, not the rules restriction.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "before",
+              "hint": "Deities and temples.",
+              "status": "missing"
+            },
+            {
+              "key": "background",
+              "title": "Background",
+              "placement": "before",
+              "hint": "How someone becomes this class.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Which peoples commonly take the class.",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "before",
+              "hint": "How the class works with a party.",
+              "status": "missing"
+            },
+            {
+              "key": "role",
+              "title": "Role",
+              "placement": "before",
+              "hint": "Job in an adventuring group.",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Ability score guidance under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment_restriction",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
+              "status": "missing"
+            },
+            {
+              "key": "hit_die",
+              "title": "Hit Die",
+              "placement": "before",
+              "hint": "Hit die line under Game Rule Information.",
+              "status": "missing"
+            },
+            {
+              "key": "class_skills",
+              "title": "Class Skills",
+              "placement": "before",
+              "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+              "status": "missing"
+            }
+          ]
+        }
+      ],
+      "deferred": []
+    },
+    {
+      "abbrev": "PH2",
+      "title": "Player's Handbook II",
+      "slug": "players-handbook-ii",
+      "classes": [
+        {
+          "name": "Beguiler",
+          "slug": "beguiler-100",
+          "schema": "phb2-standard",
+          "page": null,
+          "file": "players-handbook-ii/beguiler-100.json",
+          "done": 0,
+          "missing": 16,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Making a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Making a [Class]: ability scores.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Making a [Class]: peoples.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Making a [Class]: alignment.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_gold",
+              "title": "Starting Gold",
+              "placement": "before",
+              "hint": "Making a [Class]: starting gold.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_age",
+              "title": "Starting Age",
+              "placement": "before",
+              "hint": "Making a [Class]: starting age.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "combat",
+              "title": "Combat",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "advancement",
+              "title": "Advancement",
+              "placement": "after",
+              "hint": "Playing a [Class]. Story advancement, not the level table.",
+              "status": "missing"
+            },
+            {
+              "key": "daily_life",
+              "title": "Daily Life",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "notables",
+              "title": "Notables",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "organizations",
+              "title": "Organizations",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "lore",
+              "title": "Beguiler Lore",
+              "placement": "after",
+              "hint": "Knowledge check lore block.",
+              "status": "missing"
+            },
+            {
+              "key": "adaptation",
+              "title": "Adaptation",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            },
+            {
+              "key": "encounters",
+              "title": "Encounters",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Dragon Shaman",
+          "slug": "dragon-shaman-101",
+          "schema": "phb2-standard",
+          "page": null,
+          "file": "players-handbook-ii/dragon-shaman-101.json",
+          "done": 0,
+          "missing": 16,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Making a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Making a [Class]: ability scores.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Making a [Class]: peoples.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Making a [Class]: alignment.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_gold",
+              "title": "Starting Gold",
+              "placement": "before",
+              "hint": "Making a [Class]: starting gold.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_age",
+              "title": "Starting Age",
+              "placement": "before",
+              "hint": "Making a [Class]: starting age.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "combat",
+              "title": "Combat",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "advancement",
+              "title": "Advancement",
+              "placement": "after",
+              "hint": "Playing a [Class]. Story advancement, not the level table.",
+              "status": "missing"
+            },
+            {
+              "key": "daily_life",
+              "title": "Daily Life",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "notables",
+              "title": "Notables",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "organizations",
+              "title": "Organizations",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "lore",
+              "title": "Dragon Shaman Lore",
+              "placement": "after",
+              "hint": "Knowledge check lore block.",
+              "status": "missing"
+            },
+            {
+              "key": "adaptation",
+              "title": "Adaptation",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            },
+            {
+              "key": "encounters",
+              "title": "Encounters",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Duskblade",
+          "slug": "duskblade-102",
+          "schema": "phb2-standard",
+          "page": null,
+          "file": "players-handbook-ii/duskblade-102.json",
+          "done": 0,
+          "missing": 16,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Making a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Making a [Class]: ability scores.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Making a [Class]: peoples.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Making a [Class]: alignment.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_gold",
+              "title": "Starting Gold",
+              "placement": "before",
+              "hint": "Making a [Class]: starting gold.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_age",
+              "title": "Starting Age",
+              "placement": "before",
+              "hint": "Making a [Class]: starting age.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "combat",
+              "title": "Combat",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "advancement",
+              "title": "Advancement",
+              "placement": "after",
+              "hint": "Playing a [Class]. Story advancement, not the level table.",
+              "status": "missing"
+            },
+            {
+              "key": "daily_life",
+              "title": "Daily Life",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "notables",
+              "title": "Notables",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "organizations",
+              "title": "Organizations",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "lore",
+              "title": "Duskblade Lore",
+              "placement": "after",
+              "hint": "Knowledge check lore block.",
+              "status": "missing"
+            },
+            {
+              "key": "adaptation",
+              "title": "Adaptation",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            },
+            {
+              "key": "encounters",
+              "title": "Encounters",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Knight",
+          "slug": "knight-103",
+          "schema": "phb2-standard",
+          "page": null,
+          "file": "players-handbook-ii/knight-103.json",
+          "done": 0,
+          "missing": 16,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Making a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "abilities",
+              "title": "Abilities",
+              "placement": "before",
+              "hint": "Making a [Class]: ability scores.",
+              "status": "missing"
+            },
+            {
+              "key": "races",
+              "title": "Races",
+              "placement": "before",
+              "hint": "Making a [Class]: peoples.",
+              "status": "missing"
+            },
+            {
+              "key": "alignment",
+              "title": "Alignment",
+              "placement": "before",
+              "hint": "Making a [Class]: alignment.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_gold",
+              "title": "Starting Gold",
+              "placement": "before",
+              "hint": "Making a [Class]: starting gold.",
+              "status": "missing"
+            },
+            {
+              "key": "starting_age",
+              "title": "Starting Age",
+              "placement": "before",
+              "hint": "Making a [Class]: starting age.",
+              "status": "missing"
+            },
+            {
+              "key": "religion",
+              "title": "Religion",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "other_classes",
+              "title": "Other Classes",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "combat",
+              "title": "Combat",
+              "placement": "after",
+              "hint": "Playing a [Class].",
+              "status": "missing"
+            },
+            {
+              "key": "advancement",
+              "title": "Advancement",
+              "placement": "after",
+              "hint": "Playing a [Class]. Story advancement, not the level table.",
+              "status": "missing"
+            },
+            {
+              "key": "daily_life",
+              "title": "Daily Life",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "notables",
+              "title": "Notables",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "organizations",
+              "title": "Organizations",
+              "placement": "after",
+              "hint": "[Class]s in the World.",
+              "status": "missing"
+            },
+            {
+              "key": "lore",
+              "title": "Knight Lore",
+              "placement": "after",
+              "hint": "Knowledge check lore block.",
+              "status": "missing"
+            },
+            {
+              "key": "adaptation",
+              "title": "Adaptation",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            },
+            {
+              "key": "encounters",
+              "title": "Encounters",
+              "placement": "after",
+              "hint": "[Class]s in the Game.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Metamagic Specialist",
+          "slug": "metamagic-specialist-1031",
+          "schema": "phb2-variant",
+          "page": null,
+          "file": "players-handbook-ii/metamagic-specialist-1031.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Short variant blurb. This record is not a full class essay.",
+              "status": "missing"
+            }
+          ]
+        }
+      ],
+      "deferred": []
+    },
+    {
+      "abbrev": "DMG",
+      "title": "Dungeon Master's Guide",
+      "slug": "dungeon-masters-guide",
+      "classes": [
+        {
+          "name": "Adept",
+          "slug": "adept-917",
+          "schema": "dmg-npc",
+          "page": null,
+          "file": "dungeon-masters-guide/adept-917.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Short introduction before the statistics.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Aristocrat",
+          "slug": "aristocrat-31",
+          "schema": "dmg-npc",
+          "page": null,
+          "file": "dungeon-masters-guide/aristocrat-31.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Short introduction before the statistics.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Commoner",
+          "slug": "commoner-32",
+          "schema": "dmg-npc",
+          "page": null,
+          "file": "dungeon-masters-guide/commoner-32.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Short introduction before the statistics.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Expert",
+          "slug": "expert-33",
+          "schema": "dmg-npc",
+          "page": null,
+          "file": "dungeon-masters-guide/expert-33.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Short introduction before the statistics.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Warrior",
+          "slug": "warrior-34",
+          "schema": "dmg-npc",
+          "page": null,
+          "file": "dungeon-masters-guide/warrior-34.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Short introduction before the statistics.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Arcane Archer",
+          "slug": "arcane-archer-378",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/arcane-archer-378.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Arcane Trickster",
+          "slug": "arcane-trickster-379",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/arcane-trickster-379.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Archmage",
+          "slug": "archmage-380",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/archmage-380.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Assassin",
+          "slug": "assassin-381",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/assassin-381.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Blackguard",
+          "slug": "blackguard-382",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/blackguard-382.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Dragon Disciple",
+          "slug": "dragon-disciple-383",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/dragon-disciple-383.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Duelist",
+          "slug": "duelist-384",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/duelist-384.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Dwarven Defender",
+          "slug": "dwarven-defender-385",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/dwarven-defender-385.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Eldritch Knight",
+          "slug": "eldritch-knight-386",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/eldritch-knight-386.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Hierophant",
+          "slug": "hierophant-387",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/hierophant-387.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Horizon Walker",
+          "slug": "horizon-walker-388",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/horizon-walker-388.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Loremaster",
+          "slug": "loremaster-389",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/loremaster-389.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Mystic Theurge",
+          "slug": "mystic-theurge-390",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/mystic-theurge-390.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Red Wizard",
+          "slug": "red-wizard-391",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/red-wizard-391.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Shadowdancer",
+          "slug": "shadowdancer-392",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/shadowdancer-392.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        },
+        {
+          "name": "Thaumaturgist",
+          "slug": "thaumaturgist-393",
+          "schema": "dmg-prestige",
+          "page": null,
+          "file": "dungeon-masters-guide/thaumaturgist-393.json",
+          "done": 0,
+          "missing": 1,
+          "sections": [
+            {
+              "key": "intro",
+              "title": null,
+              "placement": "before",
+              "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+              "status": "missing"
+            }
+          ]
+        }
+      ],
+      "deferred": [
+        {
+          "name": "Epic Barbarian",
+          "slug": "epic-barbarian-991",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Bard",
+          "slug": "epic-bard-1012",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Cleric",
+          "slug": "epic-cleric-1013",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Druid",
+          "slug": "epic-druid-1014",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Fighter",
+          "slug": "epic-fighter-1016",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Monk",
+          "slug": "epic-monk-1017",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Paladin",
+          "slug": "epic-paladin-1018",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Ranger",
+          "slug": "epic-ranger-1019",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Rogue",
+          "slug": "epic-rogue-1020",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Sorcerer",
+          "slug": "epic-sorcerer-1021",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        },
+        {
+          "name": "Epic Wizard",
+          "slug": "epic-wizard-1022",
+          "status": "deferred",
+          "reason": "Epic level progression, not a class essay."
+        }
+      ]
+    }
+  ]
+}

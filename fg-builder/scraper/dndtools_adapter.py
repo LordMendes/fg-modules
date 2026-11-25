@@ -1054,6 +1054,9 @@ def convert_class(record: dict[str, Any], book_slug: str) -> dict[str, Any]:
         detail["race"] = str(race_name)
     if is_racial:
         detail["class_type"] = "base"
+    from scraper.class_flavor import attach_class_flavor
+
+    attach_class_flavor(detail, book_slug, record.get("slug") or "")
     return {
         "id": record.get("id"),
         "slug": record.get("slug", ""),

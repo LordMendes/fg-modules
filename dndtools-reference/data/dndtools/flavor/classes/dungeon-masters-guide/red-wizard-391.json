@@ -1,0 +1,17 @@
+{
+  "name": "Red Wizard",
+  "slug": "red-wizard-391",
+  "source_abbrev": "DMG",
+  "book_slug": "dungeon-masters-guide",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

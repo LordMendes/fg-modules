@@ -1,0 +1,122 @@
+{
+  "name": "Duskblade",
+  "slug": "duskblade-102",
+  "source_abbrev": "PH2",
+  "book_slug": "players-handbook-ii",
+  "page": null,
+  "schema": "phb2-standard",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Making a [Class].",
+      "html": ""
+    },
+    {
+      "key": "abilities",
+      "title": "Abilities",
+      "placement": "before",
+      "hint": "Making a [Class]: ability scores.",
+      "html": ""
+    },
+    {
+      "key": "races",
+      "title": "Races",
+      "placement": "before",
+      "hint": "Making a [Class]: peoples.",
+      "html": ""
+    },
+    {
+      "key": "alignment",
+      "title": "Alignment",
+      "placement": "before",
+      "hint": "Making a [Class]: alignment.",
+      "html": ""
+    },
+    {
+      "key": "starting_gold",
+      "title": "Starting Gold",
+      "placement": "before",
+      "hint": "Making a [Class]: starting gold.",
+      "html": ""
+    },
+    {
+      "key": "starting_age",
+      "title": "Starting Age",
+      "placement": "before",
+      "hint": "Making a [Class]: starting age.",
+      "html": ""
+    },
+    {
+      "key": "religion",
+      "title": "Religion",
+      "placement": "after",
+      "hint": "Playing a [Class].",
+      "html": ""
+    },
+    {
+      "key": "other_classes",
+      "title": "Other Classes",
+      "placement": "after",
+      "hint": "Playing a [Class].",
+      "html": ""
+    },
+    {
+      "key": "combat",
+      "title": "Combat",
+      "placement": "after",
+      "hint": "Playing a [Class].",
+      "html": ""
+    },
+    {
+      "key": "advancement",
+      "title": "Advancement",
+      "placement": "after",
+      "hint": "Playing a [Class]. Story advancement, not the level table.",
+      "html": ""
+    },
+    {
+      "key": "daily_life",
+      "title": "Daily Life",
+      "placement": "after",
+      "hint": "[Class]s in the World.",
+      "html": ""
+    },
+    {
+      "key": "notables",
+      "title": "Notables",
+      "placement": "after",
+      "hint": "[Class]s in the World.",
+      "html": ""
+    },
+    {
+      "key": "organizations",
+      "title": "Organizations",
+      "placement": "after",
+      "hint": "[Class]s in the World.",
+      "html": ""
+    },
+    {
+      "key": "lore",
+      "title": "Duskblade Lore",
+      "placement": "after",
+      "hint": "Knowledge check lore block.",
+      "html": ""
+    },
+    {
+      "key": "adaptation",
+      "title": "Adaptation",
+      "placement": "after",
+      "hint": "[Class]s in the Game.",
+      "html": ""
+    },
+    {
+      "key": "encounters",
+      "title": "Encounters",
+      "placement": "after",
+      "hint": "[Class]s in the Game.",
+      "html": ""
+    }
+  ]
+}
