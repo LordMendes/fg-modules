@@ -67,6 +67,12 @@ describe("matchesSectionFilter", () => {
     assert.equal(matchesSectionFilter("planar", "vehicles"), false);
   });
 
+  it("includes undead equipment and positoxins for the undead chip", () => {
+    assert.equal(matchesSectionFilter("undead-equipment", "undead"), true);
+    assert.equal(matchesSectionFilter("positoxins", "undead"), true);
+    assert.equal(matchesSectionFilter("adventuring-gear", "undead"), false);
+  });
+
   it("includes buildings and siege engines for buildings chip", () => {
     assert.equal(matchesSectionFilter("buildings", "buildings"), true);
     assert.equal(matchesSectionFilter("siege-engines", "buildings"), true);

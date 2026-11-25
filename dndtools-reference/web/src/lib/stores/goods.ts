@@ -55,6 +55,8 @@ export const SECTION_ORDER: string[] = [
   "gear-of-the-waters",
   "gear-for-the-dungeoneer",
   "alternative-keys",
+  "undead-equipment",
+  "positoxins",
 ];
 
 export const SECTION_LABELS: Record<string, string> = {
@@ -79,6 +81,8 @@ export const SECTION_LABELS: Record<string, string> = {
   "gear-of-the-waters": "Gear Of The Waters",
   "gear-for-the-dungeoneer": "Gear for the Dungeoneer",
   "alternative-keys": "Alternative Keys",
+  "undead-equipment": "Undead Equipment",
+  "positoxins": "Positoxins",
 };
 
 export const SECTION_FILTER_GROUPS: GoodsSectionGroup[] = [
@@ -91,6 +95,7 @@ export const SECTION_FILTER_GROUPS: GoodsSectionGroup[] = [
   { id: "buildings", label: "Buildings", filter: "buildings" },
   { id: "services", label: "Services", filter: "services" },
   { id: "environment", label: "Environment", filter: "environment" },
+  { id: "undead", label: "Undead", filter: "undead" },
 ];
 
 export const VALID_GOODS_FILTERS = new Set(
@@ -132,6 +137,9 @@ export function matchesSectionFilter(sectionSlug: string, filter: string | null)
   }
   if (filter === "buildings") {
     return sectionSlug === "buildings" || sectionSlug === "siege-engines";
+  }
+  if (filter === "undead") {
+    return sectionSlug === "undead-equipment" || sectionSlug === "positoxins";
   }
   return sectionSlug === filter;
 }

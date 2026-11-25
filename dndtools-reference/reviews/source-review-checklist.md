@@ -799,7 +799,7 @@ Categories: classes=8, domains=3, feats=31, spells=30
 
 ### Libris Mortis: The Book of Undead (`LM`)
 
-Categories: classes=11, feats=59, spells=57
+Categories: classes=11, equipment=13, feats=59, items=48, spells=57
 
 - 
 

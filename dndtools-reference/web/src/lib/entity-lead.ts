@@ -2,6 +2,11 @@ import type { CategoryKey } from "@/lib/categories";
 import { getCategoryLabel } from "@/lib/categories";
 import type { EntityDetail } from "@/lib/entities";
 
+function finishSentence(text: string): string {
+  const trimmed = text.trim();
+  return /[.!?…]$/.test(trimmed) ? trimmed : `${trimmed}.`;
+}
+
 function joinParts(parts: (string | null | undefined)[]): string {
   return parts
     .filter(Boolean)
@@ -343,9 +348,9 @@ export function buildEntityFaqs(category: CategoryKey, entity: EntityDetail): En
     }
     case "equipment": {
       const cost = f.Cost || f.Price;
-      if (cost) add(`How much does ${name} cost?`, `${name} costs ${cost}.`);
+      if (cost) add(`How much does ${name} cost?`, finishSentence(`${name} costs ${cost}`));
       const weight = f.Weight;
-      if (weight) add(`How much does ${name} weigh?`, `${name} weighs ${weight}.`);
+      if (weight) add(`How much does ${name} weigh?`, finishSentence(`${name} weighs ${weight}`));
       break;
     }
     case "domains": {

@@ -42,6 +42,7 @@ const SUPPLEMENTAL_EQUIPMENT_FILES = [
   "wowrpg_core_equipment.json",
   "wowrpg_mmm_equipment.json",
   "wowrpg_hpg_equipment.json",
+  "libris_mortis_goods.json",
 ] as const;
 const SUPPLEMENTAL_RACE_FILES = [
   "warcraft_rpg_races.json",
@@ -64,6 +65,7 @@ const SUPPLEMENTAL_ITEM_FILES = [
   "wowrpg_mmm_items.json",
   "wowrpg_hpg_items.json",
   "mic_items.json",
+  "libris_mortis_items.json",
 ] as const;
 const SUPPLEMENTAL_SPELL_FILES = ["warcraft_rpg_spells.json", "wowrpg_mmm_spells.json"] as const;
 const SPELL_CLASS_LINK_OVERLAY_FILE = "warcraft_rpg_spell_class_links.json";
