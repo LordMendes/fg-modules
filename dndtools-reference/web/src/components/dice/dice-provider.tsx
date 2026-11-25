@@ -23,7 +23,9 @@ import {
   d20Check,
   poolDieCount,
   removeOneDieFromPool,
+  resultFromThreejsRoll,
 } from "@/lib/dice/notation";
+import { rollFaces } from "@/lib/campaign/rollFaces";
 import { DEFAULT_SKIN_ID, getDiceSkin } from "@/lib/dice/skins";
 import type {
   DicePoolItem,
@@ -39,10 +41,12 @@ const SKIN_ID_KEY = "pc-planner-dice-skin-id";
 const THEME_COLOR_KEY = "pc-planner-dice-theme-color";
 const HISTORY_LIMIT_SOLO = 24;
 const HISTORY_LIMIT_CAMPAIGN = 50;
-const ROLL_QUEUE_LIMIT = 8;
 
-type QueuedRoll = {
-  run: () => void | Promise<void>;
+type InFlightRoll = {
+  request: RollRequest;
+  onComplete: ((result: RollResult) => void) | null;
+  canonical: RollResult | null;
+  combat?: RollResult["combat"];
 };
 
 export type CampaignDiceConfig = {
@@ -134,7 +138,7 @@ export function DiceProvider({
   const [pool, setPool] = useState<DicePoolItem[]>([]);
   const [modifier, setModifier] = useState(0);
   const [rolling, setRolling] = useState(false);
-  const [queuedCount, setQueuedCount] = useState(0);
+  const [rollToken, setRollToken] = useState(0);
   const [ready, setReady] = useState(false);
   const [activeRequest, setActiveRequest] = useState<RollRequest | null>(null);
   const [lastResult, setLastResult] = useState<RollResult | null>(null);
@@ -152,82 +156,114 @@ export function DiceProvider({
     campaign?.actor.characterName ?? null,
   );
   const hydrated = useRef(false);
-  const onCompleteRef = useRef<((result: RollResult) => void) | null>(null);
-  const pendingCanonicalRef = useRef<RollResult | null>(null);
-  const pendingCombatOutcomeRef = useRef<RollResult["combat"]>(undefined);
+  const inFlightRef = useRef<InFlightRoll | null>(null);
+  const settledIdsRef = useRef(new Set<string>());
+  const settledResultsRef = useRef(new Map<string, RollResult>());
+  const pendingCallbacksRef = useRef(
+    new Map<string, ((result: RollResult) => void) | null>(),
+  );
+  const pendingCombatRef = useRef(new Map<string, RollResult["combat"]>());
   const seenRollIds = useRef(new Set<string>());
   const readyRef = useRef(false);
   readyRef.current = ready;
-  const activeRequestRef = useRef<RollRequest | null>(null);
-  activeRequestRef.current = activeRequest;
   const completeRollRef = useRef<(result: RollResult) => void>(() => {});
   const failRollRef = useRef<() => void>(() => {});
-  const finishCurrentRollRef = useRef<() => void>(() => {});
-  const busyRef = useRef(false);
-  const rollQueueRef = useRef<QueuedRoll[]>([]);
   const campaignId = campaign?.campaignId ?? null;
   const isCampaign = Boolean(campaignId);
   const historyLimit = isCampaign ? HISTORY_LIMIT_CAMPAIGN : HISTORY_LIMIT_SOLO;
-  const canRoll = (isCampaign || ready) && queuedCount < ROLL_QUEUE_LIMIT;
+  const canRoll = isCampaign || ready;
 
-  const syncQueueCount = useCallback(() => {
-    setQueuedCount(rollQueueRef.current.length);
+  const rememberSettled = useCallback((id: string, result: RollResult | null) => {
+    settledIdsRef.current.add(id);
+    if (result) settledResultsRef.current.set(id, result);
+    if (settledIdsRef.current.size <= 80) return;
+    const first = settledIdsRef.current.values().next().value;
+    if (!first) return;
+    settledIdsRef.current.delete(first);
+    settledResultsRef.current.delete(first);
   }, []);
 
-  const markBusy = useCallback(() => {
-    busyRef.current = true;
-    setRolling(true);
-  }, []);
-
-  const enqueueRoll = useCallback(
-    (run: () => void | Promise<void>): boolean => {
-      if (rollQueueRef.current.length >= ROLL_QUEUE_LIMIT) return false;
-      rollQueueRef.current.push({ run });
-      syncQueueCount();
-      return true;
+  const pushHistory = useCallback(
+    (result: RollResult) => {
+      if (result.silhouetteOnly) return;
+      setLastResult(result);
+      setHistory((prev) => {
+        if (prev.some((entry) => entry.id === result.id)) return prev;
+        return [result, ...prev].slice(0, historyLimit);
+      });
     },
-    [syncQueueCount],
+    [historyLimit],
   );
 
-  const finishCurrentRoll = useCallback(() => {
+  const resultForFlight = useCallback((flight: InFlightRoll, engine?: RollResult): RollResult => {
+    const base = flight.canonical ?? engine ?? resultFromThreejsRoll(flight.request, undefined);
+    return flight.combat != null ? { ...base, combat: flight.combat } : base;
+  }, []);
+
+  const releaseRolling = useCallback(() => {
     setActiveRequest(null);
     setSilhouetteActive(false);
+    setRolling(false);
+  }, []);
 
-    if (rollQueueRef.current.length === 0) {
-      busyRef.current = false;
-      setRolling(false);
-      syncQueueCount();
+  const settleInFlight = useCallback(() => {
+    const flight = inFlightRef.current;
+    if (!flight || settledIdsRef.current.has(flight.request.id)) {
+      inFlightRef.current = null;
       return;
     }
+    inFlightRef.current = null;
+    const result = resultForFlight(flight);
+    rememberSettled(flight.request.id, result);
+    if (!isCampaign) pushHistory(result);
+    flight.onComplete?.(result);
+  }, [isCampaign, pushHistory, rememberSettled, resultForFlight]);
 
-    syncQueueCount();
-    const next = rollQueueRef.current.shift();
-    syncQueueCount();
-    if (!next) {
-      busyRef.current = false;
-      setRolling(false);
-      return;
-    }
-    void Promise.resolve(next.run());
-  }, [syncQueueCount]);
-  finishCurrentRollRef.current = finishCurrentRoll;
-
-  const startIngestAnimation = useCallback(
-    (request: RollRequest, canonical: RollResult | null) => {
-      pendingCanonicalRef.current = canonical;
-      setSilhouetteActive(Boolean(request.silhouetteOnly));
+  const beginAnimatedRoll = useCallback(
+    (flight: InFlightRoll) => {
+      settleInFlight();
       if (!readyRef.current) {
-        if (canonical) {
-          completeRollRef.current(canonical);
-        } else {
-          finishCurrentRollRef.current();
+        if (flight.canonical || (flight.request.faces?.length ?? 0) > 0) {
+          const result = resultForFlight(flight);
+          rememberSettled(flight.request.id, result);
+          if (!isCampaign) pushHistory(result);
+          flight.onComplete?.(result);
         }
         return;
       }
-      markBusy();
-      setActiveRequest(request);
+      inFlightRef.current = flight;
+      setSilhouetteActive(Boolean(flight.request.silhouetteOnly));
+      setRolling(true);
+      setRollToken((n) => n + 1);
+      setActiveRequest(flight.request);
     },
-    [markBusy],
+    [isCampaign, pushHistory, rememberSettled, resultForFlight, settleInFlight],
+  );
+
+  const attachLocalCallback = useCallback(
+    (
+      rollId: string,
+      onComplete: ((result: RollResult) => void) | null,
+      combat?: RollResult["combat"],
+    ) => {
+      if (settledIdsRef.current.has(rollId)) {
+        const stored = settledResultsRef.current.get(rollId);
+        if (!stored) return;
+        const result = combat !== undefined ? { ...stored, combat } : stored;
+        if (combat !== undefined) settledResultsRef.current.set(rollId, result);
+        onComplete?.(result);
+        return;
+      }
+      const flight = inFlightRef.current;
+      if (flight?.request.id === rollId) {
+        if (combat !== undefined) flight.combat = combat;
+        if (onComplete) flight.onComplete = onComplete;
+        return;
+      }
+      if (combat !== undefined) pendingCombatRef.current.set(rollId, combat);
+      if (onComplete) pendingCallbacksRef.current.set(rollId, onComplete);
+    },
+    [],
   );
 
   const defaultActor = useMemo<RollActor | null>(() => {
@@ -324,29 +360,34 @@ export function DiceProvider({
         });
       }
 
-      if (busyRef.current && activeRequestRef.current) {
-        enqueueRoll(() => startIngestAnimation(request, canonical));
-        return;
-      }
+      const onComplete = pendingCallbacksRef.current.get(view.id) ?? null;
+      pendingCallbacksRef.current.delete(view.id);
+      const combat = pendingCombatRef.current.get(view.id);
+      pendingCombatRef.current.delete(view.id);
 
-      startIngestAnimation(request, canonical);
+      beginAnimatedRoll({
+        request,
+        onComplete,
+        canonical,
+        ...(combat !== undefined ? { combat } : {}),
+      });
     },
-    [historyLimit, enqueueRoll, startIngestAnimation],
+    [beginAnimatedRoll, historyLimit],
   );
 
   useEffect(() => {
     if (!rolling) return;
     const timer = window.setTimeout(() => {
       console.warn("[DiceProvider] roll watchdog reset");
-      const canonical = pendingCanonicalRef.current;
-      if (canonical) {
-        completeRollRef.current(canonical);
+      const flight = inFlightRef.current;
+      if (flight) {
+        completeRollRef.current(resultForFlight(flight));
       } else {
         failRollRef.current();
       }
     }, 8000);
     return () => window.clearTimeout(timer);
-  }, [rolling]);
+  }, [resultForFlight, rolling, rollToken]);
 
   // Campaign rolls arrive on the shared WebSocket (CampaignLiveProvider).
   const live = useCampaignLiveOptional();
@@ -438,24 +479,17 @@ export function DiceProvider({
     (request: RollRequest, onComplete?: (result: RollResult) => void) => {
       if (!readyRef.current) return;
       if (request.dice.every((d) => d.qty <= 0)) return;
-
-      const start = () => {
-        if (!readyRef.current) return;
-        pendingCanonicalRef.current = null;
-        pendingCombatOutcomeRef.current = undefined;
-        onCompleteRef.current = onComplete ?? null;
-        setSilhouetteActive(false);
-        markBusy();
-        setActiveRequest(request);
-      };
-
-      if (busyRef.current) {
-        enqueueRoll(start);
-        return;
-      }
-      start();
+      const withFaces =
+        request.faces && request.faces.length > 0
+          ? request
+          : { ...request, faces: rollFaces(request.dice) };
+      beginAnimatedRoll({
+        request: withFaces,
+        onComplete: onComplete ?? null,
+        canonical: null,
+      });
     },
-    [enqueueRoll, markBusy],
+    [beginAnimatedRoll],
   );
 
   const roll = useCallback(
@@ -476,40 +510,11 @@ export function DiceProvider({
         return;
       }
 
-      const executeCampaignRoll = () => {
-        // Campaign: server RNG first; every client animates the shared roll once.
-        // Set onComplete before await so SSE-first ingest still fires sheet callbacks.
-        onCompleteRef.current = onComplete ?? null;
-        pendingCombatOutcomeRef.current = undefined;
-        markBusy();
-        void (async () => {
-          try {
-            if (enriched.combat) {
-              const result = await startCombatRollAction({
-                campaignId,
-                label: enriched.label,
-                kind: enriched.kind ?? "other",
-                hidden: Boolean(enriched.hidden),
-                characterName: actor?.characterName ?? null,
-                dice: enriched.dice,
-                modifier: enriched.modifier,
-                iterativeModifiers: enriched.iterativeModifiers,
-                combat: enriched.combat,
-              });
-              if (!result.success || !result.roll) {
-                onCompleteRef.current = null;
-                const message = result.error ?? "Combat roll failed";
-                campaign?.onRollError?.(message);
-                console.warn("[DiceProvider] combat roll failed:", message);
-                finishCurrentRollRef.current();
-                return;
-              }
-              pendingCombatOutcomeRef.current = result.outcome;
-              ingestCampaignRoll(result.roll);
-              return;
-            }
-
-            const result = await startCampaignRoll({
+      const callback = onComplete ?? null;
+      void (async () => {
+        try {
+          if (enriched.combat) {
+            const result = await startCombatRollAction({
               campaignId,
               label: enriched.label,
               kind: enriched.kind ?? "other",
@@ -518,32 +523,44 @@ export function DiceProvider({
               dice: enriched.dice,
               modifier: enriched.modifier,
               iterativeModifiers: enriched.iterativeModifiers,
+              combat: enriched.combat,
             });
             if (!result.success || !result.roll) {
-              onCompleteRef.current = null;
-              const message = result.error ?? "Roll failed";
+              const message = result.error ?? "Combat roll failed";
               campaign?.onRollError?.(message);
-              console.warn("[DiceProvider] campaign roll failed:", message);
-              finishCurrentRollRef.current();
+              console.warn("[DiceProvider] combat roll failed:", message);
               return;
             }
+            attachLocalCallback(result.roll.id, callback, result.outcome);
             ingestCampaignRoll(result.roll);
-          } catch (err) {
-            onCompleteRef.current = null;
-            const message =
-              err instanceof Error ? err.message : "Roll failed unexpectedly";
-            campaign?.onRollError?.(message);
-            console.warn("[DiceProvider] campaign roll error:", err);
-            finishCurrentRollRef.current();
+            return;
           }
-        })();
-      };
 
-      if (busyRef.current) {
-        enqueueRoll(executeCampaignRoll);
-        return;
-      }
-      executeCampaignRoll();
+          const result = await startCampaignRoll({
+            campaignId,
+            label: enriched.label,
+            kind: enriched.kind ?? "other",
+            hidden: Boolean(enriched.hidden),
+            characterName: actor?.characterName ?? null,
+            dice: enriched.dice,
+            modifier: enriched.modifier,
+            iterativeModifiers: enriched.iterativeModifiers,
+          });
+          if (!result.success || !result.roll) {
+            const message = result.error ?? "Roll failed";
+            campaign?.onRollError?.(message);
+            console.warn("[DiceProvider] campaign roll failed:", message);
+            return;
+          }
+          attachLocalCallback(result.roll.id, callback);
+          ingestCampaignRoll(result.roll);
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Roll failed unexpectedly";
+          campaign?.onRollError?.(message);
+          console.warn("[DiceProvider] campaign roll error:", err);
+        }
+      })();
     },
     [
       isCampaign,
@@ -553,8 +570,7 @@ export function DiceProvider({
       campaign,
       rollLocal,
       ingestCampaignRoll,
-      enqueueRoll,
-      markBusy,
+      attachLocalCallback,
     ],
   );
 
@@ -595,59 +611,37 @@ export function DiceProvider({
 
   const completeRoll = useCallback(
     (result: RollResult) => {
-      const apply = onCompleteRef.current;
-      onCompleteRef.current = null;
-      const canonical = pendingCanonicalRef.current;
-      pendingCanonicalRef.current = null;
-      const combatOutcome = pendingCombatOutcomeRef.current;
-      pendingCombatOutcomeRef.current = undefined;
-      setSilhouetteActive(false);
-
-      if (isCampaign) {
-        // Log already written at ingest from server faces; do not log engine faces.
-        const base = canonical ?? result;
-        apply?.(
-          combatOutcome != null ? { ...base, combat: combatOutcome } : base,
-        );
-        finishCurrentRoll();
-        return;
-      }
-
-      if (!result.silhouetteOnly) {
-        setLastResult(result);
-        setHistory((prev) => {
-          if (prev.some((r) => r.id === result.id)) return prev;
-          return [result, ...prev].slice(0, historyLimit);
-        });
-      }
-
-      apply?.(result);
-      finishCurrentRoll();
+      if (settledIdsRef.current.has(result.id)) return;
+      const flight = inFlightRef.current;
+      if (flight && flight.request.id !== result.id) return;
+      const finalResult = flight ? resultForFlight(flight, result) : result;
+      if (flight) inFlightRef.current = null;
+      rememberSettled(result.id, finalResult);
+      if (!isCampaign) pushHistory(finalResult);
+      (flight?.onComplete ?? null)?.(finalResult);
+      releaseRolling();
     },
-    [isCampaign, historyLimit, finishCurrentRoll],
+    [isCampaign, pushHistory, rememberSettled, releaseRolling, resultForFlight],
   );
   completeRollRef.current = completeRoll;
 
   const failRoll = useCallback(() => {
-    onCompleteRef.current = null;
-    pendingCanonicalRef.current = null;
-    pendingCombatOutcomeRef.current = undefined;
-    finishCurrentRoll();
-  }, [finishCurrentRoll]);
+    const flight = inFlightRef.current;
+    inFlightRef.current = null;
+    if (flight) rememberSettled(flight.request.id, null);
+    releaseRolling();
+  }, [releaseRolling, rememberSettled]);
   failRollRef.current = failRoll;
 
   const clearDice = useCallback(() => {
-    onCompleteRef.current = null;
-    pendingCanonicalRef.current = null;
-    pendingCombatOutcomeRef.current = undefined;
-    rollQueueRef.current = [];
-    syncQueueCount();
-    busyRef.current = false;
-    setSilhouetteActive(false);
+    const flight = inFlightRef.current;
+    inFlightRef.current = null;
+    if (flight) rememberSettled(flight.request.id, null);
+    pendingCallbacksRef.current.clear();
+    pendingCombatRef.current.clear();
     setClearSignal((n) => n + 1);
-    setRolling(false);
-    setActiveRequest(null);
-  }, [syncQueueCount]);
+    releaseRolling();
+  }, [releaseRolling, rememberSettled]);
 
   const setEngineReady = useCallback((isReady: boolean) => {
     setReady(isReady);

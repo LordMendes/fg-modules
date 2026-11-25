@@ -173,3 +173,51 @@ export function domainNameAllowed(
     return key === allowedKey || key.startsWith(`${allowedKey} (`);
   });
 }
+
+/** Portfolio text split into display items. A dash placeholder becomes an empty list. */
+export function splitPortfolio(value: string | null | undefined): string[] {
+  if (!value) return [];
+  return value
+    .split(",")
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0 && part !== "-" && part !== "—" && part !== "–");
+}
+
+export type DeityDomainLink = {
+  label: string;
+  href: string | null;
+};
+
+/**
+ * One catalog row for a domain name. Exact names win. Otherwise prefer the
+ * Spell Compendium reprint, then the shortest source-suffixed name.
+ */
+export function pickDomainRecord<T extends { name: string }>(
+  domainName: string,
+  matches: readonly T[],
+): T | null {
+  const allowed = matches.filter((row) => domainNameAllowed(row.name, [domainName]));
+  if (allowed.length === 0) return null;
+  const key = domainName.trim().toLowerCase();
+  const exact = allowed.find((row) => row.name.trim().toLowerCase() === key);
+  if (exact) return exact;
+  const spellCompendium = allowed.find((row) => /\(spc\)$/i.test(row.name.trim()));
+  if (spellCompendium) return spellCompendium;
+  return [...allowed].sort(
+    (a, b) => a.name.length - b.name.length || a.name.localeCompare(b.name),
+  )[0] ?? null;
+}
+
+/** Recorded domains for a deity, each linked to one catalog domain page when one exists. */
+export function deityDomainLinks(
+  slug: string | null | undefined,
+  name: string | null | undefined,
+  catalog: readonly { name: string; slug: string }[],
+): DeityDomainLink[] {
+  const names = deityDomainNames(slug, name);
+  if (!names || names.length === 0) return [];
+  return names.map((label) => {
+    const match = pickDomainRecord(label, catalog);
+    return { label, href: match ? `/domains/${match.slug}` : null };
+  });
+}

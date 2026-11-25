@@ -34,6 +34,7 @@ import type { TableSort } from "@/lib/table-sort";
 import { isCastingClassVariant, resolveClassSpellOriginSlug } from "@/lib/class-spell-origin";
 import { getClassCastingInfo } from "@/lib/pc-planner/classCasting";
 import { domainSpellLevel } from "@/lib/pc-planner/spellSlots";
+import { deityDomainLinks, deityDomainNames, splitPortfolio } from "@/lib/pc-planner/deityDomains";
 import {
   parseClassAbilities,
   parseClassProficiencies,
@@ -81,6 +82,10 @@ export type EntityDetail = {
   classSkills?: ClassSkillRef[];
   secondarySources?: { abbrev: string; name: string }[];
   updatedAt?: string | null;
+  /** Cleric domain spells in list order, with the spell level each one fills. */
+  domainSpells?: { level: number; label: string; href: string }[];
+  /** Cleric domains granted by a deity, linked when a catalog page exists. */
+  deityDomains?: { label: string; href: string | null }[];
 };
 
 function indexText(indexData: unknown, key: string): string | null {
@@ -1692,29 +1697,54 @@ async function loadEntityDetail(
         },
       });
       if (!r) return null;
+      const ordered = r.domainSpells;
+      const domainSpells = ordered.map((ds, index) => ({
+        level: domainSpellLevel(index, ordered.length),
+        label: ds.spell.name,
+        href: `/spells/${ds.spell.slug}`,
+      }));
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.grantedPowerHtml ?? r.descriptionHtml,
         descriptionText: r.grantedPowerText ?? r.descriptionText,
         source: { ...r.source, page: null },
         fields: { Type: r.domainType },
-        related: r.domainSpells.map((ds) => ({
-          label: ds.spell.name,
-          href: `/spells/${ds.spell.slug}`,
-          meta: `Position ${ds.position}`,
+        related: domainSpells.map((spell) => ({
+          label: spell.label,
+          href: spell.href,
+          meta: `Level ${spell.level}`,
         })),
+        domainSpells,
         updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }
     case "deities": {
       const r = await prisma.deity.findUnique({ where: { slug }, include: { source: src } });
       if (!r) return null;
+      const recorded = deityDomainNames(r.slug, r.name) ?? [];
+      const catalog = recorded.length === 0
+        ? []
+        : await prisma.domain.findMany({
+            where: {
+              OR: recorded.flatMap((name) => [
+                { name: { equals: name, mode: "insensitive" as const } },
+                { name: { startsWith: `${name} (`, mode: "insensitive" as const } },
+              ]),
+            },
+            select: { name: true, slug: true },
+          });
+      const portfolio = splitPortfolio(r.portfolio);
       return {
         slug: r.slug, name: r.name, sourceUrl: r.sourceUrl,
         descriptionHtml: r.descriptionHtml, descriptionText: r.descriptionText,
         source: { ...r.source, page: null },
-        fields: { Alignment: r.alignment, Pantheon: r.pantheon, Portfolio: r.portfolio },
+        fields: {
+          Alignment: r.alignment,
+          Pantheon: splitPortfolio(r.pantheon).join(", ") || null,
+          Portfolio: portfolio.join(", ") || null,
+        },
         related: [],
+        deityDomains: deityDomainLinks(r.slug, r.name, catalog),
         updatedAt: entityUpdatedAt(r.scrapedAt),
       };
     }

@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { deityDomainNames, domainNameAllowed, normalizeDeityKey } from "./deityDomains";
+import {
+  deityDomainLinks,
+  deityDomainNames,
+  domainNameAllowed,
+  normalizeDeityKey,
+  pickDomainRecord,
+  splitPortfolio,
+} from "./deityDomains";
 
 describe("deityDomainNames", () => {
   it("returns null when no deity is selected", () => {
@@ -61,5 +68,40 @@ describe("domainNameAllowed", () => {
     const allowed = deityDomainNames("grumbar");
     assert.equal(domainNameAllowed("Cavern (FRCS)", allowed), true);
     assert.equal(domainNameAllowed("Cavernous", allowed), false);
+  });
+});
+
+describe("splitPortfolio", () => {
+  it("splits comma-separated portfolio text and drops a dash placeholder", () => {
+    assert.deepEqual(splitPortfolio("Magic , Spells , The Weave"), ["Magic", "Spells", "The Weave"]);
+    assert.deepEqual(splitPortfolio("—"), []);
+    assert.deepEqual(splitPortfolio(null), []);
+  });
+});
+
+describe("deityDomainLinks", () => {
+  it("links an exact catalog name ahead of a source-suffixed reprint", () => {
+    const links = deityDomainLinks("pelor", "Pelor", [
+      { name: "Good (SpC)", slug: "good-spc" },
+      { name: "Good", slug: "good-103" },
+      { name: "Healing", slug: "healing-1" },
+      { name: "Strength", slug: "strength-1" },
+      { name: "Sun", slug: "sun-1" },
+    ]);
+    assert.deepEqual(links[0], { label: "Good", href: "/domains/good-103" });
+    assert.equal(links.length, 4);
+  });
+
+  it("prefers the Spell Compendium reprint when no exact name exists", () => {
+    const picked = pickDomainRecord("Cavern", [
+      { name: "Cavern (FRCS)", slug: "cavern-frcs" },
+      { name: "Cavern (SpC)", slug: "cavern-spc" },
+      { name: "Cavernous", slug: "cavernous" },
+    ]);
+    assert.equal(picked?.slug, "cavern-spc");
+  });
+
+  it("returns no links when the deity has no recorded domains", () => {
+    assert.deepEqual(deityDomainLinks("bhaal", "Bhaal", [{ name: "Death", slug: "death" }]), []);
   });
 });

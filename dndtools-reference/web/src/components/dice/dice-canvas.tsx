@@ -106,12 +106,11 @@ async function rollWithPerDieColors(
   notation: string,
   dieColors: string[],
   fallbackColor: string,
+  isCurrent: () => boolean,
 ): Promise<ThreejsResult> {
-  const colors =
-    dieColors.length > 0
-      ? dieColors
-      : [fallbackColor];
+  const colors = dieColors.length > 0 ? dieColors : [fallbackColor];
   const colorSets = await preloadColorSets(box, [...colors, fallbackColor]);
+  if (!isCurrent()) return {};
   const factory = box.DiceFactory;
   const originalCreate = factory.create.bind(factory);
   let createIndex = 0;
@@ -128,9 +127,10 @@ async function rollWithPerDieColors(
   };
 
   try {
+    if (!isCurrent()) return {};
     return await box.roll(notation);
   } finally {
-    factory.create = originalCreate;
+    if (isCurrent()) factory.create = originalCreate;
   }
 }
 
@@ -155,6 +155,7 @@ export function DiceCanvas() {
   const pendingRef = useRef<RollRequest | null>(null);
   const queuedRequestRef = useRef<RollRequest | null>(null);
   const rollingRef = useRef(false);
+  const throwTokenRef = useRef(0);
   const fadeTimersRef = useRef<{ hold?: number; clear?: number }>({});
   const seenIdsRef = useRef(new Set<string>());
   const initFailedRef = useRef(false);
@@ -213,10 +214,6 @@ export function DiceCanvas() {
       }
       return;
     }
-    if (rollingRef.current) {
-      queuedRequestRef.current = request;
-      return;
-    }
 
     if (seenIdsRef.current.has(request.id)) {
       ack();
@@ -245,10 +242,12 @@ export function DiceCanvas() {
     pendingRef.current = request;
     rollingRef.current = true;
     cancelFade();
+    const token = ++throwTokenRef.current;
+    const isCurrent = () => throwTokenRef.current === token;
 
     let finished = false;
     const finishOnce = (payload: ThreejsResult | undefined) => {
-      if (finished) return;
+      if (!isCurrent() || finished) return;
       if (pendingRef.current?.id !== request.id) return;
       finished = true;
       pendingRef.current = null;
@@ -260,11 +259,6 @@ export function DiceCanvas() {
     void (async () => {
       try {
         hideDesk(box);
-        try {
-          box.clearDice();
-        } catch {
-          // ignore
-        }
         const fallback = themeColorRef.current;
         const dieColors = expandDieColors(request.dice, fallback);
         const results = await rollWithPerDieColors(
@@ -272,9 +266,11 @@ export function DiceCanvas() {
           notation,
           dieColors,
           fallback,
+          isCurrent,
         );
         finishOnce(results);
       } catch (err) {
+        if (!isCurrent()) return;
         console.error("[DiceCanvas] roll failed", err);
         reportError(err, { source: "client", dedupeKey: "client:dice-roll" });
         if (!finished && pendingRef.current?.id === request.id) {

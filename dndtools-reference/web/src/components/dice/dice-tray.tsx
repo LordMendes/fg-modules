@@ -55,7 +55,6 @@ export function DiceTray() {
     rollPool,
     rollDie,
     clearDice,
-    rolling,
     ready,
     canRoll,
     skinId,
@@ -286,7 +285,7 @@ export function DiceTray() {
                 onPointerUp={onThrowPointerUp}
                 onPointerCancel={onThrowPointerUp}
               >
-                {rolling ? "Rolling…" : "Roll pool"}
+                Roll pool
               </button>
               <button
                 type="button"

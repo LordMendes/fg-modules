@@ -4,6 +4,7 @@ import { SaveToListButton } from "@/components/save-to-list-button";
 import type { CategoryKey } from "@/lib/categories";
 import type { EntityDetail } from "@/lib/entities";
 import { buildEntityFaqs, buildEntityLead, type EntityFaq } from "@/lib/entity-lead";
+import { splitPortfolio } from "@/lib/pc-planner/deityDomains";
 import { formatProseHtml, sanitizeHtml } from "@/lib/sanitize";
 import { ClassSpellList } from "@/components/class-spell-list";
 import { ClassSkillsTable } from "@/components/class-skills-table";
@@ -27,6 +28,122 @@ function EntityQuickAnswers({ faqs }: { faqs: EntityFaq[] }) {
   );
 }
 
+function spellLevelLabel(level: number): string {
+  const mod100 = level % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${level}th`;
+  switch (level % 10) {
+    case 1:
+      return `${level}st`;
+    case 2:
+      return `${level}nd`;
+    case 3:
+      return `${level}rd`;
+    default:
+      return `${level}th`;
+  }
+}
+
+function DomainOverview({ entity }: { entity: EntityDetail }) {
+  const spells = entity.domainSpells ?? [];
+  const byLevel = new Map<number, { label: string; href: string }[]>();
+  for (const spell of spells) {
+    const list = byLevel.get(spell.level) ?? [];
+    list.push(spell);
+    byLevel.set(spell.level, list);
+  }
+  const levels = [...byLevel.keys()].sort((a, b) => a - b);
+  const paired = levels.some((level) => (byLevel.get(level)?.length ?? 0) > 1);
+
+  return (
+    <div className="domain-overview">
+      {entity.descriptionHtml ? (
+        <section className="entity-section domain-granted">
+          <h2>Granted power</h2>
+          <div
+            className="prose-content"
+            dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.descriptionHtml) }}
+          />
+        </section>
+      ) : null}
+      {levels.length > 0 ? (
+        <section className="entity-section domain-spells" aria-labelledby="domain-spells-heading">
+          <h2 id="domain-spells-heading">Domain spells</h2>
+          {paired ? (
+            <p className="domain-spells-note">
+              Each level offers two spells. Prepare one of them in the domain slot.
+            </p>
+          ) : null}
+          <div className="table-wrap">
+            <table className="domain-spell-table">
+              <thead>
+                <tr>
+                  <th scope="col">Level</th>
+                  <th scope="col">Spell</th>
+                </tr>
+              </thead>
+              <tbody>
+                {levels.map((level) => (
+                  <tr key={level}>
+                    <th scope="row">{spellLevelLabel(level)}</th>
+                    <td>
+                      <span className="domain-spell-links">
+                        {(byLevel.get(level) ?? []).map((spell) => (
+                          <Link key={spell.href} href={spell.href}>
+                            {spell.label}
+                          </Link>
+                        ))}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function DeityOverview({ entity }: { entity: EntityDetail }) {
+  const portfolio = splitPortfolio(entity.fields.Portfolio);
+  const domains = entity.deityDomains ?? [];
+  if (portfolio.length === 0 && domains.length === 0) return null;
+
+  return (
+    <div className="deity-overview">
+      {portfolio.length > 0 ? (
+        <section className="entity-section" aria-labelledby="deity-portfolio-heading">
+          <h2 id="deity-portfolio-heading">Portfolio</h2>
+          <ul className="deity-chip-list">
+            {portfolio.map((item) => (
+              <li key={item}>
+                <span className="deity-chip">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {domains.length > 0 ? (
+        <section className="entity-section" aria-labelledby="deity-domains-heading">
+          <h2 id="deity-domains-heading">Domains</h2>
+          <ul className="deity-chip-list">
+            {domains.map((domain) => (
+              <li key={domain.label}>
+                {domain.href ? (
+                  <Link className="deity-chip" href={domain.href}>{domain.label}</Link>
+                ) : (
+                  <span className="deity-chip">{domain.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
 function formatAdvancementHtml(html: string): string {
   const withClass = html.replace(/<table(\s[^>]*)?>/gi, (_match, _attrs, offset: number) => {
     const head = html.slice(offset, offset + 500).toLowerCase();
@@ -46,6 +163,7 @@ export function EntityDetailView({
   entity: EntityDetail;
 }) {
   const fields = Object.entries(entity.fields).filter(([, v]) => v);
+  const statFields = fields.filter(([label]) => category !== "deities" || label !== "Portfolio");
   const lead = buildEntityLead(category, entity);
   const faqs = buildEntityFaqs(category, entity);
 
@@ -106,6 +224,9 @@ export function EntityDetailView({
 
       {lead ? <p className="entity-lead">{lead}</p> : null}
 
+      {category === "domains" ? <DomainOverview entity={entity} /> : null}
+      {category === "deities" ? <DeityOverview entity={entity} /> : null}
+
       {entity.sections && entity.sections.length > 0 && (
         <>
           {entity.sections.map((section) => (
@@ -120,9 +241,9 @@ export function EntityDetailView({
         </>
       )}
 
-      {fields.length > 0 && (
+      {statFields.length > 0 && category !== "domains" && (
         <dl className={`stat-block${category === "monsters" ? " monster-stats" : ""}`}>
-          {fields.map(([label, value]) => (
+          {statFields.map(([label, value]) => (
             <div key={label} className="stat-row">
               <dt>{label}</dt>
               <dd>{value}</dd>
@@ -205,7 +326,7 @@ export function EntityDetailView({
         </>
       )}
 
-      {entity.related.length > 0 && (
+      {entity.related.length > 0 && category !== "domains" && (
         <section className="related-section">
           <h2>Related</h2>
           <ul className="related-list">
@@ -243,7 +364,10 @@ export function EntityDetailView({
         </section>
       )}
 
-      {entity.descriptionHtml && category !== "monsters" && category !== "feats" && (
+      {entity.descriptionHtml &&
+        category !== "monsters" &&
+        category !== "feats" &&
+        category !== "domains" && (
         <section
           className="prose-content"
           dangerouslySetInnerHTML={{ __html: formatProseHtml(entity.descriptionHtml) }}

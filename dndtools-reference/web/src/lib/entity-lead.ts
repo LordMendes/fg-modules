@@ -368,6 +368,12 @@ export function buildEntityFaqs(category: CategoryKey, entity: EntityDetail): En
     case "deities": {
       const alignment = f.Alignment;
       if (alignment) add(`What is the alignment of ${name}?`, `The alignment of ${name} is ${alignment}.`);
+      const portfolio = f.Portfolio;
+      if (portfolio) add(`What is the portfolio of ${name}?`, `The portfolio of ${name} is ${portfolio}.`);
+      const domains = entity.deityDomains?.map((domain) => domain.label) ?? [];
+      if (domains.length > 0) {
+        add(`Which domains does ${name} grant?`, `${name} grants ${domains.join(", ")}.`);
+      }
       const pantheon = f.Pantheon;
       if (pantheon) add(`Which pantheon is ${name} in?`, `${name} belongs to the ${pantheon} pantheon.`);
       break;
