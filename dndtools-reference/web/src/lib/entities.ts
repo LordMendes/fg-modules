@@ -1838,53 +1838,128 @@ const archiveSearchSelect = {
   source: { select: { name: true, abbrev: true } },
 } as const;
 
+type ArchiveSearchRow = {
+  slug: string;
+  name: string;
+  descriptionText: string | null;
+  source: { name: string; abbrev: string | null } | null;
+};
+
+/** Exact name, then a name that starts with the query, then a name that contains it. */
+function archiveMatchRank(name: string, query: string): 0 | 1 | 2 {
+  const n = name.toLowerCase();
+  const q = query.trim().toLowerCase();
+  if (n === q) return 0;
+  if (n.startsWith(q)) return 1;
+  return 2;
+}
+
+/**
+ * Exact names come first. Other matches rotate through categories so one
+ * category, usually spells, cannot fill the list and hide a deity.
+ */
+export function mergeArchiveSearchHits(
+  hits: ArchiveSearchHit[],
+  query: string,
+  limit: number,
+): ArchiveSearchHit[] {
+  const buckets: [ArchiveSearchHit[], ArchiveSearchHit[], ArchiveSearchHit[]] = [[], [], []];
+  for (const hit of hits) buckets[archiveMatchRank(hit.name, query)].push(hit);
+
+  const out: ArchiveSearchHit[] = [];
+  const seen = new Set<string>();
+  const push = (hit: ArchiveSearchHit) => {
+    if (out.length >= limit) return;
+    const key = `${hit.category}:${hit.slug}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push(hit);
+  };
+
+  const byName = (a: ArchiveSearchHit, b: ArchiveSearchHit) => a.name.localeCompare(b.name);
+  for (const hit of buckets[0].sort(byName)) push(hit);
+
+  for (const bucket of [buckets[1], buckets[2]]) {
+    const groups = new Map<CategoryKey, ArchiveSearchHit[]>();
+    for (const hit of bucket) {
+      const list = groups.get(hit.category) ?? [];
+      list.push(hit);
+      groups.set(hit.category, list);
+    }
+    for (const list of groups.values()) list.sort(byName);
+    let added = true;
+    while (added && out.length < limit) {
+      added = false;
+      for (const list of groups.values()) {
+        const next = list.shift();
+        if (!next) continue;
+        push(next);
+        added = true;
+        if (out.length >= limit) break;
+      }
+    }
+  }
+
+  return out;
+}
+
 export async function searchAll(query: string, limit = 20): Promise<ArchiveSearchHit[]> {
   if (!query || query.length < 2) return [];
 
-  const pattern = `%${query}%`;
-  const results: ArchiveSearchHit[] = [];
-
-  const searches: [CategoryKey, () => Promise<{ slug: string; name: string; descriptionText: string | null; source: { name: string; abbrev: string | null } | null }[]>][] = [
-    ["spells", () => prisma.spell.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["feats", () => prisma.feat.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["monsters", () => prisma.monster.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["classes", () => prisma.dndClass.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["skills", () => prisma.skill.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["races", () => prisma.race.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["items", () => prisma.item.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+  const nameWhere = { contains: query, mode: "insensitive" as const };
+  const searches: [CategoryKey, () => Promise<ArchiveSearchRow[]>][] = [
+    ["spells", () => prisma.spell.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["feats", () => prisma.feat.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["monsters", () => prisma.monster.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["classes", () => prisma.dndClass.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["skills", () => prisma.skill.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["races", () => prisma.race.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["items", () => prisma.item.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
     ["equipment", () => prisma.equipment.findMany({
       where: {
         OR: [
-          { name: { contains: query, mode: "insensitive" } },
+          { name: nameWhere },
           { descriptionText: { contains: query, mode: "insensitive" } },
         ],
       },
       take: limit,
       select: archiveSearchSelect,
     })],
-    ["domains", () => prisma.domain.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["psionics", () => prisma.psionic.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
-    ["rules", () => prisma.rule.findMany({ where: { name: { contains: query, mode: "insensitive" } }, take: limit, select: archiveSearchSelect })],
+    ["domains", () => prisma.domain.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["deities", async () => {
+      const rows = await prisma.deity.findMany({
+        where: { name: nameWhere },
+        take: limit,
+        select: { ...archiveSearchSelect, portfolio: true },
+      });
+      return rows.map((row) => {
+        const portfolio = splitPortfolio(row.portfolio).join(", ");
+        return {
+          slug: row.slug,
+          name: row.name,
+          descriptionText: portfolio || row.descriptionText,
+          source: row.source,
+        };
+      });
+    }],
+    ["psionics", () => prisma.psionic.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["templates", () => prisma.template.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
+    ["rules", () => prisma.rule.findMany({ where: { name: nameWhere }, take: limit, select: archiveSearchSelect })],
   ];
 
-  void pattern;
-  for (const [cat, fn] of searches) {
-    if (results.length >= limit) break;
+  const batches = await Promise.all(searches.map(async ([category, fn]) => {
     const rows = await fn();
-    for (const row of rows) {
-      results.push({
-        category: cat,
-        slug: row.slug,
-        name: row.name,
-        snippet: row.descriptionText?.slice(0, 120) ?? null,
-        sourceName: row.source?.name ?? null,
-        sourceAbbrev: row.source?.abbrev ?? null,
-      });
-      if (results.length >= limit) break;
-    }
-  }
+    return rows.map((row): ArchiveSearchHit => ({
+      category,
+      slug: row.slug,
+      name: row.name,
+      snippet: row.descriptionText?.slice(0, 120) ?? null,
+      sourceName: row.source?.name ?? null,
+      sourceAbbrev: row.source?.abbrev ?? null,
+    }));
+  }));
 
-  return results;
+  return mergeArchiveSearchHits(batches.flat(), query, limit);
 }
 
 async function resolveClassSpellListSlug(
