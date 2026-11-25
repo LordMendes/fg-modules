@@ -1,20 +1,15 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { clampInt } from "./combatMutations";
+import { clampInt, parseInitiative } from "./validation";
 
 describe("Combat editable field validation", () => {
   it("validates init values (float, no bounds)", () => {
-    const parseInit = (value: string): number | null => {
-      const n = Number.parseFloat(value);
-      return Number.isFinite(n) ? n : null;
-    };
-    
-    assert.equal(parseInit("15.5"), 15.5);
-    assert.equal(parseInit("0"), 0);
-    assert.equal(parseInit("-5.2"), -5.2);
-    assert.equal(parseInit("100"), 100);
-    assert.equal(parseInit("invalid"), null);
-    assert.equal(parseInit("NaN"), null);
+    assert.equal(parseInitiative("15.5"), 15.5);
+    assert.equal(parseInitiative("0"), 0);
+    assert.equal(parseInitiative("-5.2"), -5.2);
+    assert.equal(parseInitiative("100"), 100);
+    assert.equal(parseInitiative("invalid"), null);
+    assert.equal(parseInitiative("NaN"), null);
   });
 
   it("validates and clamps HP max (1-9999)", () => {
@@ -53,29 +48,5 @@ describe("Combat editable field validation", () => {
     assert.equal(clampInt(50, 0, hpMax), 50);
     assert.equal(clampInt(60, 0, hpMax), 50);
     assert.equal(clampInt(25.9, 0, hpMax), 25);
-  });
-});
-
-describe("Combat editing permissions", () => {
-  it("DM can edit any combatant field", () => {
-    const isDm = true;
-    const isOwnPc = false;
-    assert.ok(isDm || isOwnPc);
-  });
-
-  it("Player cannot edit NPC fields", () => {
-    const isDm = false;
-    const isOwnPc = false;
-    const canEdit = isDm || isOwnPc;
-    assert.ok(!canEdit);
-  });
-
-  it("Player can roll own PC initiative but not set it directly", () => {
-    const isDm = false;
-    const isOwnPc = true;
-    const canRollInit = isOwnPc;
-    const canSetInit = isDm;
-    assert.ok(canRollInit);
-    assert.ok(!canSetInit);
   });
 });

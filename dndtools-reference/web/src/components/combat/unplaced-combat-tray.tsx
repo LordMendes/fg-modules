@@ -8,12 +8,17 @@ export const UNPLACED_COMBATANT_MIME = "application/x-unplaced-combatant";
 
 export function UnplacedCombatTray({
   combatants,
+  showPcs = true,
 }: {
   combatants: CombatantView[];
+  showPcs?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(false);
+  const displayCombatants = showPcs
+    ? combatants
+    : combatants.filter((c) => c.kind === "npc");
 
-  if (combatants.length === 0) return null;
+  if (displayCombatants.length === 0) return null;
 
   return (
     <aside
@@ -34,18 +39,18 @@ export function UnplacedCombatTray({
           <div className="unplaced-combat-tray-title">
             <Users size={16} aria-hidden />
             <span>Unplaced</span>
-            <span className="unplaced-combat-tray-count">{combatants.length}</span>
+            <span className="unplaced-combat-tray-count">{displayCombatants.length}</span>
           </div>
         ) : (
           <span className="unplaced-combat-tray-count unplaced-combat-tray-count--solo">
-            {combatants.length}
+            {displayCombatants.length}
           </span>
         )}
       </div>
 
       {!collapsed ? (
         <ul className="unplaced-combat-tray-list">
-          {combatants.map((c) => (
+          {displayCombatants.map((c) => (
             <li
               key={c.id}
               className="unplaced-combat-tray-item"
@@ -60,7 +65,7 @@ export function UnplacedCombatTray({
                 );
                 e.dataTransfer.effectAllowed = "move";
               }}
-              title="Drag onto the map to place"
+              title={`Drag ${c.name} onto the map to place`}
             >
               {c.tokenImageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -75,7 +80,10 @@ export function UnplacedCombatTray({
                   className={`unplaced-combat-tray-thumb unplaced-combat-tray-thumb--blank combat-faction--${c.faction}`}
                 />
               )}
-              <span className="unplaced-combat-tray-name">{c.name}</span>
+              <span className="unplaced-combat-tray-name">
+                {c.name}
+                {c.kind === "pc" ? " (PC)" : ""}
+              </span>
               <span className="unplaced-combat-tray-meta">
                 AC {c.ac} · HP {c.hpMax - c.wounds}/{c.hpMax}
               </span>

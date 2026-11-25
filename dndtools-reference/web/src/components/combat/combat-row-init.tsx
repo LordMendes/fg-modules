@@ -2,6 +2,7 @@
 
 import { combatSetInitiative, combatSetActiveCombatant } from "@/actions/combat";
 import type { CombatantView } from "@/lib/combat/types";
+import { parseInitiative } from "@/lib/combat/validation";
 import { formatModifier } from "@/lib/pc-planner/combatStats";
 import { ChevronRight } from "lucide-react";
 import { useState, useTransition } from "react";
@@ -34,8 +35,8 @@ export function CombatRowInit({
           onChange={(e) => setInitDraft(e.target.value)}
           onBlur={() => {
             setEditingInit(false);
-            const n = Number.parseFloat(initDraft);
-            if (!Number.isFinite(n) || !ctx) return;
+            const n = parseInitiative(initDraft);
+            if (n === null || !ctx) return;
             startTransition(async () => {
               await combatSetInitiative(ctx.campaignId, c.id, n);
             });

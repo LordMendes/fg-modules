@@ -16,7 +16,12 @@ import {
   snapshotCombatStats,
 } from "./combatView";
 import { uniqueCombatName } from "./combatMutations";
-import { unplacedNpcCombatants, type CampaignCombatView } from "./types";
+import {
+  unplacedNpcCombatants,
+  unplacedCombatants,
+  separateUnplacedCombatants,
+  type CampaignCombatView,
+} from "./types";
 
 describe("parseSpaceReach", () => {
   it("maps size categories to squares", () => {
@@ -240,5 +245,296 @@ describe("unplacedNpcCombatants", () => {
     const unplaced = unplacedNpcCombatants(combat);
     assert.equal(unplaced.length, 1);
     assert.equal(unplaced[0]?.name, "Goblin");
+  });
+});
+
+describe("unplacedCombatants", () => {
+  const defaultCombatantFields = {
+    nonlethal: 0,
+    turnState: "normal" as const,
+    deathState: null,
+    defenses: {},
+    effects: [],
+    pendingTargetIds: [],
+    pendingCrit: null,
+    stats: {},
+  };
+
+  it("returns both PCs and NPCs without tokens", () => {
+    const combat: CampaignCombatView = {
+      id: "c1",
+      round: 1,
+      currentCombatantId: null,
+      active: true,
+      state: "active",
+      eventSeq: 0,
+      combatants: [
+        {
+          id: "1",
+          kind: "npc",
+          tokenId: null,
+          pcPlanId: null,
+          campaignNpcId: "n1",
+          name: "Goblin",
+          faction: "foe",
+          init: 10,
+          initMod: 1,
+          hpMax: 5,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 15,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 5,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+        {
+          id: "2",
+          kind: "pc",
+          tokenId: null,
+          pcPlanId: "p1",
+          campaignNpcId: null,
+          name: "Hero",
+          faction: "friend",
+          init: 12,
+          initMod: 2,
+          hpMax: 20,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 16,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 20,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+        {
+          id: "3",
+          kind: "npc",
+          tokenId: "t1",
+          pcPlanId: null,
+          campaignNpcId: "n1",
+          name: "Goblin 2",
+          faction: "foe",
+          init: 8,
+          initMod: 1,
+          hpMax: 5,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 15,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 5,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+      ],
+    };
+    const unplaced = unplacedCombatants(combat);
+    assert.equal(unplaced.length, 2);
+    assert.equal(unplaced[0]?.name, "Goblin");
+    assert.equal(unplaced[1]?.name, "Hero");
+  });
+
+  it("returns empty array when all combatants have tokens", () => {
+    const combat: CampaignCombatView = {
+      id: "c1",
+      round: 1,
+      currentCombatantId: null,
+      active: true,
+      state: "active",
+      eventSeq: 0,
+      combatants: [
+        {
+          id: "1",
+          kind: "npc",
+          tokenId: "t1",
+          pcPlanId: null,
+          campaignNpcId: "n1",
+          name: "Goblin",
+          faction: "foe",
+          init: 10,
+          initMod: 1,
+          hpMax: 5,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 15,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 5,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+      ],
+    };
+    const unplaced = unplacedCombatants(combat);
+    assert.equal(unplaced.length, 0);
+  });
+
+  it("returns empty array when combat is null", () => {
+    const unplaced = unplacedCombatants(null);
+    assert.equal(unplaced.length, 0);
+  });
+});
+
+describe("separateUnplacedCombatants", () => {
+  const defaultCombatantFields = {
+    nonlethal: 0,
+    turnState: "normal" as const,
+    deathState: null,
+    defenses: {},
+    effects: [],
+    pendingTargetIds: [],
+    pendingCrit: null,
+    stats: {},
+  };
+
+  it("separates PCs and NPCs correctly", () => {
+    const combat: CampaignCombatView = {
+      id: "c1",
+      round: 1,
+      currentCombatantId: null,
+      active: true,
+      state: "active",
+      eventSeq: 0,
+      combatants: [
+        {
+          id: "1",
+          kind: "npc",
+          tokenId: null,
+          pcPlanId: null,
+          campaignNpcId: "n1",
+          name: "Goblin 1",
+          faction: "foe",
+          init: 10,
+          initMod: 1,
+          hpMax: 5,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 15,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 5,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+        {
+          id: "2",
+          kind: "pc",
+          tokenId: null,
+          pcPlanId: "p1",
+          campaignNpcId: null,
+          name: "Hero",
+          faction: "friend",
+          init: 12,
+          initMod: 2,
+          hpMax: 20,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 16,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 20,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+        {
+          id: "3",
+          kind: "npc",
+          tokenId: null,
+          pcPlanId: null,
+          campaignNpcId: "n2",
+          name: "Goblin 2",
+          faction: "foe",
+          init: 8,
+          initMod: 1,
+          hpMax: 5,
+          hpTemp: 0,
+          wounds: 0,
+          ac: 15,
+          acTouch: null,
+          acFlat: null,
+          spaceSquares: 1,
+          reachFeet: 5,
+          attacks: [],
+          targetIds: [],
+          visibleToPlayers: true,
+          identified: true,
+          snapshot: {},
+          hpCurrent: 5,
+          status: "healthy",
+          isCurrentTurn: false,
+          tokenImageUrl: null,
+          ...defaultCombatantFields,
+        },
+      ],
+    };
+    const { pcs, npcs } = separateUnplacedCombatants(combat);
+    assert.equal(pcs.length, 1);
+    assert.equal(npcs.length, 2);
+    assert.equal(pcs[0]?.name, "Hero");
+    assert.equal(npcs[0]?.name, "Goblin 1");
+    assert.equal(npcs[1]?.name, "Goblin 2");
+  });
+
+  it("returns empty arrays when combat is null", () => {
+    const { pcs, npcs } = separateUnplacedCombatants(null);
+    assert.equal(pcs.length, 0);
+    assert.equal(npcs.length, 0);
   });
 });

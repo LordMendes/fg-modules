@@ -16,9 +16,12 @@ import { UNPLACED_COMBATANT_MIME } from "@/components/combat/unplaced-combat-tra
 import { useCampaignLive } from "@/components/tools/campaign-live-provider";
 import type { LiveSend } from "@/lib/campaign/liveClient";
 import type { CampaignCombatView } from "@/lib/combat/types";
-import { unplacedNpcCombatants } from "@/lib/combat/types";
+import { unplacedCombatants } from "@/lib/combat/types";
+import { placePcToken } from "@/actions/maps";
+import { parsePcTokenDrop, canDropPcToken } from "@/lib/map/mapDragDrop";
 import { UnplacedCombatTray } from "@/components/combat/unplaced-combat-tray";
 import { reachFeetToSquares } from "@/lib/combat/parseSpaceReach";
+import { combatantForToken as getCombatantForToken } from "@/lib/combat/combatantForToken";
 import {
   type Camera,
   fitCameraToImage,
@@ -1315,9 +1318,8 @@ export function CampaignMapBoard({
   }, [map.id, map.tokens.map((t) => `${t.id}:${t.seq}`).join("|")]);
 
   const combatantForToken = useCallback(
-    (tokenId: string) =>
-      combat?.combatants.find((c) => c.tokenId === tokenId) ?? null,
-    [combat],
+    (tokenId: string) => getCombatantForToken(combat, tokenId, map.tokens),
+    [combat, map.tokens],
   );
 
   const canUseTargetMode = useMemo(() => {
@@ -1425,16 +1427,16 @@ export function CampaignMapBoard({
   };
 
   const handleMapDragOver = (e: React.DragEvent) => {
-    if (!isDm) return;
     // During dragover Chromium often hides custom MIME types; accept when
     // text/plain is present or the known custom types appear.
     const types = Array.from(e.dataTransfer.types);
-    const maybeNpcDrop =
+    const maybeTokenDrop =
       types.includes("text/plain") ||
       types.includes("application/x-campaign-npc") ||
+      types.includes("application/x-campaign-pc-token") ||
       types.includes(UNPLACED_COMBATANT_MIME) ||
       types.includes(COMBAT_DRAG_MIME);
-    if (!maybeNpcDrop) return;
+    if (!maybeTokenDrop) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = types.includes(UNPLACED_COMBATANT_MIME)
       ? "move"
@@ -1442,9 +1444,9 @@ export function CampaignMapBoard({
   };
 
   const handleMapDrop = (e: React.DragEvent) => {
-    if (!isDm) return;
-
     const plain = e.dataTransfer.getData("text/plain").trim();
+
+    // Handle unplaced combatant drops (PC or NPC from combat tracker)
     const unplacedRaw =
       e.dataTransfer.getData(UNPLACED_COMBATANT_MIME) ||
       (plain.startsWith("unplaced-combatant:")
@@ -1453,6 +1455,7 @@ export function CampaignMapBoard({
           })
         : "");
     if (unplacedRaw) {
+      if (!isDm) return;
       e.preventDefault();
       let combatantId: string | null = null;
       try {
@@ -1473,6 +1476,20 @@ export function CampaignMapBoard({
       return;
     }
 
+    // Handle PC token drops from party chips (DM or owning player)
+    const pcTokenRaw = e.dataTransfer.getData("application/x-campaign-pc-token");
+    const pcTokenPayload = parsePcTokenDrop(pcTokenRaw, plain);
+    if (pcTokenPayload) {
+      e.preventDefault();
+      // Allow DM or the owning player to place the token
+      if (!canDropPcToken(isDm, viewerUserId, pcTokenPayload.userId)) return;
+      const pt = clientToGrid(e.clientX, e.clientY);
+      void placePcToken(campaignId, map.id, pcTokenPayload.pcPlanId, pt.x, pt.y);
+      return;
+    }
+
+    // Handle NPC library drops (DM only)
+    if (!isDm) return;
     const raw =
       e.dataTransfer.getData("application/x-campaign-npc") ||
       (plain.startsWith("campaign-npc:")
@@ -1632,7 +1649,7 @@ export function CampaignMapBoard({
         </div>
       ) : null}
       {isDm ? (
-        <UnplacedCombatTray combatants={unplacedNpcCombatants(combat ?? null)} />
+        <UnplacedCombatTray combatants={unplacedCombatants(combat ?? null)} />
       ) : null}
       <div
         ref={viewportRef}

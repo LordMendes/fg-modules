@@ -313,10 +313,9 @@ export function publishCombatEvent(
   });
 }
 
-export function clampInt(value: unknown, min: number, max: number): number | null {
-  if (!Number.isFinite(value)) return null;
-  return Math.max(min, Math.min(max, Math.trunc(Number(value))));
-}
+// Validation helpers moved to validation.ts
+import { clampInt } from "./validation";
+export { clampInt, parseInitiative } from "./validation";
 
 function asTargetIds(raw: unknown): string[] {
   if (!Array.isArray(raw)) return [];
@@ -2636,7 +2635,7 @@ export async function removeEffect(
     const permission = canRemoveEffect({
       isDm: isDm(actor),
       effectIsSystem: effect.system,
-      effectVisibility: effect.visibility,
+      effectVisibility: effect.visibility as "visible" | "hidden" | "gm",
       effectApplierUserId: effect.applierUserId,
       actorUserId: actor.userId,
     });
