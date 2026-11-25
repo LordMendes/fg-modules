@@ -85,13 +85,24 @@ describe("describeLevelRestore", () => {
     previous.notes = "Earlier notes";
 
     const lines = describeLevelRestore(current, previous);
-    assert.ok(lines.some((line) => line.includes("level 5") && line.includes("level 4")));
-    assert.ok(lines.some((line) => line.includes("Strength 16 returns to 14")));
-    assert.ok(lines.some((line) => line.includes("Hit points 40 return to 32")));
-    assert.ok(lines.some((line) => line.includes("Feat will be removed: Power Attack")));
-    assert.ok(lines.some((line) => line.includes("Climb ranks 4 return to 2")));
-    assert.ok(lines.some((line) => line.includes("Longsword will be removed")));
-    assert.ok(lines.some((line) => line.includes("Notes return to the earlier text")));
+    assert.equal(
+      lines.some((line) => line.detail.includes("level")),
+      false,
+    );
+    const strength = lines.find((line) => line.label === "Strength");
+    assert.equal(strength?.detail, "16 → 14");
+    const hp = lines.find((line) => line.label === "Hit points");
+    assert.equal(hp?.detail, "40 → 32");
+    const feat = lines.find((line) => line.label === "Feat");
+    assert.equal(feat?.kind, "remove");
+    assert.equal(feat?.detail, "Power Attack");
+    const climb = lines.find((line) => line.label === "Climb");
+    assert.equal(climb?.detail, "4 ranks → 2");
+    const sword = lines.find((line) => line.label === "Inventory");
+    assert.equal(sword?.kind, "remove");
+    assert.equal(sword?.detail, "Longsword");
+    const notes = lines.find((line) => line.label === "Notes");
+    assert.equal(notes?.detail, "Saved text");
   });
 });
 

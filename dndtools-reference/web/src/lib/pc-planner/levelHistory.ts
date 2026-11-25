@@ -62,36 +62,51 @@ function inventoryTotals(rows: InventoryRow[]): Map<string, number> {
   return totals;
 }
 
+export type LevelRestoreKind = "remove" | "restore" | "change";
+
+export type LevelRestoreChange = {
+  kind: LevelRestoreKind;
+  label: string;
+  detail: string;
+};
+
+/** Class line split into chips so "Monk 1 // Cleric 1" does not break mid-name. */
+export function classSummaryParts(summary: string): string[] {
+  const parts = summary
+    .split(/\s\/\/\s|\s\/\s/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts.length > 0 ? parts : [summary];
+}
+
 function pushSetChanges(
-  lines: string[],
+  lines: LevelRestoreChange[],
   noun: string,
   currentKeys: Map<string, string>,
   previousKeys: Map<string, string>,
 ) {
   for (const [key, label] of currentKeys) {
-    if (!previousKeys.has(key)) lines.push(`${noun} will be removed: ${label}.`);
+    if (!previousKeys.has(key)) lines.push({ kind: "remove", label: noun, detail: label });
   }
   for (const [key, label] of previousKeys) {
-    if (!currentKeys.has(key)) lines.push(`${noun} will be restored: ${label}.`);
+    if (!currentKeys.has(key)) lines.push({ kind: "restore", label: noun, detail: label });
   }
 }
 
-/** Human-readable list of what returning to `previous` undoes on `current`. */
-export function describeLevelRestore(current: PcPlanState, previous: PcPlanState): string[] {
-  const lines: string[] = [];
-  const fromLevel = characterLevelFromPlan(current);
-  const toLevel = characterLevelFromPlan(previous);
-  lines.push(
-    `Character level ${fromLevel} (${classSummaryForPlan(current)}) returns to level ${toLevel} (${classSummaryForPlan(previous)}).`,
-  );
+/** Fields that differ when the current sheet returns to `previous`. Level itself is not listed. */
+export function describeLevelRestore(
+  current: PcPlanState,
+  previous: PcPlanState,
+): LevelRestoreChange[] {
+  const lines: LevelRestoreChange[] = [];
 
   const text = (label: string, from: string, to: string) => {
     const before = from.trim();
     const after = to.trim();
     if (before === after) return;
-    if (!after) lines.push(`${label} "${before}" will be cleared.`);
-    else if (!before) lines.push(`${label} returns to "${after}".`);
-    else lines.push(`${label} "${before}" returns to "${after}".`);
+    if (!after) lines.push({ kind: "remove", label, detail: before });
+    else if (!before) lines.push({ kind: "restore", label, detail: after });
+    else lines.push({ kind: "change", label, detail: `${before} → ${after}` });
   };
 
   text("Name", current.identity.name, previous.identity.name);
@@ -100,29 +115,33 @@ export function describeLevelRestore(current: PcPlanState, previous: PcPlanState
   text("Deity", current.identity.deity ?? "", previous.identity.deity ?? "");
 
   if (Boolean(current.identity.gestalt) !== Boolean(previous.identity.gestalt)) {
-    lines.push(
-      previous.identity.gestalt
-        ? "Gestalt planning will be turned back on."
-        : "Gestalt planning will be turned off.",
-    );
+    lines.push({
+      kind: "change",
+      label: "Gestalt",
+      detail: previous.identity.gestalt ? "Turns back on" : "Turns off",
+    });
   }
 
   if ((current.identity.xp ?? 0) !== (previous.identity.xp ?? 0)) {
-    lines.push(`XP ${current.identity.xp ?? 0} returns to ${previous.identity.xp ?? 0}.`);
+    lines.push({
+      kind: "change",
+      label: "XP",
+      detail: `${current.identity.xp ?? 0} → ${previous.identity.xp ?? 0}`,
+    });
   }
 
   for (const key of Object.keys(ABILITY_LABELS) as (keyof typeof ABILITY_LABELS)[]) {
     const from = current.abilities[key];
     const to = previous.abilities[key];
     if (from !== to) {
-      lines.push(`${ABILITY_LABELS[key]} ${from} returns to ${to}.`);
+      lines.push({ kind: "change", label: ABILITY_LABELS[key], detail: `${from} → ${to}` });
     }
   }
 
   const fromHp = current.hitPoints.current ?? 0;
   const toHp = previous.hitPoints.current ?? 0;
   if (fromHp !== toHp) {
-    lines.push(`Hit points ${fromHp} return to ${toHp}.`);
+    lines.push({ kind: "change", label: "Hit points", detail: `${fromHp} → ${toHp}` });
   }
 
   const currentFeats = new Map(current.feats.map((feat) => [featKey(feat), featLabel(feat)]));
@@ -138,7 +157,11 @@ export function describeLevelRestore(current: PcPlanState, previous: PcPlanState
     const fromRanks = from?.ranks ?? 0;
     const toRanks = to?.ranks ?? 0;
     if (fromRanks === toRanks) continue;
-    lines.push(`${name} ranks ${fromRanks} return to ${toRanks}.`);
+    lines.push({
+      kind: "change",
+      label: name,
+      detail: `${fromRanks} ranks → ${toRanks}`,
+    });
   }
 
   const currentSpells = new Map<string, string>();
@@ -162,13 +185,13 @@ export function describeLevelRestore(current: PcPlanState, previous: PcPlanState
     const from = currentItems.get(name) ?? 0;
     const to = previousItems.get(name) ?? 0;
     if (from === to) continue;
-    if (to === 0) lines.push(`${name} will be removed from inventory.`);
-    else if (from === 0) lines.push(`${name} will be restored to inventory (quantity ${to}).`);
-    else lines.push(`${name} quantity ${from} returns to ${to}.`);
+    if (to === 0) lines.push({ kind: "remove", label: "Inventory", detail: name });
+    else if (from === 0) lines.push({ kind: "restore", label: "Inventory", detail: `${name} ×${to}` });
+    else lines.push({ kind: "change", label: name, detail: `×${from} → ×${to}` });
   }
 
   if ((current.notes ?? "") !== (previous.notes ?? "")) {
-    lines.push("Notes return to the earlier text.");
+    lines.push({ kind: "change", label: "Notes", detail: "Saved text" });
   }
 
   const picture = (label: string, from: string | null | undefined, to: string | null | undefined) => {
@@ -178,10 +201,14 @@ export function describeLevelRestore(current: PcPlanState, previous: PcPlanState
     const had = Boolean(fromKey);
     const will = Boolean(toKey);
     if (had && will) {
-      lines.push(`${label} returns to the earlier image.`);
+      lines.push({ kind: "change", label, detail: "Saved image" });
       return;
     }
-    lines.push(will ? `${label} will be restored.` : `${label} will be removed.`);
+    lines.push(
+      will
+        ? { kind: "restore", label, detail: "Saved image" }
+        : { kind: "remove", label, detail: "Current image" },
+    );
   };
   picture("Profile picture", current.identity.profileImageKey, previous.identity.profileImageKey);
   picture("Token picture", current.identity.tokenImageKey, previous.identity.tokenImageKey);

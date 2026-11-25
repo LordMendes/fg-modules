@@ -3,14 +3,20 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { previewLevelRestore, restorePcPlanLevel, type LevelRestorePreview } from "@/actions/pc-plans";
 import { characterLevelFromPlan } from "@/lib/pc-planner/gestalt";
-import { describeLevelRestore } from "@/lib/pc-planner/levelHistory";
+import {
+  classSummaryForPlan,
+  classSummaryParts,
+  describeLevelRestore,
+  type LevelRestoreChange,
+} from "@/lib/pc-planner/levelHistory";
 import type { PcPlanState } from "@/lib/pc-planner/types";
+import { pcImagePublicUrl } from "@/lib/storage/pc-image-url";
 
 type Prompt =
   | { kind: "loading" }
   | { kind: "empty" }
   | { kind: "error"; message: string }
-  | { kind: "ready"; preview: LevelRestorePreview; lines: string[] };
+  | { kind: "ready"; preview: LevelRestorePreview; lines: LevelRestoreChange[] };
 
 export function PcRestoreLevelButton({
   state,
@@ -83,6 +89,8 @@ export function PcRestoreLevelButton({
   }
 
   const titleId = "pc-restore-level-title";
+  const currentLevel = characterLevelFromPlan(state);
+  const currentClasses = classSummaryParts(classSummaryForPlan(state));
 
   return (
     <>
@@ -127,18 +135,56 @@ export function PcRestoreLevelButton({
             ) : null}
             {prompt.kind === "ready" ? (
               <>
-                <h3 id={titleId}>
-                  Restore level {prompt.preview.characterLevel}?
-                </h3>
-                <p>
-                  The current sheet will be replaced by the saved{" "}
-                  {prompt.preview.classSummary} sheet. These changes will be undone:
+                <h3 id={titleId}>Restore level {prompt.preview.characterLevel}?</h3>
+                <p className="pc-restore-lead">
+                  This replaces the sheet you are editing. The saved copy stays in the level list.
                 </p>
-                <ul className="confirm-dialog-details confirm-dialog-details--scroll">
-                  {prompt.lines.map((line, index) => (
-                    <li key={`${index}:${line}`}>{line}</li>
-                  ))}
-                </ul>
+                <div className="pc-restore-compare">
+                  <RestoreSide
+                    kicker="Now"
+                    level={currentLevel}
+                    name={state.identity.name}
+                    classes={currentClasses}
+                    imageKey={state.identity.profileImageKey}
+                  />
+                  <span className="pc-restore-arrow" aria-hidden="true">
+                    →
+                  </span>
+                  <RestoreSide
+                    kicker="Saved"
+                    level={prompt.preview.characterLevel}
+                    name={prompt.preview.state.identity.name}
+                    classes={classSummaryParts(prompt.preview.classSummary)}
+                    imageKey={prompt.preview.state.identity.profileImageKey}
+                    target
+                  />
+                </div>
+                {prompt.lines.length > 0 ? (
+                  <ul className="pc-restore-changes">
+                    {prompt.lines.map((line, index) => (
+                      <li
+                        key={`${index}:${line.label}:${line.detail}`}
+                        className={`pc-restore-change is-${line.kind}`}
+                      >
+                        <span className="pc-restore-tag">
+                          {line.kind === "remove"
+                            ? "Remove"
+                            : line.kind === "restore"
+                              ? "Bring back"
+                              : "Change"}
+                        </span>
+                        <span className="pc-restore-change-copy">
+                          <span className="pc-restore-change-label">{line.label}</span>
+                          <span className="pc-restore-change-detail">{line.detail}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="pc-restore-empty-changes">
+                    No other stats, gear, or choices differ.
+                  </p>
+                )}
               </>
             ) : null}
             <div className="confirm-dialog-actions">
@@ -167,5 +213,46 @@ export function PcRestoreLevelButton({
         </div>
       ) : null}
     </>
+  );
+}
+
+function RestoreSide({
+  kicker,
+  level,
+  name,
+  classes,
+  imageKey,
+  target = false,
+}: {
+  kicker: string;
+  level: number;
+  name: string;
+  classes: string[];
+  imageKey?: string | null;
+  target?: boolean;
+}) {
+  const photo = pcImagePublicUrl(imageKey);
+  const initial = (name.trim()[0] || "?").toUpperCase();
+  return (
+    <div className={target ? "pc-restore-side pc-restore-side--target" : "pc-restore-side"}>
+      <div className="pc-restore-side-head">
+        {photo ? (
+          <img src={photo} alt="" className="pc-restore-photo" />
+        ) : (
+          <span className="pc-restore-photo pc-restore-photo--empty" aria-hidden="true">
+            {initial}
+          </span>
+        )}
+        <div className="pc-restore-side-title">
+          <span className="pc-restore-kicker">{kicker}</span>
+          <span className="pc-restore-level">Level {level}</span>
+        </div>
+      </div>
+      <ul className="pc-restore-classes">
+        {classes.map((entry, index) => (
+          <li key={`${index}:${entry}`}>{entry}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
