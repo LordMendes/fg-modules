@@ -1,0 +1,17 @@
+{
+  "name": "Green Star Adept",
+  "slug": "green-star-adept-213",
+  "source_abbrev": "CAr",
+  "book_slug": "complete-arcane",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

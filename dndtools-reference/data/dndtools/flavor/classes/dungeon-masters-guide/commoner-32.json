@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Short introduction before the statistics.",
-      "html": ""
+      "html": "<p>The common folk farm the fields, staff the shops, build the homes, and produce the goods in the world around the adventurers. Commoners usually have no desire to live the dangerous life of an adventurer and none of the skills needed to undertake the challenges adventurers must face. Commoners are skilled in their own vocations and make up the majority of the population.</p><p>Commoners make poor adventurers. This class should be reserved for everyone who does not qualify for any other class.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/npcClasses.html#commoner"
 }

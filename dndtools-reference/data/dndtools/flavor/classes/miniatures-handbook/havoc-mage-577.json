@@ -1,0 +1,17 @@
+{
+  "name": "Havoc Mage",
+  "slug": "havoc-mage-577",
+  "source_abbrev": "MH",
+  "book_slug": "miniatures-handbook",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

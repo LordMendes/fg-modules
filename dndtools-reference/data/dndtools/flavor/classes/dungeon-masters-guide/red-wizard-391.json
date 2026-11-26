@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>The Red Wizards are the masters of Thay, the would-be magical overlords of the land of Faerûn (in the FORGOTTEN REALMS® campaign setting). They focus on a school of magic more intently than any specialist, achieving incredible mastery of magic within a very narrow focus. Seen as cruel and evil tyrants by people across the world of Toril, a few choose to leave their region, assume secret identities, and practice magic without having to worry about political alliances and possible slave uprisings.</p><p>Early in their careers, would-be Red Wizards specialize in a school of magic and acquire the Tattoo Focus feat that prepares them for entry into the Red Wizard prestige class. All Red Wizards have some skill as a specialist wizard, and most follow that path exclusively, but a few dabble in other sorts of learning (such as combat or divine magic). While it is possible for a sorcerer or bard to become a Red Wizard, such misfits are ridiculed in their homeland and are incredibly rare.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/redWizard.html"
 }

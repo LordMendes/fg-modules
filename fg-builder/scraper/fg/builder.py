@@ -10,9 +10,11 @@ from typing import Any
 from .converters import CONVERTERS
 from .converters.spell_lists import (
     DREAD_NECROMANCER_CLASS,
+    DRUID_VARIANT_LISTS,
     add_dread_necromancer_spell_list,
     arcanist_path_spell_links,
     build_spell_lists,
+    healer_spell_links,
     index_spell_paths,
 )
 from .loader import (
@@ -26,6 +28,14 @@ from .loader import (
 from .xml_builder import IdAllocator, make_db_root, write_definition, write_xml
 
 MMM_MODULE_NAME = "WOWRPG - More Magic and Mayhem"
+CORE_WOW_MODULE = "WOWRPG - World of Warcraft The Roleplaying Game"
+DRUID_VARIANT_CLASSES = {
+    "Druid of the Claw",
+    "Druid of the Fang",
+    "Druid of the Talon",
+    "Lone Druid",
+    "Night Elf Druid",
+}
 
 
 class EmptyModuleError(Exception):
@@ -96,8 +106,9 @@ def build_module(
                 root.append(section)
 
     if book.slug == "world-of-warcraft-the-roleplaying-game":
-        # The dedicated block below links the general list and each path.
+        # Dedicated blocks below link the general list and each path.
         class_spell_links.pop("Arcanist", None)
+        class_spell_links.pop("Healer", None)
 
     if class_spell_links:
         _inject_class_spell_links(root, class_spell_links)
@@ -105,6 +116,26 @@ def build_module(
     # Core class dialog lists the Chapter 16 lists, then MMM path additions.
     if book.slug == "world-of-warcraft-the-roleplaying-game":
         _inject_arcanist_links(root, display_name)
+        _inject_named_links(
+            root,
+            {
+                "Healer": healer_spell_links(
+                    module_name=display_name,
+                    extra_module=MMM_MODULE_NAME,
+                )
+            },
+        )
+    if book.slug == "alliance-players-guide":
+        druid_links = healer_spell_links(
+            DRUID_VARIANT_LISTS,
+            module_name=CORE_WOW_MODULE,
+            extra_module=MMM_MODULE_NAME,
+            extra_lists=(("druid", "Druid spell list"),),
+        )
+        _inject_named_links(
+            root,
+            {name: druid_links for name in DRUID_VARIANT_CLASSES},
+        )
 
     if sum(report.written.values()) == 0:
         raise EmptyModuleError(
@@ -153,6 +184,21 @@ def _inject_class_spell_links(root: ET.Element, links: dict[str, str]) -> None:
                 continue
             name = (name_el.text or "").strip()
             html = links.get(name)
+            if not html:
+                continue
+            text_el = node.find("text")
+            if text_el is None:
+                continue
+            _append_formatted_html(text_el, html)
+
+
+def _inject_named_links(root: ET.Element, links: dict[str, str]) -> None:
+    for category in root.findall("./class/category"):
+        for node in category:
+            name_el = node.find("name")
+            if name_el is None:
+                continue
+            html = links.get((name_el.text or "").strip())
             if not html:
                 continue
             text_el = node.find("text")

@@ -1,0 +1,18 @@
+{
+  "name": "Kensai",
+  "slug": "kensai-320",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The kensai masters body, mind, weapon, and will. He devotes his strength and his life to the service of a master or an ideal he accepts as greater than himself. Some kensai become masters in their own right, but even one who becomes an emperor sees himself as a servant of some higher power.</p><p>Most characters who become kensai aspire to the class from the beginning of their careers. Often, other kensai or elite military organizations train likely young men and women in the principles of service, the arts of war, and the purity of mind and body necessary to become a kensai. Even those who do not qualify at the end often become powerful adventurers.</p><p>A kensai can be a lone adventurer, serving an ideal or attempting to fulfill a lifetime goal. Some kensai swear fealty to great lords and rise to become trusted bodyguards, warlords, or leaders in the lord’s service. Monks and paladins know the strenuous road a kensai must travel, and some tread that path. Fighters value the might of the kensai, and some clerics have been known to join their ranks. Few wizards or sorcerers achieve kensai status, and bards and barbarians find themselves particularly unsuited to service as a kensai. While it might be thought that a rogue would make a poor kensai, such characters are not unheard of and can be deadly adversaries.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/kensai.html"
+}

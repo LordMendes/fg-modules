@@ -1,0 +1,18 @@
+{
+  "name": "Cavalier",
+  "slug": "cavalier-341",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Representing the ultimate in mounted warfare, the cavalier is the quintessential knight in shining armor. The charge of the cavalier is among the most devastating offensive weapons any culture can hope to field.</p><p>Most cavaliers belong to the upper social class or nobility of a society. The cavalier dedicates his life to the service of a higher authority, such as a noble or sovereign, deity, military or religious order, or a special cause. His is a hereditary honor that comes with the price of lifelong service to his monarch, country, or other object or entity. The cavalier is expected to participate in any wars or other armed conflict in which his lord or cause is engaged. Cavaliers in service to other nobles often serve their master beyond the battlefield as well, performing such duties as their skills, and their noble lord, see fit.</p><p>The cavalier often pursues such selfless goals as the eradication of evil and chaos from the world, and justice for all the subjects of his land. He can also be a bully and a braggart who uses his status and privileges to pursue only his own self-aggrandizement.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/cavalier.html"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Knight Protector",
+  "slug": "knight-protector-322",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The few, the proud, the knight protectors are martial characters dedicated to restoring the ideals of knightly chivalry before they fade forever. The protectors see moral decay everywhere they look in the world around them, brought on by a lapse in ethical behavior. Like paladins, knight protectors adhere to a rigid code of behavior that embraces such values as honor, honesty, chivalry, and courage. Unlike paladins, the first duty of knight protectors is to this code and the ideals for which it stands, rather than to a deity or a holy order. A protector is expected to display these ideals in all aspects of his behavior and throughout all his actions and deeds, however arduous they may be.</p><p>Many knight protectors come from backgrounds of honor and loyalty, such as other orders of chivalry or the service of a powerful master. Paladins and ex-paladins are the most common knight protectors, and clerics of lawful deities (such as St. Cuthbert or Heironeous) as well as fighters seeking a higher ideal often find much to appreciate in the knight protector’s code of conduct. Members of most other classes, particularly spellcasters, lack either the interest or the dedication to pursue this path.</p><p>NPC knight protectors are often found wandering alone, looking for worthy people to protect or idealistic lords to serve. What little bond or organization exists between knight protectors is extremely strong - whether a knight protector was once a baron, a lowly liegeman, or a samurai, each feels a kinship to his compatriots and a longing for better days.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/knightProtector.html"
+}

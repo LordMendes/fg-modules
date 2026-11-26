@@ -1,0 +1,18 @@
+{
+  "name": "Hunter of the Dead",
+  "slug": "hunter-of-the-dead-317",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The hunter of the dead is the hated enemy of all undead. She spends each restless night tracking undead to their lairs and cleansing the land of their foul presence.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/hunteroftheDead.html"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Death Delver",
+  "slug": "death-delver-531",
+  "source_abbrev": "HH",
+  "book_slug": "heroes-of-horror",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

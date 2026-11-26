@@ -1,0 +1,18 @@
+{
+  "name": "Reaping Mauler",
+  "slug": "reaping-mauler-332",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Truly wise adventurers are always wary of unarmed opponents, for such adversaries are usually more than they seem. Such an opponent might even be a reaping mauler - the worst nightmare of a character who depends on weapon skills to win. Anyone who dares to wield a weapon against a reaping mauler had better make use of it quickly, because the opportunity won’t last long.</p><p>Reaping maulers are the back-breakers, the limb-twisters, and the neck-snappers among pit fighters. Grapplers of the highest order, they wear nothing heavier than light armor in combat to maximize their flexibility, and they use no weapons to achieve their gruesome victories, for they prefer the intimacy of a barehanded kill. A reaping mauler wants to be close enough to taunt his opponent with whispers while crushing the life out of it, to smell its fear, and to watch the despair creep over its face when the opponent realizes just how useless its weapons are during a grapple.</p><p>Most of those attracted to the reaping mauler prestige class are fighters, but it is not uncommon for barbarians or rangers to embrace this path. Monks have natural ability in this direction, but the class sometimes feels too chaotic for such a character. Paladins and clerics have also been known to dabble in this prestige class, treating the combat style as both good, hearty sport and a means to render opponents unconscious without killing them. Druids sometimes become reaping maulers to enhance their ability to tame animals by hand, and even rogues occasionally adopt the class. Bards, sorcerers, and wizards usually lack the physical strength to be good candidates for the class, but they respect reaping maulers for their obvious spell-disrupting abilities.</p><p>NPC reaping maulers are burly, rowdy individuals who carry themselves with an air of invulnerability. When it comes to the simple pleasures of life - drink and food - they believe the world exists for their convenience. In a reaping mauler’s mind, there is no problem that can’t be solved with brawn. If something can be taken by force, he feels that it must naturally belong to him, and rarely does anyone openly oppose this concept.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/reapingMauler.html"
+}

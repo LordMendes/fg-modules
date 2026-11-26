@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>Arcane tricksters combine their knowledge of spells with a taste for intrigue, larceny, or just plain mischief. They are among the most adaptable of adventurers.</p><p>Arcane spellcasting and the sneak attack ability are needed to qualify for this class, making it a natural choice for multiclass wizard/rogues or sorcerer/rogues. Assassins occasionally opt for this class, but usually only if they already have wizard or sorcerer levels.</p><p>Arcane tricksters tend to use a seat-of-the-pants approach to adventuring, loading up on spells that improve their stealth and mobility. An NPC arcane trickster is just the sort of person that might bump into you in a crowded tavern. (Check your pockets.)</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/arcaneTrickster.html"
 }

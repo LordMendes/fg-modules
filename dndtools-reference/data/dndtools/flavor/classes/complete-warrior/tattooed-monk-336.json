@@ -1,0 +1,18 @@
+{
+  "name": "Tattooed Monk",
+  "slug": "tattooed-monk-336",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Certain monastic orders bestow supernatural or spell-like powers on their members by inscribing magic tattoos on their skin. These tattooed monks shave their heads, speak in cryptic riddles and maxims, and - in many cases - travel the countryside furthering their quest for enlightenment by facing and conquering temptation.</p><p>The great majority of tattooed monks begin their careers as monks. A small number of fighters, druids, and even a few clerics adopt the tattooed monk prestige class. In general, tattooed monks are drawn almost exclusively from rural or wild regions, though more “civilized” individuals who gain the favor of the order are sometimes allowed to join.</p><p>The ranks of the tattooed monks are divided between worldly monks - those who believe that temptation can only be overcome if it is squarely faced - and ascetic monks, who rarely leave their mountaintop retreats. Player character tattooed monks are assumed to fall into the former category, but NPCs can be found in both roles. NPC tattooed monks often fulfill roles as philosophers and mystics, helping others find answers to esoteric questions and solutions to unusual problems.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/tattooedMonk.html"
+}

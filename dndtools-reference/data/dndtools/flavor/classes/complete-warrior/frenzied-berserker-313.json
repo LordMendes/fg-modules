@@ -1,0 +1,18 @@
+{
+  "name": "Frenzied Berserker",
+  "slug": "frenzied-berserker-313",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The random madness of the thunderstorm and the unpredictability of the slaadi come together in the soul of the frenzied berserker. Unlike most other characters, she does not fight to achieve some heroic goal or defeat a loathsome villain. Those are mere excuses - it is the thrill of combat that draws her. For the frenzied berserker, the insanity of battle is much like an addictive drug - she must constantly seek out more conflict to feed her craving for battle.</p><p>Along the wild borderlands and in the evil kingdoms of the world, frenzied berserkers often lead warbands that include a variety of character types - and even other frenzied berserkers. Some such groups turn to banditry and brigandage; others serve as specialized mercenaries. Whatever their origin, such warbands naturally gravitate toward situations of instability and conflict, because wars and civil strife are their bread and butter. Indeed, the coming of a frenzied berserker is the most obvious herald of troubled times.</p><p>The frenzied berserker’s path is unsuited for most adventurers - a fact for which the peace-lovers of the world can be thankful. Because of their traditional love for battle, orc and half-orc barbarians are the ones who most frequently adopt this prestige class, though human and dwarf barbarians also find it appealing. It might seem that elves would be good candidates because of their chaotic nature, but the elven aesthetic and love of grace are at odds with the frenzied berserker’s devaluation of the self. Spellcasting characters and monks almost never become frenzied berserkers.</p><p>NPC frenzied berserkers often lead tribal warbands or raiders made up of fighters, barbarians, or other martial characters. Some fall in with humanoids and even giantish tribes, but not all frenzied berserkers turn their chaotic strength to evil. A few have found homes in small villages or in rural areas, acting as members of the settlement’s defenses. Most people give even such well-intentioned frenzied berserkers a wide berth, however, and they often find themselves wandering as loners in the wilderness.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/frenziedBerserker.html"
+}

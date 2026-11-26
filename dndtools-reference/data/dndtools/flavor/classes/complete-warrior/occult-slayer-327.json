@@ -1,0 +1,18 @@
+{
+  "name": "Occult Slayer",
+  "slug": "occult-slayer-327",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The occult slayer is driven to confront any arcane or divine spellcaster who crosses her path. Occult slayers believe that mortals are too irresponsible to wield magic, and that those who dare to do so must be slain. Spellcasters who become occult slayers are considered to have seen the error of their ways - although they may still cast spells, they rely primarily on their battle prowess and their ability to resist magical effects to defeat their enemies.</p><p>The occult slayer comes into her own through exhaustive training. Every regimen she performs is an exercise that refines her anger against spellcasters into martial skill. Each occult slayer forms a preternatural bond with her masterwork weapon of choice, which serves as the instrument of her vengeance.</p><p>This prestige class is ideal for individuals who have been victimized by spellcasters and seek acceptable ways to oppose them. Most occult slayers begin their careers as fighters, although barbarians and rangers often take this path as well. Monks and rogues have also been known to embrace this calling, but bards and paladins find the occult slayer’s preoccupation with spellcasters stifling. Clerics, druids, sorcerers, and wizards - the primary targets of occult slayers - tend not to adopt this prestige class, although such turnarounds are not without precedent.</p><p>NPC occult slayers seldom form organizations, because they have discovered that congregating in one place attracts spellcasters intent on making preemptive strikes against them. Instead, occult slayers discreetly meet from time to time to exchange information about spellcasting opponents they have targeted for matches. Otherwise, the occult slayer operates alone, traveling between venues in search of matches that involve spellcasters. Because of the inherent discretion that occult slayers display, a candidate for this prestige class must be chosen and trained by another occult slayer who is willing to share her secrets.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/occultSlayer.html"
+}

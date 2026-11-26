@@ -81,21 +81,22 @@
       "title": "Alignment",
       "placement": "before",
       "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
-      "html": ""
+      "html": "<p>Lawful good.</p>"
     },
     {
       "key": "hit_die",
       "title": "Hit Die",
       "placement": "before",
       "hint": "Hit die line under Game Rule Information.",
-      "html": ""
+      "html": "<p>d10.</p>"
     },
     {
       "key": "class_skills",
       "title": "Class Skills",
       "placement": "before",
       "hint": "Skill point sentence. The skill list stays on the class stat tab.",
-      "html": ""
+      "html": "<p>The paladin's class skills (and the key ability for each skill) are Concentration (Con), Craft (Int), Diplomacy (Cha), Handle Animal (Cha), Heal (Wis), Knowledge (nobility and royalty) (Int), Knowledge (religion) (Int), Profession (Wis), Ride (Dex), and Sense Motive (Wis).</p><p>Skill Points at 1st Level : (2 + Int modifier) x 4.</p><p>Skill Points at Each Additional Level : 2 + Int modifier.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/baseCore/paladin.html"
 }

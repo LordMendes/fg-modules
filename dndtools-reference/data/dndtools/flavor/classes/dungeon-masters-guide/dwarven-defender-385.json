@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>The defender is a sponsored champion of a dwarven cause, a dwarf aristocrat, a dwarven deity, or the dwarven way of life. As the name might imply, this character is a skilled combatant trained in the arts of defense. A line of dwarven defenders is a far better defense than a 10foot-thick wall of stone, and much more dangerous.</p><p>Most dwarven defenders are fighters, paladins, rangers, or clerics, although ex-barbarians, sorcerers, wizards, and druids can certainly all benefit from the defensive capabilities of this prestige class. Rogues, bards, and monks usually depend too heavily on mobility to use the abilities of the dwarven defender class to their fullest.</p><p>NPC dwarven defenders are usually soldiers in a dwarven citadel, segregated into their own units separate from regular warriors or fighters. Occasionally a lone, wandering dwarven defender can be encountered on some mission, although he usually guards his words so closely that it’s difficult to learn what his quest actually entails.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/dwarvenDefender.html"
 }

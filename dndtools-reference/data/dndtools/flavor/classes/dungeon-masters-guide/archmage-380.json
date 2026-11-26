@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>The highest art is magic—often referred to as the Art. Its most advanced practitioners are frequently archmages, characters who bend spells in ways unavailable to other spellcasters. An archmage gains strange powers and the ability to alter spells in remarkable ways, but must sacrifice some of her spell capability in order to master these arcane secrets.</p><p>Most archmages are purely wizards or sorcerers. They rarely multiclass, choosing instead to concentrate on perfecting their arcane skills.</p><p>NPC archmages in urban areas often hold positions of power in magic-focused guilds. Their pursuit of arcane excellence and their familiarity with high arcana place them above most of their peers. Some archmages choose a more solitary path, often eschewing society to study in quietude</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/archmage.html"
 }

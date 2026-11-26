@@ -1,0 +1,18 @@
+{
+  "name": "Stonelord",
+  "slug": "stonelord-335",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Dwarves know more secrets about stone than anyone. They live and die among the stones, and the earth whispers to them - or at least to select individuals. These special dwarves are known as stonelords. They use their connection with the earth to draw from the infinite reserves of power within it to help them perform amazing feats.</p><p>Fighters are the most common stonelords, although dwarf paladins and rangers adopt the mantle as well. Though uncommon, dwarf rogues, clerics, and even the occasional wizard or sorcerer become stonelords.</p><p>NPC stonelords work in dwarven communities as protectors and leaders. Occasionally they work in groups, but even then, their varied backgrounds and chosen powers make them all very different.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/stonelord.html"
+}

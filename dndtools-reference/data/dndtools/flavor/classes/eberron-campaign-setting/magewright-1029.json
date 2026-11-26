@@ -1,0 +1,17 @@
+{
+  "name": "Magewright",
+  "slug": "magewright-1029",
+  "source_abbrev": "ECS",
+  "book_slug": "eberron-campaign-setting",
+  "page": null,
+  "schema": "dmg-npc",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Short introduction before the statistics.",
+      "html": ""
+    }
+  ]
+}

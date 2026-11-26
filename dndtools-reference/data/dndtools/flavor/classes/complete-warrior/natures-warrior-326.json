@@ -1,0 +1,18 @@
+{
+  "name": "Nature's Warrior",
+  "slug": "natures-warrior-326",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Nature’s warriors are defenders of the wild, protectors of the natural world... and often druids who have spent “too much time” in wild shape form. Members of this prestige class share a bond that transcends race and outside appearance.</p><p>When a character gains the ability to naturally shift into the form of a “lower animal,” she sometimes gains a perspective on life that makes her envy this adopted form over her own. She may simply feel a stronger tie to nature while in animal (or elemental) form, or perhaps she longs for the power such forms give her. Certainly she begins to develop her abilities while in wild forms at the expense of the shape she was born in.</p><p>Many people consider nature’s warriors to be loners or fanatics, even less a part of the world than the most solitary druid or ranger. Nature’s warriors, however, tend to be very communal. They often communicate with each other—sometimes through animal messengers, or even face to face, when they can bring themselves to leave their territories—and they keep a careful watch on “civilization.” Nature’s warriors develop their animalistic instincts more strongly than the behavior associated with societal learning, and do have a tendency to come off as gruff or impatient with those who are not as “in tune” with nature as themselves. It is not uncommon for a nature’s warrior to spend days or even weeks in a single animal or elemental form, or to shift from form to form regularly, without returning to whatever humanoid form she started with.</p><p>Virtually all nature’s warriors begin as members of the druid class, but some members of other prestige classes or creatures with the wild shape ability have adopted this class. Many more militant druids — those with levels in fighter, barbarian, or ranger — find this class ideal for their purposes.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/naturesWarrior.html"
+}

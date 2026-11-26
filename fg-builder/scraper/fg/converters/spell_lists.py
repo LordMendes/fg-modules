@@ -21,6 +21,16 @@ CASTER_LIST_NAMES = frozenset(
         "Priest",
         "Druid",
         "Shaman",
+        "Healer",
+        "Animal Domain",
+        "Death Domain",
+        "Destruction Domain",
+        "Elements Domain",
+        "Healing Domain",
+        "Protection Domain",
+        "Spirits Domain",
+        "War Domain",
+        "Wild Domain",
         "Witch Doctor",
         "Argent Dawn Templar",
         "Paladin",
@@ -531,4 +541,63 @@ def arcanist_path_spell_links(
                     f"{label} (More Magic and Mayhem)",
                 )
             )
+    return "<p><b>Spell Lists</b></p>" + _linklist(items)
+
+
+HEALER_LISTS = (
+    ("healer", "Healer spell list"),
+    ("druid", "Druid spell list"),
+    ("priest", "Priest spell list"),
+    ("shaman", "Shaman spell list"),
+    ("animaldomain", "Animal Domain spell list"),
+    ("deathdomain", "Death Domain spell list"),
+    ("destructiondomain", "Destruction Domain spell list"),
+    ("elementsdomain", "Elements Domain spell list"),
+    ("healingdomain", "Healing Domain spell list"),
+    ("protectiondomain", "Protection Domain spell list"),
+    ("spiritsdomain", "Spirits Domain spell list"),
+    ("wardomain", "War Domain spell list"),
+    ("wilddomain", "Wild Domain spell list"),
+)
+# Path and domain lists a druid variant actually casts.
+DRUID_VARIANT_LISTS = (
+    ("healer", "Healer spell list"),
+    ("druid", "Druid spell list"),
+    ("animaldomain", "Animal Domain spell list"),
+    ("wilddomain", "Wild Domain spell list"),
+)
+HEALER_MMM_LISTS = (
+    ("druid", "Druid spell list"),
+    ("priest", "Priest spell list"),
+    ("shaman", "Shaman spell list"),
+)
+
+
+def _spell_list_items(
+    pairs: tuple[tuple[str, str], ...],
+    module_name: str,
+    suffix: str = "",
+) -> list[tuple[str, str, str]]:
+    return [
+        (
+            "reference_classspelllist",
+            f"spelllists.{key}@{module_name}",
+            f"{label}{suffix}",
+        )
+        for key, label in pairs
+    ]
+
+
+def healer_spell_links(
+    lists: tuple[tuple[str, str], ...] = HEALER_LISTS,
+    module_name: str = "WOWRPG - World of Warcraft The Roleplaying Game",
+    extra_module: str | None = "WOWRPG - More Magic and Mayhem",
+    extra_lists: tuple[tuple[str, str], ...] = HEALER_MMM_LISTS,
+) -> str:
+    """Core healer, path, and domain lists, plus MMM path additions."""
+    items = _spell_list_items(lists, module_name)
+    if extra_module and extra_module != module_name and extra_lists:
+        items.extend(
+            _spell_list_items(extra_lists, extra_module, " (More Magic and Mayhem)")
+        )
     return "<p><b>Spell Lists</b></p>" + _linklist(items)

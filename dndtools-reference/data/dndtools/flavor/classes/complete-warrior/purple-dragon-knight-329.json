@@ -1,0 +1,18 @@
+{
+  "name": "Purple Dragon Knight",
+  "slug": "purple-dragon-knight-329",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The famous Purple Dragons are regarded across the land as exemplars of disciplined, skilled, loyal soldiers. Their reputation is deserved partly because of the heroic actions of their leaders, the Purple Dragon knights.</p><p>Purple Dragon knights develop uncanny skills related to coordinating and leading soldiers. Most are fighters, rangers, or paladins, but a few bards, clerics, and rogues have been known to become Purple Dragon knights. Sorcerers and wizards tend to join the War Wizards, an elite brigade of fighting spellcasters allied with the Purple Dragons, while barbarians are too undisciplined, and druids and monks “lack the commitment” to measure up to the Purple Dragons’ exacting standards.</p><p>In general, NPC Purple Dragon knights are responsible for leading the Purple Dragons on and off the battlefield. Player character knights either are retirees, special liaisons to the army, or recipients of honorary titles. A character’s level in this prestige class is irrelevant to his rank in the military, although higher-ranked knights tend to be of higher level. It is not necessary to have this prestige class to serve in the Purple Dragons at large, or even to be an officer in their ranks. Likewise, a Purple Dragon knight might serve her entire career on “detached duty,” away from the unit as a whole.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/purpleDragonKnight.html"
+}

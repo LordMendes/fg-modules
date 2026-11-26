@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>The thaumaturgist reaches out with divine power to other planes of existence, calling creatures there to do his bidding. Evil thaumaturgists conspire with demons and devils to gain power on the Material Plane, while good thaumaturgists send powerful angels or eladrins on holy quests.</p><p>In combat, thaumaturgists often summon creatures from the Outer Planes to fight on their behalf. These creatures fade away as soon as the battle is over, but thaumaturgists also make agreements with more powerful creatures for long-term service. The planar ally of a thaumaturgist is utterly devoted to furthering the thaumaturgist’s goals (or the goals of a deity, if the thaumaturgist worships one).</p><p>Almost all thaumaturgists were once clerics, because the first step on the path of thaumaturgy is making an agreement with a denizen of the Outer Planes by use of the lesser planar ally spell. But many of the class abilities are useful to arcane spellcasters, so multiclass cleric/wizards and the occasional cleric/sorcerer aren’t unheard of.</p><p>A thaumaturgist is keenly aware that his unparalleled conjurations are just tools in service of his overall philosophy or deity. Thus, thaumaturgists often undertake quests to advance a cause, using their abilities to conjure up a strike force of summoned and called creatures at a moment’s notice.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/thaumaturgist.html"
 }

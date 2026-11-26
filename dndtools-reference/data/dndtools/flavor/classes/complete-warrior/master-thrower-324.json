@@ -1,0 +1,18 @@
+{
+  "name": "Master Thrower",
+  "slug": "master-thrower-324",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>“Only a master thrower would invent a new style of fighting that involves cleverly disarming herself.” That’s how many more traditional weapon masters think of master throwers. Indeed, many master throwers see those who dabble in thrown weapons the same way. If a character tosses away a hand axe, javelin, or dagger, he may end up facing his foe with bare hands. Unless one is a monk, one should avoid that situation at all reasonable costs.</p><p>Master throwers depend on quick reflexes, good planning, and, of course, deadly aim to survive in a world that values brute strength over clever tactics. Members of this prestige class establish a camaraderie that often overshadows alignment or cultural differences. This camaraderie won’t prevent two master throwers from fighting each other if the need arises, but it does give those individuals an incentive to find peaceful - or at least nonlethal - ways of settling their differences. Some orders have developed sigils or small signs they can use to identify their members. Common sigils include a hand gripping a dagger by its point, or a whirling handaxe on a field of blue. Many master throwers make phantom throwing motions with their hands as they enter combat, watching their opponents to see if they return the sign.</p><p>NPC master throwers like to frequent cities and towns where they can demonstrate their abilities for others and pick up new tricks or pointers from specialists with different weapons. Since such demonstrations can be made against nonliving targets or in sport hunting, master throwers are often welcomed at fairs and celebrations, where they use their abilities to entertain. Some master throwers find service in the city guard or as personal protectors of the very rich.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/masterThrower.html"
+}

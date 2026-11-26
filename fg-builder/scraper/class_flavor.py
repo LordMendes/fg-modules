@@ -17,6 +17,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from scraper.class_flavor_catalog import MORE_BOOKS
 from scraper.fg.html_utils import normalize_class_body_html
 
 FLAVOR_ROOT = (
@@ -157,6 +158,37 @@ SCHEMAS: dict[str, dict[str, Any]] = {
         ],
         "groups": [],
     },
+    "rules-preamble": {
+        "sections": [
+            _section(
+                "intro",
+                None,
+                "before",
+                "Opening paragraphs. This book stops at the game rules, with no Playing or Lore chapters.",
+            ),
+            _section("abilities", "Abilities", "before", "Ability score guidance under Game Rule Information."),
+            _section(
+                "alignment_restriction",
+                "Alignment",
+                "before",
+                "Rules restriction under Game Rule Information.",
+            ),
+            _section("hit_die", "Hit Die", "before", "Hit die line under Game Rule Information."),
+            _section(
+                "class_skills",
+                "Class Skills",
+                "before",
+                "Skill point sentence. The skill list stays on the class stat tab.",
+            ),
+        ],
+        "groups": [
+            {
+                "title": "Game Rule Information",
+                "placement": "before",
+                "opens": ["abilities", "alignment_restriction", "hit_die", "class_skills"],
+            }
+        ],
+    },
 }
 
 
@@ -245,6 +277,7 @@ CATALOG: list[dict[str, Any]] = [
         ],
     },
 ]
+CATALOG.extend(MORE_BOOKS)
 
 
 def plural_class_name(name: str) -> str:
@@ -499,6 +532,8 @@ def write_flavor_files() -> None:
             fresh = _blank_sidecar(book, entry)
             if path.is_file():
                 old = json.loads(path.read_text(encoding="utf-8"))
+                if old.get("srd_url"):
+                    fresh["srd_url"] = old["srd_url"]
                 old_html = {
                     section.get("key"): section.get("html") or ""
                     for section in old.get("sections") or []

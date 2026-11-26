@@ -1,0 +1,18 @@
+{
+  "name": "Knight of the Chalice",
+  "slug": "knight-of-the-chalice-321",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>A knight of the Chalice is a member of an elite knightly organization devoted to fighting demons and other evil outsiders. Motivated by a pious hatred of these creatures that embody the principles of evil and routinely invade the Material Plane, knights of the Chalice learn tactics and gain special abilities to help them in their crusade.</p><p>A character who qualifies for entrance into the Order of the Chalice is typically a paladin/ranger or a cleric/ranger. Characters with minimal levels as a ranger/cleric or ranger/paladin can qualify even if they have more levels in other classes— rogue, fighter, and even wizard or sorcerer. Wizards and sorcerers are rarely drawn to the order’s crusade, and cannot qualify as knights until reaching high levels. Few monks or bards have enough dedication to exterminating demons to take up this class.</p><p>Knights of the Chalice are often lone crusaders, maintaining only loose connections to their order. NPC knights sometimes gather adventuring bands around themselves for combat support. A knight of the Chalice could become a temporary ally of a group of adventurers while the party is engaged in a campaign against a demon.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/knightoftheChalice.html"
+}

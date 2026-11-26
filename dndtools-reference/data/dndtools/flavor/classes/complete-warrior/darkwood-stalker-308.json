@@ -1,0 +1,18 @@
+{
+  "name": "Darkwood Stalker",
+  "slug": "darkwood-stalker-308",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Elves and orcs are ancient foes, their enmity dating back to times before humans walked the land. Some elves train as elite hunters of the hated orcs. These hunters, called darkwood stalkers among the elves, pursue their age-old enemies with grim determination.</p><p>Darkwood stalkers usually come from the ranks of elf (or half-elf) rangers or rogues, although the rare elf barbarian can follow this path as well. Fighters and paladins make poor darkwood stalkers without gaining at least one level in ranger or rogue. Spellcasters rarely take up the mantle of the darkwood stalker, although druids willing to forego spellcasting can fit well into the order.</p><p>Most darkwood stalkers are affiliated with elven military units, although some are lone scouts or field agents.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/darkwoodStalker.html"
+}

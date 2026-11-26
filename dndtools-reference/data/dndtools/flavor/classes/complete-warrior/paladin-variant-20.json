@@ -1,0 +1,17 @@
+{
+  "name": "Paladin Variant",
+  "slug": "paladin-variant-20",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "phb2-variant",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Short variant blurb. This record is not a full class essay.",
+      "html": ""
+    }
+  ]
+}

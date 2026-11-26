@@ -1,0 +1,18 @@
+{
+  "name": "Ravager",
+  "slug": "ravager-331",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Feared by many and understood by few, the infamous ravager is an individual who has dedicated himself to the service of Erythnul, deity of slaughter. Living a life of violence and savagery, the ravager seeks to spread this deity’s malignant influence wherever he goes, never resting long in one place, lest the forces of good and law pursue him.</p><p>Ravagers who come from the ranks of fighters and barbarians find that the ravager’s offensive capabilities enhance their combat skills, while wizard, sorcerer, cleric, and druid ravagers find that their ability to cause terror in their foes is a very useful defensive measure. Ravagers spend much of their time with others of their kind, roaming the land in small, close-knit warbands, striking unsuspecting communities without warning, and retiring back into the wilderness to plan their next terrible raid. Sometimes the clergy of Erythnul commands a lone ravager to undertake some mission or project that obliges the ravager to join up with other individuals, but such alliances are usually temporary and must be managed carefully, lest they lead to quarrels or worse.</p><p>NPC ravagers are usually encountered in small warbands of from two to six individuals, but sometimes a lone ravager may be encountered when undertaking a special mission.</p><p>All ravagers are readily identified by the bizarre and fearsome facial tattoos they wear to mark themselves as Erythnul’s instruments.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/ravager.html"
+}

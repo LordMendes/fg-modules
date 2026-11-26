@@ -1,0 +1,18 @@
+{
+  "name": "Drunken Master",
+  "slug": "drunken-master-310",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Martial arts students face a bewildering array of martial arts schools, each with its own adherents and detractors. However, few schools are as unusual—or as controversial—as drunken boxing. By weaving and staggering about as if inebriated, drunken boxers avoid many blows. Likewise, their stumbling, lurching attacks catch their opponents off guard. Moreover, when they actually imbibe alcohol, drunken masters can perform truly prodigious feats of strength and bravery.</p><p>This ability garners a drunken master little respect among adherents of other martial arts schools, because drunken boxing exacts a toll on its users. Drunken masters may remain intoxicated for hours after a fight, and they are often found half-asleep in taverns, mumbling incoherently. This flies in the face of other schools’ ascetic principles. Members of rival schools must be wary—they never know when the tipsy lout at the bar is just a harmless thug, and when he is a nigh-unstoppable drunken master.</p><p>Monks form the backbone of the drunken boxing school. A monk loses some face with his original school or monastery for becoming a drunken master, but a brilliant display of drunken fighting can sometimes silence critics in one’s former school. Members of other classes become drunken masters only rarely, although students often tell the tale of a barbarian from the north who became a phenomenal drunken master.</p><p>Prospective students are studied at a distance by other drunken masters, then treated to a display of the power of drunken boxing. If the student expresses enthusiasm for learning the new techniques, a group of drunken masters takes him or her from tavern to tavern, getting rip-roaring drunk, causing trouble, and passing along the first secrets of the technique. Those who survive the revelry are welcomed as new drunken masters.</p><p>NPC drunken masters are often found in taverns and bars. They rarely pick fights there, but are quick to come to the aid of someone overmatched in a tavern brawl. Most keep a low profile, although some are famous—or infamous—for the deeds they have performed while under the influence.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/drunkenMaster.html"
+}

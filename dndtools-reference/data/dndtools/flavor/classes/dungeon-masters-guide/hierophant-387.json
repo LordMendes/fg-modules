@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>A divine spellcaster who rises high in the service of his deity gains access to spells and abilities of which lesser faithful can only dream. The hierophant prestige class is open to powerful divine spellcasters who are approaching access to the strongest and most difficult divine spells. They delay the acquisition of these greatest gifts in exchange for a deeper understanding of and ability to control the power they channel.</p><p>Most hierophants were clerics or druids. Some may have pursued another divine spellcasting-focused prestige class. Hierophants rarely multiclass into non-spellcasting classes.</p><p>Hierophants are usually high-ranking members of a church or druidic circle. Most are exemplary representatives of their faith.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/hierophant.html"
 }

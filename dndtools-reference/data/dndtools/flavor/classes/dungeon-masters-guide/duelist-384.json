@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>The duelist (sometimes known as the swashbuckler) is a nimble, intelligent fighter trained in making precise attacks with light weapons, such as the rapier. She always takes full advantage of her quick reflexes and wits in a fight. Rather than wearing bulky armor, a duelist feels the best way to protect herself is not to get hit at all.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/duelist.html"
 }

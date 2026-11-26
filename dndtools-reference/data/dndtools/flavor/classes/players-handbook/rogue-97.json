@@ -81,21 +81,22 @@
       "title": "Alignment",
       "placement": "before",
       "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
-      "html": ""
+      "html": "<p>Any.</p>"
     },
     {
       "key": "hit_die",
       "title": "Hit Die",
       "placement": "before",
       "hint": "Hit die line under Game Rule Information.",
-      "html": ""
+      "html": "<p>d6.</p>"
     },
     {
       "key": "class_skills",
       "title": "Class Skills",
       "placement": "before",
       "hint": "Skill point sentence. The skill list stays on the class stat tab.",
-      "html": ""
+      "html": "<p>The rogue's class skills (and the key ability for each skill) are Appraise (Int), Balance (Dex), Bluff (Cha), Climb (Str), Craft (Int), Decipher Script (Int), Diplomacy (Cha), Disable Device (Int), Disguise (Cha), Escape Artist (Dex), Forgery (Int), Gather Information (Cha), Hide (Dex), Intimidate (Cha), Jump (Str), Knowledge (local) (Int), Listen (Wis), Move Silently (Dex), Open Lock (Dex), Perform (Cha), Profession (Wis), Search (Int), Sense Motive (Wis), Sleight of Hand (Dex), Spot (Wis), Swim (Str), Tumble (Dex), Use Magic Device (Cha), and Use Rope (Dex).</p><p>Skill Points at 1st Level : (8 + Int modifier) x 4.</p><p>Skill Points at Each Additional Level : 8 + Int modifier.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/baseCore/rogue.html"
 }

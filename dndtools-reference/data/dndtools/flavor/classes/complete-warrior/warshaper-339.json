@@ -1,0 +1,18 @@
+{
+  "name": "Warshaper",
+  "slug": "warshaper-339",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Most martial characters rely on manufactured gear such as a sword and a shield or natural endowments such as teeth and claws to survive on the battlefield. The warshaper finds those options sadly limiting, instead growing and evolving her own weapons and armor to suit the threat at hand. Blessed with the ability to change form at a moment’s notice, warshapers delight in surprising their foes by growing massive claws, armored skin, or other unpleasant surprises.</p><p>Warshapers must have some ability to change their form, and many are shapechangers such as doppelgangers and lycanthropes. Wizards and sorcerers who know the polymorph spell can take levels in the prestige class, as can druids who have mastered the wild shape class feature.</p><p>Most warshapers can change their outward appearance in the blink of an eye, so they don’t stand out among the ranks of their allies. It’s not until the soldier you’re fighting grows a tentacle and fangs that you know you have met a warshaper.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/warshaper.html"
+}

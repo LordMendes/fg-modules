@@ -1,0 +1,18 @@
+{
+  "name": "Gnome Giant-slayer",
+  "slug": "gnome-giant-slayer-314",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>In every gnome community, only a select few individuals of extraordinary courage take up the mantle of giant-slayer. Relying on a combination of agility, combat prowess, and pure craftiness, the gnome giant-slayer is the bane of all creatures who use their size to terrorize the small or weak. The champion of those far-too-often trampled underfoot, the gnome giant-slayer stands far taller than his stature would suggest. As the ultimate believers that “The bigger they are, the harder they fall,” these doughty battlers actively seek out ogres, trolls, giants, and the like to slay. Some also utilize their training to take on other immense opponents, such as umber hulks, monstrous vermin, and even dragons.</p><p>Most gnome giant-slayers are fighters or rangers, although some paladins and clerics also take up the path of giant slaying. Rogues who favor looting the dens of ogres and the like also become giant-slayers. Monks make excellent giant-slayers. Arcane spellcasters rarely take up this class, since it largely depends on toe-to-toe interaction with immensely powerful creatures.</p><p>Gnome giant-slayer NPCs are often lauded as heroes or celebrities within gnome communities. They might serve as captains of the guard, trainers, or in other positions of authority. Some pass down their mantle from generation to generation, granting the bravest son or daughter a treasured nickname such as “Trollbane” or “Giant-Crasher.” Those who work for their own purposes might still enjoy some measure of popularity but prefer to remain aloof from political venues in favor of pursuing personal gain. Of course, many look to adventure to prove their mettle; rare indeed is the gnome giant-slayer who hasn’t bearded his share of trolls or fire giants in their very lairs.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/gnomeGiantSlayer.html"
+}

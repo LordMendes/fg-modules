@@ -1,0 +1,17 @@
+{
+  "name": "True Necromancer",
+  "slug": "true-necromancer-555",
+  "source_abbrev": "LM",
+  "book_slug": "libris-mortis",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

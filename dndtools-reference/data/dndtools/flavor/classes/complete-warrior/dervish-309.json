@@ -1,0 +1,18 @@
+{
+  "name": "Dervish",
+  "slug": "dervish-309",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Wild, exotic, and as dangerous as her whirling blades, the dervish epitomizes speed, quickness, and abandon. Her motions appear to be as random as they are graceful, but the steps of her lethal dance play out according to their own rhythm.</p><p>Nearly all dervishes belong to nomadic cultures. These nomads are not simple wanderers with no roots to call their own - they have their ancient traditions, and their societies simply do not consider permanent settlements an important part of their nature. They are gypsies, keeping their own traditions and forging their own familial and societal bonds while they move throughout the world. Often, these tribes adopt the attitudes and even some of the laws of the lands they live in - for the sake of expedience, if nothing else. The dervish treats fighting styles the same way. A dervish learns the dance of war as she grows up among her family and her tribe. She watches others as she travels, however, and brings new steps to the dance as she goes.</p><p>Fighters, rangers, and monks often take up the role of the dervish. Many paladins look at the wildness of the dance and assume it has some roots in chaos, but those who look past the seeming randomness can find things to learn. Barbarians seldom choose to learn the ways of the dance - the dervish depends on subtlety more than brute force. The way of the dervish has been known to appeal to some druids, bards, and even sorcerers - those who wish to learn a type of fighting that does not rely on heavy arms or armor find the class interesting.</p><p>Halflings and elves make good dervishes, and many nomadic halfling tribes have dervishes as their primary protectors.</p><p>NPC dervishes seldom wander without their tribes. They can be sent on missions, or serve as scouts in new lands, but the dervish is too important to the tribal unit to go off on her own for extended periods of time. Some dervishes balk at this responsibility, however, so exceptions to this rule do show up occasionally. A dervish found wandering alone is usually seeking new challenges and new knowledge.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/dervish.html"
+}

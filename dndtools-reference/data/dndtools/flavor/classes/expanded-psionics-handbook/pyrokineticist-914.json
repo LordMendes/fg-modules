@@ -1,0 +1,17 @@
+{
+  "name": "Pyrokineticist",
+  "slug": "pyrokineticist-914",
+  "source_abbrev": "XPH",
+  "book_slug": "expanded-psionics-handbook",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

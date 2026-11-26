@@ -1,0 +1,18 @@
+{
+  "name": "Order of the Bow Initiate",
+  "slug": "order-of-the-bow-initiate-328",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>When asked, “What is Truth?,” an initiate of the Order of the Bow picks up his bow, fires an arrow and, without saying a word, lets his mastery of the weapon serve as the gauge of the archer’s progress along the way. By learning the meditative art of the Way of the Bow, the archer improves his discipline, precision, and spirituality. Order of the Bow initiates see their weapons as extensions of their being, and the use of a bow as a spiritual experience.</p><p>Fighters are the most common initiates of the Order of the Bow. Rangers, paladins, and even barbarians utilize these skills and philosophies as well. Some rogues and bards have been known to enter the order, but they are rare indeed.</p><p>NPC initiates are most often encountered teaching others the ways of archery or wandering the lands looking for true challenges for their skill.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/orderoftheBowInitiate.html"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Hulking Hurler",
+  "slug": "hulking-hurler-316",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Usually brutish and always incredibly strong, hulking hurlers belong to those races of generously proportioned creatures who enjoy nothing more than wrenching boulders, trees, or even buildings free of their earthly bonds and throwing them at their foes. No one knows how this loose organization came into being, but there is no doubt that hulking hurlers make fearsome enemies.</p><p>Hulking hurlers usually come from the giant races, though a few members of other species learn the unusually focused skills of the organization. Those few hulking hurlers who advance in other classes first almost always come from fighter or barbarian backgrounds. NPC hulking hurlers sometimes serve as specialists in giant warbands, but they can also be found among smaller humanoids, serving the function of a sort of artillery unit.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/hulkingHurler.html"
+}

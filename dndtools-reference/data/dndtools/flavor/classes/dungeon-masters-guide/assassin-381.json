@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>The assassin is the master of dealing quick, lethal blows. Assassins also excel at infiltration and disguise. Assassins often function as spies, informants, killers for hire, or agents of vengeance. Their training in anatomy, stealth, poison, and the dark arts allows them to carry out missions of death with shocking, terrifying precision.</p><p>Most rogues, monks, and bards who choose this class become examples of the classic assassin skulking in the shadows with a blade carrying certain death. Fighters, ex-paladins, rangers, druids, and barbarians operate as warrior assassins, with as much ability to kill in combat as from the shadows. Sorcerers, wizards, and clerics may be the most terrifying assassins of all, for with their spells they can infiltrate and slay with even greater impunity.</p><p>As NPCs, assassins work in guilds or secret societies found hidden in cities or based in remote fortresses in the wilderness. Sometimes they serve more powerful evil characters singly or in a group. Occasionally an assassin works alone, but only the most capable are willing to operate without any sort of support or backup.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/assassin.html"
 }

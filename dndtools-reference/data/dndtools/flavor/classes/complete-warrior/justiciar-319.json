@@ -1,0 +1,18 @@
+{
+  "name": "Justiciar",
+  "slug": "justiciar-319",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Where there are laws, there are those who defy them, and where citizens live in fear of these lawbreakers, brave souls hunt them down. These are the justiciars. They don’t do it for money; they don’t do it for glory. They do it because it’s a thankless job that needs to be done. It also happens to be a satisfying vocation to make a living by kicking the daylights out of a criminal who desperately deserves it. Justiciars are generally solitary, relying on their own wits and skills. They are fearless and single-minded in pursuit of their prey and ruthlessly effective in combat. Innocence and alibi can be argued in front of a court, but pretty words don’t change the facts of the case or absolve a criminal of guilt. A justiciar is not necessarily judge, jury, or executioner; often he simply sees to it that those people get the chance to do their jobs. When it is impractical to bring a miscreant to the hands of the law, or if the criminal resists, a justiciar doesn’t hesitate to bring final justice to someone who deserves it. Some evil justiciars prefer torturing their prisoners into confessing before turning them in.</p><p>When faced with a difficult challenge, justiciars may team up with each other or with a posse of other characters to hunt those wanted by the law. The presence of one or more justiciars in a posse might come as a rude surprise to a group of individuals that have been robbing from the rich to give to the poor...</p><p>Most justiciars begin as rangers. Some paladins also find being a justiciar in line with their ideology. Fighters often find enough reward in killing; bringing people back alive is typically more effort than they consider worthwhile. Conversely, many clerics are too forgiving to be justiciars; obvious exceptions include clerics of St. Cuthbert, as well as those of Hextor and certain other lawful evil deities. Rogues and bards, with their stealth-oriented skills, can be very effective in this class. Even the occasional druid, sorcerer, or wizard (especially diviners) enters the field, wielding spells as their weapons instead of steel.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/justiciar.html"
+}

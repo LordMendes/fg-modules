@@ -1,0 +1,18 @@
+{
+  "name": "Mindspy",
+  "slug": "mindspy-325",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Success in combat relies on anticipating your enemy’s every move. A mindspy knows how easy that can be if you’re privy to your foe’s every thought. By reading the minds of her enemies, a mindspy knows exactly what they’re going to do a fraction of a second before they do it. Eventually she learns to probe deeper, finding weak spots in her enemy’s training.</p><p>Because the class relies utterly on detect thoughts, most mindspies are creatures who have it as a spell-like or supernatural ability usable at will, such as couatls, succubi, doppelgangers, ghaeles, myrmarchs, leonals, mind flayers, dark nagas, rakshasas, and green slaadi. Spellcasters sometimes take levels in the prestige class if they can cast detect thoughts frequently, or if they have a helm of telepathy to enable the mindspy’s class features.</p><p>The most often encountered mindspies are elite mind flayer or doppelgangers. There is rumored to be a secretive order of couatl mindspies that roams the planes, hunting down evildoers.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/mindspy.html"
+}

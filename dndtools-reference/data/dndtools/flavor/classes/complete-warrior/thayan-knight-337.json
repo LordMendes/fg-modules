@@ -1,0 +1,18 @@
+{
+  "name": "Thayan Knight",
+  "slug": "thayan-knight-337",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>While the Red Wizards of Thay are not opposed to blasting their opponents with deadly spells or shredding the minds of their enemies with dark magic, there are times when they need protectors who have mastered the art of swordplay. These protectors are the Thayan knights, familiar with magic and loyal to none but the tattooed mages.</p><p>The Thayan knights act as bodyguards and enforcers for the Red Wizards (see page 193 of the Dungeon Master’s Guide). They lead common Thayan troops into battle and help guard the wizard enclaves. Although they are referred to as knights, they have no code of conduct, and the only rule that binds them is that their lives are worth nothing compared to the safety of the Red Wizards.</p><p>Almost all Thayan knights are fighters, although monks and rangers have been known to pursue this career. Barbarians are typically too reckless to concentrate on defense, and the Red Wizards consider other individuals too weak to perform the duties of a Thayan knight.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/thayanKnight.html"
+}

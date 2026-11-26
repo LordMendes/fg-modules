@@ -1,0 +1,18 @@
+{
+  "name": "Exotic Weapon Master",
+  "slug": "exotic-weapon-master-311",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Characters of any race or background can become exotic weapon masters; the only real requirement is commitment and perseverance. Nevertheless, most exotic weapon masters are human, because members of that race have the most exposure to new cultures and thus the most opportunity to take up exotic weapons.</p><p>NPC exotic weapon masters often open training arenas or schools for those interested in learning to fight with unusual weapons or tactics. They often take levels in other prestige classes and can be found as champions or leaders among bands of warriors.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/exoticWeaponMaster.html"
+}

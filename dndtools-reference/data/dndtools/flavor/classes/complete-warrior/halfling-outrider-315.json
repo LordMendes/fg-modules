@@ -1,0 +1,18 @@
+{
+  "name": "Halfling Outrider",
+  "slug": "halfling-outrider-315",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The semi-nomadic culture of the halfling race often results in sudden encounters with peril. To safeguard themselves, many halfling communities turn to their outriders, elite champions whose task it is to warn their fellows of, and protect them from, danger. The halfling outrider is naturally skilled in the arts of riding and scouting.</p><p>Most halfling outriders are fighters, rangers, druids, or rogues. All classes, however, can benefit from the Armor Class bonus and defensive riding capabilities of the class.</p><p>NPC halfling outriders are usually found performing their duties in the field, or relaxing in their off-duty hours. The presence of an outrider whether afield or at rest usually indicates that a halfling community cannot be far away.</p><p>However, some outriders feel the pull of adventure more strongly. These individuals leave behind their hearths and homes for a life of excitement on the road.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/halflingOutrider.html"
+}

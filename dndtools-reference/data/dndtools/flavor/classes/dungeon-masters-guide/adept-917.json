@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Short introduction before the statistics.",
-      "html": ""
+      "html": "<p>Some tribal societies or less sophisticated regions don't have the resources to train wizards and clerics. Reflecting a lesser knowledge of magic yet an intriguing combination of arcane and divine skills, the adept serves these cultures as both wise woman (or holy man) and mystical defender.</p><p>Adepts can be found in isolated human, elf, dwarf, gnome, and halfling communities but are most prevalent among more bestial humanoid and giant species such as orcs, goblins, gnolls, bugbears, and ogres.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/npcClasses.html#adept"
 }

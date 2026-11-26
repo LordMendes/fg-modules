@@ -1,0 +1,18 @@
+{
+  "name": "Invisible Blade",
+  "slug": "invisible-blade-318",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Who is this fool who dares to challenge you in the arena? You brandish a greatsword, and he whips out a dagger. You unsheathe your longsword, and he throws off his armor. You advance menacingly, and he only smiles at you - a big, maniacal grin. Is he mad? Does he have a death wish? No, he is an invisible blade, and you have made the classic mistake of underestimating his prowess. As you fight, he seems almost relaxed, stepping lightly to the side, dodging your blows easily. His eyes note your every move, as though taking mental notes about your style. Then, in the split second when you lower your guard, he exploits your error, plunging his weapon into your heart.</p><p>Invisible blades are deadly fighters who prefer to use daggers and related weapons in combat. Their training and techniques with these weapons make them just as lethal as any well-armed fighter. Invisible blades enjoy cultivating misconceptions about the level of danger they present, and they relish any chance to demonstrate that the most unimposing weapons can be the most lethal. Thus, invisible blades are rarely impressed by how mighty their opponents appear.</p><p>An invisible blade specializes in fighting with the dagger, kukri, or punching dagger. He is not penalized for using other weapons with which he is proficient, but every class ability he possesses is tied into using one of these three weapons.</p><p>The typical invisible blade was once a rogue, who chose this path because his sneak attack ability dovetailed nicely with the abilities of this prestige class. Bards and monks are also good candidates, as are barbarians, fighters, and rangers who are willing to exchange their arsenals of weapons for a less cumbersome approach. Clerics and druids seldom choose this class, perceiving its members as faithless, while paladins ironically view invisible blades as too self-absorbed. Sorcerers and wizards rarely become invisible blades because they don’t appreciate the class’s lack of offensive options and tight focus on weapon use.</p><p>NPC invisible blades are silently egotistical gladiators who regard their fighting style as superior to all other martial philosophies. They place enormous emphasis on making a single decisive strike, thereby hoping to end a bout in a single round. Most invisible blades pick up their skills in a guild. A few, however, learn from seasoned professionals who expect a potential gladiator to practice fanatically with the dagger until he can pass the required rite-of-passage combat (see Requirements, below).</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/invisibleBlade.html"
+}

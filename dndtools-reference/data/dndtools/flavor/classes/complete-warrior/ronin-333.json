@@ -1,0 +1,18 @@
+{
+  "name": "Ronin",
+  "slug": "ronin-333",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>When a samurai or other noble warrior is exiled from the service of his feudal lord, he may become a ronin - a masterless warrior cast adrift in the world, but still clinging to the remnants of his former life. Blade in hand, a ronin wanders from job to job, trying to stay one step ahead of his enemies - and the shame of his past.</p><p>The vast majority of ronin were once samurai; both game rules and theme tie the two classes together. As with the samurai class, the ronin prestige class has its roots in feudal Japan, but it’s an appropriate choice in any campaign world that includes an Asian-themed culture. “Ronin” is Japanese for “wave-man,” and ronin tend to be inveterate wanderers. Even if an Asian setting isn’t an important part of your campaign, a ronin character may be a traveler from a distant land, eager to put his dishonor behind him and live out his days in a land where no one knows the code of bushido.</p><p>Ronin are often found in the pay of less scrupulous feudal lords. Because they are trained in the art of war, they are prized as mercenaries. Those who hire a ronin should watch their employee closely. Almost every ronin has a failure of honor in his past; most involve a conflict with their former masters.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/ronin.html"
+}

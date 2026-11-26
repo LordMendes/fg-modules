@@ -1,0 +1,18 @@
+{
+  "name": "War Chanter",
+  "slug": "war-chanter-338",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>The roar of battle, the screams of the dying, the howl of the warrior’s cry… these are all notes in the music composed by the war chanter. His music flows across the battlefield like a raging torrent, catching friends and foes alike in its wake.</p><p>Bards of particularly militant mindsets become war chanters (giving up their spellcasting ability in the process), and among barbarians, war chanters are often the leaders or elite warriors of a tribe. The music of a war chanter inspires those around him and pushes them to greater heights of strength and deeds of valor.</p><p>Fighters and barbarians sometimes gain a few levels of bard in qualifying for this prestige class. Paladins and monks cannot join because of the alignment requirement, but members of both those classes respect the leadership and military qualities of the war chanter class.</p><p>NPC war chanters are usually leaders of small warbands. It is not unusual to see them as chief lieutenants in larger groups. They function best when surrounded by lesser allies, but can be encountered on their own as well.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/warChanter.html"
+}

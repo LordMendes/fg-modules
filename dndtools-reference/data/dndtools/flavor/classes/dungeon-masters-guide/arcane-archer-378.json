@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>Master of the elven warbands, the arcane archer is a warrior skilled in using magic to supplement her combat prowess. Beyond the woods, arcane archers gain renown throughout entire kingdoms for their supernatural accuracy with a bow and their ability to imbue their arrows with magic. In a group, they can strike fear into an entire enemy army.</p><p>Fighters, rangers, paladins, and barbarians become arcane archers to add a little magic to their combat abilities. Conversely, wizards and sorcerers may take this prestige class to add combat capabilities to their repertoire. Monks, clerics, druids, rogues, and bards rarely become arcane archers.</p><p>NPC arcane archers often lead units of normal archers or form small, elite units formed entirely of arcane archers.</p><p>These units are one of the prime reasons that the elves are so feared in battle.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/arcaneArcher.html"
 }

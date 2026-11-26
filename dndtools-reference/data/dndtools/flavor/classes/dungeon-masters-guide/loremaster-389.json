@@ -11,7 +11,8 @@
       "title": null,
       "placement": "before",
       "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
-      "html": ""
+      "html": "<p>Loremasters are spellcasters who concentrate on knowledge, valuing lore and secrets over gold. They uncover secrets that they then use to better themselves mentally, physically, and spiritually.</p><p>Characters without at least one level of wizard, sorcerer, cleric, or druid gain little benefit for becoming a loremaster. Paladins, rangers, and bards might gain some benefit, but overall, it would be minor.</p><p>Loremasters sometimes gather in secluded cabals but are more often found as members of an order attached to a university, a library, or some other source of information. They’re likely to earn extra money as sages and information brokers, pouring their wages into their own research. A loremaster might also adopt a position as a wise one in a community, or even as its leader, drawing upon her knowledge to help others.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCore/loremaster.html"
 }

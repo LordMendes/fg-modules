@@ -81,21 +81,22 @@
       "title": "Alignment",
       "placement": "before",
       "hint": "Rules restriction under Game Rule Information, such as any nonlawful.",
-      "html": ""
+      "html": "<p>Any nonlawful.</p>"
     },
     {
       "key": "hit_die",
       "title": "Hit Die",
       "placement": "before",
       "hint": "Hit die line under Game Rule Information.",
-      "html": ""
+      "html": "<p>d12.</p>"
     },
     {
       "key": "class_skills",
       "title": "Class Skills",
       "placement": "before",
       "hint": "Skill point sentence. The skill list stays on the class stat tab.",
-      "html": ""
+      "html": "<p>The barbarian's class skills (and the key ability for each skill) are Climb (Str), Craft (Int), Handle Animal (Cha), Intimidate (Cha), Jump (Str), Listen (Wis), Ride (Dex), Survival (Wis), and Swim (Str).</p><p>Skill Points at 1st Level : (4 + Int modifier) x 4.</p><p>Skill Points at Each Additional Level : 4 + Int modifier.</p>"
     }
-  ]
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/baseCore/barbarian.html"
 }

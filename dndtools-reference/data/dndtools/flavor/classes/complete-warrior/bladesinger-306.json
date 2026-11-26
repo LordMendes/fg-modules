@@ -1,0 +1,18 @@
+{
+  "name": "Bladesinger",
+  "slug": "bladesinger-306",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Bladesingers are elves who have blended art, swordplay, and arcane magic into a harmonious whole. In battle, a bladesinger’s lithe movements and subtle tactics are beautiful, belying their deadly martial efficiency.</p><p>Multiclass fighter/wizards are the most obvious candidates for the prestige class, although any elf who can wield a martial weapon and cast arcane spells can become a bladesinger. Bladesinger ranger/wizards, rogue/wizards, and even bards are not unknown.</p><p>Bladesingers command great respect in most elf communities, and NPC bladesingers usually serve as itinerant guardians and champions of the elf community at large.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/bladesinger.html"
+}

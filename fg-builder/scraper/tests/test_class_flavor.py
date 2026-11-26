@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 
 from scraper.class_flavor import (
+    CATALOG,
     MANIFEST_PATH,
     SCHEMAS,
     build_manifest,
@@ -23,8 +24,8 @@ from scraper.fg.xml_builder import IdAllocator
 def test_tracked_books_have_sidecars_and_a_matching_manifest():
     summary = {row["abbrev"]: row for row in flavor_coverage_summary()}
     assert summary["PH"]["classes"] == 11
-    assert summary["PH"]["done"] == 0
-    assert summary["PH"]["missing"] == 11 * len(SCHEMAS["phb-base"]["sections"])
+    assert summary["PH"]["done"] == 33
+    assert summary["PH"]["missing"] == 11 * len(SCHEMAS["phb-base"]["sections"]) - 33
     assert summary["PH2"]["classes"] == 5
     assert summary["DMG"]["classes"] == 21
     assert summary["DMG"]["deferred"] == 11
@@ -38,8 +39,12 @@ def test_tracked_books_have_sidecars_and_a_matching_manifest():
     assert [section["key"] for section in bard["sections"]] == [
         spec["key"] for spec in SCHEMAS["phb-base"]["sections"]
     ]
-    assert render_flavor_html(bard, "before") == ""
     assert render_flavor_html(bard, "after") == ""
+    rendered = render_flavor_html(bard, "before")
+    assert "Game Rule Information" in rendered
+    assert "Any nonlawful." in rendered
+    assert "Adventures" not in rendered
+    assert "Fharlanghn" not in rendered
 
     knight = load_class_flavor("players-handbook-ii", "knight-103")
     assert knight is not None
@@ -48,6 +53,44 @@ def test_tracked_books_have_sidecars_and_a_matching_manifest():
 
     epic = load_class_flavor("dungeon-masters-guide", "epic-bard-1012")
     assert epic is None
+
+    abbrevs = [book["abbrev"] for book in CATALOG]
+    assert abbrevs.index("CAr") < abbrevs.index("LM") < abbrevs.index("CAd")
+    summary = {row["abbrev"]: row for row in flavor_coverage_summary()}
+    assert summary["CW"]["classes"] == 41
+    assert summary["CD"]["classes"] == 31
+    assert summary["CAr"]["classes"] == 22
+    assert summary["LM"]["classes"] == 11
+    assert summary["LM"]["sections"] == 11
+    assert summary["CAd"]["classes"] == 29
+    assert summary["MH"]["classes"] == 11
+    assert summary["HH"]["classes"] == 8
+    assert summary["ToB"]["classes"] == 11
+    assert summary["XPH"]["classes"] == 13
+    assert summary["ECS"]["classes"] == 10
+    assert summary["ECS"]["deferred"] == 10
+
+    hexblade = load_class_flavor("complete-warrior", "hexblade-19")
+    assert hexblade is not None
+    assert hexblade["schema"] == "phb-base"
+    hexblade_notes = render_flavor_html(hexblade, "before")
+    assert "Any nongood." in hexblade_notes
+    assert "Game Rule Information" in hexblade_notes
+    assert "Wee Jas" not in hexblade_notes
+    assert "Adventures" not in hexblade_notes
+    bear = load_class_flavor("complete-warrior", "bear-warrior-340")
+    assert bear is not None
+    bear_intro = next(section["html"] for section in bear["sections"] if section["key"] == "intro")
+    assert bear_intro.startswith("<p>")
+    assert "Hit Die" not in bear_intro
+    assert "Class Features" not in bear_intro
+    pale = load_class_flavor("libris-mortis", "pale-master-552")
+    assert pale is not None
+    assert pale["schema"] == "dmg-prestige"
+    healer = load_class_flavor("miniatures-handbook", "healer-77")
+    assert healer is not None
+    assert healer["schema"] == "rules-preamble"
+    assert load_class_flavor("eberron-campaign-setting", "barbarian-37") is None
 
 
 def test_render_skips_empty_sections_and_opens_group_headings():
@@ -105,19 +148,22 @@ def test_convert_class_attaches_empty_flavor_without_changing_notes():
         "players-handbook",
     )["detail"]
     assert detail["flavor_schema"] == "phb-base"
-    assert detail["flavor_html_before"] == ""
+    assert "Any nonlawful." in detail["flavor_html_before"]
     assert detail["flavor_html_after"] == ""
     notes = _build_notes_html(detail, "Bard")
     assert "Spells" in notes
+    assert "Any nonlawful." in notes
     assert "Adventures" not in notes
 
 
 def test_gap_warning_names_the_tracked_books_only():
     warning = flavor_gap_warning("Player's Handbook")
     assert warning is not None
-    assert warning.startswith("classes: flavor text 0/")
-    assert flavor_gap_warning("Complete Warrior") is None
+    assert warning.startswith("classes: flavor text 33/")
+    assert flavor_gap_warning("Complete Warrior") is not None
+    assert flavor_gap_warning("Book of Exalted Deeds") is None
     assert any(line.startswith("PH/Bard:") for line in flavor_coverage_warnings())
+    assert any(line.startswith("LM/Pale Master:") for line in flavor_coverage_warnings())
     assert not any(line.startswith("DMG/Epic Bard:") for line in flavor_coverage_warnings())
 
 

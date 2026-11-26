@@ -1,0 +1,18 @@
+{
+  "name": "Eye of Gruumsh",
+  "slug": "eye-of-gruumsh-312",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Most people think they have seen the worst that orcs can breed when an orc barbarian comes raging over a hilltop - until they see a one-eyed orc barbarian come raging over a hilltop. This creature may well be an eye of Gruumsh, an orc so devoted to his evil deity that he has disfigured himself in Gruumsh’s name.</p><p>In an epic battle at the dawn of time, the elven deity Corellon Larethian stabbed out Gruumsh’s left eye. Filled with rage and hatred, the orc deity called for followers loyal enough to serve in his image. Those who heed this call are known as the eyes of Gruumsh. They sacrifice their right eyes instead of their left ones so that their impaired vision complements that of their deity. Thus, symbolically at least, eyes of Gruumsh can see what Gruumsh cannot. These living martyrs are some of the toughest orcs and half-orcs in the world.</p><p>The eye of Gruumsh is a true prestige class in the sense that all orcs respect those who achieve it. If a candidate proves capable with the orc double axe and has no moral code to stand in the way of his service, only the test remains - to put out his own right eye in a special ceremony. This is a bloody and painful ritual, the details of which are best left undescribed. If the candidate makes a sound during the process, he fails the test. No consequences for failure exist, except that the candidate can never thereafter become an eye of Gruumsh - and he has lost an eye.</p><p>Barbarians gain the most value from this prestige class, since it encourages raging as a fighting style. Fighters, clerics, rangers, and even rogues also heed this calling. Some orc tribes whisper of barbarians from other races who have adopted this mantle. Of course, these may just be legends meant to inspire young orcs to jealous rage.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/eyeofGruumsh.html"
+}

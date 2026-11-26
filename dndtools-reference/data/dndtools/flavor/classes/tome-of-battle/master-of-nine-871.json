@@ -1,0 +1,17 @@
+{
+  "name": "Master of Nine",
+  "slug": "master-of-nine-871",
+  "source_abbrev": "ToB",
+  "book_slug": "tome-of-battle",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

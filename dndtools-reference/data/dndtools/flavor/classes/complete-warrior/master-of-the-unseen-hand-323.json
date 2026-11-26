@@ -1,0 +1,18 @@
+{
+  "name": "Master of the Unseen Hand",
+  "slug": "master-of-the-unseen-hand-323",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Masters of the unseen hand delight in crushing their foes with invisible force, flinging massive objects into the sky, and disarming enemies with a single thought. Their mastery of the craft of telekinesis makes masters of the unseen hand potent and versatile combatants.</p><p>Originally a cabal of sorcerers who learned to push the limits of their telekinesis, the masters of the unseen hand are now a loose-knit group that includes outsiders and other creatures with the ability to use telekinesis.</p><p>Sorcerers are the most likely characters to become masters of the unseen hand, and some wizards take a level or two in the class as well. A significant minority of the order are creatures with the innate ability to use telekinesis, such as githyanki, ghosts, beholders, and even the occasional demon.</p><p>Because their abilities are suited to warfare, masters of the unseen hand are often found in the thick of the fighting, disarming opponents with telekinesis and using it to hurl them to the ground - or even high into the sky. Some hire themselves out as mercenaries, attaching themselves to a group of mid-level fighters who want to catch their foes by surprise.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/masteroftheUnseenHand.html"
+}

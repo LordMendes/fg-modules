@@ -1,0 +1,17 @@
+{
+  "name": "Mage of the Arcane Order",
+  "slug": "mage-of-the-arcane-order-215",
+  "source_abbrev": "CAr",
+  "book_slug": "complete-arcane",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}

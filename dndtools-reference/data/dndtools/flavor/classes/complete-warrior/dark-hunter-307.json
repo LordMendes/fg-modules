@@ -1,0 +1,18 @@
+{
+  "name": "Dark Hunter",
+  "slug": "dark-hunter-307",
+  "source_abbrev": "CW",
+  "book_slug": "complete-warrior",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": "<p>Dark hunters specialize in hunting down and eliminating creatures in the dark, twisting caves of the Underdark, often protecting underground communities or those people who make their living under the earth (such as miners or hunters). They use stealth, ambush, and deception to single out foes and remove them one by one. A typical strategy is to locate the enemy, then hide against a nearby wall of earth or stone. The dark hunter then waits for her enemy to pass by, leaping out to attack when the target least expects it. A dark hunter uses her knowledge of underground terrain to find the best areas to create pits, cave-ins, and rockslides, often enabling her to eliminate the enemy without drawing her axe. If a dark hunter is outnumbered, she retreats into the darkness, hiding until she can pick off individual targets.</p><p>Because they spend so much time in the stark wilderness of caves and caverns, dark hunters are slightly ostracized by other members of society. Most individuals live among others of their own kind, so the rootless existence of the dark hunter seems like a social aberration. Still, great honor is to be found in protecting the clan from attack, so dark hunters are given respect. None of this concerns the individual, who cares little for what others think; she finds purpose in what she does every time she brings down another one of her enemies. She prefers to work alone, but also knows that cooperation with others has its advantages.</p><p>Rangers are the most likely characters to become dark hunters. Druids, rogues, and fighters are also common. Feral tribes of barbaric dwarves sometimes produce dark hunters, who track down their foes in silence and then explode into action once they ambush their prey. Half-orcs make excellent dark hunters, since they are often found on the fringes of society anyway. Elves, with their abiding hatred of the drow, sometimes follow this path.</p>"
+    }
+  ],
+  "srd_url": "https://srd.dndtools.org/srd/classes/prestigeCwar/darkHunter.html"
+}

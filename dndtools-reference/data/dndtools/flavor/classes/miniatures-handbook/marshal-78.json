@@ -1,0 +1,45 @@
+{
+  "name": "Marshal",
+  "slug": "marshal-78",
+  "source_abbrev": "MH",
+  "book_slug": "miniatures-handbook",
+  "page": null,
+  "schema": "rules-preamble",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs. This book stops at the game rules, with no Playing or Lore chapters.",
+      "html": ""
+    },
+    {
+      "key": "abilities",
+      "title": "Abilities",
+      "placement": "before",
+      "hint": "Ability score guidance under Game Rule Information.",
+      "html": ""
+    },
+    {
+      "key": "alignment_restriction",
+      "title": "Alignment",
+      "placement": "before",
+      "hint": "Rules restriction under Game Rule Information.",
+      "html": ""
+    },
+    {
+      "key": "hit_die",
+      "title": "Hit Die",
+      "placement": "before",
+      "hint": "Hit die line under Game Rule Information.",
+      "html": ""
+    },
+    {
+      "key": "class_skills",
+      "title": "Class Skills",
+      "placement": "before",
+      "hint": "Skill point sentence. The skill list stays on the class stat tab.",
+      "html": ""
+    }
+  ]
+}

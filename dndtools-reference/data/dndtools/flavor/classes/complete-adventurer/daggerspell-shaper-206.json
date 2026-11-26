@@ -1,0 +1,17 @@
+{
+  "name": "Daggerspell Shaper",
+  "slug": "daggerspell-shaper-206",
+  "source_abbrev": "CAd",
+  "book_slug": "complete-adventurer",
+  "page": null,
+  "schema": "dmg-prestige",
+  "sections": [
+    {
+      "key": "intro",
+      "title": null,
+      "placement": "before",
+      "hint": "Opening paragraphs before Hit Die. This book has no Adventures or Role sections.",
+      "html": ""
+    }
+  ]
+}
